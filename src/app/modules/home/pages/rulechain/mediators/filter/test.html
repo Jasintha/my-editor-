@@ -1,0 +1,96 @@
+<section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+  <section class="mat-block" fxFlex>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Second Input</mat-label>
+      <mat-select formControlName="secondinputType" (selectionChange)="refreshSecondInputTypes()">
+        <mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
+        <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>
+        <mat-option *ngIf="inputProperties?.length" value="PARAM">Param</mat-option>
+        <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+        <mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+
+  <section class="mat-block" fxFlex>
+
+    <mat-form-field *ngIf="configuration.secondinputType === 'MODEL'" fxFlex class="mat-block">
+      <mat-label>Model</mat-label>
+      <mat-select formControlName="secondentity">
+        <mat-option *ngFor="let nodeEntity of inputEntities" [value]="property">
+          {{nodeEntity.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="configuration.secondinputType === 'DTO'" fxFlex class="mat-block">
+      <mat-label>DTO</mat-label>
+      <mat-select formControlName="secondcustomObject">
+        <mat-option *ngFor="let nodeEntity of inputEntities" [value]="property">
+          {{nodeEntity.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="configuration.secondinputType === 'PARAM'" fxFlex class="mat-block">
+      <mat-label>Param</mat-label>
+      <mat-select formControlName="secondparam">
+        <mat-option *ngFor="let property of inputProperties" [value]="property">
+          {{property.inputName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="configuration.secondinputType === 'CONSTANT'" fxFlex class="mat-block">
+      <mat-label>Constant</mat-label>
+      <mat-select formControlName="secondconstant">
+        <mat-option *ngFor="let constant of allConstants" [value]="constant">
+          {{constant.constantName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="configuration.secondinputType === 'VARIABLE'" fxFlex class="mat-block">
+      <mat-label>Variable</mat-label>
+      <mat-select formControlName="secondvariable">
+        <mat-option *ngFor="let variable of allVariables" [value]="variable">
+          {{variable.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </section>
+
+  <section class="mat-block" fxFlex>
+
+    <mat-form-field *ngIf="configuration.secondinputType === 'MODEL'" fxFlex class="mat-block">
+      <mat-label>Property</mat-label>
+      <mat-select formControlName="secondentityProperty">
+        <mat-option *ngFor="let property of selectedSecondEntityProperties" [value]="property">
+          {{property.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="configuration.secondinputType === 'DTO'" fxFlex class="mat-block">
+      <mat-label>Property</mat-label>
+      <mat-select formControlName="secondcustomObjectProperty">
+        <mat-option *ngFor="let property of selectedSecondCustomObjectProperties" [value]="property">
+          {{property.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngIf="configuration.secondinputType === 'VARIABLE'">
+      <!--<mat-form-field *ngIf="configuration?.variable.type != 'String' || configuration?.variable.type != 'Integer' || configuration?.variable.type != 'Boolean' || configuration?.variable.type != 'Date' || configuration?.variable.type != 'Image' || configuration?.variable.type != 'File'" class="mat-block">-->
+      <mat-form-field *ngIf="configuration?.secondvariable?.pkg === 'model' || configuration?.secondvariable?.pkg === 'dto'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="secondvariableProperty">
+          <mat-option *ngFor="let property of selectedSecondVariableProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+  </section>
+
+</section>

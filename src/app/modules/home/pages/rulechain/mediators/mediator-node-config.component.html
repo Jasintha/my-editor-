@@ -1,0 +1,81 @@
+<div [formGroup]="mediatorNodeConfigFormGroup" style="margin-top: 10px;margin-bottom: 10px;">
+  <ng-container *ngIf="nodeClazz === 'xiRootNode'">
+    <tb-root-node-config #rootNodeConfigComponent
+                         formControlName="configuration"
+                         [ruleNodeId]="ruleNodeId"
+                         [nodeDefinition]="nodeDefinitionValue">
+    </tb-root-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiPayloadNode'">
+    <tb-payload-node-config #payloadNodeConfigComponent
+                            formControlName="configuration"
+                            [ruleNodeId]="ruleNodeId"
+                            [nodeDefinition]="nodeDefinitionValue">
+    </tb-payload-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiConstantNode'">
+    <tb-constant-node-config #constantNodeConfigComponent
+                             formControlName="configuration"
+                             [ruleNodeId]="ruleNodeId"
+                             [nodeDefinition]="nodeDefinitionValue">
+    </tb-constant-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiEmailInitNode'">
+    <tb-email-init-node-config #emailInitNodeConfigComponent
+                             formControlName="configuration"
+                             [ruleNodeId]="ruleNodeId"
+                             [nodeDefinition]="nodeDefinitionValue">
+    </tb-email-init-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiEmailSendNode'">
+    <tb-email-send-node-config #emailSendNodeConfigComponent
+                               formControlName="configuration"
+                               [ruleNodeId]="ruleNodeId"
+                               [allConstants]=" allConstants"
+                               [inputEntities]=" inputEntities"
+                               [inputCustomobjects]="inputCustomobjects"
+                               [allVariables]="allVariables"
+                               [inputProperties]="inputProperties"
+                               [nodeDefinition]="nodeDefinitionValue">
+    </tb-email-send-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiFilterNode'">
+    <tb-filter-node-config #filterNodeConfigComponent
+                               formControlName="configuration"
+                               [ruleNodeId]="ruleNodeId"
+                               [allConstants]=" allConstants"
+                               [inputEntities]=" inputEntities"
+                               [inputCustomobjects]="inputCustomobjects"
+                               [allVariables]="allVariables"
+                               [inputProperties]="inputProperties"
+                               [nodeDefinition]="nodeDefinitionValue">
+    </tb-filter-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiCRUDNode'">
+    <tb-crud-node-config #filterNodeConfigComponent
+                           formControlName="configuration"
+                           [ruleNodeId]="ruleNodeId"
+                           [allConstants]=" allConstants"
+                           [inputEntities]=" inputEntities"
+                           [inputCustomobjects]="inputCustomobjects"
+                           [allVariables]="allVariables"
+                           [inputProperties]="inputProperties"
+                           [nodeDefinition]="nodeDefinitionValue">
+    </tb-crud-node-config>
+  </ng-container>
+  <!--<ng-container *ngIf="nodeClazz === 'xiConstantNode'">
+    <tb-constant-node-config #constantNodeConfigComponent
+                             formControlName="configuration"
+                             [ruleNodeId]="ruleNodeId"
+                             [ruleEntities]="ruleEntities"
+                             [inputCustomobjects]="inputCustomobjects"
+                             [inputProperties]="inputProperties"
+                             [inputEntities]="inputEntities"
+                             [allFields]="allFields"
+                             [allConstants]=" allConstants"
+                             [allSavedObjects]="allSavedObjects"
+                             [allVariables]="allVariables"
+                             [nodeDefinition]="nodeDefinitionValue">
+    </tb-constant-node-config>
+  </ng-container>-->
+</div>
