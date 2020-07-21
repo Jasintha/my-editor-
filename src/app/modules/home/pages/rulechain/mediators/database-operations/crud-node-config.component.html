@@ -1,0 +1,119 @@
+<div [formGroup]="crudNodeConfigFormGroup">
+
+  <section class="mat-block" fxFlex>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Action</mat-label>
+      <mat-select formControlName="dbAction" (selectionChange)="refreshDbActions()">
+        <mat-option value="CREATE">CREATE</mat-option>
+        <mat-option value="UPDATE">UPDATE</mat-option>
+        <mat-option value="DELETE">DELETE</mat-option>
+        <mat-option value="FIND">FIND</mat-option>
+        <mat-option value="FINDALL">FIND ALL</mat-option>
+        <mat-option value="DELETEALL">DELETE ALL</mat-option>
+      </mat-select>      
+    </mat-form-field>
+  </section>
+
+  <section class="mat-block" fxFlex>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Model</mat-label>
+      <mat-select formControlName="entity">
+        <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+          {{nodeEntity.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+
+  <section *ngIf="configuration.dbAction === 'DELETE' || configuration.dbAction === 'FIND'" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>Input Type</mat-label>
+        <mat-select formControlName="crudinputType" (selectionChange)="refreshInputTypes()">
+          <mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
+          <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>
+          <mat-option *ngIf="inputProperties?.length" value="PARAM">Param</mat-option>
+          <mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    
+    <section class="mat-block" fxFlex>
+         
+
+      <mat-form-field *ngIf="configuration.crudinputType === 'MODEL'" fxFlex class="mat-block">
+        <mat-label>Model</mat-label>
+        <mat-select formControlName="crudentity">
+          <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+            {{nodeEntity.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field *ngIf="configuration.crudinputType === 'DTO'" fxFlex class="mat-block">
+        <mat-label>DTO</mat-label>
+        <mat-select formControlName="crudcustomObject">
+          <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+            {{nodeEntity.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.crudinputType === 'PARAM'" fxFlex class="mat-block">
+        <mat-label>Param</mat-label>
+        <mat-select formControlName="crudparam">
+          <mat-option *ngFor="let property of inputProperties" [value]="property">
+            {{property.inputName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.crudinputType === 'VARIABLE'" fxFlex class="mat-block">
+        <mat-label>Variable</mat-label>
+        <mat-select formControlName="crudvariable">
+          <mat-option *ngFor="let variable of allVariables" [value]="variable">
+            {{variable.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </section>
+
+    <section class="mat-block" fxFlex>
+
+      <mat-form-field *ngIf="configuration.crudinputType === 'MODEL'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="crudentityProperty">
+          <mat-option *ngFor="let property of selectedEntityProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.crudinputType === 'DTO'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="crudcustomObjectProperty">
+          <mat-option *ngFor="let property of selectedCustomObjectProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <ng-container *ngIf="configuration.crudinputType === 'VARIABLE'">
+        <!--<mat-form-field *ngIf="configuration?.variable.type != 'String' || configuration?.variable.type != 'Integer' || configuration?.variable.type != 'Boolean' || configuration?.variable.type != 'Date' || configuration?.variable.type != 'Image' || configuration?.variable.type != 'File'" class="mat-block">-->
+          <mat-form-field *ngIf="configuration?.crudvariable?.pkg === 'model' || configuration?.crudvariable?.pkg === 'dto'" fxFlex class="mat-block">
+          <mat-label>Property</mat-label>
+          <mat-select formControlName="crudvariableProperty">
+            <mat-option *ngFor="let property of selectedVariableProperties" [value]="property">
+              {{property.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+    </section>
+
+  </section>
+
+
+</div>

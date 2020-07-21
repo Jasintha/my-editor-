@@ -1,0 +1,11 @@
+<div [formGroup]="payloadNodeConfigFormGroup">
+  <section fxLayout="column" fxLayout.gt-sm="row">
+    <mat-form-field class="mat-block">
+      <mat-label>Payload</mat-label>
+      <textarea matInput formControlName="payload" required rows="20"></textarea>
+      <mat-error *ngIf="payloadNodeConfigFormGroup.get('payload').hasError('required')">
+        Payload is required
+      </mat-error>
+    </mat-form-field>
+  </section>
+</div>

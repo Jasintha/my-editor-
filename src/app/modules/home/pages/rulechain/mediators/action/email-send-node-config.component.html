@@ -1,0 +1,157 @@
+<div [formGroup]="emailSendNodeConfigFormGroup">
+
+  <mat-form-field  class="mat-block">
+    <mat-label>Subject</mat-label>
+    <input matInput formControlName="emailSubject"/>
+  </mat-form-field>
+
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>To Email Number Input Type</mat-label>
+        <mat-select formControlName="toemailinputType" (selectionChange)="refreshInputTypes()">
+          <mat-option *ngIf="inputProperties?.length" value="PARAM">Param</mat-option>
+          <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+          <mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.toemailinputType === 'PARAM'" fxFlex class="mat-block">
+        <mat-label>Param</mat-label>
+        <mat-select formControlName="toemailparam">
+          <mat-option *ngFor="let property of inputProperties" [value]="property">
+            {{property.inputName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.toemailinputType === 'CONSTANT'" fxFlex class="mat-block">
+        <mat-label>Constant</mat-label>
+        <mat-select formControlName="toemailconstant">
+          <mat-option *ngFor="let constant of allConstants" [value]="constant">
+            {{constant.constantName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.toemailinputType === 'VARIABLE'" fxFlex class="mat-block">
+        <mat-label>Variable</mat-label>
+        <mat-select formControlName="toemailvariable">
+          <mat-option *ngFor="let variable of allVariables" [value]="variable">
+            {{variable.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </section>
+
+    <section class="mat-block" fxFlex>
+      <ng-container *ngIf="configuration.toemailinputType === 'VARIABLE'">
+        <!--<mat-form-field *ngIf="configuration?.variable.type != 'String' || configuration?.variable.type != 'Integer' || configuration?.variable.type != 'Boolean' || configuration?.variable.type != 'Date' || configuration?.variable.type != 'Image' || configuration?.variable.type != 'File'" class="mat-block">-->
+          <mat-form-field *ngIf="configuration?.toemailvariable?.pkg === 'model' || configuration?.toemailvariable?.pkg === 'dto'" fxFlex class="mat-block">
+          <mat-label>Property</mat-label>
+          <mat-select formControlName="toemailvariableProperty">
+            <mat-option *ngFor="let property of selectedVariableProperties" [value]="property">
+              {{property.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+    </section>
+
+
+  </section>
+  <section style="padding-top: 10px;padding-bottom: 10px;">
+    <label>Email Body Parameters</label>
+  </section>
+
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Parameter Input Type</mat-label>
+      <mat-select formControlName="parameterinputType" (selectionChange)="refreshParameterInputTypes()">
+        <mat-option *ngIf="inputProperties?.length" value="PARAM">Param</mat-option>
+        <mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <section class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.parameterinputType === 'PARAM'" fxFlex class="mat-block">
+        <mat-label>Param</mat-label>
+        <mat-select formControlName="parameterparam">
+          <mat-option *ngFor="let property of inputProperties" [value]="property">
+            {{property.inputName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.parameterinputType === 'VARIABLE'" fxFlex class="mat-block">
+        <mat-label>Variable</mat-label>
+        <mat-select formControlName="parametervariable">
+          <mat-option *ngFor="let variable of allVariables" [value]="variable">
+            {{variable.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section class="mat-block" fxFlex>
+      <ng-container *ngIf="configuration.parameterinputType === 'VARIABLE'">
+        <mat-form-field *ngIf="configuration?.parametervariable?.pkg === 'model' || configuration?.parametervariable?.pkg === 'dto'" fxFlex class="mat-block">
+          <mat-label>Property</mat-label>
+          <mat-select formControlName="parametervariableProperty">
+            <mat-option *ngFor="let property of selectedVariablePropertiesForParameter" [value]="property">
+              {{property.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+    </section>
+    <button mat-icon-button class="tb-fullscreen-button-style"
+            (click)="addParameter()"
+            matTooltip="Add Parameter"
+            matTooltipPosition="above">
+      <mat-icon color="primary">add</mat-icon>
+    </button>
+  </section>
+
+
+  <div fxFlex class="table-container" style="padding: 10px;margin-bottom-5px;">
+    <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="parameterName">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.parameterName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="inputType">
+        <th mat-header-cell *matHeaderCellDef> Input Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.inputType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="input">
+        <th mat-header-cell *matHeaderCellDef> Input </th>
+        <td mat-cell *matCellDef="let element"> {{element.input}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="property">
+        <th mat-header-cell *matHeaderCellDef> Property </th>
+        <td mat-cell *matCellDef="let element"> {{element.property}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element;let i = index">
+          <button mat-icon-button class="tb-mat-32" (click)="deleteRow(i)" matTooltip="Delete Parameter" matTooltipPosition="above">
+            <mat-icon style="color:red;">delete</mat-icon>
+          </button></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-form-field class="mat-block">
+    <mat-label>Email Body</mat-label>
+    <textarea matInput formControlName="emailBody" rows="7"></textarea>
+  </mat-form-field>
+</div>
+
+

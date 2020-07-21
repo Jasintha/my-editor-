@@ -1,0 +1,106 @@
+<div [formGroup]="constantNodeConfigFormGroup">
+  <!--<section fxLayout="column" fxLayout.gt-sm="row">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Payload</mat-label>
+      <textarea matInput formControlName="payload" required rows="20"></textarea>
+      <mat-error *ngIf="payloadNodeConfigFormGroup.get('payload').hasError('required')">
+        {{ 'rulenode.name-required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </section>-->
+
+  <section style="padding-top: 10px;padding-bottom: 20px;">
+    <label>Add Constants</label>
+  </section>
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="constantName"/>
+    </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="constantType">
+        <mat-option value="Integer">Number</mat-option>
+        <mat-option value="String">Text</mat-option>
+        <mat-option value="Date">Date</mat-option>
+        <mat-option value="Boolean">True/False</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Custom Value</mat-label>
+      <input matInput formControlName="customValue"/>
+    </mat-form-field>
+    <!--<button mat-raised-button color="primary"
+            type="button">
+      {{ 'action.add' | translate }}
+    </button>-->
+    <button mat-icon-button class="tb-fullscreen-button-style"
+            (click)="addConstant()"
+            matTooltip="Add Constant"
+            matTooltipPosition="above">
+      <mat-icon color="primary">add</mat-icon>
+    </button>
+  </section>
+  <div fxFlex class="table-container" style="padding: 10px;">
+    <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="constantName">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.constantName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="constantType">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.constantType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="customValue">
+        <th mat-header-cell *matHeaderCellDef> Custom Value </th>
+        <td mat-cell *matCellDef="let element"> {{element.customValue}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element;let i = index">
+          <button mat-icon-button class="tb-mat-32" (click)="deleteRow(i)" matTooltip="Delete Constant" matTooltipPosition="above">
+          <mat-icon style="color:red;">delete</mat-icon>
+        </button></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <!--<md-table-container class="md-block" style="padding-top: 20px;" flex>
+    &lt;!&ndash;<label>Constants</label>&ndash;&gt;
+    <table md-table style="padding-top: 20px;">
+      <thead md-head style="background-color: gainsboro;">
+      <tr md-row>
+        <th md-column><span>Name</span></th>
+        <th md-column><span>Type</span></th>
+        <th md-column><span>Custom Value</span></th>
+        <th md-column><span>Action</span></th>
+      </tr>
+      </thead>
+      <tbody md-body>
+      <tr md-row ng-repeat="prop in configuration.constants track by $index">
+        <td md-cell>{{ prop.constantName }}</td>
+        <td md-cell>{{ prop.constantType }}</td>
+        <td md-cell>{{ prop.customValue }}</td>
+        <td md-cell class="tb-action-cell">
+          <md-button class="md-icon-button" aria-label="{{ 'action.delete' | translate }}"
+                     ng-click="removeConstantRow($index)">
+            <md-icon aria-label="{{ 'action.delete' | translate }}" class="material-icons"
+                     style="color: #df1111;">delete
+            </md-icon>
+            <md-tooltip md-direction="top">
+              Delete Field
+            </md-tooltip>
+          </md-button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </md-table-container>-->
+</div>
+
