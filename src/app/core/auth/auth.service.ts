@@ -369,6 +369,9 @@ export class AuthService {
         if (authPayload.authUser.isPublic) {
           authPayload.forceFullscreen = true;
         }
+        console.log("authPayload");
+        console.log(authPayload);
+
         if (authPayload.authUser.isPublic) {
           this.loadSystemParams(authPayload).subscribe(
             (sysParams) => {

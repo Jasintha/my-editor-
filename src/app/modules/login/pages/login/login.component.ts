@@ -51,7 +51,7 @@ export class LoginComponent extends PageComponent implements OnInit {
   }
 
   login(): void {
-    if (this.loginFormGroup.valid) {
+    //if (this.loginFormGroup.valid) {
       console.log('ssss');
       this.authService.login(this.loginFormGroup.value).subscribe(
         () => {},
@@ -63,12 +63,12 @@ export class LoginComponent extends PageComponent implements OnInit {
           }
         }
       );
-    } else {
-      Object.keys(this.loginFormGroup.controls).forEach(field => {
-        const control = this.loginFormGroup.get(field);
-        control.markAsTouched({onlySelf: true});
-      });
-    }
+    //} else {
+    //  Object.keys(this.loginFormGroup.controls).forEach(field => {
+    //    const control = this.loginFormGroup.get(field);
+    //    control.markAsTouched({onlySelf: true});
+    //  });
+    //}
   }
 
 }
