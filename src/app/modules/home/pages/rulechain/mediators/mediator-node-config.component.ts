@@ -29,8 +29,9 @@ import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Valida
 import {
   IRuleNodeConfigurationComponent,
   RuleNodeConfiguration,
-  RuleNodeDefinition
+  RuleNodeDefinition,
 } from '@shared/models/rule-node.models';
+import { QuestionBase } from '@shared/models/question-base.models';
 import { Subscription } from 'rxjs';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -67,6 +68,9 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   inputProperties: any[];
 
   @Input()
+  ruleType: string;
+
+  @Input()
   allFields: any[];
 
   @Input()
@@ -78,6 +82,8 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   @Input()
   allVariables: any[];
 
+  @Input() connectorfields: QuestionBase[];
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
@@ -85,7 +91,6 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
     if (this.nodeDefinitionValue !== nodeDefinition) {
       this.nodeDefinitionValue = nodeDefinition;
 
-      console.log(this.nodeDefinitionValue);
       if (this.nodeDefinitionValue) {
         //this.validateDefinedDirective();
       }
@@ -193,7 +198,6 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   private validateDefinedDirective() {
 
 
-  console.log(this.nodeDefinition);
 
     if (this.definedConfigComponentRef) {
       this.definedConfigComponentRef.destroy();

@@ -62,6 +62,7 @@ import {
   ruleNodeTypeDescriptors,
   ruleNodeTypesLibrary
 } from '@shared/models/rule-node.models';
+import { QuestionBase, TextboxQuestion, DropdownQuestion } from '@shared/models/question-base.models';
 import { FcRuleNodeModel, FcRuleNodeTypeModel, RuleChainMenuContextInfo } from './rulechain-page.models';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { fromEvent, NEVER, Observable, of } from 'rxjs';
@@ -158,6 +159,8 @@ export class RuleChainPageComponent extends PageComponent
   allConstants: any[];
   allVariables: any[];
   allSavedObjects: any[];
+  connectorData: any[];
+  connectorfields: QuestionBase[];
 
   ruleChainModel: FcRuleNodeModel = {
     nodes: [],
@@ -311,6 +314,7 @@ export class RuleChainPageComponent extends PageComponent
 
     this.dataModels = this.ruleChainMetaData.dataModels;
     this.inputDataModels = this.ruleChainMetaData.inputDataModels;
+    this.connectorData = this.ruleChainMetaData.connectors;
     this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
     this.inputProperties = this.ruleChainMetaData.inputProperties;
     this.allFields = this.ruleChainMetaData.allFields;
@@ -897,6 +901,7 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   openNodeDetails(node: FcRuleNode) {
+    this.connectorfields = [];
     if (node.component.type !== RuleNodeType.INPUT) {
       this.enableHotKeys = false;
       this.updateErrorTooltips(true);
@@ -905,6 +910,12 @@ export class RuleChainPageComponent extends PageComponent
       this.isEditingRuleNode = true;
       this.editingRuleNodeIndex = this.ruleChainModel.nodes.indexOf(node);
       this.editingRuleNode = deepClone(node, ['component']);
+
+      if(node.component.type === 'CONNECTOR'){
+          let ruleNodeClass = node.component.clazz;
+          this.connectorfields = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).fields;
+      }
+
       setTimeout(() => {
         this.ruleNodeComponent.ruleNodeFormGroup.markAsPristine();
       }, 0);
@@ -1317,6 +1328,13 @@ export class RuleChainPageComponent extends PageComponent
     const allVariables = this.ruleChainMetaData.allVariables;
     const allSavedObjects = this.ruleChainMetaData.allSavedObjects;
 
+    let connectorfields : QuestionBase[]= [];
+    if(ruleNode.component.type === 'CONNECTOR'){
+        let ruleNodeClass = ruleNode.component.clazz;
+        connectorfields = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).fields;
+
+    }
+
     this.enableHotKeys = false;
     this.dialog.open<AddRuleNodeDialogComponent, AddRuleNodeDialogData,
       FcRuleNode>(AddRuleNodeDialogComponent, {
@@ -1332,7 +1350,8 @@ export class RuleChainPageComponent extends PageComponent
         allFields,
         allConstants,
         allVariables,
-        allSavedObjects
+        allSavedObjects,
+        connectorfields
       }
     }).afterClosed().subscribe(
       (addedRuleNode) => {
@@ -1538,6 +1557,7 @@ export interface AddRuleNodeDialogData {
   allConstants: any[];
   allVariables: any[];
   allSavedObjects: any[];
+  connectorfields: QuestionBase[];
 }
 
 @Component({
@@ -1561,6 +1581,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allConstants: any[];
   allSavedObjects: any[];
   allVariables: any[];
+  connectorfields: QuestionBase[];
 
   submitted = false;
 
@@ -1581,6 +1602,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allConstants = this.data.allConstants;
     this.allVariables = this.data.allVariables;
     this.allSavedObjects = this.data.allSavedObjects;
+    this.connectorfields = this.data.connectorfields
   }
 
   ngOnInit(): void {

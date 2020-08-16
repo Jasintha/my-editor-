@@ -13,6 +13,7 @@ import { ConstantNodeConfigComponent } from './core/constant-node-config.compone
 import { PayloadNodeConfigComponent } from './action/payload-node-config.component';
 import { EmailInitNodeConfigComponent } from './action/email-init-node-config.component';
 import { EmailSendNodeConfigComponent } from './action/email-send-node-config.component';
+import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
 //filter
 import { FilterNodeConfigComponent } from './filter/filter-node-config.component';
@@ -30,7 +31,8 @@ import {MatTableModule} from '@angular/material/table';
     EmailInitNodeConfigComponent,
     EmailSendNodeConfigComponent,
     FilterNodeConfigComponent,
-    CrudNodeConfigComponent
+    CrudNodeConfigComponent,
+    ConnectorNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import {MatTableModule} from '@angular/material/table';
     EmailSendNodeConfigComponent,
     EmailInitNodeConfigComponent,
     FilterNodeConfigComponent,
-    CrudNodeConfigComponent
+    CrudNodeConfigComponent,
+    ConnectorNodeConfigComponent
   ],
   providers: []
 })

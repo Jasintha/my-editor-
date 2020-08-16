@@ -22,6 +22,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FcRuleNode, RuleNodeType } from '@shared/models/rule-node.models';
 import { EntityType } from '@shared/models/entity-type.models';
 import { Subscription } from 'rxjs';
+import { QuestionBase } from '@shared/models/question-base.models';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { RuleNodeConfigComponent } from './rule-node-config.component';
 
@@ -69,6 +70,8 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
 
   @Input()
   isReadOnly: boolean;
+
+  @Input() connectorfields: QuestionBase[];
 
   ruleNodeType = RuleNodeType;
   entityType = EntityType;
@@ -139,7 +142,6 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   }
 
   ngOnInit(): void {
-  console.log(this.ruleNode);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

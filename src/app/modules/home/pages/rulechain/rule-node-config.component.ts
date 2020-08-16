@@ -31,6 +31,7 @@ import {
   RuleNodeConfiguration,
   RuleNodeDefinition
 } from '@shared/models/rule-node.models';
+import { QuestionBase } from '@shared/models/question-base.models';
 import { Subscription } from 'rxjs';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
@@ -73,6 +74,9 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
   nodeClazz: string;
 
   @Input()
+  ruleType: string;
+
+  @Input()
   inputEntities: any[];
 
   @Input()
@@ -95,6 +99,8 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
 
   @Input()
   allConstants: any[];
+
+  @Input() connectorfields: QuestionBase[];
 
   nodeDefinitionValue: RuleNodeDefinition;
 
@@ -164,8 +170,6 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
 
   writeValue(value: RuleNodeConfiguration): void {
     this.configuration = deepClone(value);
-    console.log("rule nd config value");
-    console.log(value);
 
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();

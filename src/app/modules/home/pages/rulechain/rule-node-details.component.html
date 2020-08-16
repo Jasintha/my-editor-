@@ -34,6 +34,7 @@
         <tb-rule-node-config #ruleNodeConfigComponent
                              formControlName="configuration"
                              [ruleNodeId]="ruleNode.ruleNodeId?.id"
+                             [ruleType]="ruleNode.component?.type"
                              [nodeClazz]="ruleNode.component.clazz"
                              [ruleEntities]="ruleEntities"
                              [inputCustomobjects]="inputCustomobjects"
@@ -43,7 +44,8 @@
                              [allConstants]=" allConstants"
                              [allSavedObjects]="allSavedObjects"
                              [allVariables]="allVariables"
-                             [nodeDefinition]="ruleNode.component.configurationDescriptor.nodeDefinition">
+                             [nodeDefinition]="ruleNode.component.configurationDescriptor.nodeDefinition"
+                              [connectorfields]="connectorfields">
         </tb-rule-node-config>
         <div formGroupName="additionalInfo" fxLayout="column">
           <mat-form-field class="mat-block">
