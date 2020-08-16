@@ -48,6 +48,7 @@ export interface RuleChainMetaData {
   allConstants?: any[];
   allVariables?: any[];
   allSavedObjects?: any[];
+  connectors?: any[];
 }
 
 export interface ResolvedRuleChainMetaData extends RuleChainMetaData {
@@ -81,6 +82,7 @@ export const ruleNodeTypeComponentTypes: ComponentType[] =
     ComponentType.ACTION,
     ComponentType.EXTERNAL,
     ComponentType.DATABASE_OPERATIONS,
+    ComponentType.CONNECTOR,
     ComponentType.ROOTING,
     ComponentType.CORE
   ];

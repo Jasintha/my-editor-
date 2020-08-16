@@ -186,6 +186,7 @@ export enum RuleNodeType {
   UNKNOWN = 'UNKNOWN',
   INPUT = 'INPUT',
   DATABASE_OPERATIONS = 'DATABASE_OPERATIONS',
+  CONNECTOR = 'CONNECTOR',
   ROOTING = 'ROOTING',
   CORE = 'CORE'
 }
@@ -196,6 +197,7 @@ export const ruleNodeTypesLibrary = [
   RuleNodeType.ACTION,
   RuleNodeType.FILTER,
   RuleNodeType.DATABASE_OPERATIONS,
+  RuleNodeType.CONNECTOR,
   RuleNodeType.RULE_CHAIN
 ];
 
@@ -257,6 +259,16 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         name: 'rulenode.type-database_operations',
         details: 'rulenode.type-database_operations-details',
         nodeClass: 'tb-database_operations-type',
+        icon: 'cloud_upload'
+      }
+    ],
+    [
+      RuleNodeType.CONNECTOR,
+      {
+        value: RuleNodeType.CONNECTOR,
+        name: 'rulenode.type-connector',
+        details: 'rulenode.type-connector-details',
+        nodeClass: 'tb-connector-type',
         icon: 'cloud_upload'
       }
     ],
