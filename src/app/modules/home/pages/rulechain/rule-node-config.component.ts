@@ -100,6 +100,21 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
   @Input()
   allConstants: any[];
 
+  @Input()
+  allDomainModels: any[];
+
+  @Input()
+  allModelProperties: any[];
+
+  @Input()
+  allEvents: any[];
+
+  @Input()
+  queryDb: string;
+
+  @Input()
+  commandDb: string;
+
   @Input() connectorfields: QuestionBase[];
 
   nodeDefinitionValue: RuleNodeDefinition;

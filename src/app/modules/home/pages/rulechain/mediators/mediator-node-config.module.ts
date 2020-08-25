@@ -2,17 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '@shared/shared.module';
 import { MediatorNodeConfigComponent } from './mediator-node-config.component';
-
+import { MatTreeModule } from '@angular/material/tree';
 //rooting
 import { RootNodeConfigComponent } from './rooting/root-node-config.component';
 
 //core
 import { ConstantNodeConfigComponent } from './core/constant-node-config.component';
+import { DomainModelVariableNodeConfigComponent } from './core/domain-model-variable-node-config.component';
 
 //action
 import { PayloadNodeConfigComponent } from './action/payload-node-config.component';
 import { EmailInitNodeConfigComponent } from './action/email-init-node-config.component';
 import { EmailSendNodeConfigComponent } from './action/email-send-node-config.component';
+import { EventPublisherNodeConfigComponent } from './action/event-publisher-node-config.component';
+import { EventReceiverNodeConfigComponent } from './action/event-receiver-node-config.component';
+
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
 //filter
@@ -28,6 +32,9 @@ import {MatTableModule} from '@angular/material/table';
     RootNodeConfigComponent,
     PayloadNodeConfigComponent,
     ConstantNodeConfigComponent,
+    DomainModelVariableNodeConfigComponent,
+    EventReceiverNodeConfigComponent,
+    EventPublisherNodeConfigComponent,
     EmailInitNodeConfigComponent,
     EmailSendNodeConfigComponent,
     FilterNodeConfigComponent,
@@ -38,12 +45,16 @@ import {MatTableModule} from '@angular/material/table';
     CommonModule,
     SharedModule,
     MatTableModule,
+    MatTreeModule
   ],
   exports: [
     MediatorNodeConfigComponent,
     RootNodeConfigComponent,
     PayloadNodeConfigComponent,
     ConstantNodeConfigComponent,
+    DomainModelVariableNodeConfigComponent,
+    EventReceiverNodeConfigComponent,
+    EventPublisherNodeConfigComponent,
     EmailSendNodeConfigComponent,
     EmailInitNodeConfigComponent,
     FilterNodeConfigComponent,

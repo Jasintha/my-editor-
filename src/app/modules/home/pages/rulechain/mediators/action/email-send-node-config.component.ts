@@ -307,10 +307,6 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         }
       }
 
-      console.log('vvvvvvvv');
-      console.log(v)
-      console.log(vp)
-
       let p = this.configuration.toemailparam;
       if(this.configuration.toemailinputType === 'PARAM'){
         p = this.inputProperties.find(x => x.inputName === this.configuration.toemailparam.inputName );
