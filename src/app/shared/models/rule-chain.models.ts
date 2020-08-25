@@ -49,6 +49,11 @@ export interface RuleChainMetaData {
   allVariables?: any[];
   allSavedObjects?: any[];
   connectors?: any[];
+  allDomainModels?: any[];
+  allModelProperties?: any[];
+  allEvents?: any[];
+  queryDb?: string;
+  commandDb?: string;
 }
 
 export interface ResolvedRuleChainMetaData extends RuleChainMetaData {

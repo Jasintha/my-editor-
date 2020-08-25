@@ -72,6 +72,12 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
   @Input()
   ruleNodeId: string;
 
+  @Input()
+  queryDb: string;
+
+  @Input()
+  commandDb: string;
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
@@ -109,6 +115,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.crudNodeConfigFormGroup = this.fb.group({
+      dbType:[],
       dbAction: [],
       entity: [],
       crudinputType: [],
@@ -319,6 +326,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
       }
 
       this.crudNodeConfigFormGroup.patchValue({
+        dbType: this.configuration.dbType,
         dbAction: this.configuration.dbAction,
         entity: entity,
         crudinputType: this.configuration.crudinputType,
@@ -339,6 +347,13 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
         }
       );
       */
+
+      this.changeSubscription = this.crudNodeConfigFormGroup.get('dbType').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.dbType = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.crudNodeConfigFormGroup.get('entity').valueChanges.subscribe(
         (configuration: any) => {

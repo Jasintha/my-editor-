@@ -159,6 +159,11 @@ export class RuleChainPageComponent extends PageComponent
   allConstants: any[];
   allVariables: any[];
   allSavedObjects: any[];
+  allDomainModels: any[];
+  allModelProperties: any[];
+  allEvents: any[];
+  queryDb: string;
+  commandDb: string;
   connectorData: any[];
   connectorfields: QuestionBase[];
 
@@ -314,6 +319,11 @@ export class RuleChainPageComponent extends PageComponent
 
     this.dataModels = this.ruleChainMetaData.dataModels;
     this.inputDataModels = this.ruleChainMetaData.inputDataModels;
+    this.allDomainModels = this.ruleChainMetaData.allDomainModels;
+    this.allEvents = this.ruleChainMetaData.allEvents;
+    this.queryDb = this.ruleChainMetaData.queryDb;
+    this.commandDb = this.ruleChainMetaData.commandDb;
+    this.allModelProperties = this.ruleChainMetaData.allModelProperties;
     this.connectorData = this.ruleChainMetaData.connectors;
     this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
     this.inputProperties = this.ruleChainMetaData.inputProperties;
@@ -1321,6 +1331,11 @@ export class RuleChainPageComponent extends PageComponent
 
     const dataModels = this.ruleChainMetaData.dataModels;
     const inputDataModels = this.ruleChainMetaData.inputDataModels;
+    const allDomainModels = this.ruleChainMetaData.allDomainModels;
+    const allEvents = this.ruleChainMetaData.allEvents;
+    const queryDb = this.ruleChainMetaData.queryDb;
+    const commandDb = this.ruleChainMetaData.commandDb;
+    const allModelProperties = this.ruleChainMetaData.allModelProperties;
     const inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
     const inputProperties = this.ruleChainMetaData.inputProperties;
     const allFields = this.ruleChainMetaData.allFields;
@@ -1351,7 +1366,12 @@ export class RuleChainPageComponent extends PageComponent
         allConstants,
         allVariables,
         allSavedObjects,
-        connectorfields
+        connectorfields,
+        allDomainModels,
+        allModelProperties,
+        allEvents,
+        queryDb,
+        commandDb
       }
     }).afterClosed().subscribe(
       (addedRuleNode) => {
@@ -1558,6 +1578,11 @@ export interface AddRuleNodeDialogData {
   allVariables: any[];
   allSavedObjects: any[];
   connectorfields: QuestionBase[];
+  allDomainModels: any[];
+  allModelProperties: any[];
+  allEvents: any[];
+  queryDb: string;
+  commandDb: string;
 }
 
 @Component({
@@ -1582,6 +1607,11 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allSavedObjects: any[];
   allVariables: any[];
   connectorfields: QuestionBase[];
+  allDomainModels: any[];
+  allModelProperties: any[];
+  allEvents: any[];
+  queryDb: string;
+  commandDb: string;
 
   submitted = false;
 
@@ -1602,7 +1632,13 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allConstants = this.data.allConstants;
     this.allVariables = this.data.allVariables;
     this.allSavedObjects = this.data.allSavedObjects;
-    this.connectorfields = this.data.connectorfields
+    this.connectorfields = this.data.connectorfields;
+    this.allDomainModels = this.data.allDomainModels;
+    this.allModelProperties = this.data.allModelProperties;
+    this.allEvents = this.data.allEvents;
+    this.queryDb = this.data.queryDb;
+    this.commandDb = this.data.commandDb;
+
   }
 
   ngOnInit(): void {

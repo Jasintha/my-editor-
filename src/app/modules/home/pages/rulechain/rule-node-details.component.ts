@@ -69,6 +69,21 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   isEdit: boolean;
 
   @Input()
+  allDomainModels: any[];
+
+  @Input()
+  allModelProperties: any[];
+
+  @Input()
+  allEvents: any[];
+
+  @Input()
+  queryDb: string;
+
+  @Input()
+  commandDb: string;
+
+  @Input()
   isReadOnly: boolean;
 
   @Input() connectorfields: QuestionBase[];

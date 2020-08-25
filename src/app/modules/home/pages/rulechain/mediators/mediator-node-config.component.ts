@@ -77,6 +77,21 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   allConstants: any[];
 
   @Input()
+  allDomainModels: any[];
+
+  @Input()
+  allModelProperties: any[];
+
+  @Input()
+  allEvents: any[];
+
+  @Input()
+  queryDb: string;
+
+  @Input()
+  commandDb: string;
+
+  @Input()
   allSavedObjects: any[];
 
   @Input()

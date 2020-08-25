@@ -1,5 +1,5 @@
 <div [formGroup]="mediatorNodeConfigFormGroup" style="margin-top: 10px;margin-bottom: 10px;">
-  <ng-container *ngIf="ruleType === 'CONNECTOR'; else all_mediators">
+  <ng-container *ngIf="ruleType === 'CONNECTOR'">
     <tb-connector-node-config #connectorNodeConfigComponent
                               formControlName="configuration"
                               [ruleNodeId]="ruleNodeId"
@@ -15,7 +15,6 @@
                               [fields]="connectorfields">
     </tb-connector-node-config>
   </ng-container>
-  <ng-container #all_mediators>
     <ng-container *ngIf="nodeClazz === 'xiRootNode'">
       <tb-root-node-config #rootNodeConfigComponent
                            formControlName="configuration"
@@ -77,10 +76,33 @@
                            [inputCustomobjects]="inputCustomobjects"
                            [allVariables]="allVariables"
                            [inputProperties]="inputProperties"
+                           [queryDb]="queryDb"
+                           [commandDb]="commandDb"
                            [nodeDefinition]="nodeDefinitionValue">
       </tb-crud-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiModelPropertyNode'">
+      <tb-domain-model-variable-node-config #modelPropertyNodeConfigComponent
+                           formControlName="configuration"
+                           [ruleNodeId]="ruleNodeId"
+                           [allDomainModels]=" allDomainModels"
+                           [nodeDefinition]="nodeDefinitionValue">
+      </tb-domain-model-variable-node-config>
+    </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiEventPublisherNode'">
+    <tb-event-publisher-node-config #eventPublisherNodeConfigComponent
+                                          formControlName="configuration"
+                                          [ruleNodeId]="ruleNodeId"
+                                          [allEvents]="allEvents"
+                                          [nodeDefinition]="nodeDefinitionValue">
+    </tb-event-publisher-node-config>
   </ng-container>
-
-
+  <ng-container *ngIf="nodeClazz === 'xiEventReceiverNode'">
+    <tb-event-publisher-node-config #eventReceiverNodeConfigComponent
+                                    formControlName="configuration"
+                                    [ruleNodeId]="ruleNodeId"
+                                    [allEvents]="allEvents"
+                                    [nodeDefinition]="nodeDefinitionValue">
+    </tb-event-publisher-node-config>
+  </ng-container>
 </div>
