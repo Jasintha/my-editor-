@@ -25,7 +25,9 @@ export enum ComponentType {
   DATABASE_OPERATIONS = 'DATABASE_OPERATIONS',
   CONNECTOR = 'CONNECTOR',
   ROOTING = 'ROOTING',
-  CORE = 'CORE'
+  CORE = 'CORE',
+  CQRS = 'CQRS',
+  MESSAGING = 'MESSAGING'
 }
 
 export enum ComponentScope {

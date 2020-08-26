@@ -54,6 +54,7 @@ export interface RuleChainMetaData {
   allEvents?: any[];
   queryDb?: string;
   commandDb?: string;
+  apptype?: string;
 }
 
 export interface ResolvedRuleChainMetaData extends RuleChainMetaData {
@@ -89,7 +90,9 @@ export const ruleNodeTypeComponentTypes: ComponentType[] =
     ComponentType.DATABASE_OPERATIONS,
     ComponentType.CONNECTOR,
     ComponentType.ROOTING,
-    ComponentType.CORE
+    ComponentType.CORE,
+    ComponentType.CQRS,
+    ComponentType.MESSAGING
   ];
 
 export const ruleChainNodeComponent: RuleNodeComponentDescriptor = {

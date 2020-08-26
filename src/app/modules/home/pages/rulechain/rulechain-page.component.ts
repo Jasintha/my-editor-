@@ -165,6 +165,7 @@ export class RuleChainPageComponent extends PageComponent
   queryDb: string;
   commandDb: string;
   connectorData: any[];
+  apptype: string;
   connectorfields: QuestionBase[];
 
   ruleChainModel: FcRuleNodeModel = {
@@ -323,6 +324,7 @@ export class RuleChainPageComponent extends PageComponent
     this.allEvents = this.ruleChainMetaData.allEvents;
     this.queryDb = this.ruleChainMetaData.queryDb;
     this.commandDb = this.ruleChainMetaData.commandDb;
+    this.apptype = this.ruleChainMetaData.apptype;
     this.allModelProperties = this.ruleChainMetaData.allModelProperties;
     this.connectorData = this.ruleChainMetaData.connectors;
     this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
@@ -1335,6 +1337,7 @@ export class RuleChainPageComponent extends PageComponent
     const allEvents = this.ruleChainMetaData.allEvents;
     const queryDb = this.ruleChainMetaData.queryDb;
     const commandDb = this.ruleChainMetaData.commandDb;
+    const apptype = this.ruleChainMetaData.apptype;
     const allModelProperties = this.ruleChainMetaData.allModelProperties;
     const inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
     const inputProperties = this.ruleChainMetaData.inputProperties;
@@ -1371,7 +1374,8 @@ export class RuleChainPageComponent extends PageComponent
         allModelProperties,
         allEvents,
         queryDb,
-        commandDb
+        commandDb,
+        apptype
       }
     }).afterClosed().subscribe(
       (addedRuleNode) => {
@@ -1583,6 +1587,7 @@ export interface AddRuleNodeDialogData {
   allEvents: any[];
   queryDb: string;
   commandDb: string;
+  apptype: string;
 }
 
 @Component({
@@ -1612,6 +1617,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allEvents: any[];
   queryDb: string;
   commandDb: string;
+  apptype: string;
 
   submitted = false;
 
@@ -1638,6 +1644,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allEvents = this.data.allEvents;
     this.queryDb = this.data.queryDb;
     this.commandDb = this.data.commandDb;
+    this.apptype = this.data.apptype;
 
   }
 

@@ -95,6 +95,9 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   allSavedObjects: any[];
 
   @Input()
+  apptype: string;
+
+  @Input()
   allVariables: any[];
 
   @Input() connectorfields: QuestionBase[];
