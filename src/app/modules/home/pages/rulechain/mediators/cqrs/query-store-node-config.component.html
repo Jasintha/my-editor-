@@ -1,0 +1,45 @@
+<div [formGroup]="queryStoreNodeConfigFormGroup">
+
+<!--  <section *ngIf="commandDb" class="mat-block" fxFlex>
+    <mat-label>Command DB: {{commandDb}}</mat-label>
+  </section>
+  <section *ngIf="queryDb" class="mat-block" fxFlex>
+    <mat-label>Query DB: {{queryDb}}</mat-label>
+  </section>-->
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>DB Type</mat-label>
+    <mat-select formControlName="dbType" [disabled]="readOnlyDbType">
+      <mat-option value="mongo">Mongo</mat-option>
+      <mat-option value="sqlite3">SQLite3</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <section class="mat-block" fxFlex>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>View Model</mat-label>
+      <mat-select formControlName="customObject">
+        <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
+          {{nodeEntity.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+
+  <section class="mat-block" fxFlex>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Action</mat-label>
+      <mat-select formControlName="queryAction">
+        <mat-option value="SELECTALL">SELECT ALL</mat-option>
+        <mat-option value="QUERY">ADVANCED QUERY</mat-option>
+      </mat-select>      
+    </mat-form-field>
+  </section>
+
+  <section *ngIf="configuration.queryAction === 'QUERY'"  fxLayout="column" fxLayout.gt-sm="row">
+    <mat-form-field class="mat-block">
+      <mat-label>Advanced Query</mat-label>
+      <textarea matInput formControlName="query" required rows="20"></textarea>
+    </mat-form-field>
+  </section>
+
+</div>

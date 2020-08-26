@@ -78,6 +78,8 @@
                            [inputProperties]="inputProperties"
                            [queryDb]="queryDb"
                            [commandDb]="commandDb"
+                           [apptype]="apptype"
+                           [allModelProperties]="allModelProperties"
                            [nodeDefinition]="nodeDefinitionValue">
       </tb-crud-node-config>
     </ng-container>
@@ -104,5 +106,37 @@
                                     [allEvents]="allEvents"
                                     [nodeDefinition]="nodeDefinitionValue">
     </tb-event-publisher-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiEventStoreNode'">
+    <tb-event-store-node-config #eventStoreNodeConfigComponent
+                         formControlName="configuration"
+                         [ruleNodeId]="ruleNodeId"
+                         [allConstants]=" allConstants"
+                         [inputEntities]=" inputEntities"
+                         [inputCustomobjects]="inputCustomobjects"
+                         [allVariables]="allVariables"
+                         [inputProperties]="inputProperties"
+                         [queryDb]="queryDb"
+                         [commandDb]="commandDb"
+                         [apptype]="apptype"
+                         [allModelProperties]="allModelProperties"
+                         [nodeDefinition]="nodeDefinitionValue">
+    </tb-event-store-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiQueryStoreNode'">
+    <tb-query-store-node-config #queryStoreNodeConfigComponent
+                         formControlName="configuration"
+                         [ruleNodeId]="ruleNodeId"
+                         [allConstants]=" allConstants"
+                         [inputEntities]=" inputEntities"
+                         [inputCustomobjects]="inputCustomobjects"
+                         [allVariables]="allVariables"
+                         [inputProperties]="inputProperties"
+                         [queryDb]="queryDb"
+                         [commandDb]="commandDb"
+                         [apptype]="apptype"
+                         [allModelProperties]="allModelProperties"
+                         [nodeDefinition]="nodeDefinitionValue">
+    </tb-query-store-node-config>
   </ng-container>
 </div>

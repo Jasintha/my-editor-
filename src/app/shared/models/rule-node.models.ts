@@ -188,7 +188,9 @@ export enum RuleNodeType {
   DATABASE_OPERATIONS = 'DATABASE_OPERATIONS',
   CONNECTOR = 'CONNECTOR',
   ROOTING = 'ROOTING',
-  CORE = 'CORE'
+  CORE = 'CORE',
+  CQRS = 'CQRS',
+  MESSAGING = 'MESSAGING'
 }
 
 export const ruleNodeTypesLibrary = [
@@ -198,7 +200,9 @@ export const ruleNodeTypesLibrary = [
   RuleNodeType.FILTER,
   RuleNodeType.DATABASE_OPERATIONS,
   RuleNodeType.CONNECTOR,
-  RuleNodeType.RULE_CHAIN
+  RuleNodeType.RULE_CHAIN,
+  RuleNodeType.CQRS,
+  RuleNodeType.MESSAGING
 ];
 
 export interface RuleNodeTypeDescriptor {
@@ -259,6 +263,26 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         name: 'rulenode.type-database_operations',
         details: 'rulenode.type-database_operations-details',
         nodeClass: 'tb-database_operations-type',
+        icon: 'cloud_upload'
+      }
+    ],
+    [
+      RuleNodeType.MESSAGING,
+      {
+        value: RuleNodeType.MESSAGING,
+        name: 'rulenode.type-messaging',
+        details: 'rulenode.type-messaging-details',
+        nodeClass: 'tb-messaging-type',
+        icon: 'comment'
+      }
+    ],
+    [
+      RuleNodeType.CQRS,
+      {
+        value: RuleNodeType.CQRS,
+        name: 'rulenode.type-cqrs',
+        details: 'rulenode.type-cqrs-details',
+        nodeClass: 'tb-cqrs-type',
         icon: 'cloud_upload'
       }
     ],

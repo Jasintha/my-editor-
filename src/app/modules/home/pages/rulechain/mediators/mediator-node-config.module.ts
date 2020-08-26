@@ -25,6 +25,10 @@ import { FilterNodeConfigComponent } from './filter/filter-node-config.component
 //database operations
 import { CrudNodeConfigComponent } from './database-operations/crud-node-config.component';
 
+//cqrs
+import { EventStoreNodeConfigComponent } from './cqrs/event-store-node-config.component';
+import { QueryStoreNodeConfigComponent } from './cqrs/query-store-node-config.component';
+
 import {MatTableModule} from '@angular/material/table';
 @NgModule({
   declarations: [

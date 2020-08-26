@@ -84,6 +84,9 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   commandDb: string;
 
   @Input()
+  apptype: string;
+
+  @Input()
   isReadOnly: boolean;
 
   @Input() connectorfields: QuestionBase[];
