@@ -43,7 +43,9 @@ import {MatTableModule} from '@angular/material/table';
     EmailSendNodeConfigComponent,
     FilterNodeConfigComponent,
     CrudNodeConfigComponent,
-    ConnectorNodeConfigComponent
+    ConnectorNodeConfigComponent,
+    EventStoreNodeConfigComponent,
+    QueryStoreNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +65,9 @@ import {MatTableModule} from '@angular/material/table';
     EmailInitNodeConfigComponent,
     FilterNodeConfigComponent,
     CrudNodeConfigComponent,
-    ConnectorNodeConfigComponent
+    ConnectorNodeConfigComponent,
+    EventStoreNodeConfigComponent,
+    QueryStoreNodeConfigComponent
   ],
   providers: []
 })

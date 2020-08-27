@@ -186,8 +186,8 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       customObject = this.inputCustomobjects.find(x => x.name === this.configuration.customObject.name );
 
       let dbType = '';
-      if(this.commandDb && this.commandDb !== ''){
-        dbType = this.commandDb;
+      if(this.queryDb && this.queryDb !== ''){
+        dbType = this.queryDb;
         this.readOnlyDbType = true;
       } else {
         dbType = this.configuration.dbType;
