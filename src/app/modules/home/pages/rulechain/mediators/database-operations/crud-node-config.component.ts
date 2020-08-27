@@ -299,7 +299,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
           if(this.apptype === 'microservice' ){
             if(this.domainModelProperties){
                 this.selectedEntityProperties = this.domainModelProperties.filter(p => p.modelName == crudentity.name);
-                crudentityProperty = this.selectedEntityProperties.find(x => x.propertyName === this.configuration.crudentityProperty.propertyName );
+                crudentityProperty = this.selectedEntityProperties.find(x => x.name === this.configuration.crudentityProperty.name );
             } else {
                 this.selectedEntityProperties = [];
             }
@@ -317,8 +317,8 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
         if(crudcustomObject){
           if(this.apptype === 'microservice' ){
             if(this.viewModelProperties){
-                this.selectedCustomObjectProperties = this.viewModelProperties.filter(p => p.modelName == crudentity.name);
-                crudcustomObjectProperty = this.selectedCustomObjectProperties.find(x => x.propertyName === this.configuration.crudcustomObjectProperty.propertyName );
+                this.selectedCustomObjectProperties = this.viewModelProperties.filter(p => p.modelName == crudcustomObject.name);
+                crudcustomObjectProperty = this.selectedCustomObjectProperties.find(x => x.name === this.configuration.crudcustomObjectProperty.name );
             } else {
                 this.selectedEntityProperties = [];
             }
@@ -341,7 +341,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
               if(this.apptype === 'microservice' ){
                 if(this.domainModelProperties){
                   this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == crudvariable.type);
-                  crudvariableProperty = this.selectedVariableProperties.find(x => x.propertyName === this.configuration.crudvariableProperty.propertyName );
+                  crudvariableProperty = this.selectedVariableProperties.find(x => x.name === this.configuration.crudvariableProperty.name );
                 } else {
                   this.selectedVariableProperties = [];
                 }
@@ -357,7 +357,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
               if(this.apptype === 'microservice' ){
                 if(this.viewModelProperties){
                   this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == crudvariable.type);
-                  crudvariableProperty = this.selectedVariableProperties.find(x => x.propertyName === this.configuration.crudvariableProperty.propertyName );
+                  crudvariableProperty = this.selectedVariableProperties.find(x => x.name === this.configuration.crudvariableProperty.name );
                 } else {
                   this.selectedVariableProperties = [];
                 }

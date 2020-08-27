@@ -27,7 +27,7 @@
       <mat-form-field *ngIf="configuration.firstinputType === 'DTO'" fxFlex class="mat-block">
         <mat-label>DTO</mat-label>
         <mat-select formControlName="customObject">
-          <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+          <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
             {{nodeEntity.name}}
           </mat-option>
         </mat-select>
@@ -159,7 +159,7 @@
       <mat-form-field *ngIf="configuration.secondinputType === 'DTO'" fxFlex class="mat-block">
         <mat-label>DTO</mat-label>
         <mat-select formControlName="secondcustomObject">
-          <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+          <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
             {{nodeEntity.name}}
           </mat-option>
         </mat-select>

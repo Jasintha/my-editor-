@@ -55,6 +55,7 @@ export interface RuleChainMetaData {
   queryDb?: string;
   commandDb?: string;
   apptype?: string;
+  allViewModels?: any[];
 }
 
 export interface ResolvedRuleChainMetaData extends RuleChainMetaData {
