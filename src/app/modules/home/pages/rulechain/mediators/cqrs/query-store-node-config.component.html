@@ -35,10 +35,10 @@
     </mat-form-field>
   </section>
 
-  <section *ngIf="configuration.queryAction === 'QUERY'"  fxLayout="column" fxLayout.gt-sm="row">
-    <mat-form-field class="mat-block">
+  <section *ngIf="configuration.queryAction === 'QUERY'"  class="mat-block" fxFlex>
+    <mat-form-field fxFlex class="mat-block">
       <mat-label>Advanced Query</mat-label>
-      <textarea matInput formControlName="query" required rows="20"></textarea>
+      <textarea matInput formControlName="query" required rows="10"></textarea>
     </mat-form-field>
   </section>
 
