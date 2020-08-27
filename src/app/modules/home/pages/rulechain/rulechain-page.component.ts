@@ -162,6 +162,7 @@ export class RuleChainPageComponent extends PageComponent
   allDomainModels: any[];
   allModelProperties: any[];
   allEvents: any[];
+  allViewModels: any[];
   queryDb: string;
   commandDb: string;
   connectorData: any[];
@@ -321,6 +322,7 @@ export class RuleChainPageComponent extends PageComponent
     this.dataModels = this.ruleChainMetaData.dataModels;
     this.inputDataModels = this.ruleChainMetaData.inputDataModels;
     this.allDomainModels = this.ruleChainMetaData.allDomainModels;
+    this.allViewModels = this.ruleChainMetaData.allViewModels;
     this.allEvents = this.ruleChainMetaData.allEvents;
     this.queryDb = this.ruleChainMetaData.queryDb;
     this.commandDb = this.ruleChainMetaData.commandDb;
@@ -1334,6 +1336,7 @@ export class RuleChainPageComponent extends PageComponent
     const dataModels = this.ruleChainMetaData.dataModels;
     const inputDataModels = this.ruleChainMetaData.inputDataModels;
     const allDomainModels = this.ruleChainMetaData.allDomainModels;
+    const allViewModels = this.ruleChainMetaData.allViewModels;
     const allEvents = this.ruleChainMetaData.allEvents;
     const queryDb = this.ruleChainMetaData.queryDb;
     const commandDb = this.ruleChainMetaData.commandDb;
@@ -1371,6 +1374,7 @@ export class RuleChainPageComponent extends PageComponent
         allSavedObjects,
         connectorfields,
         allDomainModels,
+        allViewModels,
         allModelProperties,
         allEvents,
         queryDb,
@@ -1583,6 +1587,7 @@ export interface AddRuleNodeDialogData {
   allSavedObjects: any[];
   connectorfields: QuestionBase[];
   allDomainModels: any[];
+  allViewModels: any[];
   allModelProperties: any[];
   allEvents: any[];
   queryDb: string;
@@ -1613,6 +1618,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allVariables: any[];
   connectorfields: QuestionBase[];
   allDomainModels: any[];
+  allViewModels: any[];
   allModelProperties: any[];
   allEvents: any[];
   queryDb: string;
@@ -1640,6 +1646,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allSavedObjects = this.data.allSavedObjects;
     this.connectorfields = this.data.connectorfields;
     this.allDomainModels = this.data.allDomainModels;
+    this.allViewModels = this.data.allViewModels;
     this.allModelProperties = this.data.allModelProperties;
     this.allEvents = this.data.allEvents;
     this.queryDb = this.data.queryDb;

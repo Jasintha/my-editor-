@@ -77,7 +77,7 @@
       <mat-form-field *ngIf="configuration.crudinputType === 'PARAM'" fxFlex class="mat-block">
         <mat-label>Param</mat-label>
         <mat-select formControlName="crudparam">
-          <mat-option *ngFor="let property of inputProperties" [value]="property">
+          <mat-option *ngFor="let property of inputCustomobjects" [value]="property">
             {{property.inputName}}
           </mat-option>
         </mat-select>

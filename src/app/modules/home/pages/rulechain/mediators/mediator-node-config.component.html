@@ -64,6 +64,8 @@
                              [inputCustomobjects]="inputCustomobjects"
                              [allVariables]="allVariables"
                              [inputProperties]="inputProperties"
+                             [apptype]="apptype"
+                             [allModelProperties]="allModelProperties"
                              [nodeDefinition]="nodeDefinitionValue">
       </tb-filter-node-config>
     </ng-container>
@@ -88,6 +90,7 @@
                            formControlName="configuration"
                            [ruleNodeId]="ruleNodeId"
                            [allDomainModels]=" allDomainModels"
+                                            [allViewModels]="allViewModels"
                            [nodeDefinition]="nodeDefinitionValue">
       </tb-domain-model-variable-node-config>
     </ng-container>

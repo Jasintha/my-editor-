@@ -3,13 +3,21 @@
         <mat-label>Model Type</mat-label>
         <mat-select formControlName="modelpropertyinputType" (selectionChange)="refreshInputTypes()">
             <mat-option *ngIf="allDomainModels?.length" value="DOMAIN_MODEL">Domain Model</mat-option>
-            <!--<mat-option *ngIf="allDomainModels?.length" value="VIEW_MODEL">View Model</mat-option>-->
+            <mat-option *ngIf="allViewModels?.length" value="VIEW_MODEL">View Model</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field *ngIf="configuration.modelpropertyinputType === 'DOMAIN_MODEL'" fxFlex class="mat-block">
         <mat-label>Domain Model</mat-label>
         <mat-select formControlName="modelpropertydomainModel">
             <mat-option *ngFor="let domainModel of allDomainModels" [value]="domainModel">
+                {{domainModel.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="configuration.modelpropertyinputType === 'VIEW_MODEL'" fxFlex class="mat-block">
+        <mat-label>View Model</mat-label>
+        <mat-select formControlName="modelpropertyviewModel">
+            <mat-option *ngFor="let domainModel of allViewModels" [value]="domainModel">
                 {{domainModel.name}}
             </mat-option>
         </mat-select>
@@ -36,7 +44,7 @@
         <mat-label>Property Name</mat-label>
         <input matInput formControlName="propertyName"/>
     </mat-form-field>
-    <div fxFlex>
+    <div fxFlex fxLayout="row" fxLayoutAlign="end center">
     <button mat-icon-button class="tb-fullscreen-button-style"
             (click)="addProperty()"
             matTooltip="Add Property"
@@ -63,9 +71,9 @@
             <td mat-cell *matCellDef="let element"> {{element.property?.name}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="propertyName">
+        <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Assigned Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.propertyName}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">

@@ -36,7 +36,6 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 
 interface DomainModelNode {
   label: string;
-  key: string;
   data: any;
   children?: DomainModelNode[];
 }
@@ -46,7 +45,6 @@ interface ExampleFlatNode {
   name: string;
   level: number;
   data: any;
-  key: string;
 }
 
 
@@ -81,11 +79,14 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
   @Input()
   allDomainModels: any[];
 
+  @Input()
+  allViewModels: any[];
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   propertydatasource: MatTableDataSource<Property>;
 
-  displayedColumns: string[] = ['modelType', 'modelUIName', 'property', 'propertyName', 'actions'];
+  displayedColumns: string[] = ['modelType', 'modelUIName', 'property', 'name', 'actions'];
 
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
@@ -119,8 +120,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       expandable: !!node.children && node.children.length > 0,
       name: node.label,
       level: level,
-      data: node.data,
-      key: node.key,
+      data: node.data
     };
   }
 
@@ -151,6 +151,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     this.domainModelVariableNodeConfigFormGroup = this.fb.group({
       modelpropertyinputType: [],
       modelpropertydomainModel: [],
+      modelpropertyviewModel: [],
       propertyName: []
     });
   }
@@ -179,13 +180,13 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     this.configuration.modelpropertyinputType = modelpropertyinputType;
     if (modelpropertyinputType === 'DOMAIN_MODEL'){
       this.configuration.modelpropertyviewModel= {};
-      this.configuration.propertyName= "";
+      //this.configuration.name= "";
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-      this.domainModelVariableNodeConfigFormGroup.get('modelpropertydomainModel').patchValue([], {emitEvent: false});
+      this.domainModelVariableNodeConfigFormGroup.get('modelpropertyviewModel').patchValue([], {emitEvent: false});
       this.domainModelVariableNodeConfigFormGroup.get('propertyName').patchValue([], {emitEvent: false});
     } else if (modelpropertyinputType === 'VIEW_MODEL'){
       this.configuration.modelpropertydomainModel= {};
-      this.configuration.propertyName= "";
+      //this.configuration.name= "";
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
       this.domainModelVariableNodeConfigFormGroup.get('modelpropertydomainModel').patchValue([], {emitEvent: false});
       this.domainModelVariableNodeConfigFormGroup.get('propertyName').patchValue([], {emitEvent: false});
@@ -202,20 +203,31 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
 
     let selectedNode : DomainModelProperty = {
       name: checklistSelection.name,
-      key:checklistSelection.key,
+      //key:checklistSelection.key,
       data: checklistSelection.data
     }
 
-    let modelName = this.domainModelVariableNodeConfigFormGroup.get('modelpropertydomainModel').value.name;
-    let modelNameTrimmed = modelName.replace(/\s/g, "");
-    let modelNameLowerCase = modelNameTrimmed.toLowerCase();
-    let modelTitleName = this.titleCaseWord(modelNameLowerCase);
+    const inputType : string = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyinputType').value;
+
+    let modelTitleName = '';
+    let modelName = '';
+    if(inputType === 'DOMAIN_MODEL'){
+        modelName = this.domainModelVariableNodeConfigFormGroup.get('modelpropertydomainModel').value.name;
+        let modelNameTrimmed = modelName.replace(/\s/g, "");
+        let modelNameLowerCase = modelNameTrimmed.toLowerCase();
+        modelTitleName = this.titleCaseWord(modelNameLowerCase);
+    } else {
+        modelName = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyviewModel').value.name;
+        let modelNameTrimmed = modelName.replace(/\s/g, "");
+        let modelNameLowerCase = modelNameTrimmed.toLowerCase();
+        modelTitleName = this.titleCaseWord(modelNameLowerCase);
+    }
 
     let property: Property = {
-      modelType: this.domainModelVariableNodeConfigFormGroup.get('modelpropertyinputType').value,
+      modelType: inputType,
       modelUIName: modelName,
       modelName : modelTitleName,
-      propertyName: this.domainModelVariableNodeConfigFormGroup.get('propertyName').value,
+      name: this.domainModelVariableNodeConfigFormGroup.get('propertyName').value,
       property: selectedNode
     };
     this.configuration.modelproperties.push(property);
@@ -224,6 +236,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     this.domainModelVariableNodeConfigFormGroup.patchValue({
       modelpropertyinputType: [],
       modelpropertydomainModel: [],
+      modelpropertyviewModel:[],
       propertyName: []
     });
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
@@ -259,18 +272,6 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
         this.updateModel(configuration);
       });
     } else {
-      //this.domainModelVariableNodeConfigFormGroup.get('payload').patchValue(this.configuration.payload, {emitEvent: false});
-      /*
-      this.changeSubscription = this.domainModelVariableNodeConfigFormGroup.get('payload').valueChanges.subscribe(
-        (configuration: RuleNodeConfiguration) => {
-
-          console.log("payload node value cahnge sub");
-          console.log(configuration);
-          this.configuration.payload = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-      */
 
       this.changeSubscription = this.domainModelVariableNodeConfigFormGroup.get('modelpropertydomainModel').valueChanges.subscribe(
         (configuration: any) => {
@@ -279,6 +280,20 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
           if(selectedmodelpropertydomainModel){
             let designtree : any[] = [];
             designtree.push(selectedmodelpropertydomainModel.design);
+            //this.dataSource.data = null;
+            this.dataSource.data = designtree;
+          }
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyviewModel').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.modelpropertyviewModel = configuration;
+          let selectedmodelpropertyviewModel = this.allViewModels.find(x => x.name === configuration.name );
+          if(selectedmodelpropertyviewModel){
+            let designtree : any[] = [];
+            designtree.push(selectedmodelpropertyviewModel.design);
             //this.dataSource.data = null;
             this.dataSource.data = designtree;
           }
@@ -310,11 +325,11 @@ export interface Property {
   modelName: string;
   modelUIName: string;
   property: DomainModelProperty;
-  propertyName: string;
+  name: string;
 }
 
 export interface DomainModelProperty {
   name: string;
-  key: string;
+ // key: string;
   data: any;
 }
