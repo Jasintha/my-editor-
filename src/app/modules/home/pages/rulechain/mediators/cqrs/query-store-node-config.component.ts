@@ -185,14 +185,16 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       });
     } else {
 
-
-    console.log('ssss');
-
       let customObject = this.configuration.customObject;
-      customObject = this.inputCustomobjects.find(x => x.name === this.configuration.customObject.name );
-console.log('fff');
+      if(customObject){
+        customObject = this.inputCustomobjects.find(x => x.name === this.configuration.customObject.name );
+      }
+
       let entity = this.configuration.entity;
-      entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
+      if(entity){
+        entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
+      }
+
       console.log(this.configuration.entity);
       console.log(this.inputEntities);
 
