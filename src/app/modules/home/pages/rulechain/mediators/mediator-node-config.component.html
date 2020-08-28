@@ -52,6 +52,8 @@
                                  [inputCustomobjects]="inputCustomobjects"
                                  [allVariables]="allVariables"
                                  [inputProperties]="inputProperties"
+                                 [apptype]="apptype"
+                                 [allModelProperties]="allModelProperties"
                                  [nodeDefinition]="nodeDefinitionValue">
       </tb-email-send-node-config>
     </ng-container>
@@ -103,12 +105,12 @@
     </tb-event-publisher-node-config>
   </ng-container>
   <ng-container *ngIf="nodeClazz === 'xiEventReceiverNode'">
-    <tb-event-publisher-node-config #eventReceiverNodeConfigComponent
+    <tb-event-receiver-node-config #eventReceiverNodeConfigComponent
                                     formControlName="configuration"
                                     [ruleNodeId]="ruleNodeId"
                                     [allEvents]="allEvents"
                                     [nodeDefinition]="nodeDefinitionValue">
-    </tb-event-publisher-node-config>
+    </tb-event-receiver-node-config>
   </ng-container>
   <ng-container *ngIf="nodeClazz === 'xiEventStoreNode'">
     <tb-event-store-node-config #eventStoreNodeConfigComponent
@@ -123,6 +125,7 @@
                          [commandDb]="commandDb"
                          [apptype]="apptype"
                          [allModelProperties]="allModelProperties"
+                                [allEvents]="allEvents"
                          [nodeDefinition]="nodeDefinitionValue">
     </tb-event-store-node-config>
   </ng-container>

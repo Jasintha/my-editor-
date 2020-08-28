@@ -79,6 +79,9 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
   commandDb: string;
 
   @Input()
+  allEvents: any[];
+
+  @Input()
   allModelProperties: any[];
 
   @Input()
@@ -128,7 +131,8 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
     this.eventStoreNodeConfigFormGroup = this.fb.group({
       dbType:[],
       dbAction: [],
-      entity: [],
+      event: [],
+      //entity: [],
       //crudinputType: [],
       //crudentity: [],
       //crudentityProperty: [],
@@ -293,8 +297,8 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       });
     } else {
 
-      let entity = this.configuration.entity;
-      entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
+      //let entity = this.configuration.entity;
+      //entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
 
       //crud input
       /*
@@ -397,7 +401,8 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       this.eventStoreNodeConfigFormGroup.patchValue({
         dbType: dbType,
         dbAction: this.configuration.dbAction,
-        entity: entity,
+        event: this.configuration.event
+        //entity: entity,
         //crudinputType: this.configuration.crudinputType,
         //crudentity: crudentity,
         //crudentityProperty: crudentityProperty,
@@ -424,6 +429,15 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         }
       );
 
+      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('event').valueChanges.subscribe(
+        (configuration: any) => {
+          console.log(configuration);
+          this.configuration.event = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+    /*
       this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('entity').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.entity = configuration;
@@ -436,6 +450,7 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
           this.updateModel(this.configuration);
         }
       );
+      */
 
       //crud input changes
 

@@ -707,9 +707,10 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
           if(selectedsecondentity){
             if(this.apptype === 'microservice' ){
               if(this.domainModelProperties){
-                this.selectedEntityProperties = this.domainModelProperties.filter(p => p.modelName == selectedsecondentity.name);
+                this.selectedSecondEntityProperties = this.domainModelProperties.filter(p => p.modelName == selectedsecondentity.name);
+                console.log(this.selectedSecondEntityProperties);
               } else {
-                this.selectedEntityProperties = [];
+                this.selectedSecondEntityProperties = [];
               }
             }else{
             this.selectedSecondEntityProperties = selectedsecondentity.properties;
@@ -734,9 +735,9 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
           if(selectedsecondcustomObject){
             if(this.apptype === 'microservice' ){
               if(this.viewModelProperties){
-                this.selectedCustomObjectProperties = this.viewModelProperties.filter(p => p.modelName == selectedsecondcustomObject.name);
+                this.selectedSecondCustomObjectProperties = this.viewModelProperties.filter(p => p.modelName == selectedsecondcustomObject.name);
               } else {
-                this.selectedCustomObjectProperties = [];
+                this.selectedSecondCustomObjectProperties = [];
               }
             } else {
             this.selectedSecondCustomObjectProperties = selectedsecondcustomObject.properties;
@@ -786,9 +787,9 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
                         if(modelVariable){
                           if(this.apptype === 'microservice' ){
                             if(this.domainModelProperties){
-                              this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == configuration.type);
+                              this.selectedSecondVariableProperties = this.domainModelProperties.filter(p => p.modelName == configuration.type);
                             } else {
-                              this.selectedVariableProperties = [];
+                              this.selectedSecondVariableProperties = [];
                             }
                           }else{
                           this.selectedSecondVariableProperties = modelVariable.properties;
@@ -798,9 +799,9 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
                         let dtoVariable = this.inputCustomobjects.find(x => x.name === configuration.type);
                         if(this.apptype === 'microservice' ){
                            if(this.viewModelProperties){
-                             this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == configuration.type);
+                             this.selectedSecondVariableProperties = this.viewModelProperties.filter(p => p.modelName == configuration.type);
                            } else {
-                             this.selectedVariableProperties = [];
+                             this.selectedSecondVariableProperties = [];
                            }
                         }else{
                         this.selectedSecondVariableProperties = dtoVariable.properties;

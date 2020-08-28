@@ -130,7 +130,8 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       dbAction: [],
       queryAction: [],
       customObject: [],
-      query: []
+      query: [],
+      entity:[]
     });
   }
 
@@ -144,8 +145,10 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
   ngOnInit(): void {
     this.readOnlyDbType = false;
     if(this.apptype === 'microservice'){
+        if(this.allModelProperties){
         this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
         this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
+        }
     }
   }
 
@@ -182,8 +185,16 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       });
     } else {
 
+
+    console.log('ssss');
+
       let customObject = this.configuration.customObject;
       customObject = this.inputCustomobjects.find(x => x.name === this.configuration.customObject.name );
+console.log('fff');
+      let entity = this.configuration.entity;
+      entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
+      console.log(this.configuration.entity);
+      console.log(this.inputEntities);
 
       let dbType = '';
       if(this.queryDb && this.queryDb !== ''){
@@ -198,7 +209,8 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         dbType: dbType,
         queryAction: this.configuration.queryAction,
         customObject: customObject,
-        query: this.configuration.query
+        query: this.configuration.query,
+        entity: entity
       });
 
 
@@ -226,6 +238,15 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('customObject').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.customObject = configuration;
+          this.configuration.entity = {};
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('entity').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.entity = configuration;
+          this.configuration.customObject = {};
           this.updateModel(this.configuration);
         }
       );

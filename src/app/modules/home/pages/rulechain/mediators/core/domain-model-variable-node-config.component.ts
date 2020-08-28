@@ -228,23 +228,27 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       modelUIName: modelName,
       modelName : modelTitleName,
       name: this.domainModelVariableNodeConfigFormGroup.get('propertyName').value,
+      type: selectedNode.data.propertytype,
       property: selectedNode
     };
     this.configuration.modelproperties.push(property);
     this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
     this.updateModel(this.configuration);
+    /*
     this.domainModelVariableNodeConfigFormGroup.patchValue({
       modelpropertyinputType: [],
       modelpropertydomainModel: [],
       modelpropertyviewModel:[],
       propertyName: []
     });
-    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    */
+    //this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   }
 
   deleteRow(index: number): void{
     this.configuration.modelproperties.splice(index, 1);
+    this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
     this.updateModel(this.configuration);
   }
 
@@ -326,6 +330,7 @@ export interface Property {
   modelUIName: string;
   property: DomainModelProperty;
   name: string;
+  type: string;
 }
 
 export interface DomainModelProperty {
