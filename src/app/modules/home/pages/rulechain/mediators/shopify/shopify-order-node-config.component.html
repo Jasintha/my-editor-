@@ -1,0 +1,58 @@
+<div [formGroup]="shopifyOrderNodeConfigFormGroup">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Resource</mat-label>
+      <mat-select formControlName="type">
+          <mat-option value="ADVANCEDCHECKOUTS">Abandoned checkouts</mat-option>
+        <mat-option value="DRAFTORDER">Draft Order</mat-option>
+        <mat-option value="ORDER">Order</mat-option>
+        <mat-option value="ORDERRISK">Order Risk</mat-option>
+        <mat-option value="REFUND">Refund</mat-option>
+        <mat-option value="TRANSACTION">Transaction</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Action</mat-label>
+    <mat-select formControlName="action">
+      <mat-option *ngIf="configuration.connector.type === 'ADVANCEDCHECKOUTS'" value="Retrieves_a_count_of_checkouts">Retrieves a count of checkouts</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ADVANCEDCHECKOUTS'" value="Retrieves_a_list_of_abandoned_checkouts">Retrieves a list of abandoned checkouts</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'DRAFTORDER'" value="Create_a_new_DraftOrder">Create a new DraftOrder</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'DRAFTORDER'" value="Modify_an_existing_DraftOrder">Modify an existing DraftOrder</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'DRAFTORDER'" value="Retrieves_a_list_of_draft_orders">Retrieves a list of draft orders</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'DRAFTORDER'" value="Receive_a_single_DraftOrder">Receive a single DraftOrder</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'DRAFTORDER'" value="Receive_a_count_of_all_DraftOrders">Receive a count of all DraftOrders</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'DRAFTORDER'" value="Send_an_invoice">Send an invoice</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'DRAFTORDER'" value="Remove_an_existing_DraftOrder">Remove an existing DraftOrder</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'DRAFTORDER'" value="Complete_a_draft_order">Complete a draft order</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="Retrieves_a_list_of_orders">Retrieves a list of orders</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="Retrieves_a_specific_order">Retrieves a specific order</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="Retrieves_an_order_count">Retrieves an order count</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="Closes_an_order">Closes an order</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="Re_opens_a_closed_order">Re-opens a closed order</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="Cancels_an_order">Cancels an order</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="Creates_an_order">Creates an order</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="Updates_an_order">Updates an order</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="Deletes_an_order">Deletes an order</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'ORDERRISK'" value="Creates_an_order_risk_for_an_order">Creates an order risk for an order</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDERRISK'" value="Retrieves_a_list_of_all_order_risks_for_an_order">Retrieves a list of all order risks for an order</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDERRISK'" value="Retrieves_a_single_order_risk_by_its_ID">Retrieves a single order risk by its ID</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDERRISK'" value="Updates_an_order_risk">Updates an order risk</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDERRISK'" value="Deletes_an_order_risk_for_an_order">Deletes an order risk for an order</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'REFUND'" value="Retrieves_a_list_of_refunds_for_an_order">Retrieves a list of refunds for an order</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'REFUND'" value="Retrieves_a_specific_refund">Retrieves a specific refund</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'REFUND'" value="Calculates_a_refund">Calculates a refund</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'REFUND'" value="Creates_a_refund">Creates a refund</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'TRANSACTION'" value="Retrieves_a_list_of_transactions">Retrieves a list of transactions</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'TRANSACTION'" value="Retrieves_a_count_of_an_order's_transactions">Retrieves a count of an order's transactions</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'TRANSACTION'" value="Retrieves_a_specific_transaction">Retrieves a specific transaction</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'TRANSACTION'" value="Creates_a_transaction_for_an_order">Creates a transaction for an order</mat-option>
+
+    </mat-select>
+  </mat-form-field>
+  
+</div>
