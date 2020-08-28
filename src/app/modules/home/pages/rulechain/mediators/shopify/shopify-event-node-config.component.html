@@ -1,0 +1,87 @@
+<div [formGroup]="shopifyEventNodeConfigFormGroup">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="ARTICLE">Article</mat-option>
+        <mat-option value="BLOG">Blog</mat-option>
+        <mat-option value="COLLECTION">Collection</mat-option>
+        <mat-option value="COMMENT">Comment</mat-option>
+        <mat-option value="ORDER">Order</mat-option>
+        <mat-option value="PAGE">Page</mat-option>
+        <mat-option value="PRICERULE">Price rule</mat-option>
+        <mat-option value="PRODUCT">Product</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Verb</mat-label>
+    <mat-select formControlName="verb">
+      <mat-option *ngIf="configuration.connector.type === 'ARTICLE' || configuration.connector.type === 'BLOG' || configuration.connector.type === 'COLLECTION' ||
+                          configuration.connector.type === 'COMMENT' || configuration.connector.type === 'PAGE' || configuration.connector.type === 'PRICERULE' || configuration.connector.type === 'PRODUCT'" value="create">Create</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ARTICLE' || configuration.connector.type === 'BLOG' || configuration.connector.type === 'COLLECTION' ||
+                          configuration.connector.type === 'PAGE' || configuration.connector.type === 'PRICERULE' || configuration.connector.type === 'PRODUCT'" value="destroy">Destroy</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ARTICLE' || configuration.connector.type === 'COLLECTION' || configuration.connector.type === 'PAGE' || configuration.connector.type === 'PRODUCT'" value="published">Published</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ARTICLE' || configuration.connector.type === 'COLLECTION' || configuration.connector.type === 'PAGE' || configuration.connector.type === 'PRODUCT'" value="unpublished">Unpublished</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ARTICLE' || configuration.connector.type === 'BLOG' || configuration.connector.type === 'COLLECTION' ||
+                    configuration.connector.type === 'ORDER' || configuration.connector.type === 'PAGE' || configuration.connector.type === 'PRICERULE'" value="update">Update</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="authorization_failure">Authorization failure</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="authorization_pending">Authorization pending</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="authorization_success">Authorization success</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="cancelled">Cancelled</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="capture_failure">Capture failure</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="capture_pending">Capture pending</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="capture_success">Capture success</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="closed">Closed</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="confirmed">Confirmed</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="fulfillment_cancelled">Fulfillment cancelled</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="fulfillment_pending">Fulfillment pending</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="fulfillment_success">Fulfillment success</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="mail_sent">Mail sent</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="placed">Placed</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="re_opened">Re opened</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="refund_failure">Refund failure</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="refund_pending">Refund pending</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="refund_success">Refund success</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="restock_line_items">Restock line items</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="sale_failure">Sale failure</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="sale_pending">Sale pending</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="sale_success">Sale success</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="void_failure">Void failure</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="void_pending">Void pending</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'ORDER'" value="void_success">Void success</mat-option>
+
+    </mat-select>
+  </mat-form-field>
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>Model Input Type</mat-label>
+        <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
+          <mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
+          <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.inputType === 'MODEL'" fxFlex class="mat-block">
+        <mat-label>Model</mat-label>
+        <mat-select formControlName="entity">
+          <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+            {{nodeEntity.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.inputType === 'DTO'" fxFlex class="mat-block">
+        <mat-label>DTO</mat-label>
+        <mat-select formControlName="customObject">
+          <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
+            {{nodeEntity.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </section>
+  </section>
+  
+</div>

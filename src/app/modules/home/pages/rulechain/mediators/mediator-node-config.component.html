@@ -1,5 +1,5 @@
 <div [formGroup]="mediatorNodeConfigFormGroup" style="margin-top: 10px;margin-bottom: 10px;">
-  <ng-container *ngIf="ruleType === 'CONNECTOR'">
+  <!--<ng-container *ngIf="ruleType === 'CONNECTOR'">
     <tb-connector-node-config #connectorNodeConfigComponent
                               formControlName="configuration"
                               [ruleNodeId]="ruleNodeId"
@@ -14,7 +14,7 @@
                               [nodeDefinition]="nodeDefinitionValue"
                               [fields]="connectorfields">
     </tb-connector-node-config>
-  </ng-container>
+  </ng-container> -->
     <ng-container *ngIf="nodeClazz === 'xiRootNode'">
       <tb-root-node-config #rootNodeConfigComponent
                            formControlName="configuration"
@@ -144,5 +144,35 @@
                          [allModelProperties]="allModelProperties"
                          [nodeDefinition]="nodeDefinitionValue">
     </tb-query-store-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiShopifyInitNode'">
+    <tb-shopify-init-node-config #shopifyInitNodeConfigComponent
+                                formControlName="configuration"
+                                [ruleNodeId]="ruleNodeId"
+                                [nodeDefinition]="nodeDefinitionValue">
+    </tb-shopify-init-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiShopifyEventNode'">
+    <tb-shopify-event-node-config #shopifyEventNodeConfigComponent
+                                formControlName="configuration"
+                                [ruleNodeId]="ruleNodeId"
+                                [inputEntities]=" inputEntities"
+                                [inputCustomobjects]="inputCustomobjects"
+                                [nodeDefinition]="nodeDefinitionValue">
+    </tb-shopify-event-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiShopifyProductNode'">
+    <tb-shopify-product-node-config #shopifyProductNodeConfigComponent
+                                formControlName="configuration"
+                                [ruleNodeId]="ruleNodeId"
+                                [nodeDefinition]="nodeDefinitionValue">
+    </tb-shopify-product-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiShopifyOrderNode'">
+    <tb-shopify-order-node-config #shopifyOrderNodeConfigComponent
+                                formControlName="configuration"
+                                [ruleNodeId]="ruleNodeId"
+                                [nodeDefinition]="nodeDefinitionValue">
+    </tb-shopify-order-node-config>
   </ng-container>
 </div>

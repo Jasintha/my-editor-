@@ -925,10 +925,12 @@ export class RuleChainPageComponent extends PageComponent
       this.editingRuleNodeIndex = this.ruleChainModel.nodes.indexOf(node);
       this.editingRuleNode = deepClone(node, ['component']);
 
+      /*
       if(node.component.type === 'CONNECTOR'){
           let ruleNodeClass = node.component.clazz;
           this.connectorfields = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).fields;
       }
+      */
 
       setTimeout(() => {
         this.ruleNodeComponent.ruleNodeFormGroup.markAsPristine();
@@ -1350,11 +1352,13 @@ export class RuleChainPageComponent extends PageComponent
     const allSavedObjects = this.ruleChainMetaData.allSavedObjects;
 
     let connectorfields : QuestionBase[]= [];
+    /*
     if(ruleNode.component.type === 'CONNECTOR'){
         let ruleNodeClass = ruleNode.component.clazz;
         connectorfields = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).fields;
 
     }
+    */
 
     this.enableHotKeys = false;
     this.dialog.open<AddRuleNodeDialogComponent, AddRuleNodeDialogData,

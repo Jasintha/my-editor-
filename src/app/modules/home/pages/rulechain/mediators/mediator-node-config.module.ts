@@ -22,6 +22,12 @@ import { ConnectorNodeConfigComponent } from './connector/connector-node-config.
 //filter
 import { FilterNodeConfigComponent } from './filter/filter-node-config.component';
 
+//shopify
+import { ShopifyInitNodeConfigComponent } from './shopify/shopify-init-node-config.component';
+import { ShopifyEventNodeConfigComponent } from './shopify/shopify-event-node-config.component';
+import { ShopifyProductNodeConfigComponent } from './shopify/shopify-product-node-config.component';
+import { ShopifyOrderNodeConfigComponent } from './shopify/shopify-order-node-config.component';
+
 //database operations
 import { CrudNodeConfigComponent } from './database-operations/crud-node-config.component';
 
@@ -45,7 +51,11 @@ import {MatTableModule} from '@angular/material/table';
     CrudNodeConfigComponent,
     ConnectorNodeConfigComponent,
     EventStoreNodeConfigComponent,
-    QueryStoreNodeConfigComponent
+    QueryStoreNodeConfigComponent,
+    ShopifyInitNodeConfigComponent,
+    ShopifyEventNodeConfigComponent,
+    ShopifyProductNodeConfigComponent,
+    ShopifyOrderNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +77,11 @@ import {MatTableModule} from '@angular/material/table';
     CrudNodeConfigComponent,
     ConnectorNodeConfigComponent,
     EventStoreNodeConfigComponent,
-    QueryStoreNodeConfigComponent
+    QueryStoreNodeConfigComponent,
+    ShopifyInitNodeConfigComponent,
+    ShopifyEventNodeConfigComponent,
+    ShopifyProductNodeConfigComponent,
+    ShopifyOrderNodeConfigComponent
   ],
   providers: []
 })

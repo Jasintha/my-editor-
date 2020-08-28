@@ -1,0 +1,66 @@
+<div [formGroup]="shopifyProductNodeConfigFormGroup">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Resource</mat-label>
+      <mat-select formControlName="type">
+          <mat-option value="COLLECT">Collect</mat-option>
+        <mat-option value="COLLECTION">Collection</mat-option>
+        <mat-option value="CUSTOMCOLLECTION">Custom Collection</mat-option>
+        <mat-option value="PRODUCT">Product</mat-option>
+        <mat-option value="PRODUCTIMAGE">Product Image</mat-option>
+        <mat-option value="PRODUCTVARIANT">Product Variant</mat-option>
+        <mat-option value="SMARTCOLLECTION">Smart Collection</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Action</mat-label>
+    <mat-select formControlName="action">
+      <mat-option *ngIf="configuration.connector.type === 'COLLECT'" value="Add_a_product_to_a_custom_collection">Add a product to a custom collection</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'COLLECT'" value="Remove_a_product_from_a_collection">Remove a product from a collection</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'COLLECT'" value="Retrieve_a_list_of_collects">Retrieve a list of collects</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'COLLECT'" value="Retrieve_a_count_of_collects">Retrieve a count of collects</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'COLLECT'" value="Retrieve_a_specific_collect_by_its_ID">Retrieve a specific collect by its ID</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'COLLECTION'" value="Retrieves_a_single_collection">Retrieve a single collection</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'COLLECTION'" value="Retrieve_a_list_of_products_belonging_to_a_collection">Retrieve a list of products belonging to a collection</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'CUSTOMCOLLECTION'" value="Retrieve_a_list_of_custom_collections">Retrieve a list of custom collections</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'CUSTOMCOLLECTION'" value="Retrieve_a_count_of_custom_collections">Retrieve a count of custom collections</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'CUSTOMCOLLECTION'" value="Retrieve_a_single_custom_collection">Retrieve a single custom collection</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'CUSTOMCOLLECTION'" value="Create_a_custom_collection">Create a custom collection</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'CUSTOMCOLLECTION'" value="Update_an_existing_custom_collection">Update an existing custom collection</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'CUSTOMCOLLECTION'" value="Delete_a_custom_collection">Delete a custom collection</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCT'" value="Retrieve_a_list_of_products">Retrieve a list of products</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCT'" value="Retrieves_a_count_of_products">Retrieves a count of products</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCT'" value="Retrieves_a_single_product">Retrieves a single product</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCT'" value="Creates_a_new_product">Creates a new product</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCT'" value="Updates_a_product">Updates a product</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCT'" value="Deletes_a_product">Deletes a product</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTIMAGE'" value="Receive_a_list_of_all_Product_Images">Receive a list of all Product Images</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTIMAGE'" value="Receive_a_count_of_all_Product_Images">Receive a count of all Product Images</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTIMAGE'" value="Receive_a_single_Product_Image">Receive a single Product Image</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTIMAGE'" value="Create_a_new_Product_Image">Create a new Product Image</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTIMAGE'" value="Modify_an_existing_Product_Image">Modify an existing Product Image</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTIMAGE'" value="Remove_an_existing_Product_Image">Remove an existing Product Image</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTVARIANT'" value="Retrieves_a_list_of_product_variants">Retrieves a list of product variants</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTVARIANT'" value="Receive_a_count_of_all_Product_Variants">Receive a count of all Product Variants</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTVARIANT'" value="Receive_a_single_Product_Variant">Receive a single Product Variant</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTVARIANT'" value="Create_a_new_Product_Variant">Create a new Product Variant</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTVARIANT'" value="Modify_an_existing_Product_Variant">Modify an existing Product Variant</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'PRODUCTVARIANT'" value="Remove_an_existing_Product_Variant">Remove an existing Product Variant</mat-option>
+
+      <mat-option *ngIf="configuration.connector.type === 'SMARTCOLLECTION'" value="Retrieves_a_list_of_smart_collections">Retrieves a list of smart collections</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'SMARTCOLLECTION'" value="Retrieves_a_count_of_smart_collections">Retrieves a count of smart collections</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'SMARTCOLLECTION'" value="Retrieves_a_single_smart_collection">Retrieves a single smart collection</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'SMARTCOLLECTION'" value="Creates_a_smart_collection">Creates a smart collection</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'SMARTCOLLECTION'" value="Updates_an_existing_smart_collection">Updates an existing smart collection</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'SMARTCOLLECTION'" value="Updates_the_ordering_type_of_products_in_a_smart_collection">Updates the ordering type of products in a smart collection</mat-option>
+      <mat-option *ngIf="configuration.connector.type === 'SMARTCOLLECTION'" value="Removes_a_smart_collection">Removes a smart collection</mat-option>
+
+    </mat-select>
+  </mat-form-field>
+  
+</div>
