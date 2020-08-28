@@ -67,6 +67,15 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   inputCustomobjects: any[];
 
   @Input()
+  allModelProperties: any[];
+
+  @Input()
+  apptype: string;
+
+    domainModelProperties: any[];
+    viewModelProperties: any[];
+
+  @Input()
   disabled: boolean;
 
   @Input()
@@ -134,6 +143,10 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   ngOnInit(): void {
+    if(this.apptype === 'microservice'){
+        this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
+        this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
+    }
   }
 
   ngOnDestroy(): void {
@@ -293,14 +306,32 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
           if(v.pkg == 'model'){
             let modelVariable = this.inputEntities.find(x => x.name === v.type);
             if(modelVariable){
+              if(this.apptype === 'microservice' ){
+                if(this.domainModelProperties){
+                  this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == v.type);
+                  vp = this.selectedVariableProperties.find(x => x.name === this.configuration.toemailvariableProperty.name );
+                } else {
+                  this.selectedVariableProperties = [];
+                }
+              }else{
               this.selectedVariableProperties = modelVariable.properties;
               vp = modelVariable.properties.find(x => x.name === this.configuration.toemailvariableProperty.name );
+              }
             }
           } else {
             let dtoVariable = this.inputCustomobjects.find(x => x.name === v.type);
             if(dtoVariable){
+              if(this.apptype === 'microservice' ){
+                if(this.viewModelProperties){
+                  this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == v.type);
+                  vp = this.selectedVariableProperties.find(x => x.name === this.configuration.toemailvariableProperty.name );
+                } else {
+                  this.selectedVariableProperties = [];
+                }
+              }else{
               this.selectedVariableProperties = dtoVariable.properties;
               vp = dtoVariable.properties.find(x => x.name === this.configuration.toemailvariableProperty.name );
+              }
             }
 
           }
@@ -393,11 +424,27 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
                     if(configuration.pkg == 'model'){
                         let modelVariable = this.inputEntities.find(x => x.name === configuration.type);
                         if(modelVariable){
+                          if(this.apptype === 'microservice' ){
+                            if(this.domainModelProperties){
+                              this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == configuration.type);
+                            } else {
+                              this.selectedVariableProperties = [];
+                            }
+                          }else{
                           this.selectedVariableProperties = modelVariable.properties;
+                          }
                         }
                     }else{
                         let dtoVariable = this.inputCustomobjects.find(x => x.name === configuration.type);
+                        if(this.apptype === 'microservice' ){
+                           if(this.viewModelProperties){
+                             this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == configuration.type);
+                           } else {
+                             this.selectedVariableProperties = [];
+                           }
+                        }else{
                         this.selectedVariableProperties = dtoVariable.properties;
+                        }
                     }
                 }
             }
@@ -414,11 +461,27 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
                     if(configuration.pkg == 'model'){
                         let modelVariable = this.inputEntities.find(x => x.name === configuration.type);
                         if(modelVariable){
+                          if(this.apptype === 'microservice' ){
+                            if(this.domainModelProperties){
+                              this.selectedVariablePropertiesForParameter = this.domainModelProperties.filter(p => p.modelName == configuration.type);
+                            } else {
+                              this.selectedVariablePropertiesForParameter = [];
+                            }
+                          }else{
                           this.selectedVariablePropertiesForParameter = modelVariable.properties;
+                          }
                         }
                     }else{
                         let dtoVariable = this.inputCustomobjects.find(x => x.name === configuration.type);
+                        if(this.apptype === 'microservice' ){
+                           if(this.viewModelProperties){
+                             this.selectedVariablePropertiesForParameter = this.viewModelProperties.filter(p => p.modelName == configuration.type);
+                           } else {
+                             this.selectedVariablePropertiesForParameter = [];
+                           }
+                        }else{
                         this.selectedVariablePropertiesForParameter = dtoVariable.properties;
+                        }
                     }
                 }
             }

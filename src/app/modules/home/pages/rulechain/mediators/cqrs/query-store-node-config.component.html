@@ -16,6 +16,17 @@
 
   <section class="mat-block" fxFlex>
     <mat-form-field fxFlex class="mat-block">
+      <mat-label>Action</mat-label>
+      <mat-select formControlName="queryAction">
+        <mat-option value="UPDATE">UPDATE</mat-option>
+        <mat-option value="SELECTALL">SELECT ALL</mat-option>
+        <mat-option value="QUERY">ADVANCED QUERY</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+
+  <section *ngIf="configuration.queryAction !== 'UPDATE'" class="mat-block" fxFlex>
+    <mat-form-field fxFlex class="mat-block">
       <mat-label>View Model</mat-label>
       <mat-select formControlName="customObject">
         <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
@@ -25,13 +36,14 @@
     </mat-form-field>
   </section>
 
-  <section class="mat-block" fxFlex>
+  <section *ngIf="configuration.queryAction === 'UPDATE'" class="mat-block" fxFlex>
     <mat-form-field fxFlex class="mat-block">
-      <mat-label>Action</mat-label>
-      <mat-select formControlName="queryAction">
-        <mat-option value="SELECTALL">SELECT ALL</mat-option>
-        <mat-option value="QUERY">ADVANCED QUERY</mat-option>
-      </mat-select>      
+      <mat-label>Domain Model</mat-label>
+      <mat-select formControlName="entity">
+        <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+          {{nodeEntity.name}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </section>
 

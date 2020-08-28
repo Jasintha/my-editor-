@@ -108,6 +108,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
   }
 
   ngOnInit(): void {
+  console.log(this.allEvents);
   }
 
   ngOnDestroy(): void {
