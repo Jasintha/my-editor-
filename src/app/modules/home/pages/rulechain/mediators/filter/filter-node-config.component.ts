@@ -124,24 +124,26 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
               private fb: FormBuilder) {
     this.filterNodeConfigFormGroup = this.fb.group({
       firstinputType: [],
-      entity: [],
-      entityProperty: [],
-      customObject: [],
-      customObjectProperty: [],
+      //entity: [],
+      //entityProperty: [],
+      //customObject: [],
+      //customObjectProperty: [],
       constant: [],
       param: [],
-      variable: [],
-      variableProperty: [],
+      property: [],
+      //variable: [],
+      //variableProperty: [],
       condition: [],
       secondinputType: [],
-      secondentity: [],
-      secondentityProperty: [],
-      secondcustomObject: [],
-      secondcustomObjectProperty: [],
+      //secondentity: [],
+      //secondentityProperty: [],
+      //secondcustomObject: [],
+      //secondcustomObjectProperty: [],
       secondconstant: [],
       secondparam: [],
-      secondvariable: [],
-      secondvariableProperty: [],
+      secondproperty:[],
+      //secondvariable: [],
+      //secondvariableProperty: [],
     });
   }
 
@@ -153,10 +155,12 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
   }
 
   ngOnInit(): void {
+  /*
     if(this.apptype === 'microservice'){
         this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
         this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
     }
+    */
   
   }
 
@@ -169,7 +173,8 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
   refreshInputTypes(){
     let inputType: string = this.filterNodeConfigFormGroup.get('firstinputType').value;
     this.configuration.firstinputType = inputType;
-    
+
+    /*
     if(inputType === 'MODEL'){
       this.configuration.customObject= {};
       this.configuration.customObjectProperty = {};
@@ -200,39 +205,6 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.filterNodeConfigFormGroup.get('variable').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('variableProperty').patchValue([], {emitEvent: false});
 
-    } else if (inputType === 'CONSTANT'){
-      this.configuration.entity= {};
-      this.configuration.entityProperty = {};
-      this.configuration.customObject= {};
-      this.configuration.customObjectProperty = {};
-      this.configuration.param= {};
-      this.configuration.variable= {};
-      this.configuration.variableProperty= {};
-
-      this.filterNodeConfigFormGroup.get('entity').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('entityProperty').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('customObject').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('customObjectProperty').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('variable').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('variableProperty').patchValue([], {emitEvent: false});
-
-    } else if (inputType === 'PARAM'){
-      this.configuration.entity= {};
-      this.configuration.entityProperty = {};
-      this.configuration.customObject= {};
-      this.configuration.customObjectProperty = {};
-      this.configuration.constant= {};
-      this.configuration.variable= {};
-      this.configuration.variableProperty= {};
-
-      this.filterNodeConfigFormGroup.get('entity').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('entityProperty').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('customObject').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('customObjectProperty').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('variable').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('variableProperty').patchValue([], {emitEvent: false});
     } else if (inputType === 'VARIABLE'){
       this.configuration.entity= {};
       this.configuration.entityProperty = {};
@@ -245,6 +217,52 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.filterNodeConfigFormGroup.get('entityProperty').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('customObject').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('customObjectProperty').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+    }
+    */
+
+
+    if (inputType === 'CONSTANT'){
+      //this.configuration.entity= {};
+      //this.configuration.entityProperty = {};
+      //this.configuration.customObject= {};
+      //this.configuration.customObjectProperty = {};
+      this.configuration.param= {};
+      this.configuration.property= {};
+      //this.configuration.variable= {};
+      this.configuration.variableProperty= {};
+
+      //this.filterNodeConfigFormGroup.get('entity').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('entityProperty').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('customObject').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('customObjectProperty').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('variable').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('variableProperty').patchValue([], {emitEvent: false});
+
+    } else if (inputType === 'PARAM'){
+      //this.configuration.entity= {};
+      //this.configuration.entityProperty = {};
+      //this.configuration.customObject= {};
+      //this.configuration.customObjectProperty = {};
+      this.configuration.constant= {};
+      this.configuration.property= {};
+      //this.configuration.variable= {};
+      //this.configuration.variableProperty= {};
+
+      //this.filterNodeConfigFormGroup.get('entity').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('entityProperty').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('customObject').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('customObjectProperty').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('variable').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('variableProperty').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
       this.filterNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
     }
@@ -259,6 +277,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
     let inputType: string = this.filterNodeConfigFormGroup.get('secondinputType').value;
     this.configuration.secondinputType = inputType;
 
+    /*
     if(inputType === 'MODEL'){
       this.configuration.secondcustomObject= {};
       this.configuration.secondcustomObjectProperty = {};
@@ -289,39 +308,6 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.filterNodeConfigFormGroup.get('secondvariable').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('secondvariableProperty').patchValue([], {emitEvent: false});
 
-    } else if (inputType === 'CONSTANT'){
-      this.configuration.secondentity= {};
-      this.configuration.secondentityProperty = {};
-      this.configuration.secondcustomObject= {};
-      this.configuration.secondcustomObjectProperty = {};
-      this.configuration.secondparam= {};
-      this.configuration.secondvariable= {};
-      this.configuration.secondvariableProperty= {};
-
-      this.filterNodeConfigFormGroup.get('secondentity').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondentityProperty').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondcustomObject').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondcustomObjectProperty').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondvariable').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondvariableProperty').patchValue([], {emitEvent: false});
-
-    } else if (inputType === 'PARAM'){
-      this.configuration.secondentity= {};
-      this.configuration.secondentityProperty = {};
-      this.configuration.secondcustomObject= {};
-      this.configuration.secondcustomObjectProperty = {};
-      this.configuration.secondconstant= {};
-      this.configuration.secondvariable= {};
-      this.configuration.secondvariableProperty= {};
-
-      this.filterNodeConfigFormGroup.get('secondentity').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondentityProperty').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondcustomObject').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondcustomObjectProperty').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondvariable').patchValue([], {emitEvent: false});
-      this.filterNodeConfigFormGroup.get('secondvariableProperty').patchValue([], {emitEvent: false});
     } else if (inputType === 'VARIABLE'){
       this.configuration.secondentity= {};
       this.configuration.secondentityProperty = {};
@@ -334,6 +320,52 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.filterNodeConfigFormGroup.get('secondentityProperty').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('secondcustomObject').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('secondcustomObjectProperty').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+    }
+    */
+
+    if (inputType === 'CONSTANT'){
+      //this.configuration.secondentity= {};
+      //this.configuration.secondentityProperty = {};
+      //this.configuration.secondcustomObject= {};
+      //this.configuration.secondcustomObjectProperty = {};
+      this.configuration.secondparam= {};
+      this.configuration.secondproperty= {};
+      //this.configuration.secondvariable= {};
+      //this.configuration.secondvariableProperty= {};
+
+      //this.filterNodeConfigFormGroup.get('secondentity').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('secondentityProperty').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('secondcustomObject').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('secondcustomObjectProperty').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('secondvariable').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('secondvariableProperty').patchValue([], {emitEvent: false});
+
+    } else if (inputType === 'PARAM'){
+      //this.configuration.secondentity= {};
+      //this.configuration.secondentityProperty = {};
+      //this.configuration.secondcustomObject= {};
+      //this.configuration.secondcustomObjectProperty = {};
+      this.configuration.secondconstant= {};
+      this.configuration.secondproperty= {};
+      //this.configuration.secondvariable= {};
+      //this.configuration.secondvariableProperty= {};
+
+      //this.filterNodeConfigFormGroup.get('secondentity').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('secondentityProperty').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('secondcustomObject').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('secondcustomObjectProperty').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('secondvariable').patchValue([], {emitEvent: false});
+      //this.filterNodeConfigFormGroup.get('secondvariableProperty').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
+      this.configuration.secondconstant= {};
+      this.configuration.secondparam= {};
+
       this.filterNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
     }
@@ -373,7 +405,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         this.updateModel(configuration);
       });
     } else {
-
+      /*
       let entity = this.configuration.entity;
       let entityProperty = this.configuration.entityProperty;
       if(this.configuration.firstinputType === 'MODEL'){
@@ -452,6 +484,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
           }
         }
       }
+      */
 
       let param = this.configuration.param;
       if(this.configuration.firstinputType === 'PARAM'){
@@ -463,8 +496,13 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         constant = this.allConstants.find(x => x.constantName === this.configuration.constant.constantName );
       }
 
-      //second input
+      let property = this.configuration.property;
+      if(this.configuration.firstinputType === 'PROPERTY'){
+        property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      }
 
+      //second input
+      /*
       let secondentity = this.configuration.secondentity;
       let secondentityProperty = this.configuration.secondentityProperty;
       if(this.configuration.secondinputType === 'MODEL'){
@@ -543,6 +581,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
           }
         }
       }
+      */
 
       let secondparam = this.configuration.secondparam;
       if(this.configuration.secondinputType === 'PARAM'){
@@ -554,26 +593,33 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         secondconstant = this.allConstants.find(x => x.secondconstantName === this.configuration.secondconstant.secondconstantName );
       }
 
+      let secondproperty = this.configuration.secondproperty;
+      if(this.configuration.firstinputType === 'PROPERTY'){
+        secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name );
+      }
+
       this.filterNodeConfigFormGroup.patchValue({
         firstinputType: this.configuration.firstinputType,
-        entity: entity,
-        entityProperty: entityProperty,
-        customObject: customObject,
-        customObjectProperty: customObjectProperty,
-        variable: variable,
-        variableProperty: variableProperty,
+        //entity: entity,
+        //entityProperty: entityProperty,
+        //customObject: customObject,
+        //customObjectProperty: customObjectProperty,
+        //variable: variable,
+        //variableProperty: variableProperty,
         param: param,
         constant: constant,
+        property: property,
         condition: this.configuration.condition,
         secondinputType: this.configuration.secondinputType,
-        secondentity: secondentity,
-        secondentityProperty: secondentityProperty,
-        secondcustomObject: secondcustomObject,
-        secondcustomObjectProperty: secondcustomObjectProperty,
-        secondvariable: secondvariable,
-        secondvariableProperty: secondvariableProperty,
+        //secondentity: secondentity,
+        //secondentityProperty: secondentityProperty,
+        //secondcustomObject: secondcustomObject,
+        //secondcustomObjectProperty: secondcustomObjectProperty,
+        //secondvariable: secondvariable,
+        //secondvariableProperty: secondvariableProperty,
         secondparam: secondparam,
-        secondconstant: secondconstant
+        secondconstant: secondconstant,
+        secondproperty: secondproperty
       });
 
       this.changeSubscription = this.filterNodeConfigFormGroup.get('condition').valueChanges.subscribe(
@@ -583,6 +629,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
+      /*
       this.changeSubscription = this.filterNodeConfigFormGroup.get('entity').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.entity = configuration;
@@ -639,6 +686,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.filterNodeConfigFormGroup.get('param').valueChanges.subscribe(
         (configuration: any) => {
@@ -654,6 +702,14 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
+      this.changeSubscription = this.filterNodeConfigFormGroup.get('property').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.property = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      /*
       this.changeSubscription = this.filterNodeConfigFormGroup.get('variableProperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.variableProperty = configuration;
@@ -697,9 +753,10 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
       );
+      */
 
       //second input changes
-
+      /*
       this.changeSubscription = this.filterNodeConfigFormGroup.get('secondentity').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.secondentity = configuration;
@@ -754,6 +811,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.filterNodeConfigFormGroup.get('secondparam').valueChanges.subscribe(
         (configuration: any) => {
@@ -769,6 +827,14 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
+      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondproperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondproperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      /*
       this.changeSubscription = this.filterNodeConfigFormGroup.get('secondvariableProperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.secondvariableProperty = configuration;
@@ -812,6 +878,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
       );
+      */
 
     }
   }

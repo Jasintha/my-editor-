@@ -51,6 +51,7 @@ export interface RuleChainMetaData {
   connectors?: any[];
   allDomainModels?: any[];
   allModelProperties?: any[];
+  allRuleInputs?: any[];
   allEvents?: any[];
   queryDb?: string;
   commandDb?: string;

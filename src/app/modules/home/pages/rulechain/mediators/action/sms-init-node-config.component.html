@@ -1,0 +1,25 @@
+<div [formGroup]="smsInitNodeConfigFormGroup">
+    <mat-form-field class="mat-block">
+      <mat-label>Twilio Account ID</mat-label>
+      <input matInput formControlName="twilioAccId" required>
+      <mat-error *ngIf="smsInitNodeConfigFormGroup.get('twilioAccId').hasError('required')">
+          Twilio Account ID is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="mat-block">
+        <mat-label>Auth Token</mat-label>
+        <input matInput formControlName="authToken" required>
+        <mat-error *ngIf="smsInitNodeConfigFormGroup.get('authToken').hasError('required')">
+            Auth Token is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="mat-block">
+      <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phoneNumber" required>
+      <mat-error *ngIf="smsInitNodeConfigFormGroup.get('phoneNumber').hasError('required')">
+        Phone Number is required
+      </mat-error>
+    </mat-form-field>
+</div>

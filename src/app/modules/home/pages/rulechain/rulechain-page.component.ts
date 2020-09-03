@@ -161,6 +161,7 @@ export class RuleChainPageComponent extends PageComponent
   allSavedObjects: any[];
   allDomainModels: any[];
   allModelProperties: any[];
+  allRuleInputs: any[];
   allEvents: any[];
   allViewModels: any[];
   queryDb: string;
@@ -322,6 +323,7 @@ export class RuleChainPageComponent extends PageComponent
     this.dataModels = this.ruleChainMetaData.dataModels;
     this.inputDataModels = this.ruleChainMetaData.inputDataModels;
     this.allDomainModels = this.ruleChainMetaData.allDomainModels;
+    this.allRuleInputs = this.ruleChainMetaData.allRuleInputs
     this.allViewModels = this.ruleChainMetaData.allViewModels;
     this.allEvents = this.ruleChainMetaData.allEvents;
     this.queryDb = this.ruleChainMetaData.queryDb;
@@ -1338,6 +1340,7 @@ export class RuleChainPageComponent extends PageComponent
     const dataModels = this.ruleChainMetaData.dataModels;
     const inputDataModels = this.ruleChainMetaData.inputDataModels;
     const allDomainModels = this.ruleChainMetaData.allDomainModels;
+    const allRuleInputs = this.ruleChainMetaData.allRuleInputs;
     const allViewModels = this.ruleChainMetaData.allViewModels;
     const allEvents = this.ruleChainMetaData.allEvents;
     const queryDb = this.ruleChainMetaData.queryDb;
@@ -1380,6 +1383,7 @@ export class RuleChainPageComponent extends PageComponent
         allDomainModels,
         allViewModels,
         allModelProperties,
+        allRuleInputs,
         allEvents,
         queryDb,
         commandDb,
@@ -1593,6 +1597,7 @@ export interface AddRuleNodeDialogData {
   allDomainModels: any[];
   allViewModels: any[];
   allModelProperties: any[];
+  allRuleInputs: any[];
   allEvents: any[];
   queryDb: string;
   commandDb: string;
@@ -1624,6 +1629,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allDomainModels: any[];
   allViewModels: any[];
   allModelProperties: any[];
+  allRuleInputs: any[];
   allEvents: any[];
   queryDb: string;
   commandDb: string;
@@ -1652,6 +1658,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allDomainModels = this.data.allDomainModels;
     this.allViewModels = this.data.allViewModels;
     this.allModelProperties = this.data.allModelProperties;
+    this.allRuleInputs = this.data.allRuleInputs;
     this.allEvents = this.data.allEvents;
     this.queryDb = this.data.queryDb;
     this.commandDb = this.data.commandDb;

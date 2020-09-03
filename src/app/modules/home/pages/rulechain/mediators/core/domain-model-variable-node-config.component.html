@@ -1,12 +1,43 @@
 <div [formGroup]="domainModelVariableNodeConfigFormGroup">
+
     <mat-form-field fxFlex class="mat-block">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="modelpropertyType" (selectionChange)="refreshTypes()">
+            <mat-option *ngIf="allRuleInputs?.length" value="API_INPUT">API Input</mat-option>
+            <mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field *ngIf="configuration.modelpropertyType === 'API_INPUT'" fxFlex class="mat-block">
+        <mat-label>API Input</mat-label>
+        <mat-select formControlName="modelpropertyruleInput">
+            <mat-option *ngFor="let domainModel of allRuleInputs" [value]="domainModel">
+                {{domainModel.inputName}} <span *ngIf="domainModel.inputType === 'model'"> - Domain Model</span>
+                <span *ngIf="domainModel.inputType === 'dto'"> - View Model</span>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="configuration.modelpropertyType === 'VARIABLE'" fxFlex class="mat-block">
+        <mat-label>Varible</mat-label>
+        <mat-select formControlName="modelpropertyvariable">
+            <ng-container *ngFor="let domainModel of allVariables">
+                <mat-option *ngIf="domainModel?.pkg === 'model' || domainModel?.pkg === 'dto'" [value]="domainModel">
+                    {{domainModel.name}} <span *ngIf="domainModel.pkg === 'model'"> - Domain Model</span>
+                    <span *ngIf="domainModel.pkg === 'dto'"> - View Model</span>
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+
+    <!--<mat-form-field fxFlex class="mat-block">
         <mat-label>Model Type</mat-label>
         <mat-select formControlName="modelpropertyinputType" (selectionChange)="refreshInputTypes()">
             <mat-option *ngIf="allDomainModels?.length" value="DOMAIN_MODEL">Domain Model</mat-option>
             <mat-option *ngIf="allViewModels?.length" value="VIEW_MODEL">View Model</mat-option>
         </mat-select>
-    </mat-form-field>
-    <mat-form-field *ngIf="configuration.modelpropertyinputType === 'DOMAIN_MODEL'" fxFlex class="mat-block">
+    </mat-form-field>-->
+    <!--<mat-form-field *ngIf="configuration.modelpropertyinputType === 'DOMAIN_MODEL'" fxFlex class="mat-block">
         <mat-label>Domain Model</mat-label>
         <mat-select formControlName="modelpropertydomainModel">
             <mat-option *ngFor="let domainModel of allDomainModels" [value]="domainModel">
@@ -21,7 +52,7 @@
                 {{domainModel.name}}
             </mat-option>
         </mat-select>
-    </mat-form-field>
+    </mat-form-field>-->
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
             <button mat-icon-button disabled></button>

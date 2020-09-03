@@ -144,12 +144,14 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
 
   ngOnInit(): void {
     this.readOnlyDbType = false;
+    /*
     if(this.apptype === 'microservice'){
         if(this.allModelProperties){
         this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
         this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
         }
     }
+    */
   }
 
   ngOnDestroy(): void {
