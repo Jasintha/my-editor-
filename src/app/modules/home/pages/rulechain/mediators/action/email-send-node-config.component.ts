@@ -125,12 +125,14 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       toemailinputType: [],
       toemailparam: [],
       toemailconstant: [],
-      toemailvariable: [],
-      toemailvariableProperty: [],
+      toemailproperty: [],
+      //toemailvariable: [],
+      //toemailvariableProperty: [],
       parameterinputType: [],
-      parametervariable: [],
-      parametervariableProperty: [],
+      //parametervariable: [],
+      //parametervariableProperty: [],
       parameterparam: [],
+      parameterproperty: [],
       emailBody: [],
     });
   }
@@ -143,10 +145,12 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   ngOnInit(): void {
+  /*
     if(this.apptype === 'microservice'){
         this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
         this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
     }
+    */
   }
 
   ngOnDestroy(): void {
@@ -162,25 +166,37 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     if (inputType === 'CONSTANT'){
     console.log("came to constant");
       this.configuration.toemailparam= {};
-      this.configuration.toemailvariable= {};
-      this.configuration.toemailvariableProperty = {};
+      this.configuration.toemailproperty= {};
+      //this.configuration.toemailvariable= {};
+      //this.configuration.toemailvariableProperty = {};
 
       this.emailSendNodeConfigFormGroup.get('toemailparam').patchValue([], {emitEvent: false});
-      this.emailSendNodeConfigFormGroup.get('toemailvariable').patchValue([], {emitEvent: false});
-      this.emailSendNodeConfigFormGroup.get('toemailvariableProperty').patchValue([], {emitEvent: false});
+      this.emailSendNodeConfigFormGroup.get('toemailproperty').patchValue([], {emitEvent: false});
+      //this.emailSendNodeConfigFormGroup.get('toemailvariable').patchValue([], {emitEvent: false});
+      //this.emailSendNodeConfigFormGroup.get('toemailvariableProperty').patchValue([], {emitEvent: false});
     } else if (inputType === 'PARAM'){
       this.configuration.toemailconstant= {};
-      this.configuration.toemailvariable= {};
-      this.configuration.toemailvariableProperty = {};
+      this.configuration.toemailproperty= {};
+      //this.configuration.toemailvariable= {};
+      //this.configuration.toemailvariableProperty = {};
       this.emailSendNodeConfigFormGroup.get('toemailconstant').patchValue([], {emitEvent: false});
-      this.emailSendNodeConfigFormGroup.get('toemailvariable').patchValue([], {emitEvent: false});
-      this.emailSendNodeConfigFormGroup.get('toemailvariableProperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'VARIABLE'){
+      this.emailSendNodeConfigFormGroup.get('toemailproperty').patchValue([], {emitEvent: false});
+      //this.emailSendNodeConfigFormGroup.get('toemailvariable').patchValue([], {emitEvent: false});
+      //this.emailSendNodeConfigFormGroup.get('toemailvariableProperty').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
       this.configuration.toemailconstant= {};
       this.configuration.toemailparam= {};
       this.emailSendNodeConfigFormGroup.get('toemailconstant').patchValue([], {emitEvent: false});
       this.emailSendNodeConfigFormGroup.get('toemailparam').patchValue([], {emitEvent: false});
     }
+    /*
+    else if (inputType === 'VARIABLE'){
+      this.configuration.toemailconstant= {};
+      this.configuration.toemailparam= {};
+      this.emailSendNodeConfigFormGroup.get('toemailconstant').patchValue([], {emitEvent: false});
+      this.emailSendNodeConfigFormGroup.get('toemailparam').patchValue([], {emitEvent: false});
+    }
+    */
 
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -193,11 +209,11 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     let inputType: string = this.emailSendNodeConfigFormGroup.get('parameterinputType').value;
     this.configuration.parameterinputType = inputType;
     if (inputType === 'PARAM'){
-      this.configuration.parametervariable= {};
-      this.configuration.parametervariableProperty = {};
-      this.emailSendNodeConfigFormGroup.get('parametervariable').patchValue([], {emitEvent: false});
-      this.emailSendNodeConfigFormGroup.get('parametervariableProperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'VARIABLE'){
+      this.configuration.parameterproperty= {};
+      //this.configuration.parametervariableProperty = {};
+      this.emailSendNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+      //this.emailSendNodeConfigFormGroup.get('parametervariableProperty').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
       this.configuration.parameterparam= {};
       this.emailSendNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
     }
@@ -222,8 +238,20 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       };
       this.configuration.emailbodyParameters.push(parameter);
       this.updateModel(this.configuration);
-    } else if (inputType === 'VARIABLE'){
-      let selectedParameterVariable = this.emailSendNodeConfigFormGroup.get('parametervariable').value;      
+    } else if (inputType === 'PROPERTY'){
+      let selectedParameterProperty = this.emailSendNodeConfigFormGroup.get('parameterproperty').value;
+      let parameterproperty = {
+        'parameterName': '$'+ number,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedParameterProperty.name
+      };
+      this.configuration.emailbodyParameters.push(parameterproperty);
+      this.updateModel(this.configuration);
+    }
+     /*
+     else if (inputType === 'VARIABLE'){
+      let selectedParameterVariable = this.emailSendNodeConfigFormGroup.get('parametervariable').value;
       if(selectedParameterVariable.type == 'String' || 
          selectedParameterVariable.type == 'Integer' ||
          selectedParameterVariable.type == 'Boolean' ||
@@ -250,13 +278,15 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
           this.updateModel(this.configuration);
       }      
     }
+    */
     
     this.datasource = new MatTableDataSource(this.configuration.emailbodyParameters);
   
     this.emailSendNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
-    this.emailSendNodeConfigFormGroup.get('parametervariable').patchValue([], {emitEvent: false});
-    this.emailSendNodeConfigFormGroup.get('parametervariableProperty').patchValue([], {emitEvent: false});
+    //this.emailSendNodeConfigFormGroup.get('parametervariable').patchValue([], {emitEvent: false});
+    //this.emailSendNodeConfigFormGroup.get('parametervariableProperty').patchValue([], {emitEvent: false});
     this.emailSendNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+    this.emailSendNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
 
   }
 
@@ -296,7 +326,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         this.updateModel(configuration);
       });
     } else {
-
+      /*
       let v = this.configuration.toemailvariable;
       let vp = this.configuration.toemailvariableProperty;
 
@@ -337,6 +367,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
           }
         }
       }
+      */
 
       let p = this.configuration.toemailparam;
       if(this.configuration.toemailinputType === 'PARAM'){
@@ -348,17 +379,24 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         c = this.allConstants.find(x => x.constantName === this.configuration.toemailconstant.constantName );
       }
 
+      let property = this.configuration.toemailproperty;
+      if(this.configuration.toemailinputType === 'PROPERTY'){
+        property = this.allModelProperties.find(x => x.name === this.configuration.toemailproperty.name );
+      }
+
       this.emailSendNodeConfigFormGroup.patchValue({
         emailSubject: this.configuration.emailSubject,
         toemailinputType: this.configuration.toemailinputType,
         toemailparam: p,
         toemailconstant: c,
-        toemailvariable: v,
-        toemailvariableProperty: vp,
+        toemailproperty: property,
+       // toemailvariable: v,
+       // toemailvariableProperty: vp,
         parameterinputType: this.configuration.parameterinputType,
-        parametervariable: this.configuration.parametervariable,
-        parametervariableProperty: this.configuration.parametervariableProperty,
+       // parametervariable: this.configuration.parametervariable,
+       // parametervariableProperty: this.configuration.parametervariableProperty,
         parameterparam: this.configuration.parameterparam,
+        parameterproperty: this.configuration.parameterproperty,
         emailBody: this.configuration.emailBody
       });
 
@@ -399,6 +437,26 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         }
       );
 
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('toemailproperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.toemailproperty = configuration;
+
+          console.log(this.configuration);
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('parameterproperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.parameterproperty = configuration;
+
+          console.log(this.configuration);
+          this.updateModel(this.configuration);
+        }
+      );
+
+
+      /*
       this.changeSubscription = this.emailSendNodeConfigFormGroup.get('toemailvariableProperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.toemailvariableProperty = configuration;
@@ -488,6 +546,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
           this.updateModel(this.configuration);
         }
       );
+      */
 
     }
   }

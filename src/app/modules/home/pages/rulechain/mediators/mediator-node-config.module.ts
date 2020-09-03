@@ -16,6 +16,8 @@ import { EmailInitNodeConfigComponent } from './action/email-init-node-config.co
 import { EmailSendNodeConfigComponent } from './action/email-send-node-config.component';
 import { EventPublisherNodeConfigComponent } from './action/event-publisher-node-config.component';
 import { EventReceiverNodeConfigComponent } from './action/event-receiver-node-config.component';
+import { SmsInitNodeConfigComponent } from './action/sms-init-node-config.component';
+import { SmsSendNodeConfigComponent } from './action/sms-send-node-config.component';
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
@@ -55,6 +57,8 @@ import {MatTableModule} from '@angular/material/table';
     ShopifyInitNodeConfigComponent,
     ShopifyEventNodeConfigComponent,
     ShopifyProductNodeConfigComponent,
+    SmsInitNodeConfigComponent,
+    SmsSendNodeConfigComponent,
     ShopifyOrderNodeConfigComponent
   ],
   imports: [
@@ -78,6 +82,8 @@ import {MatTableModule} from '@angular/material/table';
     ConnectorNodeConfigComponent,
     EventStoreNodeConfigComponent,
     QueryStoreNodeConfigComponent,
+    SmsInitNodeConfigComponent,
+    SmsSendNodeConfigComponent,
     ShopifyInitNodeConfigComponent,
     ShopifyEventNodeConfigComponent,
     ShopifyProductNodeConfigComponent,

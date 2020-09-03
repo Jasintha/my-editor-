@@ -27,18 +27,17 @@ import { Observable } from 'rxjs';
 import { PageComponent } from '@shared/components/page.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
-import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-shopify-event-node-config',
-  templateUrl: './shopify-event-node-config.component.html',
+  selector: 'tb-sms-init-node-config',
+  templateUrl: './sms-init-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => ShopifyEventNodeConfigComponent),
+    useExisting: forwardRef(() => SmsInitNodeConfigComponent),
     multi: true
   }]
 })
-export class ShopifyEventNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
+export class SmsInitNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('definedConfigContent', {read: ViewContainerRef, static: true}) definedConfigContainer: ViewContainerRef;
 
@@ -46,48 +45,18 @@ export class ShopifyEventNodeConfigComponent implements ControlValueAccessor, On
   get required(): boolean {
     return this.requiredValue;
   }
+
+
   @Input()
   set required(value: boolean) {
     this.requiredValue = coerceBooleanProperty(value);
   }
 
   @Input()
-  inputEntities: any[];
-
-  @Input()
-  allVariables: any[];
-
-  @Input()
-  inputProperties: any[];
-
-  @Input()
-  allConstants: any[];
-
-  @Input()
-  inputCustomobjects: any[];
-
-  @Input()
   disabled: boolean;
 
   @Input()
   ruleNodeId: string;
-
-  @Input()
-  queryDb: string;
-
-  @Input()
-  commandDb: string;
-
-  @Input()
-  allModelProperties: any[];
-
-  @Input()
-  apptype: string;
-
-  readOnlyDbType: boolean;
-
-  domainModelProperties: any[];
-  viewModelProperties: any[];
 
   nodeDefinitionValue: RuleNodeDefinition;
 
@@ -107,7 +76,7 @@ export class ShopifyEventNodeConfigComponent implements ControlValueAccessor, On
 
   definedDirectiveError: string;
 
-  shopifyEventNodeConfigFormGroup: FormGroup;
+  smsInitNodeConfigFormGroup: FormGroup;
 
   changeSubscription: Subscription;
 
@@ -115,22 +84,16 @@ export class ShopifyEventNodeConfigComponent implements ControlValueAccessor, On
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
   private configuration: RuleNodeConfiguration;
-  
-  selectedVariableProperties: any[];
-  selectedEntityProperties: any[];
-  selectedCustomObjectProperties: any[];
 
   private propagateChange = (v: any) => { };
 
   constructor(private translate: TranslateService,
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
-    this.shopifyEventNodeConfigFormGroup = this.fb.group({
-      type: [],
-      verb: [],
-      inputType: [],
-      entity: [],
-      customObject: []
+    this.smsInitNodeConfigFormGroup = this.fb.group({
+      twilioAccId: [null, Validators.required],
+      authToken: [null, Validators.required],
+      phoneNumber: [null, Validators.required]
     });
   }
 
@@ -142,13 +105,6 @@ export class ShopifyEventNodeConfigComponent implements ControlValueAccessor, On
   }
 
   ngOnInit(): void {
-    this.readOnlyDbType = false;
-    if(this.apptype === 'microservice'){
-        if(this.allModelProperties){
-        this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
-        this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
-        }
-    }
   }
 
   ngOnDestroy(): void {
@@ -163,68 +119,101 @@ export class ShopifyEventNodeConfigComponent implements ControlValueAccessor, On
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     if (this.disabled) {
-      this.shopifyEventNodeConfigFormGroup.disable({emitEvent: false});
+      this.smsInitNodeConfigFormGroup.disable({emitEvent: false});
     } else {
-      this.shopifyEventNodeConfigFormGroup.enable({emitEvent: false});
+      this.smsInitNodeConfigFormGroup.enable({emitEvent: false});
     }
   }
 
   writeValue(value: RuleNodeConfiguration): void {
+
+  console.log("email init node write value");
+  console.log(value);
 
     this.configuration = deepClone(value);
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
     }
-
     if (this.definedConfigComponent) {
       this.definedConfigComponent.configuration = this.configuration;
       this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
         this.updateModel(configuration);
       });
     } else {
-
-      let customObject = this.configuration.customObject;
-      if(customObject){
-        customObject = this.inputCustomobjects.find(x => x.name === this.configuration.customObject.name );
-      }
-
-      let entity = this.configuration.entity;
-      if(entity){
-        entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
-      }
-      this.shopifyEventNodeConfigFormGroup.patchValue({
-        type: this.configuration.connector.type,
-        verb: this.configuration.connector.verb,
-        inputType: this.configuration.inputType,
-        entity: entity,
-        customObject: customObject
-      });
-
-      this.changeSubscription = this.shopifyEventNodeConfigFormGroup.get('customObject').valueChanges.subscribe(
+      this.smsInitNodeConfigFormGroup.get('twilioAccId').patchValue(this.configuration.twilioAccId, {emitEvent: false});
+      this.smsInitNodeConfigFormGroup.get('authToken').patchValue(this.configuration.authToken, {emitEvent: false});
+      this.smsInitNodeConfigFormGroup.get('phoneNumber').patchValue(this.configuration.phoneNumber, {emitEvent: false});
+      this.changeSubscription = this.smsInitNodeConfigFormGroup.get('twilioAccId').valueChanges.subscribe(
         (configuration: any) => {
-          this.configuration.customObject = configuration;
-          this.configuration.entity = {};
+          this.configuration.twilioAccId = configuration;
           this.updateModel(this.configuration);
         }
       );
 
-      this.changeSubscription = this.shopifyEventNodeConfigFormGroup.get('entity').valueChanges.subscribe(
+      this.changeSubscription = this.smsInitNodeConfigFormGroup.get('authToken').valueChanges.subscribe(
         (configuration: any) => {
-          this.configuration.entity = configuration;
-          this.configuration.customObject = {};
+          this.configuration.authToken = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.smsInitNodeConfigFormGroup.get('phoneNumber').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.phoneNumber = configuration;
           this.updateModel(this.configuration);
         }
       );
     }
   }
 
+/*
+  useDefinedDirective(): boolean {
+    return this.nodeDefinition &&
+      (this.nodeDefinition.configDirective &&
+       this.nodeDefinition.configDirective.length) && !this.definedDirectiveError;
+  }
+  */
+
   private updateModel(configuration: RuleNodeConfiguration) {
-    if (this.definedConfigComponent || this.shopifyEventNodeConfigFormGroup.valid) {
+    if (this.definedConfigComponent || this.smsInitNodeConfigFormGroup.valid) {
       this.propagateChange(configuration);
     } else {
       this.propagateChange(this.required ? null : configuration);
     }
   }
 
+  /*
+
+  private validateDefinedDirective() {
+    if (this.definedConfigComponentRef) {
+      this.definedConfigComponentRef.destroy();
+      this.definedConfigComponentRef = null;
+    }
+    if (this.nodeDefinition.uiResourceLoadError && this.nodeDefinition.uiResourceLoadError.length) {
+      this.definedDirectiveError = this.nodeDefinition.uiResourceLoadError;
+    } else if (this.nodeDefinition.configDirective && this.nodeDefinition.configDirective.length) {
+      if (this.changeSubscription) {
+        this.changeSubscription.unsubscribe();
+        this.changeSubscription = null;
+      }
+      this.definedConfigContainer.clear();
+      const factory = this.ruleChainService.getRuleNodeConfigFactory(this.nodeDefinition.configDirective);
+      this.definedConfigComponentRef = this.definedConfigContainer.createComponent(factory);
+      this.definedConfigComponent = this.definedConfigComponentRef.instance;
+      this.definedConfigComponent.ruleNodeId = this.ruleNodeId;
+      this.definedConfigComponent.configuration = this.configuration;
+      this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
+        this.updateModel(configuration);
+      });
+    }
+  }
+
+  validate() {
+    if (this.useDefinedDirective()) {
+      this.definedConfigComponent.validate();
+    }
+  }
+  */
 }
+

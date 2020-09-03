@@ -57,6 +57,27 @@
                                  [nodeDefinition]="nodeDefinitionValue">
       </tb-email-send-node-config>
     </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiSmsInitNode'">
+    <tb-sms-init-node-config #smsInitNodeConfigComponent
+                               formControlName="configuration"
+                               [ruleNodeId]="ruleNodeId"
+                               [nodeDefinition]="nodeDefinitionValue">
+    </tb-sms-init-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiSmsSendNode'">
+    <tb-sms-send-node-config #smsSendNodeConfigComponent
+                               formControlName="configuration"
+                               [ruleNodeId]="ruleNodeId"
+                               [allConstants]=" allConstants"
+                               [inputEntities]=" inputEntities"
+                               [inputCustomobjects]="inputCustomobjects"
+                               [allVariables]="allVariables"
+                               [inputProperties]="inputProperties"
+                               [apptype]="apptype"
+                               [allModelProperties]="allModelProperties"
+                               [nodeDefinition]="nodeDefinitionValue">
+    </tb-sms-send-node-config>
+  </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiFilterNode'">
       <tb-filter-node-config #filterNodeConfigComponent
                              formControlName="configuration"
@@ -93,6 +114,8 @@
                            [ruleNodeId]="ruleNodeId"
                            [allDomainModels]=" allDomainModels"
                                             [allViewModels]="allViewModels"
+                                            [allRuleInputs]="allRuleInputs"
+                                            [allVariables]="allVariables"
                            [nodeDefinition]="nodeDefinitionValue">
       </tb-domain-model-variable-node-config>
     </ng-container>
