@@ -169,6 +169,7 @@ export class RuleChainPageComponent extends PageComponent
   connectorData: any[];
   apptype: string;
   connectorfields: QuestionBase[];
+  allValueObjectProperties: any[];
 
   ruleChainModel: FcRuleNodeModel = {
     nodes: [],
@@ -337,6 +338,7 @@ export class RuleChainPageComponent extends PageComponent
     this.allConstants = this.ruleChainMetaData.allConstants;
     this.allVariables = this.ruleChainMetaData.allVariables;
     this.allSavedObjects = this.ruleChainMetaData.allSavedObjects;
+    this.allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
 
     this.ruleNodeComponents = this.route.snapshot.data.ruleNodeComponents;
     for (const type of ruleNodeTypesLibrary) {
@@ -1351,6 +1353,7 @@ export class RuleChainPageComponent extends PageComponent
     const inputProperties = this.ruleChainMetaData.inputProperties;
     const allFields = this.ruleChainMetaData.allFields;
     const allConstants = this.ruleChainMetaData.allConstants;
+    const allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
     const allVariables = this.ruleChainMetaData.allVariables;
     const allSavedObjects = this.ruleChainMetaData.allSavedObjects;
 
@@ -1385,6 +1388,7 @@ export class RuleChainPageComponent extends PageComponent
         allModelProperties,
         allRuleInputs,
         allEvents,
+        allValueObjectProperties,
         queryDb,
         commandDb,
         apptype
@@ -1591,6 +1595,7 @@ export interface AddRuleNodeDialogData {
   inputProperties: any[];
   allFields: any[];
   allConstants: any[];
+  allValueObjectProperties: any[];
   allVariables: any[];
   allSavedObjects: any[];
   connectorfields: QuestionBase[];
@@ -1623,6 +1628,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   inputProperties: any[];
   allFields: any[];
   allConstants: any[];
+  allValueObjectProperties: any[];
   allSavedObjects: any[];
   allVariables: any[];
   connectorfields: QuestionBase[];
@@ -1652,6 +1658,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.inputProperties = this.data.inputProperties;
     this.allFields = this.data.allFields;
     this.allConstants = this.data.allConstants;
+    this.allValueObjectProperties = this.data.allValueObjectProperties;
     this.allVariables = this.data.allVariables;
     this.allSavedObjects = this.data.allSavedObjects;
     this.connectorfields = this.data.connectorfields;
