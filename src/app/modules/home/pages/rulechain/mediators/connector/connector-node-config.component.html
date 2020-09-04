@@ -1,17 +1,71 @@
+<!--<div [formGroup]="connectorConfigFormGroup">-->
+
+<!--    <ng-container *ngFor="let field of fields">-->
+<!--        <section fxLayout="column" fxLayout.gt-sm="row">-->
+<!--            <ng-container [ngSwitch]="field.controlType">-->
+<!--            <mat-form-field fxFlex class="mat-block" *ngSwitchCase="'textbox'">-->
+<!--                <mat-label>{{field.label}}</mat-label>-->
+
+<!--                    <input matInput [formControlName]="field.key" [id]="field.key"-->
+<!--                           [type]="field.type"/>-->
+
+<!--            </mat-form-field>-->
+
+<!--                <mat-form-field fxFlex class="mat-block" *ngSwitchCase="'dropdown'">-->
+<!--                    <mat-label>{{field.label}}</mat-label>-->
+
+<!--                    <mat-select [formControlName]="field.key" [id]="field.key">-->
+<!--                        <mat-option *ngFor="let opt of field.options" [value]="opt.key">{{opt.value}}</mat-option>-->
+<!--                    </mat-select>-->
+
+<!--                </mat-form-field>-->
+
+<!--            -->
+
+
+<!--            </ng-container>-->
+<!--        </section>-->
+<!--    </ng-container>-->
+
+<!--</div>-->
+
+
 <div [formGroup]="connectorConfigFormGroup">
 
     <ng-container *ngFor="let field of fields">
         <section fxLayout="column" fxLayout.gt-sm="row">
-            <mat-form-field fxFlex class="mat-block">
+
+            <mat-form-field fxFlex class="mat-block" *ngIf="field.controlType ==='textbox'">
                 <mat-label>{{field.label}}</mat-label>
-                <ng-container [ngSwitch]="field.controlType">
-                    <input *ngSwitchCase="'textbox'" matInput [formControlName]="field.key" [id]="field.key"
-                           [type]="field.type"/>
-                    <mat-select *ngSwitchCase="'dropdown'" [formControlName]="field.key" [id]="field.key">
-                        <mat-option *ngFor="let opt of field.options" [value]="opt.key">{{opt.value}}</mat-option>
-                    </mat-select>
-                </ng-container>
+                <input matInput [formControlName]="field.key" [id]="field.key"
+                       [type]="field.type"/>
             </mat-form-field>
+
+            <mat-form-field fxFlex class="mat-block" *ngIf="field.controlType ==='dropdown'">
+                <mat-label>{{field.label}}</mat-label>
+                <mat-select [formControlName]="field.key" [id]="field.key">
+                    <mat-option *ngFor="let opt of field.options" [value]="opt.key">{{opt.value}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex class="mat-block" *ngIf="checkControlType(field.controlType)">
+                <mat-label>{{field.label}}</mat-label>
+
+                <mat-select [formControlName]="field.key" [id]="field.key">
+                    <mat-option *ngFor="let opt of generatePropertyArray(field.controlType)" [value]="opt">{{opt.name}}</mat-option>
+                </mat-select>
+
+            </mat-form-field>
+
+            <mat-form-field fxFlex class="mat-block" *ngIf="checkType(field.type)">
+                <mat-label>{{field.label}}</mat-label>
+
+                <mat-select [formControlName]="field.key" [id]="field.key">
+                    <mat-option *ngFor="let opt of generatePrimitiveArray(field.type)" [value]="opt">{{opt.name}}</mat-option>
+                </mat-select>
+
+            </mat-form-field>
+
         </section>
     </ng-container>
 
