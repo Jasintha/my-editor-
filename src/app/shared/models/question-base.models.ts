@@ -1,38 +1,48 @@
 export class QuestionBase {
-  value: any;
-  key: string;
-  label: string;
-  required: boolean;
-  order: number;
-  controlType: string;
-  type: string;
-  options: {key: string, value: string}[];
+    value?: any;
+    key?: string;
+    label?: string;
+    required?: boolean;
+    order?: number;
+    controlType?: string;
+    type?: string;
+    options?: {key: string, value: string}[];
+    modelSelectionFields?:ModelSelectionFields[];
 
-  constructor(options: {
-      value?: any;
-      key?: string;
-      label?: string;
-      required?: boolean;
-      order?: number;
-      controlType?: string;
-      type?: string;
-      options?: {key: string, value: string}[];
+    constructor(options: {
+        value?: any;
+        key?: string;
+        label?: string;
+        required?: boolean;
+        order?: number;
+        controlType?: string;
+        type?: string;
+        options?: {key: string, value: string}[];
+        modelSelectionFields?:ModelSelectionFields[];
+
     } = {}) {
-    this.value = options.value;
-    this.key = options.key || '';
-    this.label = options.label || '';
-    this.required = !!options.required;
-    this.order = options.order === undefined ? 1 : options.order;
-    this.controlType = options.controlType || '';
-    this.type = options.type || '';
-    this.options = options.options || [];
-  }
+        this.value = options.value;
+        this.key = options.key || '';
+        this.label = options.label || '';
+        this.required = !!options.required;
+        this.order = options.order === undefined ? 1 : options.order;
+        this.controlType = options.controlType || '';
+        this.type = options.type || '';
+        this.options = options.options || [];
+        this.modelSelectionFields=options.modelSelectionFields;
+    }
 }
 
 export class TextboxQuestion extends QuestionBase {
-  controlType = 'textbox';
+    controlType = 'textbox';
 }
 
 export class DropdownQuestion extends QuestionBase {
-  controlType = 'dropdown';
+    controlType = 'dropdown';
+}
+
+export class ModelSelectionFields{
+    type: string;
+    label: string;
+    name: string;
 }
