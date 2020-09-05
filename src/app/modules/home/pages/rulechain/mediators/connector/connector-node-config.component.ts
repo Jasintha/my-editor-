@@ -53,7 +53,7 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
 
   @ViewChild('definedConfigContent', {read: ViewContainerRef, static: true}) definedConfigContainer: ViewContainerRef;
 
-  // @Input() fields: QuestionBase[] = [];
+  @Input() fields: QuestionBase[] = [];
 
   connectorConfigFormGroup: FormGroup;
 
@@ -101,6 +101,9 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   @Input()
   allVariables: any[];
 
+  @Input()
+  allValueObjectProperties: any[];
+
 
   allRuleProperties:ModelValueproperties[] =[
     {
@@ -130,28 +133,11 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     }
   ];
 
-  allPrimitiveObjectsValue:ModelPrimitiveproperties[]=[
-    {
-      type: "PRIMITIVE",
-      name: "TEXT",
-    },
-    {
-      type: "PRIMITIVE",
-      name: "NUMBER",
-    },
-    {
-      type: "DTO",
-      name: "Customer"
-    },
-  ];
-
-
-  // emptyFeids: ModelSelectionFields[] = [];
 
   nodeDefinitionValue: RuleNodeDefinition;
 
 
-  fields: QuestionBase[] = [
+  testfields: QuestionBase[] = [
     {
       controlType: "textbox",
       key: "firstName",
@@ -233,9 +219,19 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   ngOnInit(): void {
+
+    if(this.fields){
+        for(let i = 0; i < this.fields.length; i++){
+            if (this.checkControlType(this.fields[i].controlType)){
+                this.fields[i].options = this.generatePropertyArray(this.fields[i].controlType);
+            } else if(this.checkType(this.fields[i].controlType)){
+                this.fields[i].options = this.generatePrimitiveArray(this.fields[i].controlType);
+            }
+
+        }
+    }
+
     this.connectorConfigFormGroup = this.toFormGroup(this.fields);
-    console.log("form checking");
-    console.log(this.connectorConfigFormGroup);
   }
 
 
@@ -259,6 +255,10 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   ngAfterViewInit(): void {
+
+  console.log("after view");
+
+
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -286,7 +286,19 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     } else {
 
       this.fields.forEach(question => {
-        this.connectorConfigFormGroup.get(question.key).patchValue(this.configuration.connector[question.key], {emitEvent: false});
+        let fieldValue = this.configuration.connector[question.key];
+        if (this.checkControlType(question.controlType)){
+            if(fieldValue){
+                fieldValue = question.options.find(x => x.type === fieldValue.type &&  x.name === fieldValue.name);
+            }
+        }else if(this.checkType(question.controlType)){
+            if(fieldValue){
+                fieldValue = question.options.find(x => x.type === fieldValue.type &&  x.name === fieldValue.name);
+            }
+        }
+        this.connectorConfigFormGroup.get(question.key).patchValue(fieldValue, {emitEvent: false});
+
+        //this.connectorConfigFormGroup.get(question.key).patchValue(this.configuration.connector[question.key], {emitEvent: false});
         this.changeSubscription = this.connectorConfigFormGroup.get(question.key).valueChanges.subscribe(
             (configuration: RuleNodeConfiguration) => {
               this.configuration.connector[question.key] = configuration;
@@ -316,7 +328,7 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   checkType(contain: string):boolean{
-    return contain.includes('DTO') || contain.includes('PRIMITIVE');
+    return contain.includes('object') || contain.includes('primitive');
   }
 
   generatePropertyArray(controlType: string): Array<any> {
@@ -325,31 +337,33 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     let isDynamic_object = controlType.includes('dynamic_object');
     let isDynamic_value = controlType.includes('dynamic_value');
 
-    let A_Array = this.allRuleProperties.filter(property =>
-        property.type == 'PARAM' || (property.type == 'PROPERTY' && property.valuetype == 'primitive' ));
+    if(this.allValueObjectProperties){
+        let A_Array = this.allValueObjectProperties.filter(property =>
+            property.type == 'PARAM' || (property.type == 'PROPERTY' && property.valuetype == 'primitive' ));
 
-    let B_Array = this.allRuleProperties.filter(property =>
-        property.type == 'PROPERTY' && property.valuetype == 'object' );
+        let B_Array = this.allValueObjectProperties.filter(property =>
+            property.type == 'PROPERTY' && property.valuetype == 'object' );
 
-    let C_Array = this.allRuleProperties.filter(property =>
-        property.type == 'CONSTANT');
+        let C_Array = this.allValueObjectProperties.filter(property =>
+            property.type == 'CONSTANT');
 
-    if (isStatic === false && isDynamic_object === false && isDynamic_value === false) {
-      proArray = [];
-    } else if (isStatic === false && isDynamic_object === false && isDynamic_value === true) {
-      proArray = A_Array;
-    } else if (isStatic === false && isDynamic_object === true && isDynamic_value === false) {
-      proArray = B_Array;
-    } else if (isStatic === false && isDynamic_object === true && isDynamic_value === true) {
-      proArray = A_Array.concat(B_Array);
-    } else if (isStatic === true && isDynamic_object === false && isDynamic_value === false) {
-      proArray = C_Array;
-    } else if (isStatic === true && isDynamic_object === false && isDynamic_value === true) {
-      proArray = A_Array.concat(C_Array);
-    } else if (isStatic === true && isDynamic_object === true && isDynamic_value === false) {
-      proArray = B_Array.concat(C_Array);
-    } else if (isStatic === true && isDynamic_object === true && isDynamic_value === true) {
-      proArray = A_Array.concat(B_Array,C_Array);
+        if (isStatic === false && isDynamic_object === false && isDynamic_value === false) {
+          proArray = [];
+        } else if (isStatic === false && isDynamic_object === false && isDynamic_value === true) {
+          proArray = A_Array;
+        } else if (isStatic === false && isDynamic_object === true && isDynamic_value === false) {
+          proArray = B_Array;
+        } else if (isStatic === false && isDynamic_object === true && isDynamic_value === true) {
+          proArray = A_Array.concat(B_Array);
+        } else if (isStatic === true && isDynamic_object === false && isDynamic_value === false) {
+          proArray = C_Array;
+        } else if (isStatic === true && isDynamic_object === false && isDynamic_value === true) {
+          proArray = A_Array.concat(C_Array);
+        } else if (isStatic === true && isDynamic_object === true && isDynamic_value === false) {
+          proArray = B_Array.concat(C_Array);
+        } else if (isStatic === true && isDynamic_object === true && isDynamic_value === true) {
+          proArray = A_Array.concat(B_Array,C_Array);
+        }
     }
 
     return proArray;
@@ -357,16 +371,43 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
 
   generatePrimitiveArray(type: string): Array<any> {
     let primArray = [];
-    let isPrimitive = type.includes('PRIMITIVE');
-    let isDTO = type.includes('DTO');
+    let isPrimitive = type.includes('primitive');
+    let isDTO = type.includes('object');
 
-    let A_Array = this.allPrimitiveObjectsValue.filter(property =>
-        property.type == 'PRIMITIVE');
-    let B_Array = this.allPrimitiveObjectsValue.filter(property =>
-        property.type == 'DTO');
+    let A_Array: ModelPrimitiveObjectProperty[] = [
+    {
+        type: 'PRIMITIVE',
+        name: 'TEXT'
+    },
+    {
+        type: 'PRIMITIVE',
+        name: 'NUMBER'
+    },
+    {
+        type: 'PRIMITIVE',
+        name: 'DATE'
+    },
+    {
+        type: 'PRIMITIVE',
+        name: 'TRUE_OR_FALSE'
+    }
+    ];
+
+
+    let B_Array : ModelPrimitiveObjectProperty[] = [];
+
+    if(this.inputCustomobjects){
+        for(let i= 0; i < this.inputCustomobjects.length; i++){
+            let dto: ModelPrimitiveObjectProperty = {
+                type: 'DTO',
+                name: this.inputCustomobjects[i].name
+            };
+            B_Array.push(dto);
+        }
+    }
 
     if (isPrimitive === false && isDTO === false) {
-      primArray = [];
+      //primArray = [];
     } else if (isPrimitive === false && isDTO === true) {
       primArray = B_Array;
     } else if (isPrimitive === true && isDTO === false) {
@@ -374,10 +415,8 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     } else if (isPrimitive === true && isDTO === true) {
       primArray = A_Array.concat(B_Array);
     }
-
     return primArray;
   }
-
 
 }
 
@@ -387,7 +426,7 @@ class ModelValueproperties{
   valuetype: string;
 }
 
-class ModelPrimitiveproperties{
+class ModelPrimitiveObjectProperty{
   type: string;
   name: string;
 }
