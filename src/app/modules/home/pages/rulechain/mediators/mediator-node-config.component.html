@@ -1,5 +1,5 @@
 <div [formGroup]="mediatorNodeConfigFormGroup" style="margin-top: 10px;margin-bottom: 10px;">
-  <!--<ng-container *ngIf="ruleType === 'CONNECTOR'">
+  <ng-container *ngIf="ruleType === 'CONNECTOR'">
     <tb-connector-node-config #connectorNodeConfigComponent
                               formControlName="configuration"
                               [ruleNodeId]="ruleNodeId"
@@ -12,9 +12,10 @@
                               [allSavedObjects]="allSavedObjects"
                               [allVariables]="allVariables"
                               [nodeDefinition]="nodeDefinitionValue"
+                              [allValueObjectProperties]="allValueObjectProperties"
                               [fields]="connectorfields">
     </tb-connector-node-config>
-  </ng-container> -->
+  </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiRootNode'">
       <tb-root-node-config #rootNodeConfigComponent
                            formControlName="configuration"

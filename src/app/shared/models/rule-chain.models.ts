@@ -50,6 +50,7 @@ export interface RuleChainMetaData {
   allSavedObjects?: any[];
   connectors?: any[];
   allDomainModels?: any[];
+  allValueObjectProperties?: any[];
   allModelProperties?: any[];
   allRuleInputs?: any[];
   allEvents?: any[];

@@ -6,7 +6,8 @@ export class QuestionBase {
     order?: number;
     controlType?: string;
     type?: string;
-    options?: {key: string, value: string}[];
+    //options?: {key: string, value: string}[];
+    options?: any[];
     modelSelectionFields?:ModelSelectionFields[];
 
     constructor(options: {
@@ -17,7 +18,7 @@ export class QuestionBase {
         order?: number;
         controlType?: string;
         type?: string;
-        options?: {key: string, value: string}[];
+        options?: any[];
         modelSelectionFields?:ModelSelectionFields[];
 
     } = {}) {
