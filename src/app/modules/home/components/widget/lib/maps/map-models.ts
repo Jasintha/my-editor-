@@ -16,6 +16,8 @@
 
 import { LatLngTuple } from 'leaflet';
 import { Datasource, JsonSettingsSchema } from '@app/shared/models/widget.models';
+import { EntityType } from '@shared/models/entity-type.models';
+import tinycolor from 'tinycolor2';
 import { Type } from '@angular/core';
 import LeafletMap from './leaflet-map';
 import { OpenStreetMap, TencentMap, GoogleMap, HEREMap, ImageMap } from './providers';
@@ -23,18 +25,17 @@ import {
     openstreetMapSettingsSchema, tencentMapSettingsSchema,
     googleMapSettingsSchema, hereMapSettingsSchema, imageMapSettingsSchema
 } from './schemes';
-import { EntityType } from '@shared/models/entity-type.models';
 
-export const DEFAULT_MAP_PAGE_SIZE = 1024;
+export const DEFAULT_MAP_PAGE_SIZE = 16384;
 
 export type GenericFunction = (data: FormattedData, dsData: FormattedData[], dsIndex: number) => string;
 export type MarkerImageFunction = (data: FormattedData, dsData: FormattedData[], dsIndex: number) => string;
-export type GetTooltip = (point: FormattedData, setTooltip?: boolean) => string;
 export type PosFuncton = (origXPos, origYPos) => { x, y };
 
 export type MapSettings = {
     draggableMarker: boolean;
     initCallback?: () => any;
+    editablePolygon: boolean;
     posFunction: PosFuncton;
     defaultZoomLevel?: number;
     disableScrollZooming?: boolean;
@@ -57,7 +58,7 @@ export type MapSettings = {
     markerClusteringSetting?;
     useDefaultCenterPosition?: boolean;
     gmDefaultMapType?: string;
-    useLabelFunction: string;
+    useLabelFunction: boolean;
     icon?: any;
     zoomOnClick: boolean,
     maxZoom: number,
@@ -68,7 +69,8 @@ export type MapSettings = {
     removeOutsideVisibleBounds: boolean,
     useCustomProvider: boolean,
     customProviderTileUrl: string;
-}
+    mapPageSize: number;
+};
 
 export enum MapProviders {
     google = 'google-map',
@@ -92,6 +94,7 @@ export type MarkerSettings = {
     useTooltipFunction: boolean;
     useColorFunction: boolean;
     color?: string;
+    tinyColor?: tinycolor.Instance;
     autocloseTooltip: boolean;
     showTooltipAction: string;
     useClusterMarkers: boolean;
@@ -108,7 +111,7 @@ export type MarkerSettings = {
     markerImageFunction?: MarkerImageFunction;
     markerOffsetX: number;
     markerOffsetY: number;
-}
+};
 
 export interface FormattedData {
     $datasource: Datasource;
@@ -117,13 +120,19 @@ export interface FormattedData {
     entityType: EntityType;
     dsIndex: number;
     deviceType: string;
-    [key: string]: any
+    [key: string]: any;
+}
+
+export interface ReplaceInfo {
+  variable: string;
+  valDec?: number;
+  dataKeyName: string;
 }
 
 export type PolygonSettings = {
     showPolygon: boolean;
     polygonKeyName: string;
-    polKeyName: string;// deprecated
+    polKeyName: string; // deprecated
     polygonStrokeOpacity: number;
     polygonOpacity: number;
     polygonStrokeWeight: number;
@@ -139,7 +148,8 @@ export type PolygonSettings = {
     usePolygonColorFunction: boolean;
     polygonTooltipFunction: GenericFunction;
     polygonColorFunction?: GenericFunction;
-}
+    editablePolygon: boolean;
+};
 
 export type PolylineSettings = {
     usePolylineDecorator: any;
@@ -164,7 +174,7 @@ export type PolylineSettings = {
     colorFunction: GenericFunction;
     strokeOpacityFunction: GenericFunction;
     strokeWeightFunction: GenericFunction;
-}
+};
 
 export interface HistorySelectSettings {
     buttonColor: string;
@@ -194,7 +204,12 @@ export type TripAnimationSettings = {
     pointAsAnchorFunction: GenericFunction;
     tooltipFunction: GenericFunction;
     labelFunction: GenericFunction;
-}
+    showLabel: boolean;
+    showTooltip: boolean;
+    tooltipColor: string;
+    tooltipOpacity: number;
+    tooltipFontColor: string;
+};
 
 export type actionsHandler = ($event: Event, datasource: Datasource) => void;
 
@@ -267,11 +282,14 @@ export const defaultSettings: any = {
     credentials: '',
     markerClusteringSetting: null,
     draggableMarker: false,
-    fitMapBounds: true
+    editablePolygon: false,
+    fitMapBounds: true,
+    mapPageSize: DEFAULT_MAP_PAGE_SIZE
 };
 
 export const hereProviders = [
     'HERE.normalDay',
     'HERE.normalNight',
     'HERE.hybridDay',
-    'HERE.terrainDay']
+    'HERE.terrainDay'
+];

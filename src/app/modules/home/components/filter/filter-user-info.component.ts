@@ -76,7 +76,7 @@ export class FilterUserInfoComponent implements ControlValueAccessor, OnInit {
     this.keyFilterPredicateUserInfo = keyFilterPredicateUserInfo;
   }
 
-  private openFilterUserInfoDialog() {
+  openFilterUserInfoDialog() {
    this.dialog.open<FilterUserInfoDialogComponent, FilterUserInfoDialogData,
      KeyFilterPredicateUserInfo>(FilterUserInfoDialogComponent, {
       disableClose: true,

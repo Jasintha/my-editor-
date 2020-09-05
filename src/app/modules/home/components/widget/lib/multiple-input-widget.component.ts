@@ -95,11 +95,11 @@ export class MultipleInputWidgetComponent extends PageComponent implements OnIni
   ctx: WidgetContext;
 
   private formResize$: ResizeObserver;
-  private settings: MultipleInputWidgetSettings;
+  settings: MultipleInputWidgetSettings;
   private widgetConfig: WidgetConfig;
   private subscription: IWidgetSubscription;
   private datasources: Array<Datasource>;
-  private sources: Array<MultipleInputWidgetSource> = [];
+  sources: Array<MultipleInputWidgetSource> = [];
 
   isVerticalAlignment: boolean;
   inputWidthSettings: string;

@@ -73,7 +73,7 @@ export class ComplexFilterPredicateComponent implements ControlValueAccessor, On
     this.complexFilterPredicate = predicate;
   }
 
-  private openComplexFilterDialog() {
+  openComplexFilterDialog() {
     this.dialog.open<ComplexFilterPredicateDialogComponent, ComplexFilterPredicateDialogData,
       ComplexFilterPredicateInfo>(ComplexFilterPredicateDialogComponent, {
       disableClose: true,
