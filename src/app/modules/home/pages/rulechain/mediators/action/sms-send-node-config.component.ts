@@ -106,7 +106,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
-  private configuration: RuleNodeConfiguration;
+  configuration: RuleNodeConfiguration;
   
   selectedVariableProperties: any[];
   selectedVariablePropertiesForParameter: any[];

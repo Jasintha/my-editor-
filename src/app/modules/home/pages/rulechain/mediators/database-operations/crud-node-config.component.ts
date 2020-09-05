@@ -112,7 +112,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
-  private configuration: RuleNodeConfiguration;
+  configuration: RuleNodeConfiguration;
   
   selectedVariableProperties: any[];
   selectedEntityProperties: any[];

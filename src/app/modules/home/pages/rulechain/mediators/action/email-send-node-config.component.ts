@@ -106,7 +106,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
-  private configuration: RuleNodeConfiguration;
+  configuration: RuleNodeConfiguration;
   
   selectedVariableProperties: any[];
   selectedVariablePropertiesForParameter: any[];

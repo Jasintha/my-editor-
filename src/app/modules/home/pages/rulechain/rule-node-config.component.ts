@@ -154,7 +154,7 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
-  private configuration: RuleNodeConfiguration;
+  configuration: RuleNodeConfiguration;
 
   private propagateChange = (v: any) => { };
 

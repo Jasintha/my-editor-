@@ -57,7 +57,7 @@
     <section class="mat-block" fxFlex>
       <mat-form-field fxFlex class="mat-block">
         <mat-label>Model Input Type</mat-label>
-        <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
+        <mat-select formControlName="inputType">
           <mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
           <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>
         </mat-select>
