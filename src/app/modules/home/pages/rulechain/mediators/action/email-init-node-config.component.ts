@@ -83,7 +83,7 @@ export class EmailInitNodeConfigComponent implements ControlValueAccessor, OnIni
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
-  private configuration: RuleNodeConfiguration;
+  configuration: RuleNodeConfiguration;
 
   private propagateChange = (v: any) => { };
 

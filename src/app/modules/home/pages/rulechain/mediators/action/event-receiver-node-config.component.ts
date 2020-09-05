@@ -86,7 +86,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
-  private configuration: RuleNodeConfiguration;
+  configuration: RuleNodeConfiguration;
 
   private propagateChange = (v: any) => { };
 

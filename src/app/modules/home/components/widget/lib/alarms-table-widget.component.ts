@@ -153,7 +153,7 @@ export class AlarmsTableWidgetComponent extends PageComponent implements OnInit,
   private alarmSource: Datasource;
 
   private displayDetails = true;
-  private allowAcknowledgment = true;
+  allowAcknowledgment = true;
   private allowClear = true;
 
   private defaultPageSize = 10;

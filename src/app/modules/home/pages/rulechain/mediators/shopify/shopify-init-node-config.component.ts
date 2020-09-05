@@ -81,7 +81,7 @@ export class ShopifyInitNodeConfigComponent implements ControlValueAccessor, OnI
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
-  private configuration: RuleNodeConfiguration;
+  configuration: RuleNodeConfiguration;
 
   private propagateChange = (v: any) => { };
 
