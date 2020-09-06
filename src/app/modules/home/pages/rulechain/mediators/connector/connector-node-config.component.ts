@@ -328,7 +328,7 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   checkType(contain: string):boolean{
-    return contain.includes('object') || contain.includes('primitive');
+    return contain.includes('type_object') || contain.includes('type_primitive');
   }
 
   generatePropertyArray(controlType: string): Array<any> {
@@ -371,8 +371,8 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
 
   generatePrimitiveArray(type: string): Array<any> {
     let primArray = [];
-    let isPrimitive = type.includes('primitive');
-    let isDTO = type.includes('object');
+    let isPrimitive = type.includes('type_primitive');
+    let isDTO = type.includes('type_object');
 
     let A_Array: ModelPrimitiveObjectProperty[] = [
     {
