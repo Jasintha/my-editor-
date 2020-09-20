@@ -58,6 +58,34 @@
                                  [nodeDefinition]="nodeDefinitionValue">
       </tb-email-send-node-config>
     </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiLambdaFunctionNode'">
+    <tb-lambda-function-node-config #lambdaFunctionNodeConfigComponent
+                               formControlName="configuration"
+                               [ruleNodeId]="ruleNodeId"
+                               [allConstants]=" allConstants"
+                               [inputEntities]=" inputEntities"
+                               [inputCustomobjects]="inputCustomobjects"
+                               [allVariables]="allVariables"
+                               [inputProperties]="inputProperties"
+                               [apptype]="apptype"
+                               [allModelProperties]="allModelProperties"
+                               [nodeDefinition]="nodeDefinitionValue">
+    </tb-lambda-function-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiValidatorNode'">
+    <tb-validator-node-config #validatorNodeConfigComponent
+                                    formControlName="configuration"
+                                    [ruleNodeId]="ruleNodeId"
+                                    [allConstants]=" allConstants"
+                                    [inputEntities]=" inputEntities"
+                                    [inputCustomobjects]="inputCustomobjects"
+                                    [allVariables]="allVariables"
+                                    [inputProperties]="inputProperties"
+                                    [apptype]="apptype"
+                                    [allModelProperties]="allModelProperties"
+                                    [nodeDefinition]="nodeDefinitionValue">
+    </tb-validator-node-config>
+  </ng-container>
   <ng-container *ngIf="nodeClazz === 'xiSmsInitNode'">
     <tb-sms-init-node-config #smsInitNodeConfigComponent
                                formControlName="configuration"

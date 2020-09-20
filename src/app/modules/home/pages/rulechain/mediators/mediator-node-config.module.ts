@@ -18,6 +18,8 @@ import { EventPublisherNodeConfigComponent } from './action/event-publisher-node
 import { EventReceiverNodeConfigComponent } from './action/event-receiver-node-config.component';
 import { SmsInitNodeConfigComponent } from './action/sms-init-node-config.component';
 import { SmsSendNodeConfigComponent } from './action/sms-send-node-config.component';
+import { LambdaFunctionNodeConfigComponent } from './action/lambda-function-node-config.component';
+import { ValidatorNodeConfigComponent } from './action/validator-node-config.component';
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
@@ -59,7 +61,9 @@ import {MatTableModule} from '@angular/material/table';
     ShopifyProductNodeConfigComponent,
     SmsInitNodeConfigComponent,
     SmsSendNodeConfigComponent,
-    ShopifyOrderNodeConfigComponent
+    ShopifyOrderNodeConfigComponent,
+    LambdaFunctionNodeConfigComponent,
+    ValidatorNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -87,7 +91,9 @@ import {MatTableModule} from '@angular/material/table';
     ShopifyInitNodeConfigComponent,
     ShopifyEventNodeConfigComponent,
     ShopifyProductNodeConfigComponent,
-    ShopifyOrderNodeConfigComponent
+    ShopifyOrderNodeConfigComponent,
+    LambdaFunctionNodeConfigComponent,
+    ValidatorNodeConfigComponent
   ],
   providers: []
 })
