@@ -119,12 +119,12 @@
         <mat-option *ngIf="configuration.param.inputType == 'NUMBER' || configuration.param.inputType == 'Integer' || configuration.param.inputType == 'int' ||
                                     configuration.constant.constantType == 'Integer' || configuration.constant.constantType == 'NUMBER' || configuration.constant.constantType == 'int' ||
                                     configuration.property.type == 'Integer' || configuration.property.type == 'NUMBER' || configuration.property.type == 'int'" value="lessthan">Less Than</mat-option>
-        <mat-option *ngIf="configuration.param.inputType == 'DATE' || configuration.param.inputType == 'Date' ||
-                                    configuration.constant.constantType == 'Date' || configuration.constant.constantType == 'DATE' ||
-                                    configuration.property.type == 'Date' || configuration.property.type == 'DATE'" value="before">Before</mat-option>
-        <mat-option *ngIf="configuration.param.inputType == 'DATE' || configuration.param.inputType == 'Date' ||
-                                    configuration.constant.constantType == 'Date' || configuration.constant.constantType == 'DATE' ||
-                                    configuration.property.type == 'Date' || configuration.property.type == 'DATE'" value="after">After</mat-option>
+        <mat-option *ngIf="configuration.param.inputType == 'DATE' || configuration.param.inputType == 'Date' || configuration.param.inputType == 'time.Time' ||
+                                    configuration.constant.constantType == 'Date' || configuration.constant.constantType == 'DATE' || configuration.constant.constantType == 'time.Time' ||
+                                    configuration.property.type == 'Date' || configuration.property.type == 'DATE' || configuration.property.type == 'time.Time'" value="before">Before</mat-option>
+        <mat-option *ngIf="configuration.param.inputType == 'DATE' || configuration.param.inputType == 'Date' || configuration.param.inputType == 'time.Time' ||
+                                    configuration.constant.constantType == 'Date' || configuration.constant.constantType == 'DATE' || configuration.constant.constantType == 'time.Time' ||
+                                    configuration.property.type == 'Date' || configuration.property.type == 'DATE' || configuration.property.type == 'time.Time'" value="after">After</mat-option>
        <!-- <mat-option *ngIf="configuration.param.inputType == 'NUMBER' || configuration.param.inputType == 'Integer' || configuration.param.inputType == 'int' ||
                                     configuration.constant.constantType == 'Integer' || configuration.constant.constantType == 'NUMBER' || configuration.constant.constantType == 'int' ||
                                     configuration.variable.type == 'Integer' || configuration.variable.type == 'NUMBER' || configuration.variable.type == 'int' ||

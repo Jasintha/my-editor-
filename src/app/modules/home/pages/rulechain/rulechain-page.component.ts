@@ -164,6 +164,8 @@ export class RuleChainPageComponent extends PageComponent
   allRuleInputs: any[];
   allEvents: any[];
   allViewModels: any[];
+  allLambdaFunctions: any[];
+  allRoots: string[];
   queryDb: string;
   commandDb: string;
   connectorData: any[];
@@ -326,6 +328,8 @@ export class RuleChainPageComponent extends PageComponent
     this.allDomainModels = this.ruleChainMetaData.allDomainModels;
     this.allRuleInputs = this.ruleChainMetaData.allRuleInputs
     this.allViewModels = this.ruleChainMetaData.allViewModels;
+    this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+    this.allRoots = this.ruleChainMetaData.allRoots;
     this.allEvents = this.ruleChainMetaData.allEvents;
     this.queryDb = this.ruleChainMetaData.queryDb;
     this.commandDb = this.ruleChainMetaData.commandDb;
@@ -1344,6 +1348,8 @@ export class RuleChainPageComponent extends PageComponent
     const allDomainModels = this.ruleChainMetaData.allDomainModels;
     const allRuleInputs = this.ruleChainMetaData.allRuleInputs;
     const allViewModels = this.ruleChainMetaData.allViewModels;
+    const allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+    const allRoots = this.ruleChainMetaData.allRoots;
     const allEvents = this.ruleChainMetaData.allEvents;
     const queryDb = this.ruleChainMetaData.queryDb;
     const commandDb = this.ruleChainMetaData.commandDb;
@@ -1389,6 +1395,8 @@ export class RuleChainPageComponent extends PageComponent
         allRuleInputs,
         allEvents,
         allValueObjectProperties,
+        allLambdaFunctions,
+        allRoots,
         queryDb,
         commandDb,
         apptype
@@ -1604,6 +1612,8 @@ export interface AddRuleNodeDialogData {
   allModelProperties: any[];
   allRuleInputs: any[];
   allEvents: any[];
+  allLambdaFunctions: any[];
+  allRoots: string[];
   queryDb: string;
   commandDb: string;
   apptype: string;
@@ -1634,6 +1644,8 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   connectorfields: QuestionBase[];
   allDomainModels: any[];
   allViewModels: any[];
+  allLambdaFunctions: any[];
+  allRoots: string[];
   allModelProperties: any[];
   allRuleInputs: any[];
   allEvents: any[];
@@ -1664,6 +1676,8 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.connectorfields = this.data.connectorfields;
     this.allDomainModels = this.data.allDomainModels;
     this.allViewModels = this.data.allViewModels;
+    this.allLambdaFunctions = this.data.allLambdaFunctions;
+    this.allRoots = this.data.allRoots;
     this.allModelProperties = this.data.allModelProperties;
     this.allRuleInputs = this.data.allRuleInputs;
     this.allEvents = this.data.allEvents;

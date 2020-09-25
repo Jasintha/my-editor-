@@ -58,6 +58,8 @@ export interface RuleChainMetaData {
   commandDb?: string;
   apptype?: string;
   allViewModels?: any[];
+  allLambdaFunctions?: any[];
+  allRoots?: string[];
 }
 
 export interface ResolvedRuleChainMetaData extends RuleChainMetaData {

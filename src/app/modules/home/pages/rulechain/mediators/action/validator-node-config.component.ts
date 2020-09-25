@@ -76,6 +76,9 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
   allModelProperties: any[];
 
   @Input()
+  allRoots: string[];
+
+  @Input()
   apptype: string;
 
   nodeDefinitionValue: RuleNodeDefinition;
@@ -120,7 +123,8 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       validatorproperty: [],
       validatorcondition: [],
       customValue: [],
-      join: []
+      join: [],
+      root: []
     });
   }
 
@@ -170,10 +174,13 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
         join = '';
     }
 
-    let customvalue: string = this.validatorNodeConfigFormGroup.get('customValue').value;
+    let constant = this.validatorNodeConfigFormGroup.get('customValue').value;
+
+    let customvalue: string = '';
 
     console.log(customvalue);
-    if(customvalue){
+    if(constant){
+        customvalue = constant.constantName;
     } else {
         customvalue = '';
     }
@@ -211,7 +218,7 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
     this.validatorNodeConfigFormGroup.get('validatorparam').patchValue([], {emitEvent: false});
     this.validatorNodeConfigFormGroup.get('validatorproperty').patchValue([], {emitEvent: false});
     this.validatorNodeConfigFormGroup.get('join').patchValue("", {emitEvent: false});
-    this.validatorNodeConfigFormGroup.get('customValue').patchValue("", {emitEvent: false});
+    this.validatorNodeConfigFormGroup.get('customValue').patchValue({}, {emitEvent: false});
     this.validatorNodeConfigFormGroup.get('validatorcondition').patchValue("", {emitEvent: false});
 
   }
@@ -234,6 +241,13 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
+    console.log(this.configuration.validators);
+
+    if(this.configuration.validators){
+    } else {
+        this.configuration.validators = [];
+    }
+
     this.datasource = new MatTableDataSource(this.configuration.validators);
 
     if (this.changeSubscription) {
@@ -246,6 +260,18 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
         this.updateModel(configuration);
       });
     } else {
+
+      this.validatorNodeConfigFormGroup.patchValue({
+        root: this.configuration.root
+      });
+
+      this.changeSubscription = this.validatorNodeConfigFormGroup.get('root').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.root = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
       this.changeSubscription = this.validatorNodeConfigFormGroup.get('validatorparam').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.validatorparam = configuration;

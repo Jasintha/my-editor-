@@ -86,6 +86,12 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   allViewModels: any[];
 
   @Input()
+  allLambdaFunctions: any[];
+
+  @Input()
+  allRoots: string[];
+
+  @Input()
   allRuleInputs: any[];
 
   @Input()
