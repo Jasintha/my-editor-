@@ -66,6 +66,9 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
   allVariables: any[];
 
   @Input()
+  allLambdaFunctions: any[];
+
+  @Input()
   inputProperties: any[];
 
   @Input()
@@ -117,10 +120,10 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.lambdaFunctionNodeConfigFormGroup = this.fb.group({
-      entity: [],
+      functionparameter: [],
       inputType: [],
-      record: [],
-      customObject: [],
+      //record: [],
+      //customObject: [],
       function: [],
       parameterinputType: [],
       parameterparam: [],
@@ -179,7 +182,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
   }
   
   addParameter(): void{
-
+    /*
     let number: number = 0;
 
     if(this.configuration.lambdaParameters){
@@ -188,13 +191,15 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
         this.configuration.lambdaParameters = [];
         number = this.configuration.lambdaParameters.length + 1;
     }
+    */
 
     let inputType: string = this.lambdaFunctionNodeConfigFormGroup.get('parameterinputType').value;
+    let functionparameter = this.lambdaFunctionNodeConfigFormGroup.get('functionparameter').value;
     
     if (inputType === 'PARAM'){
       let selectedParameterParam = this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').value;
       let parameter = {
-        'parameterName': 'p'+ number,
+        'parameterName': functionparameter.inputName,
         'inputType': inputType,
         'input': '-',
         'property': selectedParameterParam.inputName
@@ -204,7 +209,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
     } else if (inputType === 'PROPERTY'){
       let selectedParameterProperty = this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').value;
       let parameterproperty = {
-        'parameterName': 'p'+ number,
+        'parameterName': functionparameter.inputName,
         'inputType': inputType,
         'input': '-',
         'property': selectedParameterProperty.name
@@ -218,6 +223,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
     this.lambdaFunctionNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
     this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
     this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+    this.lambdaFunctionNodeConfigFormGroup.get('functionparameter').patchValue([], {emitEvent: false});
 
   }
 
@@ -235,7 +241,12 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
         this.updateModel(configuration);
       });
     } else {
-    
+
+      let functionObj = this.configuration.function;
+      if(functionObj){
+        functionObj = this.allLambdaFunctions.find(x => x.name === this.configuration.function.name );
+      }
+      /*
       let customObject = this.configuration.customObject;
       if(customObject){
         customObject = this.inputCustomobjects.find(x => x.name === this.configuration.customObject.name );
@@ -245,17 +256,17 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       if(entity){
         entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
       }
-
+      */
 
       this.lambdaFunctionNodeConfigFormGroup.patchValue({
         inputType: this.configuration.inputType,
-        entity: entity,
-        record: this.configuration.record,
-        customObject: customObject,
+        functionparameter: this.configuration.functionparameter,
+        //record: this.configuration.record,
+        //customObject: customObject,
         parameterinputType: this.configuration.parameterinputType,
         parameterparam: this.configuration.parameterparam,
         parameterproperty: this.configuration.parameterproperty,
-        function: this.configuration.function
+        function: functionObj
       });
 
       this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('function').valueChanges.subscribe(
@@ -264,13 +275,14 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
           this.updateModel(this.configuration);
         }
       );
-
+      /*
       this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('record').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.record = configuration;
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').valueChanges.subscribe(
         (configuration: any) => {
@@ -285,7 +297,8 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
           this.updateModel(this.configuration);
         }
       );
-      
+
+      /*
       this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('inputType').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
 
@@ -315,6 +328,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
           this.updateModel(this.configuration);
         }
       );
+      */
 
     }
   }

@@ -81,6 +81,12 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   allViewModels: any[];
 
   @Input()
+  allLambdaFunctions: any[];
+
+  @Input()
+  allRoots: string[];
+
+  @Input()
   allModelProperties: any[];
 
   @Input()
