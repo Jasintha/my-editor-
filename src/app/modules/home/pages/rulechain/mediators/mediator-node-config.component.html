@@ -88,6 +88,21 @@
                                     [nodeDefinition]="nodeDefinitionValue">
     </tb-validator-node-config>
   </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiIteratorNode'">
+    <tb-iterator-node-config #iteratorNodeConfigComponent
+                              formControlName="configuration"
+                              [ruleNodeId]="ruleNodeId"
+                              [allConstants]=" allConstants"
+                              [inputEntities]=" inputEntities"
+                              [inputCustomobjects]="inputCustomobjects"
+                              [allVariables]="allVariables"
+                              [inputProperties]="inputProperties"
+                              [apptype]="apptype"
+                              [allModelProperties]="allModelProperties"
+                              [allRoots]="allRoots"
+                              [nodeDefinition]="nodeDefinitionValue">
+    </tb-iterator-node-config>
+  </ng-container>
   <ng-container *ngIf="nodeClazz === 'xiSmsInitNode'">
     <tb-sms-init-node-config #smsInitNodeConfigComponent
                                formControlName="configuration"

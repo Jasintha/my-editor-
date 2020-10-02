@@ -22,6 +22,7 @@ import { SmsSendNodeConfigComponent } from './action/sms-send-node-config.compon
 import { LambdaFunctionNodeConfigComponent } from './action/lambda-function-node-config.component';
 import { ValidatorNodeConfigComponent } from './action/validator-node-config.component';
 import { LogNodeConfigComponent } from './action/log-node-config.component';
+import { IteratorNodeConfigComponent } from './action/iterator-node-config.component';
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
@@ -66,6 +67,7 @@ import {MatTableModule} from '@angular/material/table';
     ShopifyOrderNodeConfigComponent,
     BranchNodeConfigComponent,
     LogNodeConfigComponent,
+    IteratorNodeConfigComponent,
     LambdaFunctionNodeConfigComponent,
     ValidatorNodeConfigComponent
   ],
@@ -93,6 +95,7 @@ import {MatTableModule} from '@angular/material/table';
     SmsInitNodeConfigComponent,
     BranchNodeConfigComponent,
     LogNodeConfigComponent,
+    IteratorNodeConfigComponent,
     SmsSendNodeConfigComponent,
     ShopifyInitNodeConfigComponent,
     ShopifyEventNodeConfigComponent,
