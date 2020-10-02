@@ -70,8 +70,11 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
   allModelProperties: any[];
 
   @Input()
-  apptype: string;  
-  
+  apptype: string;
+
+  @Input()
+  allRoots: string[];
+
     domainModelProperties: any[];
     viewModelProperties: any[];
 
@@ -144,6 +147,12 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       secondproperty:[],
       //secondvariable: [],
       //secondvariableProperty: [],
+      root: [],
+      isAsync: false,
+      secondroot: [],
+      secondisAsync:false,
+      errorMsg: "",
+      errorAction: ""
     });
   }
 
@@ -598,6 +607,16 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name );
       }
 
+      let root = this.configuration.root;
+      if(root){
+        root = this.allRoots.find(x => x === this.configuration.root );
+      }
+
+      let secondroot = this.configuration.secondroot;
+      if(secondroot){
+        secondroot = this.allRoots.find(x => x === this.configuration.secondroot );
+      }
+
       this.filterNodeConfigFormGroup.patchValue({
         firstinputType: this.configuration.firstinputType,
         //entity: entity,
@@ -619,8 +638,57 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         //secondvariableProperty: secondvariableProperty,
         secondparam: secondparam,
         secondconstant: secondconstant,
-        secondproperty: secondproperty
+        secondproperty: secondproperty,
+        root: root,
+        secondroot: secondroot,
+        isAsync: this.configuration.isAsync,
+        secondisAsync: this.configuration.secondisAsync,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction
       });
+
+      this.changeSubscription = this.filterNodeConfigFormGroup.get('root').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.root = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondroot').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondroot = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.filterNodeConfigFormGroup.get('isAsync').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.isAsync = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondisAsync').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondisAsync = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.filterNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.filterNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          console.log(configuration);
+          this.configuration.errorAction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.filterNodeConfigFormGroup.get('condition').valueChanges.subscribe(
         (configuration: any) => {

@@ -96,7 +96,9 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
     this.eventReceiverNodeConfigFormGroup = this.fb.group({
       eventSource: [],
       subject: [],
-      event: []
+      event: [],
+      errorMsg: "",
+      errorAction: ""
     });
   }
 
@@ -152,7 +154,9 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
       this.eventReceiverNodeConfigFormGroup.patchValue({
         eventSource: this.configuration.eventSource,
         subject: this.configuration.subject,
-        event: this.configuration.event
+        event: this.configuration.event,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction
       });
 
       this.changeSubscription = this.eventReceiverNodeConfigFormGroup.get('event').valueChanges.subscribe(
@@ -174,6 +178,21 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
         (configuration: any) => {
           console.log(configuration);
           this.configuration.subject = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+      
+      this.changeSubscription = this.eventReceiverNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventReceiverNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          console.log(configuration);
+          this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }
       );
