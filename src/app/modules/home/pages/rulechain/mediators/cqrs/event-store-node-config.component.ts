@@ -132,6 +132,8 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       dbType:[],
       dbAction: [],
       event: [],
+      errorMsg: "",
+      errorAction: ""
       //entity: [],
       //crudinputType: [],
       //crudentity: [],
@@ -403,7 +405,9 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       this.eventStoreNodeConfigFormGroup.patchValue({
         dbType: dbType,
         dbAction: this.configuration.dbAction,
-        event: this.configuration.event
+        event: this.configuration.event,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction
         //entity: entity,
         //crudinputType: this.configuration.crudinputType,
         //crudentity: crudentity,
@@ -415,6 +419,20 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         //crudparam: crudparam
       });
 
+      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          console.log(configuration);
+          this.configuration.errorAction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('dbAction').valueChanges.subscribe(
         (configuration: any) => {

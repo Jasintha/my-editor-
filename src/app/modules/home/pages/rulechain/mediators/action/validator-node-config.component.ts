@@ -124,7 +124,10 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       validatorcondition: [],
       customValue: [],
       join: [],
-      root: []
+      root: [],
+      isAsync: false,
+      errorMsg: "",
+      errorAction: ""
     });
   }
 
@@ -260,10 +263,38 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
         this.updateModel(configuration);
       });
     } else {
-
+      let root = this.configuration.root;
+      if(root && this.allRoots){
+        root = this.allRoots.find(x => x === this.configuration.root );
+      }
       this.validatorNodeConfigFormGroup.patchValue({
-        root: this.configuration.root
+        root: root,
+        isAsync: this.configuration.isAsync,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction
       });
+
+      this.changeSubscription = this.validatorNodeConfigFormGroup.get('isAsync').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.isAsync = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.validatorNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.validatorNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          console.log(configuration);
+          this.configuration.errorAction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.validatorNodeConfigFormGroup.get('root').valueChanges.subscribe(
         (configuration: any) => {

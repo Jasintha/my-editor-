@@ -181,10 +181,10 @@ export class RuleChainPageComponent extends PageComponent
 
   editCallbacks: UserCallbacks = {
     edgeDoubleClick: (event, edge) => {
-      this.openLinkDetails(edge);
+      //this.openLinkDetails(edge);
     },
     edgeEdit: (event, edge) => {
-      this.openLinkDetails(edge);
+      //this.openLinkDetails(edge);
     },
     nodeCallbacks: {
       doubleClick: (event, node: FcRuleNode) => {
@@ -224,12 +224,20 @@ export class RuleChainPageComponent extends PageComponent
           const allowCustomLabels = this.ruleChainService.ruleNodeAllowCustomLinks(sourceNode.component);
           this.enableHotKeys = false;
           if(sourceNode.component.clazz == 'xiRootNode'){
-            let label = 'new';
+            console.log(sourceNode);
+            let sourcename = sourceNode.name.replace(/\s/g, "");
+            let label = this.lowerCaseWord(sourcename);
             let rootlabels = [label];
             let rootLink = {source: edge.source, destination: edge.destination, label : label, labels: rootlabels};
             this.enableHotKeys = true;
             return of(rootLink);
           } else {
+            let label = '';
+            let rootlabels = [label];
+            let rootLink = {source: edge.source, destination: edge.destination, label : label, labels: rootlabels};
+            this.enableHotKeys = true;
+            return of(rootLink);
+            /*
             return this.addRuleNodeLink(edge, labels, allowCustomLabels).pipe(
               tap(() => {
                   this.enableHotKeys = true;
@@ -242,6 +250,7 @@ export class RuleChainPageComponent extends PageComponent
                 }
               })
             );
+            */
           }
         }
       }
@@ -299,6 +308,11 @@ export class RuleChainPageComponent extends PageComponent
       )
       .subscribe();
     this.ruleChainCanvas.adjustCanvasSize(true);
+  }
+
+  lowerCaseWord(word: string) {
+    if (!word) return word;
+    return word[0].toLowerCase() + word.substr(1);
   }
 
   onSearchTextUpdated(searchText: string) {
@@ -541,6 +555,7 @@ export class RuleChainPageComponent extends PageComponent
 
       }
     );
+    console.log(this.ruleChainModel);
     const nodes: FcRuleNode[] = [];
     this.ruleChainMetaData.nodes.forEach((ruleNode) => {
       const component = this.ruleChainService.getRuleNodeComponentByClazz(ruleNode.type);

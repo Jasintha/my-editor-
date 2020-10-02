@@ -1,12 +1,5 @@
 <div [formGroup]="validatorNodeConfigFormGroup">
-  <mat-form-field fxFlex class="mat-block">
-    <mat-label>Root</mat-label>
-    <mat-select formControlName="root">
-      <mat-option *ngFor="let root of allRoots" [value]="root">
-        {{root}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+
   <section style="padding-top: 10px;padding-bottom: 20px;">
     <label>Add Validators</label>
   </section>
@@ -48,22 +41,22 @@
     <mat-select formControlName="validatorcondition">
       <mat-option value="equal">Equal</mat-option>
       <mat-option value="notequal">Not Equal</mat-option>
-      <mat-option *ngIf="configuration.validatorparam.inputType == 'TEXT' || configuration.validatorparam.inputType == 'string' || configuration.validatorparam.inputType == 'String' ||
-                                    configuration.validatorproperty.type == 'TEXT' || configuration.validatorproperty.type == 'string' || configuration.validatorproperty.type == 'String'" value="isblank">Is Blank</mat-option>
-      <mat-option *ngIf="configuration.validatorparam.inputType == 'TEXT' || configuration.validatorparam.inputType == 'string' || configuration.validatorparam.inputType == 'String' ||
-                                    configuration.validatorproperty.type == 'TEXT' || configuration.validatorproperty.type == 'string' || configuration.validatorproperty.type == 'String'" value="isnotblank">Is Not Blank</mat-option>
-      <mat-option *ngIf="configuration.validatorparam.inputType == 'TEXT' || configuration.validatorparam.inputType == 'string' || configuration.validatorparam.inputType == 'String' ||
-                                    configuration.validatorproperty.type == 'TEXT' || configuration.validatorproperty.type == 'string' || configuration.validatorproperty.type == 'String'" value="contains">Contains</mat-option>
-      <mat-option *ngIf="configuration.validatorparam.inputType == 'TEXT' || configuration.validatorparam.inputType == 'string' || configuration.validatorparam.inputType == 'String' ||
-                                    configuration.validatorproperty.type == 'TEXT' || configuration.validatorproperty.type == 'string' || configuration.validatorproperty.type == 'String'" value="contains" value="notcontains">Not Contains</mat-option>
-      <mat-option *ngIf="configuration.validatorparam.inputType == 'NUMBER' || configuration.validatorparam.inputType == 'Integer' || configuration.validatorparam.inputType == 'int' ||
-                                    configuration.validatorproperty.type == 'Integer' || configuration.validatorproperty.type == 'NUMBER' || configuration.validatorproperty.type == 'int'" value="greaterthan">Greater Than</mat-option>
-      <mat-option *ngIf="configuration.validatorparam.inputType == 'NUMBER' || configuration.validatorparam.inputType == 'Integer' || configuration.validatorparam.inputType == 'int' ||
-                                    configuration.validatorproperty.type == 'Integer' || configuration.validatorproperty.type == 'NUMBER' || configuration.validatorproperty.type == 'int'" value="lessthan">Less Than</mat-option>
-      <mat-option *ngIf="configuration.validatorparam.inputType == 'DATE' || configuration.validatorparam.inputType == 'Date' || configuration.validatorparam.inputType == 'time.Time' ||
-                                    configuration.validatorproperty.type == 'Date' || configuration.validatorproperty.type == 'DATE' || configuration.validatorproperty.inputType == 'time.Time'" value="before">Before</mat-option>
-      <mat-option *ngIf="configuration.validatorparam.inputType == 'DATE' || configuration.validatorparam.inputType == 'Date' || configuration.validatorparam.inputType == 'time.Time' ||
-                                    configuration.validatorproperty.type == 'Date' || configuration.validatorproperty.type == 'DATE' || configuration.validatorproperty.inputType == 'time.Time'" value="before" value="after">After</mat-option>
+      <mat-option *ngIf="configuration?.validatorparam?.inputType == 'TEXT' || configuration?.validatorparam?.inputType == 'string' || configuration?.validatorparam?.inputType == 'String' ||
+                                    configuration?.validatorproperty?.type == 'TEXT' || configuration?.validatorproperty?.type == 'string' || configuration?.validatorproperty?.type == 'String'" value="isblank">Is Blank</mat-option>
+      <mat-option *ngIf="configuration?.validatorparam?.inputType == 'TEXT' || configuration?.validatorparam?.inputType == 'string' || configuration?.validatorparam?.inputType == 'String' ||
+                                    configuration?.validatorproperty?.type == 'TEXT' || configuration?.validatorproperty?.type == 'string' || configuration?.validatorproperty?.type == 'String'" value="isnotblank">Is Not Blank</mat-option>
+      <mat-option *ngIf="configuration?.validatorparam?.inputType == 'TEXT' || configuration?.validatorparam?.inputType == 'string' || configuration?.validatorparam?.inputType == 'String' ||
+                                    configuration?.validatorproperty?.type == 'TEXT' || configuration?.validatorproperty?.type == 'string' || configuration?.validatorproperty?.type == 'String'" value="contains">Contains</mat-option>
+      <mat-option *ngIf="configuration?.validatorparam?.inputType == 'TEXT' || configuration?.validatorparam?.inputType == 'string' || configuration?.validatorparam?.inputType == 'String' ||
+                                    configuration?.validatorproperty?.type == 'TEXT' || configuration?.validatorproperty?.type == 'string' || configuration?.validatorproperty?.type == 'String'" value="contains" value="notcontains">Not Contains</mat-option>
+      <mat-option *ngIf="configuration?.validatorparam?.inputType == 'NUMBER' || configuration?.validatorparam?.inputType == 'Integer' || configuration?.validatorparam?.inputType == 'int' ||
+                                    configuration?.validatorproperty?.type == 'Integer' || configuration?.validatorproperty?.type == 'NUMBER' || configuration?.validatorproperty?.type == 'int'" value="greaterthan">Greater Than</mat-option>
+      <mat-option *ngIf="configuration?.validatorparam?.inputType == 'NUMBER' || configuration?.validatorparam?.inputType == 'Integer' || configuration?.validatorparam?.inputType == 'int' ||
+                                    configuration?.validatorproperty?.type == 'Integer' || configuration?.validatorproperty?.type == 'NUMBER' || configuration?.validatorproperty?.type == 'int'" value="lessthan">Less Than</mat-option>
+      <mat-option *ngIf="configuration?.validatorparam?.inputType == 'DATE' || configuration?.validatorparam?.inputType == 'Date' || configuration?.validatorparam?.inputType == 'time.Time' ||
+                                    configuration?.validatorproperty?.type == 'Date' || configuration?.validatorproperty?.type == 'DATE' || configuration?.validatorproperty?.inputType == 'time.Time'" value="before">Before</mat-option>
+      <mat-option *ngIf="configuration?.validatorparam?.inputType == 'DATE' || configuration?.validatorparam?.inputType == 'Date' || configuration?.validatorparam?.inputType == 'time.Time' ||
+                                    configuration?.validatorproperty?.type == 'Date' || configuration?.validatorproperty?.type == 'DATE' || configuration?.validatorproperty?.inputType == 'time.Time'" value="before" value="after">After</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field *ngIf="configuration?.validatorcondition !== 'isEmpty' && configuration?.validatorcondition !== 'isNotEmpty'" fxFlex class="mat-block">
@@ -90,7 +83,7 @@
     </button>
   </div>
 
-  <div fxFlex class="table-container" style="padding: 10px;margin-bottom-5px;">
+  <div fxFlex class="table-container" style="padding: 10px;margin-bottom:10px;">
     <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
 
       <ng-container matColumnDef="inputType">
@@ -129,6 +122,33 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
+
+  <section fxLayout="column" fxLayout.gt-sm="row">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Branch</mat-label>
+      <mat-select formControlName="root">
+        <mat-option *ngFor="let root of allRoots" [value]="root">
+          {{root}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-checkbox formControlName="isAsync">
+      Non Blocking
+    </mat-checkbox>
+  </section>
+
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Error Message</mat-label>
+    <input matInput formControlName="errorMsg"/>
+  </mat-form-field>
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Error Action</mat-label>
+    <mat-select formControlName="errorAction">
+      <mat-option value="1">Log & Continue</mat-option>
+      <mat-option value="2">Log & Exit</mat-option>
+      <mat-option value="3">Return</mat-option>
+    </mat-select>
+  </mat-form-field>
 
 </div>
 

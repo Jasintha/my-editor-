@@ -129,6 +129,8 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
       parameterparam: [],
       parameterproperty: [],
       smsBody: [],
+      errorMsg: "",
+      errorAction: ""
     });
   }
 
@@ -295,7 +297,9 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
         parameterinputType: this.configuration.parameterinputType,
         parameterparam: this.configuration.parameterparam,
         parameterproperty: this.configuration.parameterproperty,
-        smsBody: this.configuration.smsBody
+        smsBody: this.configuration.smsBody,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction
       });
 
       this.changeSubscription = this.smsSendNodeConfigFormGroup.get('smsBody').valueChanges.subscribe(
@@ -342,6 +346,21 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
           this.configuration.parameterproperty = configuration;
 
           console.log(this.configuration);
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.smsSendNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.smsSendNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          console.log(configuration);
+          this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }
       );

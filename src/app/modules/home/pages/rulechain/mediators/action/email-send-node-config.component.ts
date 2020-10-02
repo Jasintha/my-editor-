@@ -134,6 +134,8 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       parameterparam: [],
       parameterproperty: [],
       emailBody: [],
+      errorMsg: "",
+      errorAction: ""
     });
   }
 
@@ -397,7 +399,9 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
        // parametervariableProperty: this.configuration.parametervariableProperty,
         parameterparam: this.configuration.parameterparam,
         parameterproperty: this.configuration.parameterproperty,
-        emailBody: this.configuration.emailBody
+        emailBody: this.configuration.emailBody,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction
       });
 
       this.changeSubscription = this.emailSendNodeConfigFormGroup.get('emailBody').valueChanges.subscribe(
@@ -451,6 +455,21 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
           this.configuration.parameterproperty = configuration;
 
           console.log(this.configuration);
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          console.log(configuration);
+          this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }
       );

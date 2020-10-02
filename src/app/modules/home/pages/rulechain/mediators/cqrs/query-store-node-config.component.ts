@@ -131,7 +131,9 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       queryAction: [],
       customObject: [],
       query: [],
-      entity:[]
+      entity:[],
+      errorMsg: "",
+      errorAction: ""
     });
   }
 
@@ -214,9 +216,25 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         queryAction: this.configuration.queryAction,
         customObject: customObject,
         query: this.configuration.query,
-        entity: entity
+        entity: entity,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction
       });
 
+      this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          console.log(configuration);
+          this.configuration.errorAction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('query').valueChanges.subscribe(
         (configuration: any) => {

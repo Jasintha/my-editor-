@@ -16,13 +16,13 @@
                               [fields]="connectorfields">
     </tb-connector-node-config>
   </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiRootNode'">
+    <!--<ng-container *ngIf="nodeClazz === 'xiRootNode'">
       <tb-root-node-config #rootNodeConfigComponent
                            formControlName="configuration"
                            [ruleNodeId]="ruleNodeId"
                            [nodeDefinition]="nodeDefinitionValue">
       </tb-root-node-config>
-    </ng-container>
+    </ng-container>-->
     <ng-container *ngIf="nodeClazz === 'xiPayloadNode'">
       <tb-payload-node-config #payloadNodeConfigComponent
                               formControlName="configuration"
@@ -120,6 +120,7 @@
                              [inputProperties]="inputProperties"
                              [apptype]="apptype"
                              [allModelProperties]="allModelProperties"
+                             [allRoots]="allRoots"
                              [nodeDefinition]="nodeDefinitionValue">
       </tb-filter-node-config>
     </ng-container>
@@ -228,5 +229,27 @@
                                 [ruleNodeId]="ruleNodeId"
                                 [nodeDefinition]="nodeDefinitionValue">
     </tb-shopify-order-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiBranchNode'">
+    <tb-branch-node-config #branchNodeConfigComponent
+                           formControlName="configuration"
+                           [ruleNodeId]="ruleNodeId"
+                           [allRoots]="allRoots"
+                           [nodeDefinition]="nodeDefinitionValue">
+    </tb-branch-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiLogNode'">
+    <tb-log-node-config #logNodeConfigComponent
+                           formControlName="configuration"
+                           [ruleNodeId]="ruleNodeId"
+                           [allConstants]=" allConstants"
+                           [inputEntities]=" inputEntities"
+                           [inputCustomobjects]="inputCustomobjects"
+                           [allVariables]="allVariables"
+                           [inputProperties]="inputProperties"
+                           [apptype]="apptype"
+                           [allModelProperties]="allModelProperties"
+                           [nodeDefinition]="nodeDefinitionValue">
+    </tb-log-node-config>
   </ng-container>
 </div>

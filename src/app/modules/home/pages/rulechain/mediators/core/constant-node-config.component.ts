@@ -184,17 +184,10 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
 
   private updateModel(configuration: RuleNodeConfiguration) {
 
-  console.log("update model");
     if (this.definedConfigComponent || this.constantNodeConfigFormGroup.valid) {
-      console.log("came valid");
-      console.log(configuration);
       this.propagateChange(configuration);
     } else {
-     console.log("came else block");
 
-     let blah = this.required ? null : configuration;
-     console.log("blahhh log");
-     console.log(blah);
       this.propagateChange(this.required ? null : configuration);
     }
   }

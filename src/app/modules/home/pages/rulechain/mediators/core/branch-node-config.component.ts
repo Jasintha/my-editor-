@@ -29,15 +29,15 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 
 @Component({
-  selector: 'tb-event-publisher-node-config',
-  templateUrl: './event-publisher-node-config.component.html',
+  selector: 'tb-branch-node-config',
+  templateUrl: './branch-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => EventPublisherNodeConfigComponent),
+    useExisting: forwardRef(() => BranchNodeConfigComponent),
     multi: true
   }]
 })
-export class EventPublisherNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
+export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('definedConfigContent', {read: ViewContainerRef, static: true}) definedConfigContainer: ViewContainerRef;
 
@@ -45,8 +45,6 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   get required(): boolean {
     return this.requiredValue;
   }
-
-
   @Input()
   set required(value: boolean) {
     this.requiredValue = coerceBooleanProperty(value);
@@ -58,10 +56,12 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   @Input()
   ruleNodeId: string;
 
-  @Input()
-  allEvents: any[];
-
   nodeDefinitionValue: RuleNodeDefinition;
+
+  @Input()
+  allRoots: string[];
+
+  errorOptions: any[] = [{'name': 'Log & Continue', 'id': 1}, {'name': 'Log & Exit', 'id': 2}, {'name': 'Return', 'id': 3}];
 
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
@@ -79,9 +79,10 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
   definedDirectiveError: string;
 
-  eventPublisherNodeConfigFormGroup: FormGroup;
+  branchNodeConfigFormGroup: FormGroup;
 
   changeSubscription: Subscription;
+
 
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
@@ -93,10 +94,9 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   constructor(private translate: TranslateService,
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
-    this.eventPublisherNodeConfigFormGroup = this.fb.group({
-      eventSource: [],
-      subject: [],
-      event: [],
+    this.branchNodeConfigFormGroup = this.fb.group({
+      root: "",
+      isAsync: false,
       errorMsg: "",
       errorAction: ""
     });
@@ -124,17 +124,15 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     if (this.disabled) {
-      this.eventPublisherNodeConfigFormGroup.disable({emitEvent: false});
+      this.branchNodeConfigFormGroup.disable({emitEvent: false});
     } else {
-      this.eventPublisherNodeConfigFormGroup.enable({emitEvent: false});
+      this.branchNodeConfigFormGroup.enable({emitEvent: false});
     }
   }
 
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
-    console.log("printttt");
-    console.log(this.configuration);
 
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
@@ -147,49 +145,45 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       });
     } else {
 
-      let e = this.configuration.event;
-     // e = this.allEvents.find(x => x.name === this.configuration.event);
+      let root = this.configuration.root;
+      if(root && this.allRoots){
+      console.log(this.allRoots);
+        root = this.allRoots.find(x => x === this.configuration.root );
+      }
+      let errorAction = this.configuration.errorAction;
+      //if(errorAction > 0){
+       // errorAction = this.errorOptions.find(x => x.id === this.configuration.errorAction );
+     // }
 
-      this.eventPublisherNodeConfigFormGroup.patchValue({
-        eventSource: this.configuration.eventSource,
-        subject: this.configuration.subject,
-        event: this.configuration.event,
+      this.branchNodeConfigFormGroup.patchValue({
+        root: root,
+        isAsync: this.configuration.isAsync,
         errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction
+        errorAction: errorAction
       });
 
-      this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('event').valueChanges.subscribe(
+      this.changeSubscription = this.branchNodeConfigFormGroup.get('isAsync').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
-          this.configuration.event = configuration;
+          this.configuration.isAsync = configuration;
           this.updateModel(this.configuration);
         }
       );
 
-      this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('eventSource').valueChanges.subscribe(
+      this.changeSubscription = this.branchNodeConfigFormGroup.get('root').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
-          this.configuration.eventSource = configuration;
+          this.configuration.root = configuration;
           this.updateModel(this.configuration);
         }
       );
 
-      this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('subject').valueChanges.subscribe(
-        (configuration: any) => {
-          console.log(configuration);
-          this.configuration.subject = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-      
-      this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+      this.changeSubscription = this.branchNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.errorMsg = configuration;
           this.updateModel(this.configuration);
         }
       );
 
-      this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+      this.changeSubscription = this.branchNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
           console.log(configuration);
           this.configuration.errorAction = configuration;
@@ -200,7 +194,8 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   }
 
   private updateModel(configuration: RuleNodeConfiguration) {
-    if (this.definedConfigComponent || this.eventPublisherNodeConfigFormGroup.valid) {
+
+    if (this.definedConfigComponent || this.branchNodeConfigFormGroup.valid) {
       this.propagateChange(configuration);
     } else {
       this.propagateChange(this.required ? null : configuration);
@@ -208,4 +203,3 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   }
 
 }
-
