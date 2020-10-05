@@ -139,6 +139,21 @@
                              [nodeDefinition]="nodeDefinitionValue">
       </tb-filter-node-config>
     </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiSwitchNode'">
+    <tb-switch-node-config #switchNodeConfigComponent
+                           formControlName="configuration"
+                           [ruleNodeId]="ruleNodeId"
+                           [allConstants]=" allConstants"
+                           [inputEntities]=" inputEntities"
+                           [inputCustomobjects]="inputCustomobjects"
+                           [allVariables]="allVariables"
+                           [inputProperties]="inputProperties"
+                           [apptype]="apptype"
+                           [allModelProperties]="allModelProperties"
+                           [allRoots]="allRoots"
+                           [nodeDefinition]="nodeDefinitionValue">
+    </tb-switch-node-config>
+  </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiCRUDNode'">
       <tb-crud-node-config #filterNodeConfigComponent
                            formControlName="configuration"
@@ -266,5 +281,33 @@
                            [allModelProperties]="allModelProperties"
                            [nodeDefinition]="nodeDefinitionValue">
     </tb-log-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiFileUploadNode'">
+    <tb-file-upload-node-config #fileUploadNodeConfigComponent
+                             formControlName="configuration"
+                             [ruleNodeId]="ruleNodeId"
+                             [allConstants]=" allConstants"
+                             [inputEntities]=" inputEntities"
+                             [inputCustomobjects]="inputCustomobjects"
+                             [allVariables]="allVariables"
+                             [inputProperties]="inputProperties"
+                             [apptype]="apptype"
+                             [allModelProperties]="allModelProperties"
+                             [nodeDefinition]="nodeDefinitionValue">
+    </tb-file-upload-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiFileDownloadNode'">
+    <tb-file-download-node-config #fileDownloadNodeConfigComponent
+                                formControlName="configuration"
+                                [ruleNodeId]="ruleNodeId"
+                                [allConstants]=" allConstants"
+                                [inputEntities]=" inputEntities"
+                                [inputCustomobjects]="inputCustomobjects"
+                                [allVariables]="allVariables"
+                                [inputProperties]="inputProperties"
+                                [apptype]="apptype"
+                                [allModelProperties]="allModelProperties"
+                                [nodeDefinition]="nodeDefinitionValue">
+    </tb-file-download-node-config>
   </ng-container>
 </div>

@@ -1,0 +1,58 @@
+<div [formGroup]="fileDownloadNodeConfigFormGroup">
+
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>File Upload Input Type</mat-label>
+        <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
+          <mat-option *ngIf="inputProperties?.length" value="PARAM">Param</mat-option>
+          <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+          <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.inputType === 'PARAM'" fxFlex class="mat-block">
+        <mat-label>Param</mat-label>
+        <mat-select formControlName="param">
+          <mat-option *ngFor="let property of inputProperties" [value]="property">
+            {{property.inputName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.inputType === 'CONSTANT'" fxFlex class="mat-block">
+        <mat-label>Constant</mat-label>
+        <mat-select formControlName="constant">
+          <mat-option *ngFor="let constant of allConstants" [value]="constant">
+            {{constant.constantName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.inputType === 'PROPERTY'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="property">
+          <mat-option *ngFor="let property of allModelProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </section>
+
+  </section>
+
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Error Message</mat-label>
+    <input matInput formControlName="errorMsg"/>
+  </mat-form-field>
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Error Action</mat-label>
+    <mat-select formControlName="errorAction">
+      <mat-option value="1">Log & Continue</mat-option>
+      <mat-option value="2">Log & Exit</mat-option>
+      <mat-option value="3">Return</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+

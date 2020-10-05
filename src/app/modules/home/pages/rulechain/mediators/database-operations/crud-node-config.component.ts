@@ -128,13 +128,11 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
       dbAction: [],
       entity: [],
       crudinputType: [],
-      crudentity: [],
-      crudentityProperty: [],
-      crudcustomObject: [],
-      crudcustomObjectProperty: [],
       crudparam: [],
-      crudvariable: [],
-      crudvariableProperty: [],
+      crudconstant: [],
+      crudproperty: [],
+      errorMsg: "",
+      errorAction: ""
     });
   }
 
@@ -161,7 +159,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
   refreshInputTypes(){
     let inputType: string = this.crudNodeConfigFormGroup.get('crudinputType').value;
     this.configuration.crudinputType = inputType;
-
+    /*
     if(inputType === 'MODEL'){
       this.configuration.crudcustomObject= {};
       this.configuration.crudcustomObjectProperty = {};
@@ -188,31 +186,26 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
       this.crudNodeConfigFormGroup.get('crudvariable').patchValue([], {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudvariableProperty').patchValue([], {emitEvent: false});
 
-    } else if (inputType === 'PARAM'){
-      this.configuration.crudentity= {};
-      this.configuration.crudentityProperty = {};
-      this.configuration.crudcustomObject= {};
-      this.configuration.crudcustomObjectProperty = {};
-      this.configuration.crudvariable= {};
-      this.configuration.crudvariableProperty= {};
+    }
+    */
 
-      this.crudNodeConfigFormGroup.get('crudentity').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudentityProperty').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudcustomObject').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudcustomObjectProperty').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudvariable').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudvariableProperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'VARIABLE'){
-      this.configuration.crudentity= {};
-      this.configuration.crudentityProperty = {};
-      this.configuration.crudcustomObject= {};
-      this.configuration.crudcustomObjectProperty = {};
+    if (inputType === 'PARAM'){
+      this.configuration.crudconstant= {};
+      this.configuration.crudproperty= {};
+
+      this.crudNodeConfigFormGroup.get('crudconstant').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudproperty').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
       this.configuration.crudparam= {};
+      this.configuration.crudconstant= {};
 
-      this.crudNodeConfigFormGroup.get('crudentity').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudentityProperty').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudcustomObject').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudcustomObjectProperty').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudconstant').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'CONSTANT'){
+      this.configuration.crudparam= {};
+      this.configuration.crudproperty= {};
+
+      this.crudNodeConfigFormGroup.get('crudproperty').patchValue([], {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
     }
 
@@ -231,22 +224,22 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
     } else {
       this.configuration.crudinputType= '';
-      this.configuration.crudentity= {};
-      this.configuration.crudentityProperty = {};
-      this.configuration.crudcustomObject= {};
-      this.configuration.crudcustomObjectProperty = {};
+      //this.configuration.crudentity= {};
+      //this.configuration.crudentityProperty = {};
+      //this.configuration.crudcustomObject= {};
+      //this.configuration.crudcustomObjectProperty = {};
       this.configuration.crudparam= {};
-      this.configuration.crudvariable= {};
-      this.configuration.crudvariableProperty= {};
+      this.configuration.crudconstant= {};
+      this.configuration.crudproperty= {};
 
       this.crudNodeConfigFormGroup.get('crudinputType').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudentity').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudentityProperty').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudcustomObject').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudcustomObjectProperty').patchValue([], {emitEvent: false});
+     // this.crudNodeConfigFormGroup.get('crudentity').patchValue([], {emitEvent: false});
+     // this.crudNodeConfigFormGroup.get('crudentityProperty').patchValue([], {emitEvent: false});
+     // this.crudNodeConfigFormGroup.get('crudcustomObject').patchValue([], {emitEvent: false});
+     // this.crudNodeConfigFormGroup.get('crudcustomObjectProperty').patchValue([], {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudvariable').patchValue([], {emitEvent: false});
-      this.crudNodeConfigFormGroup.get('crudvariableProperty').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudconstant').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudproperty').patchValue([], {emitEvent: false});
 
     }
 
@@ -290,7 +283,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
       entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
 
       //crud input
-
+      /*
       let crudentity = this.configuration.crudentity;
       let crudentityProperty = this.configuration.crudentityProperty;
       if(this.configuration.crudinputType === 'MODEL'){
@@ -369,10 +362,21 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
           }
         }
       }
+      */
 
       let crudparam = this.configuration.crudparam;
       if(this.configuration.crudinputType === 'PARAM'){
         crudparam = this.inputProperties.find(x => x.inputName === this.configuration.crudparam.inputName );
+      }
+
+      let crudconstant = this.configuration.crudconstant;
+      if(this.configuration.secondinputType === 'CONSTANT'){
+        crudconstant = this.allConstants.find(x => x.constantName === this.configuration.crudconstant.constantName );
+      }
+
+      let crudproperty = this.configuration.crudproperty;
+      if(this.configuration.firstinputType === 'PROPERTY'){
+        crudproperty = this.allModelProperties.find(x => x.name === this.configuration.crudproperty.name );
       }
 
       this.crudNodeConfigFormGroup.patchValue({
@@ -380,13 +384,15 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
         dbAction: this.configuration.dbAction,
         entity: entity,
         crudinputType: this.configuration.crudinputType,
-        crudentity: crudentity,
-        crudentityProperty: crudentityProperty,
-        crudcustomObject: crudcustomObject,
-        crudcustomObjectProperty: crudcustomObjectProperty,
-        crudvariable: crudvariable,
-        crudvariableProperty: crudvariableProperty,
-        crudparam: crudparam
+       // crudentity: crudentity,
+       // crudentityProperty: crudentityProperty,
+       // crudcustomObject: crudcustomObject,
+       // crudcustomObjectProperty: crudcustomObjectProperty,
+        crudconstant: crudconstant,
+        crudproperty: crudproperty,
+        crudparam: crudparam,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction
       });
 
       /*
@@ -405,6 +411,21 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
         }
       );
 
+      this.changeSubscription = this.crudNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.crudNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          console.log(configuration);
+          this.configuration.errorAction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
       this.changeSubscription = this.crudNodeConfigFormGroup.get('entity').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.entity = configuration;
@@ -419,7 +440,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
       );
 
       //crud input changes
-
+      /*
       this.changeSubscription = this.crudNodeConfigFormGroup.get('crudentity').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.crudentity = configuration;
@@ -473,6 +494,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.crudNodeConfigFormGroup.get('crudparam').valueChanges.subscribe(
         (configuration: any) => {
@@ -480,6 +502,22 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
           this.updateModel(this.configuration);
         }
       );
+
+      this.changeSubscription = this.crudNodeConfigFormGroup.get('crudproperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.crudproperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.crudNodeConfigFormGroup.get('crudconstant').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.crudconstant = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      /*
 
       this.changeSubscription = this.crudNodeConfigFormGroup.get('crudvariableProperty').valueChanges.subscribe(
         (configuration: any) => {
@@ -525,6 +563,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
           this.updateModel(this.configuration);
         }
       );
+      */
 
     }
   }

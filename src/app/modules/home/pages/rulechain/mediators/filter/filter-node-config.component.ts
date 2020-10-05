@@ -240,7 +240,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.configuration.param= {};
       this.configuration.property= {};
       //this.configuration.variable= {};
-      this.configuration.variableProperty= {};
+      //this.configuration.variableProperty= {};
 
       //this.filterNodeConfigFormGroup.get('entity').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('entityProperty').patchValue([], {emitEvent: false});
@@ -599,7 +599,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
       let secondconstant = this.configuration.secondconstant;
       if(this.configuration.secondinputType === 'CONSTANT'){
-        secondconstant = this.allConstants.find(x => x.secondconstantName === this.configuration.secondconstant.secondconstantName );
+        secondconstant = this.allConstants.find(x => x.constantName === this.configuration.secondconstant.constantName );
       }
 
       let secondproperty = this.configuration.secondproperty;

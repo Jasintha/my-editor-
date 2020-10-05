@@ -23,11 +23,14 @@ import { LambdaFunctionNodeConfigComponent } from './action/lambda-function-node
 import { ValidatorNodeConfigComponent } from './action/validator-node-config.component';
 import { LogNodeConfigComponent } from './action/log-node-config.component';
 import { IteratorNodeConfigComponent } from './action/iterator-node-config.component';
+import { FileUploadNodeConfigComponent } from './action/file-upload-node-config.component';
+import { FileDownloadNodeConfigComponent } from './action/file-download-node-config.component';
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
 //filter
 import { FilterNodeConfigComponent } from './filter/filter-node-config.component';
+import { SwitchNodeConfigComponent } from './filter/switch-node-config.component';
 
 //shopify
 import { ShopifyInitNodeConfigComponent } from './shopify/shopify-init-node-config.component';
@@ -69,7 +72,10 @@ import {MatTableModule} from '@angular/material/table';
     LogNodeConfigComponent,
     IteratorNodeConfigComponent,
     LambdaFunctionNodeConfigComponent,
-    ValidatorNodeConfigComponent
+    ValidatorNodeConfigComponent,
+    FileDownloadNodeConfigComponent,
+    FileUploadNodeConfigComponent,
+    SwitchNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -102,7 +108,10 @@ import {MatTableModule} from '@angular/material/table';
     ShopifyProductNodeConfigComponent,
     ShopifyOrderNodeConfigComponent,
     LambdaFunctionNodeConfigComponent,
-    ValidatorNodeConfigComponent
+    ValidatorNodeConfigComponent,
+    FileDownloadNodeConfigComponent,
+    FileUploadNodeConfigComponent,
+    SwitchNodeConfigComponent
   ],
   providers: []
 })
