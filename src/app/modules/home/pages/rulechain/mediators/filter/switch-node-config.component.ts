@@ -120,7 +120,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   selectedSecondEntityProperties: any[];
   selectedSecondCustomObjectProperties: any[];
 
-  displayedColumns: string[] = ['condition', 'secondInputType', 'secondInput', 'secondProperty', 'root', 'isAsync', 'actions'];
+  displayedColumns: string[] = ['condition', 'inputType', 'input', 'property', 'root', 'isAsync', 'actions'];
 
   private propagateChange = (v: any) => { };
 
@@ -254,9 +254,9 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       let selectedSwitchParam = this.switchNodeConfigFormGroup.get('switchsecondparam').value;
       let switchcase = {
         'condition': switchCondition,
-        'secondInputType': inputType,
-        'secondInput': '-',
-        'secondProperty': selectedSwitchParam.inputName,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedSwitchParam.inputName,
         'root': switchroot,
         'isAsync': switchisAsync
       };
@@ -266,9 +266,9 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       let selectedSwitchProperty = this.switchNodeConfigFormGroup.get('switchsecondproperty').value;
       let switchcase = {
         'condition': switchCondition,
-        'secondInputType': inputType,
-        'secondInput': '-',
-        'secondProperty': selectedSwitchProperty.name,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedSwitchProperty.name,
         'root': switchroot,
         'isAsync': switchisAsync
       };
@@ -278,9 +278,9 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       let selectedSwitchConstant = this.switchNodeConfigFormGroup.get('switchsecondconstant').value;
       let switchcase = {
         'condition': switchCondition,
-        'secondInputType': inputType,
-        'secondInput': '-',
-        'secondProperty': selectedSwitchConstant.constantName,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedSwitchConstant.constantName,
         'root': switchroot,
         'isAsync': switchisAsync
       };
@@ -484,9 +484,9 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
 export interface ConditionalStatement {
   condition: string;
-  secondInputType: string;
-  secondInput: string;
-  secondProperty: string;
+  inputType: string;
+  input: string;
+  property: string;
   root: string;
   isAsync: string;
 }
