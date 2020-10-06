@@ -25,6 +25,7 @@ import { LogNodeConfigComponent } from './action/log-node-config.component';
 import { IteratorNodeConfigComponent } from './action/iterator-node-config.component';
 import { FileUploadNodeConfigComponent } from './action/file-upload-node-config.component';
 import { FileDownloadNodeConfigComponent } from './action/file-download-node-config.component';
+import { CallNodeConfigComponent } from './action/call-node-config.component';
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
@@ -75,7 +76,8 @@ import {MatTableModule} from '@angular/material/table';
     ValidatorNodeConfigComponent,
     FileDownloadNodeConfigComponent,
     FileUploadNodeConfigComponent,
-    SwitchNodeConfigComponent
+    SwitchNodeConfigComponent,
+    CallNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -111,7 +113,8 @@ import {MatTableModule} from '@angular/material/table';
     ValidatorNodeConfigComponent,
     FileDownloadNodeConfigComponent,
     FileUploadNodeConfigComponent,
-    SwitchNodeConfigComponent
+    SwitchNodeConfigComponent,
+    CallNodeConfigComponent
   ],
   providers: []
 })

@@ -356,4 +356,18 @@
                                 [nodeDefinition]="nodeDefinitionValue">
     </tb-file-download-node-config>
   </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiCallNode'">
+    <tb-call-node-config #callNodeConfigComponent
+                             formControlName="configuration"
+                             [ruleNodeId]="ruleNodeId"
+                             [allConstants]=" allConstants"
+                             [inputEntities]=" inputEntities"
+                             [inputCustomobjects]="inputCustomobjects"
+                             [allVariables]="allVariables"
+                             [inputProperties]="inputProperties"
+                             [apptype]="apptype"
+                             [allModelProperties]="allModelProperties"
+                             [nodeDefinition]="nodeDefinitionValue">
+    </tb-call-node-config>
+  </ng-container>
 </div>
