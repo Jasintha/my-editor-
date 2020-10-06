@@ -1,20 +1,66 @@
 <div [formGroup]="mediatorNodeConfigFormGroup" style="margin-top: 10px;margin-bottom: 10px;">
   <ng-container *ngIf="ruleType === 'CONNECTOR'">
-    <tb-connector-node-config #connectorNodeConfigComponent
-                              formControlName="configuration"
-                              [ruleNodeId]="ruleNodeId"
-                              [ruleEntities]="ruleEntities"
-                              [inputCustomobjects]="inputCustomobjects"
-                              [inputProperties]="inputProperties"
-                              [inputEntities]="inputEntities"
-                              [allFields]="allFields"
-                              [allConstants]=" allConstants"
-                              [allSavedObjects]="allSavedObjects"
-                              [allVariables]="allVariables"
-                              [nodeDefinition]="nodeDefinitionValue"
-                              [allValueObjectProperties]="allValueObjectProperties"
-                              [fields]="connectorfields">
-    </tb-connector-node-config>
+    <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiGmailInitNode_gmail' || nodeClazz === 'CONNECTOR_xiGmailSendNode_gmail' || nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio' || nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio' ;else second">
+      <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiGmailInitNode_gmail'">
+        <tb-email-init-node-config #emailInitNodeConfigComponent
+                                   formControlName="configuration"
+                                   [ruleNodeId]="ruleNodeId"
+                                   [nodeDefinition]="nodeDefinitionValue">
+        </tb-email-init-node-config>
+      </ng-container>
+      <ng-container *ngIf="nodeClazz === 'CONNECTOR_xiGmailSendNode_gmail'">
+        <tb-email-send-node-config #emailSendNodeConfigComponent
+                                   formControlName="configuration"
+                                   [ruleNodeId]="ruleNodeId"
+                                   [allConstants]=" allConstants"
+                                   [inputEntities]=" inputEntities"
+                                   [inputCustomobjects]="inputCustomobjects"
+                                   [allVariables]="allVariables"
+                                   [inputProperties]="inputProperties"
+                                   [apptype]="apptype"
+                                   [allModelProperties]="allModelProperties"
+                                   [nodeDefinition]="nodeDefinitionValue">
+        </tb-email-send-node-config>
+      </ng-container>
+      <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio'">
+        <tb-sms-init-node-config #smsInitNodeConfigComponent
+                                 formControlName="configuration"
+                                 [ruleNodeId]="ruleNodeId"
+                                 [nodeDefinition]="nodeDefinitionValue">
+        </tb-sms-init-node-config>
+      </ng-container>
+      <ng-container *ngIf="nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio'">
+        <tb-sms-send-node-config #smsSendNodeConfigComponent
+                                 formControlName="configuration"
+                                 [ruleNodeId]="ruleNodeId"
+                                 [allConstants]=" allConstants"
+                                 [inputEntities]=" inputEntities"
+                                 [inputCustomobjects]="inputCustomobjects"
+                                 [allVariables]="allVariables"
+                                 [inputProperties]="inputProperties"
+                                 [apptype]="apptype"
+                                 [allModelProperties]="allModelProperties"
+                                 [nodeDefinition]="nodeDefinitionValue">
+        </tb-sms-send-node-config>
+      </ng-container>
+    </ng-container>
+    <ng-template #second>
+      <tb-connector-node-config #connectorNodeConfigComponent
+                                formControlName="configuration"
+                                [ruleNodeId]="ruleNodeId"
+                                [ruleEntities]="ruleEntities"
+                                [inputCustomobjects]="inputCustomobjects"
+                                [inputProperties]="inputProperties"
+                                [inputEntities]="inputEntities"
+                                [allFields]="allFields"
+                                [allConstants]=" allConstants"
+                                [allSavedObjects]="allSavedObjects"
+                                [allVariables]="allVariables"
+                                [nodeDefinition]="nodeDefinitionValue"
+                                [allValueObjectProperties]="allValueObjectProperties"
+                                [fields]="connectorfields">
+      </tb-connector-node-config>
+    </ng-template>
   </ng-container>
     <!--<ng-container *ngIf="nodeClazz === 'xiRootNode'">
       <tb-root-node-config #rootNodeConfigComponent
@@ -37,7 +83,7 @@
                                [nodeDefinition]="nodeDefinitionValue">
       </tb-constant-node-config>
     </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiEmailInitNode'">
+    <!--<ng-container *ngIf="nodeClazz === 'xiEmailInitNode'">
       <tb-email-init-node-config #emailInitNodeConfigComponent
                                  formControlName="configuration"
                                  [ruleNodeId]="ruleNodeId"
@@ -57,7 +103,7 @@
                                  [allModelProperties]="allModelProperties"
                                  [nodeDefinition]="nodeDefinitionValue">
       </tb-email-send-node-config>
-    </ng-container>
+    </ng-container>-->
   <ng-container *ngIf="nodeClazz === 'xiLambdaFunctionNode'">
     <tb-lambda-function-node-config #lambdaFunctionNodeConfigComponent
                                formControlName="configuration"
@@ -103,7 +149,7 @@
                               [nodeDefinition]="nodeDefinitionValue">
     </tb-iterator-node-config>
   </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiSmsInitNode'">
+  <!--<ng-container *ngIf="nodeClazz === 'xiSmsInitNode'">
     <tb-sms-init-node-config #smsInitNodeConfigComponent
                                formControlName="configuration"
                                [ruleNodeId]="ruleNodeId"
@@ -123,7 +169,7 @@
                                [allModelProperties]="allModelProperties"
                                [nodeDefinition]="nodeDefinitionValue">
     </tb-sms-send-node-config>
-  </ng-container>
+  </ng-container>-->
     <ng-container *ngIf="nodeClazz === 'xiFilterNode'">
       <tb-filter-node-config #filterNodeConfigComponent
                              formControlName="configuration"
