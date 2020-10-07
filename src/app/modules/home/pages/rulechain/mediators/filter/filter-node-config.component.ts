@@ -496,17 +496,17 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       */
 
       let param = this.configuration.param;
-      if(this.configuration.firstinputType === 'PARAM'){
+      if(this.configuration.firstinputType === 'PARAM' && this.inputProperties){
         param = this.inputProperties.find(x => x.inputName === this.configuration.param.inputName );
       }
 
       let constant = this.configuration.constant;
-      if(this.configuration.firstinputType === 'CONSTANT'){
+      if(this.configuration.firstinputType === 'CONSTANT' && this.allConstants){
         constant = this.allConstants.find(x => x.constantName === this.configuration.constant.constantName );
       }
 
       let property = this.configuration.property;
-      if(this.configuration.firstinputType === 'PROPERTY'){
+      if(this.configuration.firstinputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
       }
 
@@ -593,27 +593,27 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       */
 
       let secondparam = this.configuration.secondparam;
-      if(this.configuration.secondinputType === 'PARAM'){
+      if(this.configuration.secondinputType === 'PARAM' && this.inputProperties){
         secondparam = this.inputProperties.find(x => x.inputName === this.configuration.secondparam.inputName );
       }
 
       let secondconstant = this.configuration.secondconstant;
-      if(this.configuration.secondinputType === 'CONSTANT'){
+      if(this.configuration.secondinputType === 'CONSTANT' && this.allConstants){
         secondconstant = this.allConstants.find(x => x.constantName === this.configuration.secondconstant.constantName );
       }
 
       let secondproperty = this.configuration.secondproperty;
-      if(this.configuration.firstinputType === 'PROPERTY'){
+      if(this.configuration.firstinputType === 'PROPERTY' && this.allModelProperties){
         secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name );
       }
 
       let root = this.configuration.root;
-      if(root){
+      if(root && this.allRoots){
         root = this.allRoots.find(x => x === this.configuration.root );
       }
 
       let secondroot = this.configuration.secondroot;
-      if(secondroot){
+      if(secondroot && this.allRoots){
         secondroot = this.allRoots.find(x => x === this.configuration.secondroot );
       }
 

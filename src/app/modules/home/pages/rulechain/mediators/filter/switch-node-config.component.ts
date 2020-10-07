@@ -323,17 +323,17 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
     } else {
 
       let param = this.configuration.param;
-      if(this.configuration.firstinputType === 'PARAM'){
+      if(this.configuration.firstinputType === 'PARAM' && this.inputProperties){
         param = this.inputProperties.find(x => x.inputName === this.configuration.param.inputName );
       }
 
       let constant = this.configuration.constant;
-      if(this.configuration.firstinputType === 'CONSTANT'){
+      if(this.configuration.firstinputType === 'CONSTANT' && this.allConstants){
         constant = this.allConstants.find(x => x.constantName === this.configuration.constant.constantName );
       }
 
       let property = this.configuration.property;
-      if(this.configuration.firstinputType === 'PROPERTY'){
+      if(this.configuration.firstinputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
       }
 
@@ -341,7 +341,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
 
       let defaultroot = this.configuration.defaultroot;
-      if(defaultroot){
+      if(defaultroot && this.allRoots){
         defaultroot = this.allRoots.find(x => x === this.configuration.defaultroot );
       }
 
