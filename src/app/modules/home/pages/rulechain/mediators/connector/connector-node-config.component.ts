@@ -104,7 +104,7 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   @Input()
   allValueObjectProperties: any[];
 
-
+  tabledatasource = {} ;
   allRuleProperties:ModelValueproperties[] =[
     {
       type: "PROPERTY",
@@ -219,6 +219,11 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   ngOnInit(): void {
+    this.fields.forEach(question =>{
+      if (question.controlType == "table"){
+        this.tabledatasource[question.key] = new MatTableDataSource<any>();
+      }
+    });
 
     if(this.fields){
         for(let i = 0; i < this.fields.length; i++){
@@ -234,17 +239,54 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     this.connectorConfigFormGroup = this.toFormGroup(this.fields);
   }
 
+  getTableDataSource(tableField: QuestionBase):any{
+    return this.tabledatasource[tableField.key]
+  }
 
+  setDisplayedColumns(tableField: QuestionBase[]):string[]{
+    const displayedColumns: string[] = [];
+    for (let i = 0; i < tableField.length ; i++) {
+      displayedColumns.push(tableField[i].key)
+    }
+    displayedColumns.push("actions")
+    return displayedColumns
+  }
+
+  addTable(tableField: QuestionBase):void{
+    let table={}
+    for (let i = 0; i < tableField.tableFields.length ; i++) {
+      table[tableField.tableFields[i].key] = this.connectorConfigFormGroup.get(tableField.tableFields[i].key).value
+      console.log(table)
+    }
+    this.configuration.connector[tableField.key].push(table);
+    this.updateModel(this.configuration);
+    this.tabledatasource[tableField.key] = new MatTableDataSource(this.configuration.connector[tableField.key]);
+    tableField.tableFields.forEach(question =>{
+      this.connectorConfigFormGroup.get(question.key).patchValue("", {emitEvent: false});
+    });
+  }
+
+  deleteRow(index: number, tableField: QuestionBase): void{
+    this.configuration.connector[tableField.key].splice(index, 1);
+    this.tabledatasource[tableField.key] = new MatTableDataSource(this.configuration.connector[tableField.key]);
+    this.updateModel(this.configuration);
+  }
 
 
   toFormGroup(questions: QuestionBase[]) {
     const group: any = {};
 
     questions.forEach(question => {
-      group[question.key] = question.required ? new FormControl(question.value || '', Validators.required)
-          : new FormControl(question.value || '');
+      if (question.controlType == "table"){
+        question.tableFields.forEach(tableField => {
+          group[tableField.key] = tableField.required ? new FormControl(tableField.value || '', Validators.required)
+              : new FormControl(tableField.value || '');
+        })
+      }else {
+        group[question.key] = question.required ? new FormControl(question.value || '', Validators.required)
+            : new FormControl(question.value || '');
+      }
     });
-
     return new FormGroup(group);
   }
 
@@ -274,6 +316,16 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
 
     this.configuration = deepClone(value);
 
+    this.fields.forEach(question => {
+      if (question.controlType == "table"){
+        if (this.configuration.connector[question.key] == null || this.configuration.connector[question.key] == undefined){
+          this.configuration.connector[question.key] = [];
+        } else {
+          this.tabledatasource[question.key] = new MatTableDataSource(this.configuration.connector[question.key]);
+        }
+      }
+    });
+
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
@@ -286,26 +338,49 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     } else {
 
       this.fields.forEach(question => {
-        let fieldValue = this.configuration.connector[question.key];
-        if (this.checkControlType(question.controlType)){
-            if(fieldValue){
-                fieldValue = question.options.find(x => x.type === fieldValue.type &&  x.name === fieldValue.name);
+        if (question.controlType == "table"){
+          question.tableFields.forEach(tableField => {
+            let fieldValue = this.configuration.connector[tableField.key];
+            if (this.checkControlType(tableField.controlType)) {
+              if (fieldValue) {
+                fieldValue = tableField.options.find(x => x.type === fieldValue.type && x.name === fieldValue.name);
+              }
+            } else if (this.checkType(tableField.controlType)) {
+              if (fieldValue) {
+                fieldValue = tableField.options.find(x => x.type === fieldValue.type && x.name === fieldValue.name);
+              }
             }
-        }else if(this.checkType(question.controlType)){
-            if(fieldValue){
-                fieldValue = question.options.find(x => x.type === fieldValue.type &&  x.name === fieldValue.name);
+            this.connectorConfigFormGroup.get(tableField.key).patchValue(fieldValue, {emitEvent: false});
+
+            //this.connectorConfigFormGroup.get(tableField.key).patchValue(this.configuration.connector[tableField.key], {emitEvent: false});
+            this.changeSubscription = this.connectorConfigFormGroup.get(tableField.key).valueChanges.subscribe(
+                (configuration: RuleNodeConfiguration) => {
+                  this.configuration.connector[tableField.key] = configuration;
+                  this.updateModel(this.configuration);
+                }
+            );
+          });
+        }else {
+          let fieldValue = this.configuration.connector[question.key];
+          if (this.checkControlType(question.controlType)) {
+            if (fieldValue) {
+              fieldValue = question.options.find(x => x.type === fieldValue.type && x.name === fieldValue.name);
             }
+          } else if (this.checkType(question.controlType)) {
+            if (fieldValue) {
+              fieldValue = question.options.find(x => x.type === fieldValue.type && x.name === fieldValue.name);
+            }
+          }
+          this.connectorConfigFormGroup.get(question.key).patchValue(fieldValue, {emitEvent: false});
+
+          //this.connectorConfigFormGroup.get(question.key).patchValue(this.configuration.connector[question.key], {emitEvent: false});
+          this.changeSubscription = this.connectorConfigFormGroup.get(question.key).valueChanges.subscribe(
+              (configuration: RuleNodeConfiguration) => {
+                this.configuration.connector[question.key] = configuration;
+                this.updateModel(this.configuration);
+              }
+          );
         }
-        this.connectorConfigFormGroup.get(question.key).patchValue(fieldValue, {emitEvent: false});
-
-        //this.connectorConfigFormGroup.get(question.key).patchValue(this.configuration.connector[question.key], {emitEvent: false});
-        this.changeSubscription = this.connectorConfigFormGroup.get(question.key).valueChanges.subscribe(
-            (configuration: RuleNodeConfiguration) => {
-              this.configuration.connector[question.key] = configuration;
-              this.updateModel(this.configuration);
-            }
-        );
-
       });
 
     }
