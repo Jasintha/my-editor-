@@ -9,7 +9,7 @@ export class QuestionBase {
     //options?: {key: string, value: string}[];
     options?: any[];
     modelSelectionFields?:ModelSelectionFields[];
-
+    tableFields?:QuestionBase[]
     constructor(options: {
         value?: any;
         key?: string;
@@ -19,6 +19,7 @@ export class QuestionBase {
         controlType?: string;
         type?: string;
         options?: any[];
+        tableFields?:QuestionBase[]
         modelSelectionFields?:ModelSelectionFields[];
 
     } = {}) {
@@ -30,6 +31,7 @@ export class QuestionBase {
         this.controlType = options.controlType || '';
         this.type = options.type || '';
         this.options = options.options || [];
+        this.tableFields = options.tableFields || [];
         this.modelSelectionFields=options.modelSelectionFields;
     }
 }
