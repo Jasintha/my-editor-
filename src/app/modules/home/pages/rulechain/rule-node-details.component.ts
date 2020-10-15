@@ -69,6 +69,9 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   isEdit: boolean;
 
   @Input()
+  isNodeEdit: boolean;
+
+  @Input()
   allDomainModels: any[];
 
   @Input()
@@ -84,7 +87,7 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   allLambdaFunctions: any[];
 
   @Input()
-  allRoots: string[];
+  allRoots: any[];
 
   @Input()
   allModelProperties: any[];
@@ -105,6 +108,8 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   isReadOnly: boolean;
 
   @Input() connectorfields: QuestionBase[];
+
+  @Input() branchAvailability: any;
 
   ruleNodeType = RuleNodeType;
   entityType = EntityType;
@@ -175,6 +180,13 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   }
 
   ngOnInit(): void {
+    if(this.branchAvailability.branchFound){
+        this.allModelProperties = this.branchAvailability.properties;
+         console.log("branch props");
+        console.log(this.branchAvailability.properties);
+        this.allConstants = this.branchAvailability.constants;
+        this.allVariables = this.branchAvailability.variables;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

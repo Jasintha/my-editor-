@@ -80,6 +80,8 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
   @Input()
   ruleNodeId: string;
 
+  @Input() branchAvailability: any;
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
@@ -121,7 +123,8 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       constant: [],
       property: [],
       errorMsg: "",
-      errorAction: ""
+      errorAction: "",
+      branchparam: []
     });
   }
 
@@ -155,19 +158,31 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
     console.log("came to constant");
       this.configuration.param= {};
       this.configuration.property= {};
-
+      this.configuration.branchparam= {};
       this.fileDownloadNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.fileDownloadNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       this.fileDownloadNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
     } else if (inputType === 'PARAM'){
       this.configuration.constant= {};
       this.configuration.property= {};
+      this.configuration.branchparam= {};
+      this.fileDownloadNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       this.fileDownloadNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.fileDownloadNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.constant= {};
       this.configuration.param= {};
+      this.configuration.branchparam= {};
+      this.fileDownloadNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       this.fileDownloadNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.fileDownloadNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.fileDownloadNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.fileDownloadNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.fileDownloadNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
     }
 
     if (this.definedConfigComponent) {
@@ -218,11 +233,17 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
       }
 
+      let branchparam = this.configuration.branchparam;
+      if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+        branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
+      }
+
       this.fileDownloadNodeConfigFormGroup.patchValue({
         inputType: this.configuration.inputType,
         param: p,
         constant: c,
         property: property,
+        branchparam: branchparam,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction
       });
@@ -230,6 +251,13 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       this.changeSubscription = this.fileDownloadNodeConfigFormGroup.get('param').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.param = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.fileDownloadNodeConfigFormGroup.get('branchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.branchparam = configuration;
           this.updateModel(this.configuration);
         }
       );

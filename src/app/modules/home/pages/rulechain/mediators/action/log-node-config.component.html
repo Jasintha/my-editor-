@@ -26,8 +26,9 @@
       <mat-form-field fxFlex class="mat-block">
           <mat-label>Type</mat-label>
           <mat-select formControlName="loginputType" (selectionChange)="refreshlogInputTypes()">
-              <mat-option *ngIf="inputProperties?.length" value="PARAM">Param</mat-option>
+              <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
               <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+              <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
           </mat-select>
       </mat-form-field>
       <section class="mat-block" fxFlex>
@@ -43,7 +44,15 @@
               <mat-label>Property</mat-label>
               <mat-select formControlName="logproperty">
                   <mat-option *ngFor="let property of allModelProperties" [value]="property">
-                      {{property.name}}
+                      {{property?.name}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="configuration.loginputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+              <mat-label>Branch Param</mat-label>
+              <mat-select formControlName="logbranchparam">
+                  <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+                      {{param.name}}
                   </mat-option>
               </mat-select>
           </mat-form-field>

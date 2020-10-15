@@ -1,5 +1,12 @@
 <div [formGroup]="iteratorNodeConfigFormGroup">
   <mat-form-field fxFlex class="mat-block">
+    <mat-label>Input Type</mat-label>
+    <mat-select formControlName="inputType">
+      <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+      <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.inputType === 'PROPERTY'">
     <mat-label>Property</mat-label>
     <mat-select formControlName="property">
       <!--<mat-option *ngFor="let property of allModelProperties" [value]="property">
@@ -12,8 +19,18 @@
       </ng-container>
     </mat-select>
   </mat-form-field>
+  <mat-form-field *ngIf="configuration.inputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+    <mat-label>Branch Param</mat-label>
+    <mat-select formControlName="branchparam">
+      <ng-container *ngFor="let param of branchAvailability?.branchParams">
+      <mat-option *ngIf="param?.record === 'm'" [value]="param">
+        {{param.name}}
+      </mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
 
-  <section fxLayout="column" fxLayout.gt-sm="row">
+  <!--<section fxLayout="column" fxLayout.gt-sm="row">
     <mat-form-field fxFlex class="mat-block">
       <mat-label>Branch</mat-label>
       <mat-select formControlName="root">
@@ -25,7 +42,7 @@
     <mat-checkbox formControlName="isAsync">
       Non Blocking
     </mat-checkbox>
-  </section>
+  </section>-->
 
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Error Message</mat-label>

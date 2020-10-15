@@ -76,7 +76,9 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
   allModelProperties: any[];
 
   @Input()
-  allRoots: string[];
+  allRoots: any[];
+
+  @Input() branchAvailability: any;
 
   @Input()
   apptype: string;
@@ -124,10 +126,11 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       validatorcondition: [],
       customValue: [],
       join: [],
-      root: [],
-      isAsync: false,
+      // root: [],
+      // isAsync: false,
       errorMsg: "",
-      errorAction: ""
+      errorAction: "",
+      validatorbranch: []
     });
   }
 
@@ -155,10 +158,19 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
     this.configuration.validatorinputType = inputType;
     if (inputType === 'PARAM'){
       this.configuration.validatorproperty= {};
+      this.configuration.validatorbranch= {};
       this.validatorNodeConfigFormGroup.get('validatorproperty').patchValue([], {emitEvent: false});
+      this.validatorNodeConfigFormGroup.get('validatorbranch').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.validatorparam= {};
+      this.configuration.validatorbranch= {};
       this.validatorNodeConfigFormGroup.get('validatorparam').patchValue([], {emitEvent: false});
+      this.validatorNodeConfigFormGroup.get('validatorbranch').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.validatorparam= {};
+      this.configuration.validatorproperty= {};
+      this.validatorNodeConfigFormGroup.get('validatorparam').patchValue([], {emitEvent: false});
+      this.validatorNodeConfigFormGroup.get('validatorproperty').patchValue([], {emitEvent: false});
     }
 
     if (this.definedConfigComponent) {
@@ -209,17 +221,36 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
         'property': selectedProperty.name
       };
 
-      console.log(validatorproperty);
-
       this.configuration.validators.push(validatorproperty);
+      this.updateModel(this.configuration);
+    } else if (inputType === 'BRANCH_PARAM'){
+      let selectedBranch = this.validatorNodeConfigFormGroup.get('validatorbranch').value;
+      let validatorbranch = {
+        'inputType': inputType,
+        'condition': this.validatorNodeConfigFormGroup.get('validatorcondition').value,
+        'join': join,
+        'value': customvalue,
+        'property': selectedBranch.name
+      };
+
+      this.configuration.validators.push(validatorbranch);
       this.updateModel(this.configuration);
     }
 
     this.datasource = new MatTableDataSource(this.configuration.validators);
 
+    this.configuration.validatorinputType = '';
+    this.configuration.validatorproperty= {};
+    this.configuration.validatorbranch= {};
+    this.configuration.validatorparam= {};
+    this.configuration.customValue= {};
+    this.configuration.validatorcondition= '';
+    this.configuration.join= '';
+
     this.validatorNodeConfigFormGroup.get('validatorinputType').patchValue([], {emitEvent: false});
     this.validatorNodeConfigFormGroup.get('validatorparam').patchValue([], {emitEvent: false});
     this.validatorNodeConfigFormGroup.get('validatorproperty').patchValue([], {emitEvent: false});
+    this.validatorNodeConfigFormGroup.get('validatorbranch').patchValue([], {emitEvent: false});
     this.validatorNodeConfigFormGroup.get('join').patchValue("", {emitEvent: false});
     this.validatorNodeConfigFormGroup.get('customValue').patchValue({}, {emitEvent: false});
     this.validatorNodeConfigFormGroup.get('validatorcondition').patchValue("", {emitEvent: false});
@@ -263,23 +294,27 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
         this.updateModel(configuration);
       });
     } else {
+    /*
       let root = this.configuration.root;
       if(root && this.allRoots){
         root = this.allRoots.find(x => x === this.configuration.root );
       }
+      */
       this.validatorNodeConfigFormGroup.patchValue({
-        root: root,
-        isAsync: this.configuration.isAsync,
+       // root: root,
+       // isAsync: this.configuration.isAsync,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction
       });
 
+      /*
       this.changeSubscription = this.validatorNodeConfigFormGroup.get('isAsync').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.isAsync = configuration;
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.validatorNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
@@ -296,12 +331,14 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
         }
       );
 
+    /*
       this.changeSubscription = this.validatorNodeConfigFormGroup.get('root').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.root = configuration;
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.validatorNodeConfigFormGroup.get('validatorparam').valueChanges.subscribe(
         (configuration: any) => {
@@ -334,6 +371,13 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       this.changeSubscription = this.validatorNodeConfigFormGroup.get('join').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.join = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.validatorNodeConfigFormGroup.get('validatorbranch').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.validatorbranch = configuration;
           this.updateModel(this.configuration);
         }
       );

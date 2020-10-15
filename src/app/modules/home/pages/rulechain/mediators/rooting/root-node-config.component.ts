@@ -27,6 +27,7 @@ import { Observable } from 'rxjs';
 import { PageComponent } from '@shared/components/page.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'tb-root-node-config',
@@ -54,6 +55,12 @@ export class RootNodeConfigComponent implements ControlValueAccessor, OnInit, On
   disabled: boolean;
 
   @Input()
+  inputEntities: any[];
+
+  @Input()
+  inputCustomobjects: any[];
+
+  @Input()
   ruleNodeId: string;
 
   nodeDefinitionValue: RuleNodeDefinition;
@@ -68,6 +75,8 @@ export class RootNodeConfigComponent implements ControlValueAccessor, OnInit, On
     }
   }
 
+  datasource: MatTableDataSource<Param>;
+
   get nodeDefinition(): RuleNodeDefinition {
     return this.nodeDefinitionValue;
   }
@@ -77,6 +86,8 @@ export class RootNodeConfigComponent implements ControlValueAccessor, OnInit, On
   rootNodeConfigFormGroup: FormGroup;
 
   changeSubscription: Subscription;
+
+  displayedColumns: string[] = ['name', 'inputType', 'input','record', 'actions'];
 
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
@@ -89,7 +100,13 @@ export class RootNodeConfigComponent implements ControlValueAccessor, OnInit, On
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.rootNodeConfigFormGroup = this.fb.group({
-      isAsync: [null, Validators.required]
+      //isAsync: [null, Validators.required],
+      paraminputType: '',
+      paramName: '',
+      paramRecord: '',
+      paramentity: [],
+      paramcustomObject: [],
+      primitive: ''
     });
   }
 
@@ -121,12 +138,71 @@ export class RootNodeConfigComponent implements ControlValueAccessor, OnInit, On
     }
   }
 
+  addParam(): void{
+
+    let inputType: string = this.rootNodeConfigFormGroup.get('paraminputType').value;
+    let paramName: string = this.rootNodeConfigFormGroup.get('paramName').value;
+    let paramRecord: string = this.rootNodeConfigFormGroup.get('paramRecord').value;
+
+    if (inputType === 'MODEL'){
+      let selectedEntity = this.rootNodeConfigFormGroup.get('paramentity').value;
+      let entityparam = {
+        'name': paramName,
+        'inputType': inputType,
+        'input': selectedEntity.name,
+        'record': paramRecord
+      };
+      this.configuration.branchParams.push(entityparam);
+      this.updateModel(this.configuration);
+    } else if (inputType === 'DTO'){
+      let selectedDTO = this.rootNodeConfigFormGroup.get('paramcustomObject').value;
+      let dtoParam = {
+        'name': paramName,
+        'inputType': inputType,
+        'input': selectedDTO.name,
+        'record': paramRecord
+      };
+      this.configuration.branchParams.push(dtoParam);
+      this.updateModel(this.configuration);
+    } else if (inputType === 'PRIMITIVE'){
+      let selectedprimitive = this.rootNodeConfigFormGroup.get('primitive').value;
+      let primitiveParam = {
+        'name': paramName,
+        'inputType': inputType,
+        'input': selectedprimitive,
+        'record': paramRecord
+      };
+      this.configuration.branchParams.push(primitiveParam);
+      this.updateModel(this.configuration);
+    }
+
+    this.datasource = new MatTableDataSource(this.configuration.branchParams);
+
+    this.rootNodeConfigFormGroup.patchValue({
+      paraminputType: '',
+      paramName: '',
+      paramRecord: '',
+      paramentity: [],
+      paramcustomObject: [],
+      primitive: ''
+    });
+
+  }
+
+  deleteRow(index: number): void{
+    this.configuration.branchParams.splice(index, 1);
+    this.datasource = new MatTableDataSource(this.configuration.branchParams);
+    this.updateModel(this.configuration);
+  }
+
   writeValue(value: RuleNodeConfiguration): void {
 
-  console.log("root node write value");
-  console.log(value);
-
     this.configuration = deepClone(value);
+    if(this.configuration.branchParams === null || this.configuration.branchParams === undefined){
+    console.log("undefined");
+        this.configuration.branchParams = [];
+    }
+    this.datasource = new MatTableDataSource(this.configuration.branchParams);
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
@@ -137,16 +213,81 @@ export class RootNodeConfigComponent implements ControlValueAccessor, OnInit, On
         this.updateModel(configuration);
       });
     } else {
-      this.rootNodeConfigFormGroup.get('isAsync').patchValue(this.configuration.isAsync, {emitEvent: false});
+
+      this.rootNodeConfigFormGroup.patchValue({
+        // isAsync: this.configuration.isAsync,
+        paraminputType: this.configuration.paraminputType,
+        paramName: this.configuration.paramName,
+        paramRecord: this.configuration.paramRecord,
+        paramentity: this.configuration.paramentity,
+        paramcustomObject: this.configuration.paramcustomObject,
+        primitive: this.configuration.primitive
+      });
+
+  //    this.rootNodeConfigFormGroup.get('isAsync').patchValue(this.configuration.isAsync, {emitEvent: false});
+      /*
       this.changeSubscription = this.rootNodeConfigFormGroup.get('isAsync').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
 
-          console.log("root node value cahnge sub");
-          console.log(configuration);
           this.configuration.isAsync = configuration;
           this.updateModel(this.configuration);
         }
       );
+      */
+
+      this.changeSubscription = this.rootNodeConfigFormGroup.get('paraminputType').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+          this.configuration.paraminputType = configuration;
+
+          if(this.configuration.paraminputType == 'MODEL'){
+            this.configuration.paramcustomObject= {};
+            this.rootNodeConfigFormGroup.get('paramcustomObject').patchValue([], {emitEvent: false});
+          }else if (this.configuration.paraminputType == 'DTO'){
+            this.configuration.paramentity= {};
+            this.rootNodeConfigFormGroup.get('paramentity').patchValue([], {emitEvent: false});
+          }
+
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.rootNodeConfigFormGroup.get('paramName').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+          this.configuration.paramName = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.rootNodeConfigFormGroup.get('paramRecord').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+          this.configuration.paramRecord = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.rootNodeConfigFormGroup.get('paramentity').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+          this.configuration.paramentity = configuration;
+          this.configuration.paramcustomObject = {};
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.rootNodeConfigFormGroup.get('paramcustomObject').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+          this.configuration.paramcustomObject = configuration;
+          this.configuration.paramentity = {};
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.rootNodeConfigFormGroup.get('primitive').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+          this.configuration.primitive = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
     }
   }
 
@@ -202,3 +343,9 @@ export class RootNodeConfigComponent implements ControlValueAccessor, OnInit, On
   */
 }
 
+export interface Param {
+  name: string;
+  inputType: string;
+  input: string;
+  record: string;
+}

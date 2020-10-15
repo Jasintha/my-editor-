@@ -75,7 +75,9 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
   allModelProperties: any[];
 
   @Input()
-  allRoots: string[];
+  allRoots: any[];
+
+  @Input() branchAvailability: any;
 
   @Input()
   apptype: string;
@@ -115,8 +117,10 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
               private fb: FormBuilder) {
     this.iteratorNodeConfigFormGroup = this.fb.group({
       property: [],
-      root: [],
-      isAsync: false,
+      inputType: '',
+      branchparam: [],
+    //  root: [],
+    //  isAsync: false,
       errorMsg: "",
       errorAction: ""
     });
@@ -165,30 +169,41 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
         this.updateModel(configuration);
       });
     } else {
+      /*
       let root = this.configuration.root;
       if(root && this.allRoots){
         root = this.allRoots.find(x => x === this.configuration.root );
       }
+      */
 
       let property = this.configuration.property;
-      if(property){
+      if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      }
+
+      let branchparam = this.configuration.branchparam;
+      if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+        branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
       }
 
       this.iteratorNodeConfigFormGroup.patchValue({
         property: property,
-        root: root,
-        isAsync: this.configuration.isAsync,
+        branchparam: branchparam,
+        inputType: this.configuration.inputType,
+       // root: root,
+       // isAsync: this.configuration.isAsync,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction
       });
 
+      /*
       this.changeSubscription = this.iteratorNodeConfigFormGroup.get('isAsync').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.isAsync = configuration;
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.iteratorNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
@@ -205,16 +220,41 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
         }
       );
 
+      /*
       this.changeSubscription = this.iteratorNodeConfigFormGroup.get('root').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.root = configuration;
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.iteratorNodeConfigFormGroup.get('property').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.property = configuration;
+          this.configuration.branchparam = {};
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.iteratorNodeConfigFormGroup.get('branchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.branchparam = configuration;
+          this.configuration.property = {};
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.iteratorNodeConfigFormGroup.get('inputType').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.inputType = configuration;
+          if(this.configuration.inputType == 'PROPERTY'){
+            this.configuration.branchparam= {};
+            this.iteratorNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+          }else if (this.configuration.inputType == 'BRANCH_PARAM'){
+            this.configuration.property= {};
+            this.iteratorNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+          }
           this.updateModel(this.configuration);
         }
       );

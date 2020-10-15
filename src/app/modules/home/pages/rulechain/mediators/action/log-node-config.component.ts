@@ -78,6 +78,8 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
   @Input()
   apptype: string;
 
+  @Input() branchAvailability: any;
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   datasource: MatTableDataSource<LogField>;
@@ -120,7 +122,8 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       logFieldName: [],
       loginputType: [],
       logparam: [],
-      logproperty: []
+      logproperty: [],
+      logbranchparam: []
     });
   }
 
@@ -132,7 +135,6 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
   }
 
   ngOnInit(): void {
-  console.log(this.allModelProperties);
   }
 
   ngOnDestroy(): void {
@@ -169,10 +171,24 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       };
       this.configuration.logFieldProperties.push(logproperty);
       this.updateModel(this.configuration);
+    } else if (inputType === 'BRANCH_PARAM'){
+      let selectedBranchParam = this.logNodeConfigFormGroup.get('logbranchparam').value;
+      let logbranchparam = {
+        'logFieldName': logfieldName,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedBranchParam.name
+      };
+      this.configuration.logFieldProperties.push(logbranchparam);
+      this.updateModel(this.configuration);
     }
     
     this.datasource = new MatTableDataSource(this.configuration.logFieldProperties);
-  
+    this.configuration.loginputType = '';
+    this.configuration.logFieldName= {};
+    this.configuration.logparam= {};
+    this.configuration.logbranchparam= {};
+    this.configuration.logproperty= {};
   //  this.logNodeConfigFormGroup.get('loginputType').patchValue([], {emitEvent: false});
   //  this.logNodeConfigFormGroup.get('logFieldName').patchValue("", {emitEvent: false});
   //  this.logNodeConfigFormGroup.get('logparam').patchValue([], {emitEvent: false});
@@ -181,7 +197,8 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       loginputType: [],
       logFieldName: '',
       logparam: [],
-      logproperty: []
+      logproperty: [],
+      logbranchparam: []
     });
 
   }
@@ -197,10 +214,19 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     this.configuration.loginputType = inputType;
     if (inputType === 'PARAM'){
       this.configuration.logproperty= {};
+      this.configuration.logbranchparam= {};
       this.logNodeConfigFormGroup.get('logproperty').patchValue([], {emitEvent: false});
+      this.logNodeConfigFormGroup.get('logbranchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.logparam= {};
+      this.configuration.logbranchparam= {};
       this.logNodeConfigFormGroup.get('logparam').patchValue([], {emitEvent: false});
+      this.logNodeConfigFormGroup.get('logbranchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.logparam= {};
+      this.configuration.logproperty= {};
+      this.logNodeConfigFormGroup.get('logbranchparam').patchValue([], {emitEvent: false});
+      this.logNodeConfigFormGroup.get('logproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -220,6 +246,9 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
+    if(this.configuration.logFieldProperties === null || this.configuration.logFieldProperties === undefined){
+        this.configuration.logFieldProperties = [];
+    }
     this.datasource = new MatTableDataSource(this.configuration.logFieldProperties);
 
     if (this.changeSubscription) {
@@ -241,6 +270,7 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         logFieldName: this.configuration.logFieldName,
         loginputType: this.configuration.loginputType,
         logparam: this.configuration.logparam,
+        logbranchparam: this.configuration.logbranchparam,
         logproperty: this.configuration.logproperty
       });
 
@@ -269,6 +299,13 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       this.changeSubscription = this.logNodeConfigFormGroup.get('logparam').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
           this.configuration.logparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.logNodeConfigFormGroup.get('logbranchparam').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+          this.configuration.logbranchparam = configuration;
           this.updateModel(this.configuration);
         }
       );
