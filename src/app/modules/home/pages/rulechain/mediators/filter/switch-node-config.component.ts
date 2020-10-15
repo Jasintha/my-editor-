@@ -73,7 +73,9 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   apptype: string;
 
   @Input()
-  allRoots: string[];
+  allRoots: any[];
+
+  @Input() branchAvailability: any;
 
     domainModelProperties: any[];
     viewModelProperties: any[];
@@ -120,7 +122,8 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   selectedSecondEntityProperties: any[];
   selectedSecondCustomObjectProperties: any[];
 
-  displayedColumns: string[] = ['condition', 'inputType', 'input', 'property', 'root', 'isAsync', 'actions'];
+  displayedColumns: string[] = ['condition', 'inputType', 'input', 'property', 'actions'];
+ // displayedColumns: string[] = ['condition', 'inputType', 'input', 'property', 'root', 'isAsync', 'actions'];
 
   private propagateChange = (v: any) => { };
 
@@ -132,18 +135,20 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       constant: [],
       param: [],
       property: [],
+      branchparam: [],
+      switchsecondbranchparam: [],
       switchCondition: "",
       switchSecondinputType: [],
       switchsecondconstant: [],
       switchsecondparam: [],
       switchsecondproperty:[],
-      switchroot: "",
-      switchisAsync:false,
-      defaultEnabled: false,
+     // switchroot: "",
+     // switchisAsync:false,
+     // defaultEnabled: false,
       errorMsg: "",
       errorAction: "",
-      defaultroot: "",
-      defaultisAsync: false
+     // defaultroot: "",
+     // defaultisAsync: false
     });
   }
 
@@ -177,21 +182,34 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
     if (inputType === 'CONSTANT'){
       this.configuration.param= {};
       this.configuration.property= {};
+      this.configuration.branchparam= {};
 
       this.switchNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.switchNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
 
     } else if (inputType === 'PARAM'){
       this.configuration.constant= {};
       this.configuration.property= {};
+      this.configuration.branchparam= {};
 
       this.switchNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.switchNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.constant= {};
       this.configuration.param= {};
+      this.configuration.branchparam= {};
       this.switchNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.switchNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.switchNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.switchNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.switchNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
     }
 
     if (this.definedConfigComponent) {
@@ -207,22 +225,36 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
     if (inputType === 'CONSTANT'){
       this.configuration.switchsecondparam= {};
       this.configuration.switchsecondproperty= {};
+      this.configuration.switchsecondbranchparam= {};
 
       this.switchNodeConfigFormGroup.get('switchsecondparam').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('switchsecondproperty').patchValue([], {emitEvent: false});
+      this.switchNodeConfigFormGroup.get('switchsecondbranchparam').patchValue([], {emitEvent: false});
 
     } else if (inputType === 'PARAM'){
       this.configuration.switchsecondconstant= {};
       this.configuration.switchsecondproperty= {};
+      this.configuration.switchsecondbranchparam= {};
 
       this.switchNodeConfigFormGroup.get('switchsecondconstant').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('switchsecondproperty').patchValue([], {emitEvent: false});
+      this.switchNodeConfigFormGroup.get('switchsecondbranchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.switchsecondconstant= {};
       this.configuration.switchsecondparam= {};
+      this.configuration.switchsecondbranchparam= {};
 
       this.switchNodeConfigFormGroup.get('switchsecondconstant').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('switchsecondparam').patchValue([], {emitEvent: false});
+      this.switchNodeConfigFormGroup.get('switchsecondbranchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.switchsecondconstant= {};
+      this.configuration.switchsecondparam= {};
+      this.configuration.switchsecondproperty= {};
+
+      this.switchNodeConfigFormGroup.get('switchsecondconstant').patchValue([], {emitEvent: false});
+      this.switchNodeConfigFormGroup.get('switchsecondparam').patchValue([], {emitEvent: false});
+      this.switchNodeConfigFormGroup.get('switchsecondproperty').patchValue([], {emitEvent: false});
     }
 
     if (this.definedConfigComponent) {
@@ -245,44 +277,55 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
   addSwitchCase(): void{
 
+    let casenumber = this.configuration.switchCases.length + 1;
+    let casename = 'Case' + casenumber;
+
     let inputType: string = this.switchNodeConfigFormGroup.get('switchSecondinputType').value;
     let switchCondition: string = this.switchNodeConfigFormGroup.get('switchCondition').value;
-    let switchroot: string = this.switchNodeConfigFormGroup.get('switchroot').value;
-    let switchisAsync: string = this.switchNodeConfigFormGroup.get('switchisAsync').value;
+    //let switchroot: string = this.switchNodeConfigFormGroup.get('switchroot').value;
+    //let switchisAsync: string = this.switchNodeConfigFormGroup.get('switchisAsync').value;
 
     if (inputType === 'PARAM'){
       let selectedSwitchParam = this.switchNodeConfigFormGroup.get('switchsecondparam').value;
       let switchcase = {
+        'name' : casename,
         'condition': switchCondition,
         'inputType': inputType,
         'input': '-',
-        'property': selectedSwitchParam.inputName,
-        'root': switchroot,
-        'isAsync': switchisAsync
+        'property': selectedSwitchParam.inputName
       };
       this.configuration.switchCases.push(switchcase);
       this.updateModel(this.configuration);
     } else if (inputType === 'PROPERTY'){
       let selectedSwitchProperty = this.switchNodeConfigFormGroup.get('switchsecondproperty').value;
       let switchcase = {
+        'name' : casename,
         'condition': switchCondition,
         'inputType': inputType,
         'input': '-',
-        'property': selectedSwitchProperty.name,
-        'root': switchroot,
-        'isAsync': switchisAsync
+        'property': selectedSwitchProperty.name
       };
       this.configuration.switchCases.push(switchcase);
       this.updateModel(this.configuration);
     } else if (inputType === 'CONSTANT'){
       let selectedSwitchConstant = this.switchNodeConfigFormGroup.get('switchsecondconstant').value;
       let switchcase = {
+        'name' : casename,
         'condition': switchCondition,
         'inputType': inputType,
         'input': '-',
-        'property': selectedSwitchConstant.constantName,
-        'root': switchroot,
-        'isAsync': switchisAsync
+        'property': selectedSwitchConstant.constantName
+      };
+      this.configuration.switchCases.push(switchcase);
+      this.updateModel(this.configuration);
+    } else if (inputType === 'BRANCH_PARAM'){
+      let selectedSwitchBranchParam = this.switchNodeConfigFormGroup.get('switchsecondbranchparam').value;
+      let switchcase = {
+        'name' : casename,
+        'condition': switchCondition,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedSwitchBranchParam.name
       };
       this.configuration.switchCases.push(switchcase);
       this.updateModel(this.configuration);
@@ -290,13 +333,21 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
     this.datasource = new MatTableDataSource(this.configuration.switchCases);
 
+    this.configuration.switchSecondinputType = '';
+    this.configuration.switchCondition = '';
+    this.configuration.switchsecondparam= {};
+    this.configuration.switchsecondproperty= {};
+    this.configuration.switchsecondbranchparam= {};
+    this.configuration.switchsecondconstant= {};
+
     this.switchNodeConfigFormGroup.get('switchSecondinputType').patchValue('', {emitEvent: false});
     this.switchNodeConfigFormGroup.get('switchCondition').patchValue('', {emitEvent: false});
-    this.switchNodeConfigFormGroup.get('switchroot').patchValue('', {emitEvent: false});
-    this.switchNodeConfigFormGroup.get('switchisAsync').patchValue(false, {emitEvent: false});
+   // this.switchNodeConfigFormGroup.get('switchroot').patchValue('', {emitEvent: false});
+   // this.switchNodeConfigFormGroup.get('switchisAsync').patchValue(false, {emitEvent: false});
     this.switchNodeConfigFormGroup.get('switchsecondparam').patchValue([], {emitEvent: false});
     this.switchNodeConfigFormGroup.get('switchsecondproperty').patchValue([], {emitEvent: false});
     this.switchNodeConfigFormGroup.get('switchsecondconstant').patchValue([], {emitEvent: false});
+    this.switchNodeConfigFormGroup.get('switchsecondbranchparam').patchValue([], {emitEvent: false});
 
   }
 
@@ -309,7 +360,11 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
+    if(this.configuration.switchCases === null || this.configuration.switchCases === undefined){
+        this.configuration.switchCases = [];
+    }
     this.datasource = new MatTableDataSource(this.configuration.switchCases);
+
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
@@ -337,33 +392,42 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
       }
 
+      let branchparam = this.configuration.branchparam;
+      if(this.configuration.firstinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+        branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
+      }
+
       //second input
 
-
+      /*
       let defaultroot = this.configuration.defaultroot;
       if(defaultroot && this.allRoots){
         defaultroot = this.allRoots.find(x => x === this.configuration.defaultroot );
       }
+      */
 
       this.switchNodeConfigFormGroup.patchValue({
         firstinputType: this.configuration.firstinputType,
         param: param,
         constant: constant,
         property: property,
+        branchparam: branchparam,
+        switchsecondbranchparam: this.configuration.switchsecondbranchparam,
         switchCondition: this.configuration.switchCondition,
         switchSecondinputType: this.configuration.switchSecondinputType,
         switchsecondparam: this.configuration.switchsecondparam,
         switchsecondconstant: this.configuration.switchsecondconstant,
         switchsecondproperty: this.configuration.switchsecondproperty,
-        switchroot: this.configuration.switchroot,
-        switchisAsync: this.configuration.switchisAsync,
+        // switchroot: this.configuration.switchroot,
+        // switchisAsync: this.configuration.switchisAsync,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction,
-        defaultEnabled: this.configuration.defaultEnabled,
-        defaultisAsync: this.configuration.defaultisAsync,
-        defaultroot: defaultroot
+        // defaultEnabled: this.configuration.defaultEnabled,
+        // defaultisAsync: this.configuration.defaultisAsync,
+        // defaultroot: defaultroot
       });
 
+      /*
       this.changeSubscription = this.switchNodeConfigFormGroup.get('defaultroot').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.defaultroot = configuration;
@@ -378,6 +442,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
+
       this.changeSubscription = this.switchNodeConfigFormGroup.get('defaultEnabled').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.defaultEnabled = configuration;
@@ -388,6 +453,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
       );
+
 
       this.changeSubscription = this.switchNodeConfigFormGroup.get('switchroot').valueChanges.subscribe(
         (configuration: any) => {
@@ -402,6 +468,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.switchNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
@@ -446,6 +513,13 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
+      this.changeSubscription = this.switchNodeConfigFormGroup.get('branchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.branchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
       //second input changes
 
       this.changeSubscription = this.switchNodeConfigFormGroup.get('switchsecondparam').valueChanges.subscribe(
@@ -469,6 +543,13 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
+      this.changeSubscription = this.switchNodeConfigFormGroup.get('switchsecondbranchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.switchsecondbranchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
     }
   }
 
@@ -483,10 +564,11 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
 }
 
 export interface ConditionalStatement {
+  name: string;
   condition: string;
   inputType: string;
   input: string;
   property: string;
-  root: string;
-  isAsync: string;
+ // root: string;
+ // isAsync: string;
 }

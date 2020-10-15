@@ -3,8 +3,9 @@
     <mat-form-field fxFlex class="mat-block">
         <mat-label>Type</mat-label>
         <mat-select formControlName="modelpropertyType" (selectionChange)="refreshTypes()">
-            <mat-option *ngIf="allRuleInputs?.length" value="API_INPUT">API Input</mat-option>
+            <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="API_INPUT">API Input</mat-option>
             <mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>
+            <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -14,7 +15,7 @@
         <mat-select formControlName="modelpropertyruleInput">
             <mat-option *ngFor="let domainModel of allRuleInputs" [value]="domainModel">
                 {{domainModel.inputName}} <span *ngIf="domainModel.inputType === 'model'"> - Domain Model</span>
-                <span *ngIf="domainModel.inputType === 'dto'"> - View Model</span>
+                <span *ngIf="domainModel.inputType === 'dto'"> - DTO Model</span>
             </mat-option>
         </mat-select>
     </mat-form-field>
@@ -24,7 +25,18 @@
             <ng-container *ngFor="let domainModel of allVariables">
                 <mat-option *ngIf="domainModel?.pkg === 'model' || domainModel?.pkg === 'dto'" [value]="domainModel">
                     {{domainModel.name}} <span *ngIf="domainModel.pkg === 'model'"> - Domain Model</span>
-                    <span *ngIf="domainModel.pkg === 'dto'"> - View Model</span>
+                    <span *ngIf="domainModel.pkg === 'dto'"> - DTO Model</span>
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="configuration.modelpropertyType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="modelpropertybranchParam">
+            <ng-container *ngFor="let domainModel of branchAvailability?.branchParams">
+                <mat-option *ngIf="(domainModel?.inputType === 'MODEL' || domainModel?.inputType === 'DTO') && domainModel?.record === 's'" [value]="domainModel">
+                    {{domainModel.name}} : {{domainModel.input}} <span *ngIf="domainModel.inputType === 'MODEL'"> - Domain Model</span>
+                    <span *ngIf="domainModel.inputType === 'DTO'"> - DTO Model</span>
                 </mat-option>
             </ng-container>
         </mat-select>

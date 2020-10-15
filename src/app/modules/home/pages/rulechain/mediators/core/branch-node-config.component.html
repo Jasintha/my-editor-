@@ -2,9 +2,9 @@
   <section fxLayout="column" fxLayout.gt-sm="row">
     <mat-form-field fxFlex class="mat-block">
       <mat-label>Branch</mat-label>
-      <mat-select formControlName="root">
+      <mat-select formControlName="branch">
         <mat-option *ngFor="let root of allRoots" [value]="root">
-          {{root}}
+          {{root.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -12,6 +12,94 @@
       Non Blocking
     </mat-checkbox>
   </section>
+
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Branch parameter</mat-label>
+      <mat-select formControlName="branchparameter">
+        <mat-option *ngFor="let param of configuration?.branch?.params" [value]="param">
+          {{param.name}} - {{param.input}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Parameter Input Type</mat-label>
+      <mat-select formControlName="parameterinputType" (selectionChange)="refreshParameterInputTypes()">
+        <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
+        <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+        <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <section class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.parameterinputType === 'PARAM'" fxFlex class="mat-block">
+        <mat-label>Param</mat-label>
+        <mat-select formControlName="parameterparam">
+          <mat-option *ngFor="let property of inputProperties" [value]="property">
+            {{property.inputName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.parameterinputType === 'PROPERTY'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="parameterproperty">
+          <mat-option *ngFor="let property of allModelProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.parameterinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="parameterbranchparam">
+          <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+            {{param.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <button mat-icon-button class="tb-fullscreen-button-style"
+            (click)="addParameter()"
+            matTooltip="Add Parameter"
+            matTooltipPosition="above">
+      <mat-icon color="primary">add</mat-icon>
+    </button>
+  </section>
+  <div fxFlex class="table-container" style="padding: 10px;margin-bottom:10px;">
+    <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="parameterName">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.parameterName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="inputType">
+        <th mat-header-cell *matHeaderCellDef> Input Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.inputType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="input">
+        <th mat-header-cell *matHeaderCellDef> Input </th>
+        <td mat-cell *matCellDef="let element"> {{element.input}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="property">
+        <th mat-header-cell *matHeaderCellDef> Property </th>
+        <td mat-cell *matCellDef="let element"> {{element.property}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element;let i = index">
+          <button mat-icon-button class="tb-mat-32" (click)="deleteRow(i)" matTooltip="Delete Parameter" matTooltipPosition="above">
+            <mat-icon style="color:red;">delete</mat-icon>
+          </button></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Error Message</mat-label>
     <input matInput formControlName="errorMsg"/>

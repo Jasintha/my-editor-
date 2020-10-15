@@ -62,13 +62,15 @@
       </tb-connector-node-config>
     </ng-template>
   </ng-container>
-    <!--<ng-container *ngIf="nodeClazz === 'xiRootNode'">
+    <ng-container *ngIf="nodeClazz === 'xiBranchNode'">
       <tb-root-node-config #rootNodeConfigComponent
                            formControlName="configuration"
                            [ruleNodeId]="ruleNodeId"
+                           [inputEntities]=" inputEntities"
+                           [inputCustomobjects]="inputCustomobjects"
                            [nodeDefinition]="nodeDefinitionValue">
       </tb-root-node-config>
-    </ng-container>-->
+    </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiPayloadNode'">
       <tb-payload-node-config #payloadNodeConfigComponent
                               formControlName="configuration"
@@ -116,6 +118,7 @@
                                [apptype]="apptype"
                                [allModelProperties]="allModelProperties"
                                     [allLambdaFunctions]="allLambdaFunctions"
+                                    [branchAvailability]="branchAvailability"
                                [nodeDefinition]="nodeDefinitionValue">
     </tb-lambda-function-node-config>
   </ng-container>
@@ -131,6 +134,7 @@
                                     [apptype]="apptype"
                                     [allModelProperties]="allModelProperties"
                                     [allRoots]="allRoots"
+                              [branchAvailability]="branchAvailability"
                                     [nodeDefinition]="nodeDefinitionValue">
     </tb-validator-node-config>
   </ng-container>
@@ -145,6 +149,7 @@
                               [inputProperties]="inputProperties"
                               [apptype]="apptype"
                               [allModelProperties]="allModelProperties"
+                             [branchAvailability]="branchAvailability"
                               [allRoots]="allRoots"
                               [nodeDefinition]="nodeDefinitionValue">
     </tb-iterator-node-config>
@@ -181,6 +186,7 @@
                              [inputProperties]="inputProperties"
                              [apptype]="apptype"
                              [allModelProperties]="allModelProperties"
+                             [branchAvailability]="branchAvailability"
                              [allRoots]="allRoots"
                              [nodeDefinition]="nodeDefinitionValue">
       </tb-filter-node-config>
@@ -196,6 +202,7 @@
                            [inputProperties]="inputProperties"
                            [apptype]="apptype"
                            [allModelProperties]="allModelProperties"
+                           [branchAvailability]="branchAvailability"
                            [allRoots]="allRoots"
                            [nodeDefinition]="nodeDefinitionValue">
     </tb-switch-node-config>
@@ -224,6 +231,7 @@
                                             [allViewModels]="allViewModels"
                                             [allRuleInputs]="allRuleInputs"
                                             [allVariables]="allVariables"
+                                            [branchAvailability]="branchAvailability"
                            [nodeDefinition]="nodeDefinitionValue">
       </tb-domain-model-variable-node-config>
     </ng-container>
@@ -256,6 +264,7 @@
                          [commandDb]="commandDb"
                          [apptype]="apptype"
                          [allModelProperties]="allModelProperties"
+                                [branchAvailability]="branchAvailability"
                                 [allEvents]="allEvents"
                          [nodeDefinition]="nodeDefinitionValue">
     </tb-event-store-node-config>
@@ -276,40 +285,18 @@
                          [nodeDefinition]="nodeDefinitionValue">
     </tb-query-store-node-config>
   </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiShopifyInitNode'">
-    <tb-shopify-init-node-config #shopifyInitNodeConfigComponent
-                                formControlName="configuration"
-                                [ruleNodeId]="ruleNodeId"
-                                [nodeDefinition]="nodeDefinitionValue">
-    </tb-shopify-init-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiShopifyEventNode'">
-    <tb-shopify-event-node-config #shopifyEventNodeConfigComponent
-                                formControlName="configuration"
-                                [ruleNodeId]="ruleNodeId"
-                                [inputEntities]=" inputEntities"
-                                [inputCustomobjects]="inputCustomobjects"
-                                [nodeDefinition]="nodeDefinitionValue">
-    </tb-shopify-event-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiShopifyProductNode'">
-    <tb-shopify-product-node-config #shopifyProductNodeConfigComponent
-                                formControlName="configuration"
-                                [ruleNodeId]="ruleNodeId"
-                                [nodeDefinition]="nodeDefinitionValue">
-    </tb-shopify-product-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiShopifyOrderNode'">
-    <tb-shopify-order-node-config #shopifyOrderNodeConfigComponent
-                                formControlName="configuration"
-                                [ruleNodeId]="ruleNodeId"
-                                [nodeDefinition]="nodeDefinitionValue">
-    </tb-shopify-order-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiBranchNode'">
+
+  <ng-container *ngIf="nodeClazz === 'xiCallFunctionNode'">
     <tb-branch-node-config #branchNodeConfigComponent
                            formControlName="configuration"
                            [ruleNodeId]="ruleNodeId"
+                           [allConstants]=" allConstants"
+                           [inputEntities]=" inputEntities"
+                           [inputCustomobjects]="inputCustomobjects"
+                           [allVariables]="allVariables"
+                           [inputProperties]="inputProperties"
+                           [branchAvailability]="branchAvailability"
+                           [allModelProperties]="allModelProperties"
                            [allRoots]="allRoots"
                            [nodeDefinition]="nodeDefinitionValue">
     </tb-branch-node-config>
@@ -324,6 +311,7 @@
                            [allVariables]="allVariables"
                            [inputProperties]="inputProperties"
                            [apptype]="apptype"
+                        [branchAvailability]="branchAvailability"
                            [allModelProperties]="allModelProperties"
                            [nodeDefinition]="nodeDefinitionValue">
     </tb-log-node-config>
@@ -337,6 +325,7 @@
                              [inputCustomobjects]="inputCustomobjects"
                              [allVariables]="allVariables"
                              [inputProperties]="inputProperties"
+                                [branchAvailability]="branchAvailability"
                              [apptype]="apptype"
                              [allModelProperties]="allModelProperties"
                              [nodeDefinition]="nodeDefinitionValue">
@@ -351,6 +340,7 @@
                                 [inputCustomobjects]="inputCustomobjects"
                                 [allVariables]="allVariables"
                                 [inputProperties]="inputProperties"
+                                  [branchAvailability]="branchAvailability"
                                 [apptype]="apptype"
                                 [allModelProperties]="allModelProperties"
                                 [nodeDefinition]="nodeDefinitionValue">
@@ -365,6 +355,7 @@
                              [inputCustomobjects]="inputCustomobjects"
                              [allVariables]="allVariables"
                              [inputProperties]="inputProperties"
+                         [branchAvailability]="branchAvailability"
                              [apptype]="apptype"
                              [allModelProperties]="allModelProperties"
                              [nodeDefinition]="nodeDefinitionValue">

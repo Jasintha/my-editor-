@@ -180,6 +180,8 @@ export class RuleChainService {
         switchrelationTypes.push(sourceNode.configuration.switchCases[j].name);
       }
 
+      switchrelationTypes.push('Default');
+
       const switchlinkLabels: {[label: string]: LinkLabel} = {};
 
       for (let a=0; a < switchrelationTypes.length; a++) {
@@ -191,7 +193,30 @@ export class RuleChainService {
       }
 
       return switchlinkLabels;
-    } else {
+    }
+    /*
+    else if(component.clazz == 'xiFilterNode' && component.configurationDescriptor.nodeDefinition.relationTypes.length == 0){
+      let filterrelationTypes: string[] = [];
+      let successlabel = sourceNode.name.replace(/\s/g, "") + '_SUCCESS';
+      let failurelabel = sourceNode.name.replace(/\s/g, "") + '_FAILURE';
+      let nextlabel = '';
+      filterrelationTypes.push(successlabel);
+      filterrelationTypes.push(failurelabel);
+      filterrelationTypes.push(nextlabel);
+      const switchlinkLabels: {[label: string]: LinkLabel} = {};
+
+      for (let a=0; a < filterrelationTypes.length; a++) {
+        let switchlabel = filterrelationTypes[a];
+        switchlinkLabels[switchlabel] = {
+          name: switchlabel,
+          value: switchlabel
+        };
+      }
+
+      return switchlinkLabels;
+    }
+    */
+    else {
       const relationTypes = component.configurationDescriptor.nodeDefinition.relationTypes;
       const linkLabels: {[label: string]: LinkLabel} = {};
       relationTypes.forEach((label) => {

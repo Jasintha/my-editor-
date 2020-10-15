@@ -89,7 +89,7 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   allLambdaFunctions: any[];
 
   @Input()
-  allRoots: string[];
+  allRoots: any[];
 
   @Input()
   allRuleInputs: any[];
@@ -116,6 +116,8 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   allVariables: any[];
 
   @Input() connectorfields: QuestionBase[];
+
+  @Input() branchAvailability: any;
 
   nodeDefinitionValue: RuleNodeDefinition;
 

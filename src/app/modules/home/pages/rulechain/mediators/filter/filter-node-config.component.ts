@@ -73,7 +73,9 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
   apptype: string;
 
   @Input()
-  allRoots: string[];
+  allRoots: any[];
+
+  @Input() branchAvailability: any;
 
     domainModelProperties: any[];
     viewModelProperties: any[];
@@ -134,6 +136,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       constant: [],
       param: [],
       property: [],
+      branchparam: [],
       //variable: [],
       //variableProperty: [],
       condition: [],
@@ -145,12 +148,13 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       secondconstant: [],
       secondparam: [],
       secondproperty:[],
+      secondbranchparam: [],
       //secondvariable: [],
       //secondvariableProperty: [],
-      root: [],
-      isAsync: false,
-      secondroot: [],
-      secondisAsync:false,
+      //root: [],
+      //isAsync: false,
+      //secondroot: [],
+      //secondisAsync:false,
       errorMsg: "",
       errorAction: ""
     });
@@ -239,6 +243,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       //this.configuration.customObjectProperty = {};
       this.configuration.param= {};
       this.configuration.property= {};
+      this.configuration.branchparam= {};
       //this.configuration.variable= {};
       //this.configuration.variableProperty= {};
 
@@ -248,6 +253,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       //this.filterNodeConfigFormGroup.get('customObjectProperty').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('variable').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('variableProperty').patchValue([], {emitEvent: false});
 
@@ -258,6 +264,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       //this.configuration.customObjectProperty = {};
       this.configuration.constant= {};
       this.configuration.property= {};
+      this.configuration.branchparam= {};
       //this.configuration.variable= {};
       //this.configuration.variableProperty= {};
 
@@ -267,13 +274,23 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       //this.filterNodeConfigFormGroup.get('customObjectProperty').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('variable').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('variableProperty').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.constant= {};
       this.configuration.param= {};
+      this.configuration.branchparam= {};
       this.filterNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.filterNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
     }
 
     if (this.definedConfigComponent) {
@@ -341,6 +358,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       //this.configuration.secondcustomObjectProperty = {};
       this.configuration.secondparam= {};
       this.configuration.secondproperty= {};
+      this.configuration.secondbranchparam= {};
       //this.configuration.secondvariable= {};
       //this.configuration.secondvariableProperty= {};
 
@@ -352,6 +370,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.filterNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('secondvariable').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('secondvariableProperty').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
 
     } else if (inputType === 'PARAM'){
       //this.configuration.secondentity= {};
@@ -362,6 +381,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.configuration.secondproperty= {};
       //this.configuration.secondvariable= {};
       //this.configuration.secondvariableProperty= {};
+      this.configuration.secondbranchparam= {};
 
       //this.filterNodeConfigFormGroup.get('secondentity').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('secondentityProperty').patchValue([], {emitEvent: false});
@@ -371,12 +391,23 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.filterNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('secondvariable').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('secondvariableProperty').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.secondconstant= {};
       this.configuration.secondparam= {};
+      this.configuration.secondbranchparam= {};
 
       this.filterNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.secondconstant= {};
+      this.configuration.secondparam= {};
+      this.configuration.secondproperty= {};
+
+      this.filterNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+      this.filterNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
     }
 
     if (this.definedConfigComponent) {
@@ -398,9 +429,6 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
   }
 
   writeValue(value: RuleNodeConfiguration): void {
-
-  console.log("email init node write value");
-  console.log(value);
 
     this.configuration = deepClone(value);
     if (this.changeSubscription) {
@@ -510,6 +538,11 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
       }
 
+      let branchparam = this.configuration.branchparam;
+      if(this.configuration.firstinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+        branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
+      }
+
       //second input
       /*
       let secondentity = this.configuration.secondentity;
@@ -603,9 +636,16 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       }
 
       let secondproperty = this.configuration.secondproperty;
-      if(this.configuration.firstinputType === 'PROPERTY' && this.allModelProperties){
+      if(this.configuration.secondinputType === 'PROPERTY' && this.allModelProperties){
         secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name );
       }
+
+      let secondbranchparam = this.configuration.secondbranchparam;
+      if(this.configuration.secondinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+        secondbranchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.secondbranchparam.name );
+      }
+
+      /*
 
       let root = this.configuration.root;
       if(root && this.allRoots){
@@ -616,6 +656,8 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       if(secondroot && this.allRoots){
         secondroot = this.allRoots.find(x => x === this.configuration.secondroot );
       }
+
+      */
 
       this.filterNodeConfigFormGroup.patchValue({
         firstinputType: this.configuration.firstinputType,
@@ -628,6 +670,8 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         param: param,
         constant: constant,
         property: property,
+        branchparam: branchparam,
+        secondbranchparam: secondbranchparam,
         condition: this.configuration.condition,
         secondinputType: this.configuration.secondinputType,
         //secondentity: secondentity,
@@ -639,14 +683,15 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         secondparam: secondparam,
         secondconstant: secondconstant,
         secondproperty: secondproperty,
-        root: root,
-        secondroot: secondroot,
-        isAsync: this.configuration.isAsync,
-        secondisAsync: this.configuration.secondisAsync,
+        //root: root,
+        //secondroot: secondroot,
+        //isAsync: this.configuration.isAsync,
+        //secondisAsync: this.configuration.secondisAsync,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction
       });
 
+      /*
       this.changeSubscription = this.filterNodeConfigFormGroup.get('root').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.root = configuration;
@@ -675,6 +720,8 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
+      */
+
       this.changeSubscription = this.filterNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.errorMsg = configuration;
@@ -684,7 +731,6 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
       this.changeSubscription = this.filterNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }
@@ -702,9 +748,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         (configuration: any) => {
           this.configuration.entity = configuration;
 
-          console.log(configuration);
           let selectedentity = this.inputEntities.find(x => x.name === configuration.name );
-          console.log(selectedentity);
           if(selectedentity){
           if(this.apptype === 'microservice' ){
               if(this.domainModelProperties){
@@ -777,6 +821,20 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
+      this.changeSubscription = this.filterNodeConfigFormGroup.get('branchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.branchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondbranchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondbranchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
       /*
       this.changeSubscription = this.filterNodeConfigFormGroup.get('variableProperty').valueChanges.subscribe(
         (configuration: any) => {
@@ -833,7 +891,6 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
             if(this.apptype === 'microservice' ){
               if(this.domainModelProperties){
                 this.selectedSecondEntityProperties = this.domainModelProperties.filter(p => p.modelName == selectedsecondentity.name);
-                console.log(this.selectedSecondEntityProperties);
               } else {
                 this.selectedSecondEntityProperties = [];
               }

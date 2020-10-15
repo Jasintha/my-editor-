@@ -31,6 +31,7 @@
             {{ 'rulenode.debug-mode' | translate }}
           </mat-checkbox>-->
         </section>
+        <ng-container *ngIf="isNodeEdit">
         <tb-rule-node-config #ruleNodeConfigComponent
                              formControlName="configuration"
                              [ruleNodeId]="ruleNode.ruleNodeId?.id"
@@ -56,8 +57,10 @@
                              [commandDb]="commandDb"
                              [apptype]="apptype"
                              [nodeDefinition]="ruleNode.component.configurationDescriptor.nodeDefinition"
+                             [branchAvailability]="branchAvailability"
                               [connectorfields]="connectorfields">
         </tb-rule-node-config>
+        </ng-container>
         <div formGroupName="additionalInfo" fxLayout="column">
           <mat-form-field class="mat-block">
             <mat-label translate>rulenode.description</mat-label>

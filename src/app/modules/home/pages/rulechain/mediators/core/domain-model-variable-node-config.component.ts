@@ -88,6 +88,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
   @Input()
   allVariables: any[];
 
+  @Input() branchAvailability: any;
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   propertydatasource: MatTableDataSource<Property>;
@@ -161,6 +163,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       modelpropertyType: [],
       //modelpropertydomainModel: [],
      // modelpropertyviewModel: [],
+     modelpropertybranchParam: [],
       propertyName: []
     });
   }
@@ -213,15 +216,27 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     this.configuration.modelpropertyType = modelpropertyType;
     if (modelpropertyType === 'API_INPUT'){
       this.configuration.modelpropertyvariable= {};
+      this.configuration.modelpropertybranchParam= {};
       //this.configuration.name= "";
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
       this.domainModelVariableNodeConfigFormGroup.get('modelpropertyvariable').patchValue([], {emitEvent: false});
+      this.domainModelVariableNodeConfigFormGroup.get('modelpropertybranchParam').patchValue([], {emitEvent: false});
       this.domainModelVariableNodeConfigFormGroup.get('propertyName').patchValue([], {emitEvent: false});
     } else if (modelpropertyType === 'VARIABLE'){
       this.configuration.modelpropertyruleInput= {};
+      this.configuration.modelpropertybranchParam= {};
       //this.configuration.name= "";
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
       this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').patchValue([], {emitEvent: false});
+      this.domainModelVariableNodeConfigFormGroup.get('modelpropertybranchParam').patchValue([], {emitEvent: false});
+      this.domainModelVariableNodeConfigFormGroup.get('propertyName').patchValue([], {emitEvent: false});
+    } else if (modelpropertyType === 'BRANCH_PARAM'){
+      this.configuration.modelpropertyruleInput= {};
+      this.configuration.modelpropertyvariable= {};
+      //this.configuration.name= "";
+      this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+      this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').patchValue([], {emitEvent: false});
+      this.domainModelVariableNodeConfigFormGroup.get('modelpropertyvariable').patchValue([], {emitEvent: false});
       this.domainModelVariableNodeConfigFormGroup.get('propertyName').patchValue([], {emitEvent: false});
     }
 
@@ -241,25 +256,33 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     }
 
     const type : string = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyType').value;
+    let pkg : string = '';
 
     //let modelTitleName = '';
     let modelName = '';
     if(type === 'API_INPUT'){
         modelName = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.inputName;
+        pkg = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.inputType;
+        //let modelNameTrimmed = modelName.replace(/\s/g, "");
+        //let modelNameLowerCase = modelNameTrimmed.toLowerCase();
+        //modelTitleName = this.titleCaseWord(modelNameLowerCase);
+    } else if (type === 'VARIABLE') {
+        modelName = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyvariable').value.name;
+        pkg = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyvariable').value.pkg;
         //let modelNameTrimmed = modelName.replace(/\s/g, "");
         //let modelNameLowerCase = modelNameTrimmed.toLowerCase();
         //modelTitleName = this.titleCaseWord(modelNameLowerCase);
     } else {
-        modelName = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyvariable').value.name;
-        //let modelNameTrimmed = modelName.replace(/\s/g, "");
-        //let modelNameLowerCase = modelNameTrimmed.toLowerCase();
-        //modelTitleName = this.titleCaseWord(modelNameLowerCase);
+        modelName = this.domainModelVariableNodeConfigFormGroup.get('modelpropertybranchParam').value.name;
+        let pkgLowerCase = this.domainModelVariableNodeConfigFormGroup.get('modelpropertybranchParam').value.inputType.toLowerCase();
+        pkg = pkgLowerCase;
     }
 
     let property: Property = {
       modelType: type,
       modelUIName: modelName,
       modelName : modelName,
+      pkg: pkg,
       name: this.domainModelVariableNodeConfigFormGroup.get('propertyName').value,
       type: selectedNode.data.propertytype,
       property: selectedNode
@@ -297,6 +320,10 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
+
+    if(this.configuration.modelproperties === null || this.configuration.modelproperties === undefined){
+        this.configuration.modelproperties = [];
+    }
     this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
 
     if (this.changeSubscription) {
@@ -352,6 +379,31 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
               if(selectedvariableviewModel){
               let designtree : any[] = [];
               designtree.push(selectedvariableviewModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+            }
+          }
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.domainModelVariableNodeConfigFormGroup.get('modelpropertybranchParam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.modelpropertybranchParam = configuration;
+
+          if(configuration.inputType === 'MODEL'){
+            let selectedbranchparamdomainModel = this.allDomainModels.find(x => x.nameTitleCase === configuration.input );
+              if(selectedbranchparamdomainModel){
+              let designtree : any[] = [];
+              designtree.push(selectedbranchparamdomainModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+            }
+          } else if (configuration.inputType === 'DTO'){
+            let selectedbranchparamviewModel = this.allViewModels.find(x => x.nameTitleCase === configuration.input );
+              if(selectedbranchparamviewModel){
+              let designtree : any[] = [];
+              designtree.push(selectedbranchparamviewModel.design);
               //this.dataSource.data = null;
               this.dataSource.data = designtree;
             }
@@ -416,6 +468,7 @@ export interface Property {
   property: DomainModelProperty;
   name: string;
   type: string;
+  pkg: string;
 }
 
 export interface DomainModelProperty {

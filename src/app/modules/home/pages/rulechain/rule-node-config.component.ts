@@ -113,7 +113,7 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
   allLambdaFunctions: any[];
 
   @Input()
-  allRoots: string[];
+  allRoots: any[];
 
   @Input()
   allModelProperties: any[];
@@ -134,6 +134,8 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
   apptype: string;
 
   @Input() connectorfields: QuestionBase[];
+
+  @Input() branchAvailability: any;
 
   nodeDefinitionValue: RuleNodeDefinition;
 

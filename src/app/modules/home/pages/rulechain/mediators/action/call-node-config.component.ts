@@ -69,6 +69,8 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
   @Input()
   allModelProperties: any[];
 
+  @Input() branchAvailability: any;
+
   @Input()
   apptype: string;
 
@@ -137,6 +139,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       callreturninputType: [],
       callreturnentity: [],
       callreturncustomObject: [],
+      calltargetbranchparam: [],
       errorMsg: "",
       errorAction: ""
     });
@@ -171,19 +174,31 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
     if (inputType === 'CONSTANT'){
       this.configuration.targetparam= {};
       this.configuration.calltargetproperty= {};
-
+      this.configuration.calltargetbranchparam= {};
       this.callNodeConfigFormGroup.get('targetparam').patchValue([], {emitEvent: false});
       this.callNodeConfigFormGroup.get('calltargetproperty').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('calltargetbranchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'PARAM'){
       this.configuration.targetconstant= {};
       this.configuration.calltargetproperty= {};
+      this.configuration.calltargetbranchparam= {};
       this.callNodeConfigFormGroup.get('targetconstant').patchValue([], {emitEvent: false});
       this.callNodeConfigFormGroup.get('calltargetproperty').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('calltargetbranchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.targetconstant= {};
       this.configuration.targetparam= {};
+      this.configuration.calltargetbranchparam= {};
       this.callNodeConfigFormGroup.get('targetconstant').patchValue([], {emitEvent: false});
       this.callNodeConfigFormGroup.get('targetparam').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('calltargetbranchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.targetconstant= {};
+      this.configuration.targetparam= {};
+      this.configuration.calltargetproperty= {};
+      this.callNodeConfigFormGroup.get('targetconstant').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('targetparam').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('calltargetproperty').patchValue([], {emitEvent: false});
     }
 
     if (this.definedConfigComponent) {
@@ -231,16 +246,36 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       };
       this.configuration.callTargets.push(targetconstant);
       this.updateModel(this.configuration);
+    } else if (inputType === 'BRANCH_PARAM'){
+      let selectedTargetBranchParam = this.callNodeConfigFormGroup.get('calltargetbranchparam').value;
+      let calltargetbranchparam = {
+        'targetType': targetParameterType,
+        'targetName': targetName,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedTargetBranchParam.name
+      };
+      this.configuration.callTargets.push(calltargetbranchparam);
+      this.updateModel(this.configuration);
     }
     
     this.targetdatasource = new MatTableDataSource(this.configuration.callTargets);
-  
+
+    this.configuration.targetinputType = '';
+    this.configuration.targetParameterType= '';
+    this.configuration.targetName= '';
+    this.configuration.targetparam= {};
+    this.configuration.calltargetproperty= {};
+    this.configuration.targetconstant= {};
+    this.configuration.calltargetbranchparam= {};
+
     this.callNodeConfigFormGroup.get('targetinputType').patchValue('', {emitEvent: false});
     this.callNodeConfigFormGroup.get('targetParameterType').patchValue('', {emitEvent: false});
     this.callNodeConfigFormGroup.get('targetName').patchValue('', {emitEvent: false});
     this.callNodeConfigFormGroup.get('targetparam').patchValue([], {emitEvent: false});
     this.callNodeConfigFormGroup.get('calltargetproperty').patchValue([], {emitEvent: false});
     this.callNodeConfigFormGroup.get('targetconstant').patchValue([], {emitEvent: false});
+    this.callNodeConfigFormGroup.get('calltargetbranchparam').patchValue([], {emitEvent: false});
 
   }
 
@@ -339,6 +374,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         callreturninputType: this.configuration.callreturninputType,
         callreturnentity: entity,
         callreturncustomObject: customObject,
+        calltargetbranchparam: this.configuration.calltargetbranchparam,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction
       });
@@ -411,7 +447,14 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
           this.configuration.callreturnrecord = configuration;
           this.updateModel(this.configuration);
         }
-      );      
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('calltargetbranchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.calltargetbranchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
       
       this.changeSubscription = this.callNodeConfigFormGroup.get('callreturninputType').valueChanges.subscribe(
         (configuration: any) => {

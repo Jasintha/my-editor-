@@ -1,7 +1,113 @@
 <div [formGroup]="rootNodeConfigFormGroup">
-  <section fxLayout="column" fxLayout.gt-sm="row">
+  <!--<section fxLayout="column" fxLayout.gt-sm="row">
     <mat-checkbox formControlName="isAsync">
       Async
     </mat-checkbox>
+  </section>-->
+
+  <section style="padding-top: 10px;padding-bottom: 20px;">
+    <label>Add Parameters</label>
   </section>
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="paramName"/>
+    </mat-form-field>
+
+      <section class="mat-block" fxFlex>
+        <mat-form-field fxFlex class="mat-block">
+          <mat-label>Input Type</mat-label>
+          <mat-select formControlName="paraminputType">
+            <mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
+            <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>
+            <mat-option value="PRIMITIVE">Primitive</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+
+      <section class="mat-block" fxFlex>
+        <mat-form-field *ngIf="configuration.paraminputType === 'MODEL'" fxFlex class="mat-block">
+          <mat-label>Model</mat-label>
+          <mat-select formControlName="paramentity">
+            <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+              {{nodeEntity.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="configuration.paraminputType === 'DTO'" fxFlex class="mat-block">
+          <mat-label>DTO</mat-label>
+          <mat-select formControlName="paramcustomObject">
+            <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
+              {{nodeEntity.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="configuration.paraminputType === 'PRIMITIVE'" fxFlex class="mat-block">
+          <mat-label>Primitive</mat-label>
+          <mat-select formControlName="primitive">
+            <mat-option value="Integer">Number</mat-option>
+            <mat-option value="String">Text</mat-option>
+            <mat-option value="Date">Date</mat-option>
+            <mat-option value="Boolean">True/False</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </section>
+
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Record</mat-label>
+      <mat-select formControlName="paramRecord">
+        <mat-option value="s">Single</mat-option>
+        <mat-option value="m">Multiple</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    
+    <!--<button mat-raised-button color="primary"
+            type="button">
+      {{ 'action.add' | translate }}
+    </button>-->
+    <button mat-icon-button class="tb-fullscreen-button-style"
+            (click)="addParam()"
+            matTooltip="Add Param"
+            matTooltipPosition="above">
+      <mat-icon color="primary">add</mat-icon>
+    </button>
+  </section>
+
+  <div fxFlex class="table-container" style="padding: 10px;">
+    <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="inputType">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.inputType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="input">
+        <th mat-header-cell *matHeaderCellDef> Input </th>
+        <td mat-cell *matCellDef="let element"> {{element.input}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="record">
+        <th mat-header-cell *matHeaderCellDef> Record </th>
+        <td mat-cell *matCellDef="let element"> {{element.record}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element;let i = index">
+          <button mat-icon-button class="tb-mat-32" (click)="deleteRow(i)" matTooltip="Delete Constant" matTooltipPosition="above">
+            <mat-icon style="color:red;">delete</mat-icon>
+          </button></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 </div>

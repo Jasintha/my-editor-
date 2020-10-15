@@ -80,6 +80,8 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
   @Input()
   allModelProperties: any[];
 
+  @Input() branchAvailability: any;
+
   @Input()
   apptype: string;
 
@@ -127,7 +129,8 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       function: [],
       parameterinputType: [],
       parameterparam: [],
-      parameterproperty: []
+      parameterproperty: [],
+      parameterbranch: []
     });
   }
 
@@ -164,10 +167,19 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
     this.configuration.parameterinputType = inputType;
     if (inputType === 'PARAM'){
       this.configuration.parameterproperty= {};
+      this.configuration.parameterbranch= {};
       this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+      this.lambdaFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.parameterparam= {};
+      this.configuration.parameterbranch= {};
       this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+      this.lambdaFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.parameterparam= {};
+      this.configuration.parameterproperty= {};
+      this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+      this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -216,13 +228,30 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       };
       this.configuration.lambdaParameters.push(parameterproperty);
       this.updateModel(this.configuration);
+    } else if (inputType === 'BRANCH_PARAM'){
+      let selectedParameterBranch = this.lambdaFunctionNodeConfigFormGroup.get('parameterbranch').value;
+      let parameterbranch = {
+        'parameterName': functionparameter.inputName,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedParameterBranch.name
+      };
+      this.configuration.lambdaParameters.push(parameterbranch);
+      this.updateModel(this.configuration);
     }
 
     this.datasource = new MatTableDataSource(this.configuration.lambdaParameters);
+
+    this.configuration.parameterinputType = '';
+    this.configuration.parameterproperty= {};
+    this.configuration.parameterbranch= {};
+    this.configuration.parameterparam= {};
+    this.configuration.functionparameter= {};
   
     this.lambdaFunctionNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
     this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
     this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+    this.lambdaFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
     this.lambdaFunctionNodeConfigFormGroup.get('functionparameter').patchValue([], {emitEvent: false});
 
   }
@@ -230,6 +259,9 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
+    if(this.configuration.lambdaParameters === null || this.configuration.lambdaParameters === undefined){
+        this.configuration.lambdaParameters = [];
+    }
     this.datasource = new MatTableDataSource(this.configuration.lambdaParameters);
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
@@ -243,7 +275,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
     } else {
 
       let functionObj = this.configuration.function;
-      if(functionObj){
+      if(functionObj && this.allLambdaFunctions){
         functionObj = this.allLambdaFunctions.find(x => x.name === this.configuration.function.name );
       }
       /*
@@ -266,6 +298,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
         parameterinputType: this.configuration.parameterinputType,
         parameterparam: this.configuration.parameterparam,
         parameterproperty: this.configuration.parameterproperty,
+        parameterbranch: this.configuration.parameterbranch,
         function: functionObj
       });
 
@@ -294,6 +327,13 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.parameterproperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('parameterbranch').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.parameterbranch = configuration;
           this.updateModel(this.configuration);
         }
       );

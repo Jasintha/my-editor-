@@ -165,13 +165,15 @@ export class RuleChainPageComponent extends PageComponent
   allEvents: any[];
   allViewModels: any[];
   allLambdaFunctions: any[];
-  allRoots: string[];
+  allRoots: any[];
   queryDb: string;
   commandDb: string;
   connectorData: any[];
   apptype: string;
   connectorfields: QuestionBase[];
   allValueObjectProperties: any[];
+
+  branchAvailability: any;
 
   ruleChainModel: FcRuleNodeModel = {
     nodes: [],
@@ -181,10 +183,10 @@ export class RuleChainPageComponent extends PageComponent
 
   editCallbacks: UserCallbacks = {
     edgeDoubleClick: (event, edge) => {
-      //this.openLinkDetails(edge);
+      this.openLinkDetails(edge);
     },
     edgeEdit: (event, edge) => {
-      //this.openLinkDetails(edge);
+      this.openLinkDetails(edge);
     },
     nodeCallbacks: {
       doubleClick: (event, node: FcRuleNode) => {
@@ -223,16 +225,31 @@ export class RuleChainPageComponent extends PageComponent
           const labels = this.ruleChainService.getRuleNodeSupportedLinks(sourceNode);
           const allowCustomLabels = this.ruleChainService.ruleNodeAllowCustomLinks(sourceNode.component);
           this.enableHotKeys = false;
-          if(sourceNode.component.clazz == 'xiRootNode'){
-            console.log(sourceNode);
+          if(sourceNode.component.clazz == 'xiBranchNode'){
             let sourcename = sourceNode.name.replace(/\s/g, "");
-            let label = this.lowerCaseWord(sourcename);
+            let label = 'BRANCH_' +this.lowerCaseWord(sourcename);
             let rootlabels = [label];
             let rootLink = {source: edge.source, destination: edge.destination, label : label, labels: rootlabels};
             this.enableHotKeys = true;
             return of(rootLink);
-          } else {
-            let label = '';
+          } else if(sourceNode.component.clazz == 'xiValidatorNode' || sourceNode.component.clazz == 'xiIteratorNode' || sourceNode.component.clazz == 'xiFilterNode' ||
+            sourceNode.component.clazz == 'xiSwitchNode'){
+
+            return this.addRuleNodeLink(edge, labels, allowCustomLabels).pipe(
+              tap(() => {
+                  this.enableHotKeys = true;
+              }),
+              mergeMap((res) => {
+                if (res) {
+                  return of(res);
+                } else {
+                  return NEVER;
+                }
+              })
+            );
+
+          }else {
+            let label = 'Next';
             let rootlabels = [label];
             let rootLink = {source: edge.source, destination: edge.destination, label : label, labels: rootlabels};
             this.enableHotKeys = true;
@@ -555,7 +572,6 @@ export class RuleChainPageComponent extends PageComponent
 
       }
     );
-    console.log(this.ruleChainModel);
     const nodes: FcRuleNode[] = [];
     this.ruleChainMetaData.nodes.forEach((ruleNode) => {
       const component = this.ruleChainService.getRuleNodeComponentByClazz(ruleNode.type);
@@ -938,6 +954,10 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   openNodeDetails(node: FcRuleNode) {
+  console.log("open node");
+  console.log(node);
+
+    this.branchAvailability = {'branchParams': [], 'branchFound': false};
     this.connectorfields = [];
     if (node.component.type !== RuleNodeType.INPUT) {
       this.enableHotKeys = false;
@@ -947,6 +967,11 @@ export class RuleChainPageComponent extends PageComponent
       this.isEditingRuleNode = true;
       this.editingRuleNodeIndex = this.ruleChainModel.nodes.indexOf(node);
       this.editingRuleNode = deepClone(node, ['component']);
+
+      if (node.component.clazz != 'xiBranchNode'){
+          let branchNodeAvailability = this.getConnections(this.editingRuleNodeIndex);
+          this.branchAvailability = branchNodeAvailability;
+      }
 
 
       if(node.component.type === 'CONNECTOR'){
@@ -958,6 +983,94 @@ export class RuleChainPageComponent extends PageComponent
       setTimeout(() => {
         this.ruleNodeComponent.ruleNodeFormGroup.markAsPristine();
       }, 0);
+    }
+  }
+
+
+  getConnections(editIndex){
+
+    let allConnections = [];
+
+      const nodes: FcRuleNode[] = [];
+      this.ruleChainModel.nodes.forEach((node) => {
+        if (node.component.type !== RuleNodeType.INPUT && node.component.type !== RuleNodeType.RULE_CHAIN) {
+          nodes.push(node);
+        }
+      });
+
+
+      this.ruleChainModel.edges.forEach((edge) => {
+        const sourceNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.source);
+        const destNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.destination);
+        if (sourceNode.component.type !== RuleNodeType.INPUT) {
+          const fromIndex = nodes.indexOf(sourceNode);
+          if (destNode.component.type === RuleNodeType.RULE_CHAIN) {
+
+          } else {
+            const toIndex = nodes.indexOf(destNode);
+            const nodeConnection = {
+              fromIndex,
+              toIndex
+            } as NodeConnectionInfo;
+            edge.labels.forEach((label) => {
+              const newNodeConnection = deepClone(nodeConnection);
+              newNodeConnection.type = label;
+              allConnections.push(newNodeConnection);
+            });
+          }
+        }
+      });
+
+      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [], [], []);
+      console.log(branchFoundObj);
+
+      if(branchFoundObj.branchFound){
+        console.log("branch node");
+        console.log(nodes[branchFoundObj.branchIndex]);
+        if(nodes[branchFoundObj.branchIndex].configuration.branchParams){
+            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables};
+            return obj;
+        } else {
+            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables};
+            return obj;
+        }
+
+      } else {
+            let obj = {'branchParams': [], 'branchFound': false, 'properties': [], 'constants': [], 'variables': []};
+            return obj;
+      }
+
+  }
+
+  checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeConstantArray, nodeVariableArray){
+    let foundNode = allConnections.find(x => x.toIndex === index);
+    if(foundNode){
+        if(foundNode.type.startsWith("BRANCH_")){
+            let obj = {'branchIndex': foundNode.fromIndex, 'branchFound': true, 'properties': nodePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray};
+            return obj;
+        } else {
+
+            if(Object.keys(nodes[foundNode.fromIndex].configuration.nodevariable).length !== 0){
+                nodeVariableArray = nodeVariableArray.push(nodes[foundNode.fromIndex].configuration.nodevariable);
+            }
+
+            if(nodes[foundNode.fromIndex].component.clazz === 'xiModelPropertyNode'){
+                if(nodes[foundNode.fromIndex].configuration.modelproperties !== null || nodes[foundNode.fromIndex].configuration.modelproperties !== undefined ){
+                    nodePropertyArray = nodePropertyArray.concat(nodes[foundNode.fromIndex].configuration.modelproperties);
+                }
+
+            } else if (nodes[foundNode.fromIndex].component.clazz === 'xiConstantNode') {
+                if(nodes[foundNode.fromIndex].configuration.constants){
+                    nodeConstantArray = nodeConstantArray.concat(nodes[foundNode.fromIndex].configuration.constants);
+                }
+            }
+
+            let branchCheckVal = this.checkForBranchConnection(foundNode.fromIndex, allConnections, nodes, nodePropertyArray, nodeConstantArray, nodeVariableArray);
+            return branchCheckVal;
+        }
+    } else {
+        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': [], 'constants': [], 'variables': []};
+        return obj;
     }
   }
 
@@ -1339,6 +1452,29 @@ export class RuleChainPageComponent extends PageComponent
       });
       this.ruleChainService.saveAndGetResolvedRuleChainMetadata(ruleChainMetaData).subscribe((savedRuleChainMetaData) => {
         this.ruleChainMetaData = savedRuleChainMetaData;
+        this.ruleType = this.ruleChainMetaData.name;
+        this.ruleInputs = this.ruleChainMetaData.ruleInputs;
+        this.name = this.ruleChainMetaData.name;
+        this.dataModels = this.ruleChainMetaData.dataModels;
+        this.inputDataModels = this.ruleChainMetaData.inputDataModels;
+        this.allDomainModels = this.ruleChainMetaData.allDomainModels;
+        this.allRuleInputs = this.ruleChainMetaData.allRuleInputs
+        this.allViewModels = this.ruleChainMetaData.allViewModels;
+        this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+        this.allRoots = this.ruleChainMetaData.allRoots;
+        this.allEvents = this.ruleChainMetaData.allEvents;
+        this.queryDb = this.ruleChainMetaData.queryDb;
+        this.commandDb = this.ruleChainMetaData.commandDb;
+        this.apptype = this.ruleChainMetaData.apptype;
+        this.allModelProperties = this.ruleChainMetaData.allModelProperties;
+        this.connectorData = this.ruleChainMetaData.connectors;
+        this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
+        this.inputProperties = this.ruleChainMetaData.inputProperties;
+        this.allFields = this.ruleChainMetaData.allFields;
+        this.allConstants = this.ruleChainMetaData.allConstants;
+        this.allVariables = this.ruleChainMetaData.allVariables;
+        this.allSavedObjects = this.ruleChainMetaData.allSavedObjects;
+        this.allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
         if (this.isImport) {
           this.isDirtyValue = false;
           this.isImport = false;
@@ -1355,6 +1491,8 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   addRuleNode(ruleNode: FcRuleNode) {
+
+ //   let isNodeEdit: boolean = false;
     ruleNode.configuration = deepClone(ruleNode.component.configurationDescriptor.nodeDefinition.defaultConfiguration);
     const ruleChainId = this.ruleChain.id ? this.ruleChain.id.id : null;
 
@@ -1379,6 +1517,7 @@ export class RuleChainPageComponent extends PageComponent
     const allSavedObjects = this.ruleChainMetaData.allSavedObjects;
 
     let connectorfields : QuestionBase[]= [];
+    let branchAvailability = {'branchParams': [], 'branchFound': false};
 
     if(ruleNode.component.type === 'CONNECTOR'){
         let ruleNodeClass = ruleNode.component.clazz;
@@ -1404,6 +1543,7 @@ export class RuleChainPageComponent extends PageComponent
         allVariables,
         allSavedObjects,
         connectorfields,
+        branchAvailability,
         allDomainModels,
         allViewModels,
         allModelProperties,
@@ -1415,6 +1555,7 @@ export class RuleChainPageComponent extends PageComponent
         queryDb,
         commandDb,
         apptype
+   //     isNodeEdit
       }
     }).afterClosed().subscribe(
       (addedRuleNode) => {
@@ -1628,10 +1769,12 @@ export interface AddRuleNodeDialogData {
   allRuleInputs: any[];
   allEvents: any[];
   allLambdaFunctions: any[];
-  allRoots: string[];
+  allRoots: any[];
   queryDb: string;
   commandDb: string;
   apptype: string;
+  branchAvailability: any;
+//  isNodeEdit: boolean;
 }
 
 @Component({
@@ -1657,16 +1800,18 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allSavedObjects: any[];
   allVariables: any[];
   connectorfields: QuestionBase[];
+  branchAvailability: any;
   allDomainModels: any[];
   allViewModels: any[];
   allLambdaFunctions: any[];
-  allRoots: string[];
+  allRoots: any[];
   allModelProperties: any[];
   allRuleInputs: any[];
   allEvents: any[];
   queryDb: string;
   commandDb: string;
   apptype: string;
+ // isNodeEdit: boolean;
 
   submitted = false;
 
@@ -1689,10 +1834,12 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allVariables = this.data.allVariables;
     this.allSavedObjects = this.data.allSavedObjects;
     this.connectorfields = this.data.connectorfields;
+    this.branchAvailability = this.data.branchAvailability;
     this.allDomainModels = this.data.allDomainModels;
     this.allViewModels = this.data.allViewModels;
     this.allLambdaFunctions = this.data.allLambdaFunctions;
     this.allRoots = this.data.allRoots;
+  //  this.isNodeEdit = this.data.isNodeEdit;
     this.allModelProperties = this.data.allModelProperties;
     this.allRuleInputs = this.data.allRuleInputs;
     this.allEvents = this.data.allEvents;
@@ -1709,7 +1856,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     const originalErrorState = this.errorStateMatcher.isErrorState(control, form);
     const customErrorState = !!(control && control.invalid && this.submitted);
     return originalErrorState || customErrorState;
-  }
+  }//
 
   helpLinkIdForRuleNodeType(): string {
     return getRuleNodeHelpLink(this.ruleNode.component);
@@ -1720,10 +1867,11 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   }
 
   add(): void {
+    console.log("add called ==================================");
     this.submitted = true;
-    this.ruleNodeDetailsComponent.validate();
-    if (this.ruleNodeDetailsComponent.ruleNodeFormGroup.valid) {
+    //this.ruleNodeDetailsComponent.validate();
+    //if (this.ruleNodeDetailsComponent.ruleNodeFormGroup.valid) {
       this.dialogRef.close(this.ruleNode);
-    }
+    //}
   }
 }

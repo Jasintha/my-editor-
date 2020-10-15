@@ -7,9 +7,10 @@
         <mat-select formControlName="firstinputType" (selectionChange)="refreshInputTypes()">
           <!--<mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
           <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>-->
-          <mat-option *ngIf="inputProperties?.length" value="PARAM">Param</mat-option>
+          <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
           <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
           <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+          <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
           <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
         </mat-select>
       </mat-form-field>
@@ -58,6 +59,15 @@
           <mat-option *ngFor="let property of allModelProperties" [value]="property">
             {{property.name}}
           </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.firstinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="branchparam">
+            <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+              {{param.name}}
+            </mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -114,15 +124,19 @@
         <mat-option value="equal">Equal</mat-option>
         <mat-option value="notequal">Not Equal</mat-option>
         <mat-option *ngIf="configuration.param.inputType == 'NUMBER' || configuration.param.inputType == 'Integer' || configuration.param.inputType == 'int' ||
+                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Integer') ||
                                     configuration.constant.constantType == 'Integer' || configuration.constant.constantType == 'NUMBER' || configuration.constant.constantType == 'int' ||
                                     configuration.property.type == 'Integer' || configuration.property.type == 'NUMBER' || configuration.property.type == 'int'" value="greaterthan">Greater Than</mat-option>
         <mat-option *ngIf="configuration.param.inputType == 'NUMBER' || configuration.param.inputType == 'Integer' || configuration.param.inputType == 'int' ||
+                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Integer') ||
                                     configuration.constant.constantType == 'Integer' || configuration.constant.constantType == 'NUMBER' || configuration.constant.constantType == 'int' ||
                                     configuration.property.type == 'Integer' || configuration.property.type == 'NUMBER' || configuration.property.type == 'int'" value="lessthan">Less Than</mat-option>
         <mat-option *ngIf="configuration.param.inputType == 'DATE' || configuration.param.inputType == 'Date' || configuration.param.inputType == 'time.Time' ||
+                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Date') ||
                                     configuration.constant.constantType == 'Date' || configuration.constant.constantType == 'DATE' || configuration.constant.constantType == 'time.Time' ||
                                     configuration.property.type == 'Date' || configuration.property.type == 'DATE' || configuration.property.type == 'time.Time'" value="before">Before</mat-option>
         <mat-option *ngIf="configuration.param.inputType == 'DATE' || configuration.param.inputType == 'Date' || configuration.param.inputType == 'time.Time' ||
+                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Date') ||
                                     configuration.constant.constantType == 'Date' || configuration.constant.constantType == 'DATE' || configuration.constant.constantType == 'time.Time' ||
                                     configuration.property.type == 'Date' || configuration.property.type == 'DATE' || configuration.property.type == 'time.Time'" value="after">After</mat-option>
        <!-- <mat-option *ngIf="configuration.param.inputType == 'NUMBER' || configuration.param.inputType == 'Integer' || configuration.param.inputType == 'int' ||
@@ -161,9 +175,10 @@
         <mat-select formControlName="secondinputType" (selectionChange)="refreshSecondInputTypes()">
           <!--<mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
           <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>-->
-          <mat-option *ngIf="inputProperties?.length" value="PARAM">Param</mat-option>
+          <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
           <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
           <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+          <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
           <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
         </mat-select>
       </mat-form-field>
@@ -214,6 +229,14 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field *ngIf="configuration.secondinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="secondbranchparam">
+          <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+            {{param.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <!--<mat-form-field *ngIf="configuration.secondinputType === 'VARIABLE'" fxFlex class="mat-block">
         <mat-label>Variable</mat-label>
@@ -260,7 +283,7 @@
     </section>-->
 
   </section>
-  <section fxLayout="column" fxLayout.gt-sm="row">
+  <!--<section fxLayout="column" fxLayout.gt-sm="row">
     <mat-form-field fxFlex class="mat-block">
       <mat-label>First Branch</mat-label>
       <mat-select formControlName="root">
@@ -285,7 +308,7 @@
     <mat-checkbox formControlName="secondisAsync">
       Non Blocking
     </mat-checkbox>
-  </section>
+  </section>-->
 
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Error Message</mat-label>
