@@ -104,6 +104,8 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   @Input()
   allValueObjectProperties: any[];
 
+  @Input() branchAvailability: any;
+
   tabledatasource = {} ;
   allRuleProperties:ModelValueproperties[] =[
     {
@@ -219,6 +221,9 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   ngOnInit(): void {
+    console.log("valueObjectProperties");
+    console.log(this.branchAvailability);
+
     this.fields.forEach(question =>{
       if (question.controlType == "table"){
         this.tabledatasource[question.key] = new MatTableDataSource<any>();
@@ -263,6 +268,13 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     this.tabledatasource[tableField.key] = new MatTableDataSource(this.configuration.connector[tableField.key]);
     tableField.tableFields.forEach(question =>{
       this.connectorConfigFormGroup.get(question.key).patchValue("", {emitEvent: false});
+      if (question.controlType == "textbox" ){
+        this.configuration.connector[question.key]= "";
+      } else if (question.controlType == "dropdown"){
+        this.configuration.connector[question.key]={};
+      } else if (question.controlType == "table"){
+        this.configuration.connector[question.key]=[];
+      }
     });
   }
 
@@ -297,9 +309,6 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   ngAfterViewInit(): void {
-
-  console.log("after view");
-
 
   }
 
@@ -392,7 +401,6 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     if (this.definedConfigComponent || this.connectorConfigFormGroup.valid) {
       this.propagateChange(configuration);
     } else {
-      let blah = this.required ? null : configuration;
       this.propagateChange(this.required ? null : configuration);
     }
   }

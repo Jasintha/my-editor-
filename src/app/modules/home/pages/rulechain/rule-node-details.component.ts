@@ -192,6 +192,7 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
         console.log(this.branchAvailability.properties);
         this.allConstants = this.branchAvailability.constants;
         this.allVariables = this.branchAvailability.variables;
+        this.allValueObjectProperties= this.branchAvailability.valueObjectProperties;
     }
   }
 
