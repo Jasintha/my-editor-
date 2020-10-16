@@ -221,9 +221,6 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   ngOnInit(): void {
-    console.log("valueObjectProperties");
-    console.log(this.branchAvailability);
-
     this.fields.forEach(question =>{
       if (question.controlType == "table"){
         this.tabledatasource[question.key] = new MatTableDataSource<any>();
@@ -261,7 +258,6 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     let table={}
     for (let i = 0; i < tableField.tableFields.length ; i++) {
       table[tableField.tableFields[i].key] = this.connectorConfigFormGroup.get(tableField.tableFields[i].key).value
-      console.log(table)
     }
     this.configuration.connector[tableField.key].push(table);
     this.updateModel(this.configuration);
