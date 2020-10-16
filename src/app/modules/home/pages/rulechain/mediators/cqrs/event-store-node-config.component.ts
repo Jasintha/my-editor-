@@ -155,12 +155,7 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
 
   ngOnInit(): void {
     this.readOnlyDbType = false;
-    /*
-    if(this.apptype === 'microservice'){
-        this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
-        this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
-    }
-    */
+
   }
 
   ngOnDestroy(): void {
@@ -305,93 +300,7 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       //entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
 
       //crud input
-      /*
 
-      let crudentity = this.configuration.crudentity;
-      let crudentityProperty = this.configuration.crudentityProperty;
-      if(this.configuration.crudinputType === 'MODEL'){
-        crudentity = this.inputEntities.find(x => x.name === this.configuration.crudentity.name );
-        if(crudentity){
-          if(this.apptype === 'microservice' ){
-            if(this.domainModelProperties){
-                this.selectedEntityProperties = this.domainModelProperties.filter(p => p.modelName == crudentity.name);
-                crudentityProperty = this.selectedEntityProperties.find(x => x.name === this.configuration.crudentityProperty.name );
-            } else {
-                this.selectedEntityProperties = [];
-            }
-          } else {
-              this.selectedEntityProperties = crudentity.properties;
-              crudentityProperty = crudentity.properties.find(x => x.name === this.configuration.crudentityProperty.name );
-          }
-        }
-      }
-
-      let crudcustomObject = this.configuration.crudcustomObject;
-      let crudcustomObjectProperty = this.configuration.crudcustomObjectProperty;
-      if(this.configuration.crudinputType === 'DTO'){
-        crudcustomObject = this.inputCustomobjects.find(x => x.name === this.configuration.crudcustomObject.name );
-        if(crudcustomObject){
-          if(this.apptype === 'microservice' ){
-            if(this.viewModelProperties){
-                this.selectedCustomObjectProperties = this.viewModelProperties.filter(p => p.modelName == crudentity.name);
-                crudcustomObjectProperty = this.selectedCustomObjectProperties.find(x => x.name === this.configuration.crudcustomObjectProperty.name );
-            } else {
-                this.selectedEntityProperties = [];
-            }
-          } else {
-              this.selectedCustomObjectProperties = crudcustomObject.properties;
-              crudcustomObjectProperty = crudcustomObject.properties.find(x => x.name === this.configuration.crudcustomObjectProperty.name );
-          }
-        }
-      }
-
-      let crudvariable = this.configuration.crudvariable;
-      let crudvariableProperty = this.configuration.crudvariableProperty;
-
-      if(this.configuration.crudinputType === 'VARIABLE'){
-        crudvariable = this.allVariables.find(x => x.name === this.configuration.crudvariable.name );
-        if(crudvariable.type != 'String' || crudvariable.type != 'Integer' || crudvariable.type != 'Boolean' || crudvariable.type != 'Date' || crudvariable.type != 'Image' || crudvariable.type != 'File'){
-          if(crudvariable.pkg == 'model'){
-            let modelVariable = this.inputEntities.find(x => x.name === crudvariable.type);
-            if(modelVariable){
-              if(this.apptype === 'microservice' ){
-                if(this.domainModelProperties){
-                  this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == crudvariable.type);
-                  crudvariableProperty = this.selectedVariableProperties.find(x => x.name === this.configuration.crudvariableProperty.name );
-                } else {
-                  this.selectedVariableProperties = [];
-                }
-              } else {
-                this.selectedVariableProperties = modelVariable.properties;
-                crudvariableProperty = modelVariable.properties.find(x => x.name === this.configuration.crudvariableProperty.name );
-              }
-
-            }
-          } else {
-            let dtoVariable = this.inputCustomobjects.find(x => x.name === crudvariable.type);
-            if(dtoVariable){
-              if(this.apptype === 'microservice' ){
-                if(this.viewModelProperties){
-                  this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == crudvariable.type);
-                  crudvariableProperty = this.selectedVariableProperties.find(x => x.name === this.configuration.crudvariableProperty.name );
-                } else {
-                  this.selectedVariableProperties = [];
-                }
-              } else {
-                this.selectedVariableProperties = dtoVariable.properties;
-                crudvariableProperty = dtoVariable.properties.find(x => x.name === this.configuration.crudvariableProperty.name );
-              }
-            }
-          }
-        }
-      }
-
-      let crudparam = this.configuration.crudparam;
-      if(this.configuration.crudinputType === 'PARAM'){
-        crudparam = this.inputProperties.find(x => x.inputName === this.configuration.crudparam.inputName );
-      }
-
-      */
 
       let dbType = '';
       if(this.commandDb && this.commandDb !== ''){
@@ -472,117 +381,6 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       );
       */
 
-      //crud input changes
-
-      /*
-
-      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('crudentity').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.crudentity = configuration;
-          let selectedcrudentity = this.inputEntities.find(x => x.name === configuration.name );
-          if(selectedcrudentity){
-            if(this.apptype === 'microservice' ){
-              if(this.domainModelProperties){
-                this.selectedEntityProperties = this.domainModelProperties.filter(p => p.modelName == selectedcrudentity.name);
-              } else {
-                this.selectedEntityProperties = [];
-              }
-            } else {
-              this.selectedEntityProperties = selectedcrudentity.properties;
-            }
-          }
-
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('crudentityProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.crudentityProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('crudcustomObject').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.crudcustomObject = configuration;
-          let selectedcrudcustomObject = this.inputCustomobjects.find(x => x.name === configuration.name );
-          if(selectedcrudcustomObject){
-            if(this.apptype === 'microservice' ){
-              if(this.viewModelProperties){
-                this.selectedCustomObjectProperties = this.viewModelProperties.filter(p => p.modelName == selectedcrudcustomObject.name);
-              } else {
-                this.selectedCustomObjectProperties = [];
-              }
-            } else {
-              this.selectedCustomObjectProperties = selectedcrudcustomObject.properties;
-            }
-          }
-
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('crudcustomObjectProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.crudcustomObjectProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('crudparam').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.crudparam = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('crudvariableProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.crudvariableProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('crudvariable').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.crudvariable = configuration;
-
-            if(Object.keys(configuration).length !== 0){
-                if(configuration.type != 'String' || configuration.type != 'Integer' || configuration.type != 'Boolean' || configuration.type != 'Date' || configuration.type != 'Image' || configuration.type != 'File'){
-                    if(configuration.pkg == 'model'){
-                        let modelVariable = this.inputEntities.find(x => x.name === configuration.type);
-                        if(modelVariable){
-                          if(this.apptype === 'microservice' ){
-                            if(this.domainModelProperties){
-                              this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == configuration.type);
-                            } else {
-                              this.selectedVariableProperties = [];
-                            }
-                          } else {
-                            this.selectedVariableProperties = modelVariable.properties;
-                          }
-                        }
-                    }else{
-                        let dtoVariable = this.inputCustomobjects.find(x => x.name === configuration.type);
-                        if(this.apptype === 'microservice' ){
-                           if(this.viewModelProperties){
-                             this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == configuration.type);
-                           } else {
-                             this.selectedVariableProperties = [];
-                           }
-                        } else {
-                          this.selectedVariableProperties = dtoVariable.properties;
-                        }
-
-                    }
-                }
-            }
-          this.updateModel(this.configuration);
-        }
-      );
-
-      */
 
     }
   }

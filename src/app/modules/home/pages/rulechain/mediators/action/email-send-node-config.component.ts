@@ -147,12 +147,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   ngOnInit(): void {
-  /*
-    if(this.apptype === 'microservice'){
-        this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
-        this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
-    }
-    */
+
   }
 
   ngOnDestroy(): void {
@@ -328,48 +323,6 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         this.updateModel(configuration);
       });
     } else {
-      /*
-      let v = this.configuration.toemailvariable;
-      let vp = this.configuration.toemailvariableProperty;
-
-      if(this.configuration.toemailinputType === 'VARIABLE'){
-        v = this.allVariables.find(x => x.name === this.configuration.toemailvariable.name );
-        if(v.type != 'String' || v.type != 'Integer' || v.type != 'Boolean' || v.type != 'Date' || v.type != 'Image' || v.type != 'File'){
-          if(v.pkg == 'model'){
-            let modelVariable = this.inputEntities.find(x => x.name === v.type);
-            if(modelVariable){
-              if(this.apptype === 'microservice' ){
-                if(this.domainModelProperties){
-                  this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == v.type);
-                  vp = this.selectedVariableProperties.find(x => x.name === this.configuration.toemailvariableProperty.name );
-                } else {
-                  this.selectedVariableProperties = [];
-                }
-              }else{
-              this.selectedVariableProperties = modelVariable.properties;
-              vp = modelVariable.properties.find(x => x.name === this.configuration.toemailvariableProperty.name );
-              }
-            }
-          } else {
-            let dtoVariable = this.inputCustomobjects.find(x => x.name === v.type);
-            if(dtoVariable){
-              if(this.apptype === 'microservice' ){
-                if(this.viewModelProperties){
-                  this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == v.type);
-                  vp = this.selectedVariableProperties.find(x => x.name === this.configuration.toemailvariableProperty.name );
-                } else {
-                  this.selectedVariableProperties = [];
-                }
-              }else{
-              this.selectedVariableProperties = dtoVariable.properties;
-              vp = dtoVariable.properties.find(x => x.name === this.configuration.toemailvariableProperty.name );
-              }
-            }
-
-          }
-        }
-      }
-      */
 
       let p = this.configuration.toemailparam;
       if(this.configuration.toemailinputType === 'PARAM'){
@@ -473,99 +426,6 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
           this.updateModel(this.configuration);
         }
       );
-
-
-      /*
-      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('toemailvariableProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.toemailvariableProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('parametervariableProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.parametervariableProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('toemailvariable').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.toemailvariable = configuration;
-          console.log("variable selected");
-          console.log(configuration);
-          
-            if(Object.keys(configuration).length !== 0){
-                if(configuration.type != 'String' || configuration.type != 'Integer' || configuration.type != 'Boolean' || configuration.type != 'Date' || configuration.type != 'Image' || configuration.type != 'File'){
-                    if(configuration.pkg == 'model'){
-                        let modelVariable = this.inputEntities.find(x => x.name === configuration.type);
-                        if(modelVariable){
-                          if(this.apptype === 'microservice' ){
-                            if(this.domainModelProperties){
-                              this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == configuration.type);
-                            } else {
-                              this.selectedVariableProperties = [];
-                            }
-                          }else{
-                          this.selectedVariableProperties = modelVariable.properties;
-                          }
-                        }
-                    }else{
-                        let dtoVariable = this.inputCustomobjects.find(x => x.name === configuration.type);
-                        if(this.apptype === 'microservice' ){
-                           if(this.viewModelProperties){
-                             this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == configuration.type);
-                           } else {
-                             this.selectedVariableProperties = [];
-                           }
-                        }else{
-                        this.selectedVariableProperties = dtoVariable.properties;
-                        }
-                    }
-                }
-            }
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('parametervariable').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.parametervariable = configuration;
-
-            if(Object.keys(configuration).length !== 0){
-                if(configuration.type != 'String' || configuration.type != 'Integer' || configuration.type != 'Boolean' || configuration.type != 'Date' || configuration.type != 'Image' || configuration.type != 'File'){
-                    if(configuration.pkg == 'model'){
-                        let modelVariable = this.inputEntities.find(x => x.name === configuration.type);
-                        if(modelVariable){
-                          if(this.apptype === 'microservice' ){
-                            if(this.domainModelProperties){
-                              this.selectedVariablePropertiesForParameter = this.domainModelProperties.filter(p => p.modelName == configuration.type);
-                            } else {
-                              this.selectedVariablePropertiesForParameter = [];
-                            }
-                          }else{
-                          this.selectedVariablePropertiesForParameter = modelVariable.properties;
-                          }
-                        }
-                    }else{
-                        let dtoVariable = this.inputCustomobjects.find(x => x.name === configuration.type);
-                        if(this.apptype === 'microservice' ){
-                           if(this.viewModelProperties){
-                             this.selectedVariablePropertiesForParameter = this.viewModelProperties.filter(p => p.modelName == configuration.type);
-                           } else {
-                             this.selectedVariablePropertiesForParameter = [];
-                           }
-                        }else{
-                        this.selectedVariablePropertiesForParameter = dtoVariable.properties;
-                        }
-                    }
-                }
-            }
-          this.updateModel(this.configuration);
-        }
-      );
-      */
 
     }
   }

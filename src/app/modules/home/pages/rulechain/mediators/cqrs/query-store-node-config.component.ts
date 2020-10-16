@@ -133,7 +133,8 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       query: [],
       entity:[],
       errorMsg: "",
-      errorAction: ""
+      errorAction: "",
+      assignedProperty: []
     });
   }
 
@@ -146,14 +147,7 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
 
   ngOnInit(): void {
     this.readOnlyDbType = false;
-    /*
-    if(this.apptype === 'microservice'){
-        if(this.allModelProperties){
-        this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
-        this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
-        }
-    }
-    */
+
   }
 
   ngOnDestroy(): void {
@@ -199,6 +193,11 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
       }
 
+      let assignedProperty = this.configuration.assignedProperty;
+      if(assignedProperty && this.allModelProperties){
+        assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      }
+
       console.log(this.configuration.entity);
       console.log(this.inputEntities);
 
@@ -218,12 +217,20 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         query: this.configuration.query,
         entity: entity,
         errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction
+        errorAction: this.configuration.errorAction,
+        assignedProperty: assignedProperty
       });
 
       this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedProperty = configuration;
           this.updateModel(this.configuration);
         }
       );

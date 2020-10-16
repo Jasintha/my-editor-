@@ -168,12 +168,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
   }
 
   ngOnInit(): void {
-  /*
-    if(this.apptype === 'microservice'){
-        this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
-        this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
-    }
-    */
+
   
   }
 
@@ -442,86 +437,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         this.updateModel(configuration);
       });
     } else {
-      /*
-      let entity = this.configuration.entity;
-      let entityProperty = this.configuration.entityProperty;
-      if(this.configuration.firstinputType === 'MODEL'){
-        entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
-        if(entity){
-            if(this.apptype === 'microservice' ){
-            if(this.domainModelProperties){
-                this.selectedEntityProperties = this.domainModelProperties.filter(p => p.modelName == entity.name);
-                entityProperty = this.selectedEntityProperties.find(x => x.name === this.configuration.entityProperty.name );
-            } else {
-                this.selectedEntityProperties = [];
-            }
-            
-            }else {
-          this.selectedEntityProperties = entity.properties;
-          entityProperty = entity.properties.find(x => x.name === this.configuration.entityProperty.name );
-          }
-        }
-      }
 
-      let customObject = this.configuration.customObject;
-      let customObjectProperty = this.configuration.customObjectProperty;
-      if(this.configuration.firstinputType === 'DTO'){
-        customObject = this.inputCustomobjects.find(x => x.name === this.configuration.customObject.name );
-        if(customObject){
-        if(this.apptype === 'microservice' ){
-            if(this.viewModelProperties){
-                this.selectedCustomObjectProperties = this.viewModelProperties.filter(p => p.modelName == customObject.name);
-                customObjectProperty = this.selectedCustomObjectProperties.find(x => x.name === this.configuration.customObjectProperty.name );
-            } else {
-                this.selectedEntityProperties = [];
-            }
-        } else {
-          this.selectedCustomObjectProperties = customObject.properties;
-          customObjectProperty = customObject.properties.find(x => x.name === this.configuration.customObjectProperty.name );
-          }
-        }
-      }
-
-      let variable = this.configuration.variable;
-      let variableProperty = this.configuration.variableProperty;
-
-      if(this.configuration.firstinputType === 'VARIABLE'){
-        variable = this.allVariables.find(x => x.name === this.configuration.variable.name );
-        if(variable.type != 'String' || variable.type != 'Integer' || variable.type != 'Boolean' || variable.type != 'Date' || variable.type != 'Image' || variable.type != 'File'){
-          if(variable.pkg == 'model'){
-            let modelVariable = this.inputEntities.find(x => x.name === variable.type);
-            if(modelVariable){
-            if(this.apptype === 'microservice' ){
-                if(this.domainModelProperties){
-                  this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == variable.type);
-                  variableProperty = this.selectedVariableProperties.find(x => x.name === this.configuration.variableProperty.name );
-                } else {
-                  this.selectedVariableProperties = [];
-                }
-            }else{
-              this.selectedVariableProperties = modelVariable.properties;
-              variableProperty = modelVariable.properties.find(x => x.name === this.configuration.variableProperty.name );
-              }
-            }
-          } else {
-            let dtoVariable = this.inputCustomobjects.find(x => x.name === variable.type);
-            if(dtoVariable){
-            if(this.apptype === 'microservice' ){
-                if(this.viewModelProperties){
-                  this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == variable.type);
-                  variableProperty = this.selectedVariableProperties.find(x => x.name === this.configuration.variableProperty.name );
-                } else {
-                  this.selectedVariableProperties = [];
-                }
-            } else{
-              this.selectedVariableProperties = dtoVariable.properties;
-              variableProperty = dtoVariable.properties.find(x => x.name === this.configuration.variableProperty.name );
-              }
-            }
-          }
-        }
-      }
-      */
 
       let param = this.configuration.param;
       if(this.configuration.firstinputType === 'PARAM' && this.inputProperties){
@@ -544,86 +460,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       }
 
       //second input
-      /*
-      let secondentity = this.configuration.secondentity;
-      let secondentityProperty = this.configuration.secondentityProperty;
-      if(this.configuration.secondinputType === 'MODEL'){
-        secondentity = this.inputEntities.find(x => x.name === this.configuration.secondentity.name );
-        if(secondentity){
-            if(this.apptype === 'microservice' ){
-            if(this.domainModelProperties){
-                this.selectedEntityProperties = this.domainModelProperties.filter(p => p.modelName == secondentity.name);
-                secondentityProperty = this.selectedEntityProperties.find(x => x.name === this.configuration.secondentityProperty.name );
-            } else {
-                this.selectedEntityProperties = [];
-            }
 
-            }else {
-            this.selectedSecondEntityProperties = secondentity.properties;
-            secondentityProperty = secondentity.properties.find(x => x.name === this.configuration.secondentityProperty.name );
-            }
-        }
-      }
-
-      let secondcustomObject = this.configuration.secondcustomObject;
-      let secondcustomObjectProperty = this.configuration.secondcustomObjectProperty;
-      if(this.configuration.secondinputType === 'DTO'){
-        secondcustomObject = this.inputCustomobjects.find(x => x.name === this.configuration.secondcustomObject.name );
-        if(secondcustomObject){
-        if(this.apptype === 'microservice' ){
-            if(this.viewModelProperties){
-                this.selectedCustomObjectProperties = this.viewModelProperties.filter(p => p.modelName == secondcustomObject.name);
-                secondcustomObjectProperty = this.selectedCustomObjectProperties.find(x => x.name === this.configuration.secondcustomObjectProperty.name );
-            } else {
-                this.selectedEntityProperties = [];
-            }
-        } else {
-          this.selectedSecondCustomObjectProperties = secondcustomObject.properties;
-          secondcustomObjectProperty = secondcustomObject.properties.find(x => x.name === this.configuration.secondcustomObjectProperty.name );
-          }
-        }
-      }
-
-      let secondvariable = this.configuration.secondvariable;
-      let secondvariableProperty = this.configuration.secondvariableProperty;
-
-      if(this.configuration.secondinputType === 'VARIABLE'){
-        secondvariable = this.allVariables.find(x => x.name === this.configuration.secondvariable.name );
-        if(secondvariable.type != 'String' || secondvariable.type != 'Integer' || secondvariable.type != 'Boolean' || secondvariable.type != 'Date' || secondvariable.type != 'Image' || secondvariable.type != 'File'){
-          if(secondvariable.pkg == 'model'){
-            let modelVariable = this.inputEntities.find(x => x.name === secondvariable.type);
-            if(modelVariable){
-            if(this.apptype === 'microservice' ){
-                if(this.domainModelProperties){
-                  this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == secondvariable.type);
-                  secondvariableProperty = this.selectedVariableProperties.find(x => x.name === this.configuration.secondvariableProperty.name );
-                } else {
-                  this.selectedVariableProperties = [];
-                }
-            }else{
-              this.selectedSecondVariableProperties = modelVariable.properties;
-              secondvariableProperty = modelVariable.properties.find(x => x.name === this.configuration.secondvariableProperty.name );
-              }
-            }
-          } else {
-            let dtoVariable = this.inputCustomobjects.find(x => x.name === secondvariable.type);
-            if(dtoVariable){
-            if(this.apptype === 'microservice' ){
-                if(this.viewModelProperties){
-                  this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == secondvariable.type);
-                  secondvariableProperty = this.selectedVariableProperties.find(x => x.name === this.configuration.secondvariableProperty.name );
-                } else {
-                  this.selectedVariableProperties = [];
-                }
-            } else{
-              this.selectedSecondVariableProperties = dtoVariable.properties;
-              secondvariableProperty = dtoVariable.properties.find(x => x.name === this.configuration.secondvariableProperty.name );
-              }
-            }
-          }
-        }
-      }
-      */
 
       let secondparam = this.configuration.secondparam;
       if(this.configuration.secondinputType === 'PARAM' && this.inputProperties){
@@ -743,63 +580,6 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
-      /*
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('entity').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.entity = configuration;
-
-          let selectedentity = this.inputEntities.find(x => x.name === configuration.name );
-          if(selectedentity){
-          if(this.apptype === 'microservice' ){
-              if(this.domainModelProperties){
-                this.selectedEntityProperties = this.domainModelProperties.filter(p => p.modelName == selectedentity.name);
-              } else {
-                this.selectedEntityProperties = [];
-              }
-          }else{
-            this.selectedEntityProperties = selectedentity.properties;
-            }
-          }
-
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('entityProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.entityProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('customObject').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.customObject = configuration;
-          let selectedcustomObject = this.inputCustomobjects.find(x => x.name === configuration.name );
-          if(selectedcustomObject){
-            if(this.apptype === 'microservice' ){
-              if(this.viewModelProperties){
-                this.selectedCustomObjectProperties = this.viewModelProperties.filter(p => p.modelName == selectedcustomObject.name);
-              } else {
-                this.selectedCustomObjectProperties = [];
-              }
-            }else{
-            this.selectedCustomObjectProperties = selectedcustomObject.properties;
-            }
-          }
-
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('customObjectProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.customObjectProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-      */
-
       this.changeSubscription = this.filterNodeConfigFormGroup.get('param').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.param = configuration;
@@ -835,108 +615,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
-      /*
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('variableProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.variableProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('variable').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.variable = configuration;
-
-            if(Object.keys(configuration).length !== 0){
-                if(configuration.type != 'String' || configuration.type != 'Integer' || configuration.type != 'Boolean' || configuration.type != 'Date' || configuration.type != 'Image' || configuration.type != 'File'){
-                    if(configuration.pkg == 'model'){
-                        let modelVariable = this.inputEntities.find(x => x.name === configuration.type);
-                        if(modelVariable){
-                          if(this.apptype === 'microservice' ){
-                            if(this.domainModelProperties){
-                              this.selectedVariableProperties = this.domainModelProperties.filter(p => p.modelName == configuration.type);
-                            } else {
-                              this.selectedVariableProperties = [];
-                            }
-                          }else{
-                          this.selectedVariableProperties = modelVariable.properties;
-                          }
-                        }
-                    }else{
-                        let dtoVariable = this.inputCustomobjects.find(x => x.name === configuration.type);
-                        if(this.apptype === 'microservice' ){
-                           if(this.viewModelProperties){
-                             this.selectedVariableProperties = this.viewModelProperties.filter(p => p.modelName == configuration.type);
-                           } else {
-                             this.selectedVariableProperties = [];
-                           }
-                        }else{
-                        this.selectedVariableProperties = dtoVariable.properties;
-                        }
-                    }
-                }
-            }
-          this.updateModel(this.configuration);
-        }
-      );
-      */
-
       //second input changes
-      /*
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondentity').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.secondentity = configuration;
-          let selectedsecondentity = this.inputEntities.find(x => x.name === configuration.name );
-          if(selectedsecondentity){
-            if(this.apptype === 'microservice' ){
-              if(this.domainModelProperties){
-                this.selectedSecondEntityProperties = this.domainModelProperties.filter(p => p.modelName == selectedsecondentity.name);
-              } else {
-                this.selectedSecondEntityProperties = [];
-              }
-            }else{
-            this.selectedSecondEntityProperties = selectedsecondentity.properties;
-            }
-          }
-
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondentityProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.secondentityProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondcustomObject').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.secondcustomObject = configuration;
-          let selectedsecondcustomObject = this.inputCustomobjects.find(x => x.name === configuration.name );
-          if(selectedsecondcustomObject){
-            if(this.apptype === 'microservice' ){
-              if(this.viewModelProperties){
-                this.selectedSecondCustomObjectProperties = this.viewModelProperties.filter(p => p.modelName == selectedsecondcustomObject.name);
-              } else {
-                this.selectedSecondCustomObjectProperties = [];
-              }
-            } else {
-            this.selectedSecondCustomObjectProperties = selectedsecondcustomObject.properties;
-            }
-          }
-
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondcustomObjectProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.secondcustomObjectProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-      */
 
       this.changeSubscription = this.filterNodeConfigFormGroup.get('secondparam').valueChanges.subscribe(
         (configuration: any) => {
@@ -958,52 +637,6 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
       );
-
-      /*
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondvariableProperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.secondvariableProperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondvariable').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.secondvariable = configuration;
-
-            if(Object.keys(configuration).length !== 0){
-                if(configuration.type != 'String' || configuration.type != 'Integer' || configuration.type != 'Boolean' || configuration.type != 'Date' || configuration.type != 'Image' || configuration.type != 'File'){
-                    if(configuration.pkg == 'model'){
-                        let modelVariable = this.inputEntities.find(x => x.name === configuration.type);
-                        if(modelVariable){
-                          if(this.apptype === 'microservice' ){
-                            if(this.domainModelProperties){
-                              this.selectedSecondVariableProperties = this.domainModelProperties.filter(p => p.modelName == configuration.type);
-                            } else {
-                              this.selectedSecondVariableProperties = [];
-                            }
-                          }else{
-                          this.selectedSecondVariableProperties = modelVariable.properties;
-                          }
-                        }
-                    }else{
-                        let dtoVariable = this.inputCustomobjects.find(x => x.name === configuration.type);
-                        if(this.apptype === 'microservice' ){
-                           if(this.viewModelProperties){
-                             this.selectedSecondVariableProperties = this.viewModelProperties.filter(p => p.modelName == configuration.type);
-                           } else {
-                             this.selectedSecondVariableProperties = [];
-                           }
-                        }else{
-                        this.selectedSecondVariableProperties = dtoVariable.properties;
-                        }
-                    }
-                }
-            }
-          this.updateModel(this.configuration);
-        }
-      );
-      */
 
     }
   }

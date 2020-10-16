@@ -142,12 +142,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   ngOnInit(): void {
-    /*
-    if(this.apptype === 'microservice'){
-        this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
-        this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
-    }
-    */
+
   }
 
   ngOnDestroy(): void {

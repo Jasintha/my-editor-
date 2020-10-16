@@ -53,6 +53,14 @@
       <textarea matInput formControlName="query" required rows="10"></textarea>
     </mat-form-field>
   </section>
+  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.queryAction === 'QUERY' || configuration.queryAction === 'SELECTALL'">
+    <mat-label>Save Result To</mat-label>
+    <mat-select formControlName="assignedProperty">
+      <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
+        {{modelproperty.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Error Message</mat-label>
     <input matInput formControlName="errorMsg"/>

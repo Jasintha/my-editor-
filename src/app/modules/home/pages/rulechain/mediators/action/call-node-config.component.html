@@ -213,6 +213,17 @@
 
     </section>
   </section>
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Save Result To</mat-label>
+    <mat-select formControlName="assignedProperty">
+      <!--<mat-option *ngFor="let property of allModelProperties" [value]="property">
+        {{property.name}}
+      </mat-option>-->
+      <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
+        {{modelproperty.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Error Message</mat-label>

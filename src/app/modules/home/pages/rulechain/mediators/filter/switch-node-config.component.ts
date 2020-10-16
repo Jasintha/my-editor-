@@ -122,8 +122,8 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   selectedSecondEntityProperties: any[];
   selectedSecondCustomObjectProperties: any[];
 
-  displayedColumns: string[] = ['condition', 'inputType', 'input', 'property', 'actions'];
- // displayedColumns: string[] = ['condition', 'inputType', 'input', 'property', 'root', 'isAsync', 'actions'];
+  displayedColumns: string[] = ['name','condition', 'inputType', 'input', 'property', 'actions'];
+ // displayedColumns: string[] = ['name', 'condition', 'inputType', 'input', 'property', 'root', 'isAsync', 'actions'];
 
   private propagateChange = (v: any) => { };
 
@@ -160,13 +160,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   }
 
   ngOnInit(): void {
-  /*
-    if(this.apptype === 'microservice'){
-        this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
-        this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
-    }
-    */
-  
+
   }
 
   ngOnDestroy(): void {

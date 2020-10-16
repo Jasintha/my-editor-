@@ -13,7 +13,13 @@
       <mat-label>Name</mat-label>
       <input matInput formControlName="paramName"/>
     </mat-form-field>
-
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Record</mat-label>
+      <mat-select formControlName="paramRecord">
+        <mat-option value="s">Single</mat-option>
+        <mat-option value="m">Multiple</mat-option>
+      </mat-select>
+    </mat-form-field>
       <section class="mat-block" fxFlex>
         <mat-form-field fxFlex class="mat-block">
           <mat-label>Input Type</mat-label>
@@ -54,15 +60,6 @@
 
       </section>
 
-    <mat-form-field fxFlex class="mat-block">
-      <mat-label>Record</mat-label>
-      <mat-select formControlName="paramRecord">
-        <mat-option value="s">Single</mat-option>
-        <mat-option value="m">Multiple</mat-option>
-      </mat-select>
-    </mat-form-field>
-    
-    
     <!--<button mat-raised-button color="primary"
             type="button">
       {{ 'action.add' | translate }}

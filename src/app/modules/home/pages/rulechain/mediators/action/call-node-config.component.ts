@@ -141,7 +141,8 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       callreturncustomObject: [],
       calltargetbranchparam: [],
       errorMsg: "",
-      errorAction: ""
+      errorAction: "",
+      assignedProperty: []
     });
   }
 
@@ -153,12 +154,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
   }
 
   ngOnInit(): void {
-    /*
-    if(this.apptype === 'microservice'){
-        this.domainModelProperties = this.allModelProperties.filter(p => p.modelType == 'DOMAIN_MODEL');
-        this.viewModelProperties = this.allModelProperties.filter(p => p.modelType == 'VIEW_MODEL');
-    }
-    */
+
   }
 
   ngOnDestroy(): void {
@@ -359,6 +355,11 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         entity = this.inputEntities.find(x => x.name === this.configuration.callreturnentity.name );
       }
 
+      let assignedProperty = this.configuration.assignedProperty;
+      if(assignedProperty && this.allModelProperties){
+        assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      }
+
       this.callNodeConfigFormGroup.patchValue({
         url: this.configuration.url,
         callAction: this.configuration.callAction,
@@ -376,8 +377,16 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         callreturncustomObject: customObject,
         calltargetbranchparam: this.configuration.calltargetbranchparam,
         errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction
+        errorAction: this.configuration.errorAction,
+        assignedProperty: assignedProperty
       });
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedProperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.callNodeConfigFormGroup.get('url').valueChanges.subscribe(
         (configuration: any) => {
