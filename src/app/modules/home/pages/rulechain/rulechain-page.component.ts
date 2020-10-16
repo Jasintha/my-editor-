@@ -172,6 +172,8 @@ export class RuleChainPageComponent extends PageComponent
   apptype: string;
   connectorfields: QuestionBase[];
   allValueObjectProperties: any[];
+  allDomainModelsWithSub: any[];
+  allViewModelsWithSub: any[];
 
   branchAvailability: any;
 
@@ -374,6 +376,8 @@ export class RuleChainPageComponent extends PageComponent
     this.allVariables = this.ruleChainMetaData.allVariables;
     this.allSavedObjects = this.ruleChainMetaData.allSavedObjects;
     this.allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
+    this.allDomainModelsWithSub = this.ruleChainMetaData.allDomainModelsWithSub;
+    this.allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
 
     this.ruleNodeComponents = this.route.snapshot.data.ruleNodeComponents;
     for (const type of ruleNodeTypesLibrary) {
@@ -1457,6 +1461,8 @@ export class RuleChainPageComponent extends PageComponent
         this.name = this.ruleChainMetaData.name;
         this.dataModels = this.ruleChainMetaData.dataModels;
         this.inputDataModels = this.ruleChainMetaData.inputDataModels;
+        this.allDomainModelsWithSub = this.ruleChainMetaData.allDomainModelsWithSub;
+        this.allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
         this.allDomainModels = this.ruleChainMetaData.allDomainModels;
         this.allRuleInputs = this.ruleChainMetaData.allRuleInputs
         this.allViewModels = this.ruleChainMetaData.allViewModels;
@@ -1498,6 +1504,8 @@ export class RuleChainPageComponent extends PageComponent
 
     const dataModels = this.ruleChainMetaData.dataModels;
     const inputDataModels = this.ruleChainMetaData.inputDataModels;
+    const allDomainModelsWithSub = this.ruleChainMetaData.allDomainModelsWithSub;
+    const allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
     const allDomainModels = this.ruleChainMetaData.allDomainModels;
     const allRuleInputs = this.ruleChainMetaData.allRuleInputs;
     const allViewModels = this.ruleChainMetaData.allViewModels;
@@ -1536,6 +1544,8 @@ export class RuleChainPageComponent extends PageComponent
         ruleChainId,
         dataModels,
         inputDataModels,
+        allDomainModelsWithSub,
+        allViewModelsWithSub,
         inputCustomObjects,
         inputProperties,
         allFields,
@@ -1755,6 +1765,8 @@ export interface AddRuleNodeDialogData {
   ruleChainId: string;
   dataModels: any[];
   inputDataModels: any[];
+  allDomainModelsWithSub: any[];
+  allViewModelsWithSub: any[];
   inputCustomObjects: any[];
   inputProperties: any[];
   allFields: any[];
@@ -1792,6 +1804,8 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   ruleChainId: string;
   dataModels: any[];
   inputDataModels: any[];
+  allDomainModelsWithSub: any[];
+  allViewModelsWithSub: any[];
   inputCustomObjects: any[];
   inputProperties: any[];
   allFields: any[];
@@ -1826,6 +1840,8 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.ruleChainId = this.data.ruleChainId;
     this.dataModels = this.data.dataModels;
     this.inputDataModels = this.data.inputDataModels;
+    this.allDomainModelsWithSub= this.data.allDomainModelsWithSub;
+    this.allViewModelsWithSub= this.data.allViewModelsWithSub;
     this.inputCustomObjects = this.data.inputCustomObjects;
     this.inputProperties = this.data.inputProperties;
     this.allFields = this.data.allFields;
