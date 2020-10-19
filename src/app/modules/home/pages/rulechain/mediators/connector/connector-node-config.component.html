@@ -107,7 +107,7 @@
             </button>
 
         </section>
-        <div *ngIf="field.controlType ==='table'" fxFlex class="table-container" style="padding: 10px;">
+        <div *ngIf="field.controlType ==='table'" fxFlex class="table-container" style="padding: 20px;">
             <table mat-table [dataSource]="getTableDataSource(field)" class="mat-elevation-z8">
 
                 <ng-container *ngFor="let tableField of field.tableFields" >

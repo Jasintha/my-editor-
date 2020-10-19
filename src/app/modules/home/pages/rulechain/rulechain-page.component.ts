@@ -62,7 +62,7 @@ import {
   ruleNodeTypeDescriptors,
   ruleNodeTypesLibrary
 } from '@shared/models/rule-node.models';
-import { QuestionBase, TextboxQuestion, DropdownQuestion } from '@shared/models/question-base.models';
+import { QuestionBase,ValueProperty, TextboxQuestion, DropdownQuestion } from '@shared/models/question-base.models';
 import { FcRuleNodeModel, FcRuleNodeTypeModel, RuleChainMenuContextInfo } from './rulechain-page.models';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { fromEvent, NEVER, Observable, of } from 'rxjs';
@@ -1031,16 +1031,49 @@ export class RuleChainPageComponent extends PageComponent
       if(branchFoundObj.branchFound){
         console.log("branch node");
         console.log(nodes[branchFoundObj.branchIndex]);
+
+        let valueObjectPropertyArray = [];
+
+        for (let prop of branchFoundObj.properties){
+          let valueProperty = new ValueProperty();
+          valueProperty.name = prop.name;
+          valueProperty.type = "PROPERTY";
+          if (prop.property.data.Type == "property"){
+            valueProperty.valueType = "primitive";
+          } else if (prop.property.data.Type == "collection"){
+            valueProperty.valueType = "object";
+          } else if (prop.property.data.Type == "list"){
+            valueProperty.valueType = "list";
+          }else {
+            valueProperty.valueType = "primitive"
+          }
+          valueObjectPropertyArray.push(valueProperty)
+        }
+        for (let cons of branchFoundObj.constants){
+          let valueProperty = new ValueProperty();
+          valueProperty.name= cons.constantName;
+          valueProperty.type= "CONSTANT";
+          valueProperty.valueType = "primitive";
+          valueObjectPropertyArray.push(valueProperty)
+        }
+
         if(nodes[branchFoundObj.branchIndex].configuration.branchParams){
-            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables};
+            for (let param of nodes[branchFoundObj.branchIndex].configuration.branchParams){
+              let valueProperty = new ValueProperty();
+              valueProperty.name = param.name;
+              valueProperty.type= "PARAM";
+              valueProperty.valueType = "primitive";
+              valueObjectPropertyArray.push(valueProperty)
+            }
+            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray};
             return obj;
         } else {
-            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables};
+            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray};
             return obj;
         }
 
       } else {
-            let obj = {'branchParams': [], 'branchFound': false, 'properties': [], 'constants': [], 'variables': []};
+            let obj = {'branchParams': [], 'branchFound': false, 'properties': [], 'constants': [], 'variables': [], 'valueObjectProperties':[]};
             return obj;
       }
 
@@ -1053,13 +1086,13 @@ export class RuleChainPageComponent extends PageComponent
             let obj = {'branchIndex': foundNode.fromIndex, 'branchFound': true, 'properties': nodePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray};
             return obj;
         } else {
-
-            if(Object.keys(nodes[foundNode.fromIndex].configuration.nodevariable).length !== 0){
+            if(nodes[foundNode.fromIndex].configuration.nodevariable !== undefined && nodes[foundNode.fromIndex].configuration.nodevariable !== null){
+              if(Object.keys(nodes[foundNode.fromIndex].configuration.nodevariable).length !== 0){
                 nodeVariableArray = nodeVariableArray.push(nodes[foundNode.fromIndex].configuration.nodevariable);
+              }
             }
-
             if(nodes[foundNode.fromIndex].component.clazz === 'xiModelPropertyNode'){
-                if(nodes[foundNode.fromIndex].configuration.modelproperties !== null || nodes[foundNode.fromIndex].configuration.modelproperties !== undefined ){
+                if(nodes[foundNode.fromIndex].configuration.modelproperties !== null && nodes[foundNode.fromIndex].configuration.modelproperties !== undefined ){
                     nodePropertyArray = nodePropertyArray.concat(nodes[foundNode.fromIndex].configuration.modelproperties);
                 }
 

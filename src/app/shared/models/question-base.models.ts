@@ -49,3 +49,9 @@ export class ModelSelectionFields{
     label: string;
     name: string;
 }
+
+export class ValueProperty {
+    name: string
+    type: string
+    valueType: string
+}
