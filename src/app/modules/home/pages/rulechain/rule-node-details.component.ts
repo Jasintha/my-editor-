@@ -188,11 +188,13 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   ngOnInit(): void {
     if(this.branchAvailability.branchFound){
         this.allModelProperties = this.branchAvailability.properties;
-         console.log("branch props");
-        console.log(this.branchAvailability.properties);
         this.allConstants = this.branchAvailability.constants;
         this.allVariables = this.branchAvailability.variables;
         this.allValueObjectProperties= this.branchAvailability.valueObjectProperties;
+    } else {
+        this.allModelProperties = this.branchAvailability.properties;
+        this.allConstants = this.branchAvailability.constants;
+        this.allVariables = this.branchAvailability.variables;
     }
   }
 

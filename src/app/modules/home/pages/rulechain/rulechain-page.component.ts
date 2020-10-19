@@ -1073,7 +1073,7 @@ export class RuleChainPageComponent extends PageComponent
         }
 
       } else {
-            let obj = {'branchParams': [], 'branchFound': false, 'properties': [], 'constants': [], 'variables': [], 'valueObjectProperties':[]};
+            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':[]};
             return obj;
       }
 
@@ -1106,7 +1106,7 @@ export class RuleChainPageComponent extends PageComponent
             return branchCheckVal;
         }
     } else {
-        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': [], 'constants': [], 'variables': []};
+        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'constants': nodePropertyArray, 'variables': nodeVariableArray};
         return obj;
     }
   }
