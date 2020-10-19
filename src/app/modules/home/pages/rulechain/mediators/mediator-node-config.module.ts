@@ -47,6 +47,7 @@ import { EventStoreNodeConfigComponent } from './cqrs/event-store-node-config.co
 import { QueryStoreNodeConfigComponent } from './cqrs/query-store-node-config.component';
 
 import {MatTableModule} from '@angular/material/table';
+import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/action/aggregate-node-config.component";
 @NgModule({
   declarations: [
     MediatorNodeConfigComponent,
@@ -77,7 +78,8 @@ import {MatTableModule} from '@angular/material/table';
     FileDownloadNodeConfigComponent,
     FileUploadNodeConfigComponent,
     SwitchNodeConfigComponent,
-    CallNodeConfigComponent
+    CallNodeConfigComponent,
+    AggregateNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -114,7 +116,8 @@ import {MatTableModule} from '@angular/material/table';
     FileDownloadNodeConfigComponent,
     FileUploadNodeConfigComponent,
     SwitchNodeConfigComponent,
-    CallNodeConfigComponent
+    CallNodeConfigComponent,
+    AggregateNodeConfigComponent
   ],
   providers: []
 })
