@@ -192,6 +192,26 @@
                              [nodeDefinition]="nodeDefinitionValue">
       </tb-filter-node-config>
     </ng-container>
+
+
+  <ng-container *ngIf="nodeClazz === 'xiAggregatorNode'">
+    <tb-aggregate-node-config #aggregateNodeConfigComponent
+                           formControlName="configuration"
+                           [ruleNodeId]="ruleNodeId"
+                           [allConstants]=" allConstants"
+                           [inputEntities]=" inputEntities"
+                           [inputCustomobjects]="inputCustomobjects"
+                           [allVariables]="allVariables"
+                           [inputProperties]="inputProperties"
+                           [apptype]="apptype"
+                           [allModelProperties]="allModelProperties"
+                           [branchAvailability]="branchAvailability"
+                           [allRoots]="allRoots"
+                           [nodeDefinition]="nodeDefinitionValue">
+    </tb-aggregate-node-config>
+  </ng-container>
+
+
   <ng-container *ngIf="nodeClazz === 'xiSwitchNode'">
     <tb-switch-node-config #switchNodeConfigComponent
                            formControlName="configuration"
