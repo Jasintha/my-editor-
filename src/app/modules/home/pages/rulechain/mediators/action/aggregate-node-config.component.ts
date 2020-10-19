@@ -91,7 +91,6 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
         if (this.nodeDefinitionValue !== nodeDefinition) {
             this.nodeDefinitionValue = nodeDefinition;
             if (this.nodeDefinitionValue) {
-                // this.validateDefinedDirective();
             }
         }
     }
@@ -113,20 +112,17 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
 
     selectedVariableProperties: any[];
 
-
     private propagateChange = (v: any) => { };
 
     constructor(private translate: TranslateService,
                 private ruleChainService: RuleChainService,
                 private fb: FormBuilder) {
-        this.aggregateNodeConfigFormGroup = this.fb.group({   //todo
-
+        this.aggregateNodeConfigFormGroup = this.fb.group({
             secondinputType: [],
             secondconstant: [],
             secondparam: [],
             secondproperty:[],
             secondbranchparam: [],
-
             property: [],
             inputType: '',
             branchparam: []
@@ -141,8 +137,6 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
     }
 
     ngOnInit(): void {
-
-        console.log(this.allModelProperties);
     }
 
     ngOnDestroy(): void {
@@ -161,7 +155,6 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
             this.configuration.secondparam= {};
             this.configuration.secondproperty= {};
             this.configuration.secondbranchparam= {};
-
             this.aggregateNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
             this.aggregateNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
             this.aggregateNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
@@ -171,7 +164,6 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
             this.configuration.secondconstant= {};
             this.configuration.secondproperty= {};
             this.configuration.secondbranchparam= {};
-
             this.aggregateNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
             this.aggregateNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
             this.aggregateNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
@@ -187,7 +179,6 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
             this.configuration.secondconstant= {};
             this.configuration.secondparam= {};
             this.configuration.secondproperty= {};
-
             this.aggregateNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
             this.aggregateNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
             this.aggregateNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
