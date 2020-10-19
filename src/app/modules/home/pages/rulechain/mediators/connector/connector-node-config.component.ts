@@ -235,10 +235,24 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
                 this.fields[i].options = this.generatePrimitiveArray(this.fields[i].controlType);
             }
 
+            if (this.fields[i].controlType == "table"){
+                for (let j = 0; j < this.fields[i].tableFields.length; j++){
+                  if (this.checkControlType(this.fields[i].tableFields[j].controlType)){
+                    this.fields[i].tableFields[j].options = this.generatePropertyArray(this.fields[i].tableFields[j].controlType);
+                  } else if(this.checkType(this.fields[i].tableFields[j].controlType)){
+                    this.fields[i].tableFields[j].options = this.generatePrimitiveArray(this.fields[i].tableFields[j].controlType);
+                  }
+                }
+            }
+
         }
     }
 
     this.connectorConfigFormGroup = this.toFormGroup(this.fields);
+  }
+
+  checkIfControlTypeOrType(tableField: QuestionBase):boolean{
+    return this.checkControlType(tableField.controlType) || this.checkType(tableField.controlType);
   }
 
   getTableDataSource(tableField: QuestionBase):any{
@@ -444,7 +458,6 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
           proArray = A_Array.concat(B_Array,C_Array);
         }
     }
-
     return proArray;
   }
 
