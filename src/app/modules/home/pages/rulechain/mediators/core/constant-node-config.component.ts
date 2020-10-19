@@ -155,6 +155,10 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
     this.configuration = deepClone(value);
     this.datasource = new MatTableDataSource(this.configuration.constants);
 
+    if(this.configuration.constants === null || this.configuration.constants === undefined){
+        this.configuration.constants = [];
+    }
+
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
