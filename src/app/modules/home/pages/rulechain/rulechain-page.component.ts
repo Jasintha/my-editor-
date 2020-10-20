@@ -1106,7 +1106,7 @@ export class RuleChainPageComponent extends PageComponent
             return branchCheckVal;
         }
     } else {
-        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'constants': nodePropertyArray, 'variables': nodeVariableArray};
+        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray};
         return obj;
     }
   }
