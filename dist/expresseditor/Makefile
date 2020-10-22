@@ -15,7 +15,7 @@ docker-build:    ## building docker image
 		rm -rf dist/expresseditor/build
 		cp -r target/generated-resources/public dist/expresseditor/build
 		cd dist/expresseditor/
-		docker build -t twillodotio/twillo-studio-editor-ui -f Dockerfile .
+		docker build -t virtuan/studio-rule-editor -f Dockerfile .
 
 docker-run:      ## runing docker image
 		docker run --network host  -it  twillodotio/twillo-studio-editor-ui
