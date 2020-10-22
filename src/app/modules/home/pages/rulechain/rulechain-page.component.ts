@@ -1038,14 +1038,16 @@ export class RuleChainPageComponent extends PageComponent
           let valueProperty = new ValueProperty();
           valueProperty.name = prop.name;
           valueProperty.type = "PROPERTY";
-          if (prop.property.data.Type == "property"){
+          if (prop.propertyDataType == "PRIMITIVE"){
             valueProperty.valueType = "primitive";
+          /*
           } else if (prop.property.data.Type == "collection"){
             valueProperty.valueType = "object";
           } else if (prop.property.data.Type == "list"){
             valueProperty.valueType = "list";
+          */
           }else {
-            valueProperty.valueType = "primitive"
+            valueProperty.valueType = "object"
           }
           valueObjectPropertyArray.push(valueProperty)
         }
