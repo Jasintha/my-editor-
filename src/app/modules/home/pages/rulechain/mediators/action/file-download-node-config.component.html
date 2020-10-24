@@ -3,7 +3,7 @@
   <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
     <section class="mat-block" fxFlex>
       <mat-form-field fxFlex class="mat-block">
-        <mat-label>File Upload Input Type</mat-label>
+        <mat-label>File Download Input Type</mat-label>
         <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
           <mat-option *ngIf="!branchAvailability?.branchFound &&  inputProperties?.length" value="PARAM">Param</mat-option>
           <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
