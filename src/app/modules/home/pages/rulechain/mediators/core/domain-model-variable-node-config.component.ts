@@ -215,7 +215,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
 
   refreshTypes(){
     let modelpropertyType: string = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyType').value;
-    if (modelpropertyType === 'API_INPUT'){
+    if (modelpropertyType === 'RULE_INPUT'){
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
      // this.domainModelVariableNodeConfigFormGroup.get('modelpropertyvariable').patchValue([], {emitEvent: false});
      // this.domainModelVariableNodeConfigFormGroup.get('modelpropertybranchParam').patchValue([], {emitEvent: false});
@@ -327,7 +327,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
 
     //let modelTitleName = '';
     let modelName = '';
-    if(propertyType === 'API_INPUT'){
+    if(propertyType === 'RULE_INPUT'){
         selectedInput = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.inputName;
         let pkg = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.inputType;
 
@@ -466,14 +466,11 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     this.configuration.modelproperties.push(property);
     this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
     this.updateModel(this.configuration);
-    /*
+
     this.domainModelVariableNodeConfigFormGroup.patchValue({
-      modelpropertyinputType: [],
-      modelpropertydomainModel: [],
-      modelpropertyviewModel:[],
-      propertyName: []
+      propertyName: ''
     });
-    */
+
     //this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   }
