@@ -7,13 +7,13 @@
         <mat-label>Type</mat-label>
         <mat-select formControlName="modelpropertyType" (selectionChange)="refreshTypes()">
             <mat-option value="NEW">New</mat-option>
-            <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="API_INPUT">API Input</mat-option>
+            <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
             <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
             <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'API_INPUT'" fxFlex class="mat-block">
-        <mat-label>API Input</mat-label>
+    <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
         <mat-select formControlName="modelpropertyruleInput">
             <mat-option *ngFor="let domainModel of allRuleInputs" [value]="domainModel">
                 {{domainModel.inputName}} <span *ngIf="domainModel.inputType === 'model'"> - Domain Model</span>
