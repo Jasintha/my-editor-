@@ -26,6 +26,7 @@ import { IteratorNodeConfigComponent } from './action/iterator-node-config.compo
 import { FileUploadNodeConfigComponent } from './action/file-upload-node-config.component';
 import { FileDownloadNodeConfigComponent } from './action/file-download-node-config.component';
 import { CallNodeConfigComponent } from './action/call-node-config.component';
+import { HybridFunctionNodeConfigComponent } from './action/hybrid-function-node-config.component';
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
@@ -67,6 +68,7 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     ShopifyInitNodeConfigComponent,
     ShopifyEventNodeConfigComponent,
     ShopifyProductNodeConfigComponent,
+    HybridFunctionNodeConfigComponent,
     SmsInitNodeConfigComponent,
     SmsSendNodeConfigComponent,
     ShopifyOrderNodeConfigComponent,
@@ -104,6 +106,7 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     QueryStoreNodeConfigComponent,
     SmsInitNodeConfigComponent,
     BranchNodeConfigComponent,
+    HybridFunctionNodeConfigComponent,
     LogNodeConfigComponent,
     IteratorNodeConfigComponent,
     SmsSendNodeConfigComponent,
