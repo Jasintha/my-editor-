@@ -165,6 +165,7 @@ export class RuleChainPageComponent extends PageComponent
   allEvents: any[];
   allViewModels: any[];
   allLambdaFunctions: any[];
+  allHybridFunctions: any[];
   allRoots: any[];
   queryDb: string;
   commandDb: string;
@@ -362,6 +363,7 @@ export class RuleChainPageComponent extends PageComponent
     this.allRuleInputs = this.ruleChainMetaData.allRuleInputs
     this.allViewModels = this.ruleChainMetaData.allViewModels;
     this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+    this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
     this.allRoots = this.ruleChainMetaData.allRoots;
     this.allEvents = this.ruleChainMetaData.allEvents;
     this.queryDb = this.ruleChainMetaData.queryDb;
@@ -1502,6 +1504,7 @@ export class RuleChainPageComponent extends PageComponent
         this.allRuleInputs = this.ruleChainMetaData.allRuleInputs
         this.allViewModels = this.ruleChainMetaData.allViewModels;
         this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+        this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
         this.allRoots = this.ruleChainMetaData.allRoots;
         this.allEvents = this.ruleChainMetaData.allEvents;
         this.queryDb = this.ruleChainMetaData.queryDb;
@@ -1545,6 +1548,7 @@ export class RuleChainPageComponent extends PageComponent
     const allRuleInputs = this.ruleChainMetaData.allRuleInputs;
     const allViewModels = this.ruleChainMetaData.allViewModels;
     const allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+    const allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
     const allRoots = this.ruleChainMetaData.allRoots;
     const allEvents = this.ruleChainMetaData.allEvents;
     const queryDb = this.ruleChainMetaData.queryDb;
@@ -1596,6 +1600,7 @@ export class RuleChainPageComponent extends PageComponent
         allEvents,
         allValueObjectProperties,
         allLambdaFunctions,
+        allHybridFunctions,
         allRoots,
         queryDb,
         commandDb,
@@ -1816,6 +1821,7 @@ export interface AddRuleNodeDialogData {
   allRuleInputs: any[];
   allEvents: any[];
   allLambdaFunctions: any[];
+  allHybridFunctions: any[];
   allRoots: any[];
   queryDb: string;
   commandDb: string;
@@ -1853,6 +1859,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allDomainModels: any[];
   allViewModels: any[];
   allLambdaFunctions: any[];
+  allHybridFunctions: any[];
   allRoots: any[];
   allModelProperties: any[];
   allRuleInputs: any[];
@@ -1889,6 +1896,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allDomainModels = this.data.allDomainModels;
     this.allViewModels = this.data.allViewModels;
     this.allLambdaFunctions = this.data.allLambdaFunctions;
+    this.allHybridFunctions = this.data.allHybridFunctions;
     this.allRoots = this.data.allRoots;
   //  this.isNodeEdit = this.data.isNodeEdit;
     this.allModelProperties = this.data.allModelProperties;

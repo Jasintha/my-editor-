@@ -1,7 +1,7 @@
 <div [formGroup]="lambdaFunctionNodeConfigFormGroup">
 
     <mat-form-field fxFlex class="mat-block">
-        <mat-label>Function</mat-label>
+        <mat-label>Lambda Function</mat-label>
         <mat-select formControlName="function">
             <mat-option *ngFor="let function of allLambdaFunctions" [value]="function">
                 {{function.name}}

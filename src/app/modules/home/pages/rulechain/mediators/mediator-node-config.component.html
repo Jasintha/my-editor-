@@ -123,6 +123,22 @@
                                [nodeDefinition]="nodeDefinitionValue">
     </tb-lambda-function-node-config>
   </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiHybridFunctionNode'">
+    <tb-hybrid-function-node-config #hybridFunctionNodeConfigComponent
+                                    formControlName="configuration"
+                                    [ruleNodeId]="ruleNodeId"
+                                    [allConstants]=" allConstants"
+                                    [inputEntities]=" inputEntities"
+                                    [inputCustomobjects]="inputCustomobjects"
+                                    [allVariables]="allVariables"
+                                    [inputProperties]="inputProperties"
+                                    [apptype]="apptype"
+                                    [allModelProperties]="allModelProperties"
+                                    [allHybridFunctions]="allHybridFunctions"
+                                    [branchAvailability]="branchAvailability"
+                                    [nodeDefinition]="nodeDefinitionValue">
+    </tb-hybrid-function-node-config>
+  </ng-container>
   <ng-container *ngIf="nodeClazz === 'xiValidatorNode'">
     <tb-validator-node-config #validatorNodeConfigComponent
                                     formControlName="configuration"
