@@ -1027,7 +1027,7 @@ export class RuleChainPageComponent extends PageComponent
         }
       });
 
-      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [], [], []);
+      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], []);
       console.log(branchFoundObj);
 
       if(branchFoundObj.branchFound){
@@ -1069,25 +1069,25 @@ export class RuleChainPageComponent extends PageComponent
               valueProperty.valueType = "primitive";
               valueObjectPropertyArray.push(valueProperty)
             }
-            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray};
+            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray};
             return obj;
         } else {
-            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray};
+            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray};
             return obj;
         }
 
       } else {
-            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':[]};
+            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':[]};
             return obj;
       }
 
   }
 
-  checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeConstantArray, nodeVariableArray){
+  checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray){
     let foundNode = allConnections.find(x => x.toIndex === index);
     if(foundNode){
         if(foundNode.type.startsWith("BRANCH_")){
-            let obj = {'branchIndex': foundNode.fromIndex, 'branchFound': true, 'properties': nodePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray};
+            let obj = {'branchIndex': foundNode.fromIndex, 'branchFound': true, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray};
             return obj;
         } else {
             if(nodes[foundNode.fromIndex].configuration.nodevariable !== undefined && nodes[foundNode.fromIndex].configuration.nodevariable !== null){
@@ -1104,13 +1104,18 @@ export class RuleChainPageComponent extends PageComponent
                 if(nodes[foundNode.fromIndex].configuration.constants){
                     nodeConstantArray = nodeConstantArray.concat(nodes[foundNode.fromIndex].configuration.constants);
                 }
+            } else if(nodes[foundNode.fromIndex].component.clazz === 'xiReferencePropertyNode'){
+                if(nodes[foundNode.fromIndex].configuration.referenceproperties !== null && nodes[foundNode.fromIndex].configuration.referenceproperties !== undefined ){
+                    nodeReferencePropertyArray = nodeReferencePropertyArray.concat(nodes[foundNode.fromIndex].configuration.referenceproperties);
+                }
+
             }
 
-            let branchCheckVal = this.checkForBranchConnection(foundNode.fromIndex, allConnections, nodes, nodePropertyArray, nodeConstantArray, nodeVariableArray);
+            let branchCheckVal = this.checkForBranchConnection(foundNode.fromIndex, allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray);
             return branchCheckVal;
         }
     } else {
-        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray};
+        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray};
         return obj;
     }
   }

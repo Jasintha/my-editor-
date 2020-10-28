@@ -76,6 +76,7 @@
       <tb-payload-node-config #payloadNodeConfigComponent
                               formControlName="configuration"
                               [ruleNodeId]="ruleNodeId"
+                              [allReferenceProperties]="allReferenceProperties"
                               [nodeDefinition]="nodeDefinitionValue">
       </tb-payload-node-config>
     </ng-container>
@@ -119,6 +120,7 @@
                                [apptype]="apptype"
                                [allModelProperties]="allModelProperties"
                                     [allLambdaFunctions]="allLambdaFunctions"
+                                    [allReferenceProperties]="allReferenceProperties"
                                     [branchAvailability]="branchAvailability"
                                [nodeDefinition]="nodeDefinitionValue">
     </tb-lambda-function-node-config>
@@ -136,6 +138,7 @@
                                     [allModelProperties]="allModelProperties"
                                     [allHybridFunctions]="allHybridFunctions"
                                     [branchAvailability]="branchAvailability"
+                                    [allReferenceProperties]="allReferenceProperties"
                                     [nodeDefinition]="nodeDefinitionValue">
     </tb-hybrid-function-node-config>
   </ng-container>
@@ -223,6 +226,7 @@
                            [allModelProperties]="allModelProperties"
                            [branchAvailability]="branchAvailability"
                            [allRoots]="allRoots"
+                              [allReferenceProperties]="allReferenceProperties"
                            [nodeDefinition]="nodeDefinitionValue">
     </tb-aggregate-node-config>
   </ng-container>
@@ -256,6 +260,7 @@
                            [queryDb]="queryDb"
                            [commandDb]="commandDb"
                            [apptype]="apptype"
+                           [allReferenceProperties]="allReferenceProperties"
                            [allModelProperties]="allModelProperties"
                            [nodeDefinition]="nodeDefinitionValue">
       </tb-crud-node-config>
@@ -277,6 +282,23 @@
                            [nodeDefinition]="nodeDefinitionValue">
       </tb-domain-model-variable-node-config>
     </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiReferencePropertyNode'">
+    <tb-reference-property-node-config #referencePropertyNodeConfigComponent
+                                          formControlName="configuration"
+                                          [ruleNodeId]="ruleNodeId"
+                                          [allDomainModels]=" allDomainModels"
+                                          [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                          [allViewModelsWithSub]="allViewModelsWithSub"
+                                          [allModelProperties]="allModelProperties"
+                                          [allViewModels]="allViewModels"
+                                          [allRuleInputs]="allRuleInputs"
+                                          [allVariables]="allVariables"
+                                          [inputEntities]="inputEntities"
+                                          [inputCustomobjects]="inputCustomobjects"
+                                          [branchAvailability]="branchAvailability"
+                                          [nodeDefinition]="nodeDefinitionValue">
+    </tb-reference-property-node-config>
+  </ng-container>
   <ng-container *ngIf="nodeClazz === 'xiEventPublisherNode'">
     <tb-event-publisher-node-config #eventPublisherNodeConfigComponent
                                           formControlName="configuration"
@@ -323,6 +345,7 @@
                          [queryDb]="queryDb"
                          [commandDb]="commandDb"
                          [apptype]="apptype"
+                                [allReferenceProperties]="allReferenceProperties"
                          [allModelProperties]="allModelProperties"
                          [nodeDefinition]="nodeDefinitionValue">
     </tb-query-store-node-config>
@@ -340,6 +363,7 @@
                            [branchAvailability]="branchAvailability"
                            [allModelProperties]="allModelProperties"
                            [allRoots]="allRoots"
+                           [allReferenceProperties]="allReferenceProperties"
                            [nodeDefinition]="nodeDefinitionValue">
     </tb-branch-node-config>
   </ng-container>
@@ -399,6 +423,7 @@
                              [inputProperties]="inputProperties"
                          [branchAvailability]="branchAvailability"
                              [apptype]="apptype"
+                         [allReferenceProperties]="allReferenceProperties"
                              [allModelProperties]="allModelProperties"
                              [nodeDefinition]="nodeDefinitionValue">
     </tb-call-node-config>

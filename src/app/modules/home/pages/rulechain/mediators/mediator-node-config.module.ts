@@ -10,6 +10,7 @@ import { RootNodeConfigComponent } from './rooting/root-node-config.component';
 import { ConstantNodeConfigComponent } from './core/constant-node-config.component';
 import { BranchNodeConfigComponent } from './core/branch-node-config.component';
 import { DomainModelVariableNodeConfigComponent } from './core/domain-model-variable-node-config.component';
+import { ReferencePropertyNodeConfigComponent } from './core/reference-property-node-config.component';
 
 //action
 import { PayloadNodeConfigComponent } from './action/payload-node-config.component';
@@ -63,6 +64,7 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     FilterNodeConfigComponent,
     CrudNodeConfigComponent,
     ConnectorNodeConfigComponent,
+    ReferencePropertyNodeConfigComponent,
     EventStoreNodeConfigComponent,
     QueryStoreNodeConfigComponent,
     ShopifyInitNodeConfigComponent,
@@ -98,6 +100,7 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     EventReceiverNodeConfigComponent,
     EventPublisherNodeConfigComponent,
     EmailSendNodeConfigComponent,
+    ReferencePropertyNodeConfigComponent,
     EmailInitNodeConfigComponent,
     FilterNodeConfigComponent,
     CrudNodeConfigComponent,
