@@ -101,6 +101,8 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   @Input()
   allModelProperties: any[];
 
+  allReferenceProperties: any[];
+
   @Input()
   allEvents: any[];
 
@@ -199,6 +201,7 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
         this.allConstants = this.branchAvailability.constants;
         this.allVariables = this.branchAvailability.variables;
     }
+    this.allReferenceProperties = this.branchAvailability.referenceProperties;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

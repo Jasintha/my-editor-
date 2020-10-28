@@ -21,14 +21,14 @@
 
         <mat-form-field fxFlex class="mat-block">
             <mat-label>Parameter Input Type</mat-label>
-            <mat-select formControlName="parameterinputType" (selectionChange)="refreshParameterInputTypes()">
+            <mat-select formControlName="assignedtoinputType" (selectionChange)="refreshParameterInputTypes()">
                 <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
                 <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
                 <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
             </mat-select>
         </mat-form-field>
         <section class="mat-block" fxFlex>
-            <mat-form-field *ngIf="configuration.parameterinputType === 'PARAM'" fxFlex class="mat-block">
+            <mat-form-field *ngIf="configuration.assignedtoinputType === 'PARAM'" fxFlex class="mat-block">
                 <mat-label>Param</mat-label>
                 <mat-select formControlName="parameterparam">
                     <mat-option *ngFor="let property of inputProperties" [value]="property">
@@ -36,7 +36,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field *ngIf="configuration.parameterinputType === 'PROPERTY'" fxFlex class="mat-block">
+            <mat-form-field *ngIf="configuration.assignedtoinputType === 'PROPERTY'" fxFlex class="mat-block">
                 <mat-label>Property</mat-label>
                 <mat-select formControlName="parameterproperty">
                     <mat-option *ngFor="let property of allModelProperties" [value]="property">
@@ -44,7 +44,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field *ngIf="configuration.parameterinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+            <mat-form-field *ngIf="configuration.assignedtoinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
                 <mat-label>Branch Param</mat-label>
                 <mat-select formControlName="parameterbranch">
                     <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
@@ -96,60 +96,47 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
+    <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Save Result Type</mat-label>
+            <mat-select formControlName="assignedtoinputType">
+                <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+                <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <section class="mat-block" fxFlex>
+            <mat-form-field fxFlex class="mat-block" *ngIf="configuration.assignedtoinputType === 'PROPERTY'">
+                <mat-label>Value Property</mat-label>
+                <mat-select formControlName="assignedProperty">
+                    <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
+                        {{modelproperty.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field *ngIf="configuration.assignedtoinputType === 'REFERENCE'" fxFlex class="mat-block">
+                <mat-label>Reference Property</mat-label>
+                <mat-select formControlName="assignedReference">
+                    <mat-option *ngFor="let property of allReferenceProperties" [value]="property">
+                        {{property.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </section>
+        
+    </section>
+    
     <mat-form-field fxFlex class="mat-block">
-        <mat-label>Save Result To</mat-label>
-        <mat-select formControlName="assignedProperty">
-            <!--<mat-option *ngFor="let property of allModelProperties" [value]="property">
-              {{property.name}}
-            </mat-option>-->
-            <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
-                {{modelproperty.name}}
-            </mat-option>
+        <mat-label>Error Message</mat-label>
+        <input matInput formControlName="errorMsg"/>
+    </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>Error Action</mat-label>
+        <mat-select formControlName="errorAction">
+            <mat-option value="1">Log & Continue</mat-option>
+            <mat-option value="2">Log & Exit</mat-option>
+            <mat-option value="3">Return</mat-option>
         </mat-select>
     </mat-form-field>
-    <!--<section class="mat-block" fxFlex>
-        <mat-form-field fxFlex class="mat-block">
-            <mat-label>Function</mat-label>
-            <textarea matInput formControlName="function" required rows="10"></textarea>
-        </mat-form-field>
-    </section>-->
-
-    <!--<section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
-
-        <section class="mat-block" fxFlex>
-            <mat-form-field fxFlex class="mat-block">
-                <mat-label>Return Input Type</mat-label>
-                <mat-select formControlName="inputType">
-                    <mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
-                    <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </section>
-        <section class="mat-block" fxFlex>
-            <mat-form-field *ngIf="configuration.inputType === 'MODEL'" fxFlex class="mat-block">
-                <mat-label>Model</mat-label>
-                <mat-select formControlName="entity">
-                    <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
-                        {{nodeEntity.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field *ngIf="configuration.inputType === 'DTO'" fxFlex class="mat-block">
-                <mat-label>DTO</mat-label>
-                <mat-select formControlName="customObject">
-                    <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
-                        {{nodeEntity.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-        </section>
-    </section>-->
-    <!--<mat-form-field fxFlex class="mat-block">
-        <mat-label>Return Record</mat-label>
-        <mat-select formControlName="record">
-            <mat-option value="s">Single</mat-option>
-            <mat-option value="m">Multiple</mat-option>
-        </mat-select>
-    </mat-form-field>-->
 </div>

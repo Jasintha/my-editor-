@@ -124,6 +124,9 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   @Input()
   allVariables: any[];
 
+  @Input()
+  allReferenceProperties: any[];
+
   @Input() connectorfields: QuestionBase[];
 
   @Input() branchAvailability: any;
