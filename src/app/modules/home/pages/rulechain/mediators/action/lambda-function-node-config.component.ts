@@ -81,6 +81,9 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
   allModelProperties: any[];
 
   @Input() branchAvailability: any;
+  
+  @Input()
+  allReferenceProperties: any[];
 
   @Input()
   apptype: string;
@@ -131,7 +134,11 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       parameterparam: [],
       parameterproperty: [],
       parameterbranch: [],
-      assignedProperty: []
+      assignedProperty: [],
+      errorMsg: "",
+      errorAction: "",
+      assignedtoinputType: "",
+      assignedReference: []
     });
   }
 
@@ -284,6 +291,11 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       if(assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
       }
+      
+      let assignedReference = this.configuration.assignedReference;
+      if(assignedReference && this.allReferenceProperties){
+        assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
+      }
       /*
       let customObject = this.configuration.customObject;
       if(customObject){
@@ -306,8 +318,26 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
         parameterproperty: this.configuration.parameterproperty,
         parameterbranch: this.configuration.parameterbranch,
         function: functionObj,
-        assignedProperty: assignedProperty
+        assignedProperty: assignedProperty,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction,
+        assignedtoinputType: this.configuration.assignedtoinputType,
+        assignedReference: assignedReference
       });
+
+      this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorAction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('function').valueChanges.subscribe(
         (configuration: any) => {
@@ -348,6 +378,28 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('parameterbranch').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.parameterbranch = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+      
+      this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedReference = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+
+          this.configuration.assignedtoinputType = configuration;
+          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+            this.configuration.assignedReference= {};
+            this.lambdaFunctionNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+          }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
+            this.configuration.assignedProperty= {};
+            this.lambdaFunctionNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+          }
           this.updateModel(this.configuration);
         }
       );

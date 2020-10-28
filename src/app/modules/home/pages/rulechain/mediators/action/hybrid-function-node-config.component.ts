@@ -85,6 +85,9 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
   @Input()
   apptype: string;
 
+  @Input()
+  allReferenceProperties: any[];
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
@@ -131,7 +134,11 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       parameterparam: [],
       parameterproperty: [],
       parameterbranch: [],
-      assignedProperty: []
+      assignedProperty: [],
+      errorMsg: "",
+      errorAction: "",
+      assignedtoinputType: "",
+      assignedReference: []
     });
   }
 
@@ -284,6 +291,11 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       if(assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
       }
+
+      let assignedReference = this.configuration.assignedReference;
+      if(assignedReference && this.allReferenceProperties){
+        assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
+      }
       /*
       let customObject = this.configuration.customObject;
       if(customObject){
@@ -306,8 +318,26 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
         parameterproperty: this.configuration.parameterproperty,
         parameterbranch: this.configuration.parameterbranch,
         function: functionObj,
-        assignedProperty: assignedProperty
+        assignedProperty: assignedProperty,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction,
+        assignedtoinputType: this.configuration.assignedtoinputType,
+        assignedReference: assignedReference
       });
+
+      this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorAction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('function').valueChanges.subscribe(
         (configuration: any) => {
@@ -352,37 +382,27 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
         }
       );
 
-      /*
-      this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('inputType').valueChanges.subscribe(
+      this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedReference = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
 
-          this.configuration.inputType = configuration;
-          if(this.configuration.inputType == 'MODEL'){
-            this.configuration.customObject= {};
-            this.hybridFunctionNodeConfigFormGroup.get('customObject').patchValue([], {emitEvent: false});
-          }else if (this.configuration.inputType == 'DTO'){
-            this.configuration.entity= {};
-            this.hybridFunctionNodeConfigFormGroup.get('entity').patchValue([], {emitEvent: false});
+          this.configuration.assignedtoinputType = configuration;
+          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+            this.configuration.assignedReference= {};
+            this.hybridFunctionNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+          }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
+            this.configuration.assignedProperty= {};
+            this.hybridFunctionNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
           }
           this.updateModel(this.configuration);
         }
       );
-      this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('customObject').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.customObject = configuration;
-          this.configuration.entity = {};
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('entity').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.entity = configuration;
-          this.configuration.customObject = {};
-          this.updateModel(this.configuration);
-        }
-      );
-      */
 
     }
   }
