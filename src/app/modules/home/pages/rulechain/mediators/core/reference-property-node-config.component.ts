@@ -376,8 +376,8 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
       mapValueType: mapValueType,
       mapValueRecord: mapValueRecord
     };
-    this.configuration.modelproperties.push(property);
-    this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
+    this.configuration.referenceproperties.push(property);
+    this.propertydatasource = new MatTableDataSource(this.configuration.referenceproperties);
     this.updateModel(this.configuration);
 
     this.referencePropertyNodeConfigFormGroup.patchValue({
