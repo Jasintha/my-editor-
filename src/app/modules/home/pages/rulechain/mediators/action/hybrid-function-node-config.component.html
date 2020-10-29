@@ -21,14 +21,14 @@
 
         <mat-form-field fxFlex class="mat-block">
             <mat-label>Parameter Input Type</mat-label>
-            <mat-select formControlName="assignedtoinputType" (selectionChange)="refreshParameterInputTypes()">
+            <mat-select formControlName="parameterinputType" (selectionChange)="refreshParameterInputTypes()">
                 <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
                 <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
                 <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
             </mat-select>
         </mat-form-field>
         <section class="mat-block" fxFlex>
-            <mat-form-field *ngIf="configuration.assignedtoinputType === 'PARAM'" fxFlex class="mat-block">
+            <mat-form-field *ngIf="configuration.parameterinputType === 'PARAM'" fxFlex class="mat-block">
                 <mat-label>Param</mat-label>
                 <mat-select formControlName="parameterparam">
                     <mat-option *ngFor="let property of inputProperties" [value]="property">
@@ -36,7 +36,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field *ngIf="configuration.assignedtoinputType === 'PROPERTY'" fxFlex class="mat-block">
+            <mat-form-field *ngIf="configuration.parameterinputType === 'PROPERTY'" fxFlex class="mat-block">
                 <mat-label>Property</mat-label>
                 <mat-select formControlName="parameterproperty">
                     <mat-option *ngFor="let property of allModelProperties" [value]="property">
@@ -44,7 +44,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field *ngIf="configuration.assignedtoinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+            <mat-form-field *ngIf="configuration.parameterinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
                 <mat-label>Branch Param</mat-label>
                 <mat-select formControlName="parameterbranch">
                     <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
