@@ -173,7 +173,10 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
              // this.dataSource.data = TREE_DATA;
     this.referencePropertyNodeConfigFormGroup = this.fb.group({
       propertyName: '',
-      modelpropertyproperty: []
+      modelpropertyproperty: [],
+      modelpropertyType: '',
+      modelpropertyruleInput: [],
+      modelpropertybranchParam: []
     });
   }
 
