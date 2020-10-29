@@ -56,6 +56,12 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
   @Input()
   ruleNodeId: string;
 
+  @Input()
+  allModelProperties: any[];
+
+  @Input()
+  allReferenceProperties: any[];
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
@@ -89,7 +95,11 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.payloadNodeConfigFormGroup = this.fb.group({
-      payload: [null, Validators.required]
+      payload: "",
+      payloadType: "",
+      assignedtoinputType: "",
+      assignedProperty: [],
+      assignedReference: []
     });
   }
 
@@ -137,13 +147,64 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
         this.updateModel(configuration);
       });
     } else {
+
+      let assignedProperty = this.configuration.assignedProperty;
+      if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
+        assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      }
+
+      let assignedReference = this.configuration.assignedReference;
+      if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
+        assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
+      }
+
+      this.payloadNodeConfigFormGroup.patchValue({
+        assignedProperty: assignedProperty,
+        payload: this.configuration.payload,
+        payloadType: this.configuration.payloadType,
+        assignedtoinputType: this.configuration.assignedtoinputType,
+        assignedReference: assignedReference
+      });
+
       this.payloadNodeConfigFormGroup.get('payload').patchValue(this.configuration.payload, {emitEvent: false});
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('payload').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
-
-          console.log("payload node value cahnge sub");
-          console.log(configuration);
           this.configuration.payload = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('payloadType').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+          this.configuration.payloadType = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+      
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedReference = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+      
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedProperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+
+          this.configuration.assignedtoinputType = configuration;
+          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+            this.configuration.assignedReference= {};
+            this.payloadNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+          }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
+            this.configuration.assignedProperty= {};
+            this.payloadNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+          }
           this.updateModel(this.configuration);
         }
       );

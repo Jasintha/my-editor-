@@ -76,6 +76,7 @@
       <tb-payload-node-config #payloadNodeConfigComponent
                               formControlName="configuration"
                               [ruleNodeId]="ruleNodeId"
+                              [allModelProperties]="allModelProperties"
                               [allReferenceProperties]="allReferenceProperties"
                               [nodeDefinition]="nodeDefinitionValue">
       </tb-payload-node-config>
@@ -427,5 +428,22 @@
                              [allModelProperties]="allModelProperties"
                              [nodeDefinition]="nodeDefinitionValue">
     </tb-call-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiAssignNode'">
+    <tb-assign-node-config #assignNodeConfigComponent
+                           formControlName="configuration"
+                           [ruleNodeId]="ruleNodeId"
+                           [allConstants]=" allConstants"
+                           [inputEntities]=" inputEntities"
+                           [inputCustomobjects]="inputCustomobjects"
+                           [allVariables]="allVariables"
+                           [inputProperties]="inputProperties"
+                           [apptype]="apptype"
+                           [allModelProperties]="allModelProperties"
+                           [branchAvailability]="branchAvailability"
+                           [allRoots]="allRoots"
+                           [allReferenceProperties]="allReferenceProperties"
+                           [nodeDefinition]="nodeDefinitionValue">
+    </tb-assign-node-config>
   </ng-container>
 </div>

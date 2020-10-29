@@ -240,7 +240,9 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
         };
     }
 
-    const name : string = this.referencePropertyNodeConfigFormGroup.get('propertyName').value;
+    let name : string = this.referencePropertyNodeConfigFormGroup.get('propertyName').value;
+    name = name.replace(/\s/g, "");
+    name = this.lowerCaseWord(name);
     let propertyDataType : string = '';
     let type: string = '';
     let record: string = '';
@@ -518,6 +520,10 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
     return word[0].toUpperCase() + word.substr(1);
   }
 
+  lowerCaseWord(word: string) {
+    if (!word) return word;
+    return word[0].toLowerCase() + word.substr(1);
+  }
 }
 
 export interface Property {

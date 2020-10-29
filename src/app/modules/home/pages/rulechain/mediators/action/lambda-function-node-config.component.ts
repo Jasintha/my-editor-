@@ -288,12 +288,12 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       }
 
       let assignedProperty = this.configuration.assignedProperty;
-      if(assignedProperty && this.allModelProperties){
+      if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
       }
       
       let assignedReference = this.configuration.assignedReference;
-      if(assignedReference && this.allReferenceProperties){
+      if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
         assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
       }
       /*

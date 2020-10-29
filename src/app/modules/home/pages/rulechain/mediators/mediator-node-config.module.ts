@@ -28,6 +28,7 @@ import { FileUploadNodeConfigComponent } from './action/file-upload-node-config.
 import { FileDownloadNodeConfigComponent } from './action/file-download-node-config.component';
 import { CallNodeConfigComponent } from './action/call-node-config.component';
 import { HybridFunctionNodeConfigComponent } from './action/hybrid-function-node-config.component';
+import { AssignNodeConfigComponent } from './action/assign-node-config.component';
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
@@ -83,7 +84,8 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     FileUploadNodeConfigComponent,
     SwitchNodeConfigComponent,
     CallNodeConfigComponent,
-    AggregateNodeConfigComponent
+    AggregateNodeConfigComponent,
+    AssignNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -123,7 +125,8 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     FileUploadNodeConfigComponent,
     SwitchNodeConfigComponent,
     CallNodeConfigComponent,
-    AggregateNodeConfigComponent
+    AggregateNodeConfigComponent,
+    AssignNodeConfigComponent
   ],
   providers: []
 })
