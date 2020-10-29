@@ -196,7 +196,37 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
   ngAfterViewInit(): void {
   }
 
+  refreshTypes(){
+    let modelpropertyType: string = this.referencePropertyNodeConfigFormGroup.get('modelpropertyType').value;
+    if (modelpropertyType === 'RULE_INPUT'){
+      this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+    this.referencePropertyNodeConfigFormGroup.patchValue({
+      modelpropertybranchParam: [],
+      modelpropertyproperty: []
+    });
+
+    } else if (modelpropertyType === 'PROPERTY'){
+      this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+    this.referencePropertyNodeConfigFormGroup.patchValue({
+      modelpropertyruleInput: [],
+      modelpropertybranchParam: []
+    });
+
+    } else if (modelpropertyType === 'BRANCH_PARAM'){
+      this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+    this.referencePropertyNodeConfigFormGroup.patchValue({
+      modelpropertyruleInput: [],
+      modelpropertyproperty: []
+    });
+
+    }
+  }
+
   addProperty(): void{
+    const propertyType : string = this.referencePropertyNodeConfigFormGroup.get('modelpropertyType').value;
     let checklistSelection = this.checklistSelection.selected[0];
     let selectedNode : DomainModelProperty;
     if(checklistSelection){
@@ -220,36 +250,117 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
     let mapValueType: string = '';
     let mapValueRecord: string = '';
 
-    //let modelTitleName = '';
     let modelName = '';
+    if(propertyType === 'RULE_INPUT'){
+        selectedInput = this.referencePropertyNodeConfigFormGroup.get('modelpropertyruleInput').value.inputName;
+        let pkg = this.referencePropertyNodeConfigFormGroup.get('modelpropertyruleInput').value.inputType;
 
-    selectedInput = this.referencePropertyNodeConfigFormGroup.get('modelpropertyproperty').value.name;
-    let pkg = this.referencePropertyNodeConfigFormGroup.get('modelpropertyproperty').value.propertyDataType;
-    if(selectedNode.data.type === 'collection' || selectedNode.data.type === 'list'){
-        let modelNameTrimmed = selectedNode.data.name.replace(/\s/g, "");
-        let modelNameLowerCase = modelNameTrimmed.toLowerCase();
-        let modelTitleName = this.titleCaseWord(modelNameLowerCase);
-        type = modelTitleName;
-        if(pkg === 'model' || pkg === 'MODEL'){
-            propertyDataType = 'MODEL';
-        } else if(pkg === 'dto' || pkg === 'DTO'){
-            propertyDataType = 'DTO';
-        }
-        if (selectedNode.data.type === 'collection') {
+        if(selectedNode.data.type === 'collection' || selectedNode.data.type === 'list'){
+            let modelNameTrimmed = selectedNode.data.name.replace(/\s/g, "");
+            let modelNameLowerCase = modelNameTrimmed.toLowerCase();
+            let modelTitleName = this.titleCaseWord(modelNameLowerCase);
+            type = modelTitleName;
+
+            if(pkg === 'model' || pkg === 'MODEL'){
+                propertyDataType = 'MODEL';
+            } else if(pkg === 'dto' || pkg === 'DTO'){
+                propertyDataType = 'DTO';
+            }
+
+            if (selectedNode.data.type === 'collection') {
+                record = 's';
+            } else if (selectedNode.data.type === 'list') {
+                record = 'm';
+            }
+
+        } else {
+            type = selectedNode.data.propertytype;
+            propertyDataType = 'PRIMITIVE';
             record = 's';
-        } else if (selectedNode.data.type === 'list') {
+        }
+
+        modelproperty = selectedNode;
+    } else if (propertyType === 'BRANCH_PARAM') {
+        selectedInput = this.referencePropertyNodeConfigFormGroup.get('modelpropertybranchParam').value.name;
+        let pkg = this.referencePropertyNodeConfigFormGroup.get('modelpropertybranchParam').value.inputType;
+        let selectedInputrecord = this.referencePropertyNodeConfigFormGroup.get('modelpropertybranchParam').value.record;
+
+        if(selectedInputrecord === 's'){
+            if(selectedNode.data.type === 'collection' || selectedNode.data.type === 'list'){
+                let modelNameTrimmed = selectedNode.data.name.replace(/\s/g, "");
+                let modelNameLowerCase = modelNameTrimmed.toLowerCase();
+                let modelTitleName = this.titleCaseWord(modelNameLowerCase);
+                type = modelTitleName;
+
+                if(pkg === 'model' || pkg === 'MODEL'){
+                    propertyDataType = 'MODEL';
+                } else if(pkg === 'dto' || pkg === 'DTO'){
+                    propertyDataType = 'DTO';
+                }
+
+                if (selectedNode.data.type === 'collection') {
+                    record = 's';
+                } else if (selectedNode.data.type === 'list') {
+                    record = 'm';
+                }
+
+            } else {
+                type = selectedNode.data.propertytype;
+                propertyDataType = 'PRIMITIVE';
+                record = 's';
+            }
+            modelproperty = selectedNode;
+        } else {
+            type = this.referencePropertyNodeConfigFormGroup.get('modelpropertybranchParam').value.input;
+            if(pkg === 'model' || pkg === 'MODEL'){
+                propertyDataType = 'MODEL';
+            } else if(pkg === 'dto' || pkg === 'DTO'){
+                propertyDataType = 'DTO';
+            } else {
+                propertyDataType = 'PRIMITIVE';
+            }
             record = 'm';
         }
 
-    } else {
-        type = selectedNode.data.propertytype;
-        propertyDataType = 'PRIMITIVE';
-        record = 's';
+    } else if (propertyType === 'PROPERTY') {
+        selectedInput = this.referencePropertyNodeConfigFormGroup.get('modelpropertyproperty').value.name;
+        let pkg = this.referencePropertyNodeConfigFormGroup.get('modelpropertyproperty').value.propertyDataType;
+        let selectedInputrecord = this.referencePropertyNodeConfigFormGroup.get('modelpropertyproperty').value.record;
+
+        if(selectedInputrecord === 's'){
+            if(selectedNode.data.type === 'collection' || selectedNode.data.type === 'list'){
+                let modelNameTrimmed = selectedNode.data.name.replace(/\s/g, "");
+                let modelNameLowerCase = modelNameTrimmed.toLowerCase();
+                let modelTitleName = this.titleCaseWord(modelNameLowerCase);
+                type = modelTitleName;
+
+                if(pkg === 'model' || pkg === 'MODEL'){
+                    propertyDataType = 'MODEL';
+                } else if(pkg === 'dto' || pkg === 'DTO'){
+                    propertyDataType = 'DTO';
+                }
+
+                if (selectedNode.data.type === 'collection') {
+                    record = 's';
+                } else if (selectedNode.data.type === 'list') {
+                    record = 'm';
+                }
+
+            } else {
+                type = selectedNode.data.propertytype;
+                propertyDataType = 'PRIMITIVE';
+                record = 's';
+            }
+            modelproperty = selectedNode;
+        } else {
+            type = this.referencePropertyNodeConfigFormGroup.get('modelpropertybranchParam').value.type;
+            propertyDataType = pkg;
+            record = 'm';
+        }
     }
-    modelproperty = selectedNode;
 
     let property: Property = {
-      propertyType: 'PROPERTY',
+      propertyType: propertyType,
       name : name,
       propertyDataType: propertyDataType,
       type: type,
@@ -262,15 +373,13 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
       mapValueType: mapValueType,
       mapValueRecord: mapValueRecord
     };
-    this.configuration.referenceproperties.push(property);
-    this.propertydatasource = new MatTableDataSource(this.configuration.referenceproperties);
+    this.configuration.modelproperties.push(property);
+    this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
     this.updateModel(this.configuration);
 
     this.referencePropertyNodeConfigFormGroup.patchValue({
       propertyName: ''
     });
-
-    //this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   }
 
@@ -313,7 +422,7 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
         (configuration: any) => {
          // this.configuration.modelpropertyproperty = configuration;
 
-          if(configuration.propertyDataType === 'MODEL'){
+          if(configuration.propertyDataType === 'MODEL' && configuration.record === 's'){
             let selectedbranchparamdomainModel = this.allDomainModelsWithSub.find(x => x.nameTitleCase === configuration.type );
               if(selectedbranchparamdomainModel){
               let designtree : any[] = [];
@@ -321,7 +430,7 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
               //this.dataSource.data = null;
               this.dataSource.data = designtree;
             }
-          } else if (configuration.propertyDataType === 'DTO'){
+          } else if (configuration.propertyDataType === 'DTO' && configuration.record === 's'){
             let selectedbranchparamviewModel = this.allViewModelsWithSub.find(x => x.nameTitleCase === configuration.type );
               if(selectedbranchparamviewModel){
               let designtree : any[] = [];
@@ -329,6 +438,60 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
               //this.dataSource.data = null;
               this.dataSource.data = designtree;
             }
+          } else {
+            this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+          }
+         // this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.referencePropertyNodeConfigFormGroup.get('modelpropertyruleInput').valueChanges.subscribe(
+        (configuration: any) => {
+          //this.configuration.modelpropertyruleInput = configuration;
+
+          if(configuration.inputType === 'model'){
+            let selectedmodelpropertydomainModel = this.allDomainModelsWithSub.find(x => x.nameTitleCase === configuration.inputName );
+              if(selectedmodelpropertydomainModel){
+              let designtree : any[] = [];
+              designtree.push(selectedmodelpropertydomainModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+            }
+          } else if (configuration.inputType === 'dto'){
+            let selectedmodelpropertyviewModel = this.allViewModelsWithSub.find(x => x.nameTitleCase === configuration.inputName );
+              if(selectedmodelpropertyviewModel){
+              let designtree : any[] = [];
+              designtree.push(selectedmodelpropertyviewModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+            }
+          }
+          //this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.referencePropertyNodeConfigFormGroup.get('modelpropertybranchParam').valueChanges.subscribe(
+        (configuration: any) => {
+          //this.configuration.modelpropertybranchParam = configuration;
+
+          if(configuration.inputType === 'MODEL' && configuration.record === 's'){
+            let selectedbranchparamdomainModel = this.allDomainModelsWithSub.find(x => x.nameTitleCase === configuration.input );
+              if(selectedbranchparamdomainModel){
+              let designtree : any[] = [];
+              designtree.push(selectedbranchparamdomainModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+            }
+          } else if (configuration.inputType === 'DTO' && configuration.record === 's'){
+            let selectedbranchparamviewModel = this.allViewModelsWithSub.find(x => x.nameTitleCase === configuration.input );
+              if(selectedbranchparamviewModel){
+              let designtree : any[] = [];
+              designtree.push(selectedbranchparamviewModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+            }
+          } else {
+            this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
           }
          // this.updateModel(this.configuration);
         }

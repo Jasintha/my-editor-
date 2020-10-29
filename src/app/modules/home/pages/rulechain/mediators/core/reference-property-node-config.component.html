@@ -4,10 +4,38 @@
         <input matInput formControlName="propertyName"/>
     </mat-form-field>
     <mat-form-field fxFlex class="mat-block">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="modelpropertyType" (selectionChange)="refreshTypes()">
+            <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+            <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+            <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="referencePropertyNodeConfigFormGroup.value.modelpropertyType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
+        <mat-select formControlName="modelpropertyruleInput">
+            <mat-option *ngFor="let domainModel of allRuleInputs" [value]="domainModel">
+                {{domainModel.inputName}} <span *ngIf="domainModel.inputType === 'model'"> - Domain Model</span>
+                <span *ngIf="domainModel.inputType === 'dto'"> - DTO Model</span>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="referencePropertyNodeConfigFormGroup.value.modelpropertyType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="modelpropertybranchParam">
+            <ng-container *ngFor="let domainModel of branchAvailability?.branchParams">
+                <mat-option *ngIf="(domainModel?.inputType === 'MODEL' || domainModel?.inputType === 'DTO')" [value]="domainModel">
+                    {{domainModel.name}} : {{domainModel.input}} <span *ngIf="domainModel.inputType === 'MODEL'"> - Domain Model</span>
+                    <span *ngIf="domainModel.inputType === 'DTO'"> - DTO Model</span>
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="referencePropertyNodeConfigFormGroup.value.modelpropertyType === 'PROPERTY'" fxFlex class="mat-block">
         <mat-label>Property</mat-label>
         <mat-select formControlName="modelpropertyproperty">
             <ng-container *ngFor="let prop of allModelProperties">
-                <mat-option *ngIf="(prop?.propertyDataType === 'MODEL' || prop?.propertyDataType === 'DTO') && prop?.record === 's'" [value]="prop">
+                <mat-option *ngIf="(prop?.propertyDataType === 'MODEL' || prop?.propertyDataType === 'DTO')" [value]="prop">
                     {{prop.name}} : {{prop.type}} <span *ngIf="prop.propertyDataType === 'MODEL'"> - Domain Model</span>
                     <span *ngIf="prop.propertyDataType === 'DTO'"> - DTO Model</span>
                 </mat-option>
@@ -15,32 +43,32 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-            <button mat-icon-button disabled></button>
-            <mat-checkbox class="checklist-leaf-node"
-                          [checked]="checklistSelection.isSelected(node)"
-                          (change)="checkboxClick(node)">{{node.name}}</mat-checkbox>
-        </mat-tree-node>
-        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-            <button mat-icon-button matTreeNodeToggle
-                    [attr.aria-label]="'toggle ' + node.name">
-                <mat-icon class="mat-icon-rtl-mirror">
-                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                </mat-icon>
-            </button>
-            <mat-checkbox [checked]="checklistSelection.isSelected(node)"
-                          (change)="checkboxClick(node)">{{node.name}}</mat-checkbox>
-        </mat-tree-node>
-    </mat-tree>
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+                <mat-checkbox class="checklist-leaf-node"
+                              [checked]="checklistSelection.isSelected(node)"
+                              (change)="checkboxClick(node)">{{node.name}}</mat-checkbox>
+            </mat-tree-node>
+            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                <button mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'toggle ' + node.name">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                </button>
+                <mat-checkbox [checked]="checklistSelection.isSelected(node)"
+                              (change)="checkboxClick(node)">{{node.name}}</mat-checkbox>
+            </mat-tree-node>
+        </mat-tree>
 
     <div fxFlex fxLayout="row" fxLayoutAlign="end center">
-    <button mat-icon-button class="tb-fullscreen-button-style"
-            (click)="addProperty()"
-            matTooltip="Add Property"
-            matTooltipPosition="above">
-        <mat-icon color="primary">add</mat-icon>
-    </button>
+        <button mat-icon-button class="tb-fullscreen-button-style"
+                (click)="addProperty()"
+                matTooltip="Add Property"
+                matTooltipPosition="above">
+            <mat-icon color="primary">add</mat-icon>
+        </button>
     </div>
 </div>
 <div fxFlex class="table-container" style="padding: 10px;">
