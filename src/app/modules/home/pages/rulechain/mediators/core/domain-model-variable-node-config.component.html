@@ -64,7 +64,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="configuration.propinputType === 'DTO'" fxFlex class="mat-block">
+        <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.propinputType === 'DTO'" fxFlex class="mat-block">
             <mat-label>DTO</mat-label>
             <mat-select formControlName="propcustomObject">
                 <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
