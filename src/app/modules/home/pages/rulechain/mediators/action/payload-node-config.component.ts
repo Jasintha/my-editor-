@@ -162,6 +162,8 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
 
       this.payloadNodeConfigFormGroup.patchValue({
         assignedProperty: assignedProperty,
+        url: this.configuration.url,
+        payloadInputType: this.configuration.payloadInputType,
         payload: this.configuration.payload,
         payloadType: this.configuration.payloadType,
         assignedtoinputType: this.configuration.assignedtoinputType,
