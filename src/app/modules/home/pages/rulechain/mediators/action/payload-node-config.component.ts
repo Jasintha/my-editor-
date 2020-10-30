@@ -101,7 +101,9 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       payloadInputType: "",
       url: "",
       assignedProperty: [],
-      assignedReference: []
+      assignedReference: [],
+      errorMsg: "",
+      errorAction: ""
     });
   }
 
@@ -167,10 +169,25 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
         payload: this.configuration.payload,
         payloadType: this.configuration.payloadType,
         assignedtoinputType: this.configuration.assignedtoinputType,
-        assignedReference: assignedReference
+        assignedReference: assignedReference,
+        errorMsg: this.configuration.errorMsg,
+        errorAction: this.configuration.errorAction
       });
 
-      this.payloadNodeConfigFormGroup.get('payload').patchValue(this.configuration.payload, {emitEvent: false});
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorMsg = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.errorAction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('payload').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
           this.configuration.payload = configuration;
