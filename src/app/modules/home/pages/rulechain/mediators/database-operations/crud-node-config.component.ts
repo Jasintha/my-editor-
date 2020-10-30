@@ -332,7 +332,9 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
     } else {
 
       let entity = this.configuration.entity;
+      if((this.configuration.dbAction === 'FIND' || this.configuration.dbAction === 'FINDALL' || this.configuration.dbAction === 'DELETEALL' || this.configuration.dbAction === 'DELETE') && entity && this.inputEntities){
       entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
+      }
 
       let property = this.configuration.property;
       if((this.configuration.dbAction === 'CREATE' || this.configuration.dbAction === 'UPDATE') && property && this.allModelProperties){
