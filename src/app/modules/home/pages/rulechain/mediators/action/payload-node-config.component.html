@@ -1,18 +1,29 @@
 <div [formGroup]="payloadNodeConfigFormGroup">
   <mat-form-field fxFlex class="mat-block">
-    <mat-label></mat-label>
+    <mat-label>Input Type</mat-label>
+    <mat-select formControlName="payloadInputType">
+      <mat-option value="INLINE">In-Line</mat-option>
+      <mat-option value="REMOTE_PATH">Remote File Path</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Paylod Type</mat-label>
     <mat-select formControlName="payloadType">
       <mat-option value="JSON">JSON</mat-option>
       <mat-option value="CSV">CSV</mat-option>
     </mat-select>
   </mat-form-field>
-    <mat-form-field class="mat-block">
+    <mat-form-field *ngIf="configuration.payloadInputType === 'INLINE'" class="mat-block">
       <mat-label>Payload</mat-label>
       <textarea matInput formControlName="payload" rows="20"></textarea>
       <!--<mat-error *ngIf="payloadNodeConfigFormGroup.get('payload').hasError('required')">
         Payload is required
       </mat-error>-->
     </mat-form-field>
+  <mat-form-field *ngIf="configuration.payloadInputType === 'REMOTE_PATH'" fxFlex class="mat-block">
+    <mat-label>File Path</mat-label>
+    <input matInput formControlName="url"/>
+  </mat-form-field>
   <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
     <mat-form-field fxFlex class="mat-block">
       <mat-label>Save Result Type</mat-label>

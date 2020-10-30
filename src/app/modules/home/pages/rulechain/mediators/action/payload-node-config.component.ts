@@ -98,6 +98,8 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       payload: "",
       payloadType: "",
       assignedtoinputType: "",
+      payloadInputType: "",
+      url: "",
       assignedProperty: [],
       assignedReference: []
     });
@@ -194,6 +196,30 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
           this.updateModel(this.configuration);
         }
       );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('url').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.url = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('payloadInputType').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.payloadInputType = configuration;
+
+          if(this.configuration.payloadInputType == 'INLINE'){
+            this.configuration.url= "";
+            this.payloadNodeConfigFormGroup.get('url').patchValue("", {emitEvent: false});
+          }else if (this.configuration.payloadInputType == 'REMOTE_PATH'){
+            this.configuration.payload= "";
+            this.payloadNodeConfigFormGroup.get('payload').patchValue("", {emitEvent: false});
+          }
+
+          this.updateModel(this.configuration);
+        }
+      );
+
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
 
