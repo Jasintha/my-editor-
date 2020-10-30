@@ -80,6 +80,11 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
   @Input()
   allModelProperties: any[];
+  
+  @Input() branchAvailability: any;
+  
+  @Input()
+  allReferenceProperties: any[];
 
   @Input()
   apptype: string;
@@ -127,13 +132,17 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
       dbType:[],
       dbAction: [],
       entity: [],
-      crudinputType: [],
+      property: [],
+      crudinputType: "",
       crudparam: [],
       crudconstant: [],
       crudproperty: [],
+      crudbranchparam: [],
       errorMsg: "",
       errorAction: "",
-      assignedProperty: []
+      assignedProperty: [],
+      assignedtoinputType: "",
+      assignedReference: []
     });
   }
 
@@ -190,21 +199,35 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
     if (inputType === 'PARAM'){
       this.configuration.crudconstant= {};
       this.configuration.crudproperty= {};
+      this.configuration.crudbranchparam= {};
 
       this.crudNodeConfigFormGroup.get('crudconstant').patchValue([], {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudproperty').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudbranchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.crudparam= {};
       this.configuration.crudconstant= {};
+      this.configuration.crudbranchparam= {};
 
       this.crudNodeConfigFormGroup.get('crudconstant').patchValue([], {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudbranchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'CONSTANT'){
       this.configuration.crudparam= {};
       this.configuration.crudproperty= {};
+      this.configuration.crudbranchparam= {};
 
       this.crudNodeConfigFormGroup.get('crudproperty').patchValue([], {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudbranchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.crudparam= {};
+      this.configuration.crudproperty= {};
+      this.configuration.crudconstant= {};
+
+      this.crudNodeConfigFormGroup.get('crudproperty').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudconstant').patchValue([], {emitEvent: false});
     }
 
     if (this.definedConfigComponent) {
@@ -218,26 +241,57 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
     let action: string = this.crudNodeConfigFormGroup.get('dbAction').value;
     this.configuration.dbAction = action;
 
-    if(action === 'FIND' || action === 'DELETE'){
-
-    } else {
-      this.configuration.crudinputType= '';
-      //this.configuration.crudentity= {};
-      //this.configuration.crudentityProperty = {};
-      //this.configuration.crudcustomObject= {};
-      //this.configuration.crudcustomObjectProperty = {};
+    if(action === 'UPDATE' || action === 'CREATE'){
+      this.configuration.crudinputType= "";
       this.configuration.crudparam= {};
       this.configuration.crudconstant= {};
       this.configuration.crudproperty= {};
+      this.configuration.crudbranchparam= {};
 
-      this.crudNodeConfigFormGroup.get('crudinputType').patchValue([], {emitEvent: false});
-     // this.crudNodeConfigFormGroup.get('crudentity').patchValue([], {emitEvent: false});
-     // this.crudNodeConfigFormGroup.get('crudentityProperty').patchValue([], {emitEvent: false});
-     // this.crudNodeConfigFormGroup.get('crudcustomObject').patchValue([], {emitEvent: false});
-     // this.crudNodeConfigFormGroup.get('crudcustomObjectProperty').patchValue([], {emitEvent: false});
+      this.configuration.entity= {};
+
+      this.configuration.assignedtoinputType= "";
+      this.configuration.assignedProperty= {};
+      this.configuration.assignedReference= {};
+
+      this.crudNodeConfigFormGroup.get('entity').patchValue([], {emitEvent: false});
+
+      this.crudNodeConfigFormGroup.get('assignedtoinputType').patchValue("", {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+
+      this.crudNodeConfigFormGroup.get('crudinputType').patchValue("", {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
+      this.crudNodeConfigFormGroup.get('crudbranchparam').patchValue([], {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudconstant').patchValue([], {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudproperty').patchValue([], {emitEvent: false});
+    } else {
+      this.configuration.property= {};
+      this.crudNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+
+      if(action === 'DELETE' || action === 'DELETEALL'){
+        this.configuration.assignedtoinputType= "";
+        this.configuration.assignedProperty= {};
+        this.configuration.assignedReference= {};
+
+        this.crudNodeConfigFormGroup.get('assignedtoinputType').patchValue("", {emitEvent: false});
+        this.crudNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+        this.crudNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+      }
+
+      if(action === 'FINDALL' || action === 'DELETEALL'){
+        this.configuration.crudinputType= "";
+        this.configuration.crudparam= {};
+        this.configuration.crudconstant= {};
+        this.configuration.crudproperty= {};
+        this.configuration.crudbranchparam= {};
+
+        this.crudNodeConfigFormGroup.get('crudinputType').patchValue("", {emitEvent: false});
+        this.crudNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
+        this.crudNodeConfigFormGroup.get('crudbranchparam').patchValue([], {emitEvent: false});
+        this.crudNodeConfigFormGroup.get('crudconstant').patchValue([], {emitEvent: false});
+        this.crudNodeConfigFormGroup.get('crudproperty').patchValue([], {emitEvent: false});
+      }
 
     }
 
@@ -280,27 +334,42 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
       let entity = this.configuration.entity;
       entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
 
+      let property = this.configuration.property;
+      if((this.configuration.dbAction === 'CREATE' || this.configuration.dbAction === 'UPDATE') && property && this.allModelProperties){
+        property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      }
+
       //crud input
 
 
       let crudparam = this.configuration.crudparam;
-      if(this.configuration.crudinputType === 'PARAM'){
+      if(this.configuration.crudinputType === 'PARAM' && this.inputProperties){
         crudparam = this.inputProperties.find(x => x.inputName === this.configuration.crudparam.inputName );
       }
 
       let crudconstant = this.configuration.crudconstant;
-      if(this.configuration.secondinputType === 'CONSTANT'){
+      if(this.configuration.crudinputType === 'CONSTANT' && this.allConstants){
         crudconstant = this.allConstants.find(x => x.constantName === this.configuration.crudconstant.constantName );
       }
 
       let crudproperty = this.configuration.crudproperty;
-      if(this.configuration.firstinputType === 'PROPERTY'){
+      if(this.configuration.crudinputType === 'PROPERTY' && this.allModelProperties){
         crudproperty = this.allModelProperties.find(x => x.name === this.configuration.crudproperty.name );
       }
-
+      
       let assignedProperty = this.configuration.assignedProperty;
-      if(assignedProperty && this.allModelProperties){
+      if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      }
+      
+      let assignedReference = this.configuration.assignedReference;
+      if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
+        assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
+      }
+      
+      let crudbranchparam = this.configuration.crudbranchparam;
+      if(this.configuration.crudinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+        crudbranchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.crudbranchparam.name );
       }
 
       this.crudNodeConfigFormGroup.patchValue({
@@ -308,16 +377,16 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
         dbAction: this.configuration.dbAction,
         entity: entity,
         crudinputType: this.configuration.crudinputType,
-       // crudentity: crudentity,
-       // crudentityProperty: crudentityProperty,
-       // crudcustomObject: crudcustomObject,
-       // crudcustomObjectProperty: crudcustomObjectProperty,
         crudconstant: crudconstant,
         crudproperty: crudproperty,
         crudparam: crudparam,
+        crudbranchparam: crudbranchparam,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction,
-        assignedProperty: assignedProperty
+        assignedProperty: assignedProperty,
+        property: property,
+        assignedtoinputType: this.configuration.assignedtoinputType,
+        assignedReference: assignedReference
       });
 
       /*
@@ -332,6 +401,13 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
       this.changeSubscription = this.crudNodeConfigFormGroup.get('dbType').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.dbType = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.crudNodeConfigFormGroup.get('property').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.property = configuration;
           this.updateModel(this.configuration);
         }
       );
@@ -360,6 +436,28 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
           //  this.selectedEntityProperties = selectedentity.properties;
           //}
 
+          this.updateModel(this.configuration);
+        }
+      );
+      
+      this.changeSubscription = this.crudNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedReference = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.crudNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+
+          this.configuration.assignedtoinputType = configuration;
+          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+            this.configuration.assignedReference= {};
+            this.crudNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+          }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
+            this.configuration.assignedProperty= {};
+            this.crudNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+          }
           this.updateModel(this.configuration);
         }
       );
@@ -395,7 +493,12 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
         }
       );
 
-
+      this.changeSubscription = this.crudNodeConfigFormGroup.get('crudbranchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.crudbranchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
     }
   }
