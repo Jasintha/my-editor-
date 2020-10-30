@@ -83,6 +83,9 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
   @Input()
   ruleNodeId: string;
 
+   @Input()
+   allReferenceProperties: any[];
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
@@ -142,7 +145,9 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       calltargetbranchparam: [],
       errorMsg: "",
       errorAction: "",
-      assignedProperty: []
+      assignedProperty: [],
+      assignedtoinputType: "",
+      assignedReference: []
     });
   }
 
@@ -356,8 +361,13 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       }
 
       let assignedProperty = this.configuration.assignedProperty;
-      if(assignedProperty && this.allModelProperties){
+      if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      }
+
+      let assignedReference = this.configuration.assignedReference;
+      if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
+        assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
       }
 
       this.callNodeConfigFormGroup.patchValue({
@@ -378,12 +388,36 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         calltargetbranchparam: this.configuration.calltargetbranchparam,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction,
-        assignedProperty: assignedProperty
+        assignedProperty: assignedProperty,
+        assignedtoinputType: this.configuration.assignedtoinputType,
+        assignedReference: assignedReference
       });
 
       this.changeSubscription = this.callNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.assignedProperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedReference = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+
+          this.configuration.assignedtoinputType = configuration;
+          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+            this.configuration.assignedReference= {};
+            this.callNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+          }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
+            this.configuration.assignedProperty= {};
+            this.callNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+          }
           this.updateModel(this.configuration);
         }
       );

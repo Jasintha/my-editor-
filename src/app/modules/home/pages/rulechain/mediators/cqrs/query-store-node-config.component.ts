@@ -84,6 +84,9 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
   @Input()
   apptype: string;
 
+   @Input()
+   allReferenceProperties: any[];
+
   readOnlyDbType: boolean;
 
   domainModelProperties: any[];
@@ -134,7 +137,9 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       entity:[],
       errorMsg: "",
       errorAction: "",
-      assignedProperty: []
+      assignedProperty: [],
+      assignedtoinputType: "",
+      assignedReference: []
     });
   }
 
@@ -194,8 +199,13 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       }
 
       let assignedProperty = this.configuration.assignedProperty;
-      if(assignedProperty && this.allModelProperties){
+      if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      }
+
+      let assignedReference = this.configuration.assignedReference;
+      if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
+        assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
       }
 
       console.log(this.configuration.entity);
@@ -218,7 +228,9 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         entity: entity,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction,
-        assignedProperty: assignedProperty
+        assignedProperty: assignedProperty,
+        assignedtoinputType: this.configuration.assignedtoinputType,
+        assignedReference: assignedReference
       });
 
       this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
@@ -231,6 +243,28 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.assignedProperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedReference = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+
+          this.configuration.assignedtoinputType = configuration;
+          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+            this.configuration.assignedReference= {};
+            this.queryStoreNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+          }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
+            this.configuration.assignedProperty= {};
+            this.queryStoreNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+          }
           this.updateModel(this.configuration);
         }
       );

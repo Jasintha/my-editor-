@@ -53,14 +53,46 @@
       <textarea matInput formControlName="query" required rows="10"></textarea>
     </mat-form-field>
   </section>
-  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.queryAction === 'QUERY' || configuration.queryAction === 'SELECTALL'">
+  <!--<mat-form-field fxFlex class="mat-block" *ngIf="configuration.queryAction === 'QUERY' || configuration.queryAction === 'SELECTALL'">
     <mat-label>Save Result To</mat-label>
     <mat-select formControlName="assignedProperty">
       <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
         {{modelproperty.name}}
       </mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field>-->
+
+  <section *ngIf="configuration.queryAction === 'QUERY' || configuration.queryAction === 'SELECTALL'" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Save Result Type</mat-label>
+      <mat-select formControlName="assignedtoinputType">
+        <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+        <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block" *ngIf="configuration.assignedtoinputType === 'PROPERTY'">
+        <mat-label>Value Property</mat-label>
+        <mat-select formControlName="assignedProperty">
+          <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
+            {{modelproperty.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.assignedtoinputType === 'REFERENCE'" fxFlex class="mat-block">
+        <mat-label>Reference Property</mat-label>
+        <mat-select formControlName="assignedReference">
+          <mat-option *ngFor="let property of allReferenceProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </section>
+
+  </section>
+
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Error Message</mat-label>
     <input matInput formControlName="errorMsg"/>
