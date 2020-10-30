@@ -138,6 +138,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       errorMsg: "",
       errorAction: "",
       assignedtoinputType: "",
+      parameterconstant: [],
       assignedReference: []
     });
   }
@@ -176,18 +177,31 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
     if (inputType === 'PARAM'){
       this.configuration.parameterproperty= {};
       this.configuration.parameterbranch= {};
+      this.configuration.parameterconstant= {};
       this.hybridFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
       this.hybridFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+      this.hybridFunctionNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.parameterparam= {};
       this.configuration.parameterbranch= {};
+      this.configuration.parameterconstant= {};
       this.hybridFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
       this.hybridFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+      this.hybridFunctionNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
     } else if (inputType === 'BRANCH_PARAM'){
       this.configuration.parameterparam= {};
       this.configuration.parameterproperty= {};
+      this.configuration.parameterconstant= {};
       this.hybridFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
       this.hybridFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+      this.hybridFunctionNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
+    } else if (inputType === 'CONSTANT'){
+      this.configuration.parameterparam= {};
+      this.configuration.parameterproperty= {};
+      this.configuration.parameterbranch= {};
+      this.hybridFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+      this.hybridFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+      this.hybridFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -246,6 +260,16 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       };
       this.configuration.hybridParameters.push(parameterbranch);
       this.updateModel(this.configuration);
+    } else if (inputType === 'CONSTANT'){
+      let selectedParameterConstant = this.hybridFunctionNodeConfigFormGroup.get('parameterconstant').value;
+      let parameterconstant = {
+        'parameterName': functionparameter.paramName,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedParameterConstant.constantName
+      };
+      this.configuration.hybridParameters.push(parameterconstant);
+      this.updateModel(this.configuration);
     }
 
     this.datasource = new MatTableDataSource(this.configuration.hybridParameters);
@@ -254,12 +278,14 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
     this.configuration.parameterproperty= {};
     this.configuration.parameterbranch= {};
     this.configuration.parameterparam= {};
+    this.configuration.parameterconstant= {};
     this.configuration.functionparameter= {};
   
     this.hybridFunctionNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
     this.hybridFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
     this.hybridFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
     this.hybridFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+    this.hybridFunctionNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
     this.hybridFunctionNodeConfigFormGroup.get('functionparameter').patchValue([], {emitEvent: false});
 
   }
@@ -316,6 +342,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
         parameterinputType: this.configuration.parameterinputType,
         parameterparam: this.configuration.parameterparam,
         parameterproperty: this.configuration.parameterproperty,
+        parameterconstant: this.configuration.parameterconstant,
         parameterbranch: this.configuration.parameterbranch,
         function: functionObj,
         assignedProperty: assignedProperty,
@@ -371,6 +398,13 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('parameterproperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.parameterproperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('parameterconstant').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.parameterconstant = configuration;
           this.updateModel(this.configuration);
         }
       );

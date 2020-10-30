@@ -24,6 +24,7 @@
             <mat-select formControlName="parameterinputType" (selectionChange)="refreshParameterInputTypes()">
                 <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
                 <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+                <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
                 <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
             </mat-select>
         </mat-form-field>
@@ -49,6 +50,14 @@
                 <mat-select formControlName="parameterbranch">
                     <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
                         {{param.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="configuration.parameterinputType === 'CONSTANT'" fxFlex class="mat-block">
+                <mat-label>Constant</mat-label>
+                <mat-select formControlName="parameterconstant">
+                    <mat-option *ngFor="let constant of allConstants" [value]="constant">
+                        {{constant.constantName}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

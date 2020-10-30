@@ -133,6 +133,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       parameterinputType: [],
       parameterparam: [],
       parameterproperty: [],
+      parameterconstant: [],
       parameterbranch: [],
       assignedProperty: [],
       errorMsg: "",
@@ -176,18 +177,31 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
     if (inputType === 'PARAM'){
       this.configuration.parameterproperty= {};
       this.configuration.parameterbranch= {};
+      this.configuration.parameterconstant= {};
       this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
       this.lambdaFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+      this.lambdaFunctionNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
       this.configuration.parameterparam= {};
       this.configuration.parameterbranch= {};
+      this.configuration.parameterconstant= {};
       this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
       this.lambdaFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+      this.lambdaFunctionNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
     } else if (inputType === 'BRANCH_PARAM'){
       this.configuration.parameterparam= {};
       this.configuration.parameterproperty= {};
+      this.configuration.parameterconstant= {};
       this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
       this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+      this.lambdaFunctionNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
+    } else if (inputType === 'CONSTANT'){
+      this.configuration.parameterparam= {};
+      this.configuration.parameterproperty= {};
+      this.configuration.parameterbranch= {};
+      this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+      this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+      this.lambdaFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -246,6 +260,16 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       };
       this.configuration.lambdaParameters.push(parameterbranch);
       this.updateModel(this.configuration);
+    } else if (inputType === 'CONSTANT'){
+      let selectedParameterConstant = this.lambdaFunctionNodeConfigFormGroup.get('parameterconstant').value;
+      let parameterconstant = {
+        'parameterName': functionparameter.inputName,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedParameterConstant.constantName
+      };
+      this.configuration.lambdaParameters.push(parameterconstant);
+      this.updateModel(this.configuration);
     }
 
     this.datasource = new MatTableDataSource(this.configuration.lambdaParameters);
@@ -254,12 +278,14 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
     this.configuration.parameterproperty= {};
     this.configuration.parameterbranch= {};
     this.configuration.parameterparam= {};
+    this.configuration.parameterconstant= {};
     this.configuration.functionparameter= {};
   
     this.lambdaFunctionNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
     this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
     this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
     this.lambdaFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+    this.lambdaFunctionNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
     this.lambdaFunctionNodeConfigFormGroup.get('functionparameter').patchValue([], {emitEvent: false});
 
   }
@@ -316,6 +342,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
         parameterinputType: this.configuration.parameterinputType,
         parameterparam: this.configuration.parameterparam,
         parameterproperty: this.configuration.parameterproperty,
+        parameterconstant: this.configuration.parameterconstant,
         parameterbranch: this.configuration.parameterbranch,
         function: functionObj,
         assignedProperty: assignedProperty,
@@ -371,6 +398,13 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('parameterproperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.parameterproperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.lambdaFunctionNodeConfigFormGroup.get('parameterconstant').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.parameterconstant = configuration;
           this.updateModel(this.configuration);
         }
       );
