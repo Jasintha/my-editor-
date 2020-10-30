@@ -83,6 +83,9 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
     @Input()
     apptype: string;
 
+   @Input()
+   allReferenceProperties: any[];
+
     nodeDefinitionValue: RuleNodeDefinition;
 
 
@@ -124,6 +127,7 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
             secondproperty:[],
             secondbranchparam: [],
             property: [],
+            referenceProperty: [],
             inputType: '',
             branchparam: []
         });
@@ -242,6 +246,11 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
                 property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
             }
 
+            let referenceProperty = this.configuration.referenceProperty;
+            if(this.configuration.inputType === 'REFERENCE' && this.allReferenceProperties){
+                referenceProperty = this.allReferenceProperties.find(x => x.name === this.configuration.referenceProperty.name );
+            }
+
             let branchparam = this.configuration.branchparam;
             if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
                 branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
@@ -254,6 +263,7 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
                 secondconstant: secondconstant,
                 secondproperty: secondproperty,
                 property: property,
+                referenceProperty: referenceProperty,
                 branchparam: branchparam,
                 inputType: this.configuration.inputType,
             });
@@ -292,6 +302,16 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
                 (configuration: any) => {
                     this.configuration.property = configuration;
                     this.configuration.branchparam = {};
+                    this.configuration.referenceProperty = {};
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.aggregateNodeConfigFormGroup.get('referenceProperty').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.referenceProperty = configuration;
+                    this.configuration.branchparam = {};
+                    this.configuration.property = {};
                     this.updateModel(this.configuration);
                 }
             );
@@ -300,6 +320,7 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
                 (configuration: any) => {
                     this.configuration.branchparam = configuration;
                     this.configuration.property = {};
+                    this.configuration.referenceProperty = {};
                     this.updateModel(this.configuration);
                 }
             );
@@ -309,9 +330,18 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
                     this.configuration.inputType = configuration;
                     if(this.configuration.inputType == 'PROPERTY'){
                         this.configuration.branchparam= {};
+                        this.configuration.referenceProperty = {};
                         this.aggregateNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+                        this.aggregateNodeConfigFormGroup.get('referenceProperty').patchValue([], {emitEvent: false});
                     }else if (this.configuration.inputType == 'BRANCH_PARAM'){
                         this.configuration.property= {};
+                        this.configuration.referenceProperty = {};
+                        this.aggregateNodeConfigFormGroup.get('referenceProperty').patchValue([], {emitEvent: false});
+                        this.aggregateNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+                    }else if (this.configuration.inputType == 'REFERENCE'){
+                        this.configuration.property= {};
+                        this.configuration.branchparam= {};
+                        this.aggregateNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
                         this.aggregateNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
                     }
                     this.updateModel(this.configuration);
