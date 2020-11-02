@@ -75,8 +75,9 @@
         <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.propinputType === 'PRIMITIVE'" fxFlex class="mat-block">
             <mat-label>Primitive</mat-label>
             <mat-select formControlName="propprimitive">
-                <mat-option value="NUMBER">Number</mat-option>
                 <mat-option value="TEXT">Text</mat-option>
+                <mat-option value="NUMBER">Number</mat-option>
+                <mat-option value="FLOAT">FLOAT</mat-option>
                 <mat-option value="DATE">Date</mat-option>
                 <mat-option value="TRUE_OR_FALSE">True/False</mat-option>
             </mat-select>
@@ -123,8 +124,9 @@
                 <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.keyinputType === 'PRIMITIVE'" fxFlex class="mat-block">
                     <mat-label>Primitive</mat-label>
                     <mat-select formControlName="keyprimitive">
-                        <mat-option value="NUMBER">Number</mat-option>
                         <mat-option value="TEXT">Text</mat-option>
+                        <mat-option value="NUMBER">Number</mat-option>
+                        <mat-option value="FLOAT">FLOAT</mat-option>
                         <mat-option value="DATE">Date</mat-option>
                         <mat-option value="TRUE_OR_FALSE">True/False</mat-option>
                     </mat-select>
@@ -164,8 +166,9 @@
                 <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.valueinputType === 'PRIMITIVE'" fxFlex class="mat-block">
                     <mat-label>Primitive</mat-label>
                     <mat-select formControlName="valueprimitive">
-                        <mat-option value="NUMBER">Number</mat-option>
                         <mat-option value="TEXT">Text</mat-option>
+                        <mat-option value="NUMBER">Number</mat-option>
+                        <mat-option value="FLOAT">FLOAT</mat-option>
                         <mat-option value="DATE">Date</mat-option>
                         <mat-option value="TRUE_OR_FALSE">True/False</mat-option>
                     </mat-select>

@@ -64,13 +64,21 @@
         <mat-option value="equal">Equal</mat-option>
         <mat-option value="notequal">Not Equal</mat-option>
         <mat-option *ngIf="configuration.param.inputType == 'NUMBER' || configuration.param.inputType == 'Integer' || configuration.param.inputType == 'int' ||
+                           configuration.param.inputType == 'FLOAT' || configuration.param.inputType == 'Float' || configuration.param.inputType == 'float64' ||
                                 (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Integer') ||
+                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Float') ||
                                     configuration.constant.constantType == 'Integer' || configuration.constant.constantType == 'NUMBER' || configuration.constant.constantType == 'int' ||
-                                    configuration.property.type == 'Integer' || configuration.property.type == 'NUMBER' || configuration.property.type == 'int'" value="greaterthan">Greater Than</mat-option>
+                                    configuration.constant.constantType == 'Float' || configuration.constant.constantType == 'FLOAT' || configuration.constant.constantType == 'float64' ||
+                                    configuration.property.type == 'Integer' || configuration.property.type == 'NUMBER' || configuration.property.type == 'int' ||
+                                    configuration.property.type == 'Float' || configuration.property.type == 'FLOAT' || configuration.property.type == 'float64'" value="greaterthan">Greater Than</mat-option>
         <mat-option *ngIf="configuration.param.inputType == 'NUMBER' || configuration.param.inputType == 'Integer' || configuration.param.inputType == 'int' ||
+                           configuration.param.inputType == 'FLOAT' || configuration.param.inputType == 'Float' || configuration.param.inputType == 'float64' ||
                                 (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Integer') ||
+                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Float') ||
                                     configuration.constant.constantType == 'Integer' || configuration.constant.constantType == 'NUMBER' || configuration.constant.constantType == 'int' ||
-                                    configuration.property.type == 'Integer' || configuration.property.type == 'NUMBER' || configuration.property.type == 'int'" value="lessthan">Less Than</mat-option>
+                                    configuration.constant.constantType == 'Float' || configuration.constant.constantType == 'FLOAT' || configuration.constant.constantType == 'float64' ||
+                                    configuration.property.type == 'Integer' || configuration.property.type == 'NUMBER' || configuration.property.type == 'int' ||
+                                    configuration.property.type == 'Float' || configuration.property.type == 'FLOAT' || configuration.property.type == 'float64'" value="lessthan">Less Than</mat-option>
         <mat-option *ngIf="configuration.param.inputType == 'DATE' || configuration.param.inputType == 'Date' || configuration.param.inputType == 'time.Time' ||
                                 (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Date') ||
                                     configuration.constant.constantType == 'Date' || configuration.constant.constantType == 'DATE' || configuration.constant.constantType == 'time.Time' ||

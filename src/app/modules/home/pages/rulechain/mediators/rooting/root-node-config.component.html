@@ -51,8 +51,9 @@
         <mat-form-field *ngIf="configuration.paraminputType === 'PRIMITIVE'" fxFlex class="mat-block">
           <mat-label>Primitive</mat-label>
           <mat-select formControlName="primitive">
-            <mat-option value="Integer">Number</mat-option>
             <mat-option value="String">Text</mat-option>
+            <mat-option value="Integer">Number</mat-option>
+            <mat-option value="Float">Float</mat-option>
             <mat-option value="Date">Date</mat-option>
             <mat-option value="Boolean">True/False</mat-option>
           </mat-select>
