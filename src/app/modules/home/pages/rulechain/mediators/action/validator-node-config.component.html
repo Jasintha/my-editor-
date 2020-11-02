@@ -64,11 +64,17 @@
                               (configuration?.validatorbranch?.inputType == 'PRIMITIVE' && configuration?.validatorbranch?.input == 'String') ||
                                     configuration?.validatorproperty?.type == 'TEXT' || configuration?.validatorproperty?.type == 'string' || configuration?.validatorproperty?.type == 'String'" value="contains" value="notcontains">Not Contains</mat-option>
       <mat-option *ngIf="configuration?.validatorparam?.inputType == 'NUMBER' || configuration?.validatorparam?.inputType == 'Integer' || configuration?.validatorparam?.inputType == 'int' ||
+                         configuration?.validatorparam?.inputType == 'FLOAT' || configuration?.validatorparam?.inputType == 'Float' || configuration?.validatorparam?.inputType == 'float64' ||
                               (configuration?.validatorbranch?.inputType == 'PRIMITIVE' && configuration?.validatorbranch?.input == 'Integer') ||
-                                    configuration?.validatorproperty?.type == 'Integer' || configuration?.validatorproperty?.type == 'NUMBER' || configuration?.validatorproperty?.type == 'int'" value="greaterthan">Greater Than</mat-option>
+                              (configuration?.validatorbranch?.inputType == 'PRIMITIVE' && configuration?.validatorbranch?.input == 'Float') ||
+                                    configuration?.validatorproperty?.type == 'Integer' || configuration?.validatorproperty?.type == 'NUMBER' || configuration?.validatorproperty?.type == 'int' ||
+                                    configuration?.validatorproperty?.type == 'Float' || configuration?.validatorproperty?.type == 'FLOAT' || configuration?.validatorproperty?.type == 'float64'" value="greaterthan">Greater Than</mat-option>
       <mat-option *ngIf="configuration?.validatorparam?.inputType == 'NUMBER' || configuration?.validatorparam?.inputType == 'Integer' || configuration?.validatorparam?.inputType == 'int' ||
+                         configuration?.validatorparam?.inputType == 'FLOAT' || configuration?.validatorparam?.inputType == 'Float' || configuration?.validatorparam?.inputType == 'float64' ||
                               (configuration?.validatorbranch?.inputType == 'PRIMITIVE' && configuration?.validatorbranch?.input == 'Integer') ||
-                                    configuration?.validatorproperty?.type == 'Integer' || configuration?.validatorproperty?.type == 'NUMBER' || configuration?.validatorproperty?.type == 'int'" value="lessthan">Less Than</mat-option>
+                              (configuration?.validatorbranch?.inputType == 'PRIMITIVE' && configuration?.validatorbranch?.input == 'Float') ||
+                                    configuration?.validatorproperty?.type == 'Integer' || configuration?.validatorproperty?.type == 'NUMBER' || configuration?.validatorproperty?.type == 'int' ||
+                                    configuration?.validatorproperty?.type == 'Float' || configuration?.validatorproperty?.type == 'FLOAT' || configuration?.validatorproperty?.type == 'float64'" value="lessthan">Less Than</mat-option>
       <mat-option *ngIf="configuration?.validatorparam?.inputType == 'DATE' || configuration?.validatorparam?.inputType == 'Date' || configuration?.validatorparam?.inputType == 'time.Time' ||
                               (configuration?.validatorbranch?.inputType == 'PRIMITIVE' && configuration?.validatorbranch?.input == 'Date') ||
                                     configuration?.validatorproperty?.type == 'Date' || configuration?.validatorproperty?.type == 'DATE' || configuration?.validatorproperty?.inputType == 'time.Time'" value="before">Before</mat-option>

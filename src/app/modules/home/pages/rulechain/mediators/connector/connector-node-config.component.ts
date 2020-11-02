@@ -477,6 +477,10 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     },
     {
         type: 'PRIMITIVE',
+        name: 'FLOAT'
+    },
+    {
+        type: 'PRIMITIVE',
         name: 'DATE'
     },
     {
