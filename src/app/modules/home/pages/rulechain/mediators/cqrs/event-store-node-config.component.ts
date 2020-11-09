@@ -81,6 +81,11 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
   @Input()
   allEvents: any[];
 
+  @Input() branchAvailability: any;
+  
+  @Input()
+  allReferenceProperties: any[];
+  
   @Input()
   allModelProperties: any[];
 
@@ -133,16 +138,15 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       dbAction: [],
       event: [],
       errorMsg: "",
-      errorAction: ""
-      //entity: [],
-      //crudinputType: [],
-      //crudentity: [],
-      //crudentityProperty: [],
-      //crudcustomObject: [],
-      //crudcustomObjectProperty: [],
-      //crudparam: [],
-      //crudvariable: [],
-      //crudvariableProperty: [],
+      errorAction: "",
+      inputType: "",
+      constant: [],
+      param: [],
+      property: [],
+      branchparam: [],
+      assignedProperty: [],
+      assignedtoinputType: "",
+      assignedReference: []
     });
   }
 
@@ -164,63 +168,41 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
     }
   }
 
-  /*
   refreshInputTypes(){
-    let inputType: string = this.eventStoreNodeConfigFormGroup.get('crudinputType').value;
-    this.configuration.crudinputType = inputType;
+    let inputType: string = this.eventStoreNodeConfigFormGroup.get('inputType').value;
+    this.configuration.inputType = inputType;
 
-    if(inputType === 'MODEL'){
-      this.configuration.crudcustomObject= {};
-      this.configuration.crudcustomObjectProperty = {};
-      this.configuration.crudparam= {};
-      this.configuration.crudvariable= {};
-      this.configuration.crudvariableProperty= {};
-
-      this.eventStoreNodeConfigFormGroup.get('crudcustomObject').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudcustomObjectProperty').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudvariable').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudvariableProperty').patchValue([], {emitEvent: false});
-
-    } else if (inputType === 'DTO'){
-      this.configuration.crudentity= {};
-      this.configuration.crudentityProperty = {};
-      this.configuration.crudparam= {};
-      this.configuration.crudvariable= {};
-      this.configuration.crudvariableProperty= {};
-
-      this.eventStoreNodeConfigFormGroup.get('crudentity').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudentityProperty').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudvariable').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudvariableProperty').patchValue([], {emitEvent: false});
-
+     if (inputType === 'CONSTANT'){
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.configuration.branchparam= {};
+      
+      this.eventStoreNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.eventStoreNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.eventStoreNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+      
     } else if (inputType === 'PARAM'){
-      this.configuration.crudentity= {};
-      this.configuration.crudentityProperty = {};
-      this.configuration.crudcustomObject= {};
-      this.configuration.crudcustomObjectProperty = {};
-      this.configuration.crudvariable= {};
-      this.configuration.crudvariableProperty= {};
-
-      this.eventStoreNodeConfigFormGroup.get('crudentity').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudentityProperty').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudcustomObject').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudcustomObjectProperty').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudvariable').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudvariableProperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'VARIABLE'){
-      this.configuration.crudentity= {};
-      this.configuration.crudentityProperty = {};
-      this.configuration.crudcustomObject= {};
-      this.configuration.crudcustomObjectProperty = {};
-      this.configuration.crudparam= {};
-
-      this.eventStoreNodeConfigFormGroup.get('crudentity').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudentityProperty').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudcustomObject').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudcustomObjectProperty').patchValue([], {emitEvent: false});
-      this.eventStoreNodeConfigFormGroup.get('crudparam').patchValue([], {emitEvent: false});
+      this.configuration.constant= {};
+      this.configuration.property= {};
+      this.configuration.branchparam= {};
+      
+      this.eventStoreNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.eventStoreNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.eventStoreNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.branchparam= {};
+      this.eventStoreNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.eventStoreNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.eventStoreNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.eventStoreNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.eventStoreNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.eventStoreNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
     }
 
     if (this.definedConfigComponent) {
@@ -228,7 +210,6 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
     }
 
   }
-  */
 
   refreshDbActions(){
 
@@ -279,10 +260,6 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
   }
 
   writeValue(value: RuleNodeConfiguration): void {
-
-  console.log("email init node write value");
-  console.log(value);
-
     this.configuration = deepClone(value);
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
@@ -301,7 +278,6 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
 
       //crud input
 
-
       let dbType = '';
       if(this.commandDb && this.commandDb !== ''){
         dbType = this.commandDb;
@@ -310,22 +286,51 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         dbType = this.configuration.dbType;
         this.readOnlyDbType = false;
       }
+          
+      let param = this.configuration.param;
+      if(this.configuration.inputType === 'PARAM' && this.inputProperties){
+        param = this.inputProperties.find(x => x.inputName === this.configuration.param.inputName );
+      }
+
+      let constant = this.configuration.constant;
+      if(this.configuration.inputType === 'CONSTANT' && this.allConstants){
+        constant = this.allConstants.find(x => x.constantName === this.configuration.constant.constantName );
+      }
+
+      let property = this.configuration.property;
+      if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
+        property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      }
+
+      let branchparam = this.configuration.branchparam;
+      if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+        branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
+      }
+
+      let assignedProperty = this.configuration.assignedProperty;
+      if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
+        assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      }
+
+      let assignedReference = this.configuration.assignedReference;
+      if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
+        assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
+      }
 
       this.eventStoreNodeConfigFormGroup.patchValue({
+        inputType: this.configuration.inputType,
         dbType: dbType,
         dbAction: this.configuration.dbAction,
         event: this.configuration.event,
         errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction
-        //entity: entity,
-        //crudinputType: this.configuration.crudinputType,
-        //crudentity: crudentity,
-        //crudentityProperty: crudentityProperty,
-        //crudcustomObject: crudcustomObject,
-        //crudcustomObjectProperty: crudcustomObjectProperty,
-        //crudvariable: crudvariable,
-        //crudvariableProperty: crudvariableProperty,
-        //crudparam: crudparam
+        errorAction: this.configuration.errorAction,
+        param: param,
+        constant: constant,
+        property: property,
+        branchparam: branchparam,
+        assignedProperty: assignedProperty,
+        assignedtoinputType: this.configuration.assignedtoinputType,
+        assignedReference: assignedReference
       });
 
       this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
@@ -365,6 +370,36 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
           this.updateModel(this.configuration);
         }
       );
+      
+      
+      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedReference = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+
+          this.configuration.assignedtoinputType = configuration;
+          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+            this.configuration.assignedReference= {};
+            this.eventStoreNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+          }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
+            this.configuration.assignedProperty= {};
+            this.eventStoreNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+          }
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedProperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
     /*
       this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('entity').valueChanges.subscribe(
@@ -381,6 +416,33 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       );
       */
 
+      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('param').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.param = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('constant').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.constant = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('property').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.property = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('branchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.branchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
     }
   }
