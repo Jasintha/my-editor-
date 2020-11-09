@@ -432,10 +432,10 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
 
     if(this.allValueObjectProperties){
         let A_Array = this.allValueObjectProperties.filter(property =>
-            property.type == 'PARAM' || (property.type == 'PROPERTY' && property.valuetype == 'primitive' ));
+            property.type == 'PARAM' || ((property.type == 'PROPERTY' || property.type == 'REFERENCE') && property.valuetype == 'primitive' ));
 
         let B_Array = this.allValueObjectProperties.filter(property =>
-            property.type == 'PROPERTY' && property.valuetype == 'object' );
+            (property.type == 'PROPERTY' || property.type == 'REFERENCE') && (property.valuetype == 'object' || property.valuetype == 'list'));
 
         let C_Array = this.allValueObjectProperties.filter(property =>
             property.type == 'CONSTANT');
