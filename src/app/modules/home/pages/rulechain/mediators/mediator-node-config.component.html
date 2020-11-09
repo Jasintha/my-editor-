@@ -331,6 +331,7 @@
                          [apptype]="apptype"
                          [allModelProperties]="allModelProperties"
                                 [branchAvailability]="branchAvailability"
+                                [allReferenceProperties]="allReferenceProperties"
                                 [allEvents]="allEvents"
                          [nodeDefinition]="nodeDefinitionValue">
     </tb-event-store-node-config>
@@ -464,4 +465,37 @@
                            [nodeDefinition]="nodeDefinitionValue">
     </tb-string-template-node-config>
   </ng-container>
-</div>
+  <ng-container *ngIf="nodeClazz === 'xiQueryBuilderNode'">
+    <tb-query-builder-node-config #queryBuilderNodeConfigComponent
+                                    formControlName="configuration"
+                                    [ruleNodeId]="ruleNodeId"
+                                    [allDomainModels]=" allDomainModels"
+                                    [allConstants]=" allConstants"
+                                    [inputEntities]=" inputEntities"
+                                    [inputCustomobjects]="inputCustomobjects"
+                                    [allVariables]="allVariables"
+                                    [inputProperties]="inputProperties"
+                                    [apptype]="apptype"
+                                    [allModelProperties]="allModelProperties"
+                                    [branchAvailability]="branchAvailability"
+                                    [allReferenceProperties]="allReferenceProperties"
+                                    [nodeDefinition]="nodeDefinitionValue">
+    </tb-query-builder-node-config>
+  </ng-container>
+  <ng-container *ngIf="nodeClazz === 'xiDBNode'">
+    <tb-db-node-config #dbNodeConfigComponent
+                                  formControlName="configuration"
+                                  [ruleNodeId]="ruleNodeId"
+                                  [allDomainModels]=" allDomainModels"
+                                  [allConstants]=" allConstants"
+                                  [inputEntities]=" inputEntities"
+                                  [inputCustomobjects]="inputCustomobjects"
+                                  [allVariables]="allVariables"
+                                  [inputProperties]="inputProperties"
+                                  [apptype]="apptype"
+                                  [allModelProperties]="allModelProperties"
+                                  [branchAvailability]="branchAvailability"
+                                  [allReferenceProperties]="allReferenceProperties"
+                                  [nodeDefinition]="nodeDefinitionValue">
+    </tb-db-node-config>
+  </ng-container></div>

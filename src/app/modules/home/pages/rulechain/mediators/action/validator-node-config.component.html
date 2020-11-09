@@ -62,7 +62,7 @@
                                     configuration?.validatorproperty?.type == 'TEXT' || configuration?.validatorproperty?.type == 'string' || configuration?.validatorproperty?.type == 'String'" value="contains">Contains</mat-option>
       <mat-option *ngIf="configuration?.validatorparam?.inputType == 'TEXT' || configuration?.validatorparam?.inputType == 'string' || configuration?.validatorparam?.inputType == 'String' ||
                               (configuration?.validatorbranch?.inputType == 'PRIMITIVE' && configuration?.validatorbranch?.input == 'String') ||
-                                    configuration?.validatorproperty?.type == 'TEXT' || configuration?.validatorproperty?.type == 'string' || configuration?.validatorproperty?.type == 'String'" value="contains" value="notcontains">Not Contains</mat-option>
+                                    configuration?.validatorproperty?.type == 'TEXT' || configuration?.validatorproperty?.type == 'string' || configuration?.validatorproperty?.type == 'String'" value="notcontains">Not Contains</mat-option>
       <mat-option *ngIf="configuration?.validatorparam?.inputType == 'NUMBER' || configuration?.validatorparam?.inputType == 'Integer' || configuration?.validatorparam?.inputType == 'int' ||
                          configuration?.validatorparam?.inputType == 'FLOAT' || configuration?.validatorparam?.inputType == 'Float' || configuration?.validatorparam?.inputType == 'float64' ||
                               (configuration?.validatorbranch?.inputType == 'PRIMITIVE' && configuration?.validatorbranch?.input == 'Integer') ||
@@ -80,7 +80,7 @@
                                     configuration?.validatorproperty?.type == 'Date' || configuration?.validatorproperty?.type == 'DATE' || configuration?.validatorproperty?.inputType == 'time.Time'" value="before">Before</mat-option>
       <mat-option *ngIf="configuration?.validatorparam?.inputType == 'DATE' || configuration?.validatorparam?.inputType == 'Date' || configuration?.validatorparam?.inputType == 'time.Time' ||
                               (configuration?.validatorbranch?.inputType == 'PRIMITIVE' && configuration?.validatorbranch?.input == 'Date') ||
-                                    configuration?.validatorproperty?.type == 'Date' || configuration?.validatorproperty?.type == 'DATE' || configuration?.validatorproperty?.inputType == 'time.Time'" value="before" value="after">After</mat-option>
+                                    configuration?.validatorproperty?.type == 'Date' || configuration?.validatorproperty?.type == 'DATE' || configuration?.validatorproperty?.inputType == 'time.Time'" value="after">After</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field *ngIf="configuration?.validatorcondition !== 'isblank' && configuration?.validatorcondition !== 'isnotblank'" fxFlex class="mat-block">
