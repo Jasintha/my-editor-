@@ -69,6 +69,9 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
   allModelProperties: any[];
 
   @Input()
+  allReferenceProperties: any[];
+
+  @Input()
   apptype: string;
 
     domainModelProperties: any[];
@@ -118,13 +121,16 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.fileUploadNodeConfigFormGroup = this.fb.group({
-      inputType: [],
-      param: [],
-      constant: [],
-      property: [],
+     // inputType: [],
+     // param: [],
+     // constant: [],
+     // property: [],
       errorMsg: "",
       errorAction: "",
-      branchparam: []
+      //branchparam: [],
+      assignedProperty: [],
+      assignedtoinputType: "",
+      assignedReference: []
     });
   }
 
@@ -145,6 +151,7 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
     }
   }
   
+  /*
   refreshInputTypes(){
   console.log("came to refresh");
     let inputType: string = this.fileUploadNodeConfigFormGroup.get('inputType').value;
@@ -185,6 +192,7 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
     }
 
   }
+  */
 
   ngAfterViewInit(): void {
   }
@@ -212,7 +220,8 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
         this.updateModel(configuration);
       });
     } else {
-
+      
+      /*
       let p = this.configuration.param;
       if(this.configuration.inputType === 'PARAM' && this.inputProperties){
         p = this.inputProperties.find(x => x.inputName === this.configuration.param.inputName );
@@ -232,17 +241,32 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
       if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
         branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
       }
+      */
+      
+      let assignedProperty = this.configuration.assignedProperty;
+      if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
+        assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      }
+      
+      let assignedReference = this.configuration.assignedReference;
+      if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
+        assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
+      }
 
       this.fileUploadNodeConfigFormGroup.patchValue({
-        inputType: this.configuration.inputType,
-        param: p,
-        constant: c,
-        property: property,
-        branchparam: branchparam,
+      //  inputType: this.configuration.inputType,
+      //  param: p,
+      //  constant: c,
+      //  property: property,
+      //  branchparam: branchparam,
         errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction
+        errorAction: this.configuration.errorAction,
+        assignedProperty: assignedProperty,
+        assignedtoinputType: this.configuration.assignedtoinputType,
+        assignedReference: assignedReference
       });
 
+      /*
       this.changeSubscription = this.fileUploadNodeConfigFormGroup.get('param').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.param = configuration;
@@ -271,6 +295,36 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
           this.configuration.property = configuration;
 
           console.log(this.configuration);
+          this.updateModel(this.configuration);
+        }
+      );
+      */
+      
+      this.changeSubscription = this.fileUploadNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedProperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+      
+      this.changeSubscription = this.fileUploadNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.assignedReference = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.fileUploadNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
+        (configuration: RuleNodeConfiguration) => {
+
+          this.configuration.assignedtoinputType = configuration;
+          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+            this.configuration.assignedReference= {};
+            this.fileUploadNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+          }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
+            this.configuration.assignedProperty= {};
+            this.fileUploadNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+          }
           this.updateModel(this.configuration);
         }
       );
