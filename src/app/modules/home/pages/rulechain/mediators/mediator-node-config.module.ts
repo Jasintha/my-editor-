@@ -45,8 +45,8 @@ import { ShopifyOrderNodeConfigComponent } from './shopify/shopify-order-node-co
 
 //database operations
 import { CrudNodeConfigComponent } from './database-operations/crud-node-config.component';
-import { DBNodeConfigComponent } from './database-operations/db-node-config.component';
-import { QueryBuilderNodeConfigComponent } from './database-operations/query-builder-node-config.component';
+// import { DBNodeConfigComponent } from './database-operations/db-node-config.component';
+// import { QueryBuilderNodeConfigComponent } from './database-operations/query-builder-node-config.component';
 
 //cqrs
 import { EventStoreNodeConfigComponent } from './cqrs/event-store-node-config.component';
@@ -90,8 +90,8 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     AggregateNodeConfigComponent,
     AssignNodeConfigComponent,
     StringTemplateNodeConfigComponent,
-    QueryBuilderNodeConfigComponent,
-    DBNodeConfigComponent
+    // QueryBuilderNodeConfigComponent,
+    // DBNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -134,8 +134,8 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     AggregateNodeConfigComponent,
     AssignNodeConfigComponent,
     StringTemplateNodeConfigComponent,
-    QueryBuilderNodeConfigComponent,
-    DBNodeConfigComponent
+    // QueryBuilderNodeConfigComponent,
+    // DBNodeConfigComponent
   ],
   providers: []
 })
