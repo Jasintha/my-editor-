@@ -61,6 +61,9 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   @Input()
   allEvents: any[];
 
+  @Input()
+  allModelProperties: any[];
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
@@ -97,6 +100,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       eventSource: [],
       subject: [],
       event: [],
+      property: [],
       errorMsg: "",
       errorAction: ""
     });
@@ -147,6 +151,10 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       });
     } else {
 
+      let property = this.configuration.property;
+      if(property && this.allModelProperties){
+        property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      }
       let e = this.configuration.event;
      // e = this.allEvents.find(x => x.name === this.configuration.event);
 
@@ -155,13 +163,22 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
         subject: this.configuration.subject,
         event: this.configuration.event,
         errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction
+        errorAction: this.configuration.errorAction,
+        property: property
       });
 
       this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('event').valueChanges.subscribe(
         (configuration: any) => {
           console.log(configuration);
           this.configuration.event = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('property').valueChanges.subscribe(
+        (configuration: any) => {
+          console.log(configuration);
+          this.configuration.property = configuration;
           this.updateModel(this.configuration);
         }
       );
