@@ -1030,36 +1030,50 @@ export class RuleChainPageComponent extends PageComponent
       let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], []);
       console.log(branchFoundObj);
 
+
+    let valueObjectPropertyArray = [];
+
+    for (let ref of branchFoundObj.referenceProperties){
+      let valueProperty = new ValueProperty();
+      valueProperty.name = ref.name;
+      valueProperty.type = "REFERENCE";
+      if (ref.propertyDataType == "PRIMITIVE"){
+        valueProperty.valueType = "primitive";
+      }else {
+        valueProperty.valueType = "object"
+      }
+      valueObjectPropertyArray.push(valueProperty)
+    }
+
+    for (let prop of branchFoundObj.properties){
+      let valueProperty = new ValueProperty();
+      valueProperty.name = prop.name;
+      valueProperty.type = "PROPERTY";
+      if (prop.propertyDataType == "PRIMITIVE"){
+        valueProperty.valueType = "primitive";
+        /*
+        } else if (prop.property.data.Type == "collection"){
+          valueProperty.valueType = "object";
+        } else if (prop.property.data.Type == "list"){
+          valueProperty.valueType = "list";
+        */
+      }else {
+        valueProperty.valueType = "object"
+      }
+      valueObjectPropertyArray.push(valueProperty)
+    }
+    for (let cons of branchFoundObj.constants){
+      let valueProperty = new ValueProperty();
+      valueProperty.name= cons.constantName;
+      valueProperty.type= "CONSTANT";
+      valueProperty.valueType = "primitive";
+      valueObjectPropertyArray.push(valueProperty)
+    }
+
+
       if(branchFoundObj.branchFound){
         console.log("branch node");
         console.log(nodes[branchFoundObj.branchIndex]);
-
-        let valueObjectPropertyArray = [];
-
-        for (let prop of branchFoundObj.properties){
-          let valueProperty = new ValueProperty();
-          valueProperty.name = prop.name;
-          valueProperty.type = "PROPERTY";
-          if (prop.propertyDataType == "PRIMITIVE"){
-            valueProperty.valueType = "primitive";
-          /*
-          } else if (prop.property.data.Type == "collection"){
-            valueProperty.valueType = "object";
-          } else if (prop.property.data.Type == "list"){
-            valueProperty.valueType = "list";
-          */
-          }else {
-            valueProperty.valueType = "object"
-          }
-          valueObjectPropertyArray.push(valueProperty)
-        }
-        for (let cons of branchFoundObj.constants){
-          let valueProperty = new ValueProperty();
-          valueProperty.name= cons.constantName;
-          valueProperty.type= "CONSTANT";
-          valueProperty.valueType = "primitive";
-          valueObjectPropertyArray.push(valueProperty)
-        }
 
         if(nodes[branchFoundObj.branchIndex].configuration.branchParams){
             for (let param of nodes[branchFoundObj.branchIndex].configuration.branchParams){
@@ -1077,7 +1091,19 @@ export class RuleChainPageComponent extends PageComponent
         }
 
       } else {
-            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':[]};
+
+        if (!(this.inputProperties === null || this.inputProperties === undefined)) {
+
+          for (let param of this.inputProperties) {
+            let valueProperty = new ValueProperty();
+            valueProperty.name = param.InputName;
+            valueProperty.type = "PARAM";
+            valueProperty.valueType = "primitive";
+            valueObjectPropertyArray.push(valueProperty)
+          }
+        }
+
+            let obj = {'branchParams': this.inputProperties, 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':valueObjectPropertyArray};
             return obj;
       }
 
