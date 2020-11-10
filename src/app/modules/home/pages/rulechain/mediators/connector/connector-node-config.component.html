@@ -52,7 +52,7 @@
                 <mat-label>{{field.label}}</mat-label>
 
                 <mat-select [formControlName]="field.key" [id]="field.key">
-                    <mat-option *ngFor="let opt of field.options" [value]="opt">{{opt.name}}</mat-option>
+                    <mat-option *ngFor="let opt of field.options" [value]="opt">{{opt.name}} - {{opt.type}}</mat-option>
                 </mat-select>
 
             </mat-form-field>

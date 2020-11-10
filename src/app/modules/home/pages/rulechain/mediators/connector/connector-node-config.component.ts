@@ -25,7 +25,7 @@ import {
   RuleNodeConfiguration,
   RuleNodeDefinition
 } from '@shared/models/rule-node.models';
-import {ModelSelectionFields, QuestionBase} from '@shared/models/question-base.models';
+import {ModelSelectionFields, QuestionBase, ValueProperty} from '@shared/models/question-base.models';
 import {Subscription} from 'rxjs';
 import {RuleChainService} from '@core/http/rule-chain.service';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
@@ -37,6 +37,7 @@ import {PageComponent} from '@shared/components/page.component';
 import {Store} from '@ngrx/store';
 import {AppState} from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
+import {B} from "@angular/cdk/keycodes";
 
 
 
@@ -417,7 +418,7 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
 
   checkControlType(contain: string):boolean{
     //contain.includes static||dynamic_object||dynamic_value--->true
-    return contain.includes('static') || contain.includes('dynamic_object') || contain.includes('dynamic_value');
+    return contain.includes('static') || contain.includes('dynamic_object') || contain.includes('dynamic_value') || contain.includes('reference_value') || contain.includes('reference_object');
   }
 
   checkType(contain: string):boolean{
@@ -429,36 +430,32 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
     let isStatic = controlType.includes('static');
     let isDynamic_object = controlType.includes('dynamic_object');
     let isDynamic_value = controlType.includes('dynamic_value');
-
+    let isReference_object = controlType.includes('reference_object');
+    let isReference_value = controlType.includes('reference_value');
     if(this.allValueObjectProperties){
         let A_Array = this.allValueObjectProperties.filter(property =>
-            property.type == 'PARAM' || ((property.type == 'PROPERTY' || property.type == 'REFERENCE') && property.valuetype == 'primitive' ));
+            property.type == 'PARAM' || (property.type == 'PROPERTY' && property.valueType == 'primitive' ));
 
         let B_Array = this.allValueObjectProperties.filter(property =>
-            (property.type == 'PROPERTY' || property.type == 'REFERENCE') && (property.valuetype == 'object' || property.valuetype == 'list'));
+            property.type == 'PROPERTY' && property.valueType == 'object');
 
         let C_Array = this.allValueObjectProperties.filter(property =>
             property.type == 'CONSTANT');
 
-        if (isStatic === false && isDynamic_object === false && isDynamic_value === false) {
-          proArray = [];
-        } else if (isStatic === false && isDynamic_object === false && isDynamic_value === true) {
-          proArray = A_Array;
-        } else if (isStatic === false && isDynamic_object === true && isDynamic_value === false) {
-          proArray = B_Array;
-        } else if (isStatic === false && isDynamic_object === true && isDynamic_value === true) {
-          proArray = A_Array.concat(B_Array);
-        } else if (isStatic === true && isDynamic_object === false && isDynamic_value === false) {
-          proArray = C_Array;
-        } else if (isStatic === true && isDynamic_object === false && isDynamic_value === true) {
-          proArray = A_Array.concat(C_Array);
-        } else if (isStatic === true && isDynamic_object === true && isDynamic_value === false) {
-          proArray = B_Array.concat(C_Array);
-        } else if (isStatic === true && isDynamic_object === true && isDynamic_value === true) {
-          proArray = A_Array.concat(B_Array,C_Array);
-        }
+        let D_Array = this.allValueObjectProperties.filter(property =>
+            property.type == 'REFERENCE' && property.valueType == 'primitive' );
+
+        let E_Array = this.allValueObjectProperties.filter(property =>
+            property.type == 'REFERENCE' && property.valueType == 'object');
+
+        if (isDynamic_value === true){proArray = proArray.concat(A_Array);}
+        if (isDynamic_object === true){proArray =proArray.concat(B_Array);}
+        if (isStatic === true){proArray =proArray.concat(C_Array);}
+        if (isReference_value === true){proArray =proArray.concat(D_Array);}
+        if (isReference_object === true){proArray =proArray.concat(E_Array);}
+
     }
-    return proArray;
+  return proArray;
   }
 
   generatePrimitiveArray(type: string): Array<any> {
