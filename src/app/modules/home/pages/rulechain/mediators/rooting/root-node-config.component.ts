@@ -174,6 +174,15 @@ export class RootNodeConfigComponent implements ControlValueAccessor, OnInit, On
       };
       this.configuration.branchParams.push(primitiveParam);
       this.updateModel(this.configuration);
+    } else if (inputType === 'ANY'){
+      let anyParam = {
+        'name': paramName,
+        'inputType': inputType,
+        'input': '-',
+        'record': paramRecord
+      };
+      this.configuration.branchParams.push(anyParam);
+      this.updateModel(this.configuration);
     }
 
     this.datasource = new MatTableDataSource(this.configuration.branchParams);
