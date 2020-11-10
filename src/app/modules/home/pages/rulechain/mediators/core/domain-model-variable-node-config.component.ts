@@ -109,7 +109,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
 
   propertydatasource: MatTableDataSource<Property>;
 
-  displayedColumns: string[] = ['name', 'propertyType', 'propertyDataType', 'actions'];
+  displayedColumns: string[] = ['name', 'propertyType', 'propertyDataType', 'type', 'actions'];
 
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
@@ -447,8 +447,6 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
             mapValueRecord = this.domainModelVariableNodeConfigFormGroup.get('valuerecord').value;
 
         }
-        console.log(type);
-        console.log(this.domainModelVariableNodeConfigFormGroup.get('propentity').value);
     }
 
     let property: Property = {
