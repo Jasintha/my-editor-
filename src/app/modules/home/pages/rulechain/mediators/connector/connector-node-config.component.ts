@@ -499,6 +499,16 @@ export class ConnectorNodeConfigComponent implements ControlValueAccessor, OnIni
         }
     }
 
+    if(this.inputEntities){
+        for(let i= 0; i < this.inputEntities.length; i++){
+            let model: ModelPrimitiveObjectProperty = {
+                type: 'MODEL',
+                name: this.inputEntities[i].name
+            };
+            B_Array.push(model);
+        }
+    }
+
     if (isPrimitive === false && isDTO === false) {
       //primArray = [];
     } else if (isPrimitive === false && isDTO === true) {
