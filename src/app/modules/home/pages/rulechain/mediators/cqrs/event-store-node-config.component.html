@@ -52,7 +52,7 @@
 
     <section class="mat-block" fxFlex>
 
-      <mat-form-field *ngIf="configuration.firstinputType === 'PARAM'" fxFlex class="mat-block">
+      <mat-form-field *ngIf="configuration.inputType === 'PARAM'" fxFlex class="mat-block">
         <mat-label>Param</mat-label>
         <mat-select formControlName="param">
           <mat-option *ngFor="let property of inputProperties" [value]="property">
@@ -61,7 +61,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field *ngIf="configuration.firstinputType === 'CONSTANT'" fxFlex class="mat-block">
+      <mat-form-field *ngIf="configuration.inputType === 'CONSTANT'" fxFlex class="mat-block">
         <mat-label>Constant</mat-label>
         <mat-select formControlName="constant">
           <mat-option *ngFor="let constant of allConstants" [value]="constant">
@@ -70,7 +70,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field *ngIf="configuration.firstinputType === 'PROPERTY'" fxFlex class="mat-block">
+      <mat-form-field *ngIf="configuration.inputType === 'PROPERTY'" fxFlex class="mat-block">
         <mat-label>Property</mat-label>
         <mat-select formControlName="property">
           <mat-option *ngFor="let property of allModelProperties" [value]="property">
@@ -79,7 +79,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field *ngIf="configuration.firstinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+      <mat-form-field *ngIf="configuration.inputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
         <mat-label>Branch Param</mat-label>
         <mat-select formControlName="branchparam">
           <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
