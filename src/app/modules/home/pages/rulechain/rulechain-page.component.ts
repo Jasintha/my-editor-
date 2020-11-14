@@ -1096,7 +1096,7 @@ export class RuleChainPageComponent extends PageComponent
 
           for (let param of this.inputProperties) {
             let valueProperty = new ValueProperty();
-            valueProperty.name = param.InputName;
+            valueProperty.name = param.inputName;
             valueProperty.type = "PARAM";
             valueProperty.valueType = "primitive";
             valueObjectPropertyArray.push(valueProperty)
