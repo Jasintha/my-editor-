@@ -113,7 +113,7 @@
       </mat-select>
     </mat-form-field>
 
-    <ng-container *ngIf="dbNodeConfigFormGroup.value.selectType !== 'SELECTSPECIFIC'">
+    <ng-container *ngIf="dbNodeConfigFormGroup.value.selectType === 'SELECTSPECIFIC'">
       <section style="padding-top: 10px;padding-bottom: 10px;">
         <label>Select Specific Properties</label>
       </section>
