@@ -5,6 +5,7 @@
     <mat-select formControlName="dbType">
       <mat-option value="mongo">Mongo</mat-option>
       <mat-option value="sqlite3">SQLite3</mat-option>
+        <mat-option value="mysql">MySQL</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -194,14 +195,14 @@
       <mat-select formControlName="querycondition">
         <mat-option value="equal">Equal</mat-option>
         <mat-option value="notequal">Not Equal</mat-option>
-        <mat-option value="isblank">Is Blank</mat-option>
-        <mat-option value="isnotblank">Is Not Blank</mat-option>
+        <!--<mat-option value="isblank">Is Blank</mat-option>
+        <mat-option value="isnotblank">Is Not Blank</mat-option>-->
         <mat-option value="contains">Contains</mat-option>
         <mat-option value="notcontains">Not Contains</mat-option>
         <mat-option value="greaterthan">Greater Than</mat-option>
         <mat-option value="lessthan">Less Than</mat-option>
         <mat-option value="in">In</mat-option>
-        <mat-option value="groupby">Order By</mat-option>
+        <mat-option value="groupby">Group By</mat-option>
         <mat-option value="orderbydesc">Order By DESC</mat-option>
         <mat-option value="orderbyasc">Order By ASC</mat-option>
         <!--<mat-option value="before">Before</mat-option>
