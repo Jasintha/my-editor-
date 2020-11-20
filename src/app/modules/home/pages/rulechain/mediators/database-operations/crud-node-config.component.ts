@@ -87,6 +87,9 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
   allReferenceProperties: any[];
 
   @Input()
+  allRuleInputs: any[];
+
+  @Input()
   apptype: string;
 
   domainModelProperties: any[];
@@ -196,7 +199,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
     }
     */
 
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.crudconstant= {};
       this.configuration.crudproperty= {};
       this.configuration.crudbranchparam= {};
@@ -345,8 +348,8 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
 
       let crudparam = this.configuration.crudparam;
-      if(this.configuration.crudinputType === 'PARAM' && this.inputProperties){
-        crudparam = this.inputProperties.find(x => x.inputName === this.configuration.crudparam.inputName );
+      if(this.configuration.crudinputType === 'RULE_INPUT' && this.allRuleInputs){
+        crudparam = this.allRuleInputs.find(x => x.inputName === this.configuration.crudparam.inputName );
       }
 
       let crudconstant = this.configuration.crudconstant;

@@ -67,6 +67,9 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
   inputProperties: any[];
 
   @Input()
+  allRuleInputs: any[];
+
+  @Input()
   allConstants: any[];
 
   @Input()
@@ -151,7 +154,7 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     let inputType: string = this.logNodeConfigFormGroup.get('loginputType').value;
     let logfieldName: string = this.logNodeConfigFormGroup.get('logFieldName').value;
     
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedParam = this.logNodeConfigFormGroup.get('logparam').value;
       let logparameter = {
         'logFieldName': logfieldName,
@@ -212,7 +215,7 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
   refreshlogInputTypes(){
     let inputType: string = this.logNodeConfigFormGroup.get('loginputType').value;
     this.configuration.loginputType = inputType;
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.logproperty= {};
       this.configuration.logbranchparam= {};
       this.logNodeConfigFormGroup.get('logproperty').patchValue([], {emitEvent: false});

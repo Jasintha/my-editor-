@@ -70,6 +70,9 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
   allModelProperties: any[];
 
   @Input()
+  allRuleInputs: any[];
+
+  @Input()
   apptype: string;
 
     domainModelProperties: any[];
@@ -162,7 +165,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
 
       this.smsSendNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
       this.smsSendNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PARAM'){
+    } else if (inputType === 'RULE_INPUT'){
       this.configuration.constant= {};
       this.configuration.property= {};
       this.smsSendNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
@@ -184,7 +187,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
   console.log("came to refresh");
     let inputType: string = this.smsSendNodeConfigFormGroup.get('parameterinputType').value;
     this.configuration.parameterinputType = inputType;
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.parameterproperty= {};
       //this.configuration.parametervariableProperty = {};
       this.smsSendNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
@@ -204,7 +207,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
     let number = this.configuration.smsbodyParameters.length + 1;
     let inputType: string = this.smsSendNodeConfigFormGroup.get('parameterinputType').value;
     
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.smsSendNodeConfigFormGroup.get('parameterparam').value;
       let parameter = {
         'parameterName': '$'+ number,
@@ -270,8 +273,8 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
 
 
       let p = this.configuration.param;
-      if(this.configuration.inputType === 'PARAM' && this.inputProperties){
-        p = this.inputProperties.find(x => x.inputName === this.configuration.param.inputName );
+      if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
+        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
       }
 
       let c = this.configuration.constant;

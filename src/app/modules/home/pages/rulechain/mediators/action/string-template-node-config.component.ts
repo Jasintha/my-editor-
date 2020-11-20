@@ -75,6 +75,9 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
   allReferenceProperties: any[];
 
   @Input()
+  allRuleInputs: any[];
+
+  @Input()
   apptype: string;
 
     domainModelProperties: any[];
@@ -161,7 +164,7 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
   refreshParameterInputTypes(){
     let inputType: string = this.stringTemplateNodeConfigFormGroup.get('parameterinputType').value;
     this.configuration.parameterinputType = inputType;
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.parameterproperty= {};
       this.configuration.parameterbranch= {};
       this.configuration.parameterconstant= {};
@@ -213,7 +216,7 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
         paramPrefix = "$";
     }
     
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.stringTemplateNodeConfigFormGroup.get('parameterparam').value;
       let parameter = {
         'parameterName': paramPrefix+ number,

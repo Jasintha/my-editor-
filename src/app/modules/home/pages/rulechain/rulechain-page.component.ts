@@ -1079,7 +1079,7 @@ export class RuleChainPageComponent extends PageComponent
             for (let param of nodes[branchFoundObj.branchIndex].configuration.branchParams){
               let valueProperty = new ValueProperty();
               valueProperty.name = param.name;
-              valueProperty.type= "PARAM";
+              valueProperty.type= "BRANCH_PARAM";
               valueProperty.valueType = "primitive";
               valueObjectPropertyArray.push(valueProperty)
             }
@@ -1092,18 +1092,22 @@ export class RuleChainPageComponent extends PageComponent
 
       } else {
 
-        if (!(this.inputProperties === null || this.inputProperties === undefined)) {
+        if (!(this.allRuleInputs === null || this.allRuleInputs === undefined)) {
 
-          for (let param of this.inputProperties) {
+          for (let param of this.allRuleInputs) {
             let valueProperty = new ValueProperty();
             valueProperty.name = param.inputName;
-            valueProperty.type = "PARAM";
-            valueProperty.valueType = "primitive";
+            valueProperty.type = "RULE_INPUT";
+            if(param.inputType === 'model' || param.inputType === 'dto'){
+                valueProperty.valueType = "object";
+            } else {
+                valueProperty.valueType = "primitive";
+            }
             valueObjectPropertyArray.push(valueProperty)
           }
         }
 
-            let obj = {'branchParams': this.inputProperties, 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':valueObjectPropertyArray};
+            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':valueObjectPropertyArray};
             return obj;
       }
 

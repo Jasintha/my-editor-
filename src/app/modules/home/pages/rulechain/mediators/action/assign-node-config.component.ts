@@ -75,6 +75,9 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
   @Input()
   allRoots: any[];
 
+  @Input()
+  allRuleInputs: any[];
+
   @Input() branchAvailability: any;
 
     domainModelProperties: any[];
@@ -192,7 +195,7 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.assignNodeConfigFormGroup.get('valueproperty').patchValue([], {emitEvent: false});
       this.assignNodeConfigFormGroup.get('valuebranchparam').patchValue([], {emitEvent: false});
 
-    } else if (inputType === 'PARAM'){
+    } else if (inputType === 'RULE_INPUT'){
       this.configuration.valueconstant= {};
       this.configuration.valueproperty= {};
       this.configuration.valuebranchparam= {};
@@ -242,7 +245,7 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
     }
     
-    if (valueinputType === 'PARAM'){
+    if (valueinputType === 'RULE_INPUT'){
       let selectedValueParam = this.assignNodeConfigFormGroup.get('valueparam').value;
       valueName = selectedValueParam.inputName;
 
@@ -346,8 +349,8 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
 
       let valueparam = this.configuration.valueparam;
-      if(this.configuration.secondinputType === 'PARAM' && this.inputProperties){
-        valueparam = this.inputProperties.find(x => x.inputName === this.configuration.valueparam.inputName );
+      if(this.configuration.secondinputType === 'RULE_INPUT' && this.allRuleInputs){
+        valueparam = this.allRuleInputs.find(x => x.inputName === this.configuration.valueparam.inputName );
       }
 
       let valueconstant = this.configuration.valueconstant;

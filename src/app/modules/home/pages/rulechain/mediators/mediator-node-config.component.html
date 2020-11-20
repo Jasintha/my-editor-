@@ -1,92 +1,95 @@
 <div [formGroup]="mediatorNodeConfigFormGroup" style="margin-top: 10px;margin-bottom: 10px;">
-  <ng-container *ngIf="ruleType === 'CONNECTOR'">
-    <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiGmailInitNode_gmail' || nodeClazz === 'CONNECTOR_xiGmailSendNode_gmail' || nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio' || nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio' ;else second">
-      <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiGmailInitNode_gmail'">
-        <tb-email-init-node-config #emailInitNodeConfigComponent
-                                   formControlName="configuration"
-                                   [ruleNodeId]="ruleNodeId"
-                                   [nodeDefinition]="nodeDefinitionValue">
-        </tb-email-init-node-config>
-      </ng-container>
-      <ng-container *ngIf="nodeClazz === 'CONNECTOR_xiGmailSendNode_gmail'">
-        <tb-email-send-node-config #emailSendNodeConfigComponent
-                                   formControlName="configuration"
-                                   [ruleNodeId]="ruleNodeId"
-                                   [allConstants]=" allConstants"
-                                   [inputEntities]=" inputEntities"
-                                   [inputCustomobjects]="inputCustomobjects"
-                                   [allVariables]="allVariables"
-                                   [inputProperties]="inputProperties"
-                                   [apptype]="apptype"
-                                   [allModelProperties]="allModelProperties"
-                                   [nodeDefinition]="nodeDefinitionValue">
-        </tb-email-send-node-config>
-      </ng-container>
-      <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio'">
-        <tb-sms-init-node-config #smsInitNodeConfigComponent
-                                 formControlName="configuration"
-                                 [ruleNodeId]="ruleNodeId"
-                                 [nodeDefinition]="nodeDefinitionValue">
-        </tb-sms-init-node-config>
-      </ng-container>
-      <ng-container *ngIf="nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio'">
-        <tb-sms-send-node-config #smsSendNodeConfigComponent
-                                 formControlName="configuration"
-                                 [ruleNodeId]="ruleNodeId"
-                                 [allConstants]=" allConstants"
-                                 [inputEntities]=" inputEntities"
-                                 [inputCustomobjects]="inputCustomobjects"
-                                 [allVariables]="allVariables"
-                                 [inputProperties]="inputProperties"
-                                 [apptype]="apptype"
-                                 [allModelProperties]="allModelProperties"
-                                 [nodeDefinition]="nodeDefinitionValue">
-        </tb-sms-send-node-config>
-      </ng-container>
+    <ng-container *ngIf="ruleType === 'CONNECTOR'">
+        <ng-container
+                *ngIf="nodeClazz === 'CONNECTOR_INIT_xiGmailInitNode_gmail' || nodeClazz === 'CONNECTOR_xiGmailSendNode_gmail' || nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio' || nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio' ;else second">
+            <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiGmailInitNode_gmail'">
+                <tb-email-init-node-config #emailInitNodeConfigComponent
+                                           formControlName="configuration"
+                                           [ruleNodeId]="ruleNodeId"
+                                           [nodeDefinition]="nodeDefinitionValue">
+                </tb-email-init-node-config>
+            </ng-container>
+            <ng-container *ngIf="nodeClazz === 'CONNECTOR_xiGmailSendNode_gmail'">
+                <tb-email-send-node-config #emailSendNodeConfigComponent
+                                           formControlName="configuration"
+                                           [ruleNodeId]="ruleNodeId"
+                                           [allConstants]=" allConstants"
+                                           [inputEntities]=" inputEntities"
+                                           [allRuleInputs]="allRuleInputs"
+                                           [inputCustomobjects]="inputCustomobjects"
+                                           [allVariables]="allVariables"
+                                           [inputProperties]="inputProperties"
+                                           [apptype]="apptype"
+                                           [allModelProperties]="allModelProperties"
+                                           [nodeDefinition]="nodeDefinitionValue">
+                </tb-email-send-node-config>
+            </ng-container>
+            <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio'">
+                <tb-sms-init-node-config #smsInitNodeConfigComponent
+                                         formControlName="configuration"
+                                         [ruleNodeId]="ruleNodeId"
+                                         [nodeDefinition]="nodeDefinitionValue">
+                </tb-sms-init-node-config>
+            </ng-container>
+            <ng-container *ngIf="nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio'">
+                <tb-sms-send-node-config #smsSendNodeConfigComponent
+                                         formControlName="configuration"
+                                         [ruleNodeId]="ruleNodeId"
+                                         [allConstants]=" allConstants"
+                                         [allRuleInputs]="allRuleInputs"
+                                         [inputEntities]=" inputEntities"
+                                         [inputCustomobjects]="inputCustomobjects"
+                                         [allVariables]="allVariables"
+                                         [inputProperties]="inputProperties"
+                                         [apptype]="apptype"
+                                         [allModelProperties]="allModelProperties"
+                                         [nodeDefinition]="nodeDefinitionValue">
+                </tb-sms-send-node-config>
+            </ng-container>
+        </ng-container>
+        <ng-template #second>
+            <tb-connector-node-config #connectorNodeConfigComponent
+                                      formControlName="configuration"
+                                      [ruleNodeId]="ruleNodeId"
+                                      [ruleEntities]="ruleEntities"
+                                      [inputCustomobjects]="inputCustomobjects"
+                                      [inputProperties]="inputProperties"
+                                      [inputEntities]="inputEntities"
+                                      [allFields]="allFields"
+                                      [allConstants]=" allConstants"
+                                      [allSavedObjects]="allSavedObjects"
+                                      [allVariables]="allVariables"
+                                      [nodeDefinition]="nodeDefinitionValue"
+                                      [allValueObjectProperties]="allValueObjectProperties"
+                                      [branchAvailability]="branchAvailability"
+                                      [fields]="connectorfields">
+            </tb-connector-node-config>
+        </ng-template>
     </ng-container>
-    <ng-template #second>
-      <tb-connector-node-config #connectorNodeConfigComponent
-                                formControlName="configuration"
-                                [ruleNodeId]="ruleNodeId"
-                                [ruleEntities]="ruleEntities"
-                                [inputCustomobjects]="inputCustomobjects"
-                                [inputProperties]="inputProperties"
-                                [inputEntities]="inputEntities"
-                                [allFields]="allFields"
-                                [allConstants]=" allConstants"
-                                [allSavedObjects]="allSavedObjects"
-                                [allVariables]="allVariables"
-                                [nodeDefinition]="nodeDefinitionValue"
-                                [allValueObjectProperties]="allValueObjectProperties"
-                                [branchAvailability]="branchAvailability"
-                                [fields]="connectorfields">
-      </tb-connector-node-config>
-    </ng-template>
-  </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiBranchNode'">
-      <tb-root-node-config #rootNodeConfigComponent
-                           formControlName="configuration"
-                           [ruleNodeId]="ruleNodeId"
-                           [inputEntities]=" inputEntities"
-                           [inputCustomobjects]="inputCustomobjects"
-                           [nodeDefinition]="nodeDefinitionValue">
-      </tb-root-node-config>
+        <tb-root-node-config #rootNodeConfigComponent
+                             formControlName="configuration"
+                             [ruleNodeId]="ruleNodeId"
+                             [inputEntities]=" inputEntities"
+                             [inputCustomobjects]="inputCustomobjects"
+                             [nodeDefinition]="nodeDefinitionValue">
+        </tb-root-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiPayloadNode'">
-      <tb-payload-node-config #payloadNodeConfigComponent
-                              formControlName="configuration"
-                              [ruleNodeId]="ruleNodeId"
-                              [allModelProperties]="allModelProperties"
-                              [allReferenceProperties]="allReferenceProperties"
-                              [nodeDefinition]="nodeDefinitionValue">
-      </tb-payload-node-config>
+        <tb-payload-node-config #payloadNodeConfigComponent
+                                formControlName="configuration"
+                                [ruleNodeId]="ruleNodeId"
+                                [allModelProperties]="allModelProperties"
+                                [allReferenceProperties]="allReferenceProperties"
+                                [nodeDefinition]="nodeDefinitionValue">
+        </tb-payload-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiConstantNode'">
-      <tb-constant-node-config #constantNodeConfigComponent
-                               formControlName="configuration"
-                               [ruleNodeId]="ruleNodeId"
-                               [nodeDefinition]="nodeDefinitionValue">
-      </tb-constant-node-config>
+        <tb-constant-node-config #constantNodeConfigComponent
+                                 formControlName="configuration"
+                                 [ruleNodeId]="ruleNodeId"
+                                 [nodeDefinition]="nodeDefinitionValue">
+        </tb-constant-node-config>
     </ng-container>
     <!--<ng-container *ngIf="nodeClazz === 'xiEmailInitNode'">
       <tb-email-init-node-config #emailInitNodeConfigComponent
@@ -100,6 +103,7 @@
                                  formControlName="configuration"
                                  [ruleNodeId]="ruleNodeId"
                                  [allConstants]=" allConstants"
+                                 [allRuleInputs]="allRuleInputs"
                                  [inputEntities]=" inputEntities"
                                  [inputCustomobjects]="inputCustomobjects"
                                  [allVariables]="allVariables"
@@ -109,395 +113,412 @@
                                  [nodeDefinition]="nodeDefinitionValue">
       </tb-email-send-node-config>
     </ng-container>-->
-  <ng-container *ngIf="nodeClazz === 'xiLambdaFunctionNode'">
-    <tb-lambda-function-node-config #lambdaFunctionNodeConfigComponent
-                               formControlName="configuration"
-                               [ruleNodeId]="ruleNodeId"
-                               [allConstants]=" allConstants"
-                               [inputEntities]=" inputEntities"
-                               [inputCustomobjects]="inputCustomobjects"
-                               [allVariables]="allVariables"
-                               [inputProperties]="inputProperties"
-                               [apptype]="apptype"
-                               [allModelProperties]="allModelProperties"
-                                    [allLambdaFunctions]="allLambdaFunctions"
-                                    [allReferenceProperties]="allReferenceProperties"
-                                    [branchAvailability]="branchAvailability"
-                               [nodeDefinition]="nodeDefinitionValue">
-    </tb-lambda-function-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiHybridFunctionNode'">
-    <tb-hybrid-function-node-config #hybridFunctionNodeConfigComponent
-                                    formControlName="configuration"
-                                    [ruleNodeId]="ruleNodeId"
-                                    [allConstants]=" allConstants"
-                                    [inputEntities]=" inputEntities"
-                                    [inputCustomobjects]="inputCustomobjects"
-                                    [allVariables]="allVariables"
-                                    [inputProperties]="inputProperties"
-                                    [apptype]="apptype"
-                                    [allModelProperties]="allModelProperties"
-                                    [allHybridFunctions]="allHybridFunctions"
-                                    [branchAvailability]="branchAvailability"
-                                    [allReferenceProperties]="allReferenceProperties"
-                                    [nodeDefinition]="nodeDefinitionValue">
-    </tb-hybrid-function-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiValidatorNode'">
-    <tb-validator-node-config #validatorNodeConfigComponent
-                                    formControlName="configuration"
-                                    [ruleNodeId]="ruleNodeId"
-                                    [allConstants]=" allConstants"
-                                    [inputEntities]=" inputEntities"
-                                    [inputCustomobjects]="inputCustomobjects"
-                                    [allVariables]="allVariables"
-                                    [inputProperties]="inputProperties"
-                                    [apptype]="apptype"
-                                    [allModelProperties]="allModelProperties"
-                                    [allRoots]="allRoots"
-                              [branchAvailability]="branchAvailability"
-                                    [nodeDefinition]="nodeDefinitionValue">
-    </tb-validator-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiIteratorNode'">
-    <tb-iterator-node-config #iteratorNodeConfigComponent
-                              formControlName="configuration"
-                              [ruleNodeId]="ruleNodeId"
-                              [allConstants]=" allConstants"
-                              [inputEntities]=" inputEntities"
-                              [inputCustomobjects]="inputCustomobjects"
-                              [allVariables]="allVariables"
-                              [inputProperties]="inputProperties"
-                              [apptype]="apptype"
-                              [allModelProperties]="allModelProperties"
-                             [branchAvailability]="branchAvailability"
-                              [allRoots]="allRoots"
-                              [nodeDefinition]="nodeDefinitionValue">
-    </tb-iterator-node-config>
-  </ng-container>
-  <!--<ng-container *ngIf="nodeClazz === 'xiSmsInitNode'">
-    <tb-sms-init-node-config #smsInitNodeConfigComponent
-                               formControlName="configuration"
-                               [ruleNodeId]="ruleNodeId"
-                               [nodeDefinition]="nodeDefinitionValue">
-    </tb-sms-init-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiSmsSendNode'">
-    <tb-sms-send-node-config #smsSendNodeConfigComponent
-                               formControlName="configuration"
-                               [ruleNodeId]="ruleNodeId"
-                               [allConstants]=" allConstants"
-                               [inputEntities]=" inputEntities"
-                               [inputCustomobjects]="inputCustomobjects"
-                               [allVariables]="allVariables"
-                               [inputProperties]="inputProperties"
-                               [apptype]="apptype"
-                               [allModelProperties]="allModelProperties"
-                               [nodeDefinition]="nodeDefinitionValue">
-    </tb-sms-send-node-config>
-  </ng-container>-->
-    <ng-container *ngIf="nodeClazz === 'xiFilterNode'">
-      <tb-filter-node-config #filterNodeConfigComponent
-                             formControlName="configuration"
-                             [ruleNodeId]="ruleNodeId"
-                             [allConstants]=" allConstants"
-                             [inputEntities]=" inputEntities"
-                             [inputCustomobjects]="inputCustomobjects"
-                             [allVariables]="allVariables"
-                             [inputProperties]="inputProperties"
-                             [apptype]="apptype"
-                             [allModelProperties]="allModelProperties"
-                             [branchAvailability]="branchAvailability"
-                             [allRoots]="allRoots"
-                             [nodeDefinition]="nodeDefinitionValue">
-      </tb-filter-node-config>
+    <ng-container *ngIf="nodeClazz === 'xiLambdaFunctionNode'">
+        <tb-lambda-function-node-config #lambdaFunctionNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [allConstants]=" allConstants"
+                                        [inputEntities]=" inputEntities"
+                                        [inputCustomobjects]="inputCustomobjects"
+                                        [allRuleInputs]="allRuleInputs"
+                                        [allVariables]="allVariables"
+                                        [inputProperties]="inputProperties"
+                                        [apptype]="apptype"
+                                        [allModelProperties]="allModelProperties"
+                                        [allLambdaFunctions]="allLambdaFunctions"
+                                        [allReferenceProperties]="allReferenceProperties"
+                                        [branchAvailability]="branchAvailability"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </tb-lambda-function-node-config>
     </ng-container>
-
-
-  <ng-container *ngIf="nodeClazz === 'xiAggregatorNode'">
-    <tb-aggregate-node-config #aggregateNodeConfigComponent
-                           formControlName="configuration"
-                           [ruleNodeId]="ruleNodeId"
-                           [allConstants]=" allConstants"
-                           [inputEntities]=" inputEntities"
-                           [inputCustomobjects]="inputCustomobjects"
-                           [allVariables]="allVariables"
-                           [inputProperties]="inputProperties"
-                           [apptype]="apptype"
-                           [allModelProperties]="allModelProperties"
-                           [branchAvailability]="branchAvailability"
-                           [allRoots]="allRoots"
-                              [allReferenceProperties]="allReferenceProperties"
-                           [nodeDefinition]="nodeDefinitionValue">
-    </tb-aggregate-node-config>
-  </ng-container>
-
-
-  <ng-container *ngIf="nodeClazz === 'xiSwitchNode'">
-    <tb-switch-node-config #switchNodeConfigComponent
-                           formControlName="configuration"
-                           [ruleNodeId]="ruleNodeId"
-                           [allConstants]=" allConstants"
-                           [inputEntities]=" inputEntities"
-                           [inputCustomobjects]="inputCustomobjects"
-                           [allVariables]="allVariables"
-                           [inputProperties]="inputProperties"
-                           [apptype]="apptype"
-                           [allModelProperties]="allModelProperties"
-                           [branchAvailability]="branchAvailability"
-                           [allRoots]="allRoots"
-                           [nodeDefinition]="nodeDefinitionValue">
-    </tb-switch-node-config>
-  </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiCRUDNode'">
-      <tb-crud-node-config #filterNodeConfigComponent
-                           formControlName="configuration"
-                           [ruleNodeId]="ruleNodeId"
-                           [allConstants]=" allConstants"
-                           [inputEntities]=" inputEntities"
-                           [inputCustomobjects]="inputCustomobjects"
-                           [allVariables]="allVariables"
-                           [inputProperties]="inputProperties"
-                           [queryDb]="queryDb"
-                           [commandDb]="commandDb"
-                           [apptype]="apptype"
-                           [allReferenceProperties]="allReferenceProperties"
-                           [branchAvailability]="branchAvailability"
-                           [allModelProperties]="allModelProperties"
-                           [nodeDefinition]="nodeDefinitionValue">
-      </tb-crud-node-config>
+    <ng-container *ngIf="nodeClazz === 'xiHybridFunctionNode'">
+        <tb-hybrid-function-node-config #hybridFunctionNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [allConstants]=" allConstants"
+                                        [inputEntities]=" inputEntities"
+                                        [allRuleInputs]="allRuleInputs"
+                                        [inputCustomobjects]="inputCustomobjects"
+                                        [allVariables]="allVariables"
+                                        [inputProperties]="inputProperties"
+                                        [apptype]="apptype"
+                                        [allModelProperties]="allModelProperties"
+                                        [allHybridFunctions]="allHybridFunctions"
+                                        [branchAvailability]="branchAvailability"
+                                        [allReferenceProperties]="allReferenceProperties"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </tb-hybrid-function-node-config>
     </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiModelPropertyNode'">
-      <tb-domain-model-variable-node-config #modelPropertyNodeConfigComponent
-                           formControlName="configuration"
-                           [ruleNodeId]="ruleNodeId"
-                           [allDomainModels]=" allDomainModels"
-                                            [allDomainModelsWithSub]="allDomainModelsWithSub"
-                                            [allViewModelsWithSub]="allViewModelsWithSub"
-                                            [allModelProperties]="allModelProperties"
-                                            [allViewModels]="allViewModels"
-                                            [allRuleInputs]="allRuleInputs"
-                                            [allVariables]="allVariables"
-                                            [inputEntities]="inputEntities"
-                                            [inputCustomobjects]="inputCustomobjects"
-                                            [branchAvailability]="branchAvailability"
-                           [nodeDefinition]="nodeDefinitionValue">
-      </tb-domain-model-variable-node-config>
-    </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiReferencePropertyNode'">
-    <tb-reference-property-node-config #referencePropertyNodeConfigComponent
-                                          formControlName="configuration"
-                                          [ruleNodeId]="ruleNodeId"
-                                          [allDomainModels]=" allDomainModels"
-                                          [allDomainModelsWithSub]="allDomainModelsWithSub"
-                                          [allViewModelsWithSub]="allViewModelsWithSub"
-                                          [allModelProperties]="allModelProperties"
-                                          [allViewModels]="allViewModels"
-                                          [allRuleInputs]="allRuleInputs"
-                                          [allVariables]="allVariables"
-                                          [inputEntities]="inputEntities"
-                                          [inputCustomobjects]="inputCustomobjects"
-                                          [branchAvailability]="branchAvailability"
-                                          [nodeDefinition]="nodeDefinitionValue">
-    </tb-reference-property-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiEventPublisherNode'">
-    <tb-event-publisher-node-config #eventPublisherNodeConfigComponent
-                                          formControlName="configuration"
-                                          [ruleNodeId]="ruleNodeId"
-                                          [allEvents]="allEvents"
-                                    [allModelProperties]="allModelProperties"
-                                          [nodeDefinition]="nodeDefinitionValue">
-    </tb-event-publisher-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiEventReceiverNode'">
-    <tb-event-receiver-node-config #eventReceiverNodeConfigComponent
-                                    formControlName="configuration"
-                                    [ruleNodeId]="ruleNodeId"
-                                    [allEvents]="allEvents"
-                                    [nodeDefinition]="nodeDefinitionValue">
-    </tb-event-receiver-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiEventStoreNode'">
-    <tb-event-store-node-config #eventStoreNodeConfigComponent
-                         formControlName="configuration"
-                         [ruleNodeId]="ruleNodeId"
-                         [allConstants]=" allConstants"
-                         [inputEntities]=" inputEntities"
-                         [inputCustomobjects]="inputCustomobjects"
-                         [allVariables]="allVariables"
-                         [inputProperties]="inputProperties"
-                         [queryDb]="queryDb"
-                         [commandDb]="commandDb"
-                         [apptype]="apptype"
-                         [allModelProperties]="allModelProperties"
-                                [branchAvailability]="branchAvailability"
-                                [allReferenceProperties]="allReferenceProperties"
-                                [allEvents]="allEvents"
-                         [nodeDefinition]="nodeDefinitionValue">
-    </tb-event-store-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiQueryStoreNode'">
-    <tb-query-store-node-config #queryStoreNodeConfigComponent
-                         formControlName="configuration"
-                         [ruleNodeId]="ruleNodeId"
-                         [allConstants]=" allConstants"
-                         [inputEntities]=" inputEntities"
-                         [inputCustomobjects]="inputCustomobjects"
-                         [allVariables]="allVariables"
-                         [inputProperties]="inputProperties"
-                         [queryDb]="queryDb"
-                         [commandDb]="commandDb"
-                         [apptype]="apptype"
-                                [allReferenceProperties]="allReferenceProperties"
-                         [allModelProperties]="allModelProperties"
-                         [nodeDefinition]="nodeDefinitionValue">
-    </tb-query-store-node-config>
-  </ng-container>
-
-  <ng-container *ngIf="nodeClazz === 'xiCallFunctionNode'">
-    <tb-branch-node-config #branchNodeConfigComponent
-                           formControlName="configuration"
-                           [ruleNodeId]="ruleNodeId"
-                           [allConstants]=" allConstants"
-                           [inputEntities]=" inputEntities"
-                           [inputCustomobjects]="inputCustomobjects"
-                           [allVariables]="allVariables"
-                           [inputProperties]="inputProperties"
-                           [branchAvailability]="branchAvailability"
-                           [allModelProperties]="allModelProperties"
-                           [allRoots]="allRoots"
-                           [allReferenceProperties]="allReferenceProperties"
-                           [nodeDefinition]="nodeDefinitionValue">
-    </tb-branch-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiLogNode'">
-    <tb-log-node-config #logNodeConfigComponent
-                           formControlName="configuration"
-                           [ruleNodeId]="ruleNodeId"
-                           [allConstants]=" allConstants"
-                           [inputEntities]=" inputEntities"
-                           [inputCustomobjects]="inputCustomobjects"
-                           [allVariables]="allVariables"
-                           [inputProperties]="inputProperties"
-                           [apptype]="apptype"
-                        [branchAvailability]="branchAvailability"
-                           [allModelProperties]="allModelProperties"
-                           [nodeDefinition]="nodeDefinitionValue">
-    </tb-log-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiFileUploadNode'">
-    <tb-file-upload-node-config #fileUploadNodeConfigComponent
-                             formControlName="configuration"
-                             [ruleNodeId]="ruleNodeId"
-                             [allConstants]=" allConstants"
-                             [inputEntities]=" inputEntities"
-                             [inputCustomobjects]="inputCustomobjects"
-                             [allVariables]="allVariables"
-                             [inputProperties]="inputProperties"
-                                [branchAvailability]="branchAvailability"
-                             [apptype]="apptype"
-                             [allModelProperties]="allModelProperties"
-                                [allReferenceProperties]="allReferenceProperties"
-                             [nodeDefinition]="nodeDefinitionValue">
-    </tb-file-upload-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiFileDownloadNode'">
-    <tb-file-download-node-config #fileDownloadNodeConfigComponent
-                                formControlName="configuration"
-                                [ruleNodeId]="ruleNodeId"
-                                [allConstants]=" allConstants"
-                                [inputEntities]=" inputEntities"
-                                [inputCustomobjects]="inputCustomobjects"
-                                [allVariables]="allVariables"
-                                [inputProperties]="inputProperties"
-                                  [branchAvailability]="branchAvailability"
-                                [apptype]="apptype"
-                                [allModelProperties]="allModelProperties"
-                                [nodeDefinition]="nodeDefinitionValue">
-    </tb-file-download-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiCallNode'">
-    <tb-call-node-config #callNodeConfigComponent
-                             formControlName="configuration"
-                             [ruleNodeId]="ruleNodeId"
-                             [allConstants]=" allConstants"
-                             [inputEntities]=" inputEntities"
-                             [inputCustomobjects]="inputCustomobjects"
-                             [allVariables]="allVariables"
-                             [inputProperties]="inputProperties"
-                         [branchAvailability]="branchAvailability"
-                             [apptype]="apptype"
-                         [allReferenceProperties]="allReferenceProperties"
-                             [allModelProperties]="allModelProperties"
-                             [nodeDefinition]="nodeDefinitionValue">
-    </tb-call-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiAssignNode'">
-    <tb-assign-node-config #assignNodeConfigComponent
-                           formControlName="configuration"
-                           [ruleNodeId]="ruleNodeId"
-                           [allConstants]=" allConstants"
-                           [inputEntities]=" inputEntities"
-                           [inputCustomobjects]="inputCustomobjects"
-                           [allVariables]="allVariables"
-                           [inputProperties]="inputProperties"
-                           [apptype]="apptype"
-                           [allModelProperties]="allModelProperties"
-                           [branchAvailability]="branchAvailability"
-                           [allRoots]="allRoots"
-                           [allReferenceProperties]="allReferenceProperties"
-                           [nodeDefinition]="nodeDefinitionValue">
-    </tb-assign-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiTemplateNode'">
-    <tb-string-template-node-config #templateNodeConfigComponent
-                           formControlName="configuration"
-                           [ruleNodeId]="ruleNodeId"
-                           [allConstants]=" allConstants"
-                           [inputEntities]=" inputEntities"
-                           [inputCustomobjects]="inputCustomobjects"
-                           [allVariables]="allVariables"
-                           [inputProperties]="inputProperties"
-                           [apptype]="apptype"
-                           [allModelProperties]="allModelProperties"
-                           [branchAvailability]="branchAvailability"
-                           [allRoots]="allRoots"
-                           [allReferenceProperties]="allReferenceProperties"
-                           [nodeDefinition]="nodeDefinitionValue">
-    </tb-string-template-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiQueryBuilderNode'">
-    <tb-query-builder-node-config #queryBuilderNodeConfigComponent
-                                    formControlName="configuration"
-                                    [ruleNodeId]="ruleNodeId"
-                                    [allDomainModels]=" allDomainModels"
-                                    [allConstants]=" allConstants"
-                                    [inputEntities]=" inputEntities"
-                                    [inputCustomobjects]="inputCustomobjects"
-                                    [allVariables]="allVariables"
-                                    [inputProperties]="inputProperties"
-                                    [apptype]="apptype"
-                                    [allModelProperties]="allModelProperties"
-                                    [branchAvailability]="branchAvailability"
-                                    [allReferenceProperties]="allReferenceProperties"
-                                    [nodeDefinition]="nodeDefinitionValue">
-    </tb-query-builder-node-config>
-  </ng-container>
-  <ng-container *ngIf="nodeClazz === 'xiDBNode'">
-    <tb-db-node-config #dbNodeConfigComponent
+    <ng-container *ngIf="nodeClazz === 'xiValidatorNode'">
+        <tb-validator-node-config #validatorNodeConfigComponent
                                   formControlName="configuration"
                                   [ruleNodeId]="ruleNodeId"
-                                  [allDomainModels]=" allDomainModels"
                                   [allConstants]=" allConstants"
                                   [inputEntities]=" inputEntities"
+                                  [allRuleInputs]="allRuleInputs"
                                   [inputCustomobjects]="inputCustomobjects"
                                   [allVariables]="allVariables"
                                   [inputProperties]="inputProperties"
                                   [apptype]="apptype"
                                   [allModelProperties]="allModelProperties"
+                                  [allRoots]="allRoots"
                                   [branchAvailability]="branchAvailability"
+                                  [nodeDefinition]="nodeDefinitionValue">
+        </tb-validator-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiIteratorNode'">
+        <tb-iterator-node-config #iteratorNodeConfigComponent
+                                 formControlName="configuration"
+                                 [ruleNodeId]="ruleNodeId"
+                                 [allConstants]=" allConstants"
+                                 [inputEntities]=" inputEntities"
+                                 [inputCustomobjects]="inputCustomobjects"
+                                 [allVariables]="allVariables"
+                                 [inputProperties]="inputProperties"
+                                 [apptype]="apptype"
+                                 [allModelProperties]="allModelProperties"
+                                 [branchAvailability]="branchAvailability"
+                                 [allRoots]="allRoots"
+                                 [nodeDefinition]="nodeDefinitionValue">
+        </tb-iterator-node-config>
+    </ng-container>
+    <!--<ng-container *ngIf="nodeClazz === 'xiSmsInitNode'">
+      <tb-sms-init-node-config #smsInitNodeConfigComponent
+                                 formControlName="configuration"
+                                 [ruleNodeId]="ruleNodeId"
+                                 [nodeDefinition]="nodeDefinitionValue">
+      </tb-sms-init-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiSmsSendNode'">
+      <tb-sms-send-node-config #smsSendNodeConfigComponent
+                                 formControlName="configuration"
+                                 [ruleNodeId]="ruleNodeId"
+                                 [allConstants]=" allConstants"
+                                 [inputEntities]=" inputEntities"
+                                 [allRuleInputs]="allRuleInputs"
+                                 [inputCustomobjects]="inputCustomobjects"
+                                 [allVariables]="allVariables"
+                                 [inputProperties]="inputProperties"
+                                 [apptype]="apptype"
+                                 [allModelProperties]="allModelProperties"
+                                 [nodeDefinition]="nodeDefinitionValue">
+      </tb-sms-send-node-config>
+    </ng-container>-->
+    <ng-container *ngIf="nodeClazz === 'xiFilterNode'">
+        <tb-filter-node-config #filterNodeConfigComponent
+                               formControlName="configuration"
+                               [ruleNodeId]="ruleNodeId"
+                               [allConstants]=" allConstants"
+                               [allRuleInputs]="allRuleInputs"
+                               [inputEntities]=" inputEntities"
+                               [inputCustomobjects]="inputCustomobjects"
+                               [allVariables]="allVariables"
+                               [inputProperties]="inputProperties"
+                               [apptype]="apptype"
+                               [allModelProperties]="allModelProperties"
+                               [branchAvailability]="branchAvailability"
+                               [allRoots]="allRoots"
+                               [nodeDefinition]="nodeDefinitionValue">
+        </tb-filter-node-config>
+    </ng-container>
+
+
+    <ng-container *ngIf="nodeClazz === 'xiAggregatorNode'">
+        <tb-aggregate-node-config #aggregateNodeConfigComponent
+                                  formControlName="configuration"
+                                  [ruleNodeId]="ruleNodeId"
+                                  [allConstants]=" allConstants"
+                                  [inputEntities]=" inputEntities"
+                                  [inputCustomobjects]="inputCustomobjects"
+                                  [allVariables]="allVariables"
+                                  [inputProperties]="inputProperties"
+                                  [allRuleInputs]="allRuleInputs"
+                                  [apptype]="apptype"
+                                  [allModelProperties]="allModelProperties"
+                                  [branchAvailability]="branchAvailability"
+                                  [allRoots]="allRoots"
                                   [allReferenceProperties]="allReferenceProperties"
                                   [nodeDefinition]="nodeDefinitionValue">
-    </tb-db-node-config>
-  </ng-container></div>
+        </tb-aggregate-node-config>
+    </ng-container>
+
+
+    <ng-container *ngIf="nodeClazz === 'xiSwitchNode'">
+        <tb-switch-node-config #switchNodeConfigComponent
+                               formControlName="configuration"
+                               [ruleNodeId]="ruleNodeId"
+                               [allConstants]=" allConstants"
+                               [allRuleInputs]="allRuleInputs"
+                               [inputEntities]=" inputEntities"
+                               [inputCustomobjects]="inputCustomobjects"
+                               [allVariables]="allVariables"
+                               [inputProperties]="inputProperties"
+                               [apptype]="apptype"
+                               [allModelProperties]="allModelProperties"
+                               [branchAvailability]="branchAvailability"
+                               [allRoots]="allRoots"
+                               [nodeDefinition]="nodeDefinitionValue">
+        </tb-switch-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiCRUDNode'">
+        <tb-crud-node-config #filterNodeConfigComponent
+                             formControlName="configuration"
+                             [ruleNodeId]="ruleNodeId"
+                             [allConstants]=" allConstants"
+                             [inputEntities]=" inputEntities"
+                             [inputCustomobjects]="inputCustomobjects"
+                             [allRuleInputs]="allRuleInputs"
+                             [allVariables]="allVariables"
+                             [inputProperties]="inputProperties"
+                             [queryDb]="queryDb"
+                             [commandDb]="commandDb"
+                             [apptype]="apptype"
+                             [allReferenceProperties]="allReferenceProperties"
+                             [branchAvailability]="branchAvailability"
+                             [allModelProperties]="allModelProperties"
+                             [nodeDefinition]="nodeDefinitionValue">
+        </tb-crud-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiModelPropertyNode'">
+        <tb-domain-model-variable-node-config #modelPropertyNodeConfigComponent
+                                              formControlName="configuration"
+                                              [ruleNodeId]="ruleNodeId"
+                                              [allDomainModels]=" allDomainModels"
+                                              [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                              [allViewModelsWithSub]="allViewModelsWithSub"
+                                              [allModelProperties]="allModelProperties"
+                                              [allViewModels]="allViewModels"
+                                              [allRuleInputs]="allRuleInputs"
+                                              [allVariables]="allVariables"
+                                              [inputEntities]="inputEntities"
+                                              [inputCustomobjects]="inputCustomobjects"
+                                              [branchAvailability]="branchAvailability"
+                                              [nodeDefinition]="nodeDefinitionValue">
+        </tb-domain-model-variable-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiReferencePropertyNode'">
+        <tb-reference-property-node-config #referencePropertyNodeConfigComponent
+                                           formControlName="configuration"
+                                           [ruleNodeId]="ruleNodeId"
+                                           [allDomainModels]=" allDomainModels"
+                                           [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                           [allViewModelsWithSub]="allViewModelsWithSub"
+                                           [allModelProperties]="allModelProperties"
+                                           [allViewModels]="allViewModels"
+                                           [allRuleInputs]="allRuleInputs"
+                                           [allVariables]="allVariables"
+                                           [inputEntities]="inputEntities"
+                                           [inputCustomobjects]="inputCustomobjects"
+                                           [branchAvailability]="branchAvailability"
+                                           [nodeDefinition]="nodeDefinitionValue">
+        </tb-reference-property-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiEventPublisherNode'">
+        <tb-event-publisher-node-config #eventPublisherNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [allEvents]="allEvents"
+                                        [allModelProperties]="allModelProperties"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </tb-event-publisher-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiEventReceiverNode'">
+        <tb-event-receiver-node-config #eventReceiverNodeConfigComponent
+                                       formControlName="configuration"
+                                       [ruleNodeId]="ruleNodeId"
+                                       [allEvents]="allEvents"
+                                       [nodeDefinition]="nodeDefinitionValue">
+        </tb-event-receiver-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiEventStoreNode'">
+        <tb-event-store-node-config #eventStoreNodeConfigComponent
+                                    formControlName="configuration"
+                                    [ruleNodeId]="ruleNodeId"
+                                    [allConstants]=" allConstants"
+                                    [inputEntities]=" inputEntities"
+                                    [inputCustomobjects]="inputCustomobjects"
+                                    [allVariables]="allVariables"
+                                    [inputProperties]="inputProperties"
+                                    [allRuleInputs]="allRuleInputs"
+                                    [queryDb]="queryDb"
+                                    [commandDb]="commandDb"
+                                    [apptype]="apptype"
+                                    [allModelProperties]="allModelProperties"
+                                    [branchAvailability]="branchAvailability"
+                                    [allReferenceProperties]="allReferenceProperties"
+                                    [allEvents]="allEvents"
+                                    [nodeDefinition]="nodeDefinitionValue">
+        </tb-event-store-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiQueryStoreNode'">
+        <tb-query-store-node-config #queryStoreNodeConfigComponent
+                                    formControlName="configuration"
+                                    [ruleNodeId]="ruleNodeId"
+                                    [allConstants]=" allConstants"
+                                    [inputEntities]=" inputEntities"
+                                    [inputCustomobjects]="inputCustomobjects"
+                                    [allVariables]="allVariables"
+                                    [inputProperties]="inputProperties"
+                                    [queryDb]="queryDb"
+                                    [commandDb]="commandDb"
+                                    [apptype]="apptype"
+                                    [allReferenceProperties]="allReferenceProperties"
+                                    [allModelProperties]="allModelProperties"
+                                    [nodeDefinition]="nodeDefinitionValue">
+        </tb-query-store-node-config>
+    </ng-container>
+
+    <ng-container *ngIf="nodeClazz === 'xiCallFunctionNode'">
+        <tb-branch-node-config #branchNodeConfigComponent
+                               formControlName="configuration"
+                               [ruleNodeId]="ruleNodeId"
+                               [allConstants]=" allConstants"
+                               [inputEntities]=" inputEntities"
+                               [allRuleInputs]="allRuleInputs"
+                               [inputCustomobjects]="inputCustomobjects"
+                               [allVariables]="allVariables"
+                               [inputProperties]="inputProperties"
+                               [branchAvailability]="branchAvailability"
+                               [allModelProperties]="allModelProperties"
+                               [allRoots]="allRoots"
+                               [allReferenceProperties]="allReferenceProperties"
+                               [nodeDefinition]="nodeDefinitionValue">
+        </tb-branch-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiLogNode'">
+        <tb-log-node-config #logNodeConfigComponent
+                            formControlName="configuration"
+                            [ruleNodeId]="ruleNodeId"
+                            [allConstants]=" allConstants"
+                            [allRuleInputs]="allRuleInputs"
+                            [inputEntities]=" inputEntities"
+                            [inputCustomobjects]="inputCustomobjects"
+                            [allVariables]="allVariables"
+                            [inputProperties]="inputProperties"
+                            [apptype]="apptype"
+                            [branchAvailability]="branchAvailability"
+                            [allModelProperties]="allModelProperties"
+                            [nodeDefinition]="nodeDefinitionValue">
+        </tb-log-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiFileUploadNode'">
+        <tb-file-upload-node-config #fileUploadNodeConfigComponent
+                                    formControlName="configuration"
+                                    [ruleNodeId]="ruleNodeId"
+                                    [allConstants]=" allConstants"
+                                    [inputEntities]=" inputEntities"
+                                    [inputCustomobjects]="inputCustomobjects"
+                                    [allVariables]="allVariables"
+                                    [inputProperties]="inputProperties"
+                                    [branchAvailability]="branchAvailability"
+                                    [apptype]="apptype"
+                                    [allModelProperties]="allModelProperties"
+                                    [allReferenceProperties]="allReferenceProperties"
+                                    [nodeDefinition]="nodeDefinitionValue">
+        </tb-file-upload-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiFileDownloadNode'">
+        <tb-file-download-node-config #fileDownloadNodeConfigComponent
+                                      formControlName="configuration"
+                                      [ruleNodeId]="ruleNodeId"
+                                      [allConstants]=" allConstants"
+                                      [allRuleInputs]="allRuleInputs"
+                                      [inputEntities]=" inputEntities"
+                                      [inputCustomobjects]="inputCustomobjects"
+                                      [allVariables]="allVariables"
+                                      [inputProperties]="inputProperties"
+                                      [branchAvailability]="branchAvailability"
+                                      [apptype]="apptype"
+                                      [allModelProperties]="allModelProperties"
+                                      [nodeDefinition]="nodeDefinitionValue">
+        </tb-file-download-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiCallNode'">
+        <tb-call-node-config #callNodeConfigComponent
+                             formControlName="configuration"
+                             [ruleNodeId]="ruleNodeId"
+                             [allRuleInputs]="allRuleInputs"
+                             [allConstants]=" allConstants"
+                             [inputEntities]=" inputEntities"
+                             [inputCustomobjects]="inputCustomobjects"
+                             [allVariables]="allVariables"
+                             [inputProperties]="inputProperties"
+                             [branchAvailability]="branchAvailability"
+                             [apptype]="apptype"
+                             [allReferenceProperties]="allReferenceProperties"
+                             [allModelProperties]="allModelProperties"
+                             [nodeDefinition]="nodeDefinitionValue">
+        </tb-call-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiAssignNode'">
+        <tb-assign-node-config #assignNodeConfigComponent
+                               formControlName="configuration"
+                               [ruleNodeId]="ruleNodeId"
+                               [allConstants]=" allConstants"
+                               [inputEntities]=" inputEntities"
+                               [inputCustomobjects]="inputCustomobjects"
+                               [allRuleInputs]="allRuleInputs"
+                               [allVariables]="allVariables"
+                               [inputProperties]="inputProperties"
+                               [apptype]="apptype"
+                               [allModelProperties]="allModelProperties"
+                               [branchAvailability]="branchAvailability"
+                               [allRoots]="allRoots"
+                               [allReferenceProperties]="allReferenceProperties"
+                               [nodeDefinition]="nodeDefinitionValue">
+        </tb-assign-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiTemplateNode'">
+        <tb-string-template-node-config #templateNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [allConstants]=" allConstants"
+                                        [inputEntities]=" inputEntities"
+                                        [allRuleInputs]="allRuleInputs"
+                                        [inputCustomobjects]="inputCustomobjects"
+                                        [allVariables]="allVariables"
+                                        [inputProperties]="inputProperties"
+                                        [apptype]="apptype"
+                                        [allModelProperties]="allModelProperties"
+                                        [branchAvailability]="branchAvailability"
+                                        [allRoots]="allRoots"
+                                        [allReferenceProperties]="allReferenceProperties"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </tb-string-template-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiQueryBuilderNode'">
+        <tb-query-builder-node-config #queryBuilderNodeConfigComponent
+                                      formControlName="configuration"
+                                      [ruleNodeId]="ruleNodeId"
+                                      [allDomainModels]=" allDomainModels"
+                                      [allConstants]=" allConstants"
+                                      [inputEntities]=" inputEntities"
+                                      [inputCustomobjects]="inputCustomobjects"
+                                      [allVariables]="allVariables"
+                                      [inputProperties]="inputProperties"
+                                      [apptype]="apptype"
+                                      [allModelProperties]="allModelProperties"
+                                      [branchAvailability]="branchAvailability"
+                                      [allReferenceProperties]="allReferenceProperties"
+                                      [nodeDefinition]="nodeDefinitionValue">
+        </tb-query-builder-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiDBNode'">
+        <tb-db-node-config #dbNodeConfigComponent
+                           formControlName="configuration"
+                           [ruleNodeId]="ruleNodeId"
+                           [allRuleInputs]="allRuleInputs"
+                           [allDomainModels]=" allDomainModels"
+                           [allConstants]=" allConstants"
+                           [inputEntities]=" inputEntities"
+                           [inputCustomobjects]="inputCustomobjects"
+                           [allVariables]="allVariables"
+                           [inputProperties]="inputProperties"
+                           [apptype]="apptype"
+                           [allModelProperties]="allModelProperties"
+                           [branchAvailability]="branchAvailability"
+                           [allReferenceProperties]="allReferenceProperties"
+                           [nodeDefinition]="nodeDefinitionValue">
+        </tb-db-node-config>
+    </ng-container>
+</div>

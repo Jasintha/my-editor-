@@ -71,6 +71,9 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
   @Input()
   apptype: string;
 
+  @Input()
+  allRuleInputs: any[];
+
     domainModelProperties: any[];
     viewModelProperties: any[];
 
@@ -157,7 +160,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       this.fileDownloadNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
       this.fileDownloadNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       this.fileDownloadNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PARAM'){
+    } else if (inputType === 'RULE_INPUT'){
       this.configuration.constant= {};
       this.configuration.property= {};
       this.configuration.branchparam= {};
@@ -214,8 +217,8 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
     } else {
 
       let p = this.configuration.param;
-      if(this.configuration.inputType === 'PARAM' && this.inputProperties){
-        p = this.inputProperties.find(x => x.inputName === this.configuration.param.inputName );
+      if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
+        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
       }
 
       let c = this.configuration.constant;

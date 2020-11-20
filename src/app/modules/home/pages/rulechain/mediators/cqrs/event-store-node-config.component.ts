@@ -79,6 +79,9 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
   commandDb: string;
 
   @Input()
+  allRuleInputs: any[];
+
+  @Input()
   allEvents: any[];
 
   @Input() branchAvailability: any;
@@ -181,7 +184,7 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       this.eventStoreNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
       this.eventStoreNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       
-    } else if (inputType === 'PARAM'){
+    } else if (inputType === 'RULE_INPUT'){
       this.configuration.constant= {};
       this.configuration.property= {};
       this.configuration.branchparam= {};
@@ -288,8 +291,8 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       }
           
       let param = this.configuration.param;
-      if(this.configuration.inputType === 'PARAM' && this.inputProperties){
-        param = this.inputProperties.find(x => x.inputName === this.configuration.param.inputName );
+      if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
+        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
       }
 
       let constant = this.configuration.constant;
