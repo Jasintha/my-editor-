@@ -166,6 +166,7 @@ export class RuleChainPageComponent extends PageComponent
   allViewModels: any[];
   allLambdaFunctions: any[];
   allHybridFunctions: any[];
+  allSubRules: any[];
   allRoots: any[];
   queryDb: string;
   commandDb: string;
@@ -364,6 +365,7 @@ export class RuleChainPageComponent extends PageComponent
     this.allViewModels = this.ruleChainMetaData.allViewModels;
     this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
     this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
+    this.allSubRules = this.ruleChainMetaData.allSubRules;
     this.allRoots = this.ruleChainMetaData.allRoots;
     this.allEvents = this.ruleChainMetaData.allEvents;
     this.queryDb = this.ruleChainMetaData.queryDb;
@@ -1540,6 +1542,7 @@ export class RuleChainPageComponent extends PageComponent
         this.allViewModels = this.ruleChainMetaData.allViewModels;
         this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
         this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
+        this.allSubRules = this.ruleChainMetaData.allSubRules;
         this.allRoots = this.ruleChainMetaData.allRoots;
         this.allEvents = this.ruleChainMetaData.allEvents;
         this.queryDb = this.ruleChainMetaData.queryDb;
@@ -1584,6 +1587,7 @@ export class RuleChainPageComponent extends PageComponent
     const allViewModels = this.ruleChainMetaData.allViewModels;
     const allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
     const allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
+    const allSubRules = this.ruleChainMetaData.allSubRules;
     const allRoots = this.ruleChainMetaData.allRoots;
     const allEvents = this.ruleChainMetaData.allEvents;
     const queryDb = this.ruleChainMetaData.queryDb;
@@ -1636,6 +1640,7 @@ export class RuleChainPageComponent extends PageComponent
         allValueObjectProperties,
         allLambdaFunctions,
         allHybridFunctions,
+        allSubRules,
         allRoots,
         queryDb,
         commandDb,
@@ -1857,6 +1862,7 @@ export interface AddRuleNodeDialogData {
   allEvents: any[];
   allLambdaFunctions: any[];
   allHybridFunctions: any[];
+  allSubRules: any[];
   allRoots: any[];
   queryDb: string;
   commandDb: string;
@@ -1895,6 +1901,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allViewModels: any[];
   allLambdaFunctions: any[];
   allHybridFunctions: any[];
+  allSubRules: any[];
   allRoots: any[];
   allModelProperties: any[];
   allRuleInputs: any[];
@@ -1932,6 +1939,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allViewModels = this.data.allViewModels;
     this.allLambdaFunctions = this.data.allLambdaFunctions;
     this.allHybridFunctions = this.data.allHybridFunctions;
+    this.allSubRules = this.data.allSubRules;
     this.allRoots = this.data.allRoots;
   //  this.isNodeEdit = this.data.isNodeEdit;
     this.allModelProperties = this.data.allModelProperties;

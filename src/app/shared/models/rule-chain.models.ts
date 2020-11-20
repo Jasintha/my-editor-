@@ -60,6 +60,7 @@ export interface RuleChainMetaData {
   allViewModels?: any[];
   allLambdaFunctions?: any[];
   allHybridFunctions?: any[];
+  allSubRules?: any[];
   allRoots?: any[];
   allDomainModelsWithSub?: any[];
   allViewModelsWithSub?: any[];

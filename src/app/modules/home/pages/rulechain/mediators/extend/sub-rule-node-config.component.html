@@ -1,26 +1,26 @@
-<div [formGroup]="hybridFunctionNodeConfigFormGroup">
+<div [formGroup]="subRuleNodeConfigFormGroup">
 
     <mat-form-field fxFlex class="mat-block">
-        <mat-label>Hybrid Function</mat-label>
-        <mat-select formControlName="function">
-            <mat-option *ngFor="let function of allHybridFunctions" [value]="function">
-                {{function.name}}
+        <mat-label>Sub Rule</mat-label>
+        <mat-select formControlName="subRule">
+            <mat-option *ngFor="let subRule of allSubRules" [value]="subRule">
+                {{subRule.name}}
             </mat-option>
         </mat-select>
     </mat-form-field>
 
     <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <mat-form-field fxFlex class="mat-block">
-            <mat-label>Function parameter</mat-label>
-            <mat-select formControlName="functionparameter">
-                <mat-option *ngFor="let param of configuration?.function?.params" [value]="param">
+            <mat-label>Sub Rule Input</mat-label>
+            <mat-select formControlName="subruleInput">
+                <mat-option *ngFor="let param of configuration?.subRule?.params" [value]="param">
                     <span *ngIf="param.inputType === 'model' || param.inputType === 'dto';else primitive_param">{{param.paramName}} - {{param.inputName}}</span><ng-template #primitive_param><span>{{param.paramName}} - {{param.inputType}}</span></ng-template>
                 </mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field fxFlex class="mat-block">
-            <mat-label>Parameter Input Type</mat-label>
+            <mat-label>Sub Rule Input Type</mat-label>
             <mat-select formControlName="parameterinputType" (selectionChange)="refreshParameterInputTypes()">
                 <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
                 <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
