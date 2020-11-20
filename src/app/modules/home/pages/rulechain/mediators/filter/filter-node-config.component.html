@@ -7,7 +7,7 @@
         <mat-select formControlName="firstinputType" (selectionChange)="refreshInputTypes()">
           <!--<mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
           <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>-->
-          <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
+          <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
           <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
           <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
           <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
@@ -35,10 +35,10 @@
         </mat-select>
       </mat-form-field>-->
 
-      <mat-form-field *ngIf="configuration.firstinputType === 'PARAM'" fxFlex class="mat-block">
-        <mat-label>Param</mat-label>
+      <mat-form-field *ngIf="configuration.firstinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
         <mat-select formControlName="param">
-          <mat-option *ngFor="let property of inputProperties" [value]="property">
+          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
             {{property.inputName}}
           </mat-option>
         </mat-select>
@@ -183,7 +183,7 @@
         <mat-select formControlName="secondinputType" (selectionChange)="refreshSecondInputTypes()">
           <!--<mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
           <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>-->
-          <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
+          <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
           <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
           <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
           <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
@@ -211,10 +211,10 @@
         </mat-select>
       </mat-form-field>-->
 
-      <mat-form-field *ngIf="configuration.secondinputType === 'PARAM'" fxFlex class="mat-block">
-        <mat-label>Param</mat-label>
+      <mat-form-field *ngIf="configuration.secondinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
         <mat-select formControlName="secondparam">
-          <mat-option *ngFor="let property of inputProperties" [value]="property">
+          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
             {{property.inputName}}
           </mat-option>
         </mat-select>

@@ -72,6 +72,9 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
   inputProperties: any[];
 
   @Input()
+  allRuleInputs: any[];
+
+  @Input()
   allConstants: any[];
 
   @Input()
@@ -174,7 +177,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
   refreshParameterInputTypes(){
     let inputType: string = this.hybridFunctionNodeConfigFormGroup.get('parameterinputType').value;
     this.configuration.parameterinputType = inputType;
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.parameterproperty= {};
       this.configuration.parameterbranch= {};
       this.configuration.parameterconstant= {};
@@ -230,7 +233,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
     let inputType: string = this.hybridFunctionNodeConfigFormGroup.get('parameterinputType').value;
     let functionparameter = this.hybridFunctionNodeConfigFormGroup.get('functionparameter').value;
     
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.hybridFunctionNodeConfigFormGroup.get('parameterparam').value;
       let parameter = {
         'parameterName': functionparameter.paramName,

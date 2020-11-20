@@ -90,6 +90,9 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   allHybridFunctions: any[];
 
   @Input()
+  allSubRules: any[];
+
+  @Input()
   allDomainModelsWithSub: any[];
 
   @Input()

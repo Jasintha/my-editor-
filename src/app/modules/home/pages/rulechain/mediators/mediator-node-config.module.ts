@@ -37,6 +37,9 @@ import { ConnectorNodeConfigComponent } from './connector/connector-node-config.
 import { FilterNodeConfigComponent } from './filter/filter-node-config.component';
 import { SwitchNodeConfigComponent } from './filter/switch-node-config.component';
 
+//extend
+import { SubRuleNodeConfigComponent } from './extend/sub-rule-node-config.component';
+
 //shopify
 import { ShopifyInitNodeConfigComponent } from './shopify/shopify-init-node-config.component';
 import { ShopifyEventNodeConfigComponent } from './shopify/shopify-event-node-config.component';
@@ -91,7 +94,8 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     AssignNodeConfigComponent,
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
-     DBNodeConfigComponent
+     DBNodeConfigComponent,
+     SubRuleNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -135,7 +139,8 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     AssignNodeConfigComponent,
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
-     DBNodeConfigComponent
+     DBNodeConfigComponent,
+     SubRuleNodeConfigComponent
   ],
   providers: []
 })

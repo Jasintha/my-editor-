@@ -166,6 +166,7 @@ export class RuleChainPageComponent extends PageComponent
   allViewModels: any[];
   allLambdaFunctions: any[];
   allHybridFunctions: any[];
+  allSubRules: any[];
   allRoots: any[];
   queryDb: string;
   commandDb: string;
@@ -364,6 +365,7 @@ export class RuleChainPageComponent extends PageComponent
     this.allViewModels = this.ruleChainMetaData.allViewModels;
     this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
     this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
+    this.allSubRules = this.ruleChainMetaData.allSubRules;
     this.allRoots = this.ruleChainMetaData.allRoots;
     this.allEvents = this.ruleChainMetaData.allEvents;
     this.queryDb = this.ruleChainMetaData.queryDb;
@@ -1079,7 +1081,7 @@ export class RuleChainPageComponent extends PageComponent
             for (let param of nodes[branchFoundObj.branchIndex].configuration.branchParams){
               let valueProperty = new ValueProperty();
               valueProperty.name = param.name;
-              valueProperty.type= "PARAM";
+              valueProperty.type= "BRANCH_PARAM";
               valueProperty.valueType = "primitive";
               valueObjectPropertyArray.push(valueProperty)
             }
@@ -1092,18 +1094,22 @@ export class RuleChainPageComponent extends PageComponent
 
       } else {
 
-        if (!(this.inputProperties === null || this.inputProperties === undefined)) {
+        if (!(this.allRuleInputs === null || this.allRuleInputs === undefined)) {
 
-          for (let param of this.inputProperties) {
+          for (let param of this.allRuleInputs) {
             let valueProperty = new ValueProperty();
             valueProperty.name = param.inputName;
-            valueProperty.type = "PARAM";
-            valueProperty.valueType = "primitive";
+            valueProperty.type = "RULE_INPUT";
+            if(param.inputType === 'model' || param.inputType === 'dto'){
+                valueProperty.valueType = "object";
+            } else {
+                valueProperty.valueType = "primitive";
+            }
             valueObjectPropertyArray.push(valueProperty)
           }
         }
 
-            let obj = {'branchParams': this.inputProperties, 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':valueObjectPropertyArray};
+            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':valueObjectPropertyArray};
             return obj;
       }
 
@@ -1536,6 +1542,7 @@ export class RuleChainPageComponent extends PageComponent
         this.allViewModels = this.ruleChainMetaData.allViewModels;
         this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
         this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
+        this.allSubRules = this.ruleChainMetaData.allSubRules;
         this.allRoots = this.ruleChainMetaData.allRoots;
         this.allEvents = this.ruleChainMetaData.allEvents;
         this.queryDb = this.ruleChainMetaData.queryDb;
@@ -1580,6 +1587,7 @@ export class RuleChainPageComponent extends PageComponent
     const allViewModels = this.ruleChainMetaData.allViewModels;
     const allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
     const allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
+    const allSubRules = this.ruleChainMetaData.allSubRules;
     const allRoots = this.ruleChainMetaData.allRoots;
     const allEvents = this.ruleChainMetaData.allEvents;
     const queryDb = this.ruleChainMetaData.queryDb;
@@ -1632,6 +1640,7 @@ export class RuleChainPageComponent extends PageComponent
         allValueObjectProperties,
         allLambdaFunctions,
         allHybridFunctions,
+        allSubRules,
         allRoots,
         queryDb,
         commandDb,
@@ -1853,6 +1862,7 @@ export interface AddRuleNodeDialogData {
   allEvents: any[];
   allLambdaFunctions: any[];
   allHybridFunctions: any[];
+  allSubRules: any[];
   allRoots: any[];
   queryDb: string;
   commandDb: string;
@@ -1891,6 +1901,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allViewModels: any[];
   allLambdaFunctions: any[];
   allHybridFunctions: any[];
+  allSubRules: any[];
   allRoots: any[];
   allModelProperties: any[];
   allRuleInputs: any[];
@@ -1928,6 +1939,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allViewModels = this.data.allViewModels;
     this.allLambdaFunctions = this.data.allLambdaFunctions;
     this.allHybridFunctions = this.data.allHybridFunctions;
+    this.allSubRules = this.data.allSubRules;
     this.allRoots = this.data.allRoots;
   //  this.isNodeEdit = this.data.isNodeEdit;
     this.allModelProperties = this.data.allModelProperties;

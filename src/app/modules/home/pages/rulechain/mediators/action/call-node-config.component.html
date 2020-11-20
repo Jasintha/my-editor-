@@ -35,17 +35,17 @@
     <mat-form-field fxFlex class="mat-block">
       <mat-label>Input Type</mat-label>
       <mat-select formControlName="targetinputType" (selectionChange)="refreshTargetInputTypes()">
-        <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
+        <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
         <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
         <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
         <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
       </mat-select>
     </mat-form-field>
     <section class="mat-block" fxFlex>
-      <mat-form-field *ngIf="configuration.targetinputType === 'PARAM'" fxFlex class="mat-block">
-        <mat-label>Param</mat-label>
+      <mat-form-field *ngIf="configuration.targetinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
         <mat-select formControlName="targetparam">
-          <mat-option *ngFor="let property of inputProperties" [value]="property">
+          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
             {{property.inputName}}
           </mat-option>
         </mat-select>

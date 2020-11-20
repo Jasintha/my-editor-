@@ -78,6 +78,9 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
   @Input()
   allRoots: any[];
 
+  @Input()
+  allRuleInputs: any[];
+
   @Input() branchAvailability: any;
 
   @Input()
@@ -156,7 +159,7 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
   refreshInputTypes(){
     let inputType: string = this.validatorNodeConfigFormGroup.get('validatorinputType').value;
     this.configuration.validatorinputType = inputType;
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.validatorproperty= {};
       this.configuration.validatorbranch= {};
       this.validatorNodeConfigFormGroup.get('validatorproperty').patchValue([], {emitEvent: false});
@@ -200,7 +203,7 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
         customvalue = '';
     }
 
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedParam = this.validatorNodeConfigFormGroup.get('validatorparam').value;
       let validatorparam = {
         'inputType': inputType,

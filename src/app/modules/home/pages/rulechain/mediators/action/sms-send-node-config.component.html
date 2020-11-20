@@ -5,7 +5,7 @@
       <mat-form-field fxFlex class="mat-block">
         <mat-label>To Phone Number Input Type</mat-label>
         <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
-          <mat-option *ngIf="inputProperties?.length" value="PARAM">Param</mat-option>
+          <mat-option *ngIf="allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
           <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
           <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
           <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
@@ -13,10 +13,10 @@
       </mat-form-field>
     </section>
     <section class="mat-block" fxFlex>
-      <mat-form-field *ngIf="configuration.inputType === 'PARAM'" fxFlex class="mat-block">
-        <mat-label>Param</mat-label>
+      <mat-form-field *ngIf="configuration.inputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
         <mat-select formControlName="param">
-          <mat-option *ngFor="let property of inputProperties" [value]="property">
+          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
             {{property.inputName}}
           </mat-option>
         </mat-select>
@@ -51,16 +51,16 @@
     <mat-form-field fxFlex class="mat-block">
       <mat-label>Parameter Input Type</mat-label>
       <mat-select formControlName="parameterinputType" (selectionChange)="refreshParameterInputTypes()">
-        <mat-option *ngIf="inputProperties?.length" value="PARAM">Param</mat-option>
+        <mat-option *ngIf="allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
         <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
         <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
       </mat-select>
     </mat-form-field>
     <section class="mat-block" fxFlex>
-      <mat-form-field *ngIf="configuration.parameterinputType === 'PARAM'" fxFlex class="mat-block">
-        <mat-label>Param</mat-label>
+      <mat-form-field *ngIf="configuration.parameterinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
         <mat-select formControlName="parameterparam">
-          <mat-option *ngFor="let property of inputProperties" [value]="property">
+          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
             {{property.inputName}}
           </mat-option>
         </mat-select>

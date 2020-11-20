@@ -74,6 +74,9 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
   @Input()
   apptype: string;
 
+  @Input()
+  allRuleInputs: any[];
+
     domainModelProperties: any[];
     viewModelProperties: any[];
 
@@ -179,7 +182,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       this.callNodeConfigFormGroup.get('targetparam').patchValue([], {emitEvent: false});
       this.callNodeConfigFormGroup.get('calltargetproperty').patchValue([], {emitEvent: false});
       this.callNodeConfigFormGroup.get('calltargetbranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PARAM'){
+    } else if (inputType === 'RULE_INPUT'){
       this.configuration.targetconstant= {};
       this.configuration.calltargetproperty= {};
       this.configuration.calltargetbranchparam= {};
@@ -214,7 +217,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
     let targetParameterType: string = this.callNodeConfigFormGroup.get('targetParameterType').value;
     let targetName: string = this.callNodeConfigFormGroup.get('targetName').value;
     
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedTargetParam = this.callNodeConfigFormGroup.get('targetparam').value;
       let targetparameter = {
         'targetType': targetParameterType,
