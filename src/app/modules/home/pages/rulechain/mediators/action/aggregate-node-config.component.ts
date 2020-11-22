@@ -52,6 +52,9 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
     }
 
     @Input()
+    allRuleInputs: any[];
+
+    @Input()
     disabled: boolean;
 
     @Input()
@@ -163,7 +166,7 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
             this.aggregateNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
             this.aggregateNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
 
-        } else if (inputType === 'PARAM'){
+        } else if (inputType === 'RULE_INPUT'){
 
             this.configuration.secondconstant= {};
             this.configuration.secondproperty= {};
@@ -222,8 +225,8 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
             //second input
 
             let secondparam = this.configuration.secondparam;
-            if(this.configuration.secondinputType === 'PARAM' && this.inputProperties){
-                secondparam = this.inputProperties.find(x => x.inputName === this.configuration.secondparam.inputName );
+            if(this.configuration.secondinputType === 'RULE_INPUT' && this.allRuleInputs){
+                secondparam = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName );
             }
 
             let secondconstant = this.configuration.secondconstant;

@@ -86,6 +86,9 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
   @Input()
   ruleNodeId: string;
 
+  @Input()
+  allRuleInputs: any[];
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
@@ -252,7 +255,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       //this.filterNodeConfigFormGroup.get('variable').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('variableProperty').patchValue([], {emitEvent: false});
 
-    } else if (inputType === 'PARAM'){
+    } else if (inputType === 'RULE_INPUT'){
       //this.configuration.entity= {};
       //this.configuration.entityProperty = {};
       //this.configuration.customObject= {};
@@ -367,7 +370,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       //this.filterNodeConfigFormGroup.get('secondvariableProperty').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
 
-    } else if (inputType === 'PARAM'){
+    } else if (inputType === 'RULE_INPUT'){
       //this.configuration.secondentity= {};
       //this.configuration.secondentityProperty = {};
       //this.configuration.secondcustomObject= {};
@@ -440,8 +443,8 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
 
       let param = this.configuration.param;
-      if(this.configuration.firstinputType === 'PARAM' && this.inputProperties){
-        param = this.inputProperties.find(x => x.inputName === this.configuration.param.inputName );
+      if(this.configuration.firstinputType === 'RULE_INPUT' && this.allRuleInputs){
+        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
       }
 
       let constant = this.configuration.constant;
@@ -463,8 +466,8 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
 
       let secondparam = this.configuration.secondparam;
-      if(this.configuration.secondinputType === 'PARAM' && this.inputProperties){
-        secondparam = this.inputProperties.find(x => x.inputName === this.configuration.secondparam.inputName );
+      if(this.configuration.secondinputType === 'RULE_INPUT' && this.allRuleInputs){
+        secondparam = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName );
       }
 
       let secondconstant = this.configuration.secondconstant;

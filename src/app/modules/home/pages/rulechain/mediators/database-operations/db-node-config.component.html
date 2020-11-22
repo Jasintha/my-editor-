@@ -5,6 +5,7 @@
     <mat-select formControlName="dbType">
       <mat-option value="mongo">Mongo</mat-option>
       <mat-option value="sqlite3">SQLite3</mat-option>
+        <mat-option value="mysql">MySQL</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -49,7 +50,7 @@
       <mat-form-field fxFlex class="mat-block">
         <mat-label>ID Input Type</mat-label>
         <mat-select formControlName="crudinputType" (selectionChange)="refreshInputTypes()">
-          <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
+          <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
           <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
           <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
           <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
@@ -58,10 +59,10 @@
     </section>
     
     <section class="mat-block" fxFlex>
-      <mat-form-field *ngIf="configuration.crudinputType === 'PARAM'" fxFlex class="mat-block">
-        <mat-label>Param</mat-label>
+      <mat-form-field *ngIf="configuration.crudinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
         <mat-select formControlName="crudparam">
-          <mat-option *ngFor="let property of inputProperties" [value]="property">
+          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
             {{property.inputName}}
           </mat-option>
         </mat-select>
@@ -194,14 +195,14 @@
       <mat-select formControlName="querycondition">
         <mat-option value="equal">Equal</mat-option>
         <mat-option value="notequal">Not Equal</mat-option>
-        <mat-option value="isblank">Is Blank</mat-option>
-        <mat-option value="isnotblank">Is Not Blank</mat-option>
+        <!--<mat-option value="isblank">Is Blank</mat-option>
+        <mat-option value="isnotblank">Is Not Blank</mat-option>-->
         <mat-option value="contains">Contains</mat-option>
         <mat-option value="notcontains">Not Contains</mat-option>
         <mat-option value="greaterthan">Greater Than</mat-option>
         <mat-option value="lessthan">Less Than</mat-option>
         <mat-option value="in">In</mat-option>
-        <mat-option value="groupby">Order By</mat-option>
+        <mat-option value="groupby">Group By</mat-option>
         <mat-option value="orderbydesc">Order By DESC</mat-option>
         <mat-option value="orderbyasc">Order By ASC</mat-option>
         <!--<mat-option value="before">Before</mat-option>
@@ -214,7 +215,7 @@
         <mat-form-field fxFlex class="mat-block">
           <mat-label>Value Type</mat-label>
           <mat-select formControlName="parameterinputType" (selectionChange)="refreshParameterInputTypes()">
-            <mat-option *ngIf="!branchAvailability?.branchFound && inputProperties?.length" value="PARAM">Param</mat-option>
+            <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
             <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
             <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
             <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
@@ -223,10 +224,10 @@
       </section>
 
       <section class="mat-block" fxFlex>
-        <mat-form-field *ngIf="configuration.parameterinputType === 'PARAM'" fxFlex class="mat-block">
-          <mat-label>Param</mat-label>
+        <mat-form-field *ngIf="configuration.parameterinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+          <mat-label>Rule Input</mat-label>
           <mat-select formControlName="parameterparam">
-            <mat-option *ngFor="let property of inputProperties" [value]="property">
+            <mat-option *ngFor="let property of allRuleInputs" [value]="property">
               {{property.inputName}}
             </mat-option>
           </mat-select>

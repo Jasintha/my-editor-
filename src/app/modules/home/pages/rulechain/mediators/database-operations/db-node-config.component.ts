@@ -93,6 +93,9 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
   disabled: boolean;
 
   @Input()
+  allRuleInputs: any[];
+
+  @Input()
   ruleNodeId: string;
 
   @Input()
@@ -269,7 +272,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
   refreshParameterInputTypes(){
     let inputType: string = this.dbNodeConfigFormGroup.get('parameterinputType').value;
     this.configuration.parameterinputType = inputType;
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.parameterproperty= {};
       this.configuration.parameterbranch= {};
       this.configuration.parameterconstant= {};
@@ -308,7 +311,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
     let inputType: string = this.dbNodeConfigFormGroup.get('crudinputType').value;
     this.configuration.crudinputType = inputType;
 
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.crudconstant= {};
       this.configuration.crudproperty= {};
       this.configuration.crudbranchparam= {};
@@ -367,7 +370,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         join = '';
     }
 
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedParam = this.dbNodeConfigFormGroup.get('parameterparam').value;
       let parameterparam = {
         'inputType': inputType,
@@ -700,8 +703,8 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
 
       let crudparam = this.configuration.crudparam;
-      if(this.configuration.crudinputType === 'PARAM' && this.inputProperties){
-        crudparam = this.inputProperties.find(x => x.inputName === this.configuration.crudparam.inputName );
+      if(this.configuration.crudinputType === 'RULE_INPUT' && this.allRuleInputs){
+        crudparam = this.allRuleInputs.find(x => x.inputName === this.configuration.crudparam.inputName );
       }
 
       let crudconstant = this.configuration.crudconstant;

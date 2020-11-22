@@ -78,6 +78,9 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   inputCustomobjects: any[];
 
   @Input()
+  allRuleInputs: any[];
+
+  @Input()
   allModelProperties: any[];
 
   @Input() branchAvailability: any;
@@ -164,7 +167,7 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   refreshParameterInputTypes(){
     let inputType: string = this.branchNodeConfigFormGroup.get('parameterinputType').value;
     this.configuration.parameterinputType = inputType;
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.parameterproperty= {};
       this.configuration.parameterbranchparam= {};
       this.branchNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
@@ -197,7 +200,7 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
     let inputType: string = this.branchNodeConfigFormGroup.get('parameterinputType').value;
     let branchparameter = this.branchNodeConfigFormGroup.get('branchparameter').value;
 
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.branchNodeConfigFormGroup.get('parameterparam').value;
       let parameter = {
         'parameterName': branchparameter.name,

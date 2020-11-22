@@ -75,6 +75,9 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   @Input()
   allRoots: any[];
 
+  @Input()
+  allRuleInputs: any[];
+
   @Input() branchAvailability: any;
 
     domainModelProperties: any[];
@@ -182,7 +185,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.switchNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
 
-    } else if (inputType === 'PARAM'){
+    } else if (inputType === 'RULE_INPUT'){
       this.configuration.constant= {};
       this.configuration.property= {};
       this.configuration.branchparam= {};
@@ -225,7 +228,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.switchNodeConfigFormGroup.get('switchsecondproperty').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('switchsecondbranchparam').patchValue([], {emitEvent: false});
 
-    } else if (inputType === 'PARAM'){
+    } else if (inputType === 'RULE_INPUT'){
       this.configuration.switchsecondconstant= {};
       this.configuration.switchsecondproperty= {};
       this.configuration.switchsecondbranchparam= {};
@@ -279,7 +282,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
     //let switchroot: string = this.switchNodeConfigFormGroup.get('switchroot').value;
     //let switchisAsync: string = this.switchNodeConfigFormGroup.get('switchisAsync').value;
 
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedSwitchParam = this.switchNodeConfigFormGroup.get('switchsecondparam').value;
       let switchcase = {
         'name' : casename,
@@ -372,8 +375,8 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
     } else {
 
       let param = this.configuration.param;
-      if(this.configuration.firstinputType === 'PARAM' && this.inputProperties){
-        param = this.inputProperties.find(x => x.inputName === this.configuration.param.inputName );
+      if(this.configuration.firstinputType === 'RULE_INPUT' && this.allRuleInputs){
+        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
       }
 
       let constant = this.configuration.constant;

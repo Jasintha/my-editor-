@@ -72,6 +72,9 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   @Input()
   apptype: string;
 
+  @Input()
+  allRuleInputs: any[];
+
     domainModelProperties: any[];
     viewModelProperties: any[];
 
@@ -171,7 +174,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       this.emailSendNodeConfigFormGroup.get('toemailproperty').patchValue([], {emitEvent: false});
       //this.emailSendNodeConfigFormGroup.get('toemailvariable').patchValue([], {emitEvent: false});
       //this.emailSendNodeConfigFormGroup.get('toemailvariableProperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PARAM'){
+    } else if (inputType === 'RULE_INPUT'){
       this.configuration.toemailconstant= {};
       this.configuration.toemailproperty= {};
       //this.configuration.toemailvariable= {};
@@ -205,7 +208,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   console.log("came to refresh");
     let inputType: string = this.emailSendNodeConfigFormGroup.get('parameterinputType').value;
     this.configuration.parameterinputType = inputType;
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.parameterproperty= {};
       //this.configuration.parametervariableProperty = {};
       this.emailSendNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
@@ -225,7 +228,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     let number = this.configuration.emailbodyParameters.length + 1;
     let inputType: string = this.emailSendNodeConfigFormGroup.get('parameterinputType').value;
     
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.emailSendNodeConfigFormGroup.get('parameterparam').value;
       let parameter = {
         'parameterName': '$'+ number,
@@ -325,8 +328,8 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     } else {
 
       let p = this.configuration.toemailparam;
-      if(this.configuration.toemailinputType === 'PARAM'){
-        p = this.inputProperties.find(x => x.inputName === this.configuration.toemailparam.inputName );
+      if(this.configuration.toemailinputType === 'RULE_INPUT'){
+        p = this.allRuleInputs.find(x => x.inputName === this.configuration.toemailparam.inputName );
       }
 
       let c = this.configuration.toemailconstant;

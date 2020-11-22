@@ -63,6 +63,9 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
   inputEntities: any[];
 
   @Input()
+  allRuleInputs: any[];
+
+  @Input()
   allVariables: any[];
 
   @Input()
@@ -174,7 +177,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
   refreshParameterInputTypes(){
     let inputType: string = this.lambdaFunctionNodeConfigFormGroup.get('parameterinputType').value;
     this.configuration.parameterinputType = inputType;
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       this.configuration.parameterproperty= {};
       this.configuration.parameterbranch= {};
       this.configuration.parameterconstant= {};
@@ -230,7 +233,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
     let inputType: string = this.lambdaFunctionNodeConfigFormGroup.get('parameterinputType').value;
     let functionparameter = this.lambdaFunctionNodeConfigFormGroup.get('functionparameter').value;
     
-    if (inputType === 'PARAM'){
+    if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').value;
       let parameter = {
         'parameterName': functionparameter.inputName,
