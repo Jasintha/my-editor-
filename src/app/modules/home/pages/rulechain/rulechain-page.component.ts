@@ -165,6 +165,7 @@ export class RuleChainPageComponent extends PageComponent
   allEvents: any[];
   allViewModels: any[];
   allLambdaFunctions: any[];
+  allPdfs: any[];
   allHybridFunctions: any[];
   allSubRules: any[];
   allRoots: any[];
@@ -364,6 +365,7 @@ export class RuleChainPageComponent extends PageComponent
     this.allRuleInputs = this.ruleChainMetaData.allRuleInputs
     this.allViewModels = this.ruleChainMetaData.allViewModels;
     this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+    this.allPdfs = this.ruleChainMetaData.allPdfs;
     this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
     this.allSubRules = this.ruleChainMetaData.allSubRules;
     this.allRoots = this.ruleChainMetaData.allRoots;
@@ -1541,6 +1543,7 @@ export class RuleChainPageComponent extends PageComponent
         this.allRuleInputs = this.ruleChainMetaData.allRuleInputs
         this.allViewModels = this.ruleChainMetaData.allViewModels;
         this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+        this.allPdfs = this.ruleChainMetaData.allPdfs;
         this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
         this.allSubRules = this.ruleChainMetaData.allSubRules;
         this.allRoots = this.ruleChainMetaData.allRoots;
@@ -1586,6 +1589,7 @@ export class RuleChainPageComponent extends PageComponent
     const allRuleInputs = this.ruleChainMetaData.allRuleInputs;
     const allViewModels = this.ruleChainMetaData.allViewModels;
     const allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+    const allPdfs = this.ruleChainMetaData.allPdfs;
     const allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
     const allSubRules = this.ruleChainMetaData.allSubRules;
     const allRoots = this.ruleChainMetaData.allRoots;
@@ -1639,6 +1643,7 @@ export class RuleChainPageComponent extends PageComponent
         allEvents,
         allValueObjectProperties,
         allLambdaFunctions,
+        allPdfs,
         allHybridFunctions,
         allSubRules,
         allRoots,
@@ -1861,6 +1866,7 @@ export interface AddRuleNodeDialogData {
   allRuleInputs: any[];
   allEvents: any[];
   allLambdaFunctions: any[];
+  allPdfs:any[];
   allHybridFunctions: any[];
   allSubRules: any[];
   allRoots: any[];
@@ -1900,6 +1906,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allDomainModels: any[];
   allViewModels: any[];
   allLambdaFunctions: any[];
+  allPdfs:any[];
   allHybridFunctions: any[];
   allSubRules: any[];
   allRoots: any[];
@@ -1938,6 +1945,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allDomainModels = this.data.allDomainModels;
     this.allViewModels = this.data.allViewModels;
     this.allLambdaFunctions = this.data.allLambdaFunctions;
+    this.allPdfs=this.data.allPdfs;
     this.allHybridFunctions = this.data.allHybridFunctions;
     this.allSubRules = this.data.allSubRules;
     this.allRoots = this.data.allRoots;

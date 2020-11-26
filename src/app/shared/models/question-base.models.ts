@@ -45,13 +45,13 @@ export class DropdownQuestion extends QuestionBase {
 }
 
 export class ModelSelectionFields{
-    type: string;
-    label: string;
-    name: string;
+    type?: string;
+    label?: string;
+    name?: string;
 }
 
 export class ValueProperty {
-    name: string
-    type: string
-    valueType: string
+    name?: string;
+    type?: string;
+    valueType?: string;
 }
