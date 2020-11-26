@@ -59,6 +59,7 @@ export interface RuleChainMetaData {
   apptype?: string;
   allViewModels?: any[];
   allLambdaFunctions?: any[];
+  allPdfs?:any[];
   allHybridFunctions?: any[];
   allSubRules?: any[];
   allRoots?: any[];

@@ -57,6 +57,9 @@ import { QueryStoreNodeConfigComponent } from './cqrs/query-store-node-config.co
 
 import {MatTableModule} from '@angular/material/table';
 import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/action/aggregate-node-config.component";
+
+//pdftemp
+import {PdfNodeConfigComponent} from "@home/pages/rulechain/mediators/pdf/pdf-node-config.component";
 @NgModule({
   declarations: [
     MediatorNodeConfigComponent,
@@ -95,7 +98,8 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
-     SubRuleNodeConfigComponent
+     SubRuleNodeConfigComponent,
+      PdfNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -140,7 +144,8 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
-     SubRuleNodeConfigComponent
+     SubRuleNodeConfigComponent,
+    PdfNodeConfigComponent
   ],
   providers: []
 })
