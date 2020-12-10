@@ -72,6 +72,9 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     allPdfs: any[];
 
     @Input()
+    allDomainModelsWithSub: any[];
+
+    @Input()
     inputProperties: any[];
 
     @Input()
@@ -137,6 +140,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             parameterparam: [],
             parameterproperty: [],
             parameterconstant: [],
+            parameterreference:[],
             parameterbranch: [],
             assignedProperty: [],
             errorMsg: "",
@@ -154,6 +158,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     }
 
     ngOnInit(): void {
+        this.addChildrenProperties()
     }
 
     ngOnDestroy(): void {
@@ -163,6 +168,91 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     }
 
     ngAfterViewInit(): void {
+    }
+
+    addChildrenProperties(){
+        for (let modelprop of this.allModelProperties){
+            let parent = modelprop.name
+            if (modelprop.propertyType === "NEW" && modelprop.record === "m" && modelprop.propertyDataType === "MODEL"){
+                for (let domModel of this.allDomainModelsWithSub){
+                    if (modelprop.type === domModel.nameTitleCase){
+                        for (let child of domModel.design.children){
+                            let childProp = {
+                                'name' : parent+"."+child.data.name,
+                                'inputType' : child.data.type
+                            }
+                            this.allModelProperties.push(childProp)
+                        }
+                    }
+                }
+            }
+            if (modelprop.record === "m"){
+                for (let domModel of this.allDomainModelsWithSub){
+                    if (modelprop.modelproperty.name === domModel.name){
+                        for (let child of domModel.design.children){
+                            let childProp = {
+                                'name' : parent+"."+child.data.name,
+                                'inputType' : child.data.type
+                            }
+                            this.allModelProperties.push(childProp)
+                        }
+                    }
+                }
+            }
+        }
+        for (let rerprop of this.allReferenceProperties){
+            let parent = rerprop.name
+            if (rerprop.record === "m"){
+                for (let domModel of this.allDomainModelsWithSub){
+                    if (rerprop.modelproperty.name === domModel.name){
+                        for (let child of domModel.design.children){
+                            let childProp = {
+                                'name' : parent+"."+child.data.name,
+                                'inputType' : child.data.type,
+                                'modelproperty' : {
+                                    'data': {
+                                        'path' : child.data.path
+                                    }
+                                }
+                            }
+                            this.allReferenceProperties.push(childProp)
+                        }
+                    }
+                }
+            }
+        }
+        for (let rerprop of this.allRuleInputs){
+            let parent = rerprop.name
+            if (rerprop.record === "m"){
+                for (let domModel of this.allDomainModelsWithSub){
+                    if (rerprop.modelproperty.name === domModel.name){
+                        for (let child of domModel.design.children){
+                            let childProp = {
+                                'name' : parent+"."+child.data.name,
+                                'inputType' : child.data.type
+                            }
+                            this.allRuleInputs.push(childProp)
+                        }
+                    }
+                }
+            }
+        }
+        for (let rerprop of this.branchAvailability){
+            let parent = rerprop.name
+            if (rerprop.record === "m"){
+                for (let domModel of this.allDomainModelsWithSub){
+                    if (rerprop.modelproperty.name === domModel.name){
+                        for (let child of domModel.design.children){
+                            let childProp = {
+                                'name' : parent+"."+child.data.name,
+                                'inputType' : child.data.type
+                            }
+                            this.branchAvailability.push(childProp)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     setDisabledState(isDisabled: boolean): void {
@@ -181,6 +271,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             this.configuration.parameterproperty= {};
             this.configuration.parameterbranch= {};
             this.configuration.parameterconstant= {};
+            this.configuration.parameterreference= {};
+            this.pdfNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
@@ -188,6 +280,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             this.configuration.parameterparam= {};
             this.configuration.parameterbranch= {};
             this.configuration.parameterconstant= {};
+            this.configuration.parameterreference= {};
+            this.pdfNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
@@ -195,6 +289,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             this.configuration.parameterparam= {};
             this.configuration.parameterproperty= {};
             this.configuration.parameterconstant= {};
+            this.configuration.parameterreference= {};
+            this.pdfNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
@@ -202,9 +298,20 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             this.configuration.parameterparam= {};
             this.configuration.parameterproperty= {};
             this.configuration.parameterbranch= {};
+            this.configuration.parameterreference= {};
+            this.pdfNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+        }  else if (inputType === 'REFERENCE'){
+            this.configuration.parameterparam= {};
+            this.configuration.parameterproperty= {};
+            this.configuration.parameterbranch= {};
+            this.configuration.parameterconstant= {};
+            this.pdfNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+            this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+            this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+            this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
         }
         if (this.definedConfigComponent) {
             this.propagateChange(this.configuration);
@@ -262,6 +369,16 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             };
             this.configuration.pdfParameters.push(parameterconstant);
             this.updateModel(this.configuration);
+        } else if (inputType === 'REFERENCE'){
+            let selectedParameterReference = this.pdfNodeConfigFormGroup.get('parameterreference').value;
+            let parameterreference = {
+                'key': key,
+                'inputType': inputType,
+                'input': '-',
+                'property': selectedParameterReference.modelproperty.data.path
+            };
+            this.configuration.pdfParameters.push(parameterreference);
+            this.updateModel(this.configuration);
         }
 
         this.datasource = new MatTableDataSource(this.configuration.pdfParameters);
@@ -271,6 +388,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         this.configuration.parameterbranch= {};
         this.configuration.parameterparam= {};
         this.configuration.parameterconstant= {};
+        this.configuration.parameterreference= {};
         this.configuration.key= {};
 
         this.pdfNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
@@ -278,6 +396,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
         this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
         this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
+        this.pdfNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
         this.pdfNodeConfigFormGroup.get('key').patchValue([], {emitEvent: false});
 
     }
@@ -324,6 +443,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 parameterproperty: this.configuration.parameterproperty,
                 parameterconstant: this.configuration.parameterconstant,
                 parameterbranch: this.configuration.parameterbranch,
+                parameterreference: this.configuration.parameterreference,
                 pdf: tempObj,
                 assignedProperty: assignedProperty,
                 errorMsg: this.configuration.errorMsg,
@@ -387,6 +507,13 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 }
             );
 
+            this.changeSubscription = this.pdfNodeConfigFormGroup.get('parameterreference').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.parameterreference = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
             this.changeSubscription = this.pdfNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.assignedReference = configuration;
@@ -426,4 +553,3 @@ export interface PdfParameters {
     input: string;
     property: string;
 }
-

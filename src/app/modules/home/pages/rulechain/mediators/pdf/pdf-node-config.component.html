@@ -26,6 +26,7 @@
                 <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
                 <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
                 <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+                <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
             </mat-select>
         </mat-form-field>
         <section class="mat-block" fxFlex>
@@ -58,6 +59,14 @@
                 <mat-select formControlName="parameterconstant">
                     <mat-option *ngFor="let constant of allConstants" [value]="constant">
                         {{constant.constantName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="configuration.parameterinputType === 'REFERENCE'" fxFlex class="mat-block">
+                <mat-label>Reference Property</mat-label>
+                <mat-select formControlName="parameterreference">
+                    <mat-option *ngFor="let property of allReferenceProperties" [value]="property">
+                        {{property.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
