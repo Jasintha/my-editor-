@@ -1,70 +1,90 @@
-var createError = require('http-errors');
+
+
+const path = require('path');
+const historyApiFallback = require("connect-history-api-fallback");
+
+const port = process.env.PORT;
+const bcp = process.env.BCP;
+const bch = process.env.BCH;
+
+const express = require('express');
+const http = require('http');
+const httpProxy = require('http-proxy');
 var proxy = require('http-proxy-middleware');
-var express = require('express');
-var path = require('path');
-var browserSync = require('browser-sync').create();
- 
+const forwardHost = bch;
+const forwardPort = bcp;
 
-module.exports = app; 
+const ruleNodeUiforwardHost = bch;
+const ruleNodeUiforwardPort = bcp;
+
+const app = express();
+const server = http.createServer(app);
+
+const PORT = port;
 
 
-var DIST_DIR = path.join(__dirname, "build");
-var PORT = 3000;
- 
+app.use(historyApiFallback());
 
-//var backend = 'http://localhost:8080';
-var backend = 'http://twillo-studio-service:8080';
 
-var wsProxy = proxy('/api', {
-  target:backend,
- // pathRewrite: {'^/api' : 'admin/api'},
-  changeOrigin: true, // for vhosted sites, changes host header to match to target's host
-  ws: true, // enable websocket proxy
-  onProxyRes,
-  logLevel: 'debug'
-});
+const root = path.join(__dirname, '/build');
 
-var ruleProxy = proxy('/artifacts', {
-  target:backend,
- pathRewrite: {'^/artifacts' : '/api/artifacts'},
-  changeOrigin: true, // for vhosted sites, changes host header to match to target's host
-  ws: true, // enable websocket proxy
-  onProxyRes,
-  logLevel: 'debug'
+app.use( express.static(root));
+
+const apiProxy = httpProxy.createProxyServer({
+
+    target: {
+        host: forwardHost,
+        port: forwardPort,
+    }
 });
 
 
 
-function onProxyRes(proxyRes, req, res) {
- // proxyRes.headers['x-added'] = 'foobar';
- delete proxyRes.headers['content-security-policy-report-only'];
- delete proxyRes.headers['content-security-policy'];
-}
-/*
-browserSync.init({
-  server: {
-    baseDir: './',
-    port: 3000,
-    middleware: [jsonPlaceholderProxy]
-  },
-  startPath: '/'
+const ruleNodeUiApiProxy = httpProxy.createProxyServer({
+
+    target: {
+        host: ruleNodeUiforwardHost,
+        port: ruleNodeUiforwardPort
+    }
 });
-*/
 
-var app = express();
-//app.use('/static', express.static(DIST_DIR)); // demo page
 
-app.use(express.static('./build'));
 
-//app.use('/static',express.static('./build/static'));
 
-app.use(wsProxy); // ad
+apiProxy.on('error', function (err, req, res) {
+    console.warn('API proxy error: ' + err);
+    res.end('Error.');
+});
 
-app.use(ruleProxy);
- 
-app.listen(PORT);
+ruleNodeUiApiProxy.on('error', function (err, req, res) {
+    console.warn('RuleNode UI API proxy error: ' + err);
+    res.end('Error.');
+});
 
-console.log('[DEMO] Server: listening on port 3000');
-console.log('[DEMO] Opening: http://localhost:3000/');
+//console.info(`Forwarding API requests to http://${forwardHost}:${forwardPort}`);
+//console.info(`Forwarding Rule Node UI requests to http://${ruleNodeUiforwardHost}:${ruleNodeUiforwardPort}`);
 
-//require('open')('http://localhost:3000/users');
+app.all('/api/*', (req, res) => {
+
+    apiProxy.web(req, res)
+});
+
+app.all('/static/rulenode/*', (req, res) => {
+    ruleNodeUiApiProxy.web(req, res);
+});
+
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build/index.html'));
+});
+
+server.on('upgrade', (req, socket, head) => {
+    apiProxy.ws(req, socket, head);
+});
+
+server.listen(PORT, '0.0.0.0', (error) => {
+    if (error) {
+        console.error(error);
+    } else {
+        console.info(`==> 🌎  Listening on port ${bch}:${bcp}`);
+    }
+});

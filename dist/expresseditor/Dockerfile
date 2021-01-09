@@ -23,4 +23,4 @@ ENV BCH=localhost
 EXPOSE ${PORT}
 
 # CMD ["PORT=9090", "BC=localhost", "node", "app.js" ]
-CMD ["sh", "-c", "node server.js ${PORT} ${BCH} ${BCP}"]
+CMD ["sh", "-c", "node app.js ${PORT} ${BCH} ${BCP}"]
