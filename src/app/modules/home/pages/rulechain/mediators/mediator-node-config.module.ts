@@ -60,6 +60,10 @@ import {AggregateNodeConfigComponent} from "@home/pages/rulechain/mediators/acti
 
 //pdftemp
 import {PdfNodeConfigComponent} from "@home/pages/rulechain/mediators/pdf/pdf-node-config.component";
+import {ExcelWriteNodeConfigComponent} from "@home/pages/rulechain/mediators/excel/excel-write-node-config.component";
+import {ExcelReadNodeConfigComponent} from "@home/pages/rulechain/mediators/excel/excel-read-node-config.component";
+import {ExcelCopyNodeConfigComponent} from "@home/pages/rulechain/mediators/excel/excel-copy-node-config.component";
+import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/excel/excel-delete-node-config.component";
 @NgModule({
   declarations: [
     MediatorNodeConfigComponent,
@@ -99,7 +103,11 @@ import {PdfNodeConfigComponent} from "@home/pages/rulechain/mediators/pdf/pdf-no
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
      SubRuleNodeConfigComponent,
-      PdfNodeConfigComponent
+      PdfNodeConfigComponent,
+    ExcelWriteNodeConfigComponent,
+    ExcelReadNodeConfigComponent,
+    ExcelCopyNodeConfigComponent,
+    ExcelDeleteNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -145,7 +153,11 @@ import {PdfNodeConfigComponent} from "@home/pages/rulechain/mediators/pdf/pdf-no
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
      SubRuleNodeConfigComponent,
-    PdfNodeConfigComponent
+    PdfNodeConfigComponent,
+    ExcelWriteNodeConfigComponent,
+    ExcelReadNodeConfigComponent,
+    ExcelCopyNodeConfigComponent,
+    ExcelDeleteNodeConfigComponent
   ],
   providers: []
 })
