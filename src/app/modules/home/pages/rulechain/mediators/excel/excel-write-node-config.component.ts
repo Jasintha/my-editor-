@@ -30,15 +30,15 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-    selector: 'tb-pdf-node-config',
-    templateUrl: './pdf-node-config.component.html',
+    selector: 'tb-excelWrite-node-config',
+    templateUrl: './excel-write-node-config.component.html',
     providers: [{
         provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => PdfNodeConfigComponent),
+        useExisting: forwardRef(() => ExcelWriteNodeConfigComponent),
         multi: true
     }]
 })
-export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
+export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
 
     @ViewChild('definedConfigContent', {read: ViewContainerRef, static: true}) definedConfigContainer: ViewContainerRef;
 
@@ -68,8 +68,6 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     @Input()
     allVariables: any[];
 
-    @Input()
-    allPdfs: any[];
 
     @Input()
     allDomainModelsWithSub: any[];
@@ -112,13 +110,13 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
 
     definedDirectiveError: string;
 
-    pdfNodeConfigFormGroup: FormGroup;
+    excelWriteNodeConfigFormGroup: FormGroup;
 
     changeSubscription: Subscription;
 
-    datasource: MatTableDataSource<PdfParameters>;
+    datasource: MatTableDataSource<ExcelWriteParameter>;
 
-    displayedColumns: string[] = ['key', 'inputType', 'input', 'property', 'actions'];
+    displayedColumns: string[] = ['colName', 'inputType', 'input', 'property', 'actions'];
 
     private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
     private definedConfigComponent: IRuleNodeConfigurationComponent;
@@ -130,13 +128,19 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     constructor(private translate: TranslateService,
                 private ruleChainService: RuleChainService,
                 private fb: FormBuilder) {
-        this.pdfNodeConfigFormGroup = this.fb.group({
-            key: [],
+        this.excelWriteNodeConfigFormGroup = this.fb.group({
+            colName: "",
             inputType: [],
             //record: [],
             //customObject: [],
-            pdf: [],
-            parameterinputType: [],
+            sheetName : "",
+            excelinputType:"",
+            excelparam: [],
+            excelproperty : [],
+            excelbranch: [],
+            excelconstant: [],
+            excelreference: [],
+            parameterinputType: "",
             parameterparam: [],
             parameterproperty: [],
             parameterconstant: [],
@@ -258,60 +262,60 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     setDisabledState(isDisabled: boolean): void {
         this.disabled = isDisabled;
         if (this.disabled) {
-            this.pdfNodeConfigFormGroup.disable({emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.disable({emitEvent: false});
         } else {
-            this.pdfNodeConfigFormGroup.enable({emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.enable({emitEvent: false});
         }
     }
 
     refreshParameterInputTypes(){
-        let inputType: string = this.pdfNodeConfigFormGroup.get('parameterinputType').value;
+        let inputType: string = this.excelWriteNodeConfigFormGroup.get('parameterinputType').value;
         this.configuration.parameterinputType = inputType;
         if (inputType === 'RULE_INPUT'){
             this.configuration.parameterproperty= {};
             this.configuration.parameterbranch= {};
             this.configuration.parameterconstant= {};
             this.configuration.parameterreference= {};
-            this.pdfNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
         } else if (inputType === 'PROPERTY'){
             this.configuration.parameterparam= {};
             this.configuration.parameterbranch= {};
             this.configuration.parameterconstant= {};
             this.configuration.parameterreference= {};
-            this.pdfNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
         } else if (inputType === 'BRANCH_PARAM'){
             this.configuration.parameterparam= {};
             this.configuration.parameterproperty= {};
             this.configuration.parameterconstant= {};
             this.configuration.parameterreference= {};
-            this.pdfNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
         } else if (inputType === 'CONSTANT'){
             this.configuration.parameterparam= {};
             this.configuration.parameterproperty= {};
             this.configuration.parameterbranch= {};
             this.configuration.parameterreference= {};
-            this.pdfNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
         }  else if (inputType === 'REFERENCE'){
             this.configuration.parameterparam= {};
             this.configuration.parameterproperty= {};
             this.configuration.parameterbranch= {};
             this.configuration.parameterconstant= {};
-            this.pdfNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
-            this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+            this.excelWriteNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
         }
         if (this.definedConfigComponent) {
             this.propagateChange(this.configuration);
@@ -320,68 +324,68 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     }
 
     deleteRow(index: number): void{
-        this.configuration.pdfParameters.splice(index, 1);
-        this.datasource = new MatTableDataSource(this.configuration.pdfParameters);
+        this.configuration.excelWriteParameters.splice(index, 1);
+        this.datasource = new MatTableDataSource(this.configuration.excelWriteParameters);
         this.updateModel(this.configuration);
     }
 
     addParameter(): void{
-        let inputType: string = this.pdfNodeConfigFormGroup.get('parameterinputType').value;
-        let key = this.pdfNodeConfigFormGroup.get('key').value;
+        let inputType: string = this.excelWriteNodeConfigFormGroup.get('parameterinputType').value;
+        let colName = this.excelWriteNodeConfigFormGroup.get('colName').value;
 
         if (inputType === 'RULE_INPUT'){
-            let selectedParameterParam = this.pdfNodeConfigFormGroup.get('parameterparam').value;
+            let selectedParameterParam = this.excelWriteNodeConfigFormGroup.get('parameterparam').value;
             let parameter = {
-                'key': key,
+                'colName': colName,
                 'inputType': inputType,
                 'input': '-',
                 'property': selectedParameterParam.inputName
             };
-            this.configuration.pdfParameters.push(parameter);
+            this.configuration.excelWriteParameters.push(parameter);
             this.updateModel(this.configuration);
         } else if (inputType === 'PROPERTY'){
-            let selectedParameterProperty = this.pdfNodeConfigFormGroup.get('parameterproperty').value;
+            let selectedParameterProperty = this.excelWriteNodeConfigFormGroup.get('parameterproperty').value;
             let parameterproperty = {
-                'key': key,
+                'colName': colName,
                 'inputType': inputType,
                 'input': '-',
                 'property': selectedParameterProperty.name
             };
-            this.configuration.pdfParameters.push(parameterproperty);
+            this.configuration.excelWriteParameters.push(parameterproperty);
             this.updateModel(this.configuration);
         } else if (inputType === 'BRANCH_PARAM'){
-            let selectedParameterBranch = this.pdfNodeConfigFormGroup.get('parameterbranch').value;
+            let selectedParameterBranch = this.excelWriteNodeConfigFormGroup.get('parameterbranch').value;
             let parameterbranch = {
-                'key': key,
+                'colName': colName,
                 'inputType': inputType,
                 'input': '-',
                 'property': selectedParameterBranch.name
             };
-            this.configuration.pdfParameters.push(parameterbranch);
+            this.configuration.excelWriteParameters.push(parameterbranch);
             this.updateModel(this.configuration);
         } else if (inputType === 'CONSTANT'){
-            let selectedParameterConstant = this.pdfNodeConfigFormGroup.get('parameterconstant').value;
+            let selectedParameterConstant = this.excelWriteNodeConfigFormGroup.get('parameterconstant').value;
             let parameterconstant = {
-                'key': key,
+                'colName': colName,
                 'inputType': inputType,
                 'input': '-',
                 'property': selectedParameterConstant.constantName
             };
-            this.configuration.pdfParameters.push(parameterconstant);
+            this.configuration.excelWriteParameters.push(parameterconstant);
             this.updateModel(this.configuration);
         } else if (inputType === 'REFERENCE'){
-            let selectedParameterReference = this.pdfNodeConfigFormGroup.get('parameterreference').value;
+            let selectedParameterReference = this.excelWriteNodeConfigFormGroup.get('parameterreference').value;
             let parameterreference = {
-                'key': key,
+                'colName': colName,
                 'inputType': inputType,
                 'input': '-',
                 'property': selectedParameterReference.modelproperty.data.path
             };
-            this.configuration.pdfParameters.push(parameterreference);
+            this.configuration.excelWriteParameters.push(parameterreference);
             this.updateModel(this.configuration);
         }
 
-        this.datasource = new MatTableDataSource(this.configuration.pdfParameters);
+        this.datasource = new MatTableDataSource(this.configuration.excelWriteParameters);
 
         this.configuration.parameterinputType = '';
         this.configuration.parameterproperty= {};
@@ -389,25 +393,93 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         this.configuration.parameterparam= {};
         this.configuration.parameterconstant= {};
         this.configuration.parameterreference= {};
-        this.configuration.key= {};
+        this.configuration.colName= '';
 
-        this.pdfNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
-        this.pdfNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
-        this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
-        this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
-        this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-        this.pdfNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
-        this.pdfNodeConfigFormGroup.get('key').patchValue([], {emitEvent: false});
+        this.excelWriteNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
+        this.excelWriteNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+        this.excelWriteNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+        this.excelWriteNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
+        this.excelWriteNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
+        this.excelWriteNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
+        this.excelWriteNodeConfigFormGroup.get('colName').patchValue([], {emitEvent: false});
+
+        this.setExcelWriteInputData()
+
+    }
+
+    setExcelWriteInputData(): void {
+
+        let inputType: string = this.excelWriteNodeConfigFormGroup.get('excelinputType').value;
+        let sheetName = this.excelWriteNodeConfigFormGroup.get('sheetName').value;
+
+        if (inputType === 'RULE_INPUT') {
+            let selectedParameterParam = this.excelWriteNodeConfigFormGroup.get('excelparam').value;
+            let parameter = {
+                'sheetName': sheetName,
+                'inputType': inputType,
+                'input': '-',
+                'property': selectedParameterParam.inputName
+            };
+            this.configuration.excelWriteInput = parameter;
+            this.updateModel(this.configuration);
+        } else if (inputType === 'PROPERTY') {
+            let selectedParameterProperty = this.excelWriteNodeConfigFormGroup.get('excelproperty').value;
+            let parameterproperty = {
+                'sheetName': sheetName,
+                'inputType': inputType,
+                'input': '-',
+                'property': selectedParameterProperty.name
+            };
+            this.configuration.excelWriteInput = parameterproperty;
+            this.updateModel(this.configuration);
+        } else if (inputType === 'BRANCH_PARAM') {
+            let selectedParameterBranch = this.excelWriteNodeConfigFormGroup.get('excelbranch').value;
+            let parameterbranch = {
+                'sheetName': sheetName,
+                'inputType': inputType,
+                'input': '-',
+                'property': selectedParameterBranch.name
+            };
+            this.configuration.excelWriteInput = parameterbranch;
+            this.updateModel(this.configuration);
+        } else if (inputType === 'CONSTANT') {
+            let selectedParameterConstant = this.excelWriteNodeConfigFormGroup.get('excelconstant').value;
+            let parameterconstant = {
+                'sheetName': sheetName,
+                'inputType': inputType,
+                'input': '-',
+                'property': selectedParameterConstant.constantName
+            };
+            this.configuration.excelWriteInput = parameterconstant;
+            this.updateModel(this.configuration);
+        } else if (inputType === 'REFERENCE') {
+            let selectedParameterReference = this.excelWriteNodeConfigFormGroup.get('excelreference').value;
+            let parameterreference = {
+                'sheetName': sheetName,
+                'inputType': inputType,
+                'input': '-',
+                'property': selectedParameterReference.modelproperty.data.path
+            };
+            this.configuration.excelWriteInput = parameterreference;
+            this.updateModel(this.configuration);
+        }
 
     }
 
     writeValue(value: RuleNodeConfiguration): void {
 
+
         this.configuration = deepClone(value);
-        if(this.configuration.pdfParameters === null || this.configuration.pdfParameters === undefined){
-            this.configuration.pdfParameters = [];
+        if(this.configuration.excelWriteParameters === null || this.configuration.excelWriteParameters === undefined){
+            this.configuration.excelWriteParameters = [];
         }
-        this.datasource = new MatTableDataSource(this.configuration.pdfParameters);
+
+        if(this.configuration.excelWriteInput === null || this.configuration.excelWriteInput === undefined){
+            this.configuration.excelWriteInput = {};
+        }
+
+        this.datasource = new MatTableDataSource(this.configuration.excelWriteParameters);
+
         if (this.changeSubscription) {
             this.changeSubscription.unsubscribe();
             this.changeSubscription = null;
@@ -418,12 +490,6 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 this.updateModel(configuration);
             });
         } else {
-
-            let tempObj = this.configuration.pdf;
-            if(tempObj && this.allPdfs){
-                tempObj = this.allPdfs.find(x => x.name === this.configuration.pdf.name );
-            }
-
             let assignedProperty = this.configuration.assignedProperty;
             if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
                 assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
@@ -433,18 +499,50 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
                 assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
             }
-            this.pdfNodeConfigFormGroup.patchValue({
+
+            let excelbranch = this.configuration.excelbranch;
+            if(this.configuration.excelinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+                excelbranch = this.allModelProperties.find(x => x.name === this.configuration.excelbranch.name );
+            }
+
+            let excelparam = this.configuration.excelparam;
+            if(this.configuration.excelinputType === 'RULE_INPUT' && this.allRuleInputs){
+                excelparam = this.allRuleInputs.find(x => x.inputName === this.configuration.excelparam.inputName );
+            }
+
+            let excelconstant = this.configuration.excelconstant;
+            if(this.configuration.excelinputType === 'CONSTANT' && this.allConstants){
+                excelconstant = this.allConstants.find(x => x.constantName === this.configuration.excelconstant.constantName );
+            }
+
+            let excelproperty = this.configuration.excelproperty;
+            if(this.configuration.excelinputType === 'PROPERTY' && this.allModelProperties){
+                excelproperty = this.allModelProperties.find(x => x.name === this.configuration.excelproperty.name );
+            }
+
+            let excelreference = this.configuration.excelreference;
+            if(this.configuration.excelinputType === 'REFERENCE' && this.allReferenceProperties){
+                excelreference = this.allReferenceProperties.find(x => x.name === this.configuration.excelreference.name );
+            }
+
+            this.excelWriteNodeConfigFormGroup.patchValue({
                 inputType: this.configuration.inputType,
-                key: this.configuration.key,
+                colName: this.configuration.colName,
                 //record: this.configuration.record,
                 //customObject: customObject,
+                sheetName : this.configuration.sheetName,
+                excelinputType:this.configuration.excelinputType,
+                excelparam: excelparam,
+                excelproperty : excelproperty,
+                excelbranch: excelbranch,
+                excelconstant: excelconstant,
+                excelreference: excelreference,
                 parameterinputType: this.configuration.parameterinputType,
                 parameterparam: this.configuration.parameterparam,
                 parameterproperty: this.configuration.parameterproperty,
                 parameterconstant: this.configuration.parameterconstant,
                 parameterbranch: this.configuration.parameterbranch,
                 parameterreference: this.configuration.parameterreference,
-                pdf: tempObj,
                 assignedProperty: assignedProperty,
                 errorMsg: this.configuration.errorMsg,
                 errorAction: this.configuration.errorAction,
@@ -452,85 +550,127 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 assignedReference: assignedReference
             });
 
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('sheetName').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.sheetName = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('excelinputType').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.excelinputType = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('excelparam').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.excelparam = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('excelproperty').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.excelproperty = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('excelbranch').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.excelbranch = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('excelconstant').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.excelconstant = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('excelreference').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.excelreference = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.errorMsg = configuration;
                     this.updateModel(this.configuration);
                 }
             );
 
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.errorAction = configuration;
                     this.updateModel(this.configuration);
                 }
             );
 
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('pdf').valueChanges.subscribe(
-                (configuration: any) => {
-                    this.configuration.pdf = configuration;
-                    this.updateModel(this.configuration);
-                }
-            );
-
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.assignedProperty = configuration;
                     this.updateModel(this.configuration);
                 }
             );
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('parameterparam').valueChanges.subscribe(
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('parameterparam').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.parameterparam = configuration;
                     this.updateModel(this.configuration);
                 }
             );
 
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('parameterproperty').valueChanges.subscribe(
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('parameterproperty').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.parameterproperty = configuration;
                     this.updateModel(this.configuration);
                 }
             );
 
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('parameterconstant').valueChanges.subscribe(
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('parameterconstant').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.parameterconstant = configuration;
                     this.updateModel(this.configuration);
                 }
             );
 
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('parameterbranch').valueChanges.subscribe(
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('parameterbranch').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.parameterbranch = configuration;
                     this.updateModel(this.configuration);
                 }
             );
 
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('parameterreference').valueChanges.subscribe(
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('parameterreference').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.parameterreference = configuration;
                     this.updateModel(this.configuration);
                 }
             );
 
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.assignedReference = configuration;
                     this.updateModel(this.configuration);
                 }
             );
 
-            this.changeSubscription = this.pdfNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
                 (configuration: RuleNodeConfiguration) => {
 
                     this.configuration.assignedtoinputType = configuration;
                     if(this.configuration.assignedtoinputType == 'PROPERTY'){
                         this.configuration.assignedReference= {};
-                        this.pdfNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
+                        this.excelWriteNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
                     }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
                         this.configuration.assignedProperty= {};
-                        this.pdfNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+                        this.excelWriteNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
                     }
                     this.updateModel(this.configuration);
                 }
@@ -538,7 +678,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         }
     }
     private updateModel(configuration: RuleNodeConfiguration) {
-        if (this.definedConfigComponent || this.pdfNodeConfigFormGroup.valid) {
+        if (this.definedConfigComponent || this.excelWriteNodeConfigFormGroup.valid) {
             this.propagateChange(configuration);
         } else {
             this.propagateChange(this.required ? null : configuration);
@@ -547,8 +687,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
 
 }
 
-export interface PdfParameters {
-    key: string;
+export interface ExcelWriteParameter {
+    colName: string;
     inputType: string;
     input: string;
     property: string;

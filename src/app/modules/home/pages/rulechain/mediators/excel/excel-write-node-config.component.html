@@ -1,22 +1,70 @@
-<div [formGroup]="pdfNodeConfigFormGroup">
+<div [formGroup]="excelWriteNodeConfigFormGroup">
 
-    <mat-form-field fxFlex class="mat-block">
-        <mat-label>PDF</mat-label>
-        <mat-select formControlName="pdf">
-            <mat-option *ngFor="let pdf of allPdfs" [value]="pdf">
-                {{pdf.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
 
     <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <mat-form-field fxFlex class="mat-block">
-            <mat-label>Key</mat-label>
-            <mat-select formControlName="key">
-                <mat-option *ngFor="let key of configuration?.pdf?.keys" [value]="key">
-                    {{key}}
-                </mat-option>
+            <mat-label>Sheet Name</mat-label>
+            <input matInput formControlName="sheetName"/>
+        </mat-form-field>
+
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Excel Input Type</mat-label>
+            <mat-select formControlName="excelinputType">
+                <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+                <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+                <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+                <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+                <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
             </mat-select>
+        </mat-form-field>
+        <section class="mat-block" fxFlex>
+            <mat-form-field *ngIf="configuration.excelinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+                <mat-label>Rule Input</mat-label>
+                <mat-select formControlName="excelparam">
+                    <mat-option *ngFor="let property of allRuleInputs" [value]="property">
+                        {{property.inputName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="configuration.excelinputType === 'PROPERTY'" fxFlex class="mat-block">
+                <mat-label>Property</mat-label>
+                <mat-select formControlName="excelproperty">
+                    <mat-option *ngFor="let property of allModelProperties" [value]="property">
+                        {{property.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="configuration.excelinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+                <mat-label>Branch Param</mat-label>
+                <mat-select formControlName="excelbranch">
+                    <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+                        {{param.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="configuration.excelinputType === 'CONSTANT'" fxFlex class="mat-block">
+                <mat-label>Constant</mat-label>
+                <mat-select formControlName="excelconstant">
+                    <mat-option *ngFor="let constant of allConstants" [value]="constant">
+                        {{constant.constantName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="configuration.excelinputType === 'REFERENCE'" fxFlex class="mat-block">
+                <mat-label>Reference Property</mat-label>
+                <mat-select formControlName="excelreference">
+                    <mat-option *ngFor="let property of allReferenceProperties" [value]="property">
+                        {{property.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+    </section>
+
+    <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Column Name</mat-label>
+            <input matInput formControlName="colName"/>
         </mat-form-field>
 
         <mat-form-field fxFlex class="mat-block">
@@ -82,9 +130,9 @@
     <div fxFlex class="table-container" style="padding: 10px;margin-bottom:10px;">
         <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
 
-            <ng-container matColumnDef="key">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.key}} </td>
+            <ng-container matColumnDef="colName">
+                <th mat-header-cell *matHeaderCellDef> Column Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.colName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="inputType">

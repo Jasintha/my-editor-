@@ -547,6 +547,7 @@
                                         [inputEntities]=" inputEntities"
                                         [inputCustomobjects]="inputCustomobjects"
                                         [allRuleInputs]="allRuleInputs"
+                                        [allDomainModelsWithSub]="allDomainModelsWithSub"
                                         [allVariables]="allVariables"
                                         [inputProperties]="inputProperties"
                                         [apptype]="apptype"
@@ -557,5 +558,77 @@
                                         [nodeDefinition]="nodeDefinitionValue">
         </tb-pdf-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiexcelWriteNode'">
+        <tb-excelWrite-node-config #excelWriteNodeConfigComponent
+                            formControlName="configuration"
+                            [ruleNodeId]="ruleNodeId"
+                            [allConstants]=" allConstants"
+                            [inputEntities]=" inputEntities"
+                            [inputCustomobjects]="inputCustomobjects"
+                            [allRuleInputs]="allRuleInputs"
+                            [allDomainModelsWithSub]="allDomainModelsWithSub"
+                            [allVariables]="allVariables"
+                            [inputProperties]="inputProperties"
+                            [apptype]="apptype"
+                            [allModelProperties]="allModelProperties"
+                            [allReferenceProperties]="allReferenceProperties"
+                            [branchAvailability]="branchAvailability"
+                            [nodeDefinition]="nodeDefinitionValue">
+        </tb-excelWrite-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiexcelReadNode'">
+        <tb-excelRead-node-config #excelReadNodeConfigComponent
+                                   formControlName="configuration"
+                                   [ruleNodeId]="ruleNodeId"
+                                   [allConstants]=" allConstants"
+                                   [inputEntities]=" inputEntities"
+                                   [inputCustomobjects]="inputCustomobjects"
+                                   [allRuleInputs]="allRuleInputs"
+                                   [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                   [allVariables]="allVariables"
+                                   [inputProperties]="inputProperties"
+                                   [apptype]="apptype"
+                                   [allModelProperties]="allModelProperties"
+                                   [allReferenceProperties]="allReferenceProperties"
+                                   [branchAvailability]="branchAvailability"
+                                   [nodeDefinition]="nodeDefinitionValue">
+        </tb-excelRead-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiexcelCopyNode'">
+        <tb-excelCopy-node-config #excelCopyNodeConfigComponent
+                                  formControlName="configuration"
+                                  [ruleNodeId]="ruleNodeId"
+                                  [allConstants]=" allConstants"
+                                  [inputEntities]=" inputEntities"
+                                  [inputCustomobjects]="inputCustomobjects"
+                                  [allRuleInputs]="allRuleInputs"
+                                  [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                  [allVariables]="allVariables"
+                                  [inputProperties]="inputProperties"
+                                  [apptype]="apptype"
+                                  [allModelProperties]="allModelProperties"
+                                  [allReferenceProperties]="allReferenceProperties"
+                                  [branchAvailability]="branchAvailability"
+                                  [nodeDefinition]="nodeDefinitionValue">
+        </tb-excelCopy-node-config>
+    </ng-container>
 
+    <ng-container *ngIf="nodeClazz === 'xiexcelDeleteNode'">
+        <tb-excelDelete-node-config #excelDeleteNodeConfigComponent
+                                  formControlName="configuration"
+                                  [ruleNodeId]="ruleNodeId"
+                                  [allConstants]=" allConstants"
+                                  [inputEntities]=" inputEntities"
+                                  [inputCustomobjects]="inputCustomobjects"
+                                  [allRuleInputs]="allRuleInputs"
+                                  [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                  [allVariables]="allVariables"
+                                  [inputProperties]="inputProperties"
+                                  [apptype]="apptype"
+                                  [allModelProperties]="allModelProperties"
+                                  [allReferenceProperties]="allReferenceProperties"
+                                  [branchAvailability]="branchAvailability"
+                                  [nodeDefinition]="nodeDefinitionValue">
+        </tb-excelDelete-node-config>
+    </ng-container>
 </div>
