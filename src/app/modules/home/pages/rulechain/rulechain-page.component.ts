@@ -1966,7 +1966,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     const originalErrorState = this.errorStateMatcher.isErrorState(control, form);
     const customErrorState = !!(control && control.invalid && this.submitted);
     return originalErrorState || customErrorState;
-  }//
+  }
 
   helpLinkIdForRuleNodeType(): string {
     return getRuleNodeHelpLink(this.ruleNode.component);
