@@ -19,7 +19,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FixedWindow } from '@shared/models/time/time.models';
 
 @Component({
-  selector: 'tb-datetime-period',
+  selector: 'virtuan-datetime-period',
   templateUrl: './datetime-period.component.html',
   styleUrls: ['./datetime-period.component.scss'],
   providers: [

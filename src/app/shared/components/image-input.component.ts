@@ -26,7 +26,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UtilsService } from '@core/services/utils.service';
 
 @Component({
-  selector: 'tb-image-input',
+  selector: 'virtuan-image-input',
   templateUrl: './image-input.component.html',
   styleUrls: ['./image-input.component.scss'],
   providers: [

@@ -1524,10 +1524,10 @@
         "select-tenant": "Seleccionar propietario",
         "no-tenants-matching": "No hay propietarios que coincidan con '{{entity}}' .",
         "tenant-required": "Propietario requerido",
-        "isolated-tb-core": "Procesando en contenedor aislado",
-        "isolated-tb-rule-engine": "Procesando en contenedor Motor de Reglas aislado",
-        "isolated-tb-core-details": "Requiere microservicios separados por propietario aislado",
-        "isolated-tb-rule-engine-details": "Requiere microservicios separados por propietario aislado"
+        "isolated-virtuan-core": "Procesando en contenedor aislado",
+        "isolated-virtuan-rule-engine": "Procesando en contenedor Motor de Reglas aislado",
+        "isolated-virtuan-core-details": "Requiere microservicios separados por propietario aislado",
+        "isolated-virtuan-rule-engine-details": "Requiere microservicios separados por propietario aislado"
     },
     "timeinterval": {
         "seconds-interval": "{ seconds, plural, 1 {1 segundo} other {# segundos} }",

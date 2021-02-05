@@ -16,7 +16,7 @@
 
 import { Injectable } from '@angular/core';
 
-const APP_PREFIX = 'TB-';
+const APP_PREFIX = 'VIRTUAN-';
 
 // @dynamic
 @Injectable(

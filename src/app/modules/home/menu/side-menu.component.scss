@@ -20,14 +20,14 @@
 
 :host ::ng-deep {
 
-  .tb-side-menu,
-  .tb-side-menu ul {
+  .virtuan-side-menu,
+  .virtuan-side-menu ul {
     padding: 0;
     margin-top: 0;
     list-style: none;
   }
 
-  .tb-side-menu > li {
+  .virtuan-side-menu > li {
     border-bottom: 1px solid rgba(0, 0, 0, .12);
   }
 
@@ -44,7 +44,7 @@
     &:focus {
       border-bottom: none;
     }
-    &.tb-active {
+    &.virtuan-active {
       font-weight: 500;
       background-color: rgba(255, 255, 255, .15);
     }
@@ -61,7 +61,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        &.tb-toggle-icon {
+        &.virtuan-toggle-icon {
           padding-top: 12px;
           padding-bottom: 12px;
         }

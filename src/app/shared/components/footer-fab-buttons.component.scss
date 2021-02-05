@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 :host {
-  section.tb-footer-fab-buttons {
+  section.virtuan-footer-fab-buttons {
     &:not(.relative-buttons) {
       position: fixed;
       right: 20px;
@@ -38,16 +38,16 @@
       }
     }
 
-    .tb-btn-footer {
+    .virtuan-btn-footer {
       &.fab-toggler {
         margin-top: 0;
       }
       position: relative !important;
       display: inline-block !important;
-      animation: tbMoveFromBottomFade .3s ease both;
+      animation: virtuanMoveFromBottomFade .3s ease both;
 
-      &.tb-hide {
-        animation: tbMoveToBottomFade .3s ease both;
+      &.virtuan-hide {
+        animation: virtuanMoveToBottomFade .3s ease both;
       }
     }
   }

@@ -29,7 +29,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 
 @Component({
-  selector: 'tb-event-receiver-node-config',
+  selector: 'virtuan-event-receiver-node-config',
   templateUrl: './event-receiver-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

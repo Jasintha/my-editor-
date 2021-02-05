@@ -25,7 +25,7 @@ import { AuthService } from '@core/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'tb-user-menu',
+  selector: 'virtuan-user-menu',
   templateUrl: './user-menu.component.html',
   styleUrls: ['./user-menu.component.scss']
 })

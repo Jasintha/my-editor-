@@ -54,7 +54,7 @@ export interface NodeScriptTestDialogData {
 }
 
 @Component({
-  selector: 'tb-node-script-test-dialog',
+  selector: 'virtuan-node-script-test-dialog',
   templateUrl: './node-script-test-dialog.component.html',
   providers: [{provide: ErrorStateMatcher, useExisting: NodeScriptTestDialogComponent}],
   styleUrls: ['./node-script-test-dialog.component.scss'],

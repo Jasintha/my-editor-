@@ -47,12 +47,12 @@ class VirtuanDate extends React.Component<JsonFormFieldProps, VirtuanDateState> 
 
     render() {
 
-        let fieldClass = 'tb-date-field';
+        let fieldClass = 'virtuan-date-field';
         if (this.props.form.required) {
-            fieldClass += ' tb-required';
+            fieldClass += ' virtuan-required';
         }
         if (this.props.form.readonly) {
-            fieldClass += ' tb-readonly';
+            fieldClass += ' virtuan-readonly';
         }
 
         return (

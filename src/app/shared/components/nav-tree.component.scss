@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-.tb-nav-tree-container {
+.virtuan-nav-tree-container {
   padding: 15px;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 
   &.jstree-proton, &.jstree-proton-small, &.jstree-proton-large {
     .jstree-node,
     .jstree-icon {
-      background-image: url("../../../assets/jstree/tb32px.png");
+      background-image: url("../../../assets/jstree/virtuan32px.png");
     }
 
     .jstree-last {
@@ -45,11 +45,11 @@
     }
 
     .jstree-file {
-      background: url("../../../assets/jstree/tb32px.png") -101px -69px no-repeat;
+      background: url("../../../assets/jstree/virtuan32px.png") -101px -69px no-repeat;
     }
 
     .jstree-folder {
-      background: url("../../../assets/jstree/tb32px.png") -261px -5px no-repeat;
+      background: url("../../../assets/jstree/virtuan32px.png") -261px -5px no-repeat;
     }
   }
 
@@ -66,11 +66,11 @@
     }
 
     .jstree-file {
-      background: url("../../../assets/jstree/tb32px.png") -103px -71px no-repeat;
+      background: url("../../../assets/jstree/virtuan32px.png") -103px -71px no-repeat;
     }
 
     .jstree-folder {
-      background: url("../../../assets/jstree/tb32px.png") -263px -7px no-repeat;
+      background: url("../../../assets/jstree/virtuan32px.png") -263px -7px no-repeat;
     }
   }
 
@@ -87,11 +87,11 @@
     }
 
     .jstree-file {
-      background: url("../../../assets/jstree/tb32px.png") -96px -64px no-repeat;
+      background: url("../../../assets/jstree/virtuan32px.png") -96px -64px no-repeat;
     }
 
     .jstree-folder {
-      background: url("../../../assets/jstree/tb32px.png") -256px 0px no-repeat;
+      background: url("../../../assets/jstree/virtuan32px.png") -256px 0px no-repeat;
     }
   }
 
@@ -99,43 +99,43 @@
     border-bottom: none;
 
     i.jstree-themeicon-custom {
-      &.tb-user-group {
+      &.virtuan-user-group {
         &::before {
           content: "account_circle";
         }
       }
 
-      &.tb-customer-group {
+      &.virtuan-customer-group {
         &::before {
           content: "supervisor_account";
         }
       }
 
-      &.tb-asset-group {
+      &.virtuan-asset-group {
         &::before {
           content: "domain";
         }
       }
 
-      &.tb-device-group {
+      &.virtuan-device-group {
         &::before {
           content: "devices_other";
         }
       }
 
-      &.tb-entity-view-group {
+      &.virtuan-entity-view-group {
         &::before {
           content: "view_quilt";
         }
       }
 
-      &.tb-dashboard-group {
+      &.virtuan-dashboard-group {
         &::before {
           content: "dashboard";
         }
       }
 
-      &.tb-customer {
+      &.virtuan-customer {
         &::before {
           content: "supervisor_account";
         }
@@ -148,20 +148,20 @@
   &.jstree-proton, &.jstree-proton-small, &.jstree-proton-large {
     .jstree-ok,
     .jstree-er {
-      background-image: url("../../../assets/jstree/tb32px.png");
+      background-image: url("../../../assets/jstree/virtuan32px.png");
     }
   }
 }
 
 @media (max-width: 768px) {
-  .tb-nav-tree-container {
+  .virtuan-nav-tree-container {
     &.jstree-proton-responsive {
       .jstree-node,
       .jstree-icon,
       .jstree-node > .jstree-ocl,
       .jstree-themeicon,
       .jstree-checkbox {
-        background-image: url("../../../assets/jstree/tb40px.png");
+        background-image: url("../../../assets/jstree/virtuan40px.png");
         background-size: 120px 240px;
       }
 
@@ -248,11 +248,11 @@
       }
 
       .jstree-file {
-        background: url("../../../assets/jstree/tb40px.png") 0 -160px no-repeat;
+        background: url("../../../assets/jstree/virtuan40px.png") 0 -160px no-repeat;
         background-size: 120px 240px;
       }
       .jstree-folder {
-        background: url("../../../assets/jstree/tb40px.png") -40px -40px no-repeat;
+        background: url("../../../assets/jstree/virtuan40px.png") -40px -40px no-repeat;
         background-size: 120px 240px;
       }
 
@@ -335,7 +335,7 @@
     &.jstree-dnd-responsive {
       .jstree-ok,
       .jstree-er {
-        background-image: url("../../../assets/jstree/tb40px.png");
+        background-image: url("../../../assets/jstree/virtuan40px.png");
         background-size: 120px 240px;
       }
       .jstree-ok {
@@ -348,13 +348,13 @@
   }
 }
 
-.tb-nav-tree .mat-button.tb-active {
+.virtuan-nav-tree .mat-button.virtuan-active {
   font-weight: 500;
   background-color: rgba(255, 255, 255, .15);
 }
 
-.tb-nav-tree,
-.tb-nav-tree ul {
+.virtuan-nav-tree,
+.virtuan-nav-tree ul {
   margin-top: 0;
   list-style: none;
 

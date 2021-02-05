@@ -28,7 +28,7 @@ import { COMMA, ENTER, SEMICOLON } from '@angular/cdk/keycodes';
 import { map, mergeMap, share, startWith } from 'rxjs/operators';
 
 @Component({
-  selector: 'tb-link-labels',
+  selector: 'virtuan-link-labels',
   templateUrl: './link-labels.component.html',
   styleUrls: [],
   providers: [{

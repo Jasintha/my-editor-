@@ -17,8 +17,8 @@
 }
 
 :host ::ng-deep {
-  tb-entity-list {
-    &.tb-not-empty {
+  virtuan-entity-list {
+    &.virtuan-not-empty {
       .mat-form-field-flex {
         padding-top: 0;
       }

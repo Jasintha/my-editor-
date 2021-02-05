@@ -31,7 +31,7 @@ import { DataKeyType } from '@shared/models/telemetry/telemetry.models';
 import { isEqual } from '@core/utils';
 
 @Component({
-  selector: 'tb-entity-keys-list',
+  selector: 'virtuan-entity-keys-list',
   templateUrl: './entity-keys-list.component.html',
   styleUrls: ['./entity-keys-list.component.scss'],
   providers: [

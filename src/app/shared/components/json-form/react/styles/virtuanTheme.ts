@@ -39,7 +39,7 @@ const PRIMARY_COLOR = '#305680';
 const SECONDARY_COLOR = '#527dad';
 const HUE3_COLOR = '#a7c1de';
 
-const tbIndigo = mergeDeep<any>({}, indigo, {
+const virtuanIndigo = mergeDeep<any>({}, indigo, {
   500: PRIMARY_COLOR,
   600: SECONDARY_COLOR,
   700: PRIMARY_COLOR,
@@ -47,7 +47,7 @@ const tbIndigo = mergeDeep<any>({}, indigo, {
 });
 
 const virtuanPalette: PaletteOptions = {
-  primary: tbIndigo,
+  primary: virtuanIndigo,
   secondary: deeepOrange,
   background: {
     default: '#eee'

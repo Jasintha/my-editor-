@@ -28,7 +28,7 @@ export interface ColorPickerDialogData {
 }
 
 @Component({
-  selector: 'tb-color-picker-dialog',
+  selector: 'virtuan-color-picker-dialog',
   templateUrl: './color-picker-dialog.component.html',
   providers: [{provide: ErrorStateMatcher, useExisting: ColorPickerDialogComponent}],
   styleUrls: []

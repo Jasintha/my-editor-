@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-query-store-node-config',
+  selector: 'virtuan-query-store-node-config',
   templateUrl: './query-store-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

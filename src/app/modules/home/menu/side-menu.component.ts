@@ -18,7 +18,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from '@core/services/menu.service';
 
 @Component({
-  selector: 'tb-side-menu',
+  selector: 'virtuan-side-menu',
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss']
 })

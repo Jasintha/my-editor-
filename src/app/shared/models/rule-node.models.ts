@@ -222,7 +222,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.FILTER,
         name: 'rulenode.type-filter',
         details: 'rulenode.type-filter-details',
-        nodeClass: 'tb-filter-type',
+        nodeClass: 'virtuan-filter-type',
         icon: 'filter_list'
       }
     ],
@@ -232,7 +232,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.ENRICHMENT,
         name: 'rulenode.type-enrichment',
         details: 'rulenode.type-enrichment-details',
-        nodeClass: 'tb-enrichment-type',
+        nodeClass: 'virtuan-enrichment-type',
         icon: 'playlist_add'
       }
     ],
@@ -242,7 +242,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.TRANSFORMATION,
         name: 'rulenode.type-transformation',
         details: 'rulenode.type-transformation-details',
-        nodeClass: 'tb-transformation-type',
+        nodeClass: 'virtuan-transformation-type',
         icon: 'transform'
       }
     ],
@@ -252,7 +252,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.ACTION,
         name: 'rulenode.type-action',
         details: 'rulenode.type-action-details',
-        nodeClass: 'tb-action-type',
+        nodeClass: 'virtuan-action-type',
         icon: 'flash_on'
       }
     ],
@@ -262,7 +262,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.DATABASE_OPERATIONS,
         name: 'rulenode.type-database_operations',
         details: 'rulenode.type-database_operations-details',
-        nodeClass: 'tb-database_operations-type',
+        nodeClass: 'virtuan-database_operations-type',
         icon: 'cloud_upload'
       }
     ],
@@ -272,7 +272,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.MESSAGING,
         name: 'rulenode.type-messaging',
         details: 'rulenode.type-messaging-details',
-        nodeClass: 'tb-messaging-type',
+        nodeClass: 'virtuan-messaging-type',
         icon: 'comment'
       }
     ],
@@ -282,7 +282,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.CQRS,
         name: 'rulenode.type-cqrs',
         details: 'rulenode.type-cqrs-details',
-        nodeClass: 'tb-cqrs-type',
+        nodeClass: 'virtuan-cqrs-type',
         icon: 'cloud_upload'
       }
     ],
@@ -292,7 +292,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.CONNECTOR,
         name: 'rulenode.type-connector',
         details: 'rulenode.type-connector-details',
-        nodeClass: 'tb-connector-type',
+        nodeClass: 'virtuan-connector-type',
         icon: 'cloud_upload'
       }
     ],
@@ -302,7 +302,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.CORE,
         name: 'rulenode.type-core',
         details: 'rulenode.type-core-details',
-        nodeClass: 'tb-core-type',
+        nodeClass: 'virtuan-core-type',
         icon: 'extension'
       }
     ],
@@ -312,7 +312,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.ROOTING,
         name: 'rulenode.type-rooting',
         details: 'rulenode.type-rooting-details',
-        nodeClass: 'tb-rooting-type',
+        nodeClass: 'virtuan-rooting-type',
         icon: 'input'
       }
     ],
@@ -322,7 +322,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.EXTERNAL,
         name: 'rulenode.type-external',
         details: 'rulenode.type-external-details',
-        nodeClass: 'tb-external-type',
+        nodeClass: 'virtuan-external-type',
         icon: 'cloud_upload'
       }
     ],
@@ -332,7 +332,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.RULE_CHAIN,
         name: 'rulenode.type-rule-chain',
         details: 'rulenode.type-rule-chain-details',
-        nodeClass: 'tb-rule-chain-type',
+        nodeClass: 'virtuan-rule-chain-type',
         icon: 'settings_ethernet'
       }
     ],
@@ -342,7 +342,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.INPUT,
         name: 'rulenode.type-input',
         details: 'rulenode.type-input-details',
-        nodeClass: 'tb-input-type',
+        nodeClass: 'virtuan-input-type',
         icon: 'input',
         special: true
       }
@@ -353,7 +353,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.UNKNOWN,
         name: 'rulenode.type-unknown',
         details: 'rulenode.type-unknown-details',
-        nodeClass: 'tb-unknown-type',
+        nodeClass: 'virtuan-unknown-type',
         icon: 'help_outline'
       }
     ]
@@ -440,7 +440,7 @@ export const messageTypeNames = new Map<MessageType, string>(
 );
 
 const ruleNodeClazzHelpLinkMap = {
-  'tb.internal.RuleChain': 'ruleNodeRuleChain'
+  'virtuan.internal.RuleChain': 'ruleNodeRuleChain'
 };
 
 export function getRuleNodeHelpLink(component: RuleNodeComponentDescriptor): string {

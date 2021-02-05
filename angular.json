@@ -7,7 +7,7 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "tb",
+      "prefix": "virtuan",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"

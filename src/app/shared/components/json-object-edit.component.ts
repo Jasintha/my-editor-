@@ -26,7 +26,7 @@ import { guid } from '@core/utils';
 import { ResizeObserver } from '@juggle/resize-observer';
 
 @Component({
-  selector: 'tb-json-object-edit',
+  selector: 'virtuan-json-object-edit',
   templateUrl: './json-object-edit.component.html',
   styleUrls: ['./json-object-edit.component.scss'],
   providers: [

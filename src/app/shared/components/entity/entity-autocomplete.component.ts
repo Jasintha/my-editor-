@@ -28,7 +28,7 @@ import { EntityService } from '@core/http/entity.service';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
-  selector: 'tb-entity-autocomplete',
+  selector: 'virtuan-entity-autocomplete',
   templateUrl: './entity-autocomplete.component.html',
   styleUrls: ['./entity-autocomplete.component.scss'],
   providers: [{

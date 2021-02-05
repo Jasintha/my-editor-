@@ -29,7 +29,7 @@
     <mat-icon class="material-icons">close</mat-icon>
   </button>
   <mat-autocomplete
-    class="tb-autocomplete"
+    class="virtuan-autocomplete"
     #relationTypeAutocomplete="matAutocomplete"
     [displayWith]="displayRelationTypeFn">
     <mat-option *ngFor="let relationType of filteredRelationTypes | async" [value]="relationType">

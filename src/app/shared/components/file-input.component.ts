@@ -36,7 +36,7 @@ import { FlowDirective } from '@flowjs/ngx-flow';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tb-file-input',
+  selector: 'virtuan-file-input',
   templateUrl: './file-input.component.html',
   styleUrls: ['./file-input.component.scss'],
   providers: [

@@ -22,6 +22,6 @@ export class AppPage {
   }
 
   getTitleText() {
-    return element(by.css('tb-root h1')).getText() as Promise<string>;
+    return element(by.css('virtuan-root h1')).getText() as Promise<string>;
   }
 }

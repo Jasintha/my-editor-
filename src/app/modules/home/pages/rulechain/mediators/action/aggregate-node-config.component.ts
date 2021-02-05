@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-    selector: 'tb-aggregate-node-config',
+    selector: 'virtuan-aggregate-node-config',
     templateUrl: './aggregate-node-config.component.html',
     providers: [{
         provide: NG_VALUE_ACCESSOR,

@@ -29,7 +29,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 
 @Component({
-  selector: 'tb-payload-node-config',
+  selector: 'virtuan-payload-node-config',
   templateUrl: './payload-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

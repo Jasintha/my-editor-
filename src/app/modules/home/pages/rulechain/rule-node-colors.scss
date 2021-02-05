@@ -14,55 +14,55 @@
  * limitations under the License.
  */
 @mixin rule-node-colors {
-  &.tb-filter-type {
+  &.virtuan-filter-type {
     background-color: #4cbaed;
   }
 
-  &.tb-enrichment-type {
+  &.virtuan-enrichment-type {
     background-color: #cdf14e;
   }
 
-  &.tb-transformation-type {
+  &.virtuan-transformation-type {
     background-color: #79cef1;
   }
 
-  &.tb-action-type {
+  &.virtuan-action-type {
     background-color: #d65151;
   }
 
-  &.tb-external-type {
+  &.virtuan-external-type {
     background-color: #fbc766;
   }
 
-  &.tb-rule-chain-type {
+  &.virtuan-rule-chain-type {
     background-color: #d6c4f1;
   }
 
-  &.tb-unknown-type {
+  &.virtuan-unknown-type {
     background-color: #f16c29;
   }
 
-  &.tb-cqrs-type {
+  &.virtuan-cqrs-type {
     background-color: #f16c29;
   }
 
-  &.tb-messaging-type {
+  &.virtuan-messaging-type {
     background-color: #cdf14e;
   }
 
-  &.tb-core-type {
+  &.virtuan-core-type {
     background-color: #3ca55c;
   }
 
-  &.tb-database_operations-type {
+  &.virtuan-database_operations-type {
     background-color: #f1e861;
   }
 
-  &.tb-connector-type {
+  &.virtuan-connector-type {
     background-color: #fbc766;
   }
 
-  &.tb-rooting-type {
+  &.virtuan-rooting-type {
     background-color: #337a57;
   }
 

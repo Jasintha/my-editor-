@@ -118,12 +118,12 @@ class VirtuanIcon extends React.Component<JsonFormFieldProps, VirtuanIconState> 
             },
         });
 
-        let fieldClass = 'tb-field';
+        let fieldClass = 'virtuan-field';
         if (this.props.form.required) {
-            fieldClass += ' tb-required';
+            fieldClass += ' virtuan-required';
         }
         if (this.state.focused) {
-            fieldClass += ' tb-focused';
+            fieldClass += ' virtuan-focused';
         }
 
         let pickedIcon = 'more_horiz';

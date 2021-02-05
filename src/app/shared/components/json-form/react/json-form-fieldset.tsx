@@ -30,7 +30,7 @@ class VirtuanFieldSet extends React.Component<JsonFormFieldProps, JsonFormFieldS
 
         return (
             <div style={{paddingTop: '20px'}}>
-                <div className='tb-head-label'>
+                <div className='virtuan-head-label'>
                     {this.props.form.title}
                 </div>
                 <div>

@@ -25,7 +25,7 @@ import {
 } from '@shared/components/dialog/json-object-edit-dialog.component';
 
 @Component({
-  selector: 'tb-value-input',
+  selector: 'virtuan-value-input',
   templateUrl: './value-input.component.html',
   styleUrls: ['./value-input.component.scss'],
   providers: [
@@ -71,7 +71,7 @@ export class ValueInputComponent implements OnInit, ControlValueAccessor {
     }
     this.dialog.open<JsonObjectEditDialogComponent, JsonObjectEditDialogData, object>(JsonObjectEditDialogComponent, {
       disableClose: true,
-      panelClass: ['tb-dialog', 'tb-fullscreen-dialog'],
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
       data: {
         jsonValue: this.modelValue
       }

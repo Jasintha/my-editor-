@@ -163,8 +163,8 @@ class VirtuanArray extends React.Component<JsonFormFieldProps, VirtuanArrayState
 
         return (
             <div>
-                <div className='tb-container'>
-                    <div className='tb-head-label'>{this.props.form.title}</div>
+                <div className='virtuan-container'>
+                    <div className='virtuan-head-label'>{this.props.form.title}</div>
                         <ol className='list-group'>
                             {arrays}
                         </ol>

@@ -26,7 +26,7 @@ import { QueueService } from '@core/http/queue.service';
 import { ServiceType } from '@shared/models/queue.models';
 
 @Component({
-  selector: 'tb-queue-type-list',
+  selector: 'virtuan-queue-type-list',
   templateUrl: './queue-type-list.component.html',
   styleUrls: [],
   providers: [{

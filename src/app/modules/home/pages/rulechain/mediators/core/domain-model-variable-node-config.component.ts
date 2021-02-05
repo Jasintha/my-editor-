@@ -49,7 +49,7 @@ interface ExampleFlatNode {
 
 
 @Component({
-  selector: 'tb-domain-model-variable-node-config',
+  selector: 'virtuan-domain-model-variable-node-config',
   templateUrl: './domain-model-variable-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

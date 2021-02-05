@@ -43,15 +43,15 @@ class VirtuanText extends React.Component<JsonFormFieldProps, VirtuanTextState> 
 
   render() {
 
-    let fieldClass = 'tb-field';
+    let fieldClass = 'virtuan-field';
     if (this.props.form.required) {
-      fieldClass += ' tb-required';
+      fieldClass += ' virtuan-required';
     }
     if (this.props.form.readonly) {
-      fieldClass += ' tb-readonly';
+      fieldClass += ' virtuan-readonly';
     }
     if (this.state.focused) {
-      fieldClass += ' tb-focused';
+      fieldClass += ' virtuan-focused';
     }
 
     const multiline = this.props.form.type === 'textarea';

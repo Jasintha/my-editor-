@@ -1558,10 +1558,10 @@
         "tenant-required": "Tenant je povinný",
         "search": "Vyhledat tenanty",
         "selected-tenants": "Vybráno { count, plural, 1 {1 tenantů} other {# tenantů} }",
-        "isolated-tb-core": "Zpracování v izolovaném kontejneru Virtuan Core",
-        "isolated-tb-rule-engine": "Zpracování v izolovaném kontejneru Virtuan Rule Engine",
-        "isolated-tb-core-details": "Vyžaduje samostatnou mikroslužbu(y) pro každého izolovaného tenanta",
-        "isolated-tb-rule-engine-details": "Vyžaduje samostatnou mikroslužbu(y) pro každého izolovaného tenanta"
+        "isolated-virtuan-core": "Zpracování v izolovaném kontejneru Virtuan Core",
+        "isolated-virtuan-rule-engine": "Zpracování v izolovaném kontejneru Virtuan Rule Engine",
+        "isolated-virtuan-core-details": "Vyžaduje samostatnou mikroslužbu(y) pro každého izolovaného tenanta",
+        "isolated-virtuan-rule-engine-details": "Vyžaduje samostatnou mikroslužbu(y) pro každého izolovaného tenanta"
     },
     "timeinterval": {
         "seconds-interval": "{ seconds, plural, 1 {1 vteřina} other {# vteřin} }",

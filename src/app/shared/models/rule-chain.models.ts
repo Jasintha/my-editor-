@@ -108,7 +108,7 @@ export const ruleNodeTypeComponentTypes: ComponentType[] =
 export const ruleChainNodeComponent: RuleNodeComponentDescriptor = {
   type: RuleNodeType.RULE_CHAIN,
   name: 'rule chain',
-  clazz: 'tb.internal.RuleChain',
+  clazz: 'virtuan.internal.RuleChain',
   configurationDescriptor: {
     nodeDefinition: {
       description: '',
@@ -125,7 +125,7 @@ export const ruleChainNodeComponent: RuleNodeComponentDescriptor = {
 export const unknownNodeComponent: RuleNodeComponentDescriptor = {
   type: RuleNodeType.UNKNOWN,
   name: 'unknown',
-  clazz: 'tb.internal.Unknown',
+  clazz: 'virtuan.internal.Unknown',
   configurationDescriptor: {
     nodeDefinition: {
       description: '',
@@ -142,5 +142,5 @@ export const unknownNodeComponent: RuleNodeComponentDescriptor = {
 export const inputNodeComponent: RuleNodeComponentDescriptor = {
   type: RuleNodeType.INPUT,
   name: 'Rooting',
-  clazz: 'tb.internal.Input'
+  clazz: 'virtuan.internal.Input'
 };

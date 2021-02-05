@@ -39,7 +39,7 @@ import { JsonObjectEditComponent } from '@shared/components/json-object-edit.com
 import { deepClone } from '@core/utils';
 
 @Component({
-  selector: 'tb-mediator-node-config',
+  selector: 'virtuan-mediator-node-config',
   templateUrl: './mediator-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

@@ -29,7 +29,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 
 @Component({
-  selector: 'tb-iterator-node-config',
+  selector: 'virtuan-iterator-node-config',
   templateUrl: './iterator-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

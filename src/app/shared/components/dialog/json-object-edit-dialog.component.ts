@@ -29,7 +29,7 @@ export interface JsonObjectEditDialogData {
 }
 
 @Component({
-  selector: 'tb-object-edit-dialog',
+  selector: 'virtuan-object-edit-dialog',
   templateUrl: './json-object-edit-dialog.component.html',
   styleUrls: []
 })

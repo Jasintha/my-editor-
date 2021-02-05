@@ -82,7 +82,7 @@ export class NodeScriptTestService {
     return this.dialog.open<NodeScriptTestDialogComponent, NodeScriptTestDialogData, string>(NodeScriptTestDialogComponent,
       {
         disableClose: true,
-        panelClass: ['tb-dialog', 'tb-fullscreen-dialog', 'tb-fullscreen-dialog-gt-sm'],
+        panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog', 'virtuan-fullscreen-dialog-gt-sm'],
         data: {
           msg,
           metadata,

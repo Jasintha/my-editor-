@@ -20,7 +20,7 @@ import { TimeInterval, TimeService } from '@core/services/time.service';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
-  selector: 'tb-timeinterval',
+  selector: 'virtuan-timeinterval',
   templateUrl: './timeinterval.component.html',
   styleUrls: ['./timeinterval.component.scss'],
   providers: [

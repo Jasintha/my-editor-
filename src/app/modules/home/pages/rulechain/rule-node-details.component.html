@@ -32,7 +32,7 @@
           </mat-checkbox>-->
         </section>
         <ng-container *ngIf="isNodeEdit">
-        <tb-rule-node-config #ruleNodeConfigComponent
+        <virtuan-rule-node-config #ruleNodeConfigComponent
                              formControlName="configuration"
                              [ruleNodeId]="ruleNode.ruleNodeId?.id"
                              [ruleType]="ruleNode.component?.type"
@@ -65,7 +65,7 @@
                              [branchAvailability]="branchAvailability"
                               [connectorfields]="connectorfields"
                              [allPdfs]="allPdfs">
-        </tb-rule-node-config>
+        </virtuan-rule-node-config>
         </ng-container>
         <div formGroupName="additionalInfo" fxLayout="column">
           <mat-form-field class="mat-block">
@@ -75,11 +75,11 @@
         </div>
       </section>
       <section *ngIf="ruleNode.component.type === ruleNodeType.RULE_CHAIN">
-        <tb-entity-autocomplete required
+        <virtuan-entity-autocomplete required
                                 [excludeEntityIds]="[ruleChainId]"
                                 [entityType]="entityType.RULE_CHAIN"
                                 formControlName="targetRuleChainId">
-        </tb-entity-autocomplete>
+        </virtuan-entity-autocomplete>
         <div formGroupName="additionalInfo" fxLayout="column">
           <mat-form-field class="mat-block">
             <mat-label translate>rulenode.description</mat-label>

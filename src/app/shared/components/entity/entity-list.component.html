@@ -37,7 +37,7 @@
            [matChipInputFor]="chipList">
   </mat-chip-list>
   <mat-autocomplete #entityAutocomplete="matAutocomplete"
-                    class="tb-autocomplete"
+                    class="virtuan-autocomplete"
                     [displayWith]="displayEntityFn">
     <mat-option *ngFor="let entity of filteredEntities | async" [value]="entity">
       <span [innerHTML]="entity.name | highlight:searchText"></span>

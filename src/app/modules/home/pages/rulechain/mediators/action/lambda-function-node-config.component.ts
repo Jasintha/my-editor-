@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-lambda-function-node-config',
+  selector: 'virtuan-lambda-function-node-config',
   templateUrl: './lambda-function-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

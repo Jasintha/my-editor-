@@ -32,7 +32,7 @@ import {
   TranslateParser
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TbMissingTranslationHandler } from './translate/missing-translate-handler';
+import { VirtuanMissingTranslationHandler } from './translate/missing-translate-handler';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -64,7 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
       missingTranslationHandler: {
         provide: MissingTranslationHandler,
-        useClass: TbMissingTranslationHandler
+        useClass: VirtuanMissingTranslationHandler
       },
       compiler: {
         provide: TranslateCompiler,

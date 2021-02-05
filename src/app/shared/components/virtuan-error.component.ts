@@ -18,7 +18,7 @@ import { Component, Input } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'tb-error',
+  selector: 'virtuan-error',
   template: `
   <div [@animation]="state" style="margin-top:0.5rem;font-size:.75rem">
       <mat-error >
@@ -46,7 +46,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ]),
   ]
 })
-export class TbErrorComponent {
+export class VirtuanErrorComponent {
   errorValue: any;
   state: any;
   message;

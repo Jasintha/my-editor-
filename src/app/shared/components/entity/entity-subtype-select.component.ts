@@ -28,7 +28,7 @@ import { AssetService } from '@core/http/asset.service';
 import { EntityViewService } from '@core/http/entity-view.service';
 
 @Component({
-  selector: 'tb-entity-subtype-select',
+  selector: 'virtuan-entity-subtype-select',
   templateUrl: './entity-subtype-select.component.html',
   styleUrls: ['./entity-subtype-select.component.scss'],
   providers: [{

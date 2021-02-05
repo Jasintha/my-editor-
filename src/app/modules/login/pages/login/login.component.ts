@@ -26,7 +26,7 @@ import { Router } from '@angular/router';
 import { OAuth2Client } from '@shared/models/login.models';
 
 @Component({
-  selector: 'tb-login',
+  selector: 'virtuan-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

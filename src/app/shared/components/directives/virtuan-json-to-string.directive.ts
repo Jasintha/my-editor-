@@ -28,24 +28,24 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 
 @Directive({
-  selector: '[tb-json-to-string]',
+  selector: '[virtuan-json-to-string]',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => TbJsonToStringDirective),
+    useExisting: forwardRef(() => VirtuanJsonToStringDirective),
     multi: true
   },
   {
     provide: NG_VALIDATORS,
-    useExisting: forwardRef(() => TbJsonToStringDirective),
+    useExisting: forwardRef(() => VirtuanJsonToStringDirective),
     multi: true,
   },
   {
     provide: ErrorStateMatcher,
-    useExisting: TbJsonToStringDirective
+    useExisting: VirtuanJsonToStringDirective
   }]
 })
 
-export class TbJsonToStringDirective implements ControlValueAccessor, Validator, ErrorStateMatcher {
+export class VirtuanJsonToStringDirective implements ControlValueAccessor, Validator, ErrorStateMatcher {
   private propagateChange = null;
   private parseError: boolean;
   private data: any;

@@ -16,9 +16,9 @@
 
 import * as ace from 'ace-builds';
 
-export type tbMetaType = 'object' | 'function' | 'service' | 'property' | 'argument';
+export type virtuanMetaType = 'object' | 'function' | 'service' | 'property' | 'argument';
 
-export type TbEditorCompletions = {[name: string]: TbEditorCompletion};
+export type VirtuanEditorCompletions = {[name: string]: VirtuanEditorCompletion};
 
 export interface FunctionArgType {
   type?: string;
@@ -32,17 +32,17 @@ export interface FunctionArg extends FunctionArgType {
   optional?: boolean;
 }
 
-export interface TbEditorCompletion {
-  meta: tbMetaType;
+export interface VirtuanEditorCompletion {
+  meta: virtuanMetaType;
   description?: string;
   type?: string;
   args?: FunctionArg[];
   return?: FunctionArgType;
-  children?: TbEditorCompletions;
+  children?: VirtuanEditorCompletions;
 }
 
-interface TbEditorAceCompletion extends ace.Ace.Completion {
-  isTbEditorAceCompletion: true;
+interface VirtuanEditorAceCompletion extends ace.Ace.Completion {
+  isVirtuanEditorAceCompletion: true;
   snippet: string;
   description?: string;
   type?: string;
@@ -50,13 +50,13 @@ interface TbEditorAceCompletion extends ace.Ace.Completion {
   return?: FunctionArgType;
 }
 
-export class TbEditorCompleter implements ace.Ace.Completer {
+export class VirtuanEditorCompleter implements ace.Ace.Completer {
 
   identifierRegexps: RegExp[] = [
     /[a-zA-Z_0-9\$\-\u00A2-\u2000\u2070-\uFFFF.]/
   ];
 
-  constructor(private editorCompletions: TbEditorCompletions) {
+  constructor(private editorCompletions: VirtuanEditorCompletions) {
   }
 
   getCompletions(editor: ace.Ace.Editor, session: ace.Ace.EditSession,
@@ -100,7 +100,7 @@ export class TbEditorCompleter implements ace.Ace.Completer {
     }
   }
 
-  private toAceCompletionsList(completions: TbEditorCompletions, parentPath: string[]): ace.Ace.Completion[]  {
+  private toAceCompletionsList(completions: VirtuanEditorCompletions, parentPath: string[]): ace.Ace.Completion[]  {
     const result: ace.Ace.Completion[] = [];
     let targetCompletions = completions;
     let parentPrefix = '';
@@ -116,9 +116,9 @@ export class TbEditorCompleter implements ace.Ace.Completer {
     return result;
   }
 
-  private toAceCompletion(name: string, completion: TbEditorCompletion, parentPrefix: string): ace.Ace.Completion {
-    const aceCompletion: TbEditorAceCompletion = {
-      isTbEditorAceCompletion: true,
+  private toAceCompletion(name: string, completion: VirtuanEditorCompletion, parentPrefix: string): ace.Ace.Completion {
+    const aceCompletion: VirtuanEditorAceCompletion = {
+      isVirtuanEditorAceCompletion: true,
       snippet: parentPrefix + name,
       name,
       caption: parentPrefix + name,
@@ -133,15 +133,15 @@ export class TbEditorCompleter implements ace.Ace.Completer {
     return aceCompletion;
   }
 
-  getDocTooltip(completion: TbEditorAceCompletion) {
-    if (completion && completion.isTbEditorAceCompletion) {
+  getDocTooltip(completion: VirtuanEditorAceCompletion) {
+    if (completion && completion.isVirtuanEditorAceCompletion) {
       return {
         docHTML: this.createDocHTML(completion)
       };
     }
   }
 
-  private createDocHTML(completion: TbEditorAceCompletion): string {
+  private createDocHTML(completion: VirtuanEditorAceCompletion): string {
     let title = `<b>${completion.name}</b>`;
     if (completion.meta === 'function') {
       title += '(';
@@ -168,15 +168,15 @@ export class TbEditorCompleter implements ace.Ace.Completer {
     } else {
       title += `: ${completion.type ? completion.type : completion.meta}`;
     }
-    let html = `<div class="tb-ace-doc-tooltip"><code class="title">${title}</code>`;
+    let html = `<div class="virtuan-ace-doc-tooltip"><code class="title">${title}</code>`;
     if (completion.description) {
       html += `<hr><div>${completion.description}</div>`;
     }
     if (completion.args || completion.return) {
-      let functionInfoBlock = '<div class="tb-function-info">';
+      let functionInfoBlock = '<div class="virtuan-function-info">';
       if (completion.args) {
-        functionInfoBlock += '<div class="tb-api-title">Parameters</div>'
-        let argsTable = '<table class="tb-api-table"><tbody>';
+        functionInfoBlock += '<div class="virtuan-api-title">Parameters</div>'
+        let argsTable = '<table class="virtuan-api-table"><tbody>';
         const strArgs: string[] = [];
         for (const arg of completion.args) {
           let strArg = `<tr><td class="arg-name"><code>${arg.name}`;
@@ -198,8 +198,8 @@ export class TbEditorCompleter implements ace.Ace.Completer {
         functionInfoBlock += argsTable;
       }
       if (completion.return) {
-        let returnStr = '<div class="tb-api-title">Returns</div>';
-        returnStr += `<div class="tb-function-return"><code>${completion.return.type}</code>`;
+        let returnStr = '<div class="virtuan-api-title">Returns</div>';
+        returnStr += `<div class="virtuan-function-return"><code>${completion.return.type}</code>`;
         if (completion.return.description) {
           returnStr += `: ${completion.return.description}`;
         }

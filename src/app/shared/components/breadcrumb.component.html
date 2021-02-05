@@ -15,7 +15,7 @@
     limitations under the License.
 
 -->
-<div fxFlex class="tb-breadcrumb" fxLayout="row">
+<div fxFlex class="virtuan-breadcrumb" fxLayout="row">
   <h1 fxFlex fxHide.gt-sm *ngIf="lastBreadcrumb$ | async; let breadcrumb">
     {{ breadcrumb.ignoreTranslate ? (breadcrumb.labelFunction ? breadcrumb.labelFunction() : breadcrumb.label) : (breadcrumb.label | translate) }}
   </h1>

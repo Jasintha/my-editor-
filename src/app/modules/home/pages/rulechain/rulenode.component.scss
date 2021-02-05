@@ -48,7 +48,7 @@
     }
   }
 
-  .tb-rule-node {
+  .virtuan-rule-node {
     box-sizing: content-box;
     display: flex;
     flex-direction: row;
@@ -68,20 +68,20 @@
 
     @include rule-node-colors();
 
-    &.tb-rule-node-highlighted:not(.tb-rule-node-invalid) {
+    &.virtuan-rule-node-highlighted:not(.virtuan-rule-node-invalid) {
       box-shadow: 0 0 10px 6px #51cbee;
 
-      .tb-node-title {
+      .virtuan-node-title {
         font-weight: 700;
         text-decoration: underline;
       }
     }
 
-    &.tb-rule-node-invalid {
+    &.virtuan-rule-node-invalid {
       box-shadow: 0 0 10px 6px #ff5c50;
     }
 
-    &.tb-input-type {
+    &.virtuan-input-type {
       user-select: none;
       background-color: #a3eaa9;
     }
@@ -96,12 +96,12 @@
       font-size: 20px;
     }
 
-    .tb-node-title {
+    .virtuan-node-title {
       font-weight: 500;
     }
 
-    .tb-node-type,
-    .tb-node-title {
+    .virtuan-node-type,
+    .virtuan-node-title {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

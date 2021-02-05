@@ -17,7 +17,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'tb-logo',
+  selector: 'virtuan-logo',
   templateUrl: './logo.component.html',
   styleUrls: ['./logo.component.scss']
 })

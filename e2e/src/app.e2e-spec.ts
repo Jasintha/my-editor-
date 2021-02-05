@@ -26,7 +26,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to tb-license-server!');
+    expect(page.getTitleText()).toEqual('Welcome to virtuan-license-server!');
   });
 
   afterEach(async () => {

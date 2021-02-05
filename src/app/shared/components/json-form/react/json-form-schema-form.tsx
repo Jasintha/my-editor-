@@ -189,9 +189,9 @@ class VirtuanSchemaGroup extends React.Component<VirtuanSchemaGroupProps, Virtua
   }
 
   render() {
-    const theCla = 'pull-right fa fa-chevron-down tb-toggle-icon' + (this.state.showGroup ? '' : ' tb-toggled');
+    const theCla = 'pull-right fa fa-chevron-down virtuan-toggle-icon' + (this.state.showGroup ? '' : ' virtuan-toggled');
     return (<section className='mat-elevation-z1' style={{marginTop: '10px'}}>
-      <div className='SchemaGroupname tb-button-toggle'
+      <div className='SchemaGroupname virtuan-button-toggle'
            onClick={this.toogleGroup.bind(this)}>{this.props.info.GroupTitle}<span className={theCla}></span></div>
       <div style={{padding: '20px'}} className={this.state.showGroup ? '' : 'invisible'}>{this.props.forms}</div>
     </section>);

@@ -34,7 +34,7 @@ export interface FooterFabButtons {
 }
 
 @Component({
-  selector: 'tb-footer-fab-buttons',
+  selector: 'virtuan-footer-fab-buttons',
   templateUrl: './footer-fab-buttons.component.html',
   styleUrls: ['./footer-fab-buttons.component.scss'],
   animations: speedDialFabAnimations

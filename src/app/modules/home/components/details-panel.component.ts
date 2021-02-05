@@ -21,7 +21,7 @@ import { AppState } from '@core/core.state';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'tb-details-panel',
+  selector: 'virtuan-details-panel',
   templateUrl: './details-panel.component.html',
   styleUrls: ['./details-panel.component.scss']
 })

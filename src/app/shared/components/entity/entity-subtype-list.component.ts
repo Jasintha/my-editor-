@@ -32,7 +32,7 @@ import { BroadcastService } from '@core/services/broadcast.service';
 import { COMMA, ENTER, SEMICOLON } from '@angular/cdk/keycodes';
 
 @Component({
-  selector: 'tb-entity-subtype-list',
+  selector: 'virtuan-entity-subtype-list',
   templateUrl: './entity-subtype-list.component.html',
   styleUrls: ['./entity-subtype-list.component.scss'],
   providers: [

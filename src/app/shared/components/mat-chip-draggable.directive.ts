@@ -24,7 +24,7 @@ export interface MatChipDropEvent {
 }
 
 @Directive({
-  selector: 'mat-chip-list[tb-chip-draggable]',
+  selector: 'mat-chip-list[virtuan-chip-draggable]',
 })
 export class MatChipDraggableDirective implements AfterViewInit {
 
@@ -106,7 +106,7 @@ class DraggableChip {
               private chipDrop: EventEmitter<MatChipDropEvent>) {
     this.chipElement = chip._elementRef.nativeElement;
     this.chipElement.setAttribute('draggable', 'true');
-    this.handle = this.chipElement.getElementsByClassName('tb-chip-drag-handle')[0] as HTMLElement;
+    this.handle = this.chipElement.getElementsByClassName('virtuan-chip-drag-handle')[0] as HTMLElement;
     this.chipElement.addEventListener('mousedown', this.onMouseDown.bind(this));
     this.chipElement.addEventListener('dragstart', this.onDragStart.bind(this));
     this.chipElement.addEventListener('dragend', this.onDragEnd.bind(this));

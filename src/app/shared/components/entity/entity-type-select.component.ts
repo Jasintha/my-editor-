@@ -24,7 +24,7 @@ import { EntityService } from '@core/http/entity.service';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
-  selector: 'tb-entity-type-select',
+  selector: 'virtuan-entity-type-select',
   templateUrl: './entity-type-select.component.html',
   styleUrls: ['./entity-type-select.component.scss'],
   providers: [{

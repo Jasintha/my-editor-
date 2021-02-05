@@ -30,13 +30,13 @@
   <div style="height: 4px;" *ngIf="!(isLoading$ | async)"></div>
   <div mat-dialog-content>
     <fieldset [disabled]="isLoading$ | async">
-      <tb-json-object-edit
+      <virtuan-json-object-edit
         formControlName="json"
         label="{{ 'value.json-value' | translate }}"
         validateContent="true"
         [required]="true"
         [fillHeight]="false">
-      </tb-json-object-edit>
+      </virtuan-json-object-edit>
     </fieldset>
   </div>
   <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">

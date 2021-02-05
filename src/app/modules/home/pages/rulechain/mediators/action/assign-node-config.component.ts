@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-assign-node-config',
+  selector: 'virtuan-assign-node-config',
   templateUrl: './assign-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

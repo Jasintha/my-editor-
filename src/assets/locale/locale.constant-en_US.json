@@ -1663,10 +1663,10 @@
         "tenant-required": "Tenant is required",
         "search": "Search tenants",
         "selected-tenants": "{ count, plural, 1 {1 tenant} other {# tenants} } selected",
-        "isolated-tb-core": "Processing in isolated Virtuan Core container",
-        "isolated-tb-rule-engine": "Processing in isolated Virtuan Rule Engine container",
-        "isolated-tb-core-details": "Requires separate microservice(s) per isolated Tenant",
-        "isolated-tb-rule-engine-details": "Requires separate microservice(s) per isolated Tenant"
+        "isolated-virtuan-core": "Processing in isolated Virtuan Core container",
+        "isolated-virtuan-rule-engine": "Processing in isolated Virtuan Rule Engine container",
+        "isolated-virtuan-core-details": "Requires separate microservice(s) per isolated Tenant",
+        "isolated-virtuan-rule-engine-details": "Requires separate microservice(s) per isolated Tenant"
     },
     "timeinterval": {
         "seconds-interval": "{ seconds, plural, 1 {1 second} other {# seconds} }",

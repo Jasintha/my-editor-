@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-hybrid-function-node-config',
+  selector: 'virtuan-hybrid-function-node-config',
   templateUrl: './hybrid-function-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

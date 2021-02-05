@@ -21,8 +21,8 @@
   }
 }
 
-.tb-json-content-toolbar {
-  button.mat-button, button.mat-icon-button, button.mat-icon-button.tb-mat-32 {
+.virtuan-json-content-toolbar {
+  button.mat-button, button.mat-icon-button, button.mat-icon-button.virtuan-mat-32 {
     align-items: center;
     vertical-align: middle;
     min-width: 32px;
@@ -39,12 +39,12 @@
   }
 }
 
-.tb-json-content-panel {
+.virtuan-json-content-panel {
   height: 100%;
   margin-left: 15px;
   border: 1px solid #c0c0c0;
 
-  #tb-json-input {
+  #virtuan-json-input {
     width: 100%;
     min-width: 200px;
     height: 100%;

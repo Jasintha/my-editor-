@@ -15,8 +15,8 @@
     limitations under the License.
 
 -->
-<div fxLayout="row" class="tb-entity-select" [formGroup]="entitySelectFormGroup">
-  <tb-entity-type-select
+<div fxLayout="row" class="virtuan-entity-select" [formGroup]="entitySelectFormGroup">
+  <virtuan-entity-type-select
     style="min-width: 100px; padding-right: 8px;"
     *ngIf="displayEntityTypeSelect"
     [showLabel]="true"
@@ -24,13 +24,13 @@
     [useAliasEntityTypes]="useAliasEntityTypes"
     [allowedEntityTypes]="allowedEntityTypes"
     formControlName="entityType">
-  </tb-entity-type-select>
-  <tb-entity-autocomplete
+  </virtuan-entity-type-select>
+  <virtuan-entity-autocomplete
     fxFlex
     *ngIf="modelValue.entityType && modelValue.entityType !== AliasEntityType.CURRENT_TENANT
                                  && modelValue.entityType !== AliasEntityType.CURRENT_USER"
     [required]="required"
     [entityType]="modelValue.entityType"
     formControlName="entityId">
-  </tb-entity-autocomplete>
+  </virtuan-entity-autocomplete>
 </div>

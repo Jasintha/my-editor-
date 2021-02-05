@@ -19,7 +19,7 @@ import { MenuSection } from '@core/services/menu.models';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'tb-menu-toggle',
+  selector: 'virtuan-menu-toggle',
   templateUrl: './menu-toggle.component.html',
   styleUrls: ['./menu-toggle.component.scss']
 })

@@ -24,7 +24,7 @@ import { ActionNotificationShow } from '@core/notification/notification.actions'
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tb-reset-password-request',
+  selector: 'virtuan-reset-password-request',
   templateUrl: './reset-password-request.component.html',
   styleUrls: ['./reset-password-request.component.scss']
 })

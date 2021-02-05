@@ -47,7 +47,7 @@ interface ExampleFlatNode {
 }
 
 @Component({
-  selector: 'tb-db-node-config',
+  selector: 'virtuan-db-node-config',
   templateUrl: './db-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

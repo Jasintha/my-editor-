@@ -40,7 +40,7 @@ export interface TimewindowPanelData {
 }
 
 @Component({
-  selector: 'tb-timewindow-panel',
+  selector: 'virtuan-timewindow-panel',
   templateUrl: './timewindow-panel.component.html',
   styleUrls: ['./timewindow-panel.component.scss']
 })

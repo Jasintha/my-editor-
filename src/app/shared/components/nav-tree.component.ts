@@ -59,7 +59,7 @@ export type NodeSelectedCallback = (node: NavTreeNode, event: Event) => void;
 export type NodesInsertedCallback = (nodes: string[], parent: string) => void;
 
 @Component({
-  selector: 'tb-nav-tree',
+  selector: 'virtuan-nav-tree',
   templateUrl: './nav-tree.component.html',
   styleUrls: ['./nav-tree.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -145,7 +145,7 @@ export class NavTreeComponent implements OnInit {
       };
     }
 
-    this.treeElement = $('.tb-nav-tree-container', this.elementRef.nativeElement).jstree(config);
+    this.treeElement = $('.virtuan-nav-tree-container', this.elementRef.nativeElement).jstree(config);
 
     this.treeElement.on('changed.jstree', (e: any, data) => {
       const node: NavTreeNode = data.instance.get_selected(true)[0];

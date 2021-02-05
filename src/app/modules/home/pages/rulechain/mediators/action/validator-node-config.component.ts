@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-validator-node-config',
+  selector: 'virtuan-validator-node-config',
   templateUrl: './validator-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

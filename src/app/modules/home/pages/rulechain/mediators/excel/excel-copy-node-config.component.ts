@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-    selector: 'tb-excelCopy-node-config',
+    selector: 'virtuan-excelCopy-node-config',
     templateUrl: './excel-copy-node-config.component.html',
     providers: [{
         provide: NG_VALUE_ACCESSOR,

@@ -15,9 +15,9 @@
     limitations under the License.
 
 -->
-<ul fxFlex fxLayout="column" fxLayoutAlign="start stretch" class="tb-side-menu">
+<ul fxFlex fxLayout="column" fxLayoutAlign="start stretch" class="virtuan-side-menu">
   <li *ngFor="let section of menuSections$| async" [ngSwitch]="section.type === 'link'">
-    <tb-menu-link *ngSwitchCase="true" [section]="section"></tb-menu-link>
-    <tb-menu-toggle *ngSwitchCase="false" [section]="section"></tb-menu-toggle>
+    <virtuan-menu-link *ngSwitchCase="true" [section]="section"></virtuan-menu-link>
+    <virtuan-menu-toggle *ngSwitchCase="false" [section]="section"></virtuan-menu-toggle>
   </li>
 </ul>

@@ -34,7 +34,7 @@ import { instanceOfSearchableComponent, ISearchableComponent } from '@home/model
 const screenfull = _screenfull as _screenfull.Screenfull;
 
 @Component({
-  selector: 'tb-home',
+  selector: 'virtuan-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

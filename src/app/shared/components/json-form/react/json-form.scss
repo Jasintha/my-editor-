@@ -23,9 +23,9 @@ $input-label-float-scale: .75 !default;
 
 $previewSize: 100px !default;
 
-.tb-json-form {
+.virtuan-json-form {
 
-  &.tb-fullscreen {
+  &.virtuan-fullscreen {
     background: #fff;
     position: absolute;
     top: 0;
@@ -49,14 +49,14 @@ $previewSize: 100px !default;
     transition: all 450ms cubic-bezier(.23, 1, .32, 1) 0ms;
   }
 
-  .tb-container {
+  .virtuan-container {
     position: relative;
     box-sizing: border-box;
     padding: 10px 0;
     margin-top: 32px;
   }
 
-  .tb-field {
+  .virtuan-field {
     padding-bottom: 18px;
 
     .MuiInputBase-multiline {
@@ -67,7 +67,7 @@ $previewSize: 100px !default;
       }
     }
 
-    &.tb-required {
+    &.virtuan-required {
       label::after {
         font-size: 13px;
         color: rgba(0, 0, 0, .54);
@@ -76,15 +76,15 @@ $previewSize: 100px !default;
       }
     }
 
-    &.tb-focused:not(.tb-readonly) {
+    &.virtuan-focused:not(.virtuan-readonly) {
       label::after {
         color: rgb(221, 44, 0);
       }
     }
   }
 
-  .tb-date-field {
-    &.tb-required {
+  .virtuan-date-field {
+    &.virtuan-required {
       div > div:first-child::after {
         font-size: 13px;
         color: rgba(0, 0, 0, .54);
@@ -93,14 +93,14 @@ $previewSize: 100px !default;
       }
     }
 
-    &.tb-focused:not(.tb-readonly) {
+    &.virtuan-focused:not(.virtuan-readonly) {
       div > div:first-child::after {
         color: rgb(221, 44, 0);
       }
     }
   }
 
-  label.tb-label {
+  label.virtuan-label {
     position: absolute;
     right: auto;
     bottom: 100%;
@@ -113,23 +113,23 @@ $previewSize: 100px !default;
     transform-origin: left top;
     -webkit-font-smoothing: antialiased;
 
-    &.tb-focused {
+    &.virtuan-focused {
       color: rgb(96, 125, 139);
     }
 
-    &.tb-required::after {
+    &.virtuan-required::after {
       font-size: 13px;
       color: rgba(0, 0, 0, .54);
       vertical-align: top;
       content: " *";
     }
 
-    &.tb-focused:not(.tb-readonly)::after {
+    &.virtuan-focused:not(.virtuan-readonly)::after {
       color: rgb(221, 44, 0);
     }
   }
 
-  .tb-head-label {
+  .virtuan-head-label {
     color: rgba(0, 0, 0, .54);
     padding-bottom: 15px;
   }
@@ -143,7 +143,7 @@ $previewSize: 100px !default;
     display: none;
   }
 
-  .tb-button-toggle .tb-toggle-icon {
+  .virtuan-button-toggle .virtuan-toggle-icon {
     display: inline-block;
     width: 15px;
     margin: auto 0 auto auto;
@@ -152,7 +152,7 @@ $previewSize: 100px !default;
     transition: transform .3s, ease-in-out;
   }
 
-  .tb-button-toggle .tb-toggle-icon.tb-toggled {
+  .virtuan-button-toggle .virtuan-toggle-icon.virtuan-toggled {
     transform: rotateZ(180deg);
   }
 
@@ -194,20 +194,20 @@ $previewSize: 100px !default;
     }
   }
 
-  .tb-image-select-container {
+  .virtuan-image-select-container {
     position: relative;
     width: 100%;
     height: $previewSize;
   }
 
-  .tb-image-preview {
+  .virtuan-image-preview {
     width: auto;
     max-width: $previewSize;
     height: auto;
     max-height: $previewSize;
   }
 
-  .tb-image-preview-container {
+  .virtuan-image-preview-container {
     position: relative;
     float: left;
     width: $previewSize;
@@ -222,7 +222,7 @@ $previewSize: 100px !default;
       text-align: center;
     }
 
-    div, .tb-image-preview {
+    div, .virtuan-image-preview {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -230,7 +230,7 @@ $previewSize: 100px !default;
     }
   }
 
-  .tb-dropzone {
+  .virtuan-dropzone {
     outline: none;
     position: relative;
     height: $previewSize;
@@ -250,14 +250,14 @@ $previewSize: 100px !default;
     }
   }
 
-  .tb-image-clear-container {
+  .virtuan-image-clear-container {
     position: relative;
     float: right;
     width: 48px;
     height: $previewSize;
   }
 
-  .tb-image-clear-btn {
+  .virtuan-image-clear-btn {
     position: absolute !important;
     top: 50%;
     transform: translate(0%, -50%) !important;
@@ -315,7 +315,7 @@ $previewSize: 100px !default;
 }
 
 .rc-select-dropdown {
-  &.tb-rc-select-dropdown {
+  &.virtuan-rc-select-dropdown {
     z-index: 100001;
     background-color: white;
     border: 1px solid #d9d9d9;

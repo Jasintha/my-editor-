@@ -43,7 +43,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 // @dynamic
 @Component({
-  selector: 'tb-timewindow',
+  selector: 'virtuan-timewindow',
   templateUrl: './timewindow.component.html',
   styleUrls: ['./timewindow.component.scss'],
   providers: [
@@ -152,7 +152,7 @@ export class TimewindowComponent implements OnInit, OnDestroy, ControlValueAcces
     const isGtXs = this.breakpointObserver.isMatched(MediaBreakpoints['gt-xs']);
     const position = this.overlay.position();
     const config = new OverlayConfig({
-      panelClass: 'tb-timewindow-panel',
+      panelClass: 'virtuan-timewindow-panel',
       backdropClass: 'cdk-overlay-transparent-backdrop',
       hasBackdrop: isGtXs,
     });

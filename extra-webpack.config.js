@@ -28,7 +28,7 @@ dirTree("./src/assets/locale/", {extensions: /\.json$/}, (item) => {
 module.exports = {
   plugins: [
     new webpack.DefinePlugin({
-      TB_VERSION: JSON.stringify(require("./package.json").version),
+      VIRTUAN_VERSION: JSON.stringify(require("./package.json").version),
       SUPPORTED_LANGS: JSON.stringify(langs),
     }),
     new CompressionPlugin({

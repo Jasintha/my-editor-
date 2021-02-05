@@ -14,12 +14,17 @@
 /// limitations under the License.
 ///
 
-import { Component, ViewContainerRef } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
+import { isNumber, isObject } from '@core/utils';
 
-@Component({
-  selector: 'tb-anchor',
-  template: '<ng-template></ng-template>'
-})
-export class TbAnchorComponent {
-  constructor(public viewContainerRef: ViewContainerRef) { }
+@Pipe({name: 'virtuanJson'})
+export class VirtuanJsonPipe implements PipeTransform {
+  transform(value: any): string {
+    if (isObject(value)) {
+      return JSON.stringify(value);
+    } else if (isNumber(value)) {
+      return value.toString();
+    }
+    return value;
+  }
 }

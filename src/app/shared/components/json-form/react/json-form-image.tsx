@@ -65,35 +65,35 @@ class VirtuanImage extends React.Component<JsonFormFieldProps, VirtuanImageState
 
     render() {
 
-        let labelClass = 'tb-label';
+        let labelClass = 'virtuan-label';
         if (this.props.form.required) {
-            labelClass += ' tb-required';
+            labelClass += ' virtuan-required';
         }
         if (this.props.form.readonly) {
-            labelClass += ' tb-readonly';
+            labelClass += ' virtuan-readonly';
         }
 
         let previewComponent;
         if (this.state.imageUrl) {
-            previewComponent = <img className='tb-image-preview' src={this.state.imageUrl} />;
+            previewComponent = <img className='virtuan-image-preview' src={this.state.imageUrl} />;
         } else {
             previewComponent = <div>No image selected</div>;
         }
 
         return (
-            <div className='tb-container'>
+            <div className='virtuan-container'>
                 <label className={labelClass}>{this.props.form.title}</label>
-                <div className='tb-image-select-container'>
-                    <div className='tb-image-preview-container'>{previewComponent}</div>
-                    <div className='tb-image-clear-container'>
+                <div className='virtuan-image-select-container'>
+                    <div className='virtuan-image-preview-container'>{previewComponent}</div>
+                    <div className='virtuan-image-clear-container'>
                         <Tooltip title='Clear' placement='top'>
-                          <IconButton className='tb-image-clear-btn' onClick={this.onClear}><ClearIcon/></IconButton>
+                          <IconButton className='virtuan-image-clear-btn' onClick={this.onClear}><ClearIcon/></IconButton>
                         </Tooltip>
                     </div>
                     <Dropzone onDrop={this.onDrop}
                               accept='image/*' multiple={false}>
                       {({getRootProps, getInputProps}) => (
-                          <div className='tb-dropzone' {...getRootProps()}>
+                          <div className='virtuan-dropzone' {...getRootProps()}>
                             <div>Drop an image or click to select a file to upload.</div>
                             <input {...getInputProps()} />
                           </div>

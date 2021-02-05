@@ -17,14 +17,14 @@
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Hotkey } from 'angular2-hotkeys';
 import 'mousetrap';
-import { TbCheatSheetComponent } from '@shared/components/cheatsheet.component';
+import { VirtuanCheatSheetComponent } from '@shared/components/cheatsheet.component';
 
 @Directive({
-  selector : '[tb-hotkeys]'
+  selector : '[virtuan-hotkeys]'
 })
-export class TbHotkeysDirective implements OnInit, OnDestroy {
+export class VirtuanHotkeysDirective implements OnInit, OnDestroy {
   @Input() hotkeys: Hotkey[] = [];
-  @Input() cheatSheet: TbCheatSheetComponent;
+  @Input() cheatSheet: VirtuanCheatSheetComponent;
 
   private mousetrap: MousetrapInstance;
   private hotkeysList: Hotkey[] = [];

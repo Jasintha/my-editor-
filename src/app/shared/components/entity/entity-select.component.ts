@@ -26,7 +26,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { NULL_UUID } from '@shared/models/id/has-uuid';
 
 @Component({
-  selector: 'tb-entity-select',
+  selector: 'virtuan-entity-select',
   templateUrl: './entity-select.component.html',
   styleUrls: ['./entity-select.component.scss'],
   providers: [{

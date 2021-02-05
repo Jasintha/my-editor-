@@ -18,17 +18,17 @@ import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/cor
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'tb-checkbox',
-  templateUrl: './tb-checkbox.component.html',
+  selector: 'virtuan-checkbox',
+  templateUrl: './virtuan-checkbox.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TbCheckboxComponent),
+      useExisting: forwardRef(() => VirtuanCheckboxComponent),
       multi: true
     }
   ]
 })
-export class TbCheckboxComponent implements ControlValueAccessor {
+export class VirtuanCheckboxComponent implements ControlValueAccessor {
 
   innerValue: boolean;
 

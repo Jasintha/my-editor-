@@ -46,7 +46,7 @@ import { GroupInfo } from '@shared/models/widget.models';
 const tinycolor = tinycolor_;
 
 @Component({
-  selector: 'tb-json-form',
+  selector: 'virtuan-json-form',
   templateUrl: './json-form.component.html',
   styleUrls: ['./json-form.component.scss'],
   providers: [

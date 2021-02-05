@@ -40,7 +40,7 @@ import { JsonObjectEditComponent } from '@shared/components/json-object-edit.com
 import { deepClone } from '@core/utils';
 
 @Component({
-  selector: 'tb-rule-node-config',
+  selector: 'virtuan-rule-node-config',
   templateUrl: './rule-node-config.component.html',
   styleUrls: ['./rule-node-config.component.scss'],
   providers: [{

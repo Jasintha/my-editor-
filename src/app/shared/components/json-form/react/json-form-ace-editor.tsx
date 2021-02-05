@@ -122,24 +122,24 @@ class VirtuanAceEditor extends React.Component<VirtuanAceEditorProps, VirtuanAce
             }
         });
 
-        let labelClass = 'tb-label';
+        let labelClass = 'virtuan-label';
         if (this.props.form.required) {
-            labelClass += ' tb-required';
+            labelClass += ' virtuan-required';
         }
         if (this.props.form.readonly) {
-            labelClass += ' tb-readonly';
+            labelClass += ' virtuan-readonly';
         }
         if (this.state.focused) {
-            labelClass += ' tb-focused';
+            labelClass += ' virtuan-focused';
         }
-        let containerClass = 'tb-container';
+        let containerClass = 'virtuan-container';
         const style = this.props.form.style || {width: '100%'};
         if (this.state.isFull) {
             containerClass += ' fullscreen-form-field';
         }
         return (
           <div>
-            <div className='tb-json-form' ref={c => (this.hostElement = c)}>
+            <div className='virtuan-json-form' ref={c => (this.hostElement = c)}>
               <div className={containerClass}>
                   <label className={labelClass}>{this.props.form.title}</label>
                   <div className='json-form-ace-editor'>

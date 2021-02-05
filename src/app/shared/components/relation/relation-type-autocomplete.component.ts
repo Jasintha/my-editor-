@@ -26,7 +26,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { RelationTypes } from '@app/shared/models/relation.models';
 
 @Component({
-  selector: 'tb-relation-type-autocomplete',
+  selector: 'virtuan-relation-type-autocomplete',
   templateUrl: './relation-type-autocomplete.component.html',
   styleUrls: [],
   providers: [{

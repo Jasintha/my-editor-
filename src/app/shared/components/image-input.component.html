@@ -15,26 +15,26 @@
     limitations under the License.
 
 -->
-<div class="tb-container">
-  <label class="tb-title" *ngIf="label">{{label}}</label>
+<div class="virtuan-container">
+  <label class="virtuan-title" *ngIf="label">{{label}}</label>
   <ng-container #flow="flow"
                 [flowConfig]="{singleFile: true, allowDuplicateUploads: true}">
-    <div class="tb-image-select-container">
-      <div *ngIf="showPreview" class="tb-image-preview-container">
+    <div class="virtuan-image-select-container">
+      <div *ngIf="showPreview" class="virtuan-image-preview-container">
         <div *ngIf="!safeImageUrl;else elseBlock" translate>dashboard.no-image</div>
-        <ng-template #elseBlock><img class="tb-image-preview" [src]="safeImageUrl" /></ng-template>
+        <ng-template #elseBlock><img class="virtuan-image-preview" [src]="safeImageUrl" /></ng-template>
       </div>
-      <div *ngIf="showClearButton" class="tb-image-clear-container">
+      <div *ngIf="showClearButton" class="virtuan-image-clear-container">
         <button mat-button mat-icon-button color="primary"
                 type="button"
                 (click)="clearImage()"
-                class="tb-image-clear-btn"
+                class="virtuan-image-clear-btn"
                 matTooltip="{{ 'action.remove' | translate }}"
                 matTooltipPosition="above">
           <mat-icon>close</mat-icon>
         </button>
       </div>
-      <div class="drop-area tb-flow-drop"
+      <div class="drop-area virtuan-flow-drop"
            flowDrop
            [flow]="flow.flowJs">
         <label for="{{inputId}}" translate>dashboard.drop-image</label>

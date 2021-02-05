@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-    selector: 'tb-excelDelete-node-config',
+    selector: 'virtuan-excelDelete-node-config',
     templateUrl: './excel-delete-node-config.component.html',
     providers: [{
         provide: NG_VALUE_ACCESSOR,

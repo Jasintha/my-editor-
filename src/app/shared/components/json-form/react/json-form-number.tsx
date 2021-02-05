@@ -59,15 +59,15 @@ class VirtuanNumber extends React.Component<JsonFormFieldProps, VirtuanNumberSta
 
   render() {
 
-    let fieldClass = 'tb-field';
+    let fieldClass = 'virtuan-field';
     if (this.props.form.required) {
-      fieldClass += ' tb-required';
+      fieldClass += ' virtuan-required';
     }
     if (this.props.form.readonly) {
-      fieldClass += ' tb-readonly';
+      fieldClass += ' virtuan-readonly';
     }
     if (this.state.focused) {
-      fieldClass += ' tb-focused';
+      fieldClass += ' virtuan-focused';
     }
     let value = this.state.lastSuccessfulValue;
     if (typeof value !== 'undefined') {

@@ -26,7 +26,7 @@ export interface ConfirmDialogData {
 
 // @dynamic
 @Component({
-  selector: 'tb-confirm-dialog',
+  selector: 'virtuan-confirm-dialog',
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss']
 })

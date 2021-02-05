@@ -38,7 +38,7 @@ import { ConnectedPosition, Overlay, OverlayConfig, OverlayRef } from '@angular/
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 
 @Directive({
-  selector: '[tb-toast]'
+  selector: '[virtuan-toast]'
 })
 export class ToastDirective implements AfterViewInit, OnDestroy {
 
@@ -50,7 +50,7 @@ export class ToastDirective implements AfterViewInit, OnDestroy {
 
   private snackBarRef: MatSnackBarRef<any> = null;
   private overlayRef: OverlayRef;
-  private toastComponentRef: ComponentRef<TbSnackBarComponent>;
+  private toastComponentRef: ComponentRef<VirtuanSnackBarComponent>;
   private currentMessage: NotificationMessage = null;
 
   private dismissTimeout: Timeout = null;
@@ -106,7 +106,7 @@ export class ToastDirective implements AfterViewInit, OnDestroy {
       }
 
       const position = this.overlay.position();
-      let panelClass = ['tb-toast-panel'];
+      let panelClass = ['virtuan-toast-panel'];
       if (notificationMessage.panelClass) {
         if (typeof notificationMessage.panelClass === 'string') {
           panelClass.push(notificationMessage.panelClass);
@@ -153,7 +153,7 @@ export class ToastDirective implements AfterViewInit, OnDestroy {
         [OverlayRef, this.overlayRef]
       ]);
       const injector = new PortalInjector(this.viewContainerRef.injector, injectionTokens);
-      this.toastComponentRef = this.overlayRef.attach(new ComponentPortal(TbSnackBarComponent, this.viewContainerRef, injector));
+      this.toastComponentRef = this.overlayRef.attach(new ComponentPortal(VirtuanSnackBarComponent, this.viewContainerRef, injector));
       this.cd.detectChanges();
 
       if (notificationMessage.duration && notificationMessage.duration > 0) {
@@ -197,7 +197,7 @@ export class ToastDirective implements AfterViewInit, OnDestroy {
       if (this.snackBarRef) {
         this.snackBarRef.dismiss();
       }
-      this.snackBarRef = this.snackBar.openFromComponent(TbSnackBarComponent, config);
+      this.snackBarRef = this.snackBar.openFromComponent(VirtuanSnackBarComponent, config);
     });
     if (notificationMessage.duration && notificationMessage.duration > 0 && notificationMessage.forceDismiss) {
       if (this.dismissTimeout !== null) {
@@ -279,12 +279,12 @@ export const toastAnimations: {
 export type ToastAnimationState = 'default' | 'opened' | 'closing';
 
 @Component({
-  selector: 'tb-snack-bar-component',
+  selector: 'virtuan-snack-bar-component',
   templateUrl: 'snack-bar-component.html',
   styleUrls: ['snack-bar-component.scss'],
   animations: [toastAnimations.showHideToast]
 })
-export class TbSnackBarComponent implements AfterViewInit, OnDestroy {
+export class VirtuanSnackBarComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('actionButton', {static: true}) actionButton: MatButton;
 
@@ -305,7 +305,7 @@ export class TbSnackBarComponent implements AfterViewInit, OnDestroy {
               private data: ToastPanelData,
               private elementRef: ElementRef,
               @Optional()
-              private snackBarRef: MatSnackBarRef<TbSnackBarComponent>,
+              private snackBarRef: MatSnackBarRef<VirtuanSnackBarComponent>,
               @Optional()
               private overlayRef: OverlayRef) {
     this.animationState = !!this.snackBarRef ? 'default' : 'opened';

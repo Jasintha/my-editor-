@@ -27,7 +27,7 @@ export interface DashboardSelectPanelData {
 }
 
 @Component({
-  selector: 'tb-dashboard-select-panel',
+  selector: 'virtuan-dashboard-select-panel',
   templateUrl: './dashboard-select-panel.component.html',
   styleUrls: ['./dashboard-select-panel.component.scss']
 })

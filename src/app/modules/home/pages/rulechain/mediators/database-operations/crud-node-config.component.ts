@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-crud-node-config',
+  selector: 'virtuan-crud-node-config',
   templateUrl: './crud-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

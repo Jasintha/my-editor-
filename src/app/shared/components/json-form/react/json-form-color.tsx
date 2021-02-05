@@ -143,15 +143,15 @@ class VirtuanColor extends React.Component<JsonFormFieldProps, VirtuanColorState
             },
         });
 
-        let fieldClass = 'tb-field';
+        let fieldClass = 'virtuan-field';
         if (this.props.form.required) {
-            fieldClass += ' tb-required';
+            fieldClass += ' virtuan-required';
         }
         if (this.props.form.readonly) {
-            fieldClass += ' tb-readonly';
+            fieldClass += ' virtuan-readonly';
         }
         if (this.state.focused) {
-            fieldClass += ' tb-focused';
+            fieldClass += ' virtuan-focused';
         }
 
         let stringColor = '';
@@ -163,8 +163,8 @@ class VirtuanColor extends React.Component<JsonFormFieldProps, VirtuanColorState
         return (
             <div style={ styles.container }>
                  <div id='color-container' style={ styles.colorContainer }>
-                    <div className='tb-color-preview' style={ styles.swatch }>
-                        <div className='tb-color-result' style={ styles.color }/>
+                    <div className='virtuan-color-preview' style={ styles.swatch }>
+                        <div className='virtuan-color-result' style={ styles.color }/>
                     </div>
                    <TextField
                      className={fieldClass}

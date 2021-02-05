@@ -32,7 +32,7 @@ import { distinctUntilChanged, filter, map, skip } from 'rxjs/operators';
 import { AuthService } from '@core/auth/auth.service';
 
 @Component({
-  selector: 'tb-root',
+  selector: 'virtuan-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
               private domSanitizer: DomSanitizer,
               private authService: AuthService) {
 
-    console.log(`Virtuan Version: ${env.tbVersion}`);
+    console.log(`Virtuan Version: ${env.virtuanVersion}`);
 
     this.matIconRegistry.addSvgIconSetInNamespace('mdi',
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));

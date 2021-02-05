@@ -26,7 +26,7 @@ interface CircleElement extends RaphaelElement {
 }
 
 @Component({
-  selector: 'tb-led-light',
+  selector: 'virtuan-led-light',
   templateUrl: './led-light.component.html',
   styleUrls: []
 })

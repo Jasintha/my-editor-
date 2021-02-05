@@ -33,7 +33,7 @@ import { AppState } from '@core/core.state';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'tb-key-val-map',
+  selector: 'virtuan-key-val-map',
   templateUrl: './kv-map.component.html',
   styleUrls: ['./kv-map.component.scss'],
   providers: [

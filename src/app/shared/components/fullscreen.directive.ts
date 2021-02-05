@@ -29,11 +29,11 @@ import {
 } from '@angular/core';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { TbAnchorComponent } from '@shared/components/tb-anchor.component';
+import { VirtuanAnchorComponent } from '@shared/components/virtuan-anchor.component';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Directive({
-  selector: '[tb-fullscreen]'
+  selector: '[virtuan-fullscreen]'
 })
 export class FullscreenDirective implements OnChanges, OnDestroy {
 
@@ -93,11 +93,11 @@ export class FullscreenDirective implements OnChanges, OnDestroy {
     const targetElement: HTMLElement = this.fullscreenElement || this.elementRef.nativeElement;
     this.parentElement = targetElement.parentElement;
     this.parentElement.removeChild(targetElement);
-    targetElement.classList.add('tb-fullscreen');
+    targetElement.classList.add('virtuan-fullscreen');
     const position = this.overlay.position();
     const config = new OverlayConfig({
       hasBackdrop: false,
-      panelClass: 'tb-fullscreen-parent'
+      panelClass: 'virtuan-fullscreen-parent'
     });
     config.minWidth = '100%';
     config.minHeight = '100%';
@@ -140,9 +140,9 @@ export class FullscreenDirective implements OnChanges, OnDestroy {
       this.parentElement.appendChild(targetElement);
       this.parentElement = null;
     }
-    targetElement.classList.remove('tb-fullscreen');
+    targetElement.classList.remove('virtuan-fullscreen');
     if (this.elementRef) {
-      this.elementRef.nativeElement.classList.remove('tb-fullscreen');
+      this.elementRef.nativeElement.classList.remove('virtuan-fullscreen');
     }
     if (this.overlayRef) {
       this.overlayRef.dispose();
@@ -151,10 +151,10 @@ export class FullscreenDirective implements OnChanges, OnDestroy {
   }
 }
 
-class EmptyPortal extends ComponentPortal<TbAnchorComponent> {
+class EmptyPortal extends ComponentPortal<VirtuanAnchorComponent> {
 
   constructor() {
-    super(TbAnchorComponent);
+    super(VirtuanAnchorComponent);
   }
 
 }

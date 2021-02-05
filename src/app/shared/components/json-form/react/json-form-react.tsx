@@ -19,7 +19,7 @@ import virtuanTheme from './styles/virtuanTheme';
 import VirtuanSchemaForm from './json-form-schema-form';
 import { JsonFormProps } from './json-form.models';
 
-const tbTheme = createMuiTheme(virtuanTheme);
+const virtTheme = createMuiTheme(virtuanTheme);
 
 class ReactSchemaForm extends React.Component<JsonFormProps, {}> {
 
@@ -31,7 +31,7 @@ class ReactSchemaForm extends React.Component<JsonFormProps, {}> {
 
   render() {
     if (this.props.form.length > 0) {
-      return <ThemeProvider theme={tbTheme}><VirtuanSchemaForm {...this.props} /></ThemeProvider>;
+      return <ThemeProvider theme={virtTheme}><VirtuanSchemaForm {...this.props} /></ThemeProvider>;
     } else {
       return <div></div>;
     }

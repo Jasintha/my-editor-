@@ -29,7 +29,7 @@ import { AssetService } from '@core/http/asset.service';
 import { EntityViewService } from '@core/http/entity-view.service';
 
 @Component({
-  selector: 'tb-entity-subtype-autocomplete',
+  selector: 'virtuan-entity-subtype-autocomplete',
   templateUrl: './entity-subtype-autocomplete.component.html',
   styleUrls: [],
   providers: [{

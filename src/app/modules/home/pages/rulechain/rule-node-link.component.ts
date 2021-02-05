@@ -22,7 +22,7 @@ import { TruncatePipe } from '@shared/pipe/truncate.pipe';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tb-rule-node-link',
+  selector: 'virtuan-rule-node-link',
   templateUrl: './rule-node-link.component.html',
   styleUrls: [],
   providers: [{

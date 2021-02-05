@@ -37,7 +37,7 @@ import { guid } from '@core/utils';
 import { ResizeObserver } from '@juggle/resize-observer';
 
 @Component({
-  selector: 'tb-json-content',
+  selector: 'virtuan-json-content',
   templateUrl: './json-content.component.html',
   styleUrls: ['./json-content.component.scss'],
   providers: [

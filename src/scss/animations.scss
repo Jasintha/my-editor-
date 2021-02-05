@@ -15,7 +15,7 @@
  */
 @import "~compass-sass-mixins/lib/animate";
 
-@keyframes tbMoveFromTopFade {
+@keyframes virtuanMoveFromTopFade {
   from {
     opacity: 0;
 
@@ -23,7 +23,7 @@
   }
 }
 
-@keyframes tbMoveToTopFade {
+@keyframes virtuanMoveToTopFade {
   to {
     opacity: 0;
 
@@ -31,7 +31,7 @@
   }
 }
 
-@keyframes tbMoveFromBottomFade {
+@keyframes virtuanMoveFromBottomFade {
   from {
     opacity: 0;
 
@@ -39,7 +39,7 @@
   }
 }
 
-@keyframes tbMoveToBottomFade {
+@keyframes virtuanMoveToBottomFade {
   to {
     opacity: 0;
 

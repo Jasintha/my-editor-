@@ -39,7 +39,7 @@
            (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
   <mat-autocomplete #keyAutocomplete="matAutocomplete"
-                    class="tb-autocomplete"
+                    class="virtuan-autocomplete"
                     (optionSelected)="selected($event)"
                     [displayWith]="displayKeyFn">
     <mat-option *ngFor="let key of filteredKeys | async" [value]="key">

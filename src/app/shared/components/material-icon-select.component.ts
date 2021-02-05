@@ -22,7 +22,7 @@ import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from 
 import { DialogService } from '@core/services/dialog.service';
 
 @Component({
-  selector: 'tb-material-icon-select',
+  selector: 'virtuan-material-icon-select',
   templateUrl: './material-icon-select.component.html',
   styleUrls: ['./material-icon-select.component.scss'],
   providers: [

@@ -27,7 +27,7 @@ import { RuleChainService } from '@core/http/rule-chain.service';
 import { RuleNodeConfigComponent } from './rule-node-config.component';
 
 @Component({
-  selector: 'tb-rule-node',
+  selector: 'virtuan-rule-node',
   templateUrl: './rule-node-details.component.html',
   styleUrls: ['./rule-node-details.component.scss']
 })

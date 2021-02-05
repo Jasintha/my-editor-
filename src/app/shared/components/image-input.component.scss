@@ -19,28 +19,28 @@ $previewSize: 100px !default;
 
 :host {
 
-  .tb-container {
+  .virtuan-container {
     margin-top: 0;
-    label.tb-title {
+    label.virtuan-title {
       display: block;
       padding-bottom: 8px;
     }
   }
 
-  .tb-image-select-container {
+  .virtuan-image-select-container {
     position: relative;
     width: 100%;
     height: $previewSize;
   }
 
-  .tb-image-preview {
+  .virtuan-image-preview {
     width: auto;
     max-width: $previewSize - 2;
     height: auto;
     max-height: $previewSize - 2;
   }
 
-  .tb-image-preview-container {
+  .virtuan-image-preview-container {
     position: relative;
     float: left;
     width: $previewSize;
@@ -56,7 +56,7 @@ $previewSize: 100px !default;
     }
 
     div,
-    .tb-image-preview {
+    .virtuan-image-preview {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -64,14 +64,14 @@ $previewSize: 100px !default;
     }
   }
 
-  .tb-image-clear-container {
+  .virtuan-image-clear-container {
     position: relative;
     float: right;
     width: 48px;
     height: $previewSize;
   }
 
-  .tb-image-clear-btn {
+  .virtuan-image-clear-btn {
     position: absolute !important;
     top: 50%;
     transform: translate(0%, -50%) !important;
@@ -81,7 +81,7 @@ $previewSize: 100px !default;
     display: none;
   }
 
-  .tb-flow-drop {
+  .virtuan-flow-drop {
     position: relative;
     height: $previewSize;
     overflow: hidden;

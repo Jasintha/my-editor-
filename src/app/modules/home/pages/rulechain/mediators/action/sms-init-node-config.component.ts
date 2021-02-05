@@ -29,7 +29,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 
 @Component({
-  selector: 'tb-sms-init-node-config',
+  selector: 'virtuan-sms-init-node-config',
   templateUrl: './sms-init-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

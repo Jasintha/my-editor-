@@ -30,7 +30,7 @@ export interface MaterialIconsDialogData {
 }
 
 @Component({
-  selector: 'tb-material-icons-dialog',
+  selector: 'virtuan-material-icons-dialog',
   templateUrl: './material-icons-dialog.component.html',
   providers: [],
   styleUrls: ['./material-icons-dialog.component.scss']

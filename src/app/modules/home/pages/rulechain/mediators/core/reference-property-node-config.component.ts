@@ -49,7 +49,7 @@ interface ExampleFlatNode {
 
 
 @Component({
-  selector: 'tb-reference-property-node-config',
+  selector: 'virtuan-reference-property-node-config',
   templateUrl: './reference-property-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

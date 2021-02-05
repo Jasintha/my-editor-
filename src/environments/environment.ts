@@ -22,7 +22,7 @@ export const environment = {
   appTitle: 'Virtuan',
   production: false,
 // @ts-ignore
-  tbVersion: TB_VERSION,
+  virtuanVersion: VIRTUAN_VERSION,
 // @ts-ignore
   supportedLangs: SUPPORTED_LANGS,
   defaultLang: 'en_US'

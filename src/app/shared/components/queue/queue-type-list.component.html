@@ -30,7 +30,7 @@
     <mat-icon class="material-icons">close</mat-icon>
   </button>
   <mat-autocomplete
-    class="tb-autocomplete"
+    class="virtuan-autocomplete"
     #queueAutocomplete="matAutocomplete"
     [displayWith]="displayQueueFn">
     <mat-option *ngFor="let queue of filteredQueues | async" [value]="queue">

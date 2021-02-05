@@ -70,7 +70,7 @@ export interface RuleNodesReference {
 })
 export class ItemBufferService {
 
-  private namespace = 'tbBufferStore';
+  private namespace = 'virtuanBufferStore';
   private delimiter = '.';
 
   constructor(private dashboardUtils: DashboardUtilsService,

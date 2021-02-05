@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-event-store-node-config',
+  selector: 'virtuan-event-store-node-config',
   templateUrl: './event-store-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

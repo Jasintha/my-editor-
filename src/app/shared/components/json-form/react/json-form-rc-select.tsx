@@ -140,15 +140,15 @@ class VirtuanRcSelect extends React.Component<JsonFormFieldProps, VirtuanRcSelec
             ));
         }
 
-        let labelClass = 'tb-label';
+        let labelClass = 'virtuan-label';
         if (this.props.form.required) {
-            labelClass += ' tb-required';
+            labelClass += ' virtuan-required';
         }
         if (this.props.form.readonly) {
-            labelClass += ' tb-readonly';
+            labelClass += ' virtuan-readonly';
         }
         if (this.state.focused) {
-            labelClass += ' tb-focused';
+            labelClass += ' virtuan-focused';
         }
         let mode: Mode;
         if (this.props.form.tags) {
@@ -158,13 +158,13 @@ class VirtuanRcSelect extends React.Component<JsonFormFieldProps, VirtuanRcSelec
         }
 
         const dropdownStyle = {...this.props.form.dropdownStyle, ...{zIndex: 100001}};
-        let dropdownClassName = 'tb-rc-select-dropdown';
+        let dropdownClassName = 'virtuan-rc-select-dropdown';
         if (this.props.form.dropdownClassName) {
           dropdownClassName += ' ' + this.props.form.dropdownClassName;
         }
 
         return (
-            <div className='tb-container'>
+            <div className='virtuan-container'>
                 <label className={labelClass}>{this.props.form.title}</label>
                 <Select
                     className={this.props.form.className}

@@ -48,10 +48,10 @@ import * as AngularMaterialAutocomplete from '@angular/material/autocomplete';
 import * as AngularMaterialDialog from '@angular/material/dialog';
 import * as NgrxStore from '@ngrx/store';
 import * as TranslateCore from '@ngx-translate/core';
-import * as TbCore from '@core/public-api';
+import * as VirtuanCore from '@core/public-api';
 import { ItemBufferService } from '@core/public-api';
-import * as TbShared from '@shared/public-api';
-import * as TbHomeComponents from '@home/components/public-api';
+import * as VirtuanShared from '@shared/public-api';
+import * as VirtuanHomeComponents from '@home/components/public-api';
 import * as _moment from 'moment';
 
 declare const SystemJS;
@@ -70,9 +70,9 @@ const ruleNodeConfigResourcesModulesMap = {
   rxjs: SystemJS.newModule(RxJs),
   'rxjs/operators': SystemJS.newModule(RxJsOperators),
   '@ngx-translate/core': SystemJS.newModule(TranslateCore),
-  '@core/public-api': SystemJS.newModule(TbCore),
-  '@shared/public-api': SystemJS.newModule(TbShared),
-  '@home/components/public-api': SystemJS.newModule(TbHomeComponents),
+  '@core/public-api': SystemJS.newModule(VirtuanCore),
+  '@shared/public-api': SystemJS.newModule(VirtuanShared),
+  '@home/components/public-api': SystemJS.newModule(VirtuanHomeComponents),
   moment: SystemJS.newModule(_moment)
 };
 
