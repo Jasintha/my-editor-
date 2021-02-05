@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -22,6 +22,6 @@ export class AppPage {
   }
 
   getTitleText() {
-    return element(by.css('tb-root h1')).getText() as Promise<string>;
+    return element(by.css('virtuan-root h1')).getText() as Promise<string>;
   }
 }

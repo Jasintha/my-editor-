@@ -1,6 +1,6 @@
 <!--
 
-    Copyright © 2016-2020 The Thingsboard Authors
+
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
 -->
 <section fxLayout="row">
   <section fxLayout="column" [fxShow]="isEdit">
-    <label class="tb-small hide-label" translate>timewindow.hide</label>
+    <label class="virtuan-small hide-label" translate>timewindow.hide</label>
     <mat-checkbox [(ngModel)]="hideFlag" (ngModelChange)="onHideFlagChange()"></mat-checkbox>
   </section>
   <section class="interval-section" fxLayout="column" fxFlex [fxShow]="advanced && (isEdit || !hideFlag)">
-    <label class="tb-small interval-label" translate>{{ predefinedName }}</label>
+    <label class="virtuan-small interval-label" translate>{{ predefinedName }}</label>
     <section fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="6px">
       <mat-form-field class="number-input">
         <mat-label translate>timeinterval.days</mat-label>
@@ -52,7 +52,7 @@
     </mat-form-field>
   </section>
   <section fxLayout="column" fxLayoutAlign="center center" [fxShow]="(isEdit || !hideFlag)">
-    <label class="tb-small advanced-label" translate>timeinterval.advanced</label>
+    <label class="virtuan-small advanced-label" translate>timeinterval.advanced</label>
     <mat-slide-toggle [disabled]="hideFlag || disabled" class="advanced-switch" [(ngModel)]="advanced" (ngModelChange)="onAdvancedChange()"></mat-slide-toggle>
   </section>
 </section>

@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -17,16 +17,16 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { interval } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { HistorySelectSettings } from '@app/modules/home/components/widget/lib/maps/map-models';
+//import { HistorySelectSettings } from '@app/modules/home/components/widget/lib/maps/map-models';
 
 @Component({
-  selector: 'tb-history-selector',
+  selector: 'virtuan-history-selector',
   templateUrl: './history-selector.component.html',
   styleUrls: ['./history-selector.component.scss']
 })
 export class HistorySelectorComponent implements OnInit, OnChanges {
 
-  @Input() settings: HistorySelectSettings
+ // @Input() settings: HistorySelectSettings
   @Input() minTime: number;
   @Input() maxTime: number;
   @Input() step = 1000;

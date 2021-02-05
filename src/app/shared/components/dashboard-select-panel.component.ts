@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ export interface DashboardSelectPanelData {
 }
 
 @Component({
-  selector: 'tb-dashboard-select-panel',
+  selector: 'virtuan-dashboard-select-panel',
   templateUrl: './dashboard-select-panel.component.html',
   styleUrls: ['./dashboard-select-panel.component.scss']
 })

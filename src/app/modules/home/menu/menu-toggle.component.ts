@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import { MenuSection } from '@core/services/menu.models';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'tb-menu-toggle',
+  selector: 'virtuan-menu-toggle',
   templateUrl: './menu-toggle.component.html',
   styleUrls: ['./menu-toggle.component.scss']
 })

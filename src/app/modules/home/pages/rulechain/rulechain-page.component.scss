@@ -1,5 +1,5 @@
 /**
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  */
 @import './rule-node-colors';
 
-.tb-rulechain {
+.virtuan-rulechain {
   width: 100%;
   height: 100%;
 
-  .mat-tab-group.tb-rulenode-details {
+  .mat-tab-group.virtuan-rulenode-details {
     > .mat-tab-body-wrapper {
       position: absolute;
       top: 49px;
@@ -34,7 +34,7 @@
     }
   }
 
-  button.mat-button.mat-icon-button.tb-fullscreen-button {
+  button.mat-button.mat-icon-button.virtuan-fullscreen-button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -44,7 +44,7 @@
     margin: 0 6px;
     z-index: 2;
   }
-  section.tb-header-buttons.tb-library-open {
+  section.virtuan-header-buttons.virtuan-library-open {
     position: absolute;
     top: 0;
     left: 0;
@@ -57,7 +57,7 @@
       }
     }
 
-    .mat-button.tb-btn-open-library {
+    .mat-button.virtuan-btn-open-library {
       top: 0;
       left: 0;
       width: 36px;
@@ -68,7 +68,7 @@
     }
   }
 
-  .tb-rulechain-library {
+  .virtuan-rulechain-library {
     z-index: 1;
     width: 250px;
     min-width: 250px;
@@ -92,7 +92,7 @@
         .mat-button.mat-icon-button {
           margin: 0;
 
-          &.tb-small {
+          &.virtuan-small {
             width: 32px;
             height: 32px;
             min-height: 32px;
@@ -110,7 +110,7 @@
         }
       }
     }
-    .tb-rulechain-library-panel-group {
+    .virtuan-rulechain-library-panel-group {
       overflow-x: hidden;
       overflow-y: auto;
       .mat-expansion-panel {
@@ -130,7 +130,7 @@
               min-width: 24px;
               margin: auto 8px auto auto;
             }
-            .tb-panel-title {
+            .virtuan-panel-title {
               min-width: 140px;
               user-select: none;
             }
@@ -151,9 +151,9 @@
       }
     }
   }
-  .mat-drawer-content.tb-rulechain-graph-content {
+  .mat-drawer-content.virtuan-rulechain-graph-content {
     overflow: hidden;
-    .tb-rulechain-graph {
+    .virtuan-rulechain-graph {
       z-index: 0;
       overflow: auto;
     }
@@ -240,43 +240,43 @@
   }
 }
 
-.tb-rule-node-tooltip,
-.tb-rule-node-help {
+.virtuan-rule-node-tooltip,
+.virtuan-rule-node-help {
   color: #333;
 }
 
-.tb-rule-node-tooltip {
+.virtuan-rule-node-tooltip {
   max-width: 300px;
   font-size: 14px;
 
-  &.tb-lib-tooltip {
+  &.virtuan-lib-tooltip {
     width: 300px;
   }
 }
 
-.tb-rule-node-help {
+.virtuan-rule-node-help {
   font-size: 16px;
 }
 
-.tb-rule-node-error-tooltip {
+.virtuan-rule-node-error-tooltip {
   font-size: 16px;
   color: #ea0d0d;
 }
 
-.tb-rule-node-tooltip,
-.tb-rule-node-error-tooltip,
-.tb-rule-node-help {
-  #tb-node-content {
-    .tb-node-title {
+.virtuan-rule-node-tooltip,
+.virtuan-rule-node-error-tooltip,
+.virtuan-rule-node-help {
+  #virtuan-node-content {
+    .virtuan-node-title {
       font-weight: 600;
     }
 
-    .tb-node-description {
+    .virtuan-node-description {
       font-style: italic;
       color: #555;
     }
 
-    .tb-node-details {
+    .virtuan-node-details {
       padding-top: 10px;
       padding-bottom: 10px;
     }
@@ -294,7 +294,7 @@
   }
 }
 
-.tb-rule-chain-context-menu {
+.virtuan-rule-chain-context-menu {
   min-width: 256px;
   max-height: 404px;
   border-radius: 8px;
@@ -308,7 +308,7 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    .tb-rule-chain-context-menu-container {
+    .virtuan-rule-chain-context-menu-container {
       pointer-events: auto;
       padding: 0 0 8px;
       display: flex;
@@ -317,7 +317,7 @@
     }
   }
 
-  .tb-context-menu-header {
+  .virtuan-context-menu-header {
     display: flex;
     box-sizing: content-box;
     flex-direction: row;
@@ -328,11 +328,11 @@
 
     @include rule-node-colors();
 
-    &.tb-rulechain-header {
+    &.virtuan-rulechain-header {
       background-color: #aac7e4;
     }
 
-    &.tb-link-header {
+    &.virtuan-link-header {
       background-color: #aac7e4;
     }
 
@@ -342,11 +342,11 @@
       margin: auto;
     }
 
-    .tb-context-menu-title {
+    .virtuan-context-menu-title {
       font-weight: 500;
     }
 
-    .tb-context-menu-subtitle {
+    .virtuan-context-menu-subtitle {
       font-size: 12px;
     }
   }

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,24 +19,24 @@
 
 @include mat-core();
 
-$tb-primary-color: #9b223f;
-$tb-secondary-color: #bf3657;
-$tb-hue3-color: #d496a5;
+$virtuan-primary-color: #9b223f;
+$virtuan-secondary-color: #bf3657;
+$virtuan-hue3-color: #d496a5;
 
-$tb-dark-primary-color: #c27487;
+$virtuan-dark-primary-color: #c27487;
 
-$tb-mat-indigo: (
+$virtuan-mat-indigo: (
   50: #e8eaf6,
   100: #c5cae9,
   200: #9fa8da,
   300: #7986cb,
   400: #5c6bc0,
-  500: $tb-primary-color,
-  600: $tb-secondary-color,
+  500: $virtuan-primary-color,
+  600: $virtuan-secondary-color,
   700: #303f9f,
   800: #283593,
   900: #1a237e,
-  A100: $tb-hue3-color,
+  A100: $virtuan-hue3-color,
   A200: #536dfe,
   A400: #3d5afe,
   A700: #304ffe,
@@ -58,35 +58,35 @@ $tb-mat-indigo: (
   )
 );
 
-$tb-primary: mat-palette($tb-mat-indigo);
-$tb-accent: mat-palette($mat-deep-orange);
+$virtuan-primary: mat-palette($virtuan-mat-indigo);
+$virtuan-accent: mat-palette($mat-deep-orange);
 
 $background: (background: map_get($mat-grey, 200));
 
-$tb-theme-background: map_merge($mat-light-theme-background, $background);
+$virtuan-theme-background: map_merge($mat-light-theme-background, $background);
 
-$tb-mat-theme: mat-light-theme(
-    $tb-primary,
-    $tb-accent
+$virtuan-mat-theme: mat-light-theme(
+    $virtuan-primary,
+    $virtuan-accent
 );
 
-$tb-theme: map_merge($tb-mat-theme, (background: $tb-theme-background));
+$virtuan-theme: map_merge($virtuan-mat-theme, (background: $virtuan-theme-background));
 
-$primary: mat-color($tb-primary);
-$accent: mat-color($tb-accent);
+$primary: mat-color($virtuan-primary);
+$accent: mat-color($virtuan-accent);
 
-$tb-dark-mat-indigo: (
+$virtuan-dark-mat-indigo: (
   50: #e8eaf6,
   100: #c5cae9,
   200: #9fa8da,
   300: #7986cb,
   400: #5c6bc0,
-  500: $tb-dark-primary-color,
-  600: $tb-secondary-color,
+  500: $virtuan-dark-primary-color,
+  600: $virtuan-secondary-color,
   700: #303f9f,
-  800: $tb-primary-color,
+  800: $virtuan-primary-color,
   900: #1a237e,
-  A100: $tb-hue3-color,
+  A100: $virtuan-hue3-color,
   A200: #536dfe,
   A400: #3d5afe,
   A700: #304ffe,
@@ -96,7 +96,7 @@ $tb-dark-mat-indigo: (
     200: $dark-primary-text,
     300: $dark-primary-text,
     400: $dark-primary-text,
-    500: map_get($tb-mat-indigo, 900),
+    500: map_get($virtuan-mat-indigo, 900),
     600: $light-primary-text,
     700: $light-primary-text,
     800: $light-primary-text,
@@ -108,40 +108,40 @@ $tb-dark-mat-indigo: (
   )
 );
 
-$tb-dark-primary: mat-palette($tb-dark-mat-indigo);
+$virtuan-dark-primary: mat-palette($virtuan-dark-mat-indigo);
 
-$tb-dark-theme-background: (
+$virtuan-dark-theme-background: (
   status-bar: black,
-  app-bar:    map_get($tb-dark-mat-indigo, 900),
-  background: map_get($tb-dark-mat-indigo, 800),
+  app-bar:    map_get($virtuan-dark-mat-indigo, 900),
+  background: map_get($virtuan-dark-mat-indigo, 800),
   hover:      rgba(white, 0.04),
-  card:       map_get($tb-dark-mat-indigo, 800),
-  dialog:     map_get($tb-dark-mat-indigo, 800),
+  card:       map_get($virtuan-dark-mat-indigo, 800),
+  dialog:     map_get($virtuan-dark-mat-indigo, 800),
   disabled-button: rgba(white, 0.12),
-  raised-button: map-get($tb-dark-mat-indigo, 50),
+  raised-button: map-get($virtuan-dark-mat-indigo, 50),
   focused-button: $light-focused,
-  selected-button: map_get($tb-dark-mat-indigo, 900),
-  selected-disabled-button: map_get($tb-dark-mat-indigo, 800),
+  selected-button: map_get($virtuan-dark-mat-indigo, 900),
+  selected-disabled-button: map_get($virtuan-dark-mat-indigo, 800),
   disabled-button-toggle: black,
-  unselected-chip: map_get($tb-dark-mat-indigo, 700),
+  unselected-chip: map_get($virtuan-dark-mat-indigo, 700),
   disabled-list-option: black,
   tooltip: map_get($mat-grey, 700),
 );
 
-@function get-tb-dark-theme($primary, $accent, $warn: mat-palette($mat-red)) {
+@function get-virtuan-dark-theme($primary, $accent, $warn: mat-palette($mat-red)) {
   @return (
     primary: $primary,
     accent: $accent,
     warn: $warn,
     is-dark: true,
     foreground: $mat-dark-theme-foreground,
-    background: $tb-dark-theme-background,
+    background: $virtuan-dark-theme-background,
   );
 }
 
-$tb-dark-theme: get-tb-dark-theme(
-    $tb-dark-primary,
-    $tb-accent
+$virtuan-dark-theme: get-virtuan-dark-theme(
+    $virtuan-dark-primary,
+    $virtuan-accent
 );
 
 @mixin mat-fab-toolbar-theme($theme) {
@@ -174,7 +174,7 @@ $tb-dark-theme: get-tb-dark-theme(
   }
 }
 
-@mixin tb-components-theme($theme) {
+@mixin virtuan-components-theme($theme) {
   $primary: map-get($theme, primary);
 
   mat-toolbar{
@@ -183,15 +183,15 @@ $tb-dark-theme: get-tb-dark-theme(
     }
   }
 
-  @include mat-fab-toolbar-theme($tb-theme);
+  @include mat-fab-toolbar-theme($virtuan-theme);
 }
 
-.tb-default {
-  @include angular-material-theme($tb-theme);
-  @include mat-datetimepicker-theme($tb-theme);
-  @include tb-components-theme($tb-theme);
+.virtuan-default {
+  @include angular-material-theme($virtuan-theme);
+  @include mat-datetimepicker-theme($virtuan-theme);
+  @include virtuan-components-theme($virtuan-theme);
 }
 
-.tb-dark {
-  @include angular-material-theme($tb-dark-theme);
+.virtuan-dark {
+  @include angular-material-theme($virtuan-dark-theme);
 }

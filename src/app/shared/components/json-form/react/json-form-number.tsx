@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 import { TextField } from '@material-ui/core';
 
-interface ThingsboardNumberState extends JsonFormFieldState {
+interface VirtuanNumberState extends JsonFormFieldState {
   focused: boolean;
   lastSuccessfulValue: number;
 }
 
-class ThingsboardNumber extends React.Component<JsonFormFieldProps, ThingsboardNumberState> {
+class VirtuanNumber extends React.Component<JsonFormFieldProps, VirtuanNumberState> {
 
   constructor(props) {
     super(props);
@@ -59,15 +59,15 @@ class ThingsboardNumber extends React.Component<JsonFormFieldProps, ThingsboardN
 
   render() {
 
-    let fieldClass = 'tb-field';
+    let fieldClass = 'virtuan-field';
     if (this.props.form.required) {
-      fieldClass += ' tb-required';
+      fieldClass += ' virtuan-required';
     }
     if (this.props.form.readonly) {
-      fieldClass += ' tb-readonly';
+      fieldClass += ' virtuan-readonly';
     }
     if (this.state.focused) {
-      fieldClass += ' tb-focused';
+      fieldClass += ' virtuan-focused';
     }
     let value = this.state.lastSuccessfulValue;
     if (typeof value !== 'undefined') {
@@ -94,4 +94,4 @@ class ThingsboardNumber extends React.Component<JsonFormFieldProps, ThingsboardN
   }
 }
 
-export default ThingsboardBaseComponent(ThingsboardNumber);
+export default VirtuanBaseComponent(VirtuanNumber);

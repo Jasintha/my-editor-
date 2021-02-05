@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import reactCSS from 'reactcss';
 import * as tinycolor_ from 'tinycolor2';
 import TextField from '@material-ui/core/TextField';
@@ -26,12 +26,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const tinycolor = tinycolor_;
 
-interface ThingsboardColorState extends JsonFormFieldState {
+interface VirtuanColorState extends JsonFormFieldState {
   color: tinycolor.ColorFormats.RGBA | null;
   focused: boolean;
 }
 
-class ThingsboardColor extends React.Component<JsonFormFieldProps, ThingsboardColorState> {
+class VirtuanColor extends React.Component<JsonFormFieldProps, VirtuanColorState> {
 
     constructor(props) {
         super(props);
@@ -143,15 +143,15 @@ class ThingsboardColor extends React.Component<JsonFormFieldProps, ThingsboardCo
             },
         });
 
-        let fieldClass = 'tb-field';
+        let fieldClass = 'virtuan-field';
         if (this.props.form.required) {
-            fieldClass += ' tb-required';
+            fieldClass += ' virtuan-required';
         }
         if (this.props.form.readonly) {
-            fieldClass += ' tb-readonly';
+            fieldClass += ' virtuan-readonly';
         }
         if (this.state.focused) {
-            fieldClass += ' tb-focused';
+            fieldClass += ' virtuan-focused';
         }
 
         let stringColor = '';
@@ -163,8 +163,8 @@ class ThingsboardColor extends React.Component<JsonFormFieldProps, ThingsboardCo
         return (
             <div style={ styles.container }>
                  <div id='color-container' style={ styles.colorContainer }>
-                    <div className='tb-color-preview' style={ styles.swatch }>
-                        <div className='tb-color-result' style={ styles.color }/>
+                    <div className='virtuan-color-preview' style={ styles.swatch }>
+                        <div className='virtuan-color-result' style={ styles.color }/>
                     </div>
                    <TextField
                      className={fieldClass}
@@ -183,4 +183,4 @@ class ThingsboardColor extends React.Component<JsonFormFieldProps, ThingsboardCo
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardColor);
+export default VirtuanBaseComponent(VirtuanColor);

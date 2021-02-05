@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import { NULL_UUID } from '@shared/models/id/has-uuid';
 
 // @dynamic
 @Component({
-  selector: 'tb-dashboard-select',
+  selector: 'virtuan-dashboard-select',
   templateUrl: './dashboard-select.component.html',
   styleUrls: ['./dashboard-select.component.scss'],
   providers: [{
@@ -128,7 +128,7 @@ export class DashboardSelectComponent implements ControlValueAccessor, OnInit {
     const panelWidth = 300;
     const position = this.overlay.position();
     const config = new OverlayConfig({
-      panelClass: 'tb-dashboard-select-panel',
+      panelClass: 'virtuan-dashboard-select-panel',
       backdropClass: 'cdk-overlay-transparent-backdrop',
       hasBackdrop: true,
     });

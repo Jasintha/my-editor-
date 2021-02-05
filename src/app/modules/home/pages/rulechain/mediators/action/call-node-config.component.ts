@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-call-node-config',
+  selector: 'virtuan-call-node-config',
   templateUrl: './call-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -542,7 +542,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
       this.changeSubscription = this.callNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

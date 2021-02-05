@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ interface CircleElement extends RaphaelElement {
 }
 
 @Component({
-  selector: 'tb-led-light',
+  selector: 'virtuan-led-light',
   templateUrl: './led-light.component.html',
   styleUrls: []
 })

@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { DialogService } from '@core/services/dialog.service';
 
 @Component({
-  selector: 'tb-color-input',
+  selector: 'virtuan-color-input',
   templateUrl: './color-input.component.html',
   styleUrls: ['./color-input.component.scss'],
   providers: [

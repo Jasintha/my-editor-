@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import { guid } from '@core/utils';
 import { ResizeObserver } from '@juggle/resize-observer';
 
 @Component({
-  selector: 'tb-json-content',
+  selector: 'virtuan-json-content',
   templateUrl: './json-content.component.html',
   styleUrls: ['./json-content.component.scss'],
   providers: [

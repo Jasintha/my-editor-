@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import { DataKeyType } from '@shared/models/telemetry/telemetry.models';
 import { isEqual } from '@core/utils';
 
 @Component({
-  selector: 'tb-entity-keys-list',
+  selector: 'virtuan-entity-keys-list',
   templateUrl: './entity-keys-list.component.html',
   styleUrls: ['./entity-keys-list.component.scss'],
   providers: [

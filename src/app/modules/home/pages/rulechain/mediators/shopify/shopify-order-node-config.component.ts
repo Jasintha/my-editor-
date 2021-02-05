@@ -29,7 +29,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 
 @Component({
-  selector: 'tb-shopify-order-node-config',
+  selector: 'virtuan-shopify-order-node-config',
   templateUrl: './shopify-order-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

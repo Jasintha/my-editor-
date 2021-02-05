@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FixedWindow } from '@shared/models/time/time.models';
 
 @Component({
-  selector: 'tb-datetime-period',
+  selector: 'virtuan-datetime-period',
   templateUrl: './datetime-period.component.html',
   styleUrls: ['./datetime-period.component.scss'],
   providers: [

@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import { EntityType } from '@shared/models/entity-type.models';
 import { DataKeyType } from '@app/shared/models/telemetry/telemetry.models';
 import { alarmFields } from '@shared/models/alarm.models';
 import { materialColors } from '@app/shared/models/material.models';
-import { WidgetInfo } from '@home/models/widget-component.models';
+//import { WidgetInfo } from '@home/models/widget-component.models';
 import jsonSchemaDefaults from 'json-schema-defaults';
 import materialIconsCodepoints from '!raw-loader!material-design-icons/iconfont/codepoints';
 import { Observable, of, ReplaySubject } from 'rxjs';
@@ -84,7 +84,7 @@ export class UtilsService {
 
   iframeMode = false;
   widgetEditMode = false;
-  editWidgetInfo: WidgetInfo = null;
+  //editWidgetInfo: WidgetInfo = null;
 
   defaultDataKey: DataKey = {
     name: 'f(x)',
@@ -119,7 +119,7 @@ export class UtilsService {
       this.iframeMode = true;
       const dataWidgetAttr = frame.getAttribute('data-widget');
       if (dataWidgetAttr && dataWidgetAttr.length) {
-        this.editWidgetInfo = JSON.parse(dataWidgetAttr);
+       // this.editWidgetInfo = JSON.parse(dataWidgetAttr);
         this.widgetEditMode = true;
       }
     }

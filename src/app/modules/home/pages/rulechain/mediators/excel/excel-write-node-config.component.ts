@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-    selector: 'tb-excelWrite-node-config',
+    selector: 'virtuan-excelWrite-node-config',
     templateUrl: './excel-write-node-config.component.html',
     providers: [{
         provide: NG_VALUE_ACCESSOR,

@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-switch-node-config',
+  selector: 'virtuan-switch-node-config',
   templateUrl: './switch-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -476,7 +476,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
       this.changeSubscription = this.switchNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

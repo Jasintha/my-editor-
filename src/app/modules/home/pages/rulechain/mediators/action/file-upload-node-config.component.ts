@@ -29,7 +29,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 
 @Component({
-  selector: 'tb-file-upload-node-config',
+  selector: 'virtuan-file-upload-node-config',
   templateUrl: './file-upload-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -153,11 +153,11 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
   
   /*
   refreshInputTypes(){
-  console.log("came to refresh");
+
     let inputType: string = this.fileUploadNodeConfigFormGroup.get('inputType').value;
     this.configuration.inputType = inputType;
     if (inputType === 'CONSTANT'){
-    console.log("came to constant");
+
       this.configuration.param= {};
       this.configuration.property= {};
       this.configuration.branchparam= {};
@@ -285,7 +285,7 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
         (configuration: any) => {
           this.configuration.constant = configuration;
 
-          console.log(this.configuration);
+
           this.updateModel(this.configuration);
         }
       );
@@ -294,7 +294,7 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
         (configuration: any) => {
           this.configuration.property = configuration;
 
-          console.log(this.configuration);
+
           this.updateModel(this.configuration);
         }
       );
@@ -338,7 +338,7 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
 
       this.changeSubscription = this.fileUploadNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

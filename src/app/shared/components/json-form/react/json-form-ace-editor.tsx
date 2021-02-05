@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import reactCSS from 'reactcss';
 import ReactAce from 'react-ace';
 import Button from '@material-ui/core/Button';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 import { IEditorProps } from 'react-ace/src/types';
 
-interface ThingsboardAceEditorProps extends JsonFormFieldProps {
+interface VirtuanAceEditorProps extends JsonFormFieldProps {
   mode: string;
   onTidy: (value: string) => string;
 }
 
-interface ThingsboardAceEditorState extends JsonFormFieldState {
+interface VirtuanAceEditorState extends JsonFormFieldState {
   isFull: boolean;
   focused: boolean;
 }
 
-class ThingsboardAceEditor extends React.Component<ThingsboardAceEditorProps, ThingsboardAceEditorState> {
+class VirtuanAceEditor extends React.Component<VirtuanAceEditorProps, VirtuanAceEditorState> {
 
     hostElement: HTMLElement;
     private aceEditor: IEditorProps;
@@ -122,24 +122,24 @@ class ThingsboardAceEditor extends React.Component<ThingsboardAceEditorProps, Th
             }
         });
 
-        let labelClass = 'tb-label';
+        let labelClass = 'virtuan-label';
         if (this.props.form.required) {
-            labelClass += ' tb-required';
+            labelClass += ' virtuan-required';
         }
         if (this.props.form.readonly) {
-            labelClass += ' tb-readonly';
+            labelClass += ' virtuan-readonly';
         }
         if (this.state.focused) {
-            labelClass += ' tb-focused';
+            labelClass += ' virtuan-focused';
         }
-        let containerClass = 'tb-container';
+        let containerClass = 'virtuan-container';
         const style = this.props.form.style || {width: '100%'};
         if (this.state.isFull) {
             containerClass += ' fullscreen-form-field';
         }
         return (
           <div>
-            <div className='tb-json-form' ref={c => (this.hostElement = c)}>
+            <div className='virtuan-json-form' ref={c => (this.hostElement = c)}>
               <div className={containerClass}>
                   <label className={labelClass}>{this.props.form.title}</label>
                   <div className='json-form-ace-editor'>
@@ -179,4 +179,4 @@ class ThingsboardAceEditor extends React.Component<ThingsboardAceEditorProps, Th
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardAceEditor);
+export default VirtuanBaseComponent(VirtuanAceEditor);

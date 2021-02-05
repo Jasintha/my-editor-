@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import { TimeInterval, TimeService } from '@core/services/time.service';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
-  selector: 'tb-timeinterval',
+  selector: 'virtuan-timeinterval',
   templateUrl: './timeinterval.component.html',
   styleUrls: ['./timeinterval.component.scss'],
   providers: [

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-.tb-js-func {
+.virtuan-js-func {
   position: relative;
 
-  &.tb-disabled {
+  &.virtuan-disabled {
     color: rgba(0, 0, 0, .38);
   }
 
@@ -24,12 +24,12 @@
     height: 100%;
   }
 
-  .tb-js-func-panel {
+  .virtuan-js-func-panel {
     height: calc(100% - 80px);
     margin-left: 15px;
     border: 1px solid #c0c0c0;
 
-    #tb-javascript-input {
+    #virtuan-javascript-input {
       width: 100%;
       min-width: 200px;
       height: 100%;
@@ -40,8 +40,8 @@
     }
   }
 
-  .tb-js-func-toolbar {
-    button.mat-button, button.mat-icon-button, button.mat-icon-button.tb-mat-32 {
+  .virtuan-js-func-toolbar {
+    button.mat-button, button.mat-icon-button, button.mat-icon-button.virtuan-mat-32 {
       align-items: center;
       vertical-align: middle;
       min-width: 32px;

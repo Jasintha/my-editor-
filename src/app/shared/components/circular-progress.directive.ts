@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ import { ComponentFactoryResolver, ComponentRef, Directive, ElementRef, Input, V
 import { MatSpinner } from '@angular/material/progress-spinner';
 
 @Directive({
-  selector: '[tb-circular-progress]'
+  selector: '[virtuan-circular-progress]'
 })
 export class CircularProgressDirective {
 
@@ -28,7 +28,7 @@ export class CircularProgressDirective {
 
   cssWidth: any;
 
-  @Input('tb-circular-progress')
+  @Input('virtuan-circular-progress')
   set showProgress(showProgress: boolean) {
     if (this.showProgressValue !== showProgress) {
       const element = this.elementRef.nativeElement;

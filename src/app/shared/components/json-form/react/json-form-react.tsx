@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  */
 import * as React from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import thingsboardTheme from './styles/thingsboardTheme';
-import ThingsboardSchemaForm from './json-form-schema-form';
+import virtuanTheme from './styles/virtuanTheme';
+import VirtuanSchemaForm from './json-form-schema-form';
 import { JsonFormProps } from './json-form.models';
 
-const tbTheme = createMuiTheme(thingsboardTheme);
+const virtTheme = createMuiTheme(virtuanTheme);
 
 class ReactSchemaForm extends React.Component<JsonFormProps, {}> {
 
@@ -31,7 +31,7 @@ class ReactSchemaForm extends React.Component<JsonFormProps, {}> {
 
   render() {
     if (this.props.form.length > 0) {
-      return <ThemeProvider theme={tbTheme}><ThingsboardSchemaForm {...this.props} /></ThemeProvider>;
+      return <ThemeProvider theme={virtTheme}><VirtuanSchemaForm {...this.props} /></ThemeProvider>;
     } else {
       return <div></div>;
     }

@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -35,11 +35,11 @@ import { guid, isUndefined } from '@app/core/utils';
 import { TranslateService } from '@ngx-translate/core';
 import { CancelAnimationFrame, RafService } from '@core/services/raf.service';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { TbEditorCompleter } from '@shared/models/ace/completion.models';
-import { widgetEditorCompleter } from '@home/pages/widget/widget-editor.models';
+import { VirtuanEditorCompleter } from '@shared/models/ace/completion.models';
+//import { widgetEditorCompleter } from '@home/pages/widget/widget-editor.models';
 
 @Component({
-  selector: 'tb-js-func',
+  selector: 'virtuan-js-func',
   templateUrl: './js-func.component.html',
   styleUrls: ['./js-func.component.scss'],
   providers: [
@@ -79,7 +79,7 @@ export class JsFuncComponent implements OnInit, OnDestroy, ControlValueAccessor,
 
   @Input() fillHeight: boolean;
 
-  @Input() editorCompleter: TbEditorCompleter;
+  @Input() editorCompleter: VirtuanEditorCompleter;
 
   private noValidateValue: boolean;
   get noValidate(): boolean {

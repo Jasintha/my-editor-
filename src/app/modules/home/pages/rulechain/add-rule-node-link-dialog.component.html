@@ -1,6 +1,6 @@
 <!--
 
-    Copyright © 2016-2020 The Thingsboard Authors
+
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
   <mat-toolbar color="primary">
     <h2 translate>rulenode.add-link</h2>
     <span fxFlex></span>
-    <div [tb-help]="'ruleEngine'"></div>
+    <div [virtuan-help]="'ruleEngine'"></div>
     <button mat-icon-button
             (click)="cancel()"
             type="button">
@@ -30,12 +30,12 @@
   </mat-progress-bar>
   <div mat-dialog-content>
     <fieldset [disabled]="isLoading$ | async">
-      <tb-rule-node-link
+      <virtuan-rule-node-link
         required
         formControlName="link"
         [allowedLabels]="labels"
         [allowCustom]="allowCustomLabels">
-      </tb-rule-node-link>
+      </virtuan-rule-node-link>
     </fieldset>
   </div>
   <div mat-dialog-actions fxLayoutAlign="end center">

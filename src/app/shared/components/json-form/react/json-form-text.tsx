@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import TextField from '@material-ui/core/TextField';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 
-interface ThingsboardTextState extends JsonFormFieldState {
+interface VirtuanTextState extends JsonFormFieldState {
   focused: boolean;
 }
 
-class ThingsboardText extends React.Component<JsonFormFieldProps, ThingsboardTextState> {
+class VirtuanText extends React.Component<JsonFormFieldProps, VirtuanTextState> {
 
   constructor(props) {
     super(props);
@@ -43,15 +43,15 @@ class ThingsboardText extends React.Component<JsonFormFieldProps, ThingsboardTex
 
   render() {
 
-    let fieldClass = 'tb-field';
+    let fieldClass = 'virtuan-field';
     if (this.props.form.required) {
-      fieldClass += ' tb-required';
+      fieldClass += ' virtuan-required';
     }
     if (this.props.form.readonly) {
-      fieldClass += ' tb-readonly';
+      fieldClass += ' virtuan-readonly';
     }
     if (this.state.focused) {
-      fieldClass += ' tb-focused';
+      fieldClass += ' virtuan-focused';
     }
 
     const multiline = this.props.form.type === 'textarea';
@@ -88,4 +88,4 @@ class ThingsboardText extends React.Component<JsonFormFieldProps, ThingsboardTex
   }
 }
 
-export default ThingsboardBaseComponent(ThingsboardText);
+export default VirtuanBaseComponent(VirtuanText);

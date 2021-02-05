@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FooterComponent } from '@shared/components/footer.component';
 import { LogoComponent } from '@shared/components/logo.component';
-import { TbSnackBarComponent, ToastDirective } from '@shared/components/toast.directive';
+import { VirtuanSnackBarComponent, ToastDirective } from '@shared/components/toast.directive';
 import { BreadcrumbComponent } from '@shared/components/breadcrumb.component';
 import { FlowInjectionToken, NgxFlowModule } from '@flowjs/ngx-flow';
 import { NgxFlowchartModule } from 'ngx-flowchart/dist/ngx-flowchart';
@@ -65,9 +65,9 @@ import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { UserMenuComponent } from '@shared/components/user-menu.component';
 import { NospacePipe } from '@shared/pipe/nospace.pipe';
 import { TranslateModule } from '@ngx-translate/core';
-import { TbCheckboxComponent } from '@shared/components/tb-checkbox.component';
+import { VirtuanCheckboxComponent } from '@shared/components/virtuan-checkbox.component';
 import { HelpComponent } from '@shared/components/help.component';
-import { TbAnchorComponent } from '@shared/components/tb-anchor.component';
+import { VirtuanAnchorComponent } from '@shared/components/virtuan-anchor.component';
 import { MillisecondsToTimeStringPipe } from '@shared/pipe/milliseconds-to-time-string.pipe';
 import { TimewindowComponent } from '@shared/components/time/timewindow.component';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -101,13 +101,12 @@ import {
 } from '@shared/components/fab-toolbar.component';
 import { DashboardSelectPanelComponent } from '@shared/components/dashboard-select-panel.component';
 import { DashboardSelectComponent } from '@shared/components/dashboard-select.component';
-import { WidgetsBundleSelectComponent } from '@shared/components/widgets-bundle-select.component';
 import { KeyboardShortcutPipe } from '@shared/pipe/keyboard-shortcut.pipe';
-import { TbErrorComponent } from '@shared/components/tb-error.component';
+import { VirtuanErrorComponent } from '@shared/components/virtuan-error.component';
 import { EntityTypeListComponent } from '@shared/components/entity/entity-type-list.component';
 import { EntitySubTypeListComponent } from '@shared/components/entity/entity-subtype-list.component';
 import { TruncatePipe } from '@shared/pipe/truncate.pipe';
-import { TbJsonPipe } from '@shared/pipe/tbJson.pipe';
+import { VirtuanJsonPipe } from '@shared/pipe/virtuanJson.pipe';
 import { ColorPickerDialogComponent } from '@shared/components/dialog/color-picker-dialog.component';
 import { MatChipDraggableDirective } from '@shared/components/mat-chip-draggable.directive';
 import { ColorInputComponent } from '@shared/components/color-input.component';
@@ -124,16 +123,15 @@ import { NodeScriptTestDialogComponent } from '@shared/components/dialog/node-sc
 import { MessageTypeAutocompleteComponent } from '@shared/components/message-type-autocomplete.component';
 import { JsonContentComponent } from '@shared/components/json-content.component';
 import { KeyValMapComponent } from '@shared/components/kv-map.component';
-import { TbCheatSheetComponent } from '@shared/components/cheatsheet.component';
-import { TbHotkeysDirective } from '@shared/components/hotkeys.directive';
+import { VirtuanCheatSheetComponent } from '@shared/components/cheatsheet.component';
+import { VirtuanHotkeysDirective } from '@shared/components/hotkeys.directive';
 import { NavTreeComponent } from '@shared/components/nav-tree.component';
 import { LedLightComponent } from '@shared/components/led-light.component';
-import { TbJsonToStringDirective } from '@shared/components/directives/tb-json-to-string.directive';
+import { VirtuanJsonToStringDirective } from '@shared/components/directives/virtuan-json-to-string.directive';
 import { JsonObjectEditDialogComponent } from '@shared/components/dialog/json-object-edit-dialog.component';
 import { HistorySelectorComponent } from './components/time/history-selector/history-selector.component';
 import { EntityGatewaySelectComponent } from '@shared/components/entity/entity-gateway-select.component';
 import { QueueTypeListComponent } from '@shared/components/queue/queue-type-list.component';
-import { ContactComponent } from '@shared/components/contact.component';
 
 @NgModule({
   providers: [
@@ -142,7 +140,7 @@ import { ContactComponent } from '@shared/components/contact.component';
     EnumToArrayPipe,
     HighlightPipe,
     TruncatePipe,
-    TbJsonPipe,
+    VirtuanJsonPipe,
     {
       provide: FlowInjectionToken,
       useValue: Flow
@@ -156,13 +154,13 @@ import { ContactComponent } from '@shared/components/contact.component';
     FullscreenDirective,
     CircularProgressDirective,
     MatChipDraggableDirective,
-    TbHotkeysDirective,
-    TbAnchorComponent,
+    VirtuanHotkeysDirective,
+    VirtuanAnchorComponent,
     HelpComponent,
-    TbCheckboxComponent,
-    TbSnackBarComponent,
-    TbErrorComponent,
-    TbCheatSheetComponent,
+    VirtuanCheckboxComponent,
+    VirtuanSnackBarComponent,
+    VirtuanErrorComponent,
+    VirtuanCheatSheetComponent,
     BreadcrumbComponent,
     UserMenuComponent,
     TimewindowComponent,
@@ -193,7 +191,6 @@ import { ContactComponent } from '@shared/components/contact.component';
     FabTriggerDirective,
     FabActionsDirective,
     FabToolbarComponent,
-    WidgetsBundleSelectComponent,
     ConfirmDialogComponent,
     AlertDialogComponent,
     TodoDialogComponent,
@@ -214,13 +211,12 @@ import { ContactComponent } from '@shared/components/contact.component';
     EnumToArrayPipe,
     HighlightPipe,
     TruncatePipe,
-    TbJsonPipe,
+    VirtuanJsonPipe,
     KeyboardShortcutPipe,
-    TbJsonToStringDirective,
+    VirtuanJsonToStringDirective,
     JsonObjectEditDialogComponent,
     HistorySelectorComponent,
-    EntityGatewaySelectComponent,
-    ContactComponent
+    EntityGatewaySelectComponent
   ],
   imports: [
     CommonModule,
@@ -278,12 +274,12 @@ import { ContactComponent } from '@shared/components/contact.component';
     FullscreenDirective,
     CircularProgressDirective,
     MatChipDraggableDirective,
-    TbHotkeysDirective,
-    TbAnchorComponent,
+    VirtuanHotkeysDirective,
+    VirtuanAnchorComponent,
     HelpComponent,
-    TbCheckboxComponent,
-    TbErrorComponent,
-    TbCheatSheetComponent,
+    VirtuanCheckboxComponent,
+    VirtuanErrorComponent,
+    VirtuanCheatSheetComponent,
     BreadcrumbComponent,
     UserMenuComponent,
     TimewindowComponent,
@@ -312,7 +308,6 @@ import { ContactComponent } from '@shared/components/contact.component';
     FabTriggerDirective,
     FabActionsDirective,
     FabToolbarComponent,
-    WidgetsBundleSelectComponent,
     ValueInputComponent,
     MatButtonModule,
     MatCheckboxModule,
@@ -376,13 +371,12 @@ import { ContactComponent } from '@shared/components/contact.component';
     EnumToArrayPipe,
     HighlightPipe,
     TruncatePipe,
-    TbJsonPipe,
+    VirtuanJsonPipe,
     KeyboardShortcutPipe,
     TranslateModule,
     JsonObjectEditDialogComponent,
     HistorySelectorComponent,
-    EntityGatewaySelectComponent,
-    ContactComponent
+    EntityGatewaySelectComponent
   ]
 })
 export class SharedModule { }

@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from 
 import { DialogService } from '@core/services/dialog.service';
 
 @Component({
-  selector: 'tb-material-icon-select',
+  selector: 'virtuan-material-icon-select',
   templateUrl: './material-icon-select.component.html',
   styleUrls: ['./material-icon-select.component.scss'],
   providers: [

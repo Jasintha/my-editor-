@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ export interface NodeScriptTestDialogData {
 }
 
 @Component({
-  selector: 'tb-node-script-test-dialog',
+  selector: 'virtuan-node-script-test-dialog',
   templateUrl: './node-script-test-dialog.component.html',
   providers: [{provide: ErrorStateMatcher, useExisting: NodeScriptTestDialogComponent}],
   styleUrls: ['./node-script-test-dialog.component.scss'],

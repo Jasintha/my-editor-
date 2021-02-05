@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -222,7 +222,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.FILTER,
         name: 'rulenode.type-filter',
         details: 'rulenode.type-filter-details',
-        nodeClass: 'tb-filter-type',
+        nodeClass: 'virtuan-filter-type',
         icon: 'filter_list'
       }
     ],
@@ -232,7 +232,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.ENRICHMENT,
         name: 'rulenode.type-enrichment',
         details: 'rulenode.type-enrichment-details',
-        nodeClass: 'tb-enrichment-type',
+        nodeClass: 'virtuan-enrichment-type',
         icon: 'playlist_add'
       }
     ],
@@ -242,7 +242,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.TRANSFORMATION,
         name: 'rulenode.type-transformation',
         details: 'rulenode.type-transformation-details',
-        nodeClass: 'tb-transformation-type',
+        nodeClass: 'virtuan-transformation-type',
         icon: 'transform'
       }
     ],
@@ -252,7 +252,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.ACTION,
         name: 'rulenode.type-action',
         details: 'rulenode.type-action-details',
-        nodeClass: 'tb-action-type',
+        nodeClass: 'virtuan-action-type',
         icon: 'flash_on'
       }
     ],
@@ -262,7 +262,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.DATABASE_OPERATIONS,
         name: 'rulenode.type-database_operations',
         details: 'rulenode.type-database_operations-details',
-        nodeClass: 'tb-database_operations-type',
+        nodeClass: 'virtuan-database_operations-type',
         icon: 'cloud_upload'
       }
     ],
@@ -272,7 +272,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.MESSAGING,
         name: 'rulenode.type-messaging',
         details: 'rulenode.type-messaging-details',
-        nodeClass: 'tb-messaging-type',
+        nodeClass: 'virtuan-messaging-type',
         icon: 'comment'
       }
     ],
@@ -282,7 +282,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.CQRS,
         name: 'rulenode.type-cqrs',
         details: 'rulenode.type-cqrs-details',
-        nodeClass: 'tb-cqrs-type',
+        nodeClass: 'virtuan-cqrs-type',
         icon: 'cloud_upload'
       }
     ],
@@ -292,7 +292,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.CONNECTOR,
         name: 'rulenode.type-connector',
         details: 'rulenode.type-connector-details',
-        nodeClass: 'tb-connector-type',
+        nodeClass: 'virtuan-connector-type',
         icon: 'cloud_upload'
       }
     ],
@@ -302,7 +302,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.CORE,
         name: 'rulenode.type-core',
         details: 'rulenode.type-core-details',
-        nodeClass: 'tb-core-type',
+        nodeClass: 'virtuan-core-type',
         icon: 'extension'
       }
     ],
@@ -312,7 +312,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.ROOTING,
         name: 'rulenode.type-rooting',
         details: 'rulenode.type-rooting-details',
-        nodeClass: 'tb-rooting-type',
+        nodeClass: 'virtuan-rooting-type',
         icon: 'input'
       }
     ],
@@ -322,7 +322,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.EXTERNAL,
         name: 'rulenode.type-external',
         details: 'rulenode.type-external-details',
-        nodeClass: 'tb-external-type',
+        nodeClass: 'virtuan-external-type',
         icon: 'cloud_upload'
       }
     ],
@@ -332,7 +332,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.RULE_CHAIN,
         name: 'rulenode.type-rule-chain',
         details: 'rulenode.type-rule-chain-details',
-        nodeClass: 'tb-rule-chain-type',
+        nodeClass: 'virtuan-rule-chain-type',
         icon: 'settings_ethernet'
       }
     ],
@@ -342,7 +342,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.INPUT,
         name: 'rulenode.type-input',
         details: 'rulenode.type-input-details',
-        nodeClass: 'tb-input-type',
+        nodeClass: 'virtuan-input-type',
         icon: 'input',
         special: true
       }
@@ -353,7 +353,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         value: RuleNodeType.UNKNOWN,
         name: 'rulenode.type-unknown',
         details: 'rulenode.type-unknown-details',
-        nodeClass: 'tb-unknown-type',
+        nodeClass: 'virtuan-unknown-type',
         icon: 'help_outline'
       }
     ]
@@ -440,40 +440,7 @@ export const messageTypeNames = new Map<MessageType, string>(
 );
 
 const ruleNodeClazzHelpLinkMap = {
-  'org.thingsboard.rule.engine.filter.TbCheckRelationNode': 'ruleNodeCheckRelation',
-  'org.thingsboard.rule.engine.filter.TbCheckMessageNode': 'ruleNodeCheckExistenceFields',
-  'org.thingsboard.rule.engine.filter.TbJsFilterNode': 'ruleNodeJsFilter',
-  'org.thingsboard.rule.engine.filter.TbJsSwitchNode': 'ruleNodeJsSwitch',
-  'org.thingsboard.rule.engine.filter.TbMsgTypeFilterNode': 'ruleNodeMessageTypeFilter',
-  'org.thingsboard.rule.engine.filter.TbMsgTypeSwitchNode': 'ruleNodeMessageTypeSwitch',
-  'org.thingsboard.rule.engine.filter.TbOriginatorTypeFilterNode': 'ruleNodeOriginatorTypeFilter',
-  'org.thingsboard.rule.engine.filter.TbOriginatorTypeSwitchNode': 'ruleNodeOriginatorTypeSwitch',
-  'org.thingsboard.rule.engine.metadata.TbGetAttributesNode': 'ruleNodeOriginatorAttributes',
-  'org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode': 'ruleNodeOriginatorFields',
-  'org.thingsboard.rule.engine.metadata.TbGetCustomerAttributeNode': 'ruleNodeCustomerAttributes',
-  'org.thingsboard.rule.engine.metadata.TbGetDeviceAttrNode': 'ruleNodeDeviceAttributes',
-  'org.thingsboard.rule.engine.metadata.TbGetRelatedAttributeNode': 'ruleNodeRelatedAttributes',
-  'org.thingsboard.rule.engine.metadata.TbGetTenantAttributeNode': 'ruleNodeTenantAttributes',
-  'org.thingsboard.rule.engine.transform.TbChangeOriginatorNode': 'ruleNodeChangeOriginator',
-  'org.thingsboard.rule.engine.transform.TbTransformMsgNode': 'ruleNodeTransformMsg',
-  'org.thingsboard.rule.engine.mail.TbMsgToEmailNode': 'ruleNodeMsgToEmail',
-  'org.thingsboard.rule.engine.action.TbClearAlarmNode': 'ruleNodeClearAlarm',
-  'org.thingsboard.rule.engine.action.TbCreateAlarmNode': 'ruleNodeCreateAlarm',
-  'org.thingsboard.rule.engine.delay.TbMsgDelayNode': 'ruleNodeMsgDelay',
-  'org.thingsboard.rule.engine.debug.TbMsgGeneratorNode': 'ruleNodeMsgGenerator',
-  'org.thingsboard.rule.engine.action.TbLogNode': 'ruleNodeLog',
-  'org.thingsboard.rule.engine.rpc.TbSendRPCReplyNode': 'ruleNodeRpcCallReply',
-  'org.thingsboard.rule.engine.rpc.TbSendRPCRequestNode': 'ruleNodeRpcCallRequest',
-  'org.thingsboard.rule.engine.telemetry.TbMsgAttributesNode': 'ruleNodeSaveAttributes',
-  'org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode': 'ruleNodeSaveTimeseries',
-  'tb.internal.RuleChain': 'ruleNodeRuleChain',
-  'org.thingsboard.rule.engine.aws.sns.TbSnsNode': 'ruleNodeAwsSns',
-  'org.thingsboard.rule.engine.aws.sqs.TbSqsNode': 'ruleNodeAwsSqs',
-  'org.thingsboard.rule.engine.kafka.TbKafkaNode': 'ruleNodeKafka',
-  'org.thingsboard.rule.engine.mqtt.TbMqttNode': 'ruleNodeMqtt',
-  'org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode': 'ruleNodeRabbitMq',
-  'org.thingsboard.rule.engine.rest.TbRestApiCallNode': 'ruleNodeRestApiCall',
-  'org.thingsboard.rule.engine.mail.TbSendEmailNode': 'ruleNodeSendEmail'
+  'virtuan.internal.RuleChain': 'ruleNodeRuleChain'
 };
 
 export function getRuleNodeHelpLink(component: RuleNodeComponentDescriptor): string {

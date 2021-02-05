@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ import { DebugEventType, EventType } from '@shared/models/event.models';
 import Timeout = NodeJS.Timeout;
 
 @Component({
-  selector: 'tb-rulechain-page',
+  selector: 'virtuan-rulechain-page',
   templateUrl: './rulechain-page.component.html',
   styleUrls: ['./rulechain-page.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -129,8 +129,8 @@ export class RuleChainPageComponent extends PageComponent
   editingRuleNodeAllowCustomLabels = false;
   editingRuleNodeLinkLabels: {[label: string]: LinkLabel};
 
-  @ViewChild('tbRuleNode') ruleNodeComponent: RuleNodeDetailsComponent;
-  @ViewChild('tbRuleNodeLink') ruleNodeLinkComponent: RuleNodeLinkComponent;
+  @ViewChild('virtuanRuleNode') ruleNodeComponent: RuleNodeDetailsComponent;
+  @ViewChild('virtuanRuleNodeLink') ruleNodeLinkComponent: RuleNodeLinkComponent;
 
   editingRuleNodeLink: FcRuleEdge = null;
   isEditingRuleNodeLink = false;
@@ -769,7 +769,7 @@ export class RuleChainPageComponent extends PageComponent
 
   private prepareRuleChainContextMenu(): RuleChainMenuContextInfo {
     const contextInfo: RuleChainMenuContextInfo = {
-      headerClass: 'tb-rulechain-header',
+      headerClass: 'virtuan-rulechain-header',
       icon: 'settings_ethernet',
       title: this.ruleChain.name,
       subtitle: this.translate.instant('rulechain.rulechain'),
@@ -917,7 +917,7 @@ export class RuleChainPageComponent extends PageComponent
 
   private prepareEdgeContextMenu(edge: FcRuleEdge): RuleChainMenuContextInfo {
     const contextInfo: RuleChainMenuContextInfo = {
-      headerClass: 'tb-link-header',
+      headerClass: 'virtuan-link-header',
       icon: 'trending_flat',
       title: edge.label,
       subtitle: this.translate.instant('rulenode.link'),
@@ -964,8 +964,7 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   openNodeDetails(node: FcRuleNode) {
-  console.log("open node");
-  console.log(node);
+
 
     this.branchAvailability = {'branchParams': [], 'branchFound': false};
     this.connectorfields = [];
@@ -1032,7 +1031,7 @@ export class RuleChainPageComponent extends PageComponent
       });
 
       let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], []);
-      console.log(branchFoundObj);
+
 
 
     let valueObjectPropertyArray = [];
@@ -1076,8 +1075,7 @@ export class RuleChainPageComponent extends PageComponent
 
 
       if(branchFoundObj.branchFound){
-        console.log("branch node");
-        console.log(nodes[branchFoundObj.branchIndex]);
+
 
         if(nodes[branchFoundObj.branchIndex].configuration.branchParams){
             for (let param of nodes[branchFoundObj.branchIndex].configuration.branchParams){
@@ -1337,10 +1335,10 @@ export class RuleChainPageComponent extends PageComponent
   typeHeaderMouseEnter(event: MouseEvent, ruleNodeType: RuleNodeType) {
     const type = ruleNodeTypeDescriptors.get(ruleNodeType);
     this.displayTooltip(event,
-      '<div class="tb-rule-node-tooltip tb-lib-tooltip">' +
-      '<div id="tb-node-content" layout="column">' +
-      '<div class="tb-node-title">' + this.translate.instant(type.name) + '</div>' +
-      '<div class="tb-node-details">' + this.translate.instant(type.details) + '</div>' +
+      '<div class="virtuan-rule-node-tooltip virtuan-lib-tooltip">' +
+      '<div id="virtuan-node-content" layout="column">' +
+      '<div class="virtuan-node-title">' + this.translate.instant(type.name) + '</div>' +
+      '<div class="virtuan-node-details">' + this.translate.instant(type.details) + '</div>' +
       '</div>' +
       '</div>'
     );
@@ -1348,11 +1346,11 @@ export class RuleChainPageComponent extends PageComponent
 
   displayLibNodeDescriptionTooltip(event: MouseEvent, node: FcRuleNodeType) {
     this.displayTooltip(event,
-      '<div class="tb-rule-node-tooltip tb-lib-tooltip">' +
-      '<div id="tb-node-content" layout="column">' +
-      '<div class="tb-node-title">' + node.component.name + '</div>' +
-      '<div class="tb-node-description">' + node.component.configurationDescriptor.nodeDefinition.description + '</div>' +
-      '<div class="tb-node-details">' + node.component.configurationDescriptor.nodeDefinition.details + '</div>' +
+      '<div class="virtuan-rule-node-tooltip virtuan-lib-tooltip">' +
+      '<div id="virtuan-node-content" layout="column">' +
+      '<div class="virtuan-node-title">' + node.component.name + '</div>' +
+      '<div class="virtuan-node-description">' + node.component.configurationDescriptor.nodeDefinition.description + '</div>' +
+      '<div class="virtuan-node-details">' + node.component.configurationDescriptor.nodeDefinition.details + '</div>' +
       '</div>' +
       '</div>'
     );
@@ -1373,12 +1371,12 @@ export class RuleChainPageComponent extends PageComponent
           details = node.additionalInfo.description;
         }
       }
-      let tooltipContent = '<div class="tb-rule-node-tooltip">' +
-        '<div id="tb-node-content" layout="column">' +
-        '<div class="tb-node-title">' + name + '</div>' +
-        '<div class="tb-node-description">' + desc + '</div>';
+      let tooltipContent = '<div class="virtuan-rule-node-tooltip">' +
+        '<div id="virtuan-node-content" layout="column">' +
+        '<div class="virtuan-node-title">' + name + '</div>' +
+        '<div class="virtuan-node-description">' + desc + '</div>';
       if (details) {
-        tooltipContent += '<div class="tb-node-details">' + details + '</div>';
+        tooltipContent += '<div class="virtuan-node-details">' + details + '</div>';
       }
       tooltipContent += '</div>' +
         '</div>';
@@ -1620,7 +1618,7 @@ export class RuleChainPageComponent extends PageComponent
     this.dialog.open<AddRuleNodeDialogComponent, AddRuleNodeDialogData,
       FcRuleNode>(AddRuleNodeDialogComponent, {
       disableClose: true,
-      panelClass: ['tb-dialog', 'tb-fullscreen-dialog'],
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
       data: {
         ruleNode,
         ruleChainId,
@@ -1686,7 +1684,7 @@ export class RuleChainPageComponent extends PageComponent
     return this.dialog.open<AddRuleNodeLinkDialogComponent, AddRuleNodeLinkDialogData,
       FcRuleEdge>(AddRuleNodeLinkDialogComponent, {
       disableClose: true,
-      panelClass: ['tb-dialog', 'tb-fullscreen-dialog'],
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
       data: {
         link,
         labels,
@@ -1719,9 +1717,9 @@ export class RuleChainPageComponent extends PageComponent
             trackOrigin: true
           }
         );
-        const content = '<div class="tb-rule-node-error-tooltip">' +
+        const content = '<div class="virtuan-rule-node-error-tooltip">' +
           '<div id="tooltip-content" layout="column">' +
-          '<div class="tb-node-details">' + node.error + '</div>' +
+          '<div class="virtuan-node-details">' + node.error + '</div>' +
           '</div>' +
           '</div>';
         const contentElement = $(content);
@@ -1790,7 +1788,7 @@ export interface AddRuleNodeLinkDialogData {
 }
 
 @Component({
-  selector: 'tb-add-rule-node-link-dialog',
+  selector: 'virtuan-add-rule-node-link-dialog',
   templateUrl: './add-rule-node-link-dialog.component.html',
   providers: [{provide: ErrorStateMatcher, useExisting: AddRuleNodeLinkDialogComponent}],
   styleUrls: ['./add-rule-node-link-dialog.component.scss']
@@ -1878,7 +1876,7 @@ export interface AddRuleNodeDialogData {
 }
 
 @Component({
-  selector: 'tb-add-rule-node-dialog',
+  selector: 'virtuan-add-rule-node-dialog',
   templateUrl: './add-rule-node-dialog.component.html',
   providers: [{provide: ErrorStateMatcher, useExisting: AddRuleNodeDialogComponent}],
   styleUrls: []
@@ -1886,7 +1884,7 @@ export interface AddRuleNodeDialogData {
 export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialogComponent, FcRuleNode>
   implements OnInit, ErrorStateMatcher {
 
-  @ViewChild('tbRuleNode', {static: true}) ruleNodeDetailsComponent: RuleNodeDetailsComponent;
+  @ViewChild('virtuanRuleNode', {static: true}) ruleNodeDetailsComponent: RuleNodeDetailsComponent;
 
   ruleNode: FcRuleNode;
   ruleChainId: string;
@@ -1977,7 +1975,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   }
 
   add(): void {
-    console.log("add called ==================================");
+
     this.submitted = true;
     //this.ruleNodeDetailsComponent.validate();
     //if (this.ruleNodeDetailsComponent.ruleNodeFormGroup.valid) {

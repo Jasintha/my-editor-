@@ -1,6 +1,6 @@
 <!--
 
-    Copyright © 2016-2020 The Thingsboard Authors
+
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@
     <mat-icon *ngIf="icon">{{icon}}</mat-icon>
     <span *ngIf="label">{{label}}</span>
   </mat-label>
-  <div matPrefix class="tb-color-preview" (click)="showColorPicker()" style="margin-right: 5px;">
-    <div class="tb-color-result" [ngStyle]="{background: colorFormGroup.get('color').value}"></div>
+  <div matPrefix class="virtuan-color-preview" (click)="showColorPicker()" style="margin-right: 5px;">
+    <div class="virtuan-color-result" [ngStyle]="{background: colorFormGroup.get('color').value}"></div>
   </div>
   <input matInput formControlName="color" (mousedown)="openOnInput && showColorPicker()" [required]="required">
   <button *ngIf="colorClearButton"

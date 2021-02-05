@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 import { MissingTranslationHandler, MissingTranslationHandlerParams } from '@ngx-translate/core';
 import { customTranslationsPrefix } from '@app/shared/models/constants';
 
-export class TbMissingTranslationHandler implements MissingTranslationHandler {
+export class VirtuanMissingTranslationHandler implements MissingTranslationHandler {
   handle(params: MissingTranslationHandlerParams) {
     if (params.key && !params.key.startsWith(customTranslationsPrefix)) {
       console.warn('Translation for ' + params.key + ' doesn\'t exist');

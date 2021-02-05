@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import { AssetService } from '@core/http/asset.service';
 import { EntityViewService } from '@core/http/entity-view.service';
 
 @Component({
-  selector: 'tb-entity-subtype-select',
+  selector: 'virtuan-entity-subtype-select',
   templateUrl: './entity-subtype-select.component.html',
   styleUrls: ['./entity-subtype-select.component.scss'],
   providers: [{

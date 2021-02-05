@@ -1,5 +1,5 @@
 /**
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@mixin tb-mat-icon-size($size) {
+@mixin virtuan-mat-icon-size($size) {
   width: #{$size}px;
   min-width: #{$size}px;
   height: #{$size}px;
@@ -26,7 +26,7 @@
   }
 }
 
-@mixin tb-mat-icon-button-size($size) {
+@mixin virtuan-mat-icon-button-size($size) {
   width: #{$size}px;
   height: #{$size}px;
   line-height: #{$size}px;
@@ -37,7 +37,7 @@
   }
 }
 
-@mixin tb-checkered-bg() {
+@mixin virtuan-checkered-bg() {
   background-color: #fff;
   background-image:
     linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd),

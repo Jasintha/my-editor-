@@ -1,5 +1,5 @@
 /**
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,35 +19,35 @@ $previewSize: 100px !default;
 
 :host {
 
-  .tb-container {
+  .virtuan-container {
     margin-top: 0;
-    label.tb-title {
+    label.virtuan-title {
       display: block;
       padding-bottom: 8px;
     }
   }
 
-  .tb-file-select-container {
+  .virtuan-file-select-container {
     position: relative;
     width: 100%;
     height: $previewSize;
   }
 
-  .tb-file-preview {
+  .virtuan-file-preview {
     width: auto;
     max-width: $previewSize;
     height: auto;
     max-height: $previewSize;
   }
 
-  .tb-file-clear-container {
+  .virtuan-file-clear-container {
     position: relative;
     float: right;
     width: 48px;
     height: $previewSize;
   }
 
-  .tb-file-clear-btn {
+  .virtuan-file-clear-btn {
     position: absolute !important;
     top: 50%;
     transform: translate(0%, -50%) !important;
@@ -57,7 +57,7 @@ $previewSize: 100px !default;
     display: none;
   }
 
-  .tb-flow-drop {
+  .virtuan-flow-drop {
     position: relative;
     height: $previewSize;
     overflow: hidden;

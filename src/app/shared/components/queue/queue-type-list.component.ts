@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import { QueueService } from '@core/http/queue.service';
 import { ServiceType } from '@shared/models/queue.models';
 
 @Component({
-  selector: 'tb-queue-type-list',
+  selector: 'virtuan-queue-type-list',
   templateUrl: './queue-type-list.component.html',
   styleUrls: [],
   providers: [{

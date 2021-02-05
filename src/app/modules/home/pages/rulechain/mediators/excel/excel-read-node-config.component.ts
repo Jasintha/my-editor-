@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-    selector: 'tb-excelRead-node-config',
+    selector: 'virtuan-excelRead-node-config',
     templateUrl: './excel-read-node-config.component.html',
     providers: [{
         provide: NG_VALUE_ACCESSOR,

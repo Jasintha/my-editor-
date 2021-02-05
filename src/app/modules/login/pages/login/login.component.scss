@@ -1,5 +1,5 @@
 /**
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +18,20 @@
 :host {
   display: flex;
   flex: 1 1 0;
-  .tb-login-content {
+  .virtuan-login-content {
     margin-top: 36px;
     margin-bottom: 76px;
     background-color: rgb(250, 250, 250);
-    .tb-login-form {
+    .virtuan-login-form {
       @media #{$mat-gt-xs} {
         width: 550px !important;
       }
 
-      .tb-reset-password{
+      .virtuan-reset-password{
         padding: 0 6px;
       }
 
-      .tb-action-button{
+      .virtuan-action-button{
         padding: 20px 0 16px;
       }
     }

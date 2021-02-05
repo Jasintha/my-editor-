@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ export class DialogService {
       }
     };
     if (fullscreen) {
-      dialogConfig.panelClass = ['tb-fullscreen-dialog'];
+      dialogConfig.panelClass = ['virtuan-fullscreen-dialog'];
     }
     const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
     return dialogRef.afterClosed();
@@ -72,7 +72,7 @@ export class DialogService {
       }
     };
     if (fullscreen) {
-      dialogConfig.panelClass = ['tb-fullscreen-dialog'];
+      dialogConfig.panelClass = ['virtuan-fullscreen-dialog'];
     }
     const dialogRef = this.dialog.open(AlertDialogComponent, dialogConfig);
     return dialogRef.afterClosed();
@@ -82,7 +82,7 @@ export class DialogService {
     return this.dialog.open<ColorPickerDialogComponent, ColorPickerDialogData, string>(ColorPickerDialogComponent,
       {
         disableClose: true,
-        panelClass: ['tb-dialog', 'tb-fullscreen-dialog'],
+        panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
         data: {
           color
         }
@@ -93,7 +93,7 @@ export class DialogService {
     return this.dialog.open<MaterialIconsDialogComponent, MaterialIconsDialogData, string>(MaterialIconsDialogComponent,
       {
         disableClose: true,
-        panelClass: ['tb-dialog', 'tb-fullscreen-dialog'],
+        panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
         data: {
           icon
         }
@@ -127,7 +127,7 @@ export class DialogService {
   todo(): Observable<any> {
     const dialogConfig: MatDialogConfig = {
       disableClose: true,
-      panelClass: ['tb-fullscreen-dialog']
+      panelClass: ['virtuan-fullscreen-dialog']
     };
     const dialogRef = this.dialog.open(TodoDialogComponent, dialogConfig);
     return dialogRef.afterClosed();

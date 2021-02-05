@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -358,9 +358,8 @@ export class AuthService {
         let authPayload = {} as AuthPayload;
         const jwtToken = AuthService._storeGet('jwt_token');
         authPayload.authUser = this.jwtHelper.decodeToken(jwtToken);
-        console.log("payload user");
-        console.log(authPayload.authUser);
-        console.log(authPayload.authUser.userId);
+
+
         if (authPayload.authUser && authPayload.authUser.scopes && authPayload.authUser.scopes.length) {
           authPayload.authUser.authority = Authority[authPayload.authUser.scopes[0]];
         } else if (authPayload.authUser) {
@@ -369,8 +368,7 @@ export class AuthService {
         if (authPayload.authUser.isPublic) {
           authPayload.forceFullscreen = true;
         }
-        console.log("authPayload");
-        console.log(authPayload);
+
 
         if (authPayload.authUser.isPublic) {
           this.loadSystemParams(authPayload).subscribe(
@@ -385,7 +383,7 @@ export class AuthService {
           );
         } else if (authPayload.authUser.userId) {
 
-          console.log("get current user");
+
 
           this.userService.getUser(authPayload.authUser.userId).subscribe(
             (user) => {
@@ -418,7 +416,7 @@ export class AuthService {
             }
           );
         } else {
-        console.log("came error user");
+
           loadUserSubject.error(null);
         }
       },
@@ -487,7 +485,7 @@ export class AuthService {
 
     if (!AuthService.isTokenValid('jwt_token')) {
 
-    console.log("toekn not valid")
+
       if (doRefresh) {
         this.refreshJwtToken().subscribe(
           () => {
@@ -504,12 +502,12 @@ export class AuthService {
       }
     } else {
 
-      console.log("token val")
+
 
       subject.next();
       subject.complete();
     }
-     console.log(subject)
+
     return subject;
   }
 
@@ -572,22 +570,21 @@ export class AuthService {
     const tokenData = this.jwtHelper.decodeToken(token);
     const issuedAt = tokenData.iat;
     const expTime = tokenData.exp;
-    console.log(issuedAt);
-    console.log(expTime);
+
 
     if (issuedAt && expTime) {
       const ttl = expTime - issuedAt;
-      console.log(ttl);
+
       if (ttl > 0) {
         const clientExpiration = new Date().valueOf() + ttl * 1000;
         localStorage.setItem(prefix, token);
         localStorage.setItem(prefix + '_expiration', '' + clientExpiration);
         valid = true;
-        console.log("valid");
+
       }
     }
     if (!valid && notify) {
-      console.log("not valid");
+
       this.notifyUnauthenticated();
     }
   }

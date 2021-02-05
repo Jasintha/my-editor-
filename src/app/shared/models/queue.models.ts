@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 ///
 
 export enum ServiceType {
-  TB_CORE = 'TB_CORE',
-  TB_RULE_ENGINE = 'TB_RULE_ENGINE',
-  TB_TRANSPORT = 'TB_TRANSPORT',
+  VIRTUAN_CORE = 'VIRTUAN_CORE',
+  VIRTUAN_RULE_ENGINE = 'VIRTUAN_RULE_ENGINE',
+  VIRTUAN_TRANSPORT = 'VIRTUAN_TRANSPORT',
   JS_EXECUTOR = 'JS_EXECUTOR'
 }

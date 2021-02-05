@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-query-store-node-config',
+  selector: 'virtuan-query-store-node-config',
   templateUrl: './query-store-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -208,8 +208,7 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
       }
 
-      console.log(this.configuration.entity);
-      console.log(this.inputEntities);
+
 
       let dbType = '';
       if(this.queryDb && this.queryDb !== ''){
@@ -271,7 +270,7 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
 
       this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

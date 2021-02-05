@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 
-interface ThingsboardDateState extends JsonFormFieldState {
+interface VirtuanDateState extends JsonFormFieldState {
   currentValue: Date | null;
 }
 
-class ThingsboardDate extends React.Component<JsonFormFieldProps, ThingsboardDateState> {
+class VirtuanDate extends React.Component<JsonFormFieldProps, VirtuanDateState> {
 
     constructor(props) {
         super(props);
@@ -47,12 +47,12 @@ class ThingsboardDate extends React.Component<JsonFormFieldProps, ThingsboardDat
 
     render() {
 
-        let fieldClass = 'tb-date-field';
+        let fieldClass = 'virtuan-date-field';
         if (this.props.form.required) {
-            fieldClass += ' tb-required';
+            fieldClass += ' virtuan-required';
         }
         if (this.props.form.readonly) {
-            fieldClass += ' tb-readonly';
+            fieldClass += ' virtuan-readonly';
         }
 
         return (
@@ -76,4 +76,4 @@ class ThingsboardDate extends React.Component<JsonFormFieldProps, ThingsboardDat
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardDate);
+export default VirtuanBaseComponent(VirtuanDate);

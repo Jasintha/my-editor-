@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-    selector: 'tb-pdf-node-config',
+    selector: 'virtuan-pdf-node-config',
     templateUrl: './pdf-node-config.component.html',
     providers: [{
         provide: NG_VALUE_ACCESSOR,

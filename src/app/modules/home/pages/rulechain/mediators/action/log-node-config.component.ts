@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-log-node-config',
+  selector: 'virtuan-log-node-config',
   templateUrl: './log-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -259,8 +259,8 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       this.changeSubscription = null;
     }
     if (this.definedConfigComponent) {
-    console.log("came inside definedCOnfig Component");
-    console.log(this.configuration);
+
+
       this.definedConfigComponent.configuration = this.configuration;
       this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
         this.updateModel(configuration);

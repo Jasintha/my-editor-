@@ -1,5 +1,5 @@
 /**
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 :host ::ng-deep {
-  .tb-button-toggle {
-    .tb-toggle-icon {
+  .virtuan-button-toggle {
+    .virtuan-toggle-icon {
       display: inline-block;
       width: 15px;
       margin: auto 0 auto auto;
       background-size: 100% auto;
       transition: transform .3s ease-in-out;
-      &.tb-toggled {
+      &.virtuan-toggled {
         transform: rotateZ(180deg);
       }
     }
   }
 
-  .tb-menu-toggle-list {
+  .virtuan-menu-toggle-list {
     position: relative;
     z-index: 1;
     overflow: hidden;

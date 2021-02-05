@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UtilsService } from '@core/services/utils.service';
 
 @Component({
-  selector: 'tb-image-input',
+  selector: 'virtuan-image-input',
   templateUrl: './image-input.component.html',
   styleUrls: ['./image-input.component.scss'],
   providers: [

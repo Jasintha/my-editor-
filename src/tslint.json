@@ -4,13 +4,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "tb",
+      "virtuan",
       "kebab-case"
     ],
     "component-selector": [
       true,
       "element",
-      "tb",
+      "virtuan",
       "kebab-case"
     ]
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import {
   JsonFormFieldState
 } from '@shared/components/json-form/react/json-form.models';
 
-class ThingsboardFieldSet extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
+class VirtuanFieldSet extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
 
     render() {
         const forms = (this.props.form.items as JsonFormData[]).map((form: JsonFormData, index) => {
@@ -30,7 +30,7 @@ class ThingsboardFieldSet extends React.Component<JsonFormFieldProps, JsonFormFi
 
         return (
             <div style={{paddingTop: '20px'}}>
-                <div className='tb-head-label'>
+                <div className='virtuan-head-label'>
                     {this.props.form.title}
                 </div>
                 <div>
@@ -41,4 +41,4 @@ class ThingsboardFieldSet extends React.Component<JsonFormFieldProps, JsonFormFi
     }
 }
 
-export default ThingsboardFieldSet;
+export default VirtuanFieldSet;

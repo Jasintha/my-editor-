@@ -1,6 +1,6 @@
 <!--
 
-    Copyright © 2016-2020 The Thingsboard Authors
+
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@
 <header>
   <mat-toolbar class="details-toolbar" color="primary" [ngStyle]="{height: headerHeightPx+'px'}">
     <div class="mat-toolbar-tools" fxLayout="row" fxLayoutAlign="start center" style="height: 100%;">
-      <div class="mat-toolbar-tools tb-details-title-header" fxFlex fxLayout="column" fxLayoutAlign="start start">
-        <span class="tb-details-title">{{ headerTitle }}</span>
-        <span class="tb-details-subtitle">{{ headerSubtitle }}</span>
+      <div class="mat-toolbar-tools virtuan-details-title-header" fxFlex fxLayout="column" fxLayoutAlign="start start">
+        <span class="virtuan-details-title">{{ headerTitle }}</span>
+        <span class="virtuan-details-subtitle">{{ headerSubtitle }}</span>
         <span style="width: 100%;">
           <ng-content select=".header-pane"></ng-content>
         </span>
@@ -30,13 +30,13 @@
         <mat-icon class="material-icons">close</mat-icon>
       </button>
     </div>
-    <section *ngIf="!isReadOnly" fxLayout="row" class="layout-wrap tb-header-buttons">
+    <section *ngIf="!isReadOnly" fxLayout="row" class="layout-wrap virtuan-header-buttons">
       <button [disabled]="(isLoading$ | async) || theForm?.invalid || !theForm?.dirty"
               mat-fab
               matTooltip="{{ 'action.apply-changes' | translate }}"
               matTooltipPosition="above"
-              color="accent" class="tb-btn-header mat-fab-bottom-right"
-              [ngClass]="{'tb-hide': !isEdit}"
+              color="accent" class="virtuan-btn-header mat-fab-bottom-right"
+              [ngClass]="{'virtuan-hide': !isEdit}"
               (click)="onApplyDetails()">
         <mat-icon class="material-icons">done</mat-icon>
       </button>
@@ -44,7 +44,7 @@
               mat-fab
               matTooltip="{{ (isAlwaysEdit ? 'action.decline-changes' : 'details.toggle-edit-mode') | translate }}"
               matTooltipPosition="above"
-              color="accent" class="tb-btn-header mat-fab-bottom-right"
+              color="accent" class="virtuan-btn-header mat-fab-bottom-right"
               (click)="onToggleDetailsEditMode()">
         <mat-icon class="material-icons">{{isEdit ? 'close' : 'edit'}}</mat-icon>
       </button>

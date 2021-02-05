@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,23 @@
 import * as React from 'react';
 import JsonFormUtils from './json-form-utils';
 
-import ThingsboardArray from './json-form-array';
-import ThingsboardJavaScript from './json-form-javascript';
-import ThingsboardJson from './json-form-json';
-import ThingsboardHtml from './json-form-html';
-import ThingsboardCss from './json-form-css';
-import ThingsboardColor from './json-form-color';
-import ThingsboardRcSelect from './json-form-rc-select';
-import ThingsboardNumber from './json-form-number';
-import ThingsboardText from './json-form-text';
-import ThingsboardSelect from './json-form-select';
-import ThingsboardRadios from './json-form-radios';
-import ThingsboardDate from './json-form-date';
-import ThingsboardImage from './json-form-image';
-import ThingsboardCheckbox from './json-form-checkbox';
-import ThingsboardHelp from './json-form-help';
-import ThingsboardFieldSet from './json-form-fieldset';
-import ThingsboardIcon from './json-form-icon';
+import VirtuanArray from './json-form-array';
+import VirtuanJavaScript from './json-form-javascript';
+import VirtuanJson from './json-form-json';
+import VirtuanHtml from './json-form-html';
+import VirtuanCss from './json-form-css';
+import VirtuanColor from './json-form-color';
+import VirtuanRcSelect from './json-form-rc-select';
+import VirtuanNumber from './json-form-number';
+import VirtuanText from './json-form-text';
+import VirtuanSelect from './json-form-select';
+import VirtuanRadios from './json-form-radios';
+import VirtuanDate from './json-form-date';
+import VirtuanImage from './json-form-image';
+import VirtuanCheckbox from './json-form-checkbox';
+import VirtuanHelp from './json-form-help';
+import VirtuanFieldSet from './json-form-fieldset';
+import VirtuanIcon from './json-form-icon';
 import { JsonFormData, JsonFormProps, onChangeFn, OnColorClickFn, OnIconClickFn } from './json-form.models';
 
 import _ from 'lodash';
@@ -41,7 +41,7 @@ import { GroupInfo } from '@shared/models/widget.models';
 
 const tinycolor = tinycolor_;
 
-class ThingsboardSchemaForm extends React.Component<JsonFormProps, any> {
+class VirtuanSchemaForm extends React.Component<JsonFormProps, any> {
 
   private hasConditions: boolean;
   private readonly mapper: {[type: string]: any};
@@ -50,25 +50,25 @@ class ThingsboardSchemaForm extends React.Component<JsonFormProps, any> {
     super(props);
 
     this.mapper = {
-      number: ThingsboardNumber,
-      text: ThingsboardText,
-      password: ThingsboardText,
-      textarea: ThingsboardText,
-      select: ThingsboardSelect,
-      radios: ThingsboardRadios,
-      date: ThingsboardDate,
-      image: ThingsboardImage,
-      checkbox: ThingsboardCheckbox,
-      help: ThingsboardHelp,
-      array: ThingsboardArray,
-      javascript: ThingsboardJavaScript,
-      json: ThingsboardJson,
-      html: ThingsboardHtml,
-      css: ThingsboardCss,
-      color: ThingsboardColor,
-      'rc-select': ThingsboardRcSelect,
-      fieldset: ThingsboardFieldSet,
-      icon: ThingsboardIcon
+      number: VirtuanNumber,
+      text: VirtuanText,
+      password: VirtuanText,
+      textarea: VirtuanText,
+      select: VirtuanSelect,
+      radios: VirtuanRadios,
+      date: VirtuanDate,
+      image: VirtuanImage,
+      checkbox: VirtuanCheckbox,
+      help: VirtuanHelp,
+      array: VirtuanArray,
+      javascript: VirtuanJavaScript,
+      json: VirtuanJson,
+      html: VirtuanHtml,
+      css: VirtuanCss,
+      color: VirtuanColor,
+      'rc-select': VirtuanRcSelect,
+      fieldset: VirtuanFieldSet,
+      icon: VirtuanIcon
     };
 
     this.onChange = this.onChange.bind(this);
@@ -154,7 +154,7 @@ class ThingsboardSchemaForm extends React.Component<JsonFormProps, any> {
       const content: JSX.Element[] = [];
       for (const info of this.props.groupInfoes) {
         const forms = this.createSchema(this.props.form[info.formIndex]);
-        const item = <ThingsboardSchemaGroup key={content.length} forms={forms} info={info}></ThingsboardSchemaGroup>;
+        const item = <VirtuanSchemaGroup key={content.length} forms={forms} info={info}></VirtuanSchemaGroup>;
         content.push(item);
       }
       return (<div>{content}</div>);
@@ -163,18 +163,18 @@ class ThingsboardSchemaForm extends React.Component<JsonFormProps, any> {
     }
   }
 }
-export default ThingsboardSchemaForm;
+export default VirtuanSchemaForm;
 
-interface ThingsboardSchemaGroupProps {
+interface VirtuanSchemaGroupProps {
   info: GroupInfo;
   forms: JSX.Element;
 }
 
-interface ThingsboardSchemaGroupState {
+interface VirtuanSchemaGroupState {
   showGroup: boolean;
 }
 
-class ThingsboardSchemaGroup extends React.Component<ThingsboardSchemaGroupProps, ThingsboardSchemaGroupState> {
+class VirtuanSchemaGroup extends React.Component<VirtuanSchemaGroupProps, VirtuanSchemaGroupState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -189,9 +189,9 @@ class ThingsboardSchemaGroup extends React.Component<ThingsboardSchemaGroupProps
   }
 
   render() {
-    const theCla = 'pull-right fa fa-chevron-down tb-toggle-icon' + (this.state.showGroup ? '' : ' tb-toggled');
+    const theCla = 'pull-right fa fa-chevron-down virtuan-toggle-icon' + (this.state.showGroup ? '' : ' virtuan-toggled');
     return (<section className='mat-elevation-z1' style={{marginTop: '10px'}}>
-      <div className='SchemaGroupname tb-button-toggle'
+      <div className='SchemaGroupname virtuan-button-toggle'
            onClick={this.toogleGroup.bind(this)}>{this.props.info.GroupTitle}<span className={theCla}></span></div>
       <div style={{padding: '20px'}} className={this.state.showGroup ? '' : 'invisible'}>{this.props.forms}</div>
     </section>);

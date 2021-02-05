@@ -49,7 +49,7 @@ interface ExampleFlatNode {
 
 
 @Component({
-  selector: 'tb-domain-model-variable-node-config',
+  selector: 'virtuan-domain-model-variable-node-config',
   templateUrl: './domain-model-variable-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -164,7 +164,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
 
   checkboxClick(node){
     this.checklistSelection.toggle(node);
-    console.log(this.checklistSelection.selected);
+
   }
 
   constructor(private translate: TranslateService,
@@ -417,7 +417,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     } else if (propertyType === 'NEW') {
         propertyDataType = this.domainModelVariableNodeConfigFormGroup.get('propinputType').value;
         record = this.domainModelVariableNodeConfigFormGroup.get('proprecord').value;
-        console.log(this.domainModelVariableNodeConfigFormGroup.get('propentity').value);
+
         if(propertyDataType === 'MODEL'){
             type = this.domainModelVariableNodeConfigFormGroup.get('propentity').value.name;
         } else if(propertyDataType === 'DTO'){
@@ -698,7 +698,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
 
   private updateModel(configuration: RuleNodeConfiguration) {
 
-  console.log("update model");
+
     if (this.definedConfigComponent || this.domainModelVariableNodeConfigFormGroup.valid) {
       this.propagateChange(configuration);
     } else {

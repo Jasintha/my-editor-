@@ -1,6 +1,6 @@
 <!--
 
-    Copyright © 2016-2020 The Thingsboard Authors
+
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
   <mat-toolbar color="primary">
     <h2 translate>rulenode.add</h2>
     <span fxFlex></span>
-    <!--<div [tb-help]="helpLinkIdForRuleNodeType()"></div>-->
+    <!--<div [virtuan-help]="helpLinkIdForRuleNodeType()"></div>-->
     <button mat-icon-button
             (click)="cancel()"
             type="button">
@@ -30,7 +30,7 @@
   </mat-progress-bar>
   <div mat-dialog-content>
     <fieldset [disabled]="isLoading$ | async">
-      <tb-rule-node #tbRuleNode
+      <virtuan-rule-node #virtuanRuleNode
                     [ruleNode]="ruleNode"
                     [ruleChainId]="ruleChainId"
                     [ruleEntities]="dataModels"
@@ -61,13 +61,13 @@
                     [apptype]="apptype"
                     [isNodeEdit]="false"
                     [isReadOnly]="false">
-      </tb-rule-node>
+      </virtuan-rule-node>
     </fieldset>
   </div>
   <div mat-dialog-actions fxLayoutAlign="end center">
     <button mat-raised-button color="primary"
             type="submit"
-            [disabled]="(isLoading$ | async) || tbRuleNode.ruleNodeFormGroup.invalid || !tbRuleNode.ruleNodeFormGroup.dirty">
+            [disabled]="(isLoading$ | async) || virtuanRuleNode.ruleNodeFormGroup.invalid || !virtuanRuleNode.ruleNodeFormGroup.dirty">
       {{ 'action.add' | translate }}
     </button>
     <button mat-button color="primary"

@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-root-node-config',
+  selector: 'virtuan-root-node-config',
   templateUrl: './root-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -208,7 +208,7 @@ export class RootNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
     this.configuration = deepClone(value);
     if(this.configuration.branchParams === null || this.configuration.branchParams === undefined){
-    console.log("undefined");
+
         this.configuration.branchParams = [];
     }
     this.datasource = new MatTableDataSource(this.configuration.branchParams);

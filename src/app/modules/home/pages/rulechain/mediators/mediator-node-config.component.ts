@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ import { JsonObjectEditComponent } from '@shared/components/json-object-edit.com
 import { deepClone } from '@core/utils';
 
 @Component({
-  selector: 'tb-mediator-node-config',
+  selector: 'virtuan-mediator-node-config',
   templateUrl: './mediator-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

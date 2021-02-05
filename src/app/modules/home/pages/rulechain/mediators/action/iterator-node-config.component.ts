@@ -29,7 +29,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 
 @Component({
-  selector: 'tb-iterator-node-config',
+  selector: 'virtuan-iterator-node-config',
   templateUrl: './iterator-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -135,7 +135,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
   }
 
   ngOnInit(): void {
-  console.log(this.allModelProperties);
+
   }
 
   ngOnDestroy(): void {
@@ -221,7 +221,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
 
       this.changeSubscription = this.iteratorNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

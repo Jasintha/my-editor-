@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-email-send-node-config',
+  selector: 'virtuan-email-send-node-config',
   templateUrl: './email-send-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -160,11 +160,11 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   }
   
   refreshInputTypes(){
-  console.log("came to refresh");
+
     let inputType: string = this.emailSendNodeConfigFormGroup.get('toemailinputType').value;
     this.configuration.toemailinputType = inputType;
     if (inputType === 'CONSTANT'){
-    console.log("came to constant");
+
       this.configuration.toemailparam= {};
       this.configuration.toemailproperty= {};
       //this.configuration.toemailvariable= {};
@@ -205,7 +205,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   refreshParameterInputTypes(){
-  console.log("came to refresh");
+
     let inputType: string = this.emailSendNodeConfigFormGroup.get('parameterinputType').value;
     this.configuration.parameterinputType = inputType;
     if (inputType === 'RULE_INPUT'){
@@ -310,8 +310,8 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
 
   writeValue(value: RuleNodeConfiguration): void {
 
-  console.log("email init node write value");
-  console.log(value);
+
+
 
     this.configuration = deepClone(value);
     this.datasource = new MatTableDataSource(this.configuration.emailbodyParameters);
@@ -392,7 +392,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         (configuration: any) => {
           this.configuration.toemailconstant = configuration;
 
-          console.log(this.configuration);
+
           this.updateModel(this.configuration);
         }
       );
@@ -401,7 +401,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         (configuration: any) => {
           this.configuration.toemailproperty = configuration;
 
-          console.log(this.configuration);
+
           this.updateModel(this.configuration);
         }
       );
@@ -410,7 +410,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         (configuration: any) => {
           this.configuration.parameterproperty = configuration;
 
-          console.log(this.configuration);
+
           this.updateModel(this.configuration);
         }
       );
@@ -424,7 +424,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
 
       this.changeSubscription = this.emailSendNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

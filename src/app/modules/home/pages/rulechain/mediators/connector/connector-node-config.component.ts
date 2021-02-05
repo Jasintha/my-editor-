@@ -42,7 +42,7 @@ import {B} from "@angular/cdk/keycodes";
 
 
 @Component({
-  selector: 'tb-connector-node-config',
+  selector: 'virtuan-connector-node-config',
   templateUrl: './connector-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

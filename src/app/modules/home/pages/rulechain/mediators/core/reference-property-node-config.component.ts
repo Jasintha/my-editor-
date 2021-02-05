@@ -49,7 +49,7 @@ interface ExampleFlatNode {
 
 
 @Component({
-  selector: 'tb-reference-property-node-config',
+  selector: 'virtuan-reference-property-node-config',
   templateUrl: './reference-property-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -164,7 +164,7 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
 
   checkboxClick(node){
     this.checklistSelection.toggle(node);
-    console.log(this.checklistSelection.selected);
+
   }
 
   constructor(private translate: TranslateService,
@@ -507,7 +507,7 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
 
   private updateModel(configuration: RuleNodeConfiguration) {
 
-  console.log("update model");
+
     if (this.definedConfigComponent || this.referencePropertyNodeConfigFormGroup.valid) {
       this.propagateChange(configuration);
     } else {

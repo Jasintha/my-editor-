@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2020 The Thingsboard Authors
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import reactCSS from 'reactcss';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
@@ -24,12 +24,12 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
 
-interface ThingsboardIconState extends JsonFormFieldState {
+interface VirtuanIconState extends JsonFormFieldState {
   icon: string | null;
   focused: boolean;
 }
 
-class ThingsboardIcon extends React.Component<JsonFormFieldProps, ThingsboardIconState> {
+class VirtuanIcon extends React.Component<JsonFormFieldProps, VirtuanIconState> {
 
     constructor(props) {
         super(props);
@@ -118,12 +118,12 @@ class ThingsboardIcon extends React.Component<JsonFormFieldProps, ThingsboardIco
             },
         });
 
-        let fieldClass = 'tb-field';
+        let fieldClass = 'virtuan-field';
         if (this.props.form.required) {
-            fieldClass += ' tb-required';
+            fieldClass += ' virtuan-required';
         }
         if (this.state.focused) {
-            fieldClass += ' tb-focused';
+            fieldClass += ' virtuan-focused';
         }
 
         let pickedIcon = 'more_horiz';
@@ -156,4 +156,4 @@ class ThingsboardIcon extends React.Component<JsonFormFieldProps, ThingsboardIco
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardIcon);
+export default VirtuanBaseComponent(VirtuanIcon);

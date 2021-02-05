@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -82,7 +82,7 @@ export class NodeScriptTestService {
     return this.dialog.open<NodeScriptTestDialogComponent, NodeScriptTestDialogData, string>(NodeScriptTestDialogComponent,
       {
         disableClose: true,
-        panelClass: ['tb-dialog', 'tb-fullscreen-dialog', 'tb-fullscreen-dialog-gt-sm'],
+        panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog', 'virtuan-fullscreen-dialog-gt-sm'],
         data: {
           msg,
           metadata,

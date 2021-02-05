@@ -30,7 +30,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'tb-branch-node-config',
+  selector: 'virtuan-branch-node-config',
   templateUrl: './branch-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -300,7 +300,7 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.changeSubscription = this.branchNodeConfigFormGroup.get('branch').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.branch = configuration;
-          console.log(this.configuration.branch);
+
           this.updateModel(this.configuration);
         }
       );

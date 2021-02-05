@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -28,9 +28,7 @@ import {
   UrlTree
 } from '@angular/router';
 
-import { EntitiesTableComponent } from '../../components/entity/entities-table.component';
 import { Authority } from '@shared/models/authority.enum';
-import { RuleChainsTableConfigResolver } from '@modules/home/pages/rulechain/rulechains-table-config.resolver';
 import * as RxJs from 'rxjs';
 import { Observable } from 'rxjs';
 import * as RxJsOperators from 'rxjs/operators';
@@ -50,10 +48,10 @@ import * as AngularMaterialAutocomplete from '@angular/material/autocomplete';
 import * as AngularMaterialDialog from '@angular/material/dialog';
 import * as NgrxStore from '@ngrx/store';
 import * as TranslateCore from '@ngx-translate/core';
-import * as TbCore from '@core/public-api';
+import * as VirtuanCore from '@core/public-api';
 import { ItemBufferService } from '@core/public-api';
-import * as TbShared from '@shared/public-api';
-import * as TbHomeComponents from '@home/components/public-api';
+import * as VirtuanShared from '@shared/public-api';
+import * as VirtuanHomeComponents from '@home/components/public-api';
 import * as _moment from 'moment';
 
 declare const SystemJS;
@@ -72,9 +70,9 @@ const ruleNodeConfigResourcesModulesMap = {
   rxjs: SystemJS.newModule(RxJs),
   'rxjs/operators': SystemJS.newModule(RxJsOperators),
   '@ngx-translate/core': SystemJS.newModule(TranslateCore),
-  '@core/public-api': SystemJS.newModule(TbCore),
-  '@shared/public-api': SystemJS.newModule(TbShared),
-  '@home/components/public-api': SystemJS.newModule(TbHomeComponents),
+  '@core/public-api': SystemJS.newModule(VirtuanCore),
+  '@shared/public-api': SystemJS.newModule(VirtuanShared),
+  '@home/components/public-api': SystemJS.newModule(VirtuanHomeComponents),
   moment: SystemJS.newModule(_moment)
 };
 
@@ -156,17 +154,6 @@ const routes: Routes = [
     },
     children: [
       {
-        path: '',
-        component: EntitiesTableComponent,
-        data: {
-          auth: [Authority.TENANT_ADMIN],
-          title: 'rulechain.rulechains'
-        },
-        resolve: {
-          entitiesTableConfig: RuleChainsTableConfigResolver
-        }
-      },
-      {
         path: ':ruleChainId',
         component: RuleChainPageComponent,
         canDeactivate: [ConfirmOnExitGuard],
@@ -184,24 +171,6 @@ const routes: Routes = [
           ruleChainMetaData: ResolvedRuleChainMetaDataResolver,
           ruleNodeComponents: RuleNodeComponentsResolver
         }
-      },
-      {
-        path: 'ruleChain/import',
-        component: RuleChainPageComponent,
-        canActivate: [RuleChainImportGuard],
-        canDeactivate: [ConfirmOnExitGuard],
-        data: {
-          breadcrumb: {
-            labelFunction: importRuleChainBreadcumbLabelFunction,
-            icon: 'settings_ethernet'
-          } as BreadCrumbConfig<RuleChainPageComponent>,
-          auth: [Authority.TENANT_ADMIN],
-          title: 'rulechain.rulechain',
-          import: true
-        },
-        resolve: {
-          ruleNodeComponents: RuleNodeComponentsResolver
-        }
       }
     ]
   }
@@ -212,7 +181,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    RuleChainsTableConfigResolver,
     RuleChainResolver,
     ResolvedRuleChainMetaDataResolver,
     RuleNodeComponentsResolver,

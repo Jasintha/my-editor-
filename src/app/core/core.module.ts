@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import {
   TranslateParser
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TbMissingTranslationHandler } from './translate/missing-translate-handler';
+import { VirtuanMissingTranslationHandler } from './translate/missing-translate-handler';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -64,7 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
       missingTranslationHandler: {
         provide: MissingTranslationHandler,
-        useClass: TbMissingTranslationHandler
+        useClass: VirtuanMissingTranslationHandler
       },
       compiler: {
         provide: TranslateCompiler,

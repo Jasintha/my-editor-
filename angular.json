@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "thingsboard": {
+    "virtuan": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "tb",
+      "prefix": "virtuan",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -23,7 +23,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/thingsboard.ico",
+              "src/virtuan.ico",
               "src/assets",
               { "glob": "worker-html.js", "input": "./node_modules/ace-builds/src-min/", "output": "/" },
               { "glob": "worker-css.js", "input": "./node_modules/ace-builds/src-min/", "output": "/" },
@@ -39,7 +39,6 @@
               "node_modules/rc-select/assets/index.less",
               "node_modules/jstree-bootstrap-theme/dist/themes/proton/style.min.css",
               "node_modules/leaflet/dist/leaflet.css",
-              "src/app/modules/home/components/widget/lib/maps/markers.scss",
               "node_modules/leaflet.markercluster/dist/MarkerCluster.css",
               "node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css"
             ],
@@ -121,19 +120,19 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "thingsboard:build",
+            "browserTarget": "virtuan:build",
             "proxyConfig": "proxy.conf.js"
           },
           "configurations": {
             "production": {
-              "browserTarget": "thingsboard:build:production"
+              "browserTarget": "virtuan:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "thingsboard:build"
+            "browserTarget": "virtuan:build"
           }
         },
         "test": {
@@ -167,7 +166,7 @@
         }
       }
     },
-    "thingsboard-e2e": {
+    "virtuan-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -176,11 +175,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "thingsboard:serve"
+            "devServerTarget": "virtuan:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "thingsboard:serve:production"
+              "devServerTarget": "virtuan:serve:production"
             }
           }
         },
@@ -196,5 +195,5 @@
       }
     }
   },
-  "defaultProject": "thingsboard"
+  "defaultProject": "virtuan"
 }

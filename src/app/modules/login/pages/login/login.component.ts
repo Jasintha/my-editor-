@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -26,14 +26,14 @@ import { Router } from '@angular/router';
 import { OAuth2Client } from '@shared/models/login.models';
 
 @Component({
-  selector: 'tb-login',
+  selector: 'virtuan-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent extends PageComponent implements OnInit {
 
   loginFormGroup = this.fb.group({
-    username: 'tenant@thingsboard.org',
+    username: 'tenant@virtuan.io',
     password: 'tenant'
   });
   oauth2Clients: Array<OAuth2Client> = null;
@@ -52,7 +52,7 @@ export class LoginComponent extends PageComponent implements OnInit {
 
   login(): void {
     //if (this.loginFormGroup.valid) {
-      console.log('ssss');
+
       this.authService.login(this.loginFormGroup.value).subscribe(
         () => {},
         (error: HttpErrorResponse) => {

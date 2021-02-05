@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { RelationTypes } from '@app/shared/models/relation.models';
 
 @Component({
-  selector: 'tb-relation-type-autocomplete',
+  selector: 'virtuan-relation-type-autocomplete',
   templateUrl: './relation-type-autocomplete.component.html',
   styleUrls: [],
   providers: [{

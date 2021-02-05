@@ -1,5 +1,5 @@
 ///
-/// Copyright © 2016-2020 The Thingsboard Authors
+///
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -88,13 +88,13 @@ import moment from 'moment';
  */
 
 import cssjs from '@core/css/css';
-import { TbFlot } from '@home/components/widget/lib/flot-widget';
-import { TbAnalogueCompass } from '@home/components/widget/lib/analogue-compass';
-import { TbAnalogueRadialGauge } from '@home/components/widget/lib/analogue-radial-gauge';
-import { TbAnalogueLinearGauge } from '@home/components/widget/lib/analogue-linear-gauge';
-import { TbCanvasDigitalGauge } from '@home/components/widget/lib/digital-gauge';
-import { TbMapWidgetV2 } from '@home/components/widget/lib/maps/map-widget2';
-import { TbTripAnimationWidget } from '@app/modules/home/components/widget/trip-animation/trip-animation.component';
+//import { VirtuanFlot } from '@home/components/widget/lib/flot-widget';
+//import { VirtuanAnalogueCompass } from '@home/components/widget/lib/analogue-compass';
+//import { VirtuanAnalogueRadialGauge } from '@home/components/widget/lib/analogue-radial-gauge';
+//import { VirtuanAnalogueLinearGauge } from '@home/components/widget/lib/analogue-linear-gauge';
+//import { VirtuanCanvasDigitalGauge } from '@home/components/widget/lib/digital-gauge';
+//import { VirtuanMapWidgetV2 } from '@home/components/widget/lib/maps/map-widget2';
+//import { VirtuanTripAnimationWidget } from '@app/modules/home/components/widget/trip-animation/trip-animation.component';
 
 import * as tinycolor_ from 'tinycolor2';
 
@@ -103,10 +103,10 @@ const tinycolor = tinycolor_;
 (window as any).tinycolor = tinycolor;
 (window as any).cssjs = cssjs;
 (window as any).moment = moment;
-(window as any).TbFlot = TbFlot;
-(window as any).TbAnalogueCompass = TbAnalogueCompass;
-(window as any).TbAnalogueRadialGauge = TbAnalogueRadialGauge;
-(window as any).TbAnalogueLinearGauge = TbAnalogueLinearGauge;
-(window as any).TbCanvasDigitalGauge = TbCanvasDigitalGauge;
-(window as any).TbMapWidgetV2 = TbMapWidgetV2;
-(window as any).TbTripAnimationWidget = TbTripAnimationWidget;
+//(window as any).VirtuanFlot = VirtuanFlot;
+//(window as any).VirtuanAnalogueCompass = VirtuanAnalogueCompass;
+//(window as any).VirtuanAnalogueRadialGauge = VirtuanAnalogueRadialGauge;
+//(window as any).VirtuanAnalogueLinearGauge = VirtuanAnalogueLinearGauge;
+//(window as any).VirtuanCanvasDigitalGauge = VirtuanCanvasDigitalGauge;
+//(window as any).VirtuanMapWidgetV2 = VirtuanMapWidgetV2;
+//(window as any).VirtuanTripAnimationWidget = VirtuanTripAnimationWidget;

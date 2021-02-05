@@ -1,6 +1,6 @@
 <!--
 
-    Copyright © 2016-2020 The Thingsboard Authors
+
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 -->
 <form #inputForm="ngForm">
   <section fxLayout="row" fxLayoutGap="8px">
-    <mat-form-field fxFlex="40" class="mat-block tb-value-type">
+    <mat-form-field fxFlex="40" class="mat-block virtuan-value-type">
       <mat-label translate>value.type</mat-label>
       <mat-select [disabled]="disabled" matInput name="valueType" [(ngModel)]="valueType" (ngModelChange)="onValueTypeChanged()">
         <mat-select-trigger>
@@ -62,7 +62,7 @@
     <div fxLayout="row" fxLayoutAlign="center" fxFlex="60" *ngIf="valueType === valueTypeEnum.JSON" class="mat-block">
       <mat-form-field fxFlex class="mat-block">
         <mat-label translate>value.json-value</mat-label>
-        <input [disabled]="disabled" matInput tb-json-to-string required name="value" #value="ngModel"
+        <input [disabled]="disabled" matInput virtuan-json-to-string required name="value" #value="ngModel"
                [(ngModel)]="modelValue" (ngModelChange)="onValueChanged()"/>
         <button matSuffix mat-button mat-icon-button (click)="openEditJSONDialog($event)">
           <mat-icon>open_in_new</mat-icon>

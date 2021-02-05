@@ -29,7 +29,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 
 @Component({
-  selector: 'tb-file-download-node-config',
+  selector: 'virtuan-file-download-node-config',
   templateUrl: './file-download-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -149,11 +149,11 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
   }
   
   refreshInputTypes(){
-  console.log("came to refresh");
+
     let inputType: string = this.fileDownloadNodeConfigFormGroup.get('inputType').value;
     this.configuration.inputType = inputType;
     if (inputType === 'CONSTANT'){
-    console.log("came to constant");
+
       this.configuration.param= {};
       this.configuration.property= {};
       this.configuration.branchparam= {};
@@ -264,7 +264,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
         (configuration: any) => {
           this.configuration.constant = configuration;
 
-          console.log(this.configuration);
+
           this.updateModel(this.configuration);
         }
       );
@@ -273,7 +273,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
         (configuration: any) => {
           this.configuration.property = configuration;
 
-          console.log(this.configuration);
+
           this.updateModel(this.configuration);
         }
       );
@@ -287,7 +287,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
 
       this.changeSubscription = this.fileDownloadNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }
