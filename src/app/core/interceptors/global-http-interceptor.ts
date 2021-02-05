@@ -237,10 +237,11 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
   }
 
   private isTokenBasedAuthEntryPoint(url): boolean {
-    return  url.startsWith('/api/') &&
-      !url.startsWith(Constants.entryPoints.login) &&
-      !url.startsWith(Constants.entryPoints.tokenRefresh) &&
-      !url.startsWith(Constants.entryPoints.nonTokenBased);
+   // return  url.startsWith('/api/') &&
+     // !url.startsWith(Constants.entryPoints.login) &&
+     // !url.startsWith(Constants.entryPoints.tokenRefresh) &&
+     // !url.startsWith(Constants.entryPoints.nonTokenBased);
+    return false;
   }
 
   private updateLoadingState(config: InterceptorConfig, isLoading: boolean) {
