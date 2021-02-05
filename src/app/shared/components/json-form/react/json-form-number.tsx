@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 import { TextField } from '@material-ui/core';
 
-interface ThingsboardNumberState extends JsonFormFieldState {
+interface VirtuanNumberState extends JsonFormFieldState {
   focused: boolean;
   lastSuccessfulValue: number;
 }
 
-class ThingsboardNumber extends React.Component<JsonFormFieldProps, ThingsboardNumberState> {
+class VirtuanNumber extends React.Component<JsonFormFieldProps, VirtuanNumberState> {
 
   constructor(props) {
     super(props);
@@ -94,4 +94,4 @@ class ThingsboardNumber extends React.Component<JsonFormFieldProps, ThingsboardN
   }
 }
 
-export default ThingsboardBaseComponent(ThingsboardNumber);
+export default VirtuanBaseComponent(VirtuanNumber);

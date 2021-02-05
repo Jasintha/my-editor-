@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardAceEditor from './json-form-ace-editor';
+import VirtuanAceEditor from './json-form-ace-editor';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 
-class ThingsboardJavaScript extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
+class VirtuanJavaScript extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
 
     constructor(props) {
         super(props);
@@ -30,9 +30,9 @@ class ThingsboardJavaScript extends React.Component<JsonFormFieldProps, JsonForm
 
     render() {
         return (
-           <ThingsboardAceEditor {...this.props} mode='javascript' onTidy={this.onTidyJavascript} {...this.state}></ThingsboardAceEditor>
+           <VirtuanAceEditor {...this.props} mode='javascript' onTidy={this.onTidyJavascript} {...this.state}></VirtuanAceEditor>
         );
     }
 }
 
-export default ThingsboardJavaScript;
+export default VirtuanJavaScript;

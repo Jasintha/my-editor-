@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import Select, { Option } from 'rc-select';
 import {
   JsonFormFieldProps,
@@ -23,13 +23,13 @@ import {
 } from '@shared/components/json-form/react/json-form.models';
 import { Mode } from 'rc-select/lib/interface';
 
-interface ThingsboardRcSelectState extends JsonFormFieldState {
+interface VirtuanRcSelectState extends JsonFormFieldState {
   currentValue: KeyLabelItem | KeyLabelItem[];
   items: Array<KeyLabelItem>;
   focused: boolean;
 }
 
-class ThingsboardRcSelect extends React.Component<JsonFormFieldProps, ThingsboardRcSelectState> {
+class VirtuanRcSelect extends React.Component<JsonFormFieldProps, VirtuanRcSelectState> {
 
     constructor(props) {
         super(props);
@@ -193,4 +193,4 @@ class ThingsboardRcSelect extends React.Component<JsonFormFieldProps, Thingsboar
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardRcSelect);
+export default VirtuanBaseComponent(VirtuanRcSelect);

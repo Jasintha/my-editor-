@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import reactCSS from 'reactcss';
 import ReactAce from 'react-ace';
 import Button from '@material-ui/core/Button';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 import { IEditorProps } from 'react-ace/src/types';
 
-interface ThingsboardAceEditorProps extends JsonFormFieldProps {
+interface VirtuanAceEditorProps extends JsonFormFieldProps {
   mode: string;
   onTidy: (value: string) => string;
 }
 
-interface ThingsboardAceEditorState extends JsonFormFieldState {
+interface VirtuanAceEditorState extends JsonFormFieldState {
   isFull: boolean;
   focused: boolean;
 }
 
-class ThingsboardAceEditor extends React.Component<ThingsboardAceEditorProps, ThingsboardAceEditorState> {
+class VirtuanAceEditor extends React.Component<VirtuanAceEditorProps, VirtuanAceEditorState> {
 
     hostElement: HTMLElement;
     private aceEditor: IEditorProps;
@@ -179,4 +179,4 @@ class ThingsboardAceEditor extends React.Component<ThingsboardAceEditorProps, Th
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardAceEditor);
+export default VirtuanBaseComponent(VirtuanAceEditor);

@@ -25,7 +25,7 @@ export class LogoComponent {
 
   logo = require('../../../assets/logo_title_white.svg').default;
 
-  gotoThingsboard(): void {
+  gotoVirtuan(): void {
     window.open('https://virtuan.io/', '_blank');
   }
 

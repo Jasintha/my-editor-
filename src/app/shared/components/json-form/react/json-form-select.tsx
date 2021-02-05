@@ -19,13 +19,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import ThingsboardBaseComponent from '@shared/components/json-form/react/json-form-base-component';
+import VirtuanBaseComponent from '@shared/components/json-form/react/json-form-base-component';
 
-interface ThingsboardSelectState extends JsonFormFieldState {
+interface VirtuanSelectState extends JsonFormFieldState {
   currentValue: any;
 }
 
-class ThingsboardSelect extends React.Component<JsonFormFieldProps, ThingsboardSelectState> {
+class VirtuanSelect extends React.Component<JsonFormFieldProps, VirtuanSelectState> {
 
   constructor(props) {
     super(props);
@@ -83,4 +83,4 @@ class ThingsboardSelect extends React.Component<JsonFormFieldProps, ThingsboardS
   }
 }
 
-export default ThingsboardBaseComponent(ThingsboardSelect);
+export default VirtuanBaseComponent(VirtuanSelect);

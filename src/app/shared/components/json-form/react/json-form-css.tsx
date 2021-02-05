@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardAceEditor from './json-form-ace-editor';
+import VirtuanAceEditor from './json-form-ace-editor';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 import { css_beautify } from 'js-beautify';
 
-class ThingsboardCss extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
+class VirtuanCss extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
 
     constructor(props) {
         super(props);
@@ -31,9 +31,9 @@ class ThingsboardCss extends React.Component<JsonFormFieldProps, JsonFormFieldSt
 
     render() {
         return (
-            <ThingsboardAceEditor {...this.props} mode='css' onTidy={this.onTidyCss} {...this.state}></ThingsboardAceEditor>
+            <VirtuanAceEditor {...this.props} mode='css' onTidy={this.onTidyCss} {...this.state}></VirtuanAceEditor>
         );
     }
 }
 
-export default ThingsboardCss;
+export default VirtuanCss;

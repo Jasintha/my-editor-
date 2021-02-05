@@ -15,7 +15,7 @@
  */
 import * as React from 'react';
 import JsonFormUtils from './json-form-utils';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import Button from '@material-ui/core/Button';
 import _ from 'lodash';
 import IconButton from '@material-ui/core/IconButton';
@@ -28,12 +28,12 @@ import {
   JsonFormFieldState
 } from '@shared/components/json-form/react/json-form.models';
 
-interface ThingsboardArrayState extends JsonFormFieldState {
+interface VirtuanArrayState extends JsonFormFieldState {
   model: any[];
   keys: number[];
 }
 
-class ThingsboardArray extends React.Component<JsonFormFieldProps, ThingsboardArrayState> {
+class VirtuanArray extends React.Component<JsonFormFieldProps, VirtuanArrayState> {
 
     constructor(props) {
         super(props);
@@ -175,4 +175,4 @@ class ThingsboardArray extends React.Component<JsonFormFieldProps, ThingsboardAr
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardArray);
+export default VirtuanBaseComponent(VirtuanArray);

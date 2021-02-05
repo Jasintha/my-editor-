@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import Checkbox from '@material-ui/core/Checkbox';
 import { JsonFormFieldProps, JsonFormFieldState } from './json-form.models.js';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-class ThingsboardCheckbox extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
+class VirtuanCheckbox extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
     render() {
         return (
           <div>
@@ -42,4 +42,4 @@ class ThingsboardCheckbox extends React.Component<JsonFormFieldProps, JsonFormFi
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardCheckbox);
+export default VirtuanBaseComponent(VirtuanCheckbox);

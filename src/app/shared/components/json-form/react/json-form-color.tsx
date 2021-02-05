@@ -15,7 +15,7 @@
  */
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import reactCSS from 'reactcss';
 import * as tinycolor_ from 'tinycolor2';
 import TextField from '@material-ui/core/TextField';
@@ -26,12 +26,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const tinycolor = tinycolor_;
 
-interface ThingsboardColorState extends JsonFormFieldState {
+interface VirtuanColorState extends JsonFormFieldState {
   color: tinycolor.ColorFormats.RGBA | null;
   focused: boolean;
 }
 
-class ThingsboardColor extends React.Component<JsonFormFieldProps, ThingsboardColorState> {
+class VirtuanColor extends React.Component<JsonFormFieldProps, VirtuanColorState> {
 
     constructor(props) {
         super(props);
@@ -183,4 +183,4 @@ class ThingsboardColor extends React.Component<JsonFormFieldProps, ThingsboardCo
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardColor);
+export default VirtuanBaseComponent(VirtuanColor);

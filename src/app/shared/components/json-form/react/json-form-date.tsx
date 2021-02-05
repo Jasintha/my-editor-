@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VirtuanBaseComponent from './json-form-base-component';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 
-interface ThingsboardDateState extends JsonFormFieldState {
+interface VirtuanDateState extends JsonFormFieldState {
   currentValue: Date | null;
 }
 
-class ThingsboardDate extends React.Component<JsonFormFieldProps, ThingsboardDateState> {
+class VirtuanDate extends React.Component<JsonFormFieldProps, VirtuanDateState> {
 
     constructor(props) {
         super(props);
@@ -76,4 +76,4 @@ class ThingsboardDate extends React.Component<JsonFormFieldProps, ThingsboardDat
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardDate);
+export default VirtuanBaseComponent(VirtuanDate);
