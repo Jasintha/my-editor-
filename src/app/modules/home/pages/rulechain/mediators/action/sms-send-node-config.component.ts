@@ -155,11 +155,11 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
   }
   
   refreshInputTypes(){
-  console.log("came to refresh");
+
     let inputType: string = this.smsSendNodeConfigFormGroup.get('inputType').value;
     this.configuration.inputType = inputType;
     if (inputType === 'CONSTANT'){
-    console.log("came to constant");
+
       this.configuration.param= {};
       this.configuration.property= {};
 
@@ -184,7 +184,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   refreshParameterInputTypes(){
-  console.log("came to refresh");
+
     let inputType: string = this.smsSendNodeConfigFormGroup.get('parameterinputType').value;
     this.configuration.parameterinputType = inputType;
     if (inputType === 'RULE_INPUT'){
@@ -325,7 +325,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
         (configuration: any) => {
           this.configuration.constant = configuration;
 
-          console.log(this.configuration);
+
           this.updateModel(this.configuration);
         }
       );
@@ -334,7 +334,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
         (configuration: any) => {
           this.configuration.property = configuration;
 
-          console.log(this.configuration);
+
           this.updateModel(this.configuration);
         }
       );
@@ -343,7 +343,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
         (configuration: any) => {
           this.configuration.parameterproperty = configuration;
 
-          console.log(this.configuration);
+
           this.updateModel(this.configuration);
         }
       );
@@ -357,7 +357,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
 
       this.changeSubscription = this.smsSendNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

@@ -164,8 +164,8 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
       this.changeSubscription = null;
     }
     if (this.definedConfigComponent) {
-    console.log("came inside definedCOnfig Component");
-    console.log(this.configuration);
+
+
       this.definedConfigComponent.configuration = this.configuration;
       this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
         this.updateModel(configuration);
@@ -176,8 +176,8 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
       this.changeSubscription = this.constantNodeConfigFormGroup.get('payload').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
 
-          console.log("payload node value cahnge sub");
-          console.log(configuration);
+
+
           this.configuration.payload = configuration;
           this.updateModel(this.configuration);
         }

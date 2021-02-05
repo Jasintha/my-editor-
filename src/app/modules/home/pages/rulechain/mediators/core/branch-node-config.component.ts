@@ -300,7 +300,7 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.changeSubscription = this.branchNodeConfigFormGroup.get('branch').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.branch = configuration;
-          console.log(this.configuration.branch);
+
           this.updateModel(this.configuration);
         }
       );

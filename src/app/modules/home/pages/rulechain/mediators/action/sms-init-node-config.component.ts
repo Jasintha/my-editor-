@@ -127,8 +127,8 @@ export class SmsInitNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   writeValue(value: RuleNodeConfiguration): void {
 
-  console.log("email init node write value");
-  console.log(value);
+
+
 
     this.configuration = deepClone(value);
     if (this.changeSubscription) {

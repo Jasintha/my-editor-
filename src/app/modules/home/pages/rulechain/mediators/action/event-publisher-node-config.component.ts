@@ -137,8 +137,8 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
-    console.log("printttt");
-    console.log(this.configuration);
+
+
 
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
@@ -169,7 +169,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
       this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('event').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.event = configuration;
           this.updateModel(this.configuration);
         }
@@ -177,7 +177,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
       this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('property').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.property = configuration;
           this.updateModel(this.configuration);
         }
@@ -185,7 +185,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
       this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('eventSource').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.eventSource = configuration;
           this.updateModel(this.configuration);
         }
@@ -193,7 +193,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
       this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('subject').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.subject = configuration;
           this.updateModel(this.configuration);
         }
@@ -208,7 +208,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
       this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

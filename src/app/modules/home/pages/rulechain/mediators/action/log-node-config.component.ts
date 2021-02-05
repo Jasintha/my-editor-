@@ -259,8 +259,8 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       this.changeSubscription = null;
     }
     if (this.definedConfigComponent) {
-    console.log("came inside definedCOnfig Component");
-    console.log(this.configuration);
+
+
       this.definedConfigComponent.configuration = this.configuration;
       this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
         this.updateModel(configuration);

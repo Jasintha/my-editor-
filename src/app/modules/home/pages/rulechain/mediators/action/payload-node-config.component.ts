@@ -137,8 +137,8 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   writeValue(value: RuleNodeConfiguration): void {
 
-  console.log("payload node write value");
-  console.log(value);
+
+
 
     this.configuration = deepClone(value);
     if (this.changeSubscription) {

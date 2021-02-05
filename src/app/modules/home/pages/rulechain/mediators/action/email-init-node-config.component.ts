@@ -126,8 +126,8 @@ export class EmailInitNodeConfigComponent implements ControlValueAccessor, OnIni
 
   writeValue(value: RuleNodeConfiguration): void {
 
-  console.log("email init node write value");
-  console.log(value);
+
+
 
     this.configuration = deepClone(value);
     if (this.changeSubscription) {
@@ -144,8 +144,8 @@ export class EmailInitNodeConfigComponent implements ControlValueAccessor, OnIni
       this.emailInitNodeConfigFormGroup.get('fromPassword').patchValue(this.configuration.fromPassword, {emitEvent: false});
       this.changeSubscription = this.emailInitNodeConfigFormGroup.get('fromEmail').valueChanges.subscribe(
         (configuration: any) => {
-          console.log("fromEmail node value cahnge sub");
-          console.log(configuration);
+
+
           this.configuration.fromEmail = configuration;
           this.updateModel(this.configuration);
         }
@@ -153,8 +153,8 @@ export class EmailInitNodeConfigComponent implements ControlValueAccessor, OnIni
 
       this.changeSubscription = this.emailInitNodeConfigFormGroup.get('fromPassword').valueChanges.subscribe(
         (configuration: any) => {
-          console.log("fromPassword node value cahnge sub");
-          console.log(configuration);
+
+
           this.configuration.fromPassword = configuration;
           this.updateModel(this.configuration);
         }

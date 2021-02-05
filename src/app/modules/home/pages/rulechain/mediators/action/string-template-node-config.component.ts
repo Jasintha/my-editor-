@@ -361,7 +361,7 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
 
       this.changeSubscription = this.stringTemplateNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

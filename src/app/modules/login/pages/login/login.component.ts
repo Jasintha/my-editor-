@@ -52,7 +52,7 @@ export class LoginComponent extends PageComponent implements OnInit {
 
   login(): void {
     //if (this.loginFormGroup.valid) {
-      console.log('ssss');
+
       this.authService.login(this.loginFormGroup.value).subscribe(
         () => {},
         (error: HttpErrorResponse) => {

@@ -196,7 +196,7 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
 
     let customvalue: string = '';
 
-    console.log(customvalue);
+
     if(constant){
         customvalue = constant.constantName;
     } else {
@@ -278,7 +278,7 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
-    console.log(this.configuration.validators);
+
 
     if(this.configuration.validators){
     } else {
@@ -328,7 +328,7 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
 
       this.changeSubscription = this.validatorNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

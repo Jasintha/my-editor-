@@ -110,7 +110,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
   }
 
   ngOnInit(): void {
-  console.log(this.allEvents);
+
   }
 
   ngOnDestroy(): void {
@@ -134,8 +134,8 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
-    console.log("printttt");
-    console.log(this.configuration);
+
+
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
@@ -149,7 +149,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
 
       let e = this.configuration.event;
       //e = this.allEvents.find(x => x.name === this.configuration.event);
-        console.log(e);
+
 
       this.eventReceiverNodeConfigFormGroup.patchValue({
         eventSource: this.configuration.eventSource,
@@ -161,14 +161,14 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
 
       this.changeSubscription = this.eventReceiverNodeConfigFormGroup.get('event').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.event = configuration;
           this.updateModel(this.configuration);
         }
       );
       this.changeSubscription = this.eventReceiverNodeConfigFormGroup.get('eventSource').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.eventSource = configuration;
           this.updateModel(this.configuration);
         }
@@ -176,7 +176,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
 
       this.changeSubscription = this.eventReceiverNodeConfigFormGroup.get('subject').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.subject = configuration;
           this.updateModel(this.configuration);
         }
@@ -191,7 +191,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
 
       this.changeSubscription = this.eventReceiverNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

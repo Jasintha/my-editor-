@@ -542,7 +542,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
       this.changeSubscription = this.callNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

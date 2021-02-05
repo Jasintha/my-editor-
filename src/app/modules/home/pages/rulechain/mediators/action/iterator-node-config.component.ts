@@ -135,7 +135,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
   }
 
   ngOnInit(): void {
-  console.log(this.allModelProperties);
+
   }
 
   ngOnDestroy(): void {
@@ -221,7 +221,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
 
       this.changeSubscription = this.iteratorNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

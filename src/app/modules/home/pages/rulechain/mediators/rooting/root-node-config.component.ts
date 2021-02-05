@@ -208,7 +208,7 @@ export class RootNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
     this.configuration = deepClone(value);
     if(this.configuration.branchParams === null || this.configuration.branchParams === undefined){
-    console.log("undefined");
+
         this.configuration.branchParams = [];
     }
     this.datasource = new MatTableDataSource(this.configuration.branchParams);

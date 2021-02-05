@@ -964,8 +964,7 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   openNodeDetails(node: FcRuleNode) {
-  console.log("open node");
-  console.log(node);
+
 
     this.branchAvailability = {'branchParams': [], 'branchFound': false};
     this.connectorfields = [];
@@ -1032,7 +1031,7 @@ export class RuleChainPageComponent extends PageComponent
       });
 
       let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], []);
-      console.log(branchFoundObj);
+
 
 
     let valueObjectPropertyArray = [];
@@ -1076,8 +1075,7 @@ export class RuleChainPageComponent extends PageComponent
 
 
       if(branchFoundObj.branchFound){
-        console.log("branch node");
-        console.log(nodes[branchFoundObj.branchIndex]);
+
 
         if(nodes[branchFoundObj.branchIndex].configuration.branchParams){
             for (let param of nodes[branchFoundObj.branchIndex].configuration.branchParams){
@@ -1977,7 +1975,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   }
 
   add(): void {
-    console.log("add called ==================================");
+
     this.submitted = true;
     //this.ruleNodeDetailsComponent.validate();
     //if (this.ruleNodeDetailsComponent.ruleNodeFormGroup.valid) {

@@ -345,7 +345,7 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
 
       this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }
@@ -368,7 +368,7 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
 
       this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('event').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.event = configuration;
           this.updateModel(this.configuration);
         }

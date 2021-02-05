@@ -189,7 +189,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
   checkboxClick(node){
     this.checklistSelection.toggle(node);
-    console.log(this.checklistSelection.selected);
+
   }
 
   //select specific tree
@@ -219,7 +219,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
   checkboxClickSelectSpecific(node){
     this.checklistSelectionSelectSpecific.toggle(node);
-    console.log(this.checklistSelectionSelectSpecific.selected);
+
   }
   
   constructor(private translate: TranslateService,
@@ -677,7 +677,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
       let model = this.configuration.model;
       if(this.configuration.dbAction === 'QUERY' && this.allDomainModels){
-        console.log(model)
+
         model = this.allDomainModels.find(x => x.name === this.configuration.model.name );
 
         if(model){
@@ -790,7 +790,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
       this.changeSubscription = this.dbNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

@@ -318,8 +318,8 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
   writeValue(value: RuleNodeConfiguration): void {
 
-  console.log("email init node write value");
-  console.log(value);
+
+
 
     this.configuration = deepClone(value);
     if (this.changeSubscription) {
@@ -426,7 +426,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
       this.changeSubscription = this.crudNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

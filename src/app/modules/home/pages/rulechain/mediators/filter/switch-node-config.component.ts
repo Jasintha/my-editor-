@@ -476,7 +476,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
       this.changeSubscription = this.switchNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }

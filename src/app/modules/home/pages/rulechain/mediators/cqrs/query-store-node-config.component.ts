@@ -208,8 +208,7 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
       }
 
-      console.log(this.configuration.entity);
-      console.log(this.inputEntities);
+
 
       let dbType = '';
       if(this.queryDb && this.queryDb !== ''){
@@ -271,7 +270,7 @@ export class QueryStoreNodeConfigComponent implements ControlValueAccessor, OnIn
 
       this.changeSubscription = this.queryStoreNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
         (configuration: any) => {
-          console.log(configuration);
+
           this.configuration.errorAction = configuration;
           this.updateModel(this.configuration);
         }
