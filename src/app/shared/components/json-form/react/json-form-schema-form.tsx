@@ -41,7 +41,7 @@ import { GroupInfo } from '@shared/models/widget.models';
 
 const tinycolor = tinycolor_;
 
-class ThingsboardSchemaForm extends React.Component<JsonFormProps, any> {
+class VirtuanSchemaForm extends React.Component<JsonFormProps, any> {
 
   private hasConditions: boolean;
   private readonly mapper: {[type: string]: any};
@@ -163,7 +163,7 @@ class ThingsboardSchemaForm extends React.Component<JsonFormProps, any> {
     }
   }
 }
-export default ThingsboardSchemaForm;
+export default VirtuanSchemaForm;
 
 interface ThingsboardSchemaGroupProps {
   info: GroupInfo;

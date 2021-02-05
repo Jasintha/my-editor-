@@ -17,11 +17,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '@shared/shared.module';
-import { RuleChainComponent } from '@modules/home/pages/rulechain/rulechain.component';
 import { RuleChainRoutingModule } from '@modules/home/pages/rulechain/rulechain-routing.module';
 import { MediatorNodeConfigModule } from '@modules/home/pages/rulechain/mediators/mediator-node-config.module';
 import { HomeComponentsModule } from '@modules/home/components/home-components.module';
-import { RuleChainTabsComponent } from '@home/pages/rulechain/rulechain-tabs.component';
 import {
   AddRuleNodeDialogComponent,
   AddRuleNodeLinkDialogComponent,
@@ -36,8 +34,6 @@ import { RuleNodeConfigComponent } from './rule-node-config.component';
 
 @NgModule({
   declarations: [
-    RuleChainComponent,
-    RuleChainTabsComponent,
     RuleChainPageComponent,
     RuleNodeComponent,
     RuleNodeDetailsComponent,

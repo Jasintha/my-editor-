@@ -28,9 +28,7 @@ import {
   UrlTree
 } from '@angular/router';
 
-import { EntitiesTableComponent } from '../../components/entity/entities-table.component';
 import { Authority } from '@shared/models/authority.enum';
-import { RuleChainsTableConfigResolver } from '@modules/home/pages/rulechain/rulechains-table-config.resolver';
 import * as RxJs from 'rxjs';
 import { Observable } from 'rxjs';
 import * as RxJsOperators from 'rxjs/operators';
@@ -156,17 +154,6 @@ const routes: Routes = [
     },
     children: [
       {
-        path: '',
-        component: EntitiesTableComponent,
-        data: {
-          auth: [Authority.TENANT_ADMIN],
-          title: 'rulechain.rulechains'
-        },
-        resolve: {
-          entitiesTableConfig: RuleChainsTableConfigResolver
-        }
-      },
-      {
         path: ':ruleChainId',
         component: RuleChainPageComponent,
         canDeactivate: [ConfirmOnExitGuard],
@@ -184,24 +171,6 @@ const routes: Routes = [
           ruleChainMetaData: ResolvedRuleChainMetaDataResolver,
           ruleNodeComponents: RuleNodeComponentsResolver
         }
-      },
-      {
-        path: 'ruleChain/import',
-        component: RuleChainPageComponent,
-        canActivate: [RuleChainImportGuard],
-        canDeactivate: [ConfirmOnExitGuard],
-        data: {
-          breadcrumb: {
-            labelFunction: importRuleChainBreadcumbLabelFunction,
-            icon: 'settings_ethernet'
-          } as BreadCrumbConfig<RuleChainPageComponent>,
-          auth: [Authority.TENANT_ADMIN],
-          title: 'rulechain.rulechain',
-          import: true
-        },
-        resolve: {
-          ruleNodeComponents: RuleNodeComponentsResolver
-        }
       }
     ]
   }
@@ -212,7 +181,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    RuleChainsTableConfigResolver,
     RuleChainResolver,
     ResolvedRuleChainMetaDataResolver,
     RuleNodeComponentsResolver,

@@ -36,7 +36,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RafService } from '@core/services/raf.service';
 import { EntityAliases } from '@shared/models/alias.models';
 import { EntityInfo } from '@app/shared/models/entity.models';
-import { IDashboardComponent } from '@home/models/dashboard-component.models';
+//import { IDashboardComponent } from '@home/models/dashboard-component.models';
 import * as moment_ from 'moment';
 import {
   AlarmData,
@@ -173,16 +173,15 @@ export interface SubscriptionInfo {
 
 export class WidgetSubscriptionContext {
 
-  constructor(private dashboard: IDashboardComponent) {}
+  constructor() {}
 
   get aliasController(): IAliasController {
-    return this.dashboard.aliasController;
+    return null;
   }
 
-  dashboardTimewindowApi: TimewindowFunctions = {
-    onResetTimewindow: this.dashboard.onResetTimewindow.bind(this.dashboard),
-    onUpdateTimewindow: this.dashboard.onUpdateTimewindow.bind(this.dashboard)
-  };
+  dashboardTimewindowApi: TimewindowFunctions;
+
+
 
   timeService: TimeService;
   deviceService: DeviceService;

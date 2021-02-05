@@ -101,7 +101,6 @@ import {
 } from '@shared/components/fab-toolbar.component';
 import { DashboardSelectPanelComponent } from '@shared/components/dashboard-select-panel.component';
 import { DashboardSelectComponent } from '@shared/components/dashboard-select.component';
-import { WidgetsBundleSelectComponent } from '@shared/components/widgets-bundle-select.component';
 import { KeyboardShortcutPipe } from '@shared/pipe/keyboard-shortcut.pipe';
 import { TbErrorComponent } from '@shared/components/tb-error.component';
 import { EntityTypeListComponent } from '@shared/components/entity/entity-type-list.component';
@@ -133,7 +132,6 @@ import { JsonObjectEditDialogComponent } from '@shared/components/dialog/json-ob
 import { HistorySelectorComponent } from './components/time/history-selector/history-selector.component';
 import { EntityGatewaySelectComponent } from '@shared/components/entity/entity-gateway-select.component';
 import { QueueTypeListComponent } from '@shared/components/queue/queue-type-list.component';
-import { ContactComponent } from '@shared/components/contact.component';
 
 @NgModule({
   providers: [
@@ -193,7 +191,6 @@ import { ContactComponent } from '@shared/components/contact.component';
     FabTriggerDirective,
     FabActionsDirective,
     FabToolbarComponent,
-    WidgetsBundleSelectComponent,
     ConfirmDialogComponent,
     AlertDialogComponent,
     TodoDialogComponent,
@@ -219,8 +216,7 @@ import { ContactComponent } from '@shared/components/contact.component';
     TbJsonToStringDirective,
     JsonObjectEditDialogComponent,
     HistorySelectorComponent,
-    EntityGatewaySelectComponent,
-    ContactComponent
+    EntityGatewaySelectComponent
   ],
   imports: [
     CommonModule,
@@ -312,7 +308,6 @@ import { ContactComponent } from '@shared/components/contact.component';
     FabTriggerDirective,
     FabActionsDirective,
     FabToolbarComponent,
-    WidgetsBundleSelectComponent,
     ValueInputComponent,
     MatButtonModule,
     MatCheckboxModule,
@@ -381,8 +376,7 @@ import { ContactComponent } from '@shared/components/contact.component';
     TranslateModule,
     JsonObjectEditDialogComponent,
     HistorySelectorComponent,
-    EntityGatewaySelectComponent,
-    ContactComponent
+    EntityGatewaySelectComponent
   ]
 })
 export class SharedModule { }

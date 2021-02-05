@@ -17,7 +17,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { interval } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { HistorySelectSettings } from '@app/modules/home/components/widget/lib/maps/map-models';
+//import { HistorySelectSettings } from '@app/modules/home/components/widget/lib/maps/map-models';
 
 @Component({
   selector: 'tb-history-selector',
@@ -26,7 +26,7 @@ import { HistorySelectSettings } from '@app/modules/home/components/widget/lib/m
 })
 export class HistorySelectorComponent implements OnInit, OnChanges {
 
-  @Input() settings: HistorySelectSettings
+ // @Input() settings: HistorySelectSettings
   @Input() minTime: number;
   @Input() maxTime: number;
   @Input() step = 1000;

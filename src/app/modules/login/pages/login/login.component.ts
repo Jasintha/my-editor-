@@ -33,7 +33,7 @@ import { OAuth2Client } from '@shared/models/login.models';
 export class LoginComponent extends PageComponent implements OnInit {
 
   loginFormGroup = this.fb.group({
-    username: 'tenant@thingsboard.org',
+    username: 'tenant@virtuan.io',
     password: 'tenant'
   });
   oauth2Clients: Array<OAuth2Client> = null;
