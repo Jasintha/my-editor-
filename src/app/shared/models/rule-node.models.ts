@@ -201,8 +201,7 @@ export const ruleNodeTypesLibrary = [
   RuleNodeType.DATABASE_OPERATIONS,
   RuleNodeType.CQRS,
   RuleNodeType.MESSAGING,
-  RuleNodeType.CONNECTOR,
-  RuleNodeType.RULE_CHAIN
+  RuleNodeType.CONNECTOR
 ];
 
 export interface RuleNodeTypeDescriptor {

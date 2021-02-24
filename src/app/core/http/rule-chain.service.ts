@@ -121,7 +121,7 @@ export class RuleChainService {
           return this.resolveRuleNodeComponentsUiResources(components, ruleNodeConfigResourcesModulesMap).pipe(
             map((ruleNodeComponents) => {
               this.ruleNodeComponents = ruleNodeComponents;
-              this.ruleNodeComponents.push(ruleChainNodeComponent);
+              //this.ruleNodeComponents.push(ruleChainNodeComponent);
               this.ruleNodeComponents.sort(
                 (comp1, comp2) => {
                   let result = comp1.type.toString().localeCompare(comp2.type.toString());
