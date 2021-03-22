@@ -1040,8 +1040,8 @@ export class RuleChainPageComponent extends PageComponent
 
       console.log(this.allGlobalProperties);
 
-      if (this.golbalProperties && this.golbalProperties.length > 0){
-        branchFoundObj.properties.concat(this.golbalProperties);
+      if (this.allGlobalProperties && this.allGlobalProperties.length > 0){
+        branchFoundObj.properties.concat(this.allGlobalProperties);
       }
 
       console.log(branchFoundObj);
