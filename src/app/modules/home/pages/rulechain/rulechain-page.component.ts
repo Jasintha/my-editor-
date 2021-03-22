@@ -1037,9 +1037,14 @@ export class RuleChainPageComponent extends PageComponent
       let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], []);
 
       let golbalProperties = this.allGlobalProperties;
+
+      console.log(this.allGlobalProperties);
+
       if (golbalProperties && golbalProperties.length > 0){
         branchFoundObj.properties.concat(golbalProperties);
       }
+
+      console.log(branchFoundObj);
 
       let allGlobalConstants = this.allGlobalConstants;
       if (allGlobalConstants && allGlobalConstants.length > 0){
