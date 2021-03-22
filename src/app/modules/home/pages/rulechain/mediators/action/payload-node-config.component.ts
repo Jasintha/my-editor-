@@ -27,6 +27,7 @@ import { Observable } from 'rxjs';
 import { PageComponent } from '@shared/components/page.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'virtuan-payload-node-config',
@@ -56,6 +57,14 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
   @Input()
   ruleNodeId: string;
 
+  @Input() branchAvailability: any;
+
+  @Input()
+  allRuleInputs: any[];
+
+  @Input()
+  allDomainModelsWithSub: any[];
+
   @Input()
   allModelProperties: any[];
 
@@ -84,6 +93,12 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   changeSubscription: Subscription;
 
+  datasource: MatTableDataSource<PayloadParameter>;
+
+  displayedColumns: string[] = ['colName', 'inputType', 'input', 'property', 'actions'];
+
+  ChildrenOfSelectedProperty : any[] = []
+
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
@@ -103,7 +118,14 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       assignedProperty: [],
       assignedReference: [],
       errorMsg: "",
-      errorAction: ""
+      errorAction: "",
+      propertyinputType: "",
+      propertyproperty: [],
+      propertyreference: [],
+      propertyparam: [],
+      colName: "",
+      childrenParam: [],
+      // mapping: []
     });
   }
 
@@ -135,12 +157,127 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
     }
   }
 
+  addChildrenProperties(modelprop, propertyType){
+
+    if (propertyType === "valueProperty") {
+      // console.log("value -------",modelprop,this.allDomainModelsWithSub)
+      let parent = modelprop.name
+      for (let domModel of this.allDomainModelsWithSub) {
+        if (modelprop.type === domModel.nameTitleCase) {
+          for (let child of domModel.design.children) {
+            let childProp = {
+              'name': parent + "." + child.data.name,
+              'inputType': child.data.type,
+              'childName': child.data.name,
+              'dataType': child.data.propertytype
+            }
+            this.ChildrenOfSelectedProperty.push(childProp)
+          }
+        }
+      }
+    } else if (propertyType === "reference") {
+      // console.log("value -------",modelprop)
+      let parent = modelprop.name
+      // if (modelprop.record === "m"){
+        for (let domModel of this.allDomainModelsWithSub){
+          if (modelprop.modelproperty.name === domModel.name){
+            for (let child of domModel.design.children){
+              let childProp = {
+                'name' : parent+"."+child.data.name,
+                'inputType' : child.data.type,
+                'childName': child.data.name,
+                'dataType': child.data.propertytype,
+                'modelproperty' : {
+                  'data': {
+                    'path' : child.data.path
+                  }
+                }
+              }
+              this.ChildrenOfSelectedProperty.push(childProp)
+            }
+          }
+        }
+      // }
+    }
+  }
+
+  refreshInputTypes(){
+    let inputType: string = this.payloadNodeConfigFormGroup.get('propertyinputType').value;
+    this.configuration.propertyinputType = inputType;
+
+    if (inputType === 'PROPERTY'){
+      this.configuration.propertyreference= {};
+      this.payloadNodeConfigFormGroup.get('propertyreference').patchValue([], {emitEvent: false});
+    } else if (inputType === 'REFERENCE'){
+      this.configuration.propertyproperty= {};
+      this.payloadNodeConfigFormGroup.get('propertyproperty').patchValue([], {emitEvent: false});
+    } else if (inputType === 'RULE_INPUT'){
+      this.configuration.propertyparam= {};
+      this.payloadNodeConfigFormGroup.get('propertyparam').patchValue([], {emitEvent: false});
+    }
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
+  }
+
+  addParameter(): void{
+    let inputType: string = this.payloadNodeConfigFormGroup.get('assignedtoinputType').value;
+    let colName = this.payloadNodeConfigFormGroup.get('colName').value;
+
+    if (inputType === 'PROPERTY') {
+      let selectedParameterProperty = this.payloadNodeConfigFormGroup.get('childrenParam').value;
+      let parameterproperty = {
+        'colName': colName,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedParameterProperty.name,
+        'type': selectedParameterProperty.dataType
+      };
+      this.configuration.payloadParameters.push(parameterproperty);
+      this.datasource = new MatTableDataSource(this.configuration.payloadParameters);
+      this.updateModel(this.configuration);
+    } else if (inputType === 'REFERENCE') {
+      let selectedParameterProperty = this.payloadNodeConfigFormGroup.get('childrenParam').value;
+      let parameterproperty = {
+        'colName': colName,
+        'inputType': inputType,
+        'input': '-',
+        'property': selectedParameterProperty.modelproperty.data.path,
+        'type': selectedParameterProperty.dataType
+      };
+      this.configuration.payloadParameters.push(parameterproperty);
+      this.datasource = new MatTableDataSource(this.configuration.payloadParameters);
+      this.updateModel(this.configuration);
+    }
+
+    this.configuration.childrenParam= {};
+    this.configuration.colName= '';
+
+    this.payloadNodeConfigFormGroup.get('childrenParam').patchValue([], {emitEvent: false});
+    this.payloadNodeConfigFormGroup.get('colName').patchValue([], {emitEvent: false});
+  }
+
+  deleteRow(index: number): void{
+    this.configuration.payloadParameters.splice(index, 1);
+    this.datasource = new MatTableDataSource(this.configuration.payloadParameters);
+    this.updateModel(this.configuration);
+  }
+
   writeValue(value: RuleNodeConfiguration): void {
 
-
-
-
     this.configuration = deepClone(value);
+    if(this.configuration.payloadParameters === null || this.configuration.payloadParameters === undefined){
+      this.configuration.payloadParameters = [];
+    }
+
+    if(this.configuration.assignedtoinputType === null || this.configuration.assignedtoinputType === undefined){
+      this.configuration.assignedtoinputType = {};
+    }
+
+    this.datasource = new MatTableDataSource(this.configuration.payloadParameters);
+
+
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
@@ -162,17 +299,73 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
         assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
       }
 
+      let propertyproperty = this.configuration.propertyproperty;
+      if(this.configuration.propertyinputType === 'PROPERTY' && this.allModelProperties){
+        propertyproperty = this.allModelProperties.find(x => x.name === this.configuration.propertyproperty.name );
+      }
+
+      let propertyreference = this.configuration.propertyreference;
+      if(this.configuration.propertyinputType === 'REFERENCE' && this.allReferenceProperties){
+        propertyreference = this.allModelProperties.find(x => x.name === this.configuration.propertyreference.name );
+      }
+
+      let propertyparam = this.configuration.propertyparam;
+      if(this.configuration.propertyinputType === 'REFERENCE' && this.allReferenceProperties){
+        propertyparam = this.allModelProperties.find(x => x.name === this.configuration.propertyparam.name );
+      }
+
       this.payloadNodeConfigFormGroup.patchValue({
         assignedProperty: assignedProperty,
         url: this.configuration.url,
         payloadInputType: this.configuration.payloadInputType,
         payload: this.configuration.payload,
         payloadType: this.configuration.payloadType,
+        // mapping : this.configuration.mapping,
         assignedtoinputType: this.configuration.assignedtoinputType,
         assignedReference: assignedReference,
         errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction
+        errorAction: this.configuration.errorAction,
+        propertyinputType: this.configuration.propertyinputType,
+        propertyproperty: propertyproperty,
+        propertyreference: propertyreference,
+        propertyparam: propertyparam,
+        childrenParam: this.configuration.childrenParam
       });
+
+        this.changeSubscription = this.payloadNodeConfigFormGroup.get('childrenParam').valueChanges.subscribe(
+            (configuration: any) => {
+                this.configuration.childrenParam = configuration;
+                this.updateModel(this.configuration);
+            }
+        );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('propertyinputType').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.propertyinputType = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('propertyproperty').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.propertyproperty = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('propertyreference').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.propertyreference = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('propertyparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.propertyparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
 
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
@@ -201,10 +394,19 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
           this.updateModel(this.configuration);
         }
       );
+
+      // this.changeSubscription = this.payloadNodeConfigFormGroup.get('mapping').valueChanges.subscribe(
+      //     (configuration: RuleNodeConfiguration) => {
+      //       this.configuration.mapping = configuration;
+      //       this.updateModel(this.configuration);
+      //     }
+      // );
       
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.assignedReference = configuration;
+          this.ChildrenOfSelectedProperty = [];
+          this.addChildrenProperties(configuration,"reference")
           this.updateModel(this.configuration);
         }
       );
@@ -212,6 +414,8 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.assignedProperty = configuration;
+          this.ChildrenOfSelectedProperty = [];
+          this.addChildrenProperties(configuration,"valueProperty")
           this.updateModel(this.configuration);
         }
       );
@@ -272,39 +476,13 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
     }
   }
 
-  /*
+}
 
-  private validateDefinedDirective() {
-    if (this.definedConfigComponentRef) {
-      this.definedConfigComponentRef.destroy();
-      this.definedConfigComponentRef = null;
-    }
-    if (this.nodeDefinition.uiResourceLoadError && this.nodeDefinition.uiResourceLoadError.length) {
-      this.definedDirectiveError = this.nodeDefinition.uiResourceLoadError;
-    } else if (this.nodeDefinition.configDirective && this.nodeDefinition.configDirective.length) {
-      if (this.changeSubscription) {
-        this.changeSubscription.unsubscribe();
-        this.changeSubscription = null;
-      }
-      this.definedConfigContainer.clear();
-      const factory = this.ruleChainService.getRuleNodeConfigFactory(this.nodeDefinition.configDirective);
-      this.definedConfigComponentRef = this.definedConfigContainer.createComponent(factory);
-      this.definedConfigComponent = this.definedConfigComponentRef.instance;
-      this.definedConfigComponent.ruleNodeId = this.ruleNodeId;
-      this.definedConfigComponent.configuration = this.configuration;
-      this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
-        this.updateModel(configuration);
-      });
-    }
-  }
-
-
-
-  validate() {
-    if (this.useDefinedDirective()) {
-      this.definedConfigComponent.validate();
-    }
-  }
-  */
+export interface PayloadParameter {
+  colName: string;
+  inputType: string;
+  input: string;
+  property: string;
+  type: string;
 }
 
