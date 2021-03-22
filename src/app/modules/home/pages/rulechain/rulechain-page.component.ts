@@ -161,6 +161,8 @@ export class RuleChainPageComponent extends PageComponent
   allSavedObjects: any[];
   allDomainModels: any[];
   allModelProperties: any[];
+  allGlobalProperties: any[];
+  allGlobalConstants: any[];
   allRuleInputs: any[];
   allEvents: any[];
   allViewModels: any[];
@@ -374,6 +376,8 @@ export class RuleChainPageComponent extends PageComponent
     this.commandDb = this.ruleChainMetaData.commandDb;
     this.apptype = this.ruleChainMetaData.apptype;
     this.allModelProperties = this.ruleChainMetaData.allModelProperties;
+    this.allGlobalProperties = this.ruleChainMetaData.allGlobalProperties;
+    this.allGlobalConstants = this.ruleChainMetaData.allGlobalConstants;
     this.connectorData = this.ruleChainMetaData.connectors;
     this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
     this.inputProperties = this.ruleChainMetaData.inputProperties;
@@ -1032,7 +1036,15 @@ export class RuleChainPageComponent extends PageComponent
 
       let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], []);
 
+      let golbalProperties = this.allGlobalProperties;
+      if (golbalProperties && golbalProperties.length > 0){
+        branchFoundObj.properties.concat(golbalProperties);
+      }
 
+      let allGlobalConstants = this.allGlobalConstants;
+      if (allGlobalConstants && allGlobalConstants.length > 0){
+        branchFoundObj.constants.concat(allGlobalConstants);
+      }
 
     let valueObjectPropertyArray = [];
 
@@ -1550,6 +1562,7 @@ export class RuleChainPageComponent extends PageComponent
         this.commandDb = this.ruleChainMetaData.commandDb;
         this.apptype = this.ruleChainMetaData.apptype;
         this.allModelProperties = this.ruleChainMetaData.allModelProperties;
+        this.allGlobalProperties = this.ruleChainMetaData.allGlobalProperties;
         this.connectorData = this.ruleChainMetaData.connectors;
         this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
         this.inputProperties = this.ruleChainMetaData.inputProperties;
