@@ -81,7 +81,7 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
 
   changeSubscription: Subscription;
 
-  displayedColumns: string[] = ['constantName', 'scope', ''constantType', 'customValue', 'actions'];
+  displayedColumns: string[] = ['constantName', 'scope', 'constantType', 'customValue', 'actions'];
 
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
