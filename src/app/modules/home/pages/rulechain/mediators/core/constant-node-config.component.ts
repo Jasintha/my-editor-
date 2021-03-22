@@ -81,7 +81,7 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
 
   changeSubscription: Subscription;
 
-  displayedColumns: string[] = ['constantName', 'constantType', 'customValue', 'actions'];
+  displayedColumns: string[] = ['constantName', 'scope', ''constantType', 'customValue', 'actions'];
 
   private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
   private definedConfigComponent: IRuleNodeConfigurationComponent;
@@ -96,7 +96,8 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
     this.constantNodeConfigFormGroup = this.fb.group({
       constantName: [],
       constantType: [],
-      customValue: []
+      customValue: [],
+      scope: ""
     });
   }
 
@@ -123,7 +124,8 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
     let constant = {
       'constantName': this.constantNodeConfigFormGroup.get('constantName').value,
       'constantType': this.constantNodeConfigFormGroup.get('constantType').value,
-      'customValue': this.constantNodeConfigFormGroup.get('customValue').value
+      'customValue': this.constantNodeConfigFormGroup.get('customValue').value,
+      'scope': this.constantNodeConfigFormGroup.get('scope').value
     };
     this.configuration.constants.push(constant);
     this.updateModel(this.configuration);
@@ -131,7 +133,8 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
     this.constantNodeConfigFormGroup.patchValue({
       constantName: '',
       constantType: '',
-      customValue: ''
+      customValue: '',
+      scope: ''
     });
   }
 
@@ -202,4 +205,5 @@ export interface Constant {
   constantName: string;
   constantType: string;
   customValue: string;
+  scope: string;
 }
