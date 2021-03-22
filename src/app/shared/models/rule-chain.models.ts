@@ -52,6 +52,8 @@ export interface RuleChainMetaData {
   allDomainModels?: any[];
   allValueObjectProperties?: any[];
   allModelProperties?: any[];
+  allGlobalProperties?: any[];
+  allGlobalConstants?: any[];
   allRuleInputs?: any[];
   allEvents?: any[];
   queryDb?: string;
