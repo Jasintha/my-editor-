@@ -190,7 +190,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valueentity: [],
       valuecustomObject: [],
       valueprimitive: '',
-      valuerecord: ''
+      valuerecord: '',
+      propertyScope:''
     });
   }
 
@@ -237,7 +238,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valueentity: [],
       valuecustomObject: [],
       valueprimitive: '',
-      valuerecord: ''
+      valuerecord: '',
+      propertyScope: ''
     });
 
     } else if (modelpropertyType === 'PROPERTY'){
@@ -262,7 +264,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valueentity: [],
       valuecustomObject: [],
       valueprimitive: '',
-      valuerecord: ''
+      valuerecord: '',
+      propertyScope: ''
     });
 
     } else if (modelpropertyType === 'BRANCH_PARAM'){
@@ -287,7 +290,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valueentity: [],
       valuecustomObject: [],
       valueprimitive: '',
-      valuerecord: ''
+      valuerecord: '',
+      propertyScope: ''
     });
 
     } else if (modelpropertyType === 'NEW'){
@@ -326,6 +330,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     let mapValue: string = '';
     let mapValueType: string = '';
     let mapValueRecord: string = '';
+    let propertyScope: string = '';
 
     //let modelTitleName = '';
     let modelName = '';
@@ -417,6 +422,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     } else if (propertyType === 'NEW') {
         propertyDataType = this.domainModelVariableNodeConfigFormGroup.get('propinputType').value;
         record = this.domainModelVariableNodeConfigFormGroup.get('proprecord').value;
+        propertyScope = this.domainModelVariableNodeConfigFormGroup.get('propertyScope').value;
 
         if(propertyDataType === 'MODEL'){
             type = this.domainModelVariableNodeConfigFormGroup.get('propentity').value.name;
@@ -446,7 +452,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
 
             mapValueRecord = this.domainModelVariableNodeConfigFormGroup.get('valuerecord').value;
 
-        }
+        }mapValueRecord
     }
 
     let property: Property = {
@@ -461,7 +467,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       mapKeyType: mapKeyType,
       mapValue: mapValue,
       mapValueType: mapValueType,
-      mapValueRecord: mapValueRecord
+      mapValueRecord: mapValueRecord,
+      propertyScope: propertyScope
     };
     this.configuration.modelproperties.push(property);
     this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
@@ -731,6 +738,7 @@ export interface Property {
   mapValue: string;
   mapValueType: string;
   mapValueRecord: string;
+  propertyScope: string;
 }
 
 /*

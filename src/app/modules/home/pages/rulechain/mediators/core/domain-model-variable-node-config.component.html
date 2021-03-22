@@ -12,6 +12,13 @@
             <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
         </mat-select>
     </mat-form-field>
+    <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'NEW'" fxFlex class="mat-block">
+        <mat-label>Scope</mat-label>
+        <mat-select formControlName="propertyScope">
+            <mat-option value="RULE">Rule</mat-option>
+            <mat-option value="GLOBAL">Global</mat-option>
+        </mat-select>
+    </mat-form-field>
     <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'RULE_INPUT'" fxFlex class="mat-block">
         <mat-label>Rule Input</mat-label>
         <mat-select formControlName="modelpropertyruleInput">
