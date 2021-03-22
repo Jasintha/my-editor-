@@ -1038,20 +1038,13 @@ export class RuleChainPageComponent extends PageComponent
 
       let golbalProperties = this.allGlobalProperties;
 
-      console.log(this.allGlobalProperties);
-
       if (this.allGlobalProperties && this.allGlobalProperties.length > 0){
-      console.log("came here");
-
-      console.log(branchFoundObj.properties);
-        branchFoundObj.properties.concat(this.allGlobalProperties);
+        branchFoundObj.properties = branchFoundObj.properties.concat(this.allGlobalProperties);
       }
-
-      console.log(branchFoundObj);
 
       let allGlobalConstants = this.allGlobalConstants;
       if (this.allGlobalConstants && this.allGlobalConstants.length > 0){
-        branchFoundObj.constants.concat(this.allGlobalConstants);
+        branchFoundObj.constants = branchFoundObj.constants.concat(this.allGlobalConstants);
       }
 
     let valueObjectPropertyArray = [];
