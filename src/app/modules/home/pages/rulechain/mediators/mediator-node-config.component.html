@@ -79,9 +79,12 @@
         <virtuan-payload-node-config #payloadNodeConfigComponent
                                 formControlName="configuration"
                                 [ruleNodeId]="ruleNodeId"
+                                [allRuleInputs]="allRuleInputs"
+                                [branchAvailability]="branchAvailability"
                                 [allModelProperties]="allModelProperties"
                                 [allReferenceProperties]="allReferenceProperties"
-                                [nodeDefinition]="nodeDefinitionValue">
+                                [nodeDefinition]="nodeDefinitionValue"
+                                [allDomainModelsWithSub]="allDomainModelsWithSub">
         </virtuan-payload-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiConstantNode'">

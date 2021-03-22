@@ -1,6 +1,21 @@
 <div [formGroup]="excelReadNodeConfigFormGroup">
 
-    <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Input Type</mat-label>
+            <mat-select formControlName="excelFileInputType">
+                <mat-option value="FILE_UPLOAD">File Upload</mat-option>
+                <mat-option value="REMOTE_PATH">Remote File Path</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="configuration.excelFileInputType === 'REMOTE_PATH'" fxFlex class="mat-block">
+            <mat-label>URL</mat-label>
+            <input matInput formControlName="url"/>
+        </mat-form-field>
+
+
+
+    <section *ngIf="configuration.excelFileInputType === 'FILE_UPLOAD'" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <section class="mat-block" fxFlex>
             <mat-form-field fxFlex class="mat-block">
                 <mat-label>File Path Property Type</mat-label>
@@ -41,8 +56,8 @@
             <mat-select formControlName="excelinputType">
                 <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
                 <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
-                <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
-                <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+<!--                <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>-->
+<!--                <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>-->
                 <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
             </mat-select>
         </mat-form-field>
@@ -95,59 +110,15 @@
             <mat-label>Column Name</mat-label>
             <input matInput formControlName="colName"/>
         </mat-form-field>
-
         <mat-form-field fxFlex class="mat-block">
-            <mat-label>Parameter Input Type</mat-label>
-            <mat-select formControlName="parameterinputType" (selectionChange)="refreshParameterInputTypes()">
-                <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
-                <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
-                <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
-                <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
-                <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
+            <mat-label>Property</mat-label>
+            <mat-select formControlName="childrenParam">
+                <mat-option *ngFor="let property of ChildrenOfSelectedProperty" [value]="property">
+                    {{property.childName}}
+                </mat-option>
             </mat-select>
         </mat-form-field>
-        <section class="mat-block" fxFlex>
-            <mat-form-field *ngIf="configuration.parameterinputType === 'RULE_INPUT'" fxFlex class="mat-block">
-                <mat-label>Rule Input</mat-label>
-                <mat-select formControlName="parameterparam">
-                    <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-                        {{property.inputName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field *ngIf="configuration.parameterinputType === 'PROPERTY'" fxFlex class="mat-block">
-                <mat-label>Property</mat-label>
-                <mat-select formControlName="parameterproperty">
-                    <mat-option *ngFor="let property of allModelProperties" [value]="property">
-                        {{property.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field *ngIf="configuration.parameterinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
-                <mat-label>Branch Param</mat-label>
-                <mat-select formControlName="parameterbranch">
-                    <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
-                        {{param.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field *ngIf="configuration.parameterinputType === 'CONSTANT'" fxFlex class="mat-block">
-                <mat-label>Constant</mat-label>
-                <mat-select formControlName="parameterconstant">
-                    <mat-option *ngFor="let constant of allConstants" [value]="constant">
-                        {{constant.constantName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field *ngIf="configuration.parameterinputType === 'REFERENCE'" fxFlex class="mat-block">
-                <mat-label>Reference Property</mat-label>
-                <mat-select formControlName="parameterreference">
-                    <mat-option *ngFor="let property of allReferenceProperties" [value]="property">
-                        {{property.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </section>
+
         <button mat-icon-button class="virtuan-fullscreen-button-style"
                 (click)="addParameter()"
                 matTooltip="Add Parameter"

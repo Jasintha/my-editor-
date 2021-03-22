@@ -1,6 +1,19 @@
 <div [formGroup]="excelDeleteNodeConfigFormGroup">
 
-    <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>Input Type</mat-label>
+        <mat-select formControlName="excelFileInputType">
+            <mat-option value="FILE_UPLOAD">File Upload</mat-option>
+            <mat-option value="REMOTE_PATH">Remote File Path</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="configuration.excelFileInputType === 'REMOTE_PATH'" fxFlex class="mat-block">
+        <mat-label>URL</mat-label>
+        <input matInput formControlName="url"/>
+    </mat-form-field>
+
+    <section *ngIf="configuration.excelFileInputType === 'FILE_UPLOAD'" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <section class="mat-block" fxFlex>
             <mat-form-field fxFlex class="mat-block">
                 <mat-label>File Path Property Type</mat-label>

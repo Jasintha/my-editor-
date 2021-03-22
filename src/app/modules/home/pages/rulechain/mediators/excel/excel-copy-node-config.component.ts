@@ -132,6 +132,8 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
             propertyinputType: "",
             propertyproperty: [],
             propertyreference: [],
+            excelFileInputType: [],
+            url: []
         });
     }
 
@@ -216,7 +218,23 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
                 propertyinputType: this.configuration.propertyinputType,
                 propertyproperty: propertyproperty,
                 propertyreference: propertyreference,
+                excelFileInputType: this.configuration.propertyinputType,
+                url: this.configuration.propertyinputType
             });
+
+            this.changeSubscription = this.excelCopyNodeConfigFormGroup.get('excelFileInputType').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.excelFileInputType = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelCopyNodeConfigFormGroup.get('url').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.url = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
 
             this.changeSubscription = this.excelCopyNodeConfigFormGroup.get('sourcesheetName').valueChanges.subscribe(
                 (configuration: any) => {

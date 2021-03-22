@@ -118,6 +118,8 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
 
     displayedColumns: string[] = ['colName', 'inputType', 'input', 'property', 'actions'];
 
+    ChildrenOfSelectedProperty : any[] = [];
+
     private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
     private definedConfigComponent: IRuleNodeConfigurationComponent;
 
@@ -140,17 +142,14 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             excelbranch: [],
             excelconstant: [],
             excelreference: [],
-            parameterinputType: "",
-            parameterparam: [],
-            parameterproperty: [],
-            parameterconstant: [],
-            parameterreference:[],
-            parameterbranch: [],
             errorMsg: "",
             errorAction: "",
             propertyinputType: "",
             propertyproperty: [],
             propertyreference: [],
+            excelFileInputType: "",
+            url: "",
+            childrenParam: []
         });
     }
 
@@ -162,7 +161,6 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
     }
 
     ngOnInit(): void {
-        this.addChildrenProperties()
     }
 
     ngOnDestroy(): void {
@@ -191,89 +189,45 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
 
     }
 
-    addChildrenProperties(){
-        for (let modelprop of this.allModelProperties){
+    addChildrenProperties(modelprop, propertyType){
+
+        if (propertyType === "valueProperty") {
             let parent = modelprop.name
-            if (modelprop.propertyType === "NEW" && modelprop.record === "m" && modelprop.propertyDataType === "MODEL"){
-                for (let domModel of this.allDomainModelsWithSub){
-                    if (modelprop.type === domModel.nameTitleCase){
-                        for (let child of domModel.design.children){
-                            let childProp = {
-                                'name' : parent+"."+child.data.name,
-                                'inputType' : child.data.type
-                            }
-                            this.allModelProperties.push(childProp)
+            for (let domModel of this.allDomainModelsWithSub) {
+                if (modelprop.type === domModel.nameTitleCase) {
+                    for (let child of domModel.design.children) {
+                        let childProp = {
+                            'name': parent + "." + child.data.name,
+                            'inputType': child.data.type,
+                            'childName': child.data.name
                         }
+                        this.ChildrenOfSelectedProperty.push(childProp)
                     }
                 }
             }
+        } else if (propertyType === "reference") {
+            let parent = modelprop.name
             if (modelprop.record === "m"){
                 for (let domModel of this.allDomainModelsWithSub){
                     if (modelprop.modelproperty.name === domModel.name){
                         for (let child of domModel.design.children){
                             let childProp = {
                                 'name' : parent+"."+child.data.name,
-                                'inputType' : child.data.type
-                            }
-                            this.allModelProperties.push(childProp)
-                        }
-                    }
-                }
-            }
-        }
-        for (let rerprop of this.allReferenceProperties){
-            let parent = rerprop.name
-            if (rerprop.record === "m"){
-                for (let domModel of this.allDomainModelsWithSub){
-                    if (rerprop.modelproperty.name === domModel.name){
-                        for (let child of domModel.design.children){
-                            let childProp = {
-                                'name' : parent+"."+child.data.name,
                                 'inputType' : child.data.type,
+                                'childName': child.data.name,
                                 'modelproperty' : {
                                     'data': {
                                         'path' : child.data.path
                                     }
                                 }
                             }
-                            this.allReferenceProperties.push(childProp)
+                            this.ChildrenOfSelectedProperty.push(childProp)
                         }
                     }
                 }
             }
         }
-        for (let rerprop of this.allRuleInputs){
-            let parent = rerprop.name
-            if (rerprop.record === "m"){
-                for (let domModel of this.allDomainModelsWithSub){
-                    if (rerprop.modelproperty.name === domModel.name){
-                        for (let child of domModel.design.children){
-                            let childProp = {
-                                'name' : parent+"."+child.data.name,
-                                'inputType' : child.data.type
-                            }
-                            this.allRuleInputs.push(childProp)
-                        }
-                    }
-                }
-            }
-        }
-        for (let rerprop of this.branchAvailability){
-            let parent = rerprop.name
-            if (rerprop.record === "m"){
-                for (let domModel of this.allDomainModelsWithSub){
-                    if (rerprop.modelproperty.name === domModel.name){
-                        for (let child of domModel.design.children){
-                            let childProp = {
-                                'name' : parent+"."+child.data.name,
-                                'inputType' : child.data.type
-                            }
-                            this.branchAvailability.push(childProp)
-                        }
-                    }
-                }
-            }
-        }
+
     }
 
     setDisabledState(isDisabled: boolean): void {
@@ -285,139 +239,48 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
         }
     }
 
-    refreshParameterInputTypes(){
-        let inputType: string = this.excelReadNodeConfigFormGroup.get('parameterinputType').value;
-        this.configuration.parameterinputType = inputType;
-        if (inputType === 'RULE_INPUT'){
-            this.configuration.parameterproperty= {};
-            this.configuration.parameterbranch= {};
-            this.configuration.parameterconstant= {};
-            this.configuration.parameterreference= {};
-            this.excelReadNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-        } else if (inputType === 'PROPERTY'){
-            this.configuration.parameterparam= {};
-            this.configuration.parameterbranch= {};
-            this.configuration.parameterconstant= {};
-            this.configuration.parameterreference= {};
-            this.excelReadNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-        } else if (inputType === 'BRANCH_PARAM'){
-            this.configuration.parameterparam= {};
-            this.configuration.parameterproperty= {};
-            this.configuration.parameterconstant= {};
-            this.configuration.parameterreference= {};
-            this.excelReadNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-        } else if (inputType === 'CONSTANT'){
-            this.configuration.parameterparam= {};
-            this.configuration.parameterproperty= {};
-            this.configuration.parameterbranch= {};
-            this.configuration.parameterreference= {};
-            this.excelReadNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
-        }  else if (inputType === 'REFERENCE'){
-            this.configuration.parameterparam= {};
-            this.configuration.parameterproperty= {};
-            this.configuration.parameterbranch= {};
-            this.configuration.parameterconstant= {};
-            this.excelReadNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
-            this.excelReadNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-        }
-        if (this.definedConfigComponent) {
-            this.propagateChange(this.configuration);
-        }
-
-    }
-
     deleteRow(index: number): void{
         this.configuration.excelReadParameters.splice(index, 1);
         this.datasource = new MatTableDataSource(this.configuration.excelReadParameters);
         this.updateModel(this.configuration);
     }
 
-    addParameter(): void{
-        let inputType: string = this.excelReadNodeConfigFormGroup.get('parameterinputType').value;
+    addParameter(): void{   // todo : should be changed according to new parameters
+        let inputType: string = this.excelReadNodeConfigFormGroup.get('excelinputType').value;
         let colName = this.excelReadNodeConfigFormGroup.get('colName').value;
 
-        if (inputType === 'RULE_INPUT'){
-            let selectedParameterParam = this.excelReadNodeConfigFormGroup.get('parameterparam').value;
-            let parameter = {
-                'colName': colName,
-                'inputType': inputType,
-                'input': '-',
-                'property': selectedParameterParam.inputName
-            };
-            this.configuration.excelReadParameters.push(parameter);
-            this.updateModel(this.configuration);
-        } else if (inputType === 'PROPERTY'){
-            let selectedParameterProperty = this.excelReadNodeConfigFormGroup.get('parameterproperty').value;
+        console.log("@@@@@@@@@@@@@@@@",inputType,colName)
+
+        if (inputType === 'PROPERTY') {
+            let selectedParameterProperty = this.excelReadNodeConfigFormGroup.get('childrenParam').value;
             let parameterproperty = {
                 'colName': colName,
                 'inputType': inputType,
                 'input': '-',
                 'property': selectedParameterProperty.name
             };
+            console.log("****************", parameterproperty)
             this.configuration.excelReadParameters.push(parameterproperty);
+            this.datasource = new MatTableDataSource(this.configuration.excelReadParameters);
             this.updateModel(this.configuration);
-        } else if (inputType === 'BRANCH_PARAM'){
-            let selectedParameterBranch = this.excelReadNodeConfigFormGroup.get('parameterbranch').value;
-            let parameterbranch = {
+        } else if (inputType === 'REFERENCE') {
+            let selectedParameterProperty = this.excelReadNodeConfigFormGroup.get('childrenParam').value;
+            let parameterproperty = {
                 'colName': colName,
                 'inputType': inputType,
                 'input': '-',
-                'property': selectedParameterBranch.name
+                'property': selectedParameterProperty.modelproperty.data.path
             };
-            this.configuration.excelReadParameters.push(parameterbranch);
-            this.updateModel(this.configuration);
-        } else if (inputType === 'CONSTANT'){
-            let selectedParameterConstant = this.excelReadNodeConfigFormGroup.get('parameterconstant').value;
-            let parameterconstant = {
-                'colName': colName,
-                'inputType': inputType,
-                'input': '-',
-                'property': selectedParameterConstant.constantName
-            };
-            this.configuration.excelReadParameters.push(parameterconstant);
-            this.updateModel(this.configuration);
-        } else if (inputType === 'REFERENCE'){
-            let selectedParameterReference = this.excelReadNodeConfigFormGroup.get('parameterreference').value;
-            let parameterreference = {
-                'colName': colName,
-                'inputType': inputType,
-                'input': '-',
-                'property': selectedParameterReference.modelproperty.data.path
-            };
-            this.configuration.excelReadParameters.push(parameterreference);
+            console.log("****************", parameterproperty)
+            this.configuration.excelReadParameters.push(parameterproperty);
+            this.datasource = new MatTableDataSource(this.configuration.excelReadParameters);
             this.updateModel(this.configuration);
         }
 
-        this.datasource = new MatTableDataSource(this.configuration.excelReadParameters);
-
-        this.configuration.parameterinputType = '';
-        this.configuration.parameterproperty= {};
-        this.configuration.parameterbranch= {};
-        this.configuration.parameterparam= {};
-        this.configuration.parameterconstant= {};
-        this.configuration.parameterreference= {};
+        this.configuration.childrenParam= {};
         this.configuration.colName= '';
 
-        this.excelReadNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
-        this.excelReadNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
-        this.excelReadNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
-        this.excelReadNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
-        this.excelReadNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-        this.excelReadNodeConfigFormGroup.get('parameterreference').patchValue([], {emitEvent: false});
+        this.excelReadNodeConfigFormGroup.get('childrenParam').patchValue([], {emitEvent: false});
         this.excelReadNodeConfigFormGroup.get('colName').patchValue([], {emitEvent: false});
 
         this.setExcelReadInput()
@@ -552,18 +415,37 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
                 excelbranch: excelbranch,
                 excelconstant: excelconstant,
                 excelreference: excelreference,
-                parameterinputType: this.configuration.parameterinputType,
-                parameterparam: this.configuration.parameterparam,
-                parameterproperty: this.configuration.parameterproperty,
-                parameterconstant: this.configuration.parameterconstant,
-                parameterbranch: this.configuration.parameterbranch,
-                parameterreference: this.configuration.parameterreference,
                 errorMsg: this.configuration.errorMsg,
                 errorAction: this.configuration.errorAction,
                 propertyinputType: this.configuration.propertyinputType,
                 propertyproperty: propertyproperty,
                 propertyreference: propertyreference,
+                excelFileInputType: this.configuration.excelFileInputType,
+                url: this.configuration.url,
+                childrenParam: this.configuration.childrenParam
             });
+
+            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('childrenParam').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.childrenParam = configuration;
+                    console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{", configuration)
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('url').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.url = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('excelFileInputType').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.excelFileInputType = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
 
             this.changeSubscription = this.excelReadNodeConfigFormGroup.get('sheetName').valueChanges.subscribe(
                 (configuration: any) => {
@@ -575,6 +457,56 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             this.changeSubscription = this.excelReadNodeConfigFormGroup.get('excelinputType').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.excelinputType = configuration;
+                    console.log("excel input type ----- ",configuration)
+                    this.ChildrenOfSelectedProperty = [];
+
+                    if (this.configuration.excelinputType == 'RULE_INPUT'){
+                        this.configuration.excelproperty = {};
+                        this.configuration.excelbranch = {};
+                        this.configuration.excelconstant = {};
+                        this.configuration.excelreference = {};
+                        this.excelReadNodeConfigFormGroup.get('excelproperty').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelbranch').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelconstant').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelreference').patchValue([], {emitEvent: false});
+                    } else if (this.configuration.excelinputType == 'PROPERTY'){
+                        this.configuration.excelparam = {};
+                        this.configuration.excelbranch = {};
+                        this.configuration.excelconstant = {};
+                        this.configuration.excelreference = {};
+                        this.excelReadNodeConfigFormGroup.get('excelparam').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelbranch').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelconstant').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelreference').patchValue([], {emitEvent: false});
+                    } else if (this.configuration.excelinputType == 'CONSTANT'){
+                        this.configuration.excelproperty = {};
+                        this.configuration.excelbranch = {};
+                        this.configuration.excelparam = {};
+                        this.configuration.excelreference = {};
+                        this.excelReadNodeConfigFormGroup.get('excelproperty').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelbranch').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelparam').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelreference').patchValue([], {emitEvent: false});
+                    } else if (this.configuration.excelinputType == 'BRANCH_PARAM'){
+                        this.configuration.excelproperty = {};
+                        this.configuration.excelparam = {};
+                        this.configuration.excelconstant = {};
+                        this.configuration.excelreference = {};
+                        this.excelReadNodeConfigFormGroup.get('excelproperty').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelparam').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelconstant').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelreference').patchValue([], {emitEvent: false});
+                    } else if (this.configuration.excelinputType == 'REFERENCE'){
+                        this.configuration.excelproperty = {};
+                        this.configuration.excelbranch = {};
+                        this.configuration.excelconstant = {};
+                        this.configuration.excelparam = {};
+                        this.excelReadNodeConfigFormGroup.get('excelproperty').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelbranch').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelconstant').patchValue([], {emitEvent: false});
+                        this.excelReadNodeConfigFormGroup.get('excelparam').patchValue([], {emitEvent: false});
+                    }
+
                     this.updateModel(this.configuration);
                 }
             );
@@ -582,6 +514,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             this.changeSubscription = this.excelReadNodeConfigFormGroup.get('excelparam').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.excelparam = configuration;
+                    this.ChildrenOfSelectedProperty = [];
                     this.updateModel(this.configuration);
                 }
             );
@@ -589,6 +522,8 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             this.changeSubscription = this.excelReadNodeConfigFormGroup.get('excelproperty').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.excelproperty = configuration;
+                    this.ChildrenOfSelectedProperty = [];
+                    this.addChildrenProperties(configuration,"valueProperty")
                     this.updateModel(this.configuration);
                 }
             );
@@ -596,6 +531,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             this.changeSubscription = this.excelReadNodeConfigFormGroup.get('excelbranch').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.excelbranch = configuration;
+                    this.ChildrenOfSelectedProperty = [];
                     this.updateModel(this.configuration);
                 }
             );
@@ -603,6 +539,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             this.changeSubscription = this.excelReadNodeConfigFormGroup.get('excelconstant').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.excelconstant = configuration;
+                    this.ChildrenOfSelectedProperty = [];
                     this.updateModel(this.configuration);
                 }
             );
@@ -610,6 +547,8 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             this.changeSubscription = this.excelReadNodeConfigFormGroup.get('excelreference').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.excelreference = configuration;
+                    this.ChildrenOfSelectedProperty = [];
+                    this.addChildrenProperties(configuration,"reference")
                     this.updateModel(this.configuration);
                 }
             );
@@ -624,41 +563,6 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             this.changeSubscription = this.excelReadNodeConfigFormGroup.get('errorAction').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.errorAction = configuration;
-                    this.updateModel(this.configuration);
-                }
-            );
-
-            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('parameterparam').valueChanges.subscribe(
-                (configuration: any) => {
-                    this.configuration.parameterparam = configuration;
-                    this.updateModel(this.configuration);
-                }
-            );
-
-            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('parameterproperty').valueChanges.subscribe(
-                (configuration: any) => {
-                    this.configuration.parameterproperty = configuration;
-                    this.updateModel(this.configuration);
-                }
-            );
-
-            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('parameterconstant').valueChanges.subscribe(
-                (configuration: any) => {
-                    this.configuration.parameterconstant = configuration;
-                    this.updateModel(this.configuration);
-                }
-            );
-
-            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('parameterbranch').valueChanges.subscribe(
-                (configuration: any) => {
-                    this.configuration.parameterbranch = configuration;
-                    this.updateModel(this.configuration);
-                }
-            );
-
-            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('parameterreference').valueChanges.subscribe(
-                (configuration: any) => {
-                    this.configuration.parameterreference = configuration;
                     this.updateModel(this.configuration);
                 }
             );
