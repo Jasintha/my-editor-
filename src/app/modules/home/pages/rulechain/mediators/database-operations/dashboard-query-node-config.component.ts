@@ -369,11 +369,12 @@ export class DashboardQueryNodeConfigComponent implements ControlValueAccessor, 
     } else {
 
       let model = this.configuration.model;
-      if(this.configuration.dbAction === 'QUERY' && this.allDomainModels){
+      if(this.allDomainModels){
 
         model = this.allDomainModels.find(x => x.name === this.configuration.model.name );
 
         if(model){
+            let designtree : any[] = [];
             let designtree : any[] = [];
             designtree.push(model.design);
             this.dataSource.data = designtree;
