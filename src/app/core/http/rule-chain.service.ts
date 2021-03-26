@@ -111,12 +111,12 @@ export class RuleChainService {
     );
   }
 
-  public getRuleNodeComponents(ruleNodeConfigResourcesModulesMap: {[key: string]: any}, config?: RequestConfig):
+  public getRuleNodeComponents(ruleNodeConfigResourcesModulesMap: {[key: string]: any}, editorType: string, config?: RequestConfig):
     Observable<Array<RuleNodeComponentDescriptor>> {
      if (this.ruleNodeComponents) {
        return of(this.ruleNodeComponents);
      } else {
-      return this.loadRuleNodeComponents(config).pipe(
+      return this.loadRuleNodeComponents(editorType, config).pipe(
         mergeMap((components) => {
           return this.resolveRuleNodeComponentsUiResources(components, ruleNodeConfigResourcesModulesMap).pipe(
             map((ruleNodeComponents) => {
@@ -261,8 +261,8 @@ export class RuleChainService {
     }
   }
 
-  private loadRuleNodeComponents(config?: RequestConfig): Observable<Array<RuleNodeComponentDescriptor>> {
-    return this.componentDescriptorService.getComponentDescriptorsByTypes(ruleNodeTypeComponentTypes, config).pipe(
+  private loadRuleNodeComponents(editorType : string, config?: RequestConfig): Observable<Array<RuleNodeComponentDescriptor>> {
+    return this.componentDescriptorService.getComponentDescriptorsByTypes(ruleNodeTypeComponentTypes, editorType, config).pipe(
       map((components) => {
         const ruleNodeComponents: RuleNodeComponentDescriptor[] = [];
         components.forEach((component) => {

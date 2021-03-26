@@ -524,6 +524,24 @@
                            [nodeDefinition]="nodeDefinitionValue">
         </virtuan-db-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiDashboardQueryNode'">
+        <virtuan-dashboard-query-node-config #dashboardQueryNodeConfigComponent
+                                formControlName="configuration"
+                                [ruleNodeId]="ruleNodeId"
+                                [allRuleInputs]="allRuleInputs"
+                                [allDomainModels]=" allDomainModels"
+                                [allConstants]=" allConstants"
+                                [inputEntities]=" inputEntities"
+                                [inputCustomobjects]="inputCustomobjects"
+                                [allVariables]="allVariables"
+                                [inputProperties]="inputProperties"
+                                [apptype]="apptype"
+                                [allModelProperties]="allModelProperties"
+                                [branchAvailability]="branchAvailability"
+                                [allReferenceProperties]="allReferenceProperties"
+                                [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-dashboard-query-node-config>
+    </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiSubRuleNode'">
         <virtuan-sub-rule-node-config #subRuleNodeConfigComponent
                                  formControlName="configuration"

@@ -107,7 +107,8 @@ export class RuleNodeComponentsResolver implements Resolve<Array<RuleNodeCompone
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<Array<RuleNodeComponentDescriptor>> {
-    return this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap);
+    const editorType = route.params.editorType;
+    return this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap, editorType);
   }
 }
 
@@ -154,7 +155,7 @@ const routes: Routes = [
     },
     children: [
       {
-        path: ':ruleChainId',
+        path: ':ruleChainId/:editorType',
         component: RuleChainPageComponent,
         canDeactivate: [ConfirmOnExitGuard],
         data: {
