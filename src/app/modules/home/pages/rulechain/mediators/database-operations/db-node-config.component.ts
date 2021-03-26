@@ -130,7 +130,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
   selectedSpecificPropertiesDatasource: MatTableDataSource<SelectedProperty>;
   
   displayedColumns: string[] = ['modelpropertyName', 'condition', 'inputType', 'property', 'join', 'actions'];
-  selectedSpecificPropertiesColumns: string[] = ['modelpropertyName', 'actions'];
+  selectedSpecificPropertiesColumns: string[] = ['modelpropertyName','selectAs','fieldFunction', 'actions'];
 
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
