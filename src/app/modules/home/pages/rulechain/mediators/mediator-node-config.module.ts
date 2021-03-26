@@ -49,6 +49,7 @@ import { ShopifyOrderNodeConfigComponent } from './shopify/shopify-order-node-co
 //database operations
 import { CrudNodeConfigComponent } from './database-operations/crud-node-config.component';
  import { DBNodeConfigComponent } from './database-operations/db-node-config.component';
+import { DashboardQueryNodeConfigComponent } from './database-operations/dashboard-query-node-config.component';
 // import { QueryBuilderNodeConfigComponent } from './database-operations/query-builder-node-config.component';
 
 //cqrs
@@ -102,6 +103,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
+     DashboardQueryNodeConfigComponent,
      SubRuleNodeConfigComponent,
       PdfNodeConfigComponent,
     ExcelWriteNodeConfigComponent,
@@ -152,6 +154,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
+     DashboardQueryNodeConfigComponent,
      SubRuleNodeConfigComponent,
     PdfNodeConfigComponent,
     ExcelWriteNodeConfigComponent,
