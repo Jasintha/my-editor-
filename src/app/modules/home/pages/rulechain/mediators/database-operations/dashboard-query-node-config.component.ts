@@ -375,7 +375,6 @@ export class DashboardQueryNodeConfigComponent implements ControlValueAccessor, 
 
         if(model){
             let designtree : any[] = [];
-            let designtree : any[] = [];
             designtree.push(model.design);
             this.dataSource.data = designtree;
             if(this.configuration.selectType === 'SELECTSPECIFIC'){
