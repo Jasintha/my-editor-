@@ -136,6 +136,24 @@
                         (change)="checkboxClickSelectSpecific(node)">{{node.name}}</mat-checkbox>
         </mat-tree-node>
       </mat-tree>
+
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>Select As</mat-label>
+        <input matInput formControlName="selectAs"/>
+      </mat-form-field>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>Function</mat-label>
+        <mat-select formControlName="fieldFunction">
+          <mat-option value=""></mat-option>
+          <mat-option value="COUNT">COUNT</mat-option>
+          <mat-option value="SUM">SUM</mat-option>
+          <mat-option value="MIN">MIN</mat-option>
+          <mat-option value="MAX">MAX</mat-option>
+          <mat-option value="AVG">AVG</mat-option>
+          <mat-option value="NOW">NOW</mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <div fxFlex fxLayout="row" fxLayoutAlign="end center">
         <button mat-icon-button class="virtuan-fullscreen-button-style"
                 (click)="addSelectedProperty()"
@@ -150,6 +168,15 @@
           <ng-container matColumnDef="modelpropertyName">
             <th mat-header-cell *matHeaderCellDef> Selected Property Name </th>
             <td mat-cell *matCellDef="let element"> {{element.modelpropertyName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="selectAs">
+            <th mat-header-cell *matHeaderCellDef> Select As </th>
+            <td mat-cell *matCellDef="let element"> {{element.selectAs}} </td>
+          </ng-container>
+          <ng-container matColumnDef="fieldFunction">
+            <th mat-header-cell *matHeaderCellDef> Function </th>
+            <td mat-cell *matCellDef="let element"> {{element.fieldFunction}} </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
@@ -199,6 +226,8 @@
         <mat-option value="isnotblank">Is Not Blank</mat-option>-->
         <mat-option value="contains">Contains</mat-option>
         <mat-option value="notcontains">Not Contains</mat-option>
+        <mat-option value="beginswith">Begins With</mat-option>
+        <mat-option value="endwith">Ends With</mat-option>
         <mat-option value="greaterthan">Greater Than</mat-option>
         <mat-option value="lessthan">Less Than</mat-option>
         <mat-option value="in">In</mat-option>

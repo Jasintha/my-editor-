@@ -248,7 +248,9 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         parameterproperty: [],
         parameterconstant: [],
         parameterbranch: [],
-        join: ""
+        join: "",
+        selectAs: "",
+        fieldFunction: ""
     });
   }
 
@@ -475,7 +477,9 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
     let selectSpecificProperty = {
       'modelproperty': selectedNode,
-      'modelpropertyName': selectedNode.name
+      'modelpropertyName': selectedNode.name,
+      'selectAs': this.dbNodeConfigFormGroup.get('selectAs').value,
+      'fieldFunction': this.dbNodeConfigFormGroup.get('fieldFunction').value
     };
     this.configuration.selectedProperties.push(selectSpecificProperty);
     this.updateModel(this.configuration);
@@ -756,6 +760,8 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         parameterconstant: this.configuration.parameterconstant,
         parameterbranch: this.configuration.parameterbranch,
         join: this.configuration.join,
+        selectAs: this.configuration.selectAs,
+        fieldFunction: this.configuration.fieldFunction
       });
 
       /*
@@ -932,6 +938,20 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         }
       );
 
+      this.changeSubscription = this.dbNodeConfigFormGroup.get('selectAs').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.selectAs = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.dbNodeConfigFormGroup.get('fieldFunction').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.fieldFunction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
       this.changeSubscription = this.dbNodeConfigFormGroup.get('model').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.model = configuration;
@@ -982,6 +1002,8 @@ export interface QueryBuilder {
 export interface SelectedProperty {
   modelproperty: DomainModelProperty;
   modelpropertyName: string;
+  selectAs: string;
+  fieldFunction: string;
 }
 
 export interface DomainModelProperty {
