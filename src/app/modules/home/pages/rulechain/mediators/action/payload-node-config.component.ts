@@ -63,6 +63,9 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
   allRuleInputs: any[];
 
   @Input()
+  allConstants: any[];
+
+  @Input()
   allDomainModelsWithSub: any[];
 
   @Input()
@@ -123,6 +126,7 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       propertyproperty: [],
       propertyreference: [],
       propertyparam: [],
+      propertyconstant: [],
       colName: "",
       childrenParam: [],
       // mapping: []
@@ -207,12 +211,31 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
 
     if (inputType === 'PROPERTY'){
       this.configuration.propertyreference= {};
+      this.configuration.propertyparam= {};
+      this.configuration.propertyconstant= {};
       this.payloadNodeConfigFormGroup.get('propertyreference').patchValue([], {emitEvent: false});
+      this.payloadNodeConfigFormGroup.get('propertyparam').patchValue([], {emitEvent: false});
+      this.payloadNodeConfigFormGroup.get('propertyconstant').patchValue([], {emitEvent: false});
     } else if (inputType === 'REFERENCE'){
       this.configuration.propertyproperty= {};
-      this.payloadNodeConfigFormGroup.get('propertyproperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'RULE_INPUT'){
       this.configuration.propertyparam= {};
+      this.configuration.propertyconstant= {};
+      this.payloadNodeConfigFormGroup.get('propertyproperty').patchValue([], {emitEvent: false});
+      this.payloadNodeConfigFormGroup.get('propertyparam').patchValue([], {emitEvent: false});
+      this.payloadNodeConfigFormGroup.get('propertyconstant').patchValue([], {emitEvent: false});
+    } else if (inputType === 'RULE_INPUT'){
+      this.configuration.propertyproperty= {};
+      this.configuration.propertyconstant= {};
+      this.configuration.propertyreference= {};
+      this.payloadNodeConfigFormGroup.get('propertyproperty').patchValue([], {emitEvent: false});
+      this.payloadNodeConfigFormGroup.get('propertyreference').patchValue([], {emitEvent: false});
+      this.payloadNodeConfigFormGroup.get('propertyconstant').patchValue([], {emitEvent: false});
+    } else if (inputType === 'CONSTANT'){
+      this.configuration.propertyproperty= {};
+      this.configuration.propertyparam= {};
+      this.configuration.propertyreference= {};
+      this.payloadNodeConfigFormGroup.get('propertyproperty').patchValue([], {emitEvent: false});
+      this.payloadNodeConfigFormGroup.get('propertyreference').patchValue([], {emitEvent: false});
       this.payloadNodeConfigFormGroup.get('propertyparam').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
@@ -310,8 +333,13 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       }
 
       let propertyparam = this.configuration.propertyparam;
-      if(this.configuration.propertyinputType === 'REFERENCE' && this.allReferenceProperties){
-        propertyparam = this.allModelProperties.find(x => x.name === this.configuration.propertyparam.name );
+      if(this.configuration.propertyinputType === 'RULE_INPUT' && this.allReferenceProperties){
+        propertyparam = this.allModelProperties.find(x => x.name === this.configuration.propertyparam.inputName );
+      }
+
+      let propertyconstant = this.configuration.propertyconstant;
+      if(this.configuration.propertyinputType === 'CONSTANT' && this.allReferenceProperties){
+        propertyconstant = this.allModelProperties.find(x => x.name === this.configuration.propertyconstant.constantName );
       }
 
       this.payloadNodeConfigFormGroup.patchValue({
@@ -329,6 +357,7 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
         propertyproperty: propertyproperty,
         propertyreference: propertyreference,
         propertyparam: propertyparam,
+        propertyconstant: propertyconstant,
         childrenParam: this.configuration.childrenParam
       });
 
@@ -349,6 +378,13 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('propertyproperty').valueChanges.subscribe(
           (configuration: any) => {
             this.configuration.propertyproperty = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('propertyconstant').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.propertyconstant = configuration;
             this.updateModel(this.configuration);
           }
       );
