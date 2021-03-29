@@ -37,22 +37,23 @@
           Payload is required
         </mat-error>-->
     </mat-form-field>
-    <mat-form-field *ngIf="configuration.payloadInputType === 'REMOTE_PATH'" fxFlex class="mat-block">
-        <mat-label>Remote Resource URL</mat-label>
-        <input matInput formControlName="url"/>
-    </mat-form-field>
+<!--    <mat-form-field *ngIf="configuration.payloadInputType === 'REMOTE_PATH'" fxFlex class="mat-block">-->
+<!--        <mat-label>Remote Resource URL</mat-label>-->
+<!--        <input matInput formControlName="url"/>-->
+<!--    </mat-form-field>-->
 
-    <section *ngIf="configuration.payloadInputType === 'FILE_UPLOAD'" fxLayout="column" fxLayout.gt-sm="row"
+    <section fxLayout="column" fxLayout.gt-sm="row"
              fxLayoutGap="10px" style="padding: 10px;">
         <section class="mat-block" fxFlex>
             <mat-form-field fxFlex class="mat-block">
-                <mat-label>Local Resource Property Type</mat-label>
+                <mat-label>Resource Property Type</mat-label>
                 <mat-select formControlName="propertyinputType" (selectionChange)="refreshInputTypes()">
                     <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">
                         Rule Input
                     </mat-option>
                     <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
                     <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
+                    <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
                 </mat-select>
             </mat-form-field>
         </section>
@@ -78,6 +79,14 @@
                 <mat-select formControlName="propertyreference">
                     <mat-option *ngFor="let property of allReferenceProperties" [value]="property">
                         {{property.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="configuration.propertyinputType === 'CONSTANT'" fxFlex class="mat-block">
+                <mat-label>Constant</mat-label>
+                <mat-select formControlName="propertyconstant">
+                    <mat-option *ngFor="let constant of allConstants" [value]="constant">
+                        {{constant.constantName}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
