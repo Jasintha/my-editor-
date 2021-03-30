@@ -129,7 +129,7 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       propertyconstant: [],
       colName: "",
       childrenParam: [],
-      // mapping: []
+      mapping: []
     });
   }
 
@@ -348,7 +348,7 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
         payloadInputType: this.configuration.payloadInputType,
         payload: this.configuration.payload,
         payloadType: this.configuration.payloadType,
-        // mapping : this.configuration.mapping,
+        mapping : this.configuration.mapping,
         assignedtoinputType: this.configuration.assignedtoinputType,
         assignedReference: assignedReference,
         errorMsg: this.configuration.errorMsg,
@@ -431,12 +431,12 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
         }
       );
 
-      // this.changeSubscription = this.payloadNodeConfigFormGroup.get('mapping').valueChanges.subscribe(
-      //     (configuration: RuleNodeConfiguration) => {
-      //       this.configuration.mapping = configuration;
-      //       this.updateModel(this.configuration);
-      //     }
-      // );
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('mapping').valueChanges.subscribe(
+          (configuration: RuleNodeConfiguration) => {
+            this.configuration.mapping = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
       
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
         (configuration: any) => {
