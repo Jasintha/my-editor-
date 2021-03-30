@@ -24,7 +24,7 @@
     </mat-form-field>
 
     <mat-form-field *ngIf="configuration.payloadInputType === 'INLINE'" class="mat-block">
-        <mat-label>Payload</mat-label>
+        <mat-label>Add your file content here</mat-label>
         <textarea matInput formControlName="payload" rows="20"></textarea>
         <!--<mat-error *ngIf="payloadNodeConfigFormGroup.get('payload').hasError('required')">
           Payload is required
@@ -65,7 +65,8 @@
                 <mat-label>Rule Input</mat-label>
                 <mat-select formControlName="propertyparam">
                     <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-                        {{property.inputName}}
+                        <div *ngIf="property.record === 'm'">{{property.inputName}} - multiple</div>
+                        <div *ngIf="property.record === 's'">{{property.inputName}} - single</div>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -73,7 +74,8 @@
                 <mat-label>Value Property</mat-label>
                 <mat-select formControlName="propertyproperty">
                     <mat-option *ngFor="let property of allModelProperties" [value]="property">
-                        {{property.name}}
+                        <div *ngIf="property.record === 'm'">{{property.name}} - multiple</div>
+                        <div *ngIf="property.record === 's'">{{property.name}} - single</div>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -81,7 +83,8 @@
                 <mat-label>Reference Property</mat-label>
                 <mat-select formControlName="propertyreference">
                     <mat-option *ngFor="let property of allReferenceProperties" [value]="property">
-                        {{property.name}}
+                        <div *ngIf="property.record === 'm'">{{property.name}} - multiple</div>
+                        <div *ngIf="property.record === 's'">{{property.name}} - single</div>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -130,7 +133,7 @@
       <mat-form-field fxFlex class="mat-block">
         <mat-label>Mapping</mat-label>
         <mat-select formControlName="mapping">
-          <mat-option value="DEFAULT">Default Mapping</mat-option>
+<!--          <mat-option value="DEFAULT">Default Mapping</mat-option>-->
           <mat-option value="CUSTOM">Custom Mapping</mat-option>
         </mat-select>
       </mat-form-field>
