@@ -1,34 +1,27 @@
 <div [formGroup]="payloadNodeConfigFormGroup">
+
+
+    <section>
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Input Type</mat-label>
+            <mat-select formControlName="payloadInputType">
+                <mat-option value="INLINE">In-Line</mat-option>
+                <mat-option value="PROPERTY">Property</mat-option>
+                <mat-option value="FILE_UPLOAD">Local Resource</mat-option>
+                <mat-option value="REMOTE_PATH">Remote Resource</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </section>
     <mat-form-field fxFlex class="mat-block">
-        <mat-label>Paylod Type</mat-label>
+        <mat-label>File Format</mat-label>
         <mat-select formControlName="payloadType">
             <mat-option value="JSON">JSON</mat-option>
             <mat-option value="XML">XML</mat-option>
             <mat-option value="YAML">YAML</mat-option>
             <mat-option value="CSV">CSV</mat-option>
+            <mat-option value="TEXT">TEXT</mat-option>
         </mat-select>
     </mat-form-field>
-
-    <section *ngIf="configuration.payloadType !== 'CSV'">
-        <mat-form-field fxFlex class="mat-block">
-            <mat-label>Input Type</mat-label>
-            <mat-select formControlName="payloadInputType">
-                <mat-option value="INLINE">In-Line</mat-option>
-                <mat-option value="REMOTE_PATH">Remote Resource</mat-option>
-                <mat-option value="FILE_UPLOAD">Local Resource</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </section>
-
-    <section *ngIf="configuration.payloadType === 'CSV'">
-        <mat-form-field fxFlex class="mat-block">
-            <mat-label>Input Type</mat-label>
-            <mat-select formControlName="payloadInputType">
-                <mat-option value="REMOTE_PATH">Remote Resource</mat-option>
-                <mat-option value="FILE_UPLOAD">Local Resource</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </section>
 
     <mat-form-field *ngIf="configuration.payloadInputType === 'INLINE'" class="mat-block">
         <mat-label>Payload</mat-label>
@@ -42,21 +35,31 @@
 <!--        <input matInput formControlName="url"/>-->
 <!--    </mat-form-field>-->
 
-    <section fxLayout="column" fxLayout.gt-sm="row"
+    <section fxLayout="column" *ngIf="configuration.payloadInputType === 'REMOTE_PATH' || configuration.payloadInputType === 'FILE_UPLOAD' || configuration.payloadInputType === 'PROPERTY'" fxLayout.gt-sm="row"
              fxLayoutGap="10px" style="padding: 10px;">
-        <section class="mat-block" fxFlex>
+
+        <section *ngIf="configuration.payloadInputType === 'REMOTE_PATH' || configuration.payloadInputType === 'FILE_UPLOAD'" class="mat-block" fxFlex>
             <mat-form-field fxFlex class="mat-block">
                 <mat-label>Resource Property Type</mat-label>
                 <mat-select formControlName="propertyinputType" (selectionChange)="refreshInputTypes()">
-                    <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">
-                        Rule Input
-                    </mat-option>
+                    <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
                     <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
                     <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
                     <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
                 </mat-select>
             </mat-form-field>
         </section>
+
+        <section *ngIf="configuration.payloadInputType === 'PROPERTY'" class="mat-block" fxFlex>
+            <mat-form-field fxFlex class="mat-block">
+                <mat-label>Property Type</mat-label>
+                <mat-select formControlName="propertyinputType" (selectionChange)="refreshInputTypes()">
+                    <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+                    <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+
         <section class="mat-block" fxFlex>
             <mat-form-field *ngIf="configuration.propertyinputType === 'RULE_INPUT'" fxFlex class="mat-block">
                 <mat-label>Rule Input</mat-label>
@@ -67,7 +70,7 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field *ngIf="configuration.propertyinputType === 'PROPERTY'" fxFlex class="mat-block">
-                <mat-label>Local Resource Property</mat-label>
+                <mat-label>Value Property</mat-label>
                 <mat-select formControlName="propertyproperty">
                     <mat-option *ngFor="let property of allModelProperties" [value]="property">
                         {{property.name}}
@@ -123,20 +126,18 @@
         </section>
     </section>
 
-    <!--  <section *ngIf="configuration.payloadType !== 'CSV'" >-->
-
-    <!--  <mat-form-field fxFlex class="mat-block">-->
-    <!--    <mat-label>Mapping</mat-label>-->
-    <!--    <mat-select formControlName="mapping">-->
-    <!--      <mat-option value="DEFAULT">Use Default Mapping</mat-option>-->
-    <!--      <mat-option value="CUSTOM">Give Custom Mapping</mat-option>-->
-    <!--    </mat-select>-->
-    <!--  </mat-form-field>-->
-
-    <!--  </section>-->
+      <section *ngIf="configuration.payloadType === 'CSV'" >
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>Mapping</mat-label>
+        <mat-select formControlName="mapping">
+          <mat-option value="DEFAULT">Default Mapping</mat-option>
+          <mat-option value="CUSTOM">Custom Mapping</mat-option>
+        </mat-select>
+      </mat-form-field>
+      </section>
 
 
-    <section *ngIf="configuration.payloadType === 'CSV'">
+    <section *ngIf="configuration.mapping === 'CUSTOM'">
 
         <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
             <mat-form-field fxFlex class="mat-block">
