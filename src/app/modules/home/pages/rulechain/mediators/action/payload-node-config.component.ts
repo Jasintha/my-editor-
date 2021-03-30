@@ -141,6 +141,11 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   ngOnInit(): void {
+    console.log("value", this.allDomainModelsWithSub)
+    console.log("ref", this.allReferenceProperties)
+    console.log("const", this.allConstants)
+    console.log("modelProp", this.allModelProperties)
+    console.log("rule inputs", this.allRuleInputs)
   }
 
   ngOnDestroy(): void {
