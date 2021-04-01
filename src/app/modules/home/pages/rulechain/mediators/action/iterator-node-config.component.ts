@@ -57,6 +57,9 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
   ruleNodeId: string;
 
   @Input()
+  allRuleInputs: any[];
+  
+  @Input()
   inputEntities: any[];
 
   @Input()
@@ -120,6 +123,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       inputType: '',
       branchparam: [],
       assignedProperty: [],
+      param: [],
     //  root: [],
     //  isAsync: false,
       errorMsg: "",
@@ -176,6 +180,11 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
         root = this.allRoots.find(x => x === this.configuration.root );
       }
       */
+      
+      let param = this.configuration.param;
+      if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
+        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+      }
 
       let property = this.configuration.property;
       if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
@@ -195,6 +204,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       this.iteratorNodeConfigFormGroup.patchValue({
         property: property,
         assignedProperty: assignedProperty,
+        param:param,
         branchparam: branchparam,
         inputType: this.configuration.inputType,
        // root: root,
@@ -240,6 +250,13 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
         (configuration: any) => {
           this.configuration.property = configuration;
           this.configuration.branchparam = {};
+          this.updateModel(this.configuration);
+        }
+      );
+      
+      this.changeSubscription = this.iteratorNodeConfigFormGroup.get('param').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.param = configuration;
           this.updateModel(this.configuration);
         }
       );
