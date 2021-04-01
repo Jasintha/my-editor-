@@ -2,8 +2,19 @@
   <mat-form-field fxFlex class="mat-block">
     <mat-label>List Input Type</mat-label>
     <mat-select formControlName="inputType">
+      <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
       <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
       <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="configuration.inputType === 'RULE_INPUT'" fxFlex class="mat-block">
+    <mat-label>Rule Input</mat-label>
+    <mat-select formControlName="param">
+      <ng-container *ngFor="let property of allRuleInputs">
+      <mat-option *ngIf="property?.record === 'm'" [value]="property">
+        {{property.inputName}}
+      </mat-option>
+      </ng-container>
     </mat-select>
   </mat-form-field>
   <mat-form-field fxFlex class="mat-block" *ngIf="configuration.inputType === 'PROPERTY'">
