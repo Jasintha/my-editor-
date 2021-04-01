@@ -23,6 +23,7 @@ import { PageData } from '@shared/models/page/page-data';
 import {
   ResolvedRuleChainMetaData,
   RuleChain,
+  ConnectionPropertyTemplate,
   RuleChainConnectionInfo,
   RuleChainMetaData,
   ruleChainNodeComponent,
@@ -69,6 +70,9 @@ export class RuleChainService {
     return this.http.get<RuleChain>(`/api/ruleChain/${ruleChainId}`, defaultHttpOptionsFromConfig(config));
   }
 
+  public getConnectionPropertyTemplates(config?: RequestConfig): Observable<ConnectionPropertyTemplate[]> {
+    return this.http.get<ConnectionPropertyTemplate[]>(`/api/ruleChain/connection-property-templates`, defaultHttpOptionsFromConfig(config));
+  }
   public saveRuleChain(ruleChain: RuleChain, config?: RequestConfig): Observable<RuleChain> {
     return this.http.post<RuleChain>('/api/ruleChain', ruleChain, defaultHttpOptionsFromConfig(config));
   }
@@ -180,7 +184,10 @@ export class RuleChainService {
         switchrelationTypes.push(sourceNode.configuration.switchCases[j].name);
       }
 
+      let nextlabel = 'Next';
+
       switchrelationTypes.push('Default');
+      switchrelationTypes.push(nextlabel);
 
       const switchlinkLabels: {[label: string]: LinkLabel} = {};
 
