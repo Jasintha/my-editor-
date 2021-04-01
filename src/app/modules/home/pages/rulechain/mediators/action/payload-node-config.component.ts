@@ -162,46 +162,46 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   addChildrenProperties(modelprop, propertyType){
-
-    if (propertyType === "valueProperty") {
-      // console.log("value -------",modelprop,this.allDomainModelsWithSub)
-      let parent = modelprop.name
-      for (let domModel of this.allDomainModelsWithSub) {
-        if (modelprop.type === domModel.nameTitleCase) {
-          for (let child of domModel.design.children) {
-            let childProp = {
-              'name': parent + "." + child.data.name,
-              'inputType': child.data.type,
-              'childName': child.data.name,
-              'dataType': child.data.propertytype
-            }
-            this.ChildrenOfSelectedProperty.push(childProp)
-          }
-        }
-      }
-    } else if (propertyType === "reference") {
-      // console.log("value -------",modelprop)
-      let parent = modelprop.name
-      // if (modelprop.record === "m"){
-        for (let domModel of this.allDomainModelsWithSub){
-          if (modelprop.modelproperty.name === domModel.name){
-            for (let child of domModel.design.children){
-              let childProp = {
-                'name' : parent+"."+child.data.name,
-                'inputType' : child.data.type,
-                'childName': child.data.name,
-                'dataType': child.data.propertytype,
-                'modelproperty' : {
-                  'data': {
-                    'path' : child.data.path
-                  }
+    if (modelprop) {
+        if (propertyType === "valueProperty") {
+            let parent = modelprop.name
+            for (let domModel of this.allDomainModelsWithSub) {
+                if (modelprop.type === domModel.nameTitleCase) {
+                    for (let child of domModel.design.children) {
+                        let childProp = {
+                            'name': parent + "." + child.data.name,
+                            'inputType': child.data.type,
+                            'childName': child.data.name,
+                            'dataType': child.data.propertytype
+                        }
+                        this.ChildrenOfSelectedProperty.push(childProp)
+                    }
                 }
-              }
-              this.ChildrenOfSelectedProperty.push(childProp)
             }
-          }
+        } else if (propertyType === "reference") {
+            // console.log("value -------",modelprop)
+            let parent = modelprop.name
+            // if (modelprop.record === "m"){
+            for (let domModel of this.allDomainModelsWithSub) {
+                if (modelprop.modelproperty.name === domModel.name) {
+                    for (let child of domModel.design.children) {
+                        let childProp = {
+                            'name': parent + "." + child.data.name,
+                            'inputType': child.data.type,
+                            'childName': child.data.name,
+                            'dataType': child.data.propertytype,
+                            'modelproperty': {
+                                'data': {
+                                    'path': child.data.path
+                                }
+                            }
+                        }
+                        this.ChildrenOfSelectedProperty.push(childProp)
+                    }
+                }
+            }
+            // }
         }
-      // }
     }
   }
 
@@ -315,11 +315,13 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       let assignedProperty = this.configuration.assignedProperty;
       if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+          this.addChildrenProperties(assignedProperty,'valueProperty')
       }
 
       let assignedReference = this.configuration.assignedReference;
       if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
         assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
+          this.addChildrenProperties(assignedReference,"reference")
       }
 
       let propertyproperty = this.configuration.propertyproperty;
@@ -329,17 +331,19 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
 
       let propertyreference = this.configuration.propertyreference;
       if(this.configuration.propertyinputType === 'REFERENCE' && this.allReferenceProperties){
-        propertyreference = this.allModelProperties.find(x => x.name === this.configuration.propertyreference.name );
+        propertyreference = this.allReferenceProperties.find(x => x.name === this.configuration.propertyreference.name );
       }
 
       let propertyparam = this.configuration.propertyparam;
       if(this.configuration.propertyinputType === 'RULE_INPUT' && this.allReferenceProperties){
-        propertyparam = this.allModelProperties.find(x => x.name === this.configuration.propertyparam.inputName );
+        propertyparam = this.allRuleInputs.find(x => x.inputName === this.configuration.propertyparam.inputName );
       }
 
       let propertyconstant = this.configuration.propertyconstant;
+        console.log("*********************",propertyconstant)
       if(this.configuration.propertyinputType === 'CONSTANT' && this.allReferenceProperties){
-        propertyconstant = this.allModelProperties.find(x => x.name === this.configuration.propertyconstant.constantName );
+        propertyconstant = this.allConstants.find(x => x.constantName === this.configuration.propertyconstant.constantName );
+        console.log("======================",propertyconstant)
       }
 
       this.payloadNodeConfigFormGroup.patchValue({
@@ -371,6 +375,36 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('propertyinputType').valueChanges.subscribe(
           (configuration: any) => {
             this.configuration.propertyinputType = configuration;
+            if (this.configuration.propertyinputType == 'PROPERTY'){
+                this.configuration.propertyconstant = {};
+                this.configuration.propertyreferenc = {};
+                this.configuration.propertyparam = {};
+                this.payloadNodeConfigFormGroup.get('propertyconstant').patchValue([], {emitEvent: false});
+                this.payloadNodeConfigFormGroup.get('propertyreferenc').patchValue([], {emitEvent: false});
+                this.payloadNodeConfigFormGroup.get('propertyparam').patchValue([], {emitEvent: false});
+            } else if (this.configuration.propertyinputType == 'RULE_INPUT'){
+                this.configuration.propertyconstant = {};
+                this.configuration.propertyreferenc = {};
+                this.configuration.propertyproperty = {};
+                this.payloadNodeConfigFormGroup.get('propertyconstant').patchValue([], {emitEvent: false});
+                this.payloadNodeConfigFormGroup.get('propertyreferenc').patchValue([], {emitEvent: false});
+                this.payloadNodeConfigFormGroup.get('propertyproperty').patchValue([], {emitEvent: false});
+            } else if (this.configuration.propertyinputType == 'REFERENCE'){
+                this.configuration.propertyconstant = {};
+                this.configuration.propertyparam = {};
+                this.configuration.propertyproperty = {};
+                this.payloadNodeConfigFormGroup.get('propertyconstant').patchValue([], {emitEvent: false});
+                this.payloadNodeConfigFormGroup.get('propertyparam').patchValue([], {emitEvent: false});
+                this.payloadNodeConfigFormGroup.get('propertyproperty').patchValue([], {emitEvent: false});
+            } else if (this.configuration.propertyinputType == 'CONSTANT'){
+                this.configuration.propertyreferenc = {};
+                this.configuration.propertyparam = {};
+                this.configuration.propertyproperty = {};
+                this.payloadNodeConfigFormGroup.get('propertyreferenc').patchValue([], {emitEvent: false});
+                this.payloadNodeConfigFormGroup.get('propertyparam').patchValue([], {emitEvent: false});
+                this.payloadNodeConfigFormGroup.get('propertyproperty').patchValue([], {emitEvent: false});
+            }
+
             this.updateModel(this.configuration);
           }
       );
