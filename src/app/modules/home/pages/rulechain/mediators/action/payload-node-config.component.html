@@ -6,37 +6,14 @@
             <mat-label>Input Type</mat-label>
             <mat-select formControlName="payloadInputType">
                 <mat-option value="INLINE">In-Line</mat-option>
-                <mat-option value="PROPERTY">Property</mat-option>
-                <mat-option value="FILE_UPLOAD">Local Resource</mat-option>
-                <mat-option value="REMOTE_PATH">Remote Resource</mat-option>
+                <mat-option value="FILE_UPLOAD">Local File Path</mat-option>
+                <mat-option value="REMOTE_PATH">Remote File Path</mat-option>
+                <mat-option value="PROPERTY">Dynamic</mat-option>
             </mat-select>
         </mat-form-field>
     </section>
-    <mat-form-field fxFlex class="mat-block">
-        <mat-label>File Format</mat-label>
-        <mat-select formControlName="payloadType">
-            <mat-option value="JSON">JSON</mat-option>
-            <mat-option value="XML">XML</mat-option>
-            <mat-option value="YAML">YAML</mat-option>
-            <mat-option value="CSV">CSV</mat-option>
-            <mat-option value="TEXT">TEXT</mat-option>
-        </mat-select>
-    </mat-form-field>
 
-    <mat-form-field *ngIf="configuration.payloadInputType === 'INLINE'" class="mat-block">
-        <mat-label>Add your file content here</mat-label>
-        <textarea matInput formControlName="payload" rows="20"></textarea>
-        <!--<mat-error *ngIf="payloadNodeConfigFormGroup.get('payload').hasError('required')">
-          Payload is required
-        </mat-error>-->
-    </mat-form-field>
-<!--    <mat-form-field *ngIf="configuration.payloadInputType === 'REMOTE_PATH'" fxFlex class="mat-block">-->
-<!--        <mat-label>Remote Resource URL</mat-label>-->
-<!--        <input matInput formControlName="url"/>-->
-<!--    </mat-form-field>-->
-
-    <section fxLayout="column" *ngIf="configuration.payloadInputType === 'REMOTE_PATH' || configuration.payloadInputType === 'FILE_UPLOAD' || configuration.payloadInputType === 'PROPERTY'" fxLayout.gt-sm="row"
-             fxLayoutGap="10px" style="padding: 10px;">
+    <section fxLayout="column" *ngIf="configuration.payloadInputType === 'REMOTE_PATH' || configuration.payloadInputType === 'FILE_UPLOAD' || configuration.payloadInputType === 'PROPERTY'" fxLayout.gt-sm="row" fxLayoutGap="10px">
 
         <section *ngIf="configuration.payloadInputType === 'REMOTE_PATH' || configuration.payloadInputType === 'FILE_UPLOAD'" class="mat-block" fxFlex>
             <mat-form-field fxFlex class="mat-block">
@@ -65,8 +42,7 @@
                 <mat-label>Rule Input</mat-label>
                 <mat-select formControlName="propertyparam">
                     <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-                        <div *ngIf="property.record === 'm'">{{property.inputName}} - multiple</div>
-                        <div *ngIf="property.record === 's'">{{property.inputName}} - single</div>
+                        {{property.inputName}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -74,8 +50,7 @@
                 <mat-label>Value Property</mat-label>
                 <mat-select formControlName="propertyproperty">
                     <mat-option *ngFor="let property of allModelProperties" [value]="property">
-                        <div *ngIf="property.record === 'm'">{{property.name}} - multiple</div>
-                        <div *ngIf="property.record === 's'">{{property.name}} - single</div>
+                        {{property.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -83,8 +58,7 @@
                 <mat-label>Reference Property</mat-label>
                 <mat-select formControlName="propertyreference">
                     <mat-option *ngFor="let property of allReferenceProperties" [value]="property">
-                        <div *ngIf="property.record === 'm'">{{property.name}} - multiple</div>
-                        <div *ngIf="property.record === 's'">{{property.name}} - single</div>
+                        {{property.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -96,8 +70,35 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+
         </section>
     </section>
+
+
+
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>File Format</mat-label>
+        <mat-select formControlName="payloadType">
+            <mat-option value="JSON">JSON</mat-option>
+            <mat-option value="XML">XML</mat-option>
+            <mat-option value="YAML">YAML</mat-option>
+            <mat-option value="CSV">CSV</mat-option>
+            <mat-option value="TEXT">TEXT</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field *ngIf="configuration.payloadInputType === 'INLINE'" class="mat-block">
+        <mat-label>Add your file content here</mat-label>
+        <textarea matInput formControlName="payload" rows="20"></textarea>
+        <!--<mat-error *ngIf="payloadNodeConfigFormGroup.get('payload').hasError('required')">
+          Payload is required
+        </mat-error>-->
+    </mat-form-field>
+<!--    <mat-form-field *ngIf="configuration.payloadInputType === 'REMOTE_PATH'" fxFlex class="mat-block">-->
+<!--        <mat-label>Remote Resource URL</mat-label>-->
+<!--        <input matInput formControlName="url"/>-->
+<!--    </mat-form-field>-->
 
     <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
         <mat-form-field fxFlex class="mat-block">
