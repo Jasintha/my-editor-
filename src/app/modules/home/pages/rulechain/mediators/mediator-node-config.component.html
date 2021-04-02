@@ -84,7 +84,8 @@
                                 [allModelProperties]="allModelProperties"
                                 [allReferenceProperties]="allReferenceProperties"
                                 [nodeDefinition]="nodeDefinitionValue"
-                                [allDomainModelsWithSub]="allDomainModelsWithSub">
+                                [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                [allConstants]=" allConstants">
         </virtuan-payload-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiConstantNode'">
@@ -179,6 +180,7 @@
                                  [allVariables]="allVariables"
                                  [inputProperties]="inputProperties"
                                  [apptype]="apptype"
+                                 [allRuleInputs]="allRuleInputs"     
                                  [allModelProperties]="allModelProperties"
                                  [branchAvailability]="branchAvailability"
                                  [allRoots]="allRoots"
