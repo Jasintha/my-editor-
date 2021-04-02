@@ -54,6 +54,7 @@ export interface RuleChainMetaData {
   allModelProperties?: any[];
   allGlobalProperties?: any[];
   allGlobalConstants?: any[];
+  allGlobalConnectionProperties?: any[];
   allRuleInputs?: any[];
   allEvents?: any[];
   queryDb?: string;
@@ -68,6 +69,20 @@ export interface RuleChainMetaData {
   allDomainModelsWithSub?: any[];
   allViewModelsWithSub?: any[];
 }
+
+export interface ConnectionPropertyTemplate{
+    name?: string;
+    key?: string;
+    type?: string;
+    fields?: ConnectionPropertyTemplateField[];
+}
+
+export interface ConnectionPropertyTemplateField{
+    name?: string;
+    key?: string;
+    dataType?: string;
+}
+
 
 export interface ResolvedRuleChainMetaData extends RuleChainMetaData {
   targetRuleChainsMap: {[ruleChainId: string]: RuleChain};

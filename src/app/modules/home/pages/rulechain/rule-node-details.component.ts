@@ -93,6 +93,9 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   allHybridFunctions: any[];
 
   @Input()
+  connectionPropertyTemplates: any[];
+
+  @Input()
   allSubRules: any[];
 
   @Input()
@@ -106,6 +109,9 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
 
   @Input()
   allModelProperties: any[];
+
+  @Input()
+  allConnectionProperties: any[];
 
   allReferenceProperties: any[];
 
@@ -202,11 +208,13 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
         this.allConstants = this.branchAvailability.constants;
         this.allVariables = this.branchAvailability.variables;
         this.allValueObjectProperties= this.branchAvailability.valueObjectProperties;
+        this.allConnectionProperties = this.branchAvailability.connectionProperties;
     } else {
         this.allModelProperties = this.branchAvailability.properties;
         this.allConstants = this.branchAvailability.constants;
         this.allVariables = this.branchAvailability.variables;
         this.allValueObjectProperties= this.branchAvailability.valueObjectProperties;
+        this.allConnectionProperties = this.branchAvailability.connectionProperties;
     }
     this.allReferenceProperties = this.branchAvailability.referenceProperties;
   }

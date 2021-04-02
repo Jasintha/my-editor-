@@ -83,6 +83,9 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   allValueObjectProperties: any[];
 
   @Input()
+  allConnectionProperties: any[];
+
+  @Input()
   allViewModels: any[];
 
   @Input()
@@ -93,6 +96,9 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
 
   @Input()
   allHybridFunctions: any[];
+
+  @Input()
+  connectionPropertyTemplates: any[];
 
   @Input()
   allSubRules: any[];

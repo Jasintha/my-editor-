@@ -33,7 +33,7 @@ import * as RxJs from 'rxjs';
 import { Observable } from 'rxjs';
 import * as RxJsOperators from 'rxjs/operators';
 import { BreadCrumbConfig, BreadCrumbLabelFunction } from '@shared/components/breadcrumb';
-import { ResolvedRuleChainMetaData, RuleChain } from '@shared/models/rule-chain.models';
+import { ResolvedRuleChainMetaData, RuleChain, ConnectionPropertyTemplate } from '@shared/models/rule-chain.models';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { RuleChainPageComponent } from '@home/pages/rulechain/rulechain-page.component';
 import { RuleNodeComponentDescriptor } from '@shared/models/rule-node.models';
@@ -87,6 +87,18 @@ export class RuleChainResolver implements Resolve<RuleChain> {
     return this.ruleChainService.getRuleChain(ruleChainId);
   }
 }
+
+@Injectable()
+export class ConnectionPropertyTemplateResolver implements Resolve<ConnectionPropertyTemplate[]> {
+
+  constructor(private ruleChainService: RuleChainService) {
+  }
+
+  resolve(route: ActivatedRouteSnapshot): Observable<ConnectionPropertyTemplate[]> {
+    return this.ruleChainService.getConnectionPropertyTemplates();
+  }
+}
+
 
 @Injectable()
 export class ResolvedRuleChainMetaDataResolver implements Resolve<ResolvedRuleChainMetaData> {
@@ -169,6 +181,7 @@ const routes: Routes = [
         },
         resolve: {
           ruleChain: RuleChainResolver,
+          connectionPropertyTemplates: ConnectionPropertyTemplateResolver,
           ruleChainMetaData: ResolvedRuleChainMetaDataResolver,
           ruleNodeComponents: RuleNodeComponentsResolver
         }
@@ -184,6 +197,7 @@ const routes: Routes = [
   providers: [
     RuleChainResolver,
     ResolvedRuleChainMetaDataResolver,
+    ConnectionPropertyTemplateResolver,
     RuleNodeComponentsResolver,
     RuleChainImportGuard
   ]
