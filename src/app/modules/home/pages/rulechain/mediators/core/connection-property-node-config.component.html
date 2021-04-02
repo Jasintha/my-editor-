@@ -1,0 +1,161 @@
+<div [formGroup]="connectionPropertyNodeConfigFormGroup">
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name"/>
+    </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>Scope</mat-label>
+        <mat-select formControlName="scope">
+            <mat-option value="RULE">Rule</mat-option>
+            <mat-option value="GLOBAL">Global</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type" (selectionChange)="refreshTemplates()">
+            <mat-option *ngFor="let option of connectionPropertyTemplates" [value]="option">
+                {{option.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <section *ngIf="configuration?.connectionproptype?.name && configuration?.connectionproptype?.name !==''" style="padding-top: 10px;padding-bottom: 20px;">
+        <label>Add Properties</label>
+    </section>
+    <section *ngIf="configuration?.connectionproptype?.name && configuration?.connectionproptype?.name !==''" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Property</mat-label>
+            <mat-select formControlName="templateproperty">
+                <mat-option *ngFor="let option of configuration?.connectionproptype.fields" [value]="option">
+                    {{option.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <section class="mat-block" fxFlex>
+            <mat-form-field fxFlex class="mat-block">
+                <mat-label>Value Input Type</mat-label>
+                <mat-select formControlName="propertyinputType" (selectionChange)="refreshInputTypes()">
+                    <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+                    <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+                    <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+                    <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+
+        <section class="mat-block" fxFlex>            
+            <mat-form-field *ngIf="configuration.propertyinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+                <mat-label>Rule Input</mat-label>
+                <mat-select formControlName="param">
+                    <mat-option *ngFor="let property of allRuleInputs" [value]="property">
+                        {{property.inputName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="configuration.propertyinputType === 'CONSTANT'" fxFlex class="mat-block">
+                <mat-label>Constant</mat-label>
+                <mat-select formControlName="constant">
+                    <mat-option *ngFor="let constant of allConstants" [value]="constant">
+                        {{constant.constantName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="configuration.propertyinputType === 'PROPERTY'" fxFlex class="mat-block">
+                <mat-label>Property</mat-label>
+                <mat-select formControlName="property">
+                    <mat-option *ngFor="let property of allModelProperties" [value]="property">
+                        {{property.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="configuration.propertyinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+                <mat-label>Branch Param</mat-label>
+                <mat-select formControlName="branchparam">
+                    <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+                        {{param.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </section>
+        <button mat-icon-button class="virtuan-fullscreen-button-style"
+                (click)="addProperty()"
+                matTooltip="Add Property"
+                matTooltipPosition="above">
+            <mat-icon color="primary">add</mat-icon>
+        </button>
+    </section>
+    <div *ngIf="configuration?.connectionproptype?.name && configuration?.connectionproptype?.name !==''" fxFlex class="table-container" style="padding: 10px;">
+        <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="connectionpropertyname">
+                <th mat-header-cell *matHeaderCellDef> Property </th>
+                <td mat-cell *matCellDef="let element"> {{element.connectionpropertyname}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="inputType">
+                <th mat-header-cell *matHeaderCellDef> Value Input Type </th>
+                <td mat-cell *matCellDef="let element"> {{element.inputType}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="property">
+                <th mat-header-cell *matHeaderCellDef> Value Property </th>
+                <td mat-cell *matCellDef="let element"> {{element.property}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element;let i = index">
+                    <button mat-icon-button class="virtuan-mat-32" (click)="deleteRow(i)" matTooltip="Delete Property" matTooltipPosition="above">
+                        <mat-icon style="color:red;">delete</mat-icon>
+                    </button></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <section style="padding-top: 10px;padding-bottom: 20px;">
+        <button style="float: right;" mat-icon-button class="virtuan-fullscreen-button-style"
+                (click)="addConProperty()"
+                matTooltip="Add Connection Property"
+                matTooltipPosition="above">
+            <mat-icon color="primary">add</mat-icon>
+        </button>
+    </section>
+    <div fxFlex class="table-container" style="padding: 20px;">
+        <table mat-table [dataSource]="propertydatasource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> Type </th>
+                <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="scope">
+                <th mat-header-cell *matHeaderCellDef> Scope </th>
+                <td mat-cell *matCellDef="let element"> {{element.scope}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element;let i = index">
+                    <button mat-icon-button class="virtuan-mat-32" (click)="deleteConRow(i)" matTooltip="Delete Connection Property" matTooltipPosition="above">
+                        <mat-icon style="color:red;">delete</mat-icon>
+                    </button></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="propertydisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: propertydisplayedColumns;"></tr>
+        </table>
+    </div>
+</div>
+
