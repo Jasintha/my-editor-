@@ -113,6 +113,9 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
   allReferenceProperties: any[];
 
   @Input()
+  allConnectionProperties: any[];
+
+  @Input()
   apptype: string;
   
   @Input()
@@ -227,6 +230,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
               private fb: FormBuilder) {
     this.dbNodeConfigFormGroup = this.fb.group({
       dbType:[],
+      dbConnection: [],
       dbAction: [],
       entity: [],
       property: [],
@@ -693,6 +697,12 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
             }
         }
       }
+
+      let dbConnection = this.configuration.dbConnection;
+      if(this.allConnectionProperties && this.configuration.dbConnection){
+        dbConnection = this.allConnectionProperties.find(x => x.name === this.configuration.dbConnection.name);
+      }
+
       let entity = this.configuration.entity;
       if((this.configuration.dbAction === 'FIND' || this.configuration.dbAction === 'FINDALL' || this.configuration.dbAction === 'DELETEALL' || this.configuration.dbAction === 'DELETE') && entity && this.inputEntities){
       entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
@@ -738,6 +748,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
       this.dbNodeConfigFormGroup.patchValue({
         dbType: this.configuration.dbType,
+        dbConnection: dbConnection,
         dbAction: this.configuration.dbAction,
         entity: entity,
         crudinputType: this.configuration.crudinputType,
@@ -772,6 +783,13 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         }
       );
       */
+
+      this.changeSubscription = this.dbNodeConfigFormGroup.get('dbConnection').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.dbConnection = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.dbNodeConfigFormGroup.get('dbType').valueChanges.subscribe(
         (configuration: any) => {

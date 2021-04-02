@@ -11,6 +11,7 @@ import { ConstantNodeConfigComponent } from './core/constant-node-config.compone
 import { BranchNodeConfigComponent } from './core/branch-node-config.component';
 import { DomainModelVariableNodeConfigComponent } from './core/domain-model-variable-node-config.component';
 import { ReferencePropertyNodeConfigComponent } from './core/reference-property-node-config.component';
+import { ConnectionPropertyNodeConfigComponent } from './core/connection-property-node-config.component';
 
 //action
 import { PayloadNodeConfigComponent } from './action/payload-node-config.component';
@@ -29,6 +30,7 @@ import { FileDownloadNodeConfigComponent } from './action/file-download-node-con
 import { CallNodeConfigComponent } from './action/call-node-config.component';
 import { HybridFunctionNodeConfigComponent } from './action/hybrid-function-node-config.component';
 import { AssignNodeConfigComponent } from './action/assign-node-config.component';
+import { EnvVariableLookupNodeConfigComponent } from './action/env-variable-lookup-node-config.component';
 import { StringTemplateNodeConfigComponent } from './action/string-template-node-config.component';
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
@@ -80,6 +82,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     CrudNodeConfigComponent,
     ConnectorNodeConfigComponent,
     ReferencePropertyNodeConfigComponent,
+    ConnectionPropertyNodeConfigComponent,
     EventStoreNodeConfigComponent,
     QueryStoreNodeConfigComponent,
     ShopifyInitNodeConfigComponent,
@@ -100,6 +103,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     CallNodeConfigComponent,
     AggregateNodeConfigComponent,
     AssignNodeConfigComponent,
+    EnvVariableLookupNodeConfigComponent,
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
@@ -127,6 +131,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     EventPublisherNodeConfigComponent,
     EmailSendNodeConfigComponent,
     ReferencePropertyNodeConfigComponent,
+    ConnectionPropertyNodeConfigComponent,
     EmailInitNodeConfigComponent,
     FilterNodeConfigComponent,
     CrudNodeConfigComponent,
@@ -151,6 +156,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     CallNodeConfigComponent,
     AggregateNodeConfigComponent,
     AssignNodeConfigComponent,
+    EnvVariableLookupNodeConfigComponent,
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,

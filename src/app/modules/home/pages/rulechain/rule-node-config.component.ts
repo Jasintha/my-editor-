@@ -107,6 +107,9 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
   allValueObjectProperties: any[];
 
   @Input()
+  allConnectionProperties: any[];
+
+  @Input()
   allViewModels: any[];
 
   @Input()
@@ -117,6 +120,9 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
 
   @Input()
   allHybridFunctions: any[];
+
+  @Input()
+  connectionPropertyTemplates: any[];
 
   @Input()
   allSubRules: any[];

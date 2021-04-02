@@ -513,6 +513,7 @@
                            [allRuleInputs]="allRuleInputs"
                            [allDomainModels]=" allDomainModels"
                            [allConstants]=" allConstants"
+                           [allConnectionProperties]="allConnectionProperties"
                            [inputEntities]=" inputEntities"
                            [inputCustomobjects]="inputCustomobjects"
                            [allVariables]="allVariables"
@@ -651,5 +652,43 @@
                                   [branchAvailability]="branchAvailability"
                                   [nodeDefinition]="nodeDefinitionValue">
         </virtuan-excelDelete-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiCPNode'">
+        <virtuan-connection-property-node-config #connectorPropertyNodeConfigComponent
+                                         formControlName="configuration"
+                                         [ruleNodeId]="ruleNodeId"
+                                         [allConstants]=" allConstants"
+                                         [inputEntities]=" inputEntities"
+                                         [inputCustomobjects]="inputCustomobjects"
+                                         [allRuleInputs]="allRuleInputs"
+                                         [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                         [allVariables]="allVariables"
+                                         [inputProperties]="inputProperties"
+                                         [apptype]="apptype"
+                                         [allModelProperties]="allModelProperties"
+                                         [allReferenceProperties]="allReferenceProperties"
+                                         [branchAvailability]="branchAvailability"
+                                         [connectionPropertyTemplates]="connectionPropertyTemplates"
+                                         [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-connection-property-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiENVLNode'">
+        <virtuan-env-variable-lookup-node-config #envVariableLookupNodeConfigComponent
+                                                 formControlName="configuration"
+                                                 [ruleNodeId]="ruleNodeId"
+                                                 [allConstants]=" allConstants"
+                                                 [inputEntities]=" inputEntities"
+                                                 [inputCustomobjects]="inputCustomobjects"
+                                                 [allRuleInputs]="allRuleInputs"
+                                                 [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                                 [allVariables]="allVariables"
+                                                 [inputProperties]="inputProperties"
+                                                 [apptype]="apptype"
+                                                 [allModelProperties]="allModelProperties"
+                                                 [allReferenceProperties]="allReferenceProperties"
+                                                 [branchAvailability]="branchAvailability"
+                                                 [connectionPropertyTemplates]="connectionPropertyTemplates"
+                                                 [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-env-variable-lookup-node-config>
     </ng-container>
 </div>

@@ -9,6 +9,17 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>DB Connection</mat-label>
+    <mat-select formControlName="dbConnection">
+      <ng-container *ngFor="let property of allConnectionProperties">
+        <mat-option *ngIf="property?.group === 'db'" [value]="property">
+          {{property.name}}
+        </mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
+
   <section class="mat-block" fxFlex>
     <mat-form-field fxFlex class="mat-block">
       <mat-label>Action</mat-label>

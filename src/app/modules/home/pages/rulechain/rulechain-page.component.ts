@@ -44,6 +44,7 @@ import {
   NodeConnectionInfo,
   ResolvedRuleChainMetaData,
   RuleChain,
+  ConnectionPropertyTemplate,
   RuleChainConnectionInfo,
   RuleChainImport,
   RuleChainMetaData,
@@ -146,6 +147,7 @@ export class RuleChainPageComponent extends PageComponent
 
   ruleChain: RuleChain;
   ruleChainMetaData: ResolvedRuleChainMetaData;
+  connectionPropertyTemplates: ConnectionPropertyTemplate[];
 
   ruleType: string;
   ruleInputs: any[];
@@ -162,6 +164,7 @@ export class RuleChainPageComponent extends PageComponent
   allDomainModels: any[];
   allModelProperties: any[];
   allGlobalProperties: any[];
+  allGlobalConnectionProperties: any[];
   allGlobalConstants: any[];
   allRuleInputs: any[];
   allEvents: any[];
@@ -355,6 +358,7 @@ export class RuleChainPageComponent extends PageComponent
     } else {
       this.ruleChain = this.route.snapshot.data.ruleChain;
       this.ruleChainMetaData = this.route.snapshot.data.ruleChainMetaData;
+      this.connectionPropertyTemplates = this.route.snapshot.data.connectionPropertyTemplates;
     }
 
     this.ruleType = this.ruleChainMetaData.name;
@@ -378,6 +382,7 @@ export class RuleChainPageComponent extends PageComponent
     this.allModelProperties = this.ruleChainMetaData.allModelProperties;
     this.allGlobalProperties = this.ruleChainMetaData.allGlobalProperties;
     this.allGlobalConstants = this.ruleChainMetaData.allGlobalConstants;
+    this.allGlobalConnectionProperties = this.ruleChainMetaData.allGlobalConnectionProperties;
     this.connectorData = this.ruleChainMetaData.connectors;
     this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
     this.inputProperties = this.ruleChainMetaData.inputProperties;
@@ -1034,7 +1039,7 @@ export class RuleChainPageComponent extends PageComponent
         }
       });
 
-      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], []);
+      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], [], []);
 
       let golbalProperties = this.allGlobalProperties;
 
@@ -1045,6 +1050,11 @@ export class RuleChainPageComponent extends PageComponent
       let allGlobalConstants = this.allGlobalConstants;
       if (this.allGlobalConstants && this.allGlobalConstants.length > 0){
         branchFoundObj.constants = branchFoundObj.constants.concat(this.allGlobalConstants);
+      }
+
+      let allGlobalConnectionProperties = this.allGlobalConnectionProperties;
+      if (this.allGlobalConnectionProperties && this.allGlobalConnectionProperties.length > 0){
+        branchFoundObj.connectionProperties = branchFoundObj.connectionProperties.concat(this.allGlobalConnectionProperties);
       }
 
     let valueObjectPropertyArray = [];
@@ -1098,10 +1108,10 @@ export class RuleChainPageComponent extends PageComponent
               valueProperty.valueType = "primitive";
               valueObjectPropertyArray.push(valueProperty)
             }
-            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray};
+            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties};
             return obj;
         } else {
-            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray};
+            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties};
             return obj;
         }
 
@@ -1122,17 +1132,17 @@ export class RuleChainPageComponent extends PageComponent
           }
         }
 
-            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':valueObjectPropertyArray};
+            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties};
             return obj;
       }
 
   }
 
-  checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray){
+  checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray){
     let foundNode = allConnections.find(x => x.toIndex === index);
     if(foundNode){
         if(foundNode.type.startsWith("BRANCH_")){
-            let obj = {'branchIndex': foundNode.fromIndex, 'branchFound': true, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray};
+            let obj = {'branchIndex': foundNode.fromIndex, 'branchFound': true, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray};
             return obj;
         } else {
             if(nodes[foundNode.fromIndex].configuration.nodevariable !== undefined && nodes[foundNode.fromIndex].configuration.nodevariable !== null){
@@ -1154,13 +1164,17 @@ export class RuleChainPageComponent extends PageComponent
                     nodeReferencePropertyArray = nodeReferencePropertyArray.concat(nodes[foundNode.fromIndex].configuration.referenceproperties);
                 }
 
+            }  else if(nodes[foundNode.fromIndex].component.clazz === 'xiCPNode'){
+                if(nodes[foundNode.fromIndex].configuration.connectionProperties !== null && nodes[foundNode.fromIndex].configuration.connectionProperties !== undefined ){
+                    nodeConnectionPropertiesArray = nodeConnectionPropertiesArray.concat(nodes[foundNode.fromIndex].configuration.connectionProperties);
+                }
             }
 
-            let branchCheckVal = this.checkForBranchConnection(foundNode.fromIndex, allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray);
+            let branchCheckVal = this.checkForBranchConnection(foundNode.fromIndex, allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray);
             return branchCheckVal;
         }
     } else {
-        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray};
+        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray};
         return obj;
     }
   }
@@ -1603,6 +1617,7 @@ export class RuleChainPageComponent extends PageComponent
     const allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
     const allPdfs = this.ruleChainMetaData.allPdfs;
     const allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
+    const connectionPropertyTemplates = this.connectionPropertyTemplates;
     const allSubRules = this.ruleChainMetaData.allSubRules;
     const allRoots = this.ruleChainMetaData.allRoots;
     const allEvents = this.ruleChainMetaData.allEvents;
@@ -1657,6 +1672,7 @@ export class RuleChainPageComponent extends PageComponent
         allLambdaFunctions,
         allPdfs,
         allHybridFunctions,
+        connectionPropertyTemplates,
         allSubRules,
         allRoots,
         queryDb,
@@ -1880,6 +1896,7 @@ export interface AddRuleNodeDialogData {
   allLambdaFunctions: any[];
   allPdfs:any[];
   allHybridFunctions: any[];
+  connectionPropertyTemplates: any[];
   allSubRules: any[];
   allRoots: any[];
   queryDb: string;
@@ -1920,6 +1937,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allLambdaFunctions: any[];
   allPdfs:any[];
   allHybridFunctions: any[];
+  connectionPropertyTemplates: any[];
   allSubRules: any[];
   allRoots: any[];
   allModelProperties: any[];
@@ -1959,6 +1977,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allLambdaFunctions = this.data.allLambdaFunctions;
     this.allPdfs=this.data.allPdfs;
     this.allHybridFunctions = this.data.allHybridFunctions;
+    this.connectionPropertyTemplates = this.data.connectionPropertyTemplates;
     this.allSubRules = this.data.allSubRules;
     this.allRoots = this.data.allRoots;
   //  this.isNodeEdit = this.data.isNodeEdit;
