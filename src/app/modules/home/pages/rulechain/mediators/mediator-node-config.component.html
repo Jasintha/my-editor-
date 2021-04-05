@@ -2,28 +2,6 @@
     <ng-container *ngIf="ruleType === 'CONNECTOR'">
         <ng-container
                 *ngIf="nodeClazz === 'CONNECTOR_INIT_xiGmailInitNode_gmail' || nodeClazz === 'CONNECTOR_xiGmailSendNode_gmail' || nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio' || nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio' ;else second">
-            <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiGmailInitNode_gmail'">
-                <virtuan-email-init-node-config #emailInitNodeConfigComponent
-                                           formControlName="configuration"
-                                           [ruleNodeId]="ruleNodeId"
-                                           [nodeDefinition]="nodeDefinitionValue">
-                </virtuan-email-init-node-config>
-            </ng-container>
-            <ng-container *ngIf="nodeClazz === 'CONNECTOR_xiGmailSendNode_gmail'">
-                <virtuan-email-send-node-config #emailSendNodeConfigComponent
-                                           formControlName="configuration"
-                                           [ruleNodeId]="ruleNodeId"
-                                           [allConstants]=" allConstants"
-                                           [inputEntities]=" inputEntities"
-                                           [allRuleInputs]="allRuleInputs"
-                                           [inputCustomobjects]="inputCustomobjects"
-                                           [allVariables]="allVariables"
-                                           [inputProperties]="inputProperties"
-                                           [apptype]="apptype"
-                                           [allModelProperties]="allModelProperties"
-                                           [nodeDefinition]="nodeDefinitionValue">
-                </virtuan-email-send-node-config>
-            </ng-container>
             <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio'">
                 <virtuan-sms-init-node-config #smsInitNodeConfigComponent
                                          formControlName="configuration"
@@ -692,5 +670,27 @@
                                                  [connectionPropertyTemplates]="connectionPropertyTemplates"
                                                  [nodeDefinition]="nodeDefinitionValue">
         </virtuan-env-variable-lookup-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiEmailInitNode'">
+        <virtuan-email-init-node-config #emailInitNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-email-init-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiEmailSendNode'">
+        <virtuan-email-send-node-config #emailSendNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [allConstants]=" allConstants"
+                                        [inputEntities]=" inputEntities"
+                                        [allRuleInputs]="allRuleInputs"
+                                        [inputCustomobjects]="inputCustomobjects"
+                                        [allVariables]="allVariables"
+                                        [inputProperties]="inputProperties"
+                                        [apptype]="apptype"
+                                        [allModelProperties]="allModelProperties"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-email-send-node-config>
     </ng-container>
 </div>
