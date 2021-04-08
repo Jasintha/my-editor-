@@ -69,11 +69,38 @@
 
 
   </section>
-  <section style="padding-top: 10px;padding-bottom: 10px;">
+
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Email Content Type</mat-label>
+    <mat-select formControlName="emailcontentType">
+      <mat-option value="TEXT">TEXT</mat-option>
+      <mat-option value="HTML">HTML</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Email Body Type</mat-label>
+    <mat-select formControlName="emailBodyType" (selectionChange)="refreshEmailBody()">
+      <mat-option value="INLINE">In-Line</mat-option>
+      <mat-option value="PROPERTY">Dynamic</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="configuration.emailBodyType === 'PROPERTY'" fxFlex class="mat-block">
+    <mat-label>Email Body Property</mat-label>
+    <mat-select formControlName="emailBodyProperty">
+      <mat-option *ngFor="let property of allModelProperties" [value]="property">
+        {{property.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <section *ngIf="configuration.emailBodyType === 'INLINE'" style="padding-top: 10px;padding-bottom: 10px;">
     <label>Email Body Parameters</label>
   </section>
 
-  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+  <section *ngIf="configuration.emailBodyType === 'INLINE'" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
 
     <mat-form-field fxFlex class="mat-block">
       <mat-label>Parameter Input Type</mat-label>
@@ -130,7 +157,7 @@
   </section>
 
 
-  <div fxFlex class="table-container" style="padding: 10px;margin-bottom-5px;">
+  <div *ngIf="configuration.emailBodyType === 'INLINE'" fxFlex class="table-container" style="padding: 10px;margin-bottom-5px;">
     <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
 
       <ng-container matColumnDef="parameterName">
@@ -166,7 +193,7 @@
     </table>
   </div>
 
-  <mat-form-field class="mat-block">
+  <mat-form-field *ngIf="configuration.emailBodyType === 'INLINE'" class="mat-block">
     <mat-label>Email Body</mat-label>
     <textarea matInput formControlName="emailBody" rows="7"></textarea>
   </mat-form-field>
