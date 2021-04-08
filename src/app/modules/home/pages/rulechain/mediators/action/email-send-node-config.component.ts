@@ -138,7 +138,10 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       parameterproperty: [],
       emailBody: [],
       errorMsg: "",
-      errorAction: ""
+      errorAction: "",
+      emailcontentType: "",
+      emailBodyType: "",
+      emailBodyProperty: []
     });
   }
 
@@ -156,6 +159,30 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   ngOnDestroy(): void {
     if (this.definedConfigComponentRef) {
       this.definedConfigComponentRef.destroy();
+    }
+  }
+
+  refreshEmailBody(){
+    let emailBodyType: string = this.emailSendNodeConfigFormGroup.get('emailBodyType').value;
+    this.configuration.emailBodyType = emailBodyType;
+
+    if (emailBodyType === 'INLINE'){
+        this.configuration.emailBodyProperty= {};
+        this.emailSendNodeConfigFormGroup.get('emailBodyProperty').patchValue([], {emitEvent: false});
+    } else if (emailBodyType === 'PROPERTY'){
+        this.configuration.parameterinputType = ""
+        this.configuration.parameterproperty= {};
+        this.configuration.parameterparam= {};
+
+        this.configuration.emailbodyParameters = [];
+        this.datasource = new MatTableDataSource(this.configuration.emailbodyParameters);
+        this.emailSendNodeConfigFormGroup.get('parameterinputType').patchValue("", {emitEvent: false});
+        this.emailSendNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
+        this.emailSendNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
+    }
+
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
     }
   }
   
@@ -282,7 +309,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     
     this.datasource = new MatTableDataSource(this.configuration.emailbodyParameters);
   
-    this.emailSendNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
+    this.emailSendNodeConfigFormGroup.get('parameterinputType').patchValue("", {emitEvent: false});
     //this.emailSendNodeConfigFormGroup.get('parametervariable').patchValue([], {emitEvent: false});
     //this.emailSendNodeConfigFormGroup.get('parametervariableProperty').patchValue([], {emitEvent: false});
     this.emailSendNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
@@ -309,9 +336,6 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   writeValue(value: RuleNodeConfiguration): void {
-
-
-
 
     this.configuration = deepClone(value);
     this.datasource = new MatTableDataSource(this.configuration.emailbodyParameters);
@@ -342,7 +366,15 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         property = this.allModelProperties.find(x => x.name === this.configuration.toemailproperty.name );
       }
 
+      let emailBodyProperty = this.configuration.emailBodyProperty;
+      if(this.configuration.emailBodyType === 'PROPERTY'){
+        emailBodyProperty = this.allModelProperties.find(x => x.name === this.configuration.emailBodyProperty.name );
+      }
+
       this.emailSendNodeConfigFormGroup.patchValue({
+        emailcontentType: this.configuration.emailcontentType,
+        emailBodyType: this.configuration.emailBodyType,
+        emailBodyProperty: emailBodyProperty,
         emailSubject: this.configuration.emailSubject,
         toemailinputType: this.configuration.toemailinputType,
         toemailparam: p,
@@ -414,6 +446,30 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
           this.updateModel(this.configuration);
         }
       );
+
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('emailcontentType').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.emailcontentType = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      /*
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('emailBodyType').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.emailBodyType = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+      */
+
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('emailBodyProperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.emailBodyProperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
 
       this.changeSubscription = this.emailSendNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
