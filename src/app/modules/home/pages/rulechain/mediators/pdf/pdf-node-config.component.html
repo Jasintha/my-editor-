@@ -34,7 +34,12 @@
                 <mat-label>Rule Input</mat-label>
                 <mat-select formControlName="parameterparam">
                     <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-                        {{property.inputName}}
+                        <div *ngIf="property.childName">
+                            {{property.childName}}
+                        </div>
+                        <div *ngIf="!property.childName">
+                            {{property.inputName}}
+                        </div>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -42,7 +47,12 @@
                 <mat-label>Property</mat-label>
                 <mat-select formControlName="parameterproperty">
                     <mat-option *ngFor="let property of allModelProperties" [value]="property">
-                        {{property.name}}
+                        <div *ngIf="property.childName">
+                            {{property.childName}}
+                        </div>
+                        <div *ngIf="!property.childName">
+                            {{property.name}}
+                        </div>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -50,7 +60,12 @@
                 <mat-label>Branch Param</mat-label>
                 <mat-select formControlName="parameterbranch">
                     <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
-                        {{param.name}}
+                        <div *ngIf="param.childName">
+                            {{param.childName}}
+                        </div>
+                        <div *ngIf="!param.childName">
+                            {{param.name}}
+                        </div>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -66,7 +81,12 @@
                 <mat-label>Reference Property</mat-label>
                 <mat-select formControlName="parameterreference">
                     <mat-option *ngFor="let property of allReferenceProperties" [value]="property">
-                        {{property.name}}
+                        <div *ngIf="property.childName">
+                            {{property.childName}}
+                        </div>
+                        <div *ngIf="!property.childName">
+                            {{property.name}}
+                        </div>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
