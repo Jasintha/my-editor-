@@ -179,7 +179,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                         for (let child of domModel.design.children){
                             let childProp = {
                                 'name' : parent+"."+child.data.name,
-                                'inputType' : child.data.type
+                                'inputType' : child.data.type,
+                                'childName': child.data.name
                             }
                             this.allModelProperties.push(childProp)
                         }
@@ -192,7 +193,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                         for (let child of domModel.design.children){
                             let childProp = {
                                 'name' : parent+"."+child.data.name,
-                                'inputType' : child.data.type
+                                'inputType' : child.data.type,
+                                'childName': child.data.name,
                             }
                             this.allModelProperties.push(childProp)
                         }
@@ -209,6 +211,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                             let childProp = {
                                 'name' : parent+"."+child.data.name,
                                 'inputType' : child.data.type,
+                                'childName': child.data.name,
                                 'modelproperty' : {
                                     'data': {
                                         'path' : child.data.path
@@ -229,7 +232,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                         for (let child of domModel.design.children){
                             let childProp = {
                                 'name' : parent+"."+child.data.name,
-                                'inputType' : child.data.type
+                                'inputType' : child.data.type,
+                                'childName': child.data.name
                             }
                             this.allRuleInputs.push(childProp)
                         }
@@ -245,7 +249,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                         for (let child of domModel.design.children){
                             let childProp = {
                                 'name' : parent+"."+child.data.name,
-                                'inputType' : child.data.type
+                                'inputType' : child.data.type,
+                                'childName': child.data.name
                             }
                             this.branchAvailability.push(childProp)
                         }
