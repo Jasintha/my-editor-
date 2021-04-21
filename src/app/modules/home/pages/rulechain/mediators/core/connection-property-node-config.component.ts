@@ -244,24 +244,29 @@ export class ConnectionPropertyNodeConfigComponent implements ControlValueAccess
     let inputType: string = this.connectionPropertyNodeConfigFormGroup.get('propertyinputType').value;
     let input = '';
     let property = ''
+    let propertyscope = ''
 
     if (inputType === 'RULE_INPUT'){
       let selectedParam = this.connectionPropertyNodeConfigFormGroup.get('param').value;
       input = '-';
+      propertyscope = '-'
       property = selectedParam.inputName;
     } else if (inputType === 'PROPERTY'){
       let selectedProperty = this.connectionPropertyNodeConfigFormGroup.get('property').value;
       input = '-';
       property = selectedProperty.name;
+      propertyscope = selectedProperty.propertyScope;
 
     } else if (inputType === 'CONSTANT'){
       let selectedConstant = this.connectionPropertyNodeConfigFormGroup.get('constant').value;
       input = '-';
       property = selectedConstant.constantName;
+      propertyscope = selectedConstant.scope;
 
     } else if (inputType === 'BRANCH_PARAM'){
       let selectedBranchParam = this.connectionPropertyNodeConfigFormGroup.get('branchparam').value;
       input = '-';
+      propertyscope = '-'
       property = selectedBranchParam.name;
     }
     
@@ -270,7 +275,8 @@ export class ConnectionPropertyNodeConfigComponent implements ControlValueAccess
         'connectionpropertykey': connectionpropertykey,
         'connectionpropertydatatype': connectionpropertydatatype,
         'inputType': inputType,
-        'property': property
+        'property': property,
+        'propertyscope': propertyscope
       };
     
     this.configuration.connectionTemplateProperties.push(conProp);
