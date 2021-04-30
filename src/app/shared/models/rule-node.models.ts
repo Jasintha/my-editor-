@@ -190,12 +190,14 @@ export enum RuleNodeType {
   ROOTING = 'ROOTING',
   CORE = 'CORE',
   CQRS = 'CQRS',
-  MESSAGING = 'MESSAGING'
+  MESSAGING = 'MESSAGING',
+  MIDDLEWARE = 'MIDDLEWARE'
 }
 
 export const ruleNodeTypesLibrary = [
   RuleNodeType.ROOTING,
   RuleNodeType.CORE,
+  RuleNodeType.MIDDLEWARE,
   RuleNodeType.ACTION,
   RuleNodeType.FILTER,
   RuleNodeType.DATABASE_OPERATIONS,
@@ -262,6 +264,16 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         name: 'rulenode.type-database_operations',
         details: 'rulenode.type-database_operations-details',
         nodeClass: 'virtuan-database_operations-type',
+        icon: 'cloud_upload'
+      }
+    ],
+    [
+      RuleNodeType.MIDDLEWARE,
+      {
+        value: RuleNodeType.MIDDLEWARE,
+        name: 'rulenode.type-middleware',
+        details: 'rulenode.type-middleware-details',
+        nodeClass: 'virtuan-middleware-type',
         icon: 'cloud_upload'
       }
     ],

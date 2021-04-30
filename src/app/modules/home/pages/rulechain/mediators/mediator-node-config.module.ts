@@ -39,6 +39,19 @@ import { ConnectorNodeConfigComponent } from './connector/connector-node-config.
 import { FilterNodeConfigComponent } from './filter/filter-node-config.component';
 import { SwitchNodeConfigComponent } from './filter/switch-node-config.component';
 
+//main
+import { APIGroupNodeConfigComponent } from './main/api-group-node-config.component';
+import { ContextPropertyNodeConfigComponent } from './main/context-property-node-config.component';
+import { GRPCServerNodeConfigComponent } from './main/grpc-server-config.component';
+import { RESTServerNodeConfigComponent } from './main/rest-server-config.component';
+
+//middlewares
+import { BasicAuthMiddlewareNodeConfigComponent } from './middlewares/basic-auth-middleware-node-config.component';
+import { BodyLimitMiddlewareNodeConfigComponent } from './middlewares/body-limit-middleware-node-config.component';
+import { CasbinAuthMiddlewareNodeConfigComponent } from './middlewares/casbin-auth-middleware-node-config.component';
+import { CoreMiddlewareNodeConfigComponent } from './middlewares/core-middleware-node-config.component';
+import { TimeoutMiddlewareNodeConfigComponent } from './middlewares/timeout-middleware-node-config.component';
+
 //extend
 import { SubRuleNodeConfigComponent } from './extend/sub-rule-node-config.component';
 
@@ -113,7 +126,16 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     ExcelWriteNodeConfigComponent,
     ExcelReadNodeConfigComponent,
     ExcelCopyNodeConfigComponent,
-    ExcelDeleteNodeConfigComponent
+    ExcelDeleteNodeConfigComponent,
+    APIGroupNodeConfigComponent,
+    ContextPropertyNodeConfigComponent,
+    GRPCServerNodeConfigComponent,
+    RESTServerNodeConfigComponent,
+    BasicAuthMiddlewareNodeConfigComponent,
+    BodyLimitMiddlewareNodeConfigComponent,
+    CasbinAuthMiddlewareNodeConfigComponent,
+    CoreMiddlewareNodeConfigComponent,
+    TimeoutMiddlewareNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -166,7 +188,16 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     ExcelWriteNodeConfigComponent,
     ExcelReadNodeConfigComponent,
     ExcelCopyNodeConfigComponent,
-    ExcelDeleteNodeConfigComponent
+    ExcelDeleteNodeConfigComponent,
+    APIGroupNodeConfigComponent,
+    ContextPropertyNodeConfigComponent,
+    GRPCServerNodeConfigComponent,
+    RESTServerNodeConfigComponent,
+    BasicAuthMiddlewareNodeConfigComponent,
+    BodyLimitMiddlewareNodeConfigComponent,
+    CasbinAuthMiddlewareNodeConfigComponent,
+    CoreMiddlewareNodeConfigComponent,
+    TimeoutMiddlewareNodeConfigComponent
   ],
   providers: []
 })

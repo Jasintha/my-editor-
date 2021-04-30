@@ -693,4 +693,166 @@
                                         [nodeDefinition]="nodeDefinitionValue">
         </virtuan-email-send-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiApiGNode'">
+        <virtuan-api-group-node-config #apiGroupNodeConfigComponent
+                                      formControlName="configuration"
+                                      [ruleNodeId]="ruleNodeId"
+                                      [allConstants]=" allConstants"
+                                      [inputEntities]=" inputEntities"
+                                      [allRuleInputs]="allRuleInputs"
+                                      [inputCustomobjects]="inputCustomobjects"
+                                      [allVariables]="allVariables"
+                                      [inputProperties]="inputProperties"
+                                      [apptype]="apptype"
+                                      [allModelProperties]="allModelProperties"
+                                      [allApis]="allApis"
+                                      [branchAvailability]="branchAvailability"
+                                      [allReferenceProperties]="allReferenceProperties"
+                                      [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-api-group-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiCxtPNode'">
+        <virtuan-context-property-node-config #contextPropertyNodeConfigComponent
+                                      formControlName="configuration"
+                                      [ruleNodeId]="ruleNodeId"
+                                      [allConstants]=" allConstants"
+                                      [inputEntities]=" inputEntities"
+                                      [allRuleInputs]="allRuleInputs"
+                                      [inputCustomobjects]="inputCustomobjects"
+                                      [allVariables]="allVariables"
+                                      [inputProperties]="inputProperties"
+                                      [apptype]="apptype"
+                                      [allModelProperties]="allModelProperties"
+                                      [allApis]="allApis"
+                                      [branchAvailability]="branchAvailability"
+                                      [allReferenceProperties]="allReferenceProperties"
+                                      [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-context-property-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiGrpcSNode'">
+        <virtuan-grpc-server-node-config #grpcServerNodeConfigComponent
+                                              formControlName="configuration"
+                                              [ruleNodeId]="ruleNodeId"
+                                              [allConstants]=" allConstants"
+                                              [inputEntities]=" inputEntities"
+                                              [allRuleInputs]="allRuleInputs"
+                                              [inputCustomobjects]="inputCustomobjects"
+                                              [allVariables]="allVariables"
+                                              [inputProperties]="inputProperties"
+                                              [apptype]="apptype"
+                                              [allModelProperties]="allModelProperties"
+                                              [allApis]="allApis"
+                                              [branchAvailability]="branchAvailability"
+                                              [allReferenceProperties]="allReferenceProperties"
+                                              [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-grpc-server-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiRestSNode'">
+        <virtuan-rest-server-node-config #restServerNodeConfigComponent
+                                         formControlName="configuration"
+                                         [ruleNodeId]="ruleNodeId"
+                                         [allConstants]=" allConstants"
+                                         [inputEntities]=" inputEntities"
+                                         [allRuleInputs]="allRuleInputs"
+                                         [inputCustomobjects]="inputCustomobjects"
+                                         [allVariables]="allVariables"
+                                         [inputProperties]="inputProperties"
+                                         [apptype]="apptype"
+                                         [allModelProperties]="allModelProperties"
+                                         [allApis]="allApis"
+                                         [branchAvailability]="branchAvailability"
+                                         [allReferenceProperties]="allReferenceProperties"
+                                         [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-rest-server-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiBasicANode'">
+        <virtuan-basic-auth-middleware-node-config #basicAuthNodeConfigComponent
+                                         formControlName="configuration"
+                                         [ruleNodeId]="ruleNodeId"
+                                         [allConstants]=" allConstants"
+                                         [inputEntities]=" inputEntities"
+                                         [allRuleInputs]="allRuleInputs"
+                                         [inputCustomobjects]="inputCustomobjects"
+                                         [allVariables]="allVariables"
+                                         [inputProperties]="inputProperties"
+                                         [apptype]="apptype"
+                                         [allModelProperties]="allModelProperties"
+                                         [allApis]="allApis"
+                                         [branchAvailability]="branchAvailability"
+                                         [allReferenceProperties]="allReferenceProperties"
+                                         [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-basic-auth-middleware-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiBodyLNode'">
+        <virtuan-body-limit-middleware-node-config #bodyLimitNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [allConstants]=" allConstants"
+                                        [inputEntities]=" inputEntities"
+                                        [allRuleInputs]="allRuleInputs"
+                                        [inputCustomobjects]="inputCustomobjects"
+                                        [allVariables]="allVariables"
+                                        [inputProperties]="inputProperties"
+                                        [apptype]="apptype"
+                                        [allModelProperties]="allModelProperties"
+                                        [allApis]="allApis"
+                                        [branchAvailability]="branchAvailability"
+                                        [allReferenceProperties]="allReferenceProperties"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-body-limit-middleware-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiCasbinANode'">
+        <virtuan-casbin-auth-middleware-node-config #casbinANodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [allConstants]=" allConstants"
+                                        [inputEntities]=" inputEntities"
+                                        [allRuleInputs]="allRuleInputs"
+                                        [inputCustomobjects]="inputCustomobjects"
+                                        [allVariables]="allVariables"
+                                        [inputProperties]="inputProperties"
+                                        [apptype]="apptype"
+                                        [allModelProperties]="allModelProperties"
+                                        [allApis]="allApis"
+                                        [branchAvailability]="branchAvailability"
+                                        [allReferenceProperties]="allReferenceProperties"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-casbin-auth-middleware-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiCoreMNode'">
+        <virtuan-core-middleware-node-config #coreMiidlewareANodeConfigComponent
+                                         formControlName="configuration"
+                                         [ruleNodeId]="ruleNodeId"
+                                         [allConstants]=" allConstants"
+                                         [inputEntities]=" inputEntities"
+                                         [allRuleInputs]="allRuleInputs"
+                                         [inputCustomobjects]="inputCustomobjects"
+                                         [allVariables]="allVariables"
+                                         [inputProperties]="inputProperties"
+                                         [apptype]="apptype"
+                                         [allModelProperties]="allModelProperties"
+                                         [allApis]="allApis"
+                                         [branchAvailability]="branchAvailability"
+                                         [allReferenceProperties]="allReferenceProperties"
+                                         [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-core-middleware-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiTimeoutNode'">
+        <virtuan-timeout-middleware-node-config #casbinANodeConfigComponent
+                                                  formControlName="configuration"
+                                                  [ruleNodeId]="ruleNodeId"
+                                                  [allConstants]=" allConstants"
+                                                  [inputEntities]=" inputEntities"
+                                                  [allRuleInputs]="allRuleInputs"
+                                                  [inputCustomobjects]="inputCustomobjects"
+                                                  [allVariables]="allVariables"
+                                                  [inputProperties]="inputProperties"
+                                                  [apptype]="apptype"
+                                                  [allModelProperties]="allModelProperties"
+                                                  [allApis]="allApis"
+                                                  [branchAvailability]="branchAvailability"
+                                                  [allReferenceProperties]="allReferenceProperties"
+                                                  [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-timeout-middleware-node-config>
+    </ng-container>
 </div>
