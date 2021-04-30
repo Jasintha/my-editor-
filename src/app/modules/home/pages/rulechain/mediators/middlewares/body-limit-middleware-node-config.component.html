@@ -1,0 +1,18 @@
+<div [formGroup]="bodyLimitMiddlewareNodeConfigFormGroup">
+    <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Limit</mat-label>
+            <input type="number" matInput formControlName="limit">
+        </mat-form-field>
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Limit Type</mat-label>
+            <mat-select formControlName="limitType">
+                <mat-option value="K">Kilobyte</mat-option>
+                <mat-option value="M">Megabyte</mat-option>
+                <mat-option value="G">Gigabyte</mat-option>
+                <mat-option value="T">Terabyte</mat-option>
+                <mat-option value="P">Petabyte</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </section>
+</div>

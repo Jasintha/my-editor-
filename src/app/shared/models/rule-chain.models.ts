@@ -65,6 +65,7 @@ export interface RuleChainMetaData {
   allPdfs?:any[];
   allHybridFunctions?: any[];
   allSubRules?: any[];
+  allApis?: any[];
   allRoots?: any[];
   allDomainModelsWithSub?: any[];
   allViewModelsWithSub?: any[];
@@ -119,7 +120,8 @@ export const ruleNodeTypeComponentTypes: ComponentType[] =
     ComponentType.ROOTING,
     ComponentType.CORE,
     ComponentType.CQRS,
-    ComponentType.MESSAGING
+    ComponentType.MESSAGING,
+    ComponentType.MIDDLEWARE
   ];
 
 export const ruleChainNodeComponent: RuleNodeComponentDescriptor = {

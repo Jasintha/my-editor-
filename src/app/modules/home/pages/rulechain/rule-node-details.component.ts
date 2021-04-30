@@ -99,6 +99,9 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   allSubRules: any[];
 
   @Input()
+  allApis: any[];
+
+  @Input()
   allDomainModelsWithSub: any[];
 
   @Input()

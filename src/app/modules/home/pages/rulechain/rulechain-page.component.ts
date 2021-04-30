@@ -177,6 +177,7 @@ export class RuleChainPageComponent extends PageComponent
   queryDb: string;
   commandDb: string;
   connectorData: any[];
+  allApis:any[];
   apptype: string;
   connectorfields: QuestionBase[];
   allValueObjectProperties: any[];
@@ -374,6 +375,7 @@ export class RuleChainPageComponent extends PageComponent
     this.allPdfs = this.ruleChainMetaData.allPdfs;
     this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
     this.allSubRules = this.ruleChainMetaData.allSubRules;
+    this.allApis = this.ruleChainMetaData.allApis;
     this.allRoots = this.ruleChainMetaData.allRoots;
     this.allEvents = this.ruleChainMetaData.allEvents;
     this.queryDb = this.ruleChainMetaData.queryDb;
@@ -1571,6 +1573,7 @@ export class RuleChainPageComponent extends PageComponent
         this.allPdfs = this.ruleChainMetaData.allPdfs;
         this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
         this.allSubRules = this.ruleChainMetaData.allSubRules;
+        this.allApis = this.ruleChainMetaData.allApis;
         this.allRoots = this.ruleChainMetaData.allRoots;
         this.allEvents = this.ruleChainMetaData.allEvents;
         this.queryDb = this.ruleChainMetaData.queryDb;
@@ -1619,6 +1622,7 @@ export class RuleChainPageComponent extends PageComponent
     const allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
     const connectionPropertyTemplates = this.connectionPropertyTemplates;
     const allSubRules = this.ruleChainMetaData.allSubRules;
+    const allApis = this.ruleChainMetaData.allApis;
     const allRoots = this.ruleChainMetaData.allRoots;
     const allEvents = this.ruleChainMetaData.allEvents;
     const queryDb = this.ruleChainMetaData.queryDb;
@@ -1674,6 +1678,7 @@ export class RuleChainPageComponent extends PageComponent
         allHybridFunctions,
         connectionPropertyTemplates,
         allSubRules,
+        allApis,
         allRoots,
         queryDb,
         commandDb,
@@ -1898,6 +1903,7 @@ export interface AddRuleNodeDialogData {
   allHybridFunctions: any[];
   connectionPropertyTemplates: any[];
   allSubRules: any[];
+  allApis: any[];
   allRoots: any[];
   queryDb: string;
   commandDb: string;
@@ -1939,6 +1945,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allHybridFunctions: any[];
   connectionPropertyTemplates: any[];
   allSubRules: any[];
+  allApis:any[];
   allRoots: any[];
   allModelProperties: any[];
   allRuleInputs: any[];
@@ -1979,6 +1986,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allHybridFunctions = this.data.allHybridFunctions;
     this.connectionPropertyTemplates = this.data.connectionPropertyTemplates;
     this.allSubRules = this.data.allSubRules;
+    this.allApis = this.data.allApis;
     this.allRoots = this.data.allRoots;
   //  this.isNodeEdit = this.data.isNodeEdit;
     this.allModelProperties = this.data.allModelProperties;

@@ -128,6 +128,9 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
   allSubRules: any[];
 
   @Input()
+  allApis: any[];
+
+  @Input()
   allDomainModelsWithSub: any[];
 
   @Input()
