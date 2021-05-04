@@ -49,7 +49,7 @@
         <mat-label>Rule Input</mat-label>
         <mat-select formControlName="valueparam">
           <ng-container *ngFor="let cpproperty of allRuleInputs">
-            <mat-option *ngIf="(cpproperty?.inputType === 'text' || cpproperty?.inputType === 'string') && cpproperty?.record === 's'" [value]="cpproperty">
+            <mat-option *ngIf="((cpproperty?.inputType | lowercase) === 'text' || (cpproperty?.inputType | lowercase) === 'string') && cpproperty?.record === 's'" [value]="cpproperty">
               {{cpproperty.inputName}}
             </mat-option>
           </ng-container>
@@ -60,7 +60,7 @@
         <mat-label>Constant</mat-label>
         <mat-select formControlName="valueconstant">
           <ng-container *ngFor="let cpconstant of allConstants">
-            <mat-option *ngIf="(cpconstant?.constantType === 'text' || cpconstant?.constantType === 'string')" [value]="cpconstant">
+            <mat-option *ngIf="((cpconstant?.constantType | lowercase) === 'text' || (cpconstant?.constantType | lowercase) === 'string')" [value]="cpconstant">
               {{cpconstant.constantName}}
             </mat-option>
           </ng-container>
@@ -71,7 +71,7 @@
         <mat-label>Property</mat-label>
         <mat-select formControlName="valueproperty">
           <ng-container *ngFor="let cpmproperty of allModelProperties">
-            <mat-option *ngIf="(cpmproperty?.type === 'text' || cpmproperty?.type === 'string') && cpmproperty?.propertyDataType === 'PRIMITIVE' && cpmproperty?.record === 's'" [value]="cpmproperty">
+            <mat-option *ngIf="((cpmproperty?.type | lowercase) === 'text' || (cpmproperty?.type | lowercase) === 'string') && cpmproperty?.propertyDataType === 'PRIMITIVE' && cpmproperty?.record === 's'" [value]="cpmproperty">
               {{cpmproperty.name}}
             </mat-option>
           </ng-container>
@@ -81,7 +81,7 @@
         <mat-label>Branch Param</mat-label>
         <mat-select formControlName="valuebranchparam">
           <ng-container *ngFor="let cpparam of branchAvailability?.branchParams">
-            <mat-option *ngIf="(cpparam?.inputType === 'text' || cpparam?.inputType === 'string') && cpparam?.record === 's'" [value]="cpparam">
+            <mat-option *ngIf="((cpparam?.inputType | lowercase) === 'text' || (cpparam?.inputType | lowercase) === 'string') && cpparam?.record === 's'" [value]="cpparam">
               {{cpparam.name}}
             </mat-option>
           </ng-container>
