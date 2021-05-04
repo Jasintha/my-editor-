@@ -32,6 +32,7 @@ import { HybridFunctionNodeConfigComponent } from './action/hybrid-function-node
 import { AssignNodeConfigComponent } from './action/assign-node-config.component';
 import { EnvVariableLookupNodeConfigComponent } from './action/env-variable-lookup-node-config.component';
 import { StringTemplateNodeConfigComponent } from './action/string-template-node-config.component';
+import { CPGetterNodeConfigComponent } from './action/cp-getter-node-config.component';
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
@@ -116,6 +117,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     CallNodeConfigComponent,
     AggregateNodeConfigComponent,
     AssignNodeConfigComponent,
+    CPGetterNodeConfigComponent,
     EnvVariableLookupNodeConfigComponent,
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
@@ -178,6 +180,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     CallNodeConfigComponent,
     AggregateNodeConfigComponent,
     AssignNodeConfigComponent,
+    CPGetterNodeConfigComponent,
     EnvVariableLookupNodeConfigComponent,
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
