@@ -5,6 +5,16 @@
                 <mat-option value="nats">NATS</mat-option>
             </mat-select>
         </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>Event Source Connection</mat-label>
+        <mat-select formControlName="esConnection">
+            <ng-container *ngFor="let property of allConnectionProperties">
+                <mat-option *ngIf="property?.group === 'messaging'" [value]="property">
+                    {{property.name}}
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
     <mat-form-field class="mat-block">
       <mat-label>Subject</mat-label>
       <input matInput formControlName="subject" required>

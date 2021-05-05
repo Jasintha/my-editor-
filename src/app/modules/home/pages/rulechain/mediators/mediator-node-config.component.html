@@ -301,6 +301,7 @@
                                         formControlName="configuration"
                                         [ruleNodeId]="ruleNodeId"
                                         [allEvents]="allEvents"
+                                        [allConnectionProperties]="allConnectionProperties"
                                         [allModelProperties]="allModelProperties"
                                         [nodeDefinition]="nodeDefinitionValue">
         </virtuan-event-publisher-node-config>
@@ -309,6 +310,7 @@
         <virtuan-event-receiver-node-config #eventReceiverNodeConfigComponent
                                        formControlName="configuration"
                                        [ruleNodeId]="ruleNodeId"
+                                       [allConnectionProperties]="allConnectionProperties"
                                        [allEvents]="allEvents"
                                        [nodeDefinition]="nodeDefinitionValue">
         </virtuan-event-receiver-node-config>
