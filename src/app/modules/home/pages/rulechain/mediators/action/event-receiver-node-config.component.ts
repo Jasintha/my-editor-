@@ -53,6 +53,9 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
   }
 
   @Input()
+  allConnectionProperties: any[];
+
+  @Input()
   allEvents: any[];
 
   @Input()
@@ -97,6 +100,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
       eventSource: [],
       subject: [],
       event: [],
+      esConnection: [],
       errorMsg: "",
       errorAction: ""
     });
@@ -153,6 +157,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
 
       this.eventReceiverNodeConfigFormGroup.patchValue({
         eventSource: this.configuration.eventSource,
+        esConnection: this.configuration.esConnection,
         subject: this.configuration.subject,
         event: this.configuration.event,
         errorMsg: this.configuration.errorMsg,
@@ -193,6 +198,14 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
         (configuration: any) => {
 
           this.configuration.errorAction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventReceiverNodeConfigFormGroup.get('esConnection').valueChanges.subscribe(
+        (configuration: any) => {
+
+          this.configuration.esConnection = configuration;
           this.updateModel(this.configuration);
         }
       );

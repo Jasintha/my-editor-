@@ -53,6 +53,9 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   }
 
   @Input()
+  allConnectionProperties: any[];
+
+  @Input()
   disabled: boolean;
 
   @Input()
@@ -100,6 +103,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       eventSource: [],
       subject: [],
       event: [],
+      esConnection: [],
       property: [],
       errorMsg: "",
       errorAction: ""
@@ -160,6 +164,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
       this.eventPublisherNodeConfigFormGroup.patchValue({
         eventSource: this.configuration.eventSource,
+        esConnection: this.configuration.esConnection,
         subject: this.configuration.subject,
         event: this.configuration.event,
         errorMsg: this.configuration.errorMsg,
@@ -210,6 +215,14 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
         (configuration: any) => {
 
           this.configuration.errorAction = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('esConnection').valueChanges.subscribe(
+        (configuration: any) => {
+
+          this.configuration.esConnection = configuration;
           this.updateModel(this.configuration);
         }
       );
