@@ -234,6 +234,8 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
     let propertyName: string = '';
     let valueName: string = '';
+    let propertyScope: string = '';
+    let valueScope: string = '';
 
     if (propinputType === 'REFERENCE'){
       let selectedPropertyReference = this.assignNodeConfigFormGroup.get('propertyreference').value;
@@ -242,6 +244,7 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
     } else if (propinputType === 'PROPERTY'){
       let selectedPropertyProperty = this.assignNodeConfigFormGroup.get('propertyproperty').value;
       propertyName = selectedPropertyProperty.name;
+      propertyScope= selectedPropertyProperty.propertyScope;
 
     }
     
@@ -252,6 +255,7 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
     } else if (valueinputType === 'PROPERTY'){
       let selectedValueProperty = this.assignNodeConfigFormGroup.get('valueproperty').value;
       valueName = selectedValueProperty.name;
+      valueScope = selectedValueProperty.propertyScope;
 
     } else if (valueinputType === 'BRANCH_PARAM'){
       let selectedValueBranch = this.assignNodeConfigFormGroup.get('valuebranchparam').value;
@@ -260,14 +264,17 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
     } else if (valueinputType === 'CONSTANT'){
       let selectedValueConstant = this.assignNodeConfigFormGroup.get('valueconstant').value;
       valueName = selectedValueConstant.constantName;
+      valueScope = selectedValueConstant.scope;
       
     }
 
     let assignment = {
       'propertyinputType': propinputType,
       'propertyName': propertyName,
+      'propertyScope':propertyScope,
       'valueinputType': valueinputType,
-      'valueName': valueName
+      'valueName': valueName,
+      'valueScope': valueScope
     };
 
     this.configuration.assignments.push(assignment);
@@ -443,5 +450,7 @@ export interface Assignment {
   propertyName: string;
   valueinputType: string;
   valueName: string;
+  propertyScope: string;
+  valueScope: string;
 }
 
