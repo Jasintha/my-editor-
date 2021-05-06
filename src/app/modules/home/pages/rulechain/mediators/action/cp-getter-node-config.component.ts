@@ -234,6 +234,8 @@ export class CPGetterNodeConfigComponent implements ControlValueAccessor, OnInit
 
     let propertyName: string = '';
     let valueName: string = '';
+    let propertyScope: string = '';
+    let valueScope: string = '';
 
     if (propinputType === 'REFERENCE'){
       let selectedPropertyReference = this.cpGetterNodeConfigFormGroup.get('propertyreference').value;
@@ -242,6 +244,7 @@ export class CPGetterNodeConfigComponent implements ControlValueAccessor, OnInit
     } else if (propinputType === 'PROPERTY'){
       let selectedPropertyProperty = this.cpGetterNodeConfigFormGroup.get('propertyproperty').value;
       propertyName = selectedPropertyProperty.name;
+      propertyScope = selectedPropertyProperty.propertyScope;
 
     }
     
@@ -252,6 +255,7 @@ export class CPGetterNodeConfigComponent implements ControlValueAccessor, OnInit
     } else if (valueinputType === 'PROPERTY'){
       let selectedValueProperty = this.cpGetterNodeConfigFormGroup.get('valueproperty').value;
       valueName = selectedValueProperty.name;
+      valueScope = selectedValueProperty.propertyScope;
 
     } else if (valueinputType === 'BRANCH_PARAM'){
       let selectedValueBranch = this.cpGetterNodeConfigFormGroup.get('valuebranchparam').value;
@@ -260,14 +264,17 @@ export class CPGetterNodeConfigComponent implements ControlValueAccessor, OnInit
     } else if (valueinputType === 'CONSTANT'){
       let selectedValueConstant = this.cpGetterNodeConfigFormGroup.get('valueconstant').value;
       valueName = selectedValueConstant.constantName;
+      valueScope = selectedValueConstant.scope;
       
     }
 
     let assignment = {
       'propertyinputType': propinputType,
       'propertyName': propertyName,
+      'propertyScope':propertyScope,
       'valueinputType': valueinputType,
-      'valueName': valueName
+      'valueName': valueName,
+      'valueScope': valueScope
     };
 
     this.configuration.contextPropertyGetters.push(assignment);
@@ -443,5 +450,7 @@ export interface Assignment {
   propertyName: string;
   valueinputType: string;
   valueName: string;
+  propertyScope: string;
+  valueScope: string;
 }
 

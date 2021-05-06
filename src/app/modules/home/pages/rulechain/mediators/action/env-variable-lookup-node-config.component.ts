@@ -191,7 +191,7 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
     if (propinputType === 'REFERENCE'){
       let selectedPropertyReference = this.envlookupNodeConfigFormGroup.get('propertyreference').value;
       propertyName = selectedPropertyReference.name;
-      propertyScope = selectedPropertyReference.propertyScope;
+      //propertyScope = selectedPropertyReference.propertyScope;
 
     } else if (propinputType === 'PROPERTY'){
       let selectedPropertyProperty = this.envlookupNodeConfigFormGroup.get('propertyproperty').value;
@@ -211,10 +211,10 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
     let lookup = {
       'propertyinputType': propinputType,
       'propertyName': propertyName,
-      'propertyScope' : propertyScope,
+      'propertyScope': propertyScope,
       'valueinputType': valueinputType,
       'valueName': valueName,
-      'valueScope': valueScope
+      'valueScope':valueScope
     };
 
     this.configuration.envlookups.push(lookup);
@@ -318,7 +318,9 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
 export interface EnvLookup {
   propertyinputType: string;
   propertyName: string;
+  propertyScope: string;
   valueinputType: string;
   valueName: string;
+  valueScope: string;
 }
 
