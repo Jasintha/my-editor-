@@ -398,7 +398,128 @@
       <mat-option value="1">Log & Continue</mat-option>
       <mat-option value="2">Log & Exit</mat-option>
       <mat-option value="3">Return</mat-option>
+      <mat-option value="4">Add an Error Function</mat-option>
     </mat-select>
   </mat-form-field>
+
+  <div *ngIf="configuration.errorAction == '4'">
+    <br>
+    <mat-label>Error Function</mat-label>
+    <br><br>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Error Function Data
+        </mat-panel-title>
+        <mat-panel-description>
+          Add a function for the error option
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <section fxLayout="column" fxLayout.gt-sm="row">
+        <mat-form-field fxFlex class="mat-block">
+          <mat-label>Branch</mat-label>
+          <mat-select formControlName="errorBranch">
+            <mat-option *ngFor="let root of allRoots" [value]="root">
+              {{root.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-checkbox formControlName="errorIsAsync">
+          Non Blocking
+        </mat-checkbox>
+      </section>
+
+      <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+        <mat-form-field fxFlex class="mat-block">
+          <mat-label>Branch parameter</mat-label>
+          <mat-select formControlName="errorBranchparameter">
+            <mat-option *ngFor="let param of configuration?.errorBranch?.params" [value]="param">
+              {{param.name}} - {{param.input}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex class="mat-block">
+          <mat-label>Error Parameter Input Type</mat-label>
+          <mat-select formControlName="errorParameterinputType" (selectionChange)="refreshErrorParameterInputTypes()">
+            <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+            <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+            <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <section class="mat-block" fxFlex>
+          <mat-form-field *ngIf="configuration.errorParameterinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+            <mat-label>Rule Input</mat-label>
+            <mat-select formControlName="errorParameterparam">
+              <mat-option *ngFor="let property of allRuleInputs" [value]="property">
+                {{property.inputName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="configuration.errorParameterinputType === 'PROPERTY'" fxFlex class="mat-block">
+            <mat-label>Property</mat-label>
+            <mat-select formControlName="errorParameterproperty">
+              <mat-option *ngFor="let property of allModelProperties" [value]="property">
+                {{property.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="configuration.errorParameterinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+            <mat-label>Branch Param</mat-label>
+            <mat-select formControlName="errorParameterbranchparam">
+              <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+                {{param.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </section>
+        <button mat-icon-button class="virtuan-fullscreen-button-style"
+                (click)="addErrorParameter()"
+                matTooltip="Add Parameter"
+                matTooltipPosition="above">
+          <mat-icon color="primary">add</mat-icon>
+        </button>
+      </section>
+
+      <div fxFlex class="table-container" style="padding: 10px;margin-bottom:10px;">
+        <table mat-table [dataSource]="errordatasource" class="mat-elevation-z8">
+
+          <ng-container matColumnDef="parameterName">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.parameterName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="inputType">
+            <th mat-header-cell *matHeaderCellDef> Input Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.inputType}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="input">
+            <th mat-header-cell *matHeaderCellDef> Input </th>
+            <td mat-cell *matCellDef="let element"> {{element.input}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="property">
+            <th mat-header-cell *matHeaderCellDef> Property </th>
+            <td mat-cell *matCellDef="let element"> {{element.property}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element;let i = index">
+              <button mat-icon-button class="virtuan-mat-32" (click)="deleteErrorRow(i)" matTooltip="Delete Parameter" matTooltipPosition="above">
+                <mat-icon style="color:red;">delete</mat-icon>
+              </button></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayErroredColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayErroredColumns;"></tr>
+        </table>
+      </div>
+
+
+    </mat-expansion-panel>
+  </div>
 
 </div>
