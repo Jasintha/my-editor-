@@ -875,4 +875,22 @@
                                     [nodeDefinition]="nodeDefinitionValue">
         </virtuan-cp-getter-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiEncryptLNode'">
+        <virtuan-encrypt-middleware-node-config #encryptMiddlewareNodeConfigComponent
+                                                   formControlName="configuration"
+                                                   [ruleNodeId]="ruleNodeId"
+                                                   [allConstants]=" allConstants"
+                                                   [inputEntities]=" inputEntities"
+                                                   [allRuleInputs]="allRuleInputs"
+                                                   [inputCustomobjects]="inputCustomobjects"
+                                                   [allVariables]="allVariables"
+                                                   [inputProperties]="inputProperties"
+                                                   [apptype]="apptype"
+                                                   [allModelProperties]="allModelProperties"
+                                                   [allApis]="allApis"
+                                                   [branchAvailability]="branchAvailability"
+                                                   [allReferenceProperties]="allReferenceProperties"
+                                                   [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-encrypt-middleware-node-config>
+    </ng-container>
 </div>

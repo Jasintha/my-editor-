@@ -52,6 +52,7 @@ import { BodyLimitMiddlewareNodeConfigComponent } from './middlewares/body-limit
 import { CasbinAuthMiddlewareNodeConfigComponent } from './middlewares/casbin-auth-middleware-node-config.component';
 import { CoreMiddlewareNodeConfigComponent } from './middlewares/core-middleware-node-config.component';
 import { TimeoutMiddlewareNodeConfigComponent } from './middlewares/timeout-middleware-node-config.component';
+import {EncryptMiddlewareNodeConfigComponent} from "./middlewares/encrypt-middleware-node-config.component";
 
 //extend
 import { SubRuleNodeConfigComponent } from './extend/sub-rule-node-config.component';
@@ -137,7 +138,8 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     BodyLimitMiddlewareNodeConfigComponent,
     CasbinAuthMiddlewareNodeConfigComponent,
     CoreMiddlewareNodeConfigComponent,
-    TimeoutMiddlewareNodeConfigComponent
+    TimeoutMiddlewareNodeConfigComponent,
+    EncryptMiddlewareNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -200,7 +202,8 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     BodyLimitMiddlewareNodeConfigComponent,
     CasbinAuthMiddlewareNodeConfigComponent,
     CoreMiddlewareNodeConfigComponent,
-    TimeoutMiddlewareNodeConfigComponent
+    TimeoutMiddlewareNodeConfigComponent,
+    EncryptMiddlewareNodeConfigComponent
   ],
   providers: []
 })
