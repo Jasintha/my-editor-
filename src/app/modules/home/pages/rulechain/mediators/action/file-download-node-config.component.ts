@@ -27,6 +27,7 @@ import { Observable } from 'rxjs';
 import { PageComponent } from '@shared/components/page.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'virtuan-file-download-node-config',
@@ -49,6 +50,9 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
   set required(value: boolean) {
     this.requiredValue = coerceBooleanProperty(value);
   }
+
+  @Input()
+  allRoots: any[];
 
   @Input()
   inputEntities: any[];
@@ -115,6 +119,9 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
   selectedVariableProperties: any[];
   selectedVariablePropertiesForParameter: any[];
 
+  errordatasource: MatTableDataSource<ErrorFunctionParameters>;
+  displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
+
   private propagateChange = (v: any) => { };
 
   constructor(private translate: TranslateService,
@@ -127,7 +134,15 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       property: [],
       errorMsg: "",
       errorAction: "",
-      branchparam: []
+      branchparam: [],
+      errorBranch: [],
+      errorInputType: [],
+      errorIsAsync: false,
+      errorBranchparameter: [],
+      errorParameterinputType: [],
+      errorParameterparam: [],
+      errorParameterproperty: [],
+      errorParameterbranchparam: []
     });
   }
 
@@ -147,7 +162,32 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       this.definedConfigComponentRef.destroy();
     }
   }
-  
+
+  refreshErrorParameterInputTypes(){
+    let errorInputType: string = this.fileDownloadNodeConfigFormGroup.get('errorParameterinputType').value;
+    this.configuration.errorParameterinputType = errorInputType;
+    if (errorInputType === 'RULE_INPUT'){
+      this.configuration.errorParameterproperty= {};
+      this.configuration.errorParameterbranchparam= {};
+      this.fileDownloadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.fileDownloadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'PROPERTY'){
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterbranchparam= {};
+      this.fileDownloadNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
+      this.fileDownloadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'BRANCH_PARAM'){
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.fileDownloadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.fileDownloadNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    }
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
+  }
+
   refreshInputTypes(){
 
     let inputType: string = this.fileDownloadNodeConfigFormGroup.get('inputType').value;
@@ -201,6 +241,65 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
     }
   }
 
+  deleteErrorRow(index: number): void{
+    this.configuration.errorFunctionParameters.splice(index, 1);
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+    this.updateModel(this.configuration);
+  }
+
+  addErrorParameter(): void{
+
+    let errorInputType: string = this.fileDownloadNodeConfigFormGroup.get('errorParameterinputType').value;
+    let errorBranchparameter = this.fileDownloadNodeConfigFormGroup.get('errorBranchparameter').value;
+
+    if (errorInputType === 'RULE_INPUT'){
+      let selectedErrorParameterParam = this.fileDownloadNodeConfigFormGroup.get('errorParameterparam').value;
+      let errorParameter = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterParam.inputName
+      };
+      this.configuration.errorFunctionParameters.push(errorParameter);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'PROPERTY'){
+      let selectedErrorParameterProperty = this.fileDownloadNodeConfigFormGroup.get('errorParameterproperty').value;
+      let errorParameterproperty = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterProperty.name
+      };
+      this.configuration.errorFunctionParameters.push(errorParameterproperty);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'BRANCH_PARAM'){
+      let selectedErrorParameterBranch = this.fileDownloadNodeConfigFormGroup.get('errorParameterbranchparam').value;
+      let errorParameterbranchparam = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterBranch.name
+      };
+      this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    }
+
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
+    this.configuration.errorParameterinputType = '';
+    this.configuration.errorParameterproperty= {};
+    this.configuration.errorParameterparam= {};
+    this.configuration.errorBranchparameter= {};
+    this.configuration.errorParameterbranchparam= {};
+
+    this.fileDownloadNodeConfigFormGroup.get('errorParameterinputType').patchValue([], {emitEvent: false});
+    this.fileDownloadNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    this.fileDownloadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+    this.fileDownloadNodeConfigFormGroup.get('errorBranchparameter').patchValue([], {emitEvent: false});
+    this.fileDownloadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+
+  }
+
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
@@ -208,6 +307,11 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
     }
+
+    if(this.configuration.errorFunctionParameters === null || this.configuration.errorFunctionParameters === undefined){
+      this.configuration.errorFunctionParameters = [];
+    }
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
 
     if (this.definedConfigComponent) {
       this.definedConfigComponent.configuration = this.configuration;
@@ -219,6 +323,11 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       let p = this.configuration.param;
       if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
         p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+      }
+
+      let errorBranch = this.configuration.errorBranch;
+      if(errorBranch && this.allRoots){
+        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let c = this.configuration.constant;
@@ -243,8 +352,52 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
         property: property,
         branchparam: branchparam,
         errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction
+        errorAction: this.configuration.errorAction,
+        errorBranch: errorBranch,
+        errorInputType: this.configuration.errorInputType,
+        errorBranchparameter: this.configuration.errorBranchparameter,
+        errorParameterinputType: this.configuration.errorParameterinputType,
+        errorParameterparam: this.configuration.errorParameterparam,
+        errorParameterproperty: this.configuration.errorParameterproperty,
+        errorParameterbranchparam: this.configuration.errorParameterbranchparam,
+        errorIsAsync: this.configuration.errorIsAsync
       });
+
+      this.changeSubscription = this.fileDownloadNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorIsAsync = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.fileDownloadNodeConfigFormGroup.get('errorBranch').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorBranch = configuration;
+
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.fileDownloadNodeConfigFormGroup.get('errorParameterparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.fileDownloadNodeConfigFormGroup.get('errorParameterbranchparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterbranchparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.fileDownloadNodeConfigFormGroup.get('errorParameterproperty').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterproperty = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
 
       this.changeSubscription = this.fileDownloadNodeConfigFormGroup.get('param').valueChanges.subscribe(
         (configuration: any) => {
@@ -304,4 +457,11 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
     }
   }
 
+}
+
+export interface ErrorFunctionParameters {
+  parameterName: string;
+  inputType: string;
+  input: string;
+  property: string;
 }

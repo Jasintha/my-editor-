@@ -117,6 +117,9 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
 
   configuration: RuleNodeConfiguration;
 
+  errordatasource: MatTableDataSource<ErrorFunctionParameters>;
+  displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
+
   private propagateChange = (v: any) => { };
 
   constructor(private translate: TranslateService,
@@ -133,7 +136,15 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       // isAsync: false,
       errorMsg: "",
       errorAction: "",
-      validatorbranch: []
+      validatorbranch: [],
+      errorBranch: [],
+      errorInputType: [],
+      errorIsAsync: false,
+      errorBranchparameter: [],
+      errorParameterinputType: [],
+      errorParameterparam: [],
+      errorParameterproperty: [],
+      errorParameterbranchparam: [],
     });
   }
 
@@ -154,6 +165,31 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
   }
 
   ngAfterViewInit(): void {
+  }
+
+  refreshErrorParameterInputTypes(){
+    let errorInputType: string = this.validatorNodeConfigFormGroup.get('errorParameterinputType').value;
+    this.configuration.errorParameterinputType = errorInputType;
+    if (errorInputType === 'RULE_INPUT'){
+      this.configuration.errorParameterproperty= {};
+      this.configuration.errorParameterbranchparam= {};
+      this.validatorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.validatorNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'PROPERTY'){
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterbranchparam= {};
+      this.validatorNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
+      this.validatorNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'BRANCH_PARAM'){
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.validatorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.validatorNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    }
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
   }
 
   refreshInputTypes(){
@@ -179,6 +215,65 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
     }
+
+  }
+
+  deleteErrorRow(index: number): void{
+    this.configuration.errorFunctionParameters.splice(index, 1);
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+    this.updateModel(this.configuration);
+  }
+
+  addErrorParameter(): void{
+
+    let errorInputType: string = this.validatorNodeConfigFormGroup.get('errorParameterinputType').value;
+    let errorBranchparameter = this.validatorNodeConfigFormGroup.get('errorBranchparameter').value;
+
+    if (errorInputType === 'RULE_INPUT'){
+      let selectedErrorParameterParam = this.validatorNodeConfigFormGroup.get('errorParameterparam').value;
+      let errorParameter = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterParam.inputName
+      };
+      this.configuration.errorFunctionParameters.push(errorParameter);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'PROPERTY'){
+      let selectedErrorParameterProperty = this.validatorNodeConfigFormGroup.get('errorParameterproperty').value;
+      let errorParameterproperty = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterProperty.name
+      };
+      this.configuration.errorFunctionParameters.push(errorParameterproperty);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'BRANCH_PARAM'){
+      let selectedErrorParameterBranch = this.validatorNodeConfigFormGroup.get('errorParameterbranchparam').value;
+      let errorParameterbranchparam = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterBranch.name
+      };
+      this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    }
+
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
+    this.configuration.errorParameterinputType = '';
+    this.configuration.errorParameterproperty= {};
+    this.configuration.errorParameterparam= {};
+    this.configuration.errorBranchparameter= {};
+    this.configuration.errorParameterbranchparam= {};
+
+    this.validatorNodeConfigFormGroup.get('errorParameterinputType').patchValue([], {emitEvent: false});
+    this.validatorNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    this.validatorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+    this.validatorNodeConfigFormGroup.get('errorBranchparameter').patchValue([], {emitEvent: false});
+    this.validatorNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
 
   }
 
@@ -291,6 +386,12 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
     }
+
+    if(this.configuration.errorFunctionParameters === null || this.configuration.errorFunctionParameters === undefined){
+      this.configuration.errorFunctionParameters = [];
+    }
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
     if (this.definedConfigComponent) {
       this.definedConfigComponent.configuration = this.configuration;
       this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
@@ -303,11 +404,25 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
         root = this.allRoots.find(x => x === this.configuration.root );
       }
       */
+
+      let errorBranch = this.configuration.errorBranch;
+      if(errorBranch && this.allRoots){
+        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+      }
+
       this.validatorNodeConfigFormGroup.patchValue({
        // root: root,
        // isAsync: this.configuration.isAsync,
         errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction
+        errorAction: this.configuration.errorAction,
+        errorBranch: errorBranch,
+        errorInputType: this.configuration.errorInputType,
+        errorBranchparameter: this.configuration.errorBranchparameter,
+        errorParameterinputType: this.configuration.errorParameterinputType,
+        errorParameterparam: this.configuration.errorParameterparam,
+        errorParameterproperty: this.configuration.errorParameterproperty,
+        errorParameterbranchparam: this.configuration.errorParameterbranchparam,
+        errorIsAsync: this.configuration.errorIsAsync
       });
 
       /*
@@ -318,6 +433,42 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
         }
       );
       */
+
+      this.changeSubscription = this.validatorNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorIsAsync = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.validatorNodeConfigFormGroup.get('errorBranch').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorBranch = configuration;
+
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.validatorNodeConfigFormGroup.get('errorParameterparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.validatorNodeConfigFormGroup.get('errorParameterbranchparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterbranchparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.validatorNodeConfigFormGroup.get('errorParameterproperty').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterproperty = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
 
       this.changeSubscription = this.validatorNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
@@ -406,4 +557,11 @@ export interface Validator {
   condition: string;
   join: string;
   value: string;
+}
+
+export interface ErrorFunctionParameters {
+  parameterName: string;
+  inputType: string;
+  input: string;
+  property: string;
 }
