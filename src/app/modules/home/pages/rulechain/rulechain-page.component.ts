@@ -184,6 +184,9 @@ export class RuleChainPageComponent extends PageComponent
   allDomainModelsWithSub: any[];
   allViewModelsWithSub: any[];
 
+  username: string;
+  uid: string;
+
   branchAvailability: any;
 
   ruleChainModel: FcRuleNodeModel = {
@@ -360,6 +363,12 @@ export class RuleChainPageComponent extends PageComponent
       this.ruleChain = this.route.snapshot.data.ruleChain;
       this.ruleChainMetaData = this.route.snapshot.data.ruleChainMetaData;
       this.connectionPropertyTemplates = this.route.snapshot.data.connectionPropertyTemplates;
+      this.username = this.route.snapshot.params.username;
+      this.uid = this.route.snapshot.params.uid;
+      console.log(this.username);
+      console.log(this.uid);
+      console.log(this.route.snapshot.params);
+      console.log(this.route.snapshot);
     }
 
     this.ruleType = this.ruleChainMetaData.name;
@@ -1557,7 +1566,12 @@ export class RuleChainPageComponent extends PageComponent
           }
         }
       });
-      this.ruleChainService.saveAndGetResolvedRuleChainMetadata(ruleChainMetaData).subscribe((savedRuleChainMetaData) => {
+
+
+
+
+
+      this.ruleChainService.saveAndGetResolvedRuleChainMetadata(ruleChainMetaData, this.username, this.uid).subscribe((savedRuleChainMetaData) => {
         this.ruleChainMetaData = savedRuleChainMetaData;
         this.ruleType = this.ruleChainMetaData.name;
         this.ruleInputs = this.ruleChainMetaData.ruleInputs;
