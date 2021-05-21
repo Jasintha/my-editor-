@@ -84,7 +84,9 @@ export class RuleChainResolver implements Resolve<RuleChain> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<RuleChain> {
     const ruleChainId = route.params.ruleChainId;
-    return this.ruleChainService.getRuleChain(ruleChainId);
+    const username = route.params.username;
+    const uid = route.params.uid;
+    return this.ruleChainService.getRuleChainWithUsernameAndUID(ruleChainId,username,uid);
   }
 }
 
@@ -108,7 +110,9 @@ export class ResolvedRuleChainMetaDataResolver implements Resolve<ResolvedRuleCh
 
   resolve(route: ActivatedRouteSnapshot): Observable<ResolvedRuleChainMetaData> {
     const ruleChainId = route.params.ruleChainId;
-    return this.ruleChainService.getResolvedRuleChainMetadata(ruleChainId);
+    const username = route.params.username;
+    const uid = route.params.uid;
+    return this.ruleChainService.getResolvedRuleChainMetadata(ruleChainId, username, uid);
   }
 }
 
@@ -167,7 +171,7 @@ const routes: Routes = [
     },
     children: [
       {
-        path: ':ruleChainId/:editorType',
+        path: ':ruleChainId/:editorType/:username/:uid',
         component: RuleChainPageComponent,
         canDeactivate: [ConfirmOnExitGuard],
         data: {
