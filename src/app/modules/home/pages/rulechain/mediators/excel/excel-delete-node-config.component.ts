@@ -216,13 +216,22 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
                 propertyinputType: this.configuration.propertyinputType,
                 propertyproperty: propertyproperty,
                 propertyreference: propertyreference,
-                excelFileInputType: this.configuration.propertyinputType,
-                url: this.configuration.propertyinputType
+                excelFileInputType: this.configuration.excelFileInputType,
+                url: this.configuration.url
             });
 
             this.changeSubscription = this.excelDeleteNodeConfigFormGroup.get('excelFileInputType').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.excelFileInputType = configuration;
+
+                    if(this.configuration.excelFileInputType == 'FILE_UPLOAD'){
+                        this.configuration.url= "";
+                        this.excelDeleteNodeConfigFormGroup.get('url').patchValue("", {emitEvent: false});
+                    }else if (this.configuration.excelFileInputType == 'REMOTE_PATH'){
+                        this.configuration.propertyinputType= "";
+                        this.excelDeleteNodeConfigFormGroup.get('propertyinputType').patchValue("", {emitEvent: false});
+                    }
+
                     this.updateModel(this.configuration);
                 }
             );
