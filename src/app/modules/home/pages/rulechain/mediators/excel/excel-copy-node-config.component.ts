@@ -378,6 +378,15 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
             this.changeSubscription = this.excelCopyNodeConfigFormGroup.get('excelFileInputType').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.excelFileInputType = configuration;
+
+                    if(this.configuration.excelFileInputType == 'FILE_UPLOAD'){
+                        this.configuration.url= "";
+                        this.excelCopyNodeConfigFormGroup.get('url').patchValue("", {emitEvent: false});
+                    }else if (this.configuration.excelFileInputType == 'REMOTE_PATH'){
+                        this.configuration.propertyinputType= "";
+                        this.excelCopyNodeConfigFormGroup.get('propertyinputType').patchValue("", {emitEvent: false});
+                    }
+
                     this.updateModel(this.configuration);
                 }
             );
