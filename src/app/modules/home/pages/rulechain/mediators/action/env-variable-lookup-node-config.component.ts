@@ -187,15 +187,22 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
     let propertyScope: string = '';
     let valueName: string = '';
     let valueScope: string = '';
+    let valueDatatype: string = '';
+    let propertyDatatype: string = '';
+    let propertyType: string = ''
 
     if (propinputType === 'REFERENCE'){
       let selectedPropertyReference = this.envlookupNodeConfigFormGroup.get('propertyreference').value;
       propertyName = selectedPropertyReference.name;
+      propertyDatatype = selectedPropertyReference.propertyDataType;
+      propertyType = selectedPropertyReference.type;
       //propertyScope = selectedPropertyReference.propertyScope;
 
     } else if (propinputType === 'PROPERTY'){
       let selectedPropertyProperty = this.envlookupNodeConfigFormGroup.get('propertyproperty').value;
       propertyName = selectedPropertyProperty.name;
+      propertyType = selectedPropertyProperty.type;
+      propertyDatatype = selectedPropertyProperty.propertyDataType;
       propertyScope = selectedPropertyProperty.propertyScope;
 
     }
@@ -205,6 +212,7 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
     if(selectedValueConstant){
         valueName = selectedValueConstant.constantName;
         valueScope = selectedValueConstant.scope;
+        valueDatatype = selectedValueConstant.constantType;
     }
 
 
@@ -212,8 +220,11 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
       'propertyinputType': propinputType,
       'propertyName': propertyName,
       'propertyScope': propertyScope,
+      'propertyDatatype': propertyDatatype,
+      'propertyType': propertyType,
       'valueinputType': valueinputType,
       'valueName': valueName,
+      'valueDatatype': valueDatatype,
       'valueScope':valueScope
     };
 
@@ -318,9 +329,12 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
 export interface EnvLookup {
   propertyinputType: string;
   propertyName: string;
+  propertyDatatype: string;
+  propertyType: string;
   propertyScope: string;
   valueinputType: string;
   valueName: string;
+  valueDatatype: string;
   valueScope: string;
 }
 
