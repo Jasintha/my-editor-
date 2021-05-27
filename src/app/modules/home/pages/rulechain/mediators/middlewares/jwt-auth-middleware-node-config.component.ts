@@ -146,11 +146,11 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
       secondparam: [],
       secondproperty:[],
       secondbranchparam: [],
-      basepathinputType: [],
-      basepathconstant: [],
-      basepathparam: [],
-      basepathproperty:[],
-      basepathbranchparam: [],
+    //  basepathinputType: [],
+    //  basepathconstant: [],
+    //  basepathparam: [],
+    //  basepathproperty:[],
+    //  basepathbranchparam: [],
       paraminputType: '',
       paramName: '',
       paramRecord: '',
@@ -195,27 +195,27 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
     this.configuration.signingKeyType = signingKeyType;
     
     if (signingKeyType === 'KEY'){
-      this.configuration.basepathinputType= "";   
-      this.configuration.secondinputType= "";    
-      this.configuration.basepathparam= {};
-      this.configuration.basepathproperty= {};
-      this.configuration.basepathbranchparam= {};
+    //  this.configuration.basepathinputType= "";
+    //  this.configuration.secondinputType= "";
+    //  this.configuration.basepathparam= {};
+    //  this.configuration.basepathproperty= {};
+    //  this.configuration.basepathbranchparam= {};
       this.configuration.basepathconstant= {};
       this.configuration.secondparam= {};
       this.configuration.secondproperty= {};
       this.configuration.secondbranchparam= {};
       this.configuration.secondconstant= {};
-      this.jwtAuthMiddlewareNodeConfigComponent.get('basepathinputType').patchValue("", {emitEvent: false});
+    //  this.jwtAuthMiddlewareNodeConfigComponent.get('basepathinputType').patchValue("", {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('secondinputType').patchValue("", {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('secondparam').patchValue([], {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('secondbranchparam').patchValue([], {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('secondproperty').patchValue([], {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('secondconstant').patchValue([], {emitEvent: false});
-      this.jwtAuthMiddlewareNodeConfigComponent.get('basepathparam').patchValue([], {emitEvent: false});
-      this.jwtAuthMiddlewareNodeConfigComponent.get('basepathbranchparam').patchValue([], {emitEvent: false});
-      this.jwtAuthMiddlewareNodeConfigComponent.get('basepathproperty').patchValue([], {emitEvent: false});
-      this.jwtAuthMiddlewareNodeConfigComponent.get('basepathconstant').patchValue([], {emitEvent: false});        
-    } else if (signingKeyType === 'FILE_PATH'){
+    //  this.jwtAuthMiddlewareNodeConfigComponent.get('basepathparam').patchValue([], {emitEvent: false});
+    //  this.jwtAuthMiddlewareNodeConfigComponent.get('basepathbranchparam').patchValue([], {emitEvent: false});
+    //  this.jwtAuthMiddlewareNodeConfigComponent.get('basepathproperty').patchValue([], {emitEvent: false});
+    //  this.jwtAuthMiddlewareNodeConfigComponent.get('basepathconstant').patchValue([], {emitEvent: false});
+    } else if (signingKeyType === 'FILE'){
       this.configuration.param= {};
       this.configuration.property= {};
       this.configuration.branchparam= {};
@@ -271,7 +271,8 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
     }
 
   }
-  
+
+  /*
   refreshBasePathInputTypes(){
 
     let inputType: string = this.jwtAuthMiddlewareNodeConfigComponent.get('basepathinputType').value;
@@ -312,8 +313,9 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
     }
 
   }
+  */
   
-  refreshSecodInputTypes(){
+  refreshSecondInputTypes(){
 
     let inputType: string = this.jwtAuthMiddlewareNodeConfigComponent.get('secondinputType').value;
     this.configuration.secondinputType = inputType;
@@ -445,10 +447,10 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
      let property = this.configuration.property;
      let branchparam = this.configuration.branchparam;
      
-     let basepathp = this.configuration.basepathparam;
-     let basepathc = this.configuration.basepathconstant;
-     let basepathproperty = this.configuration.basepathproperty;
-     let basepathbranchparam = this.configuration.basepathbranchparam;
+     //let basepathp = this.configuration.basepathparam;
+     //let basepathc = this.configuration.basepathconstant;
+     //let basepathproperty = this.configuration.basepathproperty;
+     //let basepathbranchparam = this.configuration.basepathbranchparam;
      
      let secondp = this.configuration.secondparam;
      let secondc = this.configuration.secondconstant;
@@ -468,7 +470,8 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
           if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.customClaims){
             branchparam = this.branchAvailability.customClaims.find(x => x.name === this.configuration.branchparam.name );
           } 
-     } else if(this.configuration.signingKeyType === 'FILE_PATH'){
+     } else if(this.configuration.signingKeyType === 'FILE'){
+        /*
           if(this.configuration.basepathinputType === 'RULE_INPUT' && this.allRuleInputs){
             basepathp = this.allRuleInputs.find(x => x.inputName === this.configuration.basepathparam.inputName );
           }      
@@ -480,7 +483,8 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
           }      
           if(this.configuration.basepathinputType === 'BRANCH_PARAM' && this.branchAvailability.customClaims){
             basepathbranchparam = this.branchAvailability.customClaims.find(x => x.name === this.configuration.basepathbranchparam.name );
-          } 
+          }
+        */
           if(this.configuration.secondinputType === 'RULE_INPUT' && this.allRuleInputs){
             secondp = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName );
           }      
@@ -500,16 +504,16 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
       this.jwtAuthMiddlewareNodeConfigComponent.patchValue({
         signingKeyType: this.configuration.signingKeyType,
         inputType: this.configuration.inputType,
-        basepathinputType: this.configuration.basepathinputType,
+      //  basepathinputType: this.configuration.basepathinputType,
         secondinputType: this.configuration.secondinputType,
         param: p,
         constant: c,
         property: property,
         branchparam: branchparam,   
-        basepathparam: basepathp,
-        basepathconstant: basepathc,
-        basepathproperty: basepathproperty,
-        basepathbranchparam: basepathbranchparam,    
+      //  basepathparam: basepathp,
+      //  basepathconstant: basepathc,
+      //  basepathproperty: basepathproperty,
+      //  basepathbranchparam: basepathbranchparam,    
         secondparam: secondp,
         secondconstant: secondc,
         secondproperty: secondproperty,
@@ -550,6 +554,7 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
         }
       );
       
+      /*
       this.changeSubscription = this.jwtAuthMiddlewareNodeConfigComponent.get('basepathparam').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.basepathparam = configuration;
@@ -577,6 +582,7 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
           this.updateModel(this.configuration);
         }
       );
+      */
       
       this.changeSubscription = this.jwtAuthMiddlewareNodeConfigComponent.get('secondparam').valueChanges.subscribe(
         (configuration: any) => {
