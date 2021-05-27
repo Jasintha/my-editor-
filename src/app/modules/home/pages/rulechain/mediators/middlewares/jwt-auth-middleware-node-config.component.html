@@ -3,7 +3,7 @@
         <mat-label>Signing Key Type</mat-label>
         <mat-select formControlName="signingKeyType" (selectionChange)="refreshSigningKeyInputType()">
             <mat-option value="KEY">Key</mat-option>
-            <mat-option value="FILE_PATH">File Path</mat-option>
+            <mat-option value="FILE">File</mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -57,16 +57,16 @@
         </section>
 
     </section>
-    <section fxLayout="column"  *ngIf="configuration.signingKeyType === 'FILE_PATH'" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+   <!-- <section fxLayout="column"  *ngIf="configuration.signingKeyType === 'FILE'" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <section class="mat-block" fxFlex>
             <mat-form-field fxFlex class="mat-block">
                 <mat-label>Base Path Input Type</mat-label>
                 <mat-select formControlName="basepathinputType" (selectionChange)="refreshBasePathInputTypes()">
-                    <!--<mat-option *ngIf="!branchAvailability?.branchFound &&  allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>-->
+                    &lt;!&ndash;<mat-option *ngIf="!branchAvailability?.branchFound &&  allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>&ndash;&gt;
                     <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
                     <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
                     <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
-                    <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
+                    &lt;!&ndash;<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>&ndash;&gt;
                 </mat-select>
             </mat-form-field>
         </section>
@@ -106,12 +106,12 @@
 
         </section>
 
-    </section>
-    <section fxLayout="column"  *ngIf="configuration.signingKeyType === 'FILE_PATH'" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    </section>-->
+    <section fxLayout="column"  *ngIf="configuration.signingKeyType === 'FILE'" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <section class="mat-block" fxFlex>
             <mat-form-field fxFlex class="mat-block">
                 <mat-label>File Name Input Type</mat-label>
-                <mat-select formControlName="secondinputType" (selectionChange)="refreshSecodInputTypes()">
+                <mat-select formControlName="secondinputType" (selectionChange)="refreshSecondInputTypes()">
                     <!--<mat-option *ngIf="!branchAvailability?.branchFound &&  allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>-->
                     <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
                     <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
