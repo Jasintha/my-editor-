@@ -840,7 +840,7 @@
         </virtuan-core-middleware-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiTimeoutNode'">
-        <virtuan-timeout-middleware-node-config #casbinANodeConfigComponent
+        <virtuan-timeout-middleware-node-config #timeoutNodeConfigComponent
                                                   formControlName="configuration"
                                                   [ruleNodeId]="ruleNodeId"
                                                   [allConstants]=" allConstants"
@@ -874,5 +874,23 @@
                                     [allReferenceProperties]="allReferenceProperties"
                                     [nodeDefinition]="nodeDefinitionValue">
         </virtuan-cp-getter-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiJWTANode'">
+        <virtuan-jwt-auth-middleware-node-config #jwtANodeConfigComponent
+                                                    formControlName="configuration"
+                                                    [ruleNodeId]="ruleNodeId"
+                                                    [allConstants]=" allConstants"
+                                                    [inputEntities]=" inputEntities"
+                                                    [allRuleInputs]="allRuleInputs"
+                                                    [inputCustomobjects]="inputCustomobjects"
+                                                    [allVariables]="allVariables"
+                                                    [inputProperties]="inputProperties"
+                                                    [apptype]="apptype"
+                                                    [allModelProperties]="allModelProperties"
+                                                    [allApis]="allApis"
+                                                    [branchAvailability]="branchAvailability"
+                                                    [allReferenceProperties]="allReferenceProperties"
+                                                    [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-jwt-auth-middleware-node-config>
     </ng-container>
 </div>
