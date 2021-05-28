@@ -48,6 +48,7 @@ import { RESTServerNodeConfigComponent } from './main/rest-server-config.compone
 
 //middlewares
 import { BasicAuthMiddlewareNodeConfigComponent } from './middlewares/basic-auth-middleware-node-config.component';
+import { JWTAuthMiddlewareNodeConfigComponent } from './middlewares/jwt-auth-middleware-node-config.component';
 import { BodyLimitMiddlewareNodeConfigComponent } from './middlewares/body-limit-middleware-node-config.component';
 import { CasbinAuthMiddlewareNodeConfigComponent } from './middlewares/casbin-auth-middleware-node-config.component';
 import { CoreMiddlewareNodeConfigComponent } from './middlewares/core-middleware-node-config.component';
@@ -103,6 +104,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     ShopifyInitNodeConfigComponent,
     ShopifyEventNodeConfigComponent,
     ShopifyProductNodeConfigComponent,
+    JWTAuthMiddlewareNodeConfigComponent,
     HybridFunctionNodeConfigComponent,
     SmsInitNodeConfigComponent,
     SmsSendNodeConfigComponent,
@@ -198,6 +200,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     ContextPropertyNodeConfigComponent,
     GRPCServerNodeConfigComponent,
     RESTServerNodeConfigComponent,
+    JWTAuthMiddlewareNodeConfigComponent,
     BasicAuthMiddlewareNodeConfigComponent,
     BodyLimitMiddlewareNodeConfigComponent,
     CasbinAuthMiddlewareNodeConfigComponent,

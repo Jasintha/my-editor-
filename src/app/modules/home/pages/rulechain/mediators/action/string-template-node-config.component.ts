@@ -52,6 +52,9 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
   }
 
   @Input()
+  allRoots: any[];
+
+  @Input()
   inputEntities: any[];
 
   @Input()
@@ -123,6 +126,9 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
 
   displayedColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
 
+  errordatasource: MatTableDataSource<ErrorFunctionParameters>;
+  displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
+
   private propagateChange = (v: any) => { };
 
   constructor(private translate: TranslateService,
@@ -140,7 +146,15 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
       errorAction: "",
       assignedProperty: [],
       assignedtoinputType: "",
-      assignedReference: []
+      assignedReference: [],
+      errorBranch: [],
+      errorInputType: [],
+      errorIsAsync: false,
+      errorBranchparameter: [],
+      errorParameterinputType: [],
+      errorParameterparam: [],
+      errorParameterproperty: [],
+      errorParameterbranchparam: []
     });
   }
 
@@ -159,6 +173,31 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
     if (this.definedConfigComponentRef) {
       this.definedConfigComponentRef.destroy();
     }
+  }
+
+  refreshErrorParameterInputTypes(){
+    let errorInputType: string = this.stringTemplateNodeConfigFormGroup.get('errorParameterinputType').value;
+    this.configuration.errorParameterinputType = errorInputType;
+    if (errorInputType === 'RULE_INPUT'){
+      this.configuration.errorParameterproperty= {};
+      this.configuration.errorParameterbranchparam= {};
+      this.stringTemplateNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.stringTemplateNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'PROPERTY'){
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterbranchparam= {};
+      this.stringTemplateNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
+      this.stringTemplateNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'BRANCH_PARAM'){
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.stringTemplateNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.stringTemplateNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    }
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
   }
  
   refreshParameterInputTypes(){
@@ -196,6 +235,65 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
     }
+
+  }
+
+  deleteErrorRow(index: number): void{
+    this.configuration.errorFunctionParameters.splice(index, 1);
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+    this.updateModel(this.configuration);
+  }
+
+  addErrorParameter(): void{
+
+    let errorInputType: string = this.stringTemplateNodeConfigFormGroup.get('errorParameterinputType').value;
+    let errorBranchparameter = this.stringTemplateNodeConfigFormGroup.get('errorBranchparameter').value;
+
+    if (errorInputType === 'RULE_INPUT'){
+      let selectedErrorParameterParam = this.stringTemplateNodeConfigFormGroup.get('errorParameterparam').value;
+      let errorParameter = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterParam.inputName
+      };
+      this.configuration.errorFunctionParameters.push(errorParameter);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'PROPERTY'){
+      let selectedErrorParameterProperty = this.stringTemplateNodeConfigFormGroup.get('errorParameterproperty').value;
+      let errorParameterproperty = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterProperty.name
+      };
+      this.configuration.errorFunctionParameters.push(errorParameterproperty);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'BRANCH_PARAM'){
+      let selectedErrorParameterBranch = this.stringTemplateNodeConfigFormGroup.get('errorParameterbranchparam').value;
+      let errorParameterbranchparam = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterBranch.name
+      };
+      this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    }
+
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
+    this.configuration.errorParameterinputType = '';
+    this.configuration.errorParameterproperty= {};
+    this.configuration.errorParameterparam= {};
+    this.configuration.errorBranchparameter= {};
+    this.configuration.errorParameterbranchparam= {};
+
+    this.stringTemplateNodeConfigFormGroup.get('errorParameterinputType').patchValue([], {emitEvent: false});
+    this.stringTemplateNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    this.stringTemplateNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+    this.stringTemplateNodeConfigFormGroup.get('errorBranchparameter').patchValue([], {emitEvent: false});
+    this.stringTemplateNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
 
   }
 
@@ -306,6 +404,11 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
       this.changeSubscription = null;
     }
 
+    if(this.configuration.errorFunctionParameters === null || this.configuration.errorFunctionParameters === undefined){
+      this.configuration.errorFunctionParameters = [];
+    }
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
     if (this.definedConfigComponent) {
       this.definedConfigComponent.configuration = this.configuration;
       this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
@@ -323,6 +426,11 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
         assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
       }
 
+      let errorBranch = this.configuration.errorBranch;
+      if(errorBranch && this.allRoots){
+        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+      }
+
       this.stringTemplateNodeConfigFormGroup.patchValue({
         paramPrefix: this.configuration.paramPrefix,
         parameterinputType: this.configuration.parameterinputType,
@@ -335,8 +443,52 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
         errorAction: this.configuration.errorAction,
         assignedtoinputType: this.configuration.assignedtoinputType,
         assignedReference: assignedReference,
-        templateBody: this.configuration.templateBody
+        templateBody: this.configuration.templateBody,
+        errorBranch: errorBranch,
+        errorInputType: this.configuration.errorInputType,
+        errorBranchparameter: this.configuration.errorBranchparameter,
+        errorParameterinputType: this.configuration.errorParameterinputType,
+        errorParameterparam: this.configuration.errorParameterparam,
+        errorParameterproperty: this.configuration.errorParameterproperty,
+        errorParameterbranchparam: this.configuration.errorParameterbranchparam,
+        errorIsAsync: this.configuration.errorIsAsync
       });
+
+      this.changeSubscription = this.stringTemplateNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorIsAsync = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.stringTemplateNodeConfigFormGroup.get('errorBranch').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorBranch = configuration;
+
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.stringTemplateNodeConfigFormGroup.get('errorParameterparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.stringTemplateNodeConfigFormGroup.get('errorParameterbranchparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterbranchparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.stringTemplateNodeConfigFormGroup.get('errorParameterproperty').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterproperty = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
 
       this.changeSubscription = this.stringTemplateNodeConfigFormGroup.get('paramPrefix').valueChanges.subscribe(
         (configuration: any) => {
@@ -439,6 +591,13 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
 }
 
 export interface TemplateBodyParameter {
+  parameterName: string;
+  inputType: string;
+  input: string;
+  property: string;
+}
+
+export interface ErrorFunctionParameters {
   parameterName: string;
   inputType: string;
   input: string;

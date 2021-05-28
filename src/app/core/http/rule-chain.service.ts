@@ -70,6 +70,10 @@ export class RuleChainService {
     return this.http.get<RuleChain>(`/api/ruleChain/${ruleChainId}`, defaultHttpOptionsFromConfig(config));
   }
 
+  public getRuleChainWithUsernameAndUID(ruleChainId: string, username: string, uid: string, config?: RequestConfig): Observable<RuleChain> {
+    return this.http.get<RuleChain>(`/api/ruleChain/${ruleChainId}/${username}/${uid}`, defaultHttpOptionsFromConfig(config));
+  }
+
   public getConnectionPropertyTemplates(config?: RequestConfig): Observable<ConnectionPropertyTemplate[]> {
     return this.http.get<ConnectionPropertyTemplate[]>(`/api/ruleChain/connection-property-templates`, defaultHttpOptionsFromConfig(config));
   }
@@ -85,23 +89,29 @@ export class RuleChainService {
     return this.http.post<RuleChain>(`/api/ruleChain/${ruleChainId}/root`, null, defaultHttpOptionsFromConfig(config));
   }
 
-  public getRuleChainMetadata(ruleChainId: string, config?: RequestConfig): Observable<RuleChainMetaData> {
-    return this.http.get<RuleChainMetaData>(`/api/ruleChain/${ruleChainId}/metadata`, defaultHttpOptionsFromConfig(config));
+  public getRuleChainMetadata(ruleChainId: string, username: string, uid: string, config?: RequestConfig): Observable<RuleChainMetaData> {
+    return this.http.get<RuleChainMetaData>(`/api/ruleChain/${ruleChainId}/${username}/${uid}/metadata`, defaultHttpOptionsFromConfig(config));
   }
 
-  public getResolvedRuleChainMetadata(ruleChainId: string, config?: RequestConfig): Observable<ResolvedRuleChainMetaData> {
-    return this.getRuleChainMetadata(ruleChainId, config).pipe(
+  public getResolvedRuleChainMetadata(ruleChainId: string,username: string, uid: string, config?: RequestConfig): Observable<ResolvedRuleChainMetaData> {
+    return this.getRuleChainMetadata(ruleChainId, username, uid, config).pipe(
       mergeMap((ruleChainMetaData) => this.resolveRuleChainMetadata(ruleChainMetaData))
     );
   }
 
-  public saveRuleChainMetadata(ruleChainMetaData: RuleChainMetaData, config?: RequestConfig): Observable<RuleChainMetaData> {
-    return this.http.post<RuleChainMetaData>('/api/ruleChain/metadata', ruleChainMetaData, defaultHttpOptionsFromConfig(config));
+  public saveRuleChainMetadata(ruleChainMetaData: RuleChainMetaData, username: string, uid: string,config?: RequestConfig): Observable<RuleChainMetaData> {
+   console.log("-----------------------------------");
+        console.log(username);
+        console.log( uid);
+
+        let url: string = '/api/ruleChain/metadata/' + username + '/'+ uid;
+    return this.http.post<RuleChainMetaData>(url, ruleChainMetaData, defaultHttpOptionsFromConfig(config));
   }
 
-  public saveAndGetResolvedRuleChainMetadata(ruleChainMetaData: RuleChainMetaData,
+  public saveAndGetResolvedRuleChainMetadata(ruleChainMetaData: RuleChainMetaData, username: string, uid: string,
                                              config?: RequestConfig): Observable<ResolvedRuleChainMetaData> {
-    return this.saveRuleChainMetadata(ruleChainMetaData, config).pipe(
+
+    return this.saveRuleChainMetadata(ruleChainMetaData, username, uid, config).pipe(
       mergeMap((savedRuleChainMetaData) => this.resolveRuleChainMetadata(savedRuleChainMetaData))
     );
   }

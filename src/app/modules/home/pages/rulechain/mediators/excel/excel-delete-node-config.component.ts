@@ -54,6 +54,9 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
     }
 
     @Input()
+    allRoots: any[];
+
+    @Input()
     disabled: boolean;
 
     @Input()
@@ -114,6 +117,9 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
 
     changeSubscription: Subscription;
 
+    errordatasource: MatTableDataSource<ErrorFunctionParameters>;
+    displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
+
     private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
     private definedConfigComponent: IRuleNodeConfigurationComponent;
 
@@ -132,7 +138,15 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
             propertyproperty: [],
             propertyreference: [],
             excelFileInputType: "",
-            url: ""
+            url: "",
+            errorBranch: [],
+            errorInputType: [],
+            errorIsAsync: false,
+            errorBranchparameter: [],
+            errorParameterinputType: [],
+            errorParameterparam: [],
+            errorParameterproperty: [],
+            errorParameterbranchparam: []
         });
     }
 
@@ -153,6 +167,31 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
     }
 
     ngAfterViewInit(): void {
+    }
+
+    refreshErrorParameterInputTypes(){
+        let errorInputType: string = this.excelDeleteNodeConfigFormGroup.get('errorParameterinputType').value;
+        this.configuration.errorParameterinputType = errorInputType;
+        if (errorInputType === 'RULE_INPUT'){
+            this.configuration.errorParameterproperty= {};
+            this.configuration.errorParameterbranchparam= {};
+            this.excelDeleteNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+            this.excelDeleteNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+        } else if (errorInputType === 'PROPERTY'){
+            this.configuration.errorParameterparam= {};
+            this.configuration.errorParameterbranchparam= {};
+            this.excelDeleteNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
+            this.excelDeleteNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+        } else if (errorInputType === 'BRANCH_PARAM'){
+            this.configuration.errorParameterparam= {};
+            this.configuration.errorParameterproperty= {};
+            this.excelDeleteNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+            this.excelDeleteNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+        }
+        if (this.definedConfigComponent) {
+            this.propagateChange(this.configuration);
+        }
+
     }
 
     refreshInputTypes(){
@@ -182,6 +221,65 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
         }
     }
 
+    deleteErrorRow(index: number): void{
+        this.configuration.errorFunctionParameters.splice(index, 1);
+        this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+        this.updateModel(this.configuration);
+    }
+
+    addErrorParameter(): void{
+
+        let errorInputType: string = this.excelDeleteNodeConfigFormGroup.get('errorParameterinputType').value;
+        let errorBranchparameter = this.excelDeleteNodeConfigFormGroup.get('errorBranchparameter').value;
+
+        if (errorInputType === 'RULE_INPUT'){
+            let selectedErrorParameterParam = this.excelDeleteNodeConfigFormGroup.get('errorParameterparam').value;
+            let errorParameter = {
+                'parameterName': errorBranchparameter.name,
+                'inputType': errorInputType,
+                'input': '-',
+                'property': selectedErrorParameterParam.inputName
+            };
+            this.configuration.errorFunctionParameters.push(errorParameter);
+            this.updateModel(this.configuration);
+        } else if (errorInputType === 'PROPERTY'){
+            let selectedErrorParameterProperty = this.excelDeleteNodeConfigFormGroup.get('errorParameterproperty').value;
+            let errorParameterproperty = {
+                'parameterName': errorBranchparameter.name,
+                'inputType': errorInputType,
+                'input': '-',
+                'property': selectedErrorParameterProperty.name
+            };
+            this.configuration.errorFunctionParameters.push(errorParameterproperty);
+            this.updateModel(this.configuration);
+        } else if (errorInputType === 'BRANCH_PARAM'){
+            let selectedErrorParameterBranch = this.excelDeleteNodeConfigFormGroup.get('errorParameterbranchparam').value;
+            let errorParameterbranchparam = {
+                'parameterName': errorBranchparameter.name,
+                'inputType': errorInputType,
+                'input': '-',
+                'property': selectedErrorParameterBranch.name
+            };
+            this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+            this.updateModel(this.configuration);
+        }
+
+        this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
+        this.configuration.errorParameterinputType = '';
+        this.configuration.errorParameterproperty= {};
+        this.configuration.errorParameterparam= {};
+        this.configuration.errorBranchparameter= {};
+        this.configuration.errorParameterbranchparam= {};
+
+        this.excelDeleteNodeConfigFormGroup.get('errorParameterinputType').patchValue([], {emitEvent: false});
+        this.excelDeleteNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+        this.excelDeleteNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+        this.excelDeleteNodeConfigFormGroup.get('errorBranchparameter').patchValue([], {emitEvent: false});
+        this.excelDeleteNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+
+    }
+
 
     writeValue(value: RuleNodeConfiguration): void {
 
@@ -191,6 +289,12 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
             this.changeSubscription.unsubscribe();
             this.changeSubscription = null;
         }
+
+        if(this.configuration.errorFunctionParameters === null || this.configuration.errorFunctionParameters === undefined){
+            this.configuration.errorFunctionParameters = [];
+        }
+        this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
         if (this.definedConfigComponent) {
             this.definedConfigComponent.configuration = this.configuration;
             this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
@@ -201,6 +305,11 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
             let propertyproperty = this.configuration.propertyproperty;
             if(this.configuration.propertyinputType === 'PROPERTY' && this.allModelProperties){
                 propertyproperty = this.allModelProperties.find(x => x.name === this.configuration.propertyproperty.name );
+            }
+
+            let errorBranch = this.configuration.errorBranch;
+            if(errorBranch && this.allRoots){
+                errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
             }
 
             let propertyreference = this.configuration.propertyreference;
@@ -217,12 +326,65 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
                 propertyproperty: propertyproperty,
                 propertyreference: propertyreference,
                 excelFileInputType: this.configuration.propertyinputType,
-                url: this.configuration.propertyinputType
+                url: this.configuration.propertyinputType,
+                errorBranch: errorBranch,
+                errorInputType: this.configuration.errorInputType,
+                errorBranchparameter: this.configuration.errorBranchparameter,
+                errorParameterinputType: this.configuration.errorParameterinputType,
+                errorParameterparam: this.configuration.errorParameterparam,
+                errorParameterproperty: this.configuration.errorParameterproperty,
+                errorParameterbranchparam: this.configuration.errorParameterbranchparam,
+                errorIsAsync: this.configuration.errorIsAsync
             });
+
+            this.changeSubscription = this.excelDeleteNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.errorIsAsync = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelDeleteNodeConfigFormGroup.get('errorBranch').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.errorBranch = configuration;
+
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelDeleteNodeConfigFormGroup.get('errorParameterparam').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.errorParameterparam = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelDeleteNodeConfigFormGroup.get('errorParameterbranchparam').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.errorParameterbranchparam = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelDeleteNodeConfigFormGroup.get('errorParameterproperty').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.errorParameterproperty = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
 
             this.changeSubscription = this.excelDeleteNodeConfigFormGroup.get('excelFileInputType').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.excelFileInputType = configuration;
+
+                    if(this.configuration.excelFileInputType == 'FILE_UPLOAD'){
+                        this.configuration.url= "";
+                        this.excelDeleteNodeConfigFormGroup.get('url').patchValue("", {emitEvent: false});
+                    }else if (this.configuration.excelFileInputType == 'REMOTE_PATH'){
+                        this.configuration.propertyinputType= "";
+                        this.excelDeleteNodeConfigFormGroup.get('propertyinputType').patchValue("", {emitEvent: false});
+                    }
+
                     this.updateModel(this.configuration);
                 }
             );
@@ -286,4 +448,11 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
         }
     }
 
+}
+
+export interface ErrorFunctionParameters {
+    parameterName: string;
+    inputType: string;
+    input: string;
+    property: string;
 }

@@ -69,6 +69,9 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
   }
 
   @Input()
+  allRoots: any[];
+
+  @Input()
   allViewModels: any[];
 
   @Input()
@@ -131,6 +134,9 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
   
   propertydatasource: MatTableDataSource<QueryBuilder>;
   selectedSpecificPropertiesDatasource: MatTableDataSource<SelectedProperty>;
+
+  errordatasource: MatTableDataSource<ErrorFunctionParameters>;
+  displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
   
   displayedColumns: string[] = ['modelpropertyName', 'condition', 'inputType', 'property', 'join', 'actions'];
   selectedSpecificPropertiesColumns: string[] = ['modelpropertyName','selectAs','fieldFunction', 'actions'];
@@ -254,7 +260,15 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         parameterbranch: [],
         join: "",
         selectAs: "",
-        fieldFunction: ""
+        fieldFunction: "",
+      errorBranch: [],
+      errorInputType: [],
+      errorIsAsync: false,
+      errorBranchparameter: [],
+      errorParameterinputType: [],
+      errorParameterparam: [],
+      errorParameterproperty: [],
+      errorParameterbranchparam: []
     });
   }
 
@@ -273,6 +287,31 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
     if (this.definedConfigComponentRef) {
       this.definedConfigComponentRef.destroy();
     }
+  }
+
+  refreshErrorParameterInputTypes(){
+    let errorInputType: string = this.dbNodeConfigFormGroup.get('errorParameterinputType').value;
+    this.configuration.errorParameterinputType = errorInputType;
+    if (errorInputType === 'RULE_INPUT'){
+      this.configuration.errorParameterproperty= {};
+      this.configuration.errorParameterbranchparam= {};
+      this.dbNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.dbNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'PROPERTY'){
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterbranchparam= {};
+      this.dbNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
+      this.dbNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'BRANCH_PARAM'){
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.dbNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.dbNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    }
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
   }
 
   refreshParameterInputTypes(){
@@ -459,6 +498,65 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
     this.dbNodeConfigFormGroup.get('join').patchValue("", {emitEvent: false});
     this.dbNodeConfigFormGroup.get('parameterconstant').patchValue({}, {emitEvent: false});
     this.dbNodeConfigFormGroup.get('querycondition').patchValue("", {emitEvent: false});
+
+  }
+
+  deleteErrorRow(index: number): void{
+    this.configuration.errorFunctionParameters.splice(index, 1);
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+    this.updateModel(this.configuration);
+  }
+
+  addErrorParameter(): void{
+
+    let errorInputType: string = this.dbNodeConfigFormGroup.get('errorParameterinputType').value;
+    let errorBranchparameter = this.dbNodeConfigFormGroup.get('errorBranchparameter').value;
+
+    if (errorInputType === 'RULE_INPUT'){
+      let selectedErrorParameterParam = this.dbNodeConfigFormGroup.get('errorParameterparam').value;
+      let errorParameter = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterParam.inputName
+      };
+      this.configuration.errorFunctionParameters.push(errorParameter);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'PROPERTY'){
+      let selectedErrorParameterProperty = this.dbNodeConfigFormGroup.get('errorParameterproperty').value;
+      let errorParameterproperty = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterProperty.name
+      };
+      this.configuration.errorFunctionParameters.push(errorParameterproperty);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'BRANCH_PARAM'){
+      let selectedErrorParameterBranch = this.dbNodeConfigFormGroup.get('errorParameterbranchparam').value;
+      let errorParameterbranchparam = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterBranch.name
+      };
+      this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    }
+
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
+    this.configuration.errorParameterinputType = '';
+    this.configuration.errorParameterproperty= {};
+    this.configuration.errorParameterparam= {};
+    this.configuration.errorBranchparameter= {};
+    this.configuration.errorParameterbranchparam= {};
+
+    this.dbNodeConfigFormGroup.get('errorParameterinputType').patchValue([], {emitEvent: false});
+    this.dbNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    this.dbNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+    this.dbNodeConfigFormGroup.get('errorBranchparameter').patchValue([], {emitEvent: false});
+    this.dbNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
 
   }
 
@@ -671,6 +769,11 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
     }
     this.selectedSpecificPropertiesDatasource = new MatTableDataSource(this.configuration.selectedProperties);
 
+    if(this.configuration.errorFunctionParameters === null || this.configuration.errorFunctionParameters === undefined){
+      this.configuration.errorFunctionParameters = [];
+    }
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
@@ -706,6 +809,11 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       let entity = this.configuration.entity;
       if((this.configuration.dbAction === 'FIND' || this.configuration.dbAction === 'FINDALL' || this.configuration.dbAction === 'DELETEALL' || this.configuration.dbAction === 'DELETE') && entity && this.inputEntities){
       entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
+      }
+
+      let errorBranch = this.configuration.errorBranch;
+      if(errorBranch && this.allRoots){
+        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let property = this.configuration.property;
@@ -772,7 +880,15 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         parameterbranch: this.configuration.parameterbranch,
         join: this.configuration.join,
         selectAs: this.configuration.selectAs,
-        fieldFunction: this.configuration.fieldFunction
+        fieldFunction: this.configuration.fieldFunction,
+        errorBranch: errorBranch,
+        errorInputType: this.configuration.errorInputType,
+        errorBranchparameter: this.configuration.errorBranchparameter,
+        errorParameterinputType: this.configuration.errorParameterinputType,
+        errorParameterparam: this.configuration.errorParameterparam,
+        errorParameterproperty: this.configuration.errorParameterproperty,
+        errorParameterbranchparam: this.configuration.errorParameterbranchparam,
+        errorIsAsync: this.configuration.errorIsAsync
       });
 
       /*
@@ -783,6 +899,42 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         }
       );
       */
+
+      this.changeSubscription = this.dbNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorIsAsync = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.dbNodeConfigFormGroup.get('errorBranch').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorBranch = configuration;
+
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.dbNodeConfigFormGroup.get('errorParameterparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.dbNodeConfigFormGroup.get('errorParameterbranchparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterbranchparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.dbNodeConfigFormGroup.get('errorParameterproperty').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterproperty = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
 
       this.changeSubscription = this.dbNodeConfigFormGroup.get('dbConnection').valueChanges.subscribe(
         (configuration: any) => {
@@ -1028,4 +1180,11 @@ export interface DomainModelProperty {
   name: string;
  // key: string;
   data: any;
+}
+
+export interface ErrorFunctionParameters {
+  parameterName: string;
+  inputType: string;
+  input: string;
+  property: string;
 }

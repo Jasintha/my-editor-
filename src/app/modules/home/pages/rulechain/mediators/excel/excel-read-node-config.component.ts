@@ -54,6 +54,9 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
     }
 
     @Input()
+    allRoots: any[];
+
+    @Input()
     disabled: boolean;
 
     @Input()
@@ -115,8 +118,11 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
     changeSubscription: Subscription;
 
     datasource: MatTableDataSource<ExcelReadParameter>;
+    errordatasource: MatTableDataSource<ErrorFunctionParameters>;
 
     displayedColumns: string[] = ['colName', 'inputType', 'input', 'property', 'actions'];
+
+    displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
 
     ChildrenOfSelectedProperty : any[] = [];
 
@@ -149,7 +155,15 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             propertyreference: [],
             excelFileInputType: "",
             url: "",
-            childrenParam: []
+            childrenParam: [],
+            errorBranch: [],
+            errorInputType: [],
+            errorIsAsync: false,
+            errorBranchparameter: [],
+            errorParameterinputType: [],
+            errorParameterparam: [],
+            errorParameterproperty: [],
+            errorParameterbranchparam: []
         });
     }
 
@@ -182,6 +196,31 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
         } else if (inputType === 'REFERENCE'){
             this.configuration.propertyproperty= {};
             this.excelReadNodeConfigFormGroup.get('propertyproperty').patchValue([], {emitEvent: false});
+        }
+        if (this.definedConfigComponent) {
+            this.propagateChange(this.configuration);
+        }
+
+    }
+
+    refreshErrorParameterInputTypes(){
+        let errorInputType: string = this.excelReadNodeConfigFormGroup.get('errorParameterinputType').value;
+        this.configuration.errorParameterinputType = errorInputType;
+        if (errorInputType === 'RULE_INPUT'){
+            this.configuration.errorParameterproperty= {};
+            this.configuration.errorParameterbranchparam= {};
+            this.excelReadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+            this.excelReadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+        } else if (errorInputType === 'PROPERTY'){
+            this.configuration.errorParameterparam= {};
+            this.configuration.errorParameterbranchparam= {};
+            this.excelReadNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
+            this.excelReadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+        } else if (errorInputType === 'BRANCH_PARAM'){
+            this.configuration.errorParameterparam= {};
+            this.configuration.errorParameterproperty= {};
+            this.excelReadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+            this.excelReadNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
         }
         if (this.definedConfigComponent) {
             this.propagateChange(this.configuration);
@@ -237,6 +276,65 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
         } else {
             this.excelReadNodeConfigFormGroup.enable({emitEvent: false});
         }
+    }
+
+    deleteErrorRow(index: number): void{
+        this.configuration.errorFunctionParameters.splice(index, 1);
+        this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+        this.updateModel(this.configuration);
+    }
+
+    addErrorParameter(): void{
+
+        let errorInputType: string = this.excelReadNodeConfigFormGroup.get('errorParameterinputType').value;
+        let errorBranchparameter = this.excelReadNodeConfigFormGroup.get('errorBranchparameter').value;
+
+        if (errorInputType === 'RULE_INPUT'){
+            let selectedErrorParameterParam = this.excelReadNodeConfigFormGroup.get('errorParameterparam').value;
+            let errorParameter = {
+                'parameterName': errorBranchparameter.name,
+                'inputType': errorInputType,
+                'input': '-',
+                'property': selectedErrorParameterParam.inputName
+            };
+            this.configuration.errorFunctionParameters.push(errorParameter);
+            this.updateModel(this.configuration);
+        } else if (errorInputType === 'PROPERTY'){
+            let selectedErrorParameterProperty = this.excelReadNodeConfigFormGroup.get('errorParameterproperty').value;
+            let errorParameterproperty = {
+                'parameterName': errorBranchparameter.name,
+                'inputType': errorInputType,
+                'input': '-',
+                'property': selectedErrorParameterProperty.name
+            };
+            this.configuration.errorFunctionParameters.push(errorParameterproperty);
+            this.updateModel(this.configuration);
+        } else if (errorInputType === 'BRANCH_PARAM'){
+            let selectedErrorParameterBranch = this.excelReadNodeConfigFormGroup.get('errorParameterbranchparam').value;
+            let errorParameterbranchparam = {
+                'parameterName': errorBranchparameter.name,
+                'inputType': errorInputType,
+                'input': '-',
+                'property': selectedErrorParameterBranch.name
+            };
+            this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+            this.updateModel(this.configuration);
+        }
+
+        this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
+        this.configuration.errorParameterinputType = '';
+        this.configuration.errorParameterproperty= {};
+        this.configuration.errorParameterparam= {};
+        this.configuration.errorBranchparameter= {};
+        this.configuration.errorParameterbranchparam= {};
+
+        this.excelReadNodeConfigFormGroup.get('errorParameterinputType').patchValue([], {emitEvent: false});
+        this.excelReadNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+        this.excelReadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+        this.excelReadNodeConfigFormGroup.get('errorBranchparameter').patchValue([], {emitEvent: false});
+        this.excelReadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+
     }
 
     deleteRow(index: number): void{
@@ -362,6 +460,12 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             this.changeSubscription.unsubscribe();
             this.changeSubscription = null;
         }
+
+        if(this.configuration.errorFunctionParameters === null || this.configuration.errorFunctionParameters === undefined){
+            this.configuration.errorFunctionParameters = [];
+        }
+        this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
         if (this.definedConfigComponent) {
             this.definedConfigComponent.configuration = this.configuration;
             this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
@@ -376,6 +480,11 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             let excelparam = this.configuration.excelparam;
             if(this.configuration.excelinputType === 'RULE_INPUT' && this.allRuleInputs){
                 excelparam = this.allRuleInputs.find(x => x.inputName === this.configuration.excelparam.inputName );
+            }
+
+            let errorBranch = this.configuration.errorBranch;
+            if(errorBranch && this.allRoots){
+                errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
             }
 
             let excelconstant = this.configuration.excelconstant;
@@ -422,8 +531,52 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
                 propertyreference: propertyreference,
                 excelFileInputType: this.configuration.excelFileInputType,
                 url: this.configuration.url,
-                childrenParam: this.configuration.childrenParam
+                childrenParam: this.configuration.childrenParam,
+                errorBranch: errorBranch,
+                errorInputType: this.configuration.errorInputType,
+                errorBranchparameter: this.configuration.errorBranchparameter,
+                errorParameterinputType: this.configuration.errorParameterinputType,
+                errorParameterparam: this.configuration.errorParameterparam,
+                errorParameterproperty: this.configuration.errorParameterproperty,
+                errorParameterbranchparam: this.configuration.errorParameterbranchparam,
+                errorIsAsync: this.configuration.errorIsAsync
             });
+
+            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.errorIsAsync = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('errorBranch').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.errorBranch = configuration;
+
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('errorParameterparam').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.errorParameterparam = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('errorParameterbranchparam').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.errorParameterbranchparam = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
+
+            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('errorParameterproperty').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.errorParameterproperty = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
 
             this.changeSubscription = this.excelReadNodeConfigFormGroup.get('childrenParam').valueChanges.subscribe(
                 (configuration: any) => {
@@ -601,6 +754,13 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
 
 export interface ExcelReadParameter {
     colName: string;
+    inputType: string;
+    input: string;
+    property: string;
+}
+
+export interface ErrorFunctionParameters {
+    parameterName: string;
     inputType: string;
     input: string;
     property: string;
