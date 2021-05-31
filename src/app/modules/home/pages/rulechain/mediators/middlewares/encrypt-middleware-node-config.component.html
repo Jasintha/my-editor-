@@ -1,0 +1,12 @@
+<div [formGroup]="encryptMiddlewareNodeConfigFormGroup">
+    <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Algorithm</mat-label>
+            <mat-select formControlName="encryption">
+                <mat-option value="AES256GCM">AES256GCM</mat-option>
+                <mat-option value="AES256CBC">AES256CBC</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </section>
+</div>
