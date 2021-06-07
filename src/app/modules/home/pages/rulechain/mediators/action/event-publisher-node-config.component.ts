@@ -241,6 +241,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
       this.eventPublisherNodeConfigFormGroup.patchValue({
       //  eventSource: this.configuration.eventSource,
+        inputType: this.configuration.inputType,
         esConnection: esConnection,
         subject: this.configuration.subject,
         event: this.configuration.event,
