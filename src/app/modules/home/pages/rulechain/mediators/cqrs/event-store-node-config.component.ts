@@ -137,7 +137,7 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.eventStoreNodeConfigFormGroup = this.fb.group({
-      dbType:[],
+    //  dbType:[],
       dbAction: [],
       event: [],
       errorMsg: "",
@@ -281,14 +281,14 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
 
       //crud input
 
-      let dbType = '';
-      if(this.commandDb && this.commandDb !== ''){
-        dbType = this.commandDb;
-        this.readOnlyDbType = true;
-      } else {
-        dbType = this.configuration.dbType;
-        this.readOnlyDbType = false;
-      }
+      //let dbType = '';
+      //if(this.commandDb && this.commandDb !== ''){
+      //  dbType = this.commandDb;
+      //  this.readOnlyDbType = true;
+      //} else {
+      //  dbType = this.configuration.dbType;
+      //  this.readOnlyDbType = false;
+      //}
           
       let param = this.configuration.param;
       if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
@@ -322,7 +322,7 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
 
       this.eventStoreNodeConfigFormGroup.patchValue({
         inputType: this.configuration.inputType,
-        dbType: dbType,
+        //dbType: dbType,
         dbAction: this.configuration.dbAction,
         event: this.configuration.event,
         errorMsg: this.configuration.errorMsg,
@@ -358,13 +358,14 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         }
       );
 
-
+    /*
       this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('dbType').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.dbType = configuration;
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('event').valueChanges.subscribe(
         (configuration: any) => {

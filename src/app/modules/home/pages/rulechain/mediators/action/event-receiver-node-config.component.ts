@@ -97,7 +97,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.eventReceiverNodeConfigFormGroup = this.fb.group({
-      eventSource: [],
+    //  eventSource: [],
       subject: [],
       event: [],
       esConnection: [],
@@ -154,10 +154,14 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
       let e = this.configuration.event;
       //e = this.allEvents.find(x => x.name === this.configuration.event);
 
+      let esConnection = this.configuration.esConnection;
+      if(this.configuration.esConnection){
+        esConnection = this.allConnectionProperties.find(x => x.name === this.configuration.esConnection.name );
+      }
 
       this.eventReceiverNodeConfigFormGroup.patchValue({
-        eventSource: this.configuration.eventSource,
-        esConnection: this.configuration.esConnection,
+       // eventSource: this.configuration.eventSource,
+        esConnection: esConnection,
         subject: this.configuration.subject,
         event: this.configuration.event,
         errorMsg: this.configuration.errorMsg,
@@ -171,6 +175,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
           this.updateModel(this.configuration);
         }
       );
+      /*
       this.changeSubscription = this.eventReceiverNodeConfigFormGroup.get('eventSource').valueChanges.subscribe(
         (configuration: any) => {
 
@@ -178,7 +183,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
           this.updateModel(this.configuration);
         }
       );
-
+      */
       this.changeSubscription = this.eventReceiverNodeConfigFormGroup.get('subject').valueChanges.subscribe(
         (configuration: any) => {
 
