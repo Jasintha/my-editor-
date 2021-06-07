@@ -1,10 +1,10 @@
 <div [formGroup]="eventPublisherNodeConfigFormGroup">
-        <mat-form-field fxFlex class="mat-block">
+        <!--<mat-form-field fxFlex class="mat-block">
             <mat-label>Event Source</mat-label>
             <mat-select formControlName="eventSource">
                 <mat-option value="nats">NATS</mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field>-->
     <mat-form-field fxFlex class="mat-block">
         <mat-label>Event Source Connection</mat-label>
         <mat-select formControlName="esConnection">
@@ -27,14 +27,66 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field fxFlex class="mat-block">
+    <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
+        <section class="mat-block" fxFlex>
+            <mat-form-field fxFlex class="mat-block">
+                <mat-label>Event Object</mat-label>
+                <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
+                    <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+                    <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+                    <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+                    <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+
+        <section class="mat-block" fxFlex>
+
+            <mat-form-field *ngIf="configuration.inputType === 'RULE_INPUT'" fxFlex class="mat-block">
+                <mat-label>Rule Input</mat-label>
+                <mat-select formControlName="param">
+                    <mat-option *ngFor="let property of allRuleInputs" [value]="property">
+                        {{property.inputName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="configuration.inputType === 'CONSTANT'" fxFlex class="mat-block">
+                <mat-label>Constant</mat-label>
+                <mat-select formControlName="constant">
+                    <mat-option *ngFor="let constant of allConstants" [value]="constant">
+                        {{constant.constantName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="configuration.inputType === 'PROPERTY'" fxFlex class="mat-block">
+                <mat-label>Property</mat-label>
+                <mat-select formControlName="property">
+                    <mat-option *ngFor="let property of allModelProperties" [value]="property">
+                        {{property.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="configuration.inputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+                <mat-label>Branch Param</mat-label>
+                <mat-select formControlName="branchparam">
+                    <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+                        {{param.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+    </section>
+    <!--<mat-form-field fxFlex class="mat-block">
         <mat-label>Event Object</mat-label>
         <mat-select formControlName="property">
             <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
                 {{modelproperty.name}}
             </mat-option>
         </mat-select>
-    </mat-form-field>
+    </mat-form-field>-->
     <mat-form-field fxFlex class="mat-block">
         <mat-label>Error Message</mat-label>
         <input matInput formControlName="errorMsg"/>

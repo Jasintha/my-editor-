@@ -6,13 +6,13 @@
   <section *ngIf="queryDb" class="mat-block" fxFlex>
     <mat-label>Query DB: {{queryDb}}</mat-label>
   </section>-->
-  <mat-form-field fxFlex class="mat-block">
+  <!--<mat-form-field fxFlex class="mat-block">
     <mat-label>DB Type</mat-label>
     <mat-select formControlName="dbType" [disabled]="readOnlyDbType">
       <mat-option value="mongo">Mongo</mat-option>
       <mat-option value="sqlite3">SQLite3</mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field>-->
 
   <section class="mat-block" fxFlex>
     <mat-form-field fxFlex class="mat-block">
@@ -40,7 +40,7 @@
   <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
     <section class="mat-block" fxFlex>
       <mat-form-field fxFlex class="mat-block">
-        <mat-label>Event ID Input</mat-label>
+        <mat-label>Event Object</mat-label>
         <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
           <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
           <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>

@@ -100,11 +100,15 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.eventPublisherNodeConfigFormGroup = this.fb.group({
-      eventSource: [],
+    //  eventSource: [],
       subject: [],
       event: [],
-      esConnection: [],
+      inputType: "",
+      constant: [],
+      param: [],
       property: [],
+      branchparam: [],
+      esConnection: [],
       errorMsg: "",
       errorAction: ""
     });
@@ -137,6 +141,49 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       this.eventPublisherNodeConfigFormGroup.enable({emitEvent: false});
     }
   }
+  
+  refreshInputTypes(){
+    let inputType: string = this.eventPublisherNodeConfigFormGroup.get('inputType').value;
+    this.configuration.inputType = inputType;
+
+     if (inputType === 'CONSTANT'){
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.configuration.branchparam= {};
+      
+      this.eventPublisherNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.eventPublisherNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.eventPublisherNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+      
+    } else if (inputType === 'RULE_INPUT'){
+      this.configuration.constant= {};
+      this.configuration.property= {};
+      this.configuration.branchparam= {};
+      
+      this.eventPublisherNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.eventPublisherNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.eventPublisherNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.branchparam= {};
+      this.eventPublisherNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.eventPublisherNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.eventPublisherNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.eventPublisherNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.eventPublisherNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.eventPublisherNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+    }
+
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
+  }
 
   writeValue(value: RuleNodeConfiguration): void {
 
@@ -155,20 +202,44 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       });
     } else {
 
+      let param = this.configuration.param;
+      if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
+        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+      }
+
+      let constant = this.configuration.constant;
+      if(this.configuration.inputType === 'CONSTANT' && this.allConstants){
+        constant = this.allConstants.find(x => x.constantName === this.configuration.constant.constantName );
+      }
+
       let property = this.configuration.property;
-      if(property && this.allModelProperties){
+      if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
       }
+
+      let branchparam = this.configuration.branchparam;
+      if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+        branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
+      }
+
+      let esConnection = this.configuration.esConnection;
+      if(this.configuration.esConnection){
+        esConnection = this.allConnectionProperties.find(x => x.name === this.configuration.esConnection.name );
+      }
+
       let e = this.configuration.event;
      // e = this.allEvents.find(x => x.name === this.configuration.event);
 
       this.eventPublisherNodeConfigFormGroup.patchValue({
-        eventSource: this.configuration.eventSource,
-        esConnection: this.configuration.esConnection,
+      //  eventSource: this.configuration.eventSource,
+        esConnection: esConnection,
         subject: this.configuration.subject,
         event: this.configuration.event,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction,
+        param: param,
+        constant: constant,
+        branchparam: branchparam,
         property: property
       });
 
@@ -180,14 +251,35 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
         }
       );
 
+      this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('param').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.param = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('constant').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.constant = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
       this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('property').valueChanges.subscribe(
         (configuration: any) => {
-
           this.configuration.property = configuration;
           this.updateModel(this.configuration);
         }
       );
 
+      this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('branchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.branchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+    /*
       this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('eventSource').valueChanges.subscribe(
         (configuration: any) => {
 
@@ -195,7 +287,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
           this.updateModel(this.configuration);
         }
       );
-
+    */
       this.changeSubscription = this.eventPublisherNodeConfigFormGroup.get('subject').valueChanges.subscribe(
         (configuration: any) => {
 
