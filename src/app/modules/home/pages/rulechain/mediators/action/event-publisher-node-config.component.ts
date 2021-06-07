@@ -67,6 +67,15 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   @Input()
   allModelProperties: any[];
 
+  @Input()
+  allConstants: any[];
+
+  @Input()
+  allRuleInputs: any[];
+
+  @Input() branchAvailability: any;
+
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
