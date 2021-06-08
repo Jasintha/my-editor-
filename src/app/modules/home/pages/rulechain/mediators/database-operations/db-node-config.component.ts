@@ -235,7 +235,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.dbNodeConfigFormGroup = this.fb.group({
-      dbType:[],
+    //  dbType:[],
       dbConnection: [],
       dbAction: [],
       entity: [],
@@ -855,7 +855,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       }
 
       this.dbNodeConfigFormGroup.patchValue({
-        dbType: this.configuration.dbType,
+      //  dbType: this.configuration.dbType,
         dbConnection: dbConnection,
         dbAction: this.configuration.dbAction,
         entity: entity,
@@ -943,12 +943,14 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         }
       );
 
+      /*
       this.changeSubscription = this.dbNodeConfigFormGroup.get('dbType').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.dbType = configuration;
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.dbNodeConfigFormGroup.get('property').valueChanges.subscribe(
         (configuration: any) => {
