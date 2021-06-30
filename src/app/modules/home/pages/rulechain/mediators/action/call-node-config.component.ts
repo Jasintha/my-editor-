@@ -125,7 +125,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
   targetdatasource: MatTableDataSource<Target>;
   calldatasource: MatTableDataSource<CallProperty>;
 
-  displayedColumns: string[] = ['targetType', 'targetName', 'inputType', 'input', 'property', 'actions'];
+  displayedColumns: string[] = ['targetType', 'keyPropertyType', 'keyProperty', 'keyRaw', 'valuePropertyType', 'valueProperty', 'valueRaw', 'actions'];
   calldisplayedColumns: string[] = ['name', 'value', 'actions'];
 
   errordatasource: MatTableDataSource<ErrorFunctionParameters>;
@@ -140,11 +140,9 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       url: "",
       callAction: "",
       targetParameterType: "",
+      targetQueryType: "",
+      targetBodyType: "",
       targetName: "",
-      targetinputType: [],
-      targetparam: [],
-      targetconstant: [],
-      calltargetproperty: [],
       callName: "",
       callValue: "",
       callreturnrecord: "",
@@ -164,7 +162,19 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       errorParameterinputType: [],
       errorParameterparam: [],
       errorParameterproperty: [],
-      errorParameterbranchparam: []
+      errorParameterbranchparam: [],
+      keyType: [],
+      valueType: [],
+      key: [],
+      keyinputType: [],
+      keyconstant: [],
+      keyproperty: [],
+      value: [],
+      valueinputType: [],
+      valueconstant: [],
+      valueproperty: [],
+      valueparam: [],
+      valuebranchparam: []
     });
   }
 
@@ -209,39 +219,55 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
     }
 
   }
-  
-  refreshTargetInputTypes(){
 
-    let inputType: string = this.callNodeConfigFormGroup.get('targetinputType').value;
-    this.configuration.targetinputType = inputType;
+  refreshValueInputTypes(){
+    let inputType: string = this.callNodeConfigFormGroup.get('valueinputType').value;
+    this.configuration.valueinputType = inputType;
     if (inputType === 'CONSTANT'){
-      this.configuration.targetparam= {};
-      this.configuration.calltargetproperty= {};
-      this.configuration.calltargetbranchparam= {};
-      this.callNodeConfigFormGroup.get('targetparam').patchValue([], {emitEvent: false});
-      this.callNodeConfigFormGroup.get('calltargetproperty').patchValue([], {emitEvent: false});
-      this.callNodeConfigFormGroup.get('calltargetbranchparam').patchValue([], {emitEvent: false});
+      this.configuration.valueparam= {};
+      this.configuration.valueproperty= {};
+      this.configuration.valuebranchparam= {};
+      this.callNodeConfigFormGroup.get('valueparam').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('valueproperty').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('valuebranchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'RULE_INPUT'){
-      this.configuration.targetconstant= {};
-      this.configuration.calltargetproperty= {};
-      this.configuration.calltargetbranchparam= {};
-      this.callNodeConfigFormGroup.get('targetconstant').patchValue([], {emitEvent: false});
-      this.callNodeConfigFormGroup.get('calltargetproperty').patchValue([], {emitEvent: false});
-      this.callNodeConfigFormGroup.get('calltargetbranchparam').patchValue([], {emitEvent: false});
+      this.configuration.valueconstant= {};
+      this.configuration.valueproperty= {};
+      this.configuration.valuebranchparam= {};
+      this.callNodeConfigFormGroup.get('valueconstant').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('valueproperty').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('valuebranchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'PROPERTY'){
-      this.configuration.targetconstant= {};
-      this.configuration.targetparam= {};
-      this.configuration.calltargetbranchparam= {};
-      this.callNodeConfigFormGroup.get('targetconstant').patchValue([], {emitEvent: false});
-      this.callNodeConfigFormGroup.get('targetparam').patchValue([], {emitEvent: false});
-      this.callNodeConfigFormGroup.get('calltargetbranchparam').patchValue([], {emitEvent: false});
+      this.configuration.valueconstant= {};
+      this.configuration.valueparam= {};
+      this.configuration.valuebranchparam= {};
+      this.callNodeConfigFormGroup.get('valueconstant').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('valueparam').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('valuebranchparam').patchValue([], {emitEvent: false});
     } else if (inputType === 'BRANCH_PARAM'){
-      this.configuration.targetconstant= {};
-      this.configuration.targetparam= {};
-      this.configuration.calltargetproperty= {};
-      this.callNodeConfigFormGroup.get('targetconstant').patchValue([], {emitEvent: false});
-      this.callNodeConfigFormGroup.get('targetparam').patchValue([], {emitEvent: false});
-      this.callNodeConfigFormGroup.get('calltargetproperty').patchValue([], {emitEvent: false});
+      this.configuration.valueconstant= {};
+      this.configuration.valueparam= {};
+      this.configuration.valueproperty= {};
+      this.callNodeConfigFormGroup.get('valueconstant').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('valueparam').patchValue([], {emitEvent: false});
+      this.callNodeConfigFormGroup.get('valueproperty').patchValue([], {emitEvent: false});
+    }
+
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
+  }
+
+  refreshKeyInputTypes(){
+    let inputType: string = this.callNodeConfigFormGroup.get('keyinputType').value;
+    this.configuration.keyinputType = inputType;
+    if (inputType === 'CONSTANT'){
+      this.configuration.keyproperty= {};
+      this.callNodeConfigFormGroup.get('keyproperty').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
+      this.configuration.keyconstant= {};
+      this.callNodeConfigFormGroup.get('keyconstant').patchValue([], {emitEvent: false});
     }
 
     if (this.definedConfigComponent) {
@@ -252,73 +278,121 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
   addTarget(): void{
 
-    let inputType: string = this.callNodeConfigFormGroup.get('targetinputType').value;
-    let targetParameterType: string = this.callNodeConfigFormGroup.get('targetParameterType').value;
-    let targetName: string = this.callNodeConfigFormGroup.get('targetName').value;
-    
-    if (inputType === 'RULE_INPUT'){
-      let selectedTargetParam = this.callNodeConfigFormGroup.get('targetparam').value;
-      let targetparameter = {
-        'targetType': targetParameterType,
-        'targetName': targetName,
-        'inputType': inputType,
-        'input': '-',
-        'property': selectedTargetParam.inputName
-      };
-      this.configuration.callTargets.push(targetparameter);
-      this.updateModel(this.configuration);
-    } else if (inputType === 'PROPERTY'){
-      let selectedTargetProperty = this.callNodeConfigFormGroup.get('calltargetproperty').value;
-      let calltargetproperty = {
-        'targetType': targetParameterType,
-        'targetName': targetName,
-        'inputType': inputType,
-        'input': '-',
-        'property': selectedTargetProperty.name
-      };
-      this.configuration.callTargets.push(calltargetproperty);
-      this.updateModel(this.configuration);
-    } else if (inputType === 'CONSTANT'){
-      let selectedTargetConstant = this.callNodeConfigFormGroup.get('targetconstant').value;
-      let targetconstant = {
-        'targetType': targetParameterType,
-        'targetName': targetName,
-        'inputType': inputType,
-        'input': '-',
-        'property': selectedTargetConstant.constantName
-      };
-      this.configuration.callTargets.push(targetconstant);
-      this.updateModel(this.configuration);
-    } else if (inputType === 'BRANCH_PARAM'){
-      let selectedTargetBranchParam = this.callNodeConfigFormGroup.get('calltargetbranchparam').value;
-      let calltargetbranchparam = {
-        'targetType': targetParameterType,
-        'targetName': targetName,
-        'inputType': inputType,
-        'input': '-',
-        'property': selectedTargetBranchParam.name
-      };
-      this.configuration.callTargets.push(calltargetbranchparam);
-      this.updateModel(this.configuration);
+
+    let targetType: string = this.callNodeConfigFormGroup.get('targetParameterType').value;
+    let targetQueryType: string = this.callNodeConfigFormGroup.get('targetQueryType').value;
+    let targetBodyType: string = this.callNodeConfigFormGroup.get('targetBodyType').value;
+    let finalTargetType : string = '';
+    if (targetType === "HEADER"){
+      finalTargetType = 'HEADER';
+    } else if (targetType === "QUERY"){
+      finalTargetType = targetQueryType;
+    } else if (targetType === "BODY"){
+      finalTargetType = targetBodyType;
     }
-    
+
+
+    let keyInputType: string = this.callNodeConfigFormGroup.get('keyType').value;
+    let valueInputType: string = this.callNodeConfigFormGroup.get('valueType').value;
+
+    let keyPropertyType: string = this.callNodeConfigFormGroup.get('keyinputType').value;
+    // let keyProperty: string = this.callNodeConfigFormGroup.get('valueType').value;
+    let valuePropertyType: string = this.callNodeConfigFormGroup.get('valueinputType').value;
+    // let valueProperty: string = this.callNodeConfigFormGroup.get('valueType').value;
+
+    let keyRaw: string = this.callNodeConfigFormGroup.get('key').value;
+    let valueRaw: string = this.callNodeConfigFormGroup.get('value').value;
+
+
+    let targetParameter: Target = new CTarget();
+
+    targetParameter.targetType = finalTargetType;
+    targetParameter.valueInputType = valueInputType;
+    targetParameter.keyInputType = keyInputType;
+    if (finalTargetType === 'BODY_RAW'){
+      targetParameter.keyInputType = '-';
+    }
+
+    if (keyInputType === 'IN-LINE'){
+      targetParameter.keyRaw = keyRaw;
+      targetParameter.keyProperty = '-';
+      targetParameter.keyPropertyType = '-';
+    }
+    if (valueInputType === 'IN-LINE'){
+      targetParameter.valueRaw = valueRaw;
+      targetParameter.valueProperty = '-';
+      targetParameter.valuePropertyType = '-';
+    }
+
+    if (keyInputType === 'PROPERTY'){
+      targetParameter.keyRaw = '-';
+      targetParameter.keyPropertyType = keyPropertyType;
+      if (keyPropertyType === 'CONSTANT'){
+        let selectedKeyConstant = this.callNodeConfigFormGroup.get('keyconstant').value;
+        targetParameter.keyPropertyScope = selectedKeyConstant.scope;
+        targetParameter.keyProperty = selectedKeyConstant.constantName;
+      } else if (keyPropertyType === 'PROPERTY'){
+        let selectedKeyProperty = this.callNodeConfigFormGroup.get('keyproperty').value;
+        targetParameter.keyPropertyScope = selectedKeyProperty.propertyScope;
+        targetParameter.keyProperty = selectedKeyProperty.name;
+      }
+    }
+
+    if (valueInputType === 'PROPERTY'){
+      targetParameter.valueRaw = '-';
+      targetParameter.valuePropertyType = valuePropertyType;
+      if (valuePropertyType === 'CONSTANT'){
+        let selectedValueConstant = this.callNodeConfigFormGroup.get('valueconstant').value;
+        targetParameter.valuePropertyScope = selectedValueConstant.scope;
+        targetParameter.valueProperty = selectedValueConstant.constantName;
+      } else if (valuePropertyType === 'PROPERTY'){
+        let selectedValueProperty = this.callNodeConfigFormGroup.get('valueproperty').value;
+        targetParameter.valuePropertyScope = selectedValueProperty.propertyScope;
+        targetParameter.valueProperty = selectedValueProperty.name;
+      } else if (valuePropertyType === 'RULE_INPUT'){
+        let selectedValueRuleProperty = this.callNodeConfigFormGroup.get('valueparam').value;
+        targetParameter.valuePropertyScope = '-';
+        targetParameter.valueProperty = selectedValueRuleProperty.inputName;
+      } else if (valuePropertyType === 'BRANCH_PARAM'){
+        let selectedValueBranchParam = this.callNodeConfigFormGroup.get('valuebranchparam').value;
+        targetParameter.valuePropertyScope = selectedValueBranchParam.propertyScope;
+        targetParameter.valueProperty = selectedValueBranchParam.name;
+      }
+    }
+
+    if (finalTargetType === 'BODY_RAW'){
+      targetParameter.keyRaw = '-';
+      targetParameter.keyPropertyType = '-';
+      targetParameter.keyProperty = '-';
+    }
+
+    this.configuration.callTargets.push(targetParameter);
+    this.updateModel(this.configuration);
+
     this.targetdatasource = new MatTableDataSource(this.configuration.callTargets);
 
-    this.configuration.targetinputType = '';
-    this.configuration.targetParameterType= '';
-    this.configuration.targetName= '';
-    this.configuration.targetparam= {};
-    this.configuration.calltargetproperty= {};
-    this.configuration.targetconstant= {};
-    this.configuration.calltargetbranchparam= {};
+    this.configuration.key = '';
+    this.configuration.keyinputType= '';
+    this.configuration.keyconstant= '';
+    this.configuration.keyproperty= {};
+    this.configuration.value= '';
+    this.configuration.valueinputType= '';
+    this.configuration.valueconstant= {};
+    this.configuration.valueproperty= {};
+    this.configuration.valueparam= {};
+    this.configuration.valuebranchparam= {};
 
-    this.callNodeConfigFormGroup.get('targetinputType').patchValue('', {emitEvent: false});
-    this.callNodeConfigFormGroup.get('targetParameterType').patchValue('', {emitEvent: false});
-    this.callNodeConfigFormGroup.get('targetName').patchValue('', {emitEvent: false});
-    this.callNodeConfigFormGroup.get('targetparam').patchValue([], {emitEvent: false});
-    this.callNodeConfigFormGroup.get('calltargetproperty').patchValue([], {emitEvent: false});
-    this.callNodeConfigFormGroup.get('targetconstant').patchValue([], {emitEvent: false});
-    this.callNodeConfigFormGroup.get('calltargetbranchparam').patchValue([], {emitEvent: false});
+    this.callNodeConfigFormGroup.get('key').patchValue('', {emitEvent: false});
+    this.callNodeConfigFormGroup.get('keyinputType').patchValue('', {emitEvent: false});
+    this.callNodeConfigFormGroup.get('keyconstant').patchValue('', {emitEvent: false});
+    this.callNodeConfigFormGroup.get('keyproperty').patchValue([], {emitEvent: false});
+    this.callNodeConfigFormGroup.get('value').patchValue([], {emitEvent: false});
+    this.callNodeConfigFormGroup.get('valueinputType').patchValue([], {emitEvent: false});
+    this.callNodeConfigFormGroup.get('valueconstant').patchValue([], {emitEvent: false});
+    this.callNodeConfigFormGroup.get('valueproperty').patchValue([], {emitEvent: false});
+    this.callNodeConfigFormGroup.get('valueparam').patchValue([], {emitEvent: false});
+    this.callNodeConfigFormGroup.get('valuebranchparam').patchValue([], {emitEvent: false});
+
 
   }
 
@@ -485,11 +559,9 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         url: this.configuration.url,
         callAction: this.configuration.callAction,
         targetParameterType: this.configuration.targetParameterType,
+        targetQueryType: this.configuration.targetQueryType,
+        targetBodyType: this.configuration.targetBodyType,
         targetName: this.configuration.targetName,
-        targetinputType: this.configuration.targetinputType,
-        targetparam: this.configuration.targetparam,
-        targetconstant: this.configuration.targetconstant,
-        calltargetproperty: this.configuration.calltargetproperty,
         callName: this.configuration.callName,
         callValue: this.configuration.callValue,
         callreturnrecord: this.configuration.callreturnrecord,
@@ -509,7 +581,19 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         errorParameterparam: this.configuration.errorParameterparam,
         errorParameterproperty: this.configuration.errorParameterproperty,
         errorParameterbranchparam: this.configuration.errorParameterbranchparam,
-        errorIsAsync: this.configuration.errorIsAsync
+        errorIsAsync: this.configuration.errorIsAsync,
+        key: this.configuration.key,
+        keyType: this.configuration.keyType,
+        valueType: this.configuration.valueType,
+        keyinputType: this.configuration.keyinputType,
+        keyconstant: this.configuration.keyconstant,
+        keyproperty: this.configuration.keyproperty,
+        value: this.configuration.value,
+        valueinputType: this.configuration.valueinputType,
+        valueconstant: this.configuration.valueconstant,
+        valueproperty: this.configuration.valueproperty,
+        valueparam: this.configuration.valueparam,
+        valuebranchparam: this.configuration.valuebranchparam
       });
 
       this.changeSubscription = this.callNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
@@ -598,30 +682,23 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         }
       );
 
+      this.changeSubscription = this.callNodeConfigFormGroup.get('targetQueryType').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.targetQueryType = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('targetBodyType').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.targetBodyType = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
       this.changeSubscription = this.callNodeConfigFormGroup.get('targetName').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.targetName = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.callNodeConfigFormGroup.get('targetparam').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.targetparam = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.callNodeConfigFormGroup.get('calltargetproperty').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.calltargetproperty = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-
-      this.changeSubscription = this.callNodeConfigFormGroup.get('targetconstant').valueChanges.subscribe(
-        (configuration: any) => {
-          this.configuration.targetconstant = configuration;
           this.updateModel(this.configuration);
         }
       );
@@ -700,6 +777,90 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         }
       );
 
+      this.changeSubscription = this.callNodeConfigFormGroup.get('keyType').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.keyType = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('valueType').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.valueType = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('key').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.key = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('keyinputType').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.keyinputType = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('keyconstant').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.keyconstant = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('keyproperty').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.keyproperty = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('value').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.value = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('valueinputType').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.valueinputType = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('valueconstant').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.valueconstant = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('valueproperty').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.valueproperty = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('valueparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.valueparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('valuebranchparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.valuebranchparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
     }
   }
 
@@ -714,11 +875,31 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
 }
 
 export interface Target {
+  targetType: string,
+  keyInputType: string,
+  keyRaw: string,
+  keyPropertyType: string,
+  keyPropertyScope: string,
+  keyProperty: string,
+  valueInputType: string,
+  valueRaw: string,
+  valuePropertyType: string,
+  valuePropertyScope: string,
+  valueProperty: string
+}
+
+class CTarget implements Target{
+  keyInputType: string;
+  keyProperty: string;
+  keyPropertyType: string;
+  keyPropertyScope: string;
+  keyRaw: string;
   targetType: string;
-  targetName: string;
-  inputType: string;
-  input: string;
-  property: string;
+  valueInputType: string;
+  valueProperty: string;
+  valuePropertyType: string;
+  valuePropertyScope: string;
+  valueRaw: string;
 }
 
 export interface CallProperty {
