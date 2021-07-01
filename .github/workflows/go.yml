@@ -17,7 +17,7 @@ jobs:
         node-version: '12'
         cache: 'npm'
     - run: npm install
-    - run: npm run cleanup && npm run build:prod
+    - run: npm run build:prod
     - name: build and deploy
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
