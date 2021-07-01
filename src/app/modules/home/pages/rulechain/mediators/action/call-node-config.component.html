@@ -20,61 +20,156 @@
   </section>
 
   <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+
     <mat-form-field fxFlex class="mat-block">
       <mat-label>Target Type</mat-label>
       <mat-select formControlName="targetParameterType">
-        <mat-option value="QUERY_PARAM">Query Param</mat-option>
-        <mat-option value="URL_PARAM">URL Param</mat-option>
+        <mat-option value="QUERY">Param</mat-option>
+        <mat-option value="HEADER">Header</mat-option>
         <mat-option value="BODY">Body</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field fxFlex class="mat-block">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="targetName"/>
+
+    <mat-form-field *ngIf="configuration.targetParameterType === 'QUERY'" fxFlex class="mat-block">
+      <mat-label>Target Type</mat-label>
+      <mat-select formControlName="targetQueryType">
+        <mat-option value="QUERY_PARAM">Query Param</mat-option>
+        <mat-option value="URL_PARAM">URL Param</mat-option>
+      </mat-select>
     </mat-form-field>
+
+    <mat-form-field *ngIf="configuration.targetParameterType === 'BODY'" fxFlex class="mat-block">
+      <mat-label>Target Type</mat-label>
+      <mat-select formControlName="targetBodyType">
+        <mat-option value="BODY_FORM_DATA">Form Data</mat-option>
+        <mat-option value="BODY_URL_ENCODED">X-WWW-Form-urlencoded</mat-option>
+        <mat-option value="BODY_RAW">Raw</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </section>
+
+<!--  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">-->
+<!--  <mat-form-field fxFlex class="mat-block">-->
+<!--    <mat-label>Target Type</mat-label>-->
+<!--    <mat-select formControlName="targetParameterType">-->
+<!--      <mat-option value="QUERY_PARAM">Query Param</mat-option>-->
+<!--      <mat-option value="URL_PARAM">URL Param</mat-option>-->
+<!--      <mat-option value="HEADER">Header</mat-option>-->
+<!--      <mat-option value="FORM_DATA">Body - Form Data</mat-option>-->
+<!--      <mat-option value="URL_ENCODED">Body - Url-encoded</mat-option>-->
+<!--      <mat-option value="RAW">Body - Raw</mat-option>-->
+<!--    </mat-select>-->
+<!--  </mat-form-field>-->
+<!--  </section>-->
+
+  <section *ngIf="!(configuration.targetParameterType === 'BODY' && configuration.targetBodyType === 'BODY_RAW')" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+
     <mat-form-field fxFlex class="mat-block">
-      <mat-label>Input Type</mat-label>
-      <mat-select formControlName="targetinputType" (selectionChange)="refreshTargetInputTypes()">
+      <mat-label>Key Input Type</mat-label>
+      <mat-select formControlName="keyType">
+        <mat-option value="PROPERTY">Property</mat-option>
+        <mat-option value="IN-LINE">In-Line</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="configuration.keyType === 'IN-LINE'" fxFlex class="mat-block">
+      <mat-label>Key</mat-label>
+      <input matInput formControlName="key"/>
+    </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.keyType === 'PROPERTY'" fxFlex class="mat-block">
+        <mat-label>Key Property Type</mat-label>
+        <mat-select formControlName="keyinputType" (selectionChange)="refreshKeyInputTypes()">
+          <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <section *ngIf="configuration.keyType === 'PROPERTY'" class="mat-block" fxFlex>
+        <mat-form-field *ngIf="configuration.keyinputType === 'CONSTANT'" fxFlex class="mat-block">
+          <mat-label>Constant</mat-label>
+          <mat-select formControlName="keyconstant">
+            <mat-option *ngFor="let constant of allConstants" [value]="constant">
+              {{constant.constantName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="configuration.keyinputType === 'PROPERTY'" fxFlex class="mat-block">
+          <mat-label>Property</mat-label>
+          <mat-select formControlName="keyproperty">
+            <mat-option *ngFor="let property of allModelProperties" [value]="property">
+              {{property.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+  </section>
+
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Value Input Type</mat-label>
+      <mat-select formControlName="valueType">
+        <mat-option value="PROPERTY">Property</mat-option>
+        <mat-option value="IN-LINE">In-Line</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="configuration.valueType === 'PROPERTY'" fxFlex class="mat-block">
+      <mat-label>Value Property Type</mat-label>
+      <mat-select formControlName="valueinputType" (selectionChange)="refreshValueInputTypes()">
         <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
         <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
         <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
         <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
       </mat-select>
     </mat-form-field>
-    <section class="mat-block" fxFlex>
-      <mat-form-field *ngIf="configuration.targetinputType === 'RULE_INPUT'" fxFlex class="mat-block">
-        <mat-label>Rule Input</mat-label>
-        <mat-select formControlName="targetparam">
-          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-            {{property.inputName}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field *ngIf="configuration.targetinputType === 'CONSTANT'" fxFlex class="mat-block">
+    <section *ngIf="configuration.valueType === 'PROPERTY'" class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.valueinputType === 'CONSTANT'" fxFlex class="mat-block">
         <mat-label>Constant</mat-label>
-        <mat-select formControlName="targetconstant">
+        <mat-select formControlName="valueconstant">
           <mat-option *ngFor="let constant of allConstants" [value]="constant">
             {{constant.constantName}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field *ngIf="configuration.targetinputType === 'PROPERTY'" fxFlex class="mat-block">
+      <mat-form-field *ngIf="configuration.valueinputType === 'PROPERTY'" fxFlex class="mat-block">
         <mat-label>Property</mat-label>
-        <mat-select formControlName="calltargetproperty">
+        <mat-select formControlName="valueproperty">
           <mat-option *ngFor="let property of allModelProperties" [value]="property">
             {{property.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field *ngIf="configuration.targetinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+      <mat-form-field *ngIf="configuration.valueinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
+        <mat-select formControlName="valueparam">
+          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
+            {{property.inputName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.valueinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
         <mat-label>Branch Param</mat-label>
-        <mat-select formControlName="calltargetbranchparam">
+        <mat-select formControlName="valuebranchparam">
           <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
             {{param.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </section>
+    <button *ngIf="configuration.valueType !== 'IN-LINE'" mat-icon-button class="virtuan-fullscreen-button-style"
+            (click)="addTarget()"
+            matTooltip="Add Target"
+            matTooltipPosition="above">
+      <mat-icon color="primary">add</mat-icon>
+    </button>
+  </section>
+
+  <section *ngIf="configuration.valueType === 'IN-LINE'" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Value</mat-label>
+      <textarea matInput formControlName="value" rows="8"></textarea>
+    </mat-form-field>
     <button mat-icon-button class="virtuan-fullscreen-button-style"
             (click)="addTarget()"
             matTooltip="Add Target"
@@ -83,6 +178,64 @@
     </button>
   </section>
 
+<!--  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">-->
+
+<!--    <mat-form-field fxFlex class="mat-block">-->
+<!--      <mat-label>Name</mat-label>-->
+<!--      <input matInput formControlName="targetName"/>-->
+<!--    </mat-form-field>-->
+
+<!--    <mat-form-field fxFlex class="mat-block">-->
+<!--      <mat-label>Input Type</mat-label>-->
+<!--      <mat-select formControlName="targetinputType" (selectionChange)="refreshTargetInputTypes()">-->
+<!--        <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>-->
+<!--        <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>-->
+<!--        <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>-->
+<!--        <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
+<!--    <section class="mat-block" fxFlex>-->
+<!--      <mat-form-field *ngIf="configuration.targetinputType === 'RULE_INPUT'" fxFlex class="mat-block">-->
+<!--        <mat-label>Rule Input</mat-label>-->
+<!--        <mat-select formControlName="targetparam">-->
+<!--          <mat-option *ngFor="let property of allRuleInputs" [value]="property">-->
+<!--            {{property.inputName}}-->
+<!--          </mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field *ngIf="configuration.targetinputType === 'CONSTANT'" fxFlex class="mat-block">-->
+<!--        <mat-label>Constant</mat-label>-->
+<!--        <mat-select formControlName="targetconstant">-->
+<!--          <mat-option *ngFor="let constant of allConstants" [value]="constant">-->
+<!--            {{constant.constantName}}-->
+<!--          </mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field *ngIf="configuration.targetinputType === 'PROPERTY'" fxFlex class="mat-block">-->
+<!--        <mat-label>Property</mat-label>-->
+<!--        <mat-select formControlName="calltargetproperty">-->
+<!--          <mat-option *ngFor="let property of allModelProperties" [value]="property">-->
+<!--            {{property.name}}-->
+<!--          </mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field *ngIf="configuration.targetinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">-->
+<!--        <mat-label>Branch Param</mat-label>-->
+<!--        <mat-select formControlName="calltargetbranchparam">-->
+<!--          <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">-->
+<!--            {{param.name}}-->
+<!--          </mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
+<!--    </section>-->
+<!--    <button mat-icon-button class="virtuan-fullscreen-button-style"-->
+<!--            (click)="addTarget()"-->
+<!--            matTooltip="Add Target"-->
+<!--            matTooltipPosition="above">-->
+<!--      <mat-icon color="primary">add</mat-icon>-->
+<!--    </button>-->
+<!--  </section>-->
+
   <div fxFlex class="table-container" style="padding: 10px;margin-bottom: 15px;">
     <table mat-table [dataSource]="targetdatasource" class="mat-elevation-z8">
 
@@ -90,24 +243,35 @@
         <th mat-header-cell *matHeaderCellDef> Target Type </th>
         <td mat-cell *matCellDef="let element"> {{element.targetType}} </td>
       </ng-container>
-      <ng-container matColumnDef="targetName">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.targetName}} </td>
+
+      <ng-container matColumnDef="keyPropertyType">
+        <th mat-header-cell *matHeaderCellDef> Key Property Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.keyPropertyType}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="inputType">
-        <th mat-header-cell *matHeaderCellDef> Input Type </th>
-        <td mat-cell *matCellDef="let element"> {{element.inputType}} </td>
+      <ng-container matColumnDef="keyProperty">
+        <th mat-header-cell *matHeaderCellDef> Key Property </th>
+        <td mat-cell *matCellDef="let element"> {{element.keyProperty}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="input">
-        <th mat-header-cell *matHeaderCellDef> Input </th>
-        <td mat-cell *matCellDef="let element"> {{element.input}} </td>
+      <ng-container matColumnDef="keyRaw">
+        <th mat-header-cell *matHeaderCellDef> Key Raw </th>
+        <td mat-cell *matCellDef="let element"> {{element.keyRaw}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="property">
-        <th mat-header-cell *matHeaderCellDef> Property </th>
-        <td mat-cell *matCellDef="let element"> {{element.property}} </td>
+      <ng-container matColumnDef="valuePropertyType">
+        <th mat-header-cell *matHeaderCellDef> Value Property Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.valuePropertyType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="valueProperty">
+        <th mat-header-cell *matHeaderCellDef> Value Property </th>
+        <td mat-cell *matCellDef="let element"> {{element.valueProperty}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="valueRaw">
+        <th mat-header-cell *matHeaderCellDef> Value Raw </th>
+        <td mat-cell *matCellDef="let element"> {{element.valueRaw}} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
