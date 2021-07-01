@@ -2,9 +2,9 @@ name: virtuan-studio-ui
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main1 ]
   pull_request:
-    branches: [ main ]
+    branches: [ main1 ]
 
 jobs:
 
@@ -14,9 +14,10 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
       with:
-        node-version: '12'
+        node-version: '16'
         cache: 'npm'
     - run: npm install
+    - run: npm install -g @angular/cli
     - run: npm run build:prod
     - name: build and deploy
       uses: mr-smithers-excellent/docker-build-push@v5
