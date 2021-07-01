@@ -2,9 +2,9 @@ name: virtuan-studio-ui
 
 on:
   push:
-    branches: [ redis ]
+    branches: [ main ]
   pull_request:
-    branches: [ redis ]
+    branches: [ main ]
 
 jobs:
 
