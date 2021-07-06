@@ -5,6 +5,7 @@ import { MediatorNodeConfigComponent } from './mediator-node-config.component';
 import { MatTreeModule } from '@angular/material/tree';
 //rooting
 import { RootNodeConfigComponent } from './rooting/root-node-config.component';
+import { ErrorBranchNodeConfigComponent } from './rooting/error-branch-node-config.component';
 
 //core
 import { ConstantNodeConfigComponent } from './core/constant-node-config.component';
@@ -33,6 +34,8 @@ import { AssignNodeConfigComponent } from './action/assign-node-config.component
 import { EnvVariableLookupNodeConfigComponent } from './action/env-variable-lookup-node-config.component';
 import { StringTemplateNodeConfigComponent } from './action/string-template-node-config.component';
 import { CPGetterNodeConfigComponent } from './action/cp-getter-node-config.component';
+import { FileReadNodeConfigComponent } from './action/file-read-node-config.component';
+import { FileWriteNodeConfigComponent } from './action/file-write-node-config.component';
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
@@ -87,6 +90,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
   declarations: [
     MediatorNodeConfigComponent,
     RootNodeConfigComponent,
+    ErrorBranchNodeConfigComponent,
     PayloadNodeConfigComponent,
     ConstantNodeConfigComponent,
     DomainModelVariableNodeConfigComponent,
@@ -121,6 +125,8 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     AggregateNodeConfigComponent,
     AssignNodeConfigComponent,
     CPGetterNodeConfigComponent,
+    FileReadNodeConfigComponent,
+    FileWriteNodeConfigComponent,
     EnvVariableLookupNodeConfigComponent,
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
@@ -152,6 +158,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
   exports: [
     MediatorNodeConfigComponent,
     RootNodeConfigComponent,
+    ErrorBranchNodeConfigComponent,
     PayloadNodeConfigComponent,
     ConstantNodeConfigComponent,
     DomainModelVariableNodeConfigComponent,
@@ -185,6 +192,8 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     AggregateNodeConfigComponent,
     AssignNodeConfigComponent,
     CPGetterNodeConfigComponent,
+    FileReadNodeConfigComponent,
+    FileWriteNodeConfigComponent,
     EnvVariableLookupNodeConfigComponent,
     StringTemplateNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,

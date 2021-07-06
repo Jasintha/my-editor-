@@ -57,6 +57,9 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
   allRoots: any[];
 
   @Input()
+  allErrorBranches: any[];
+
+  @Input()
   disabled: boolean;
 
   @Input()
@@ -421,8 +424,8 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allRoots){
-        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allErrorBranches){
+        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let assignedProperty = this.configuration.assignedProperty;

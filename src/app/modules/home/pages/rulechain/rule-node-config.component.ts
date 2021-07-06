@@ -140,6 +140,9 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
   allRoots: any[];
 
   @Input()
+  allErrorBranches: any[];
+
+  @Input()
   allModelProperties: any[];
 
   @Input()

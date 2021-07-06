@@ -72,6 +72,9 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
   allRoots: any[];
 
   @Input()
+  allErrorBranches: any[];
+
+  @Input()
   allViewModels: any[];
 
   @Input()
@@ -811,9 +814,11 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       entity = this.inputEntities.find(x => x.name === this.configuration.entity.name );
       }
 
+      console.log(this.allErrorBranches);
+
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allRoots){
-        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allErrorBranches){
+        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let property = this.configuration.property;

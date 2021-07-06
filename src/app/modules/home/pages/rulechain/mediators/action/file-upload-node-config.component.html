@@ -91,21 +91,20 @@
       <mat-option value="1">Log & Continue</mat-option>
       <mat-option value="2">Log & Exit</mat-option>
       <mat-option value="3">Return</mat-option>
-      <mat-option value="4">Add an Error Function</mat-option>
+      <mat-option value="4">Call an Error Branch</mat-option>
     </mat-select>
   </mat-form-field>
 
   <div *ngIf="configuration.errorAction == '4'">
     <br>
-    <mat-label>Error Function</mat-label>
-    <br><br>
+
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Error Function Data
+          Error Branch Details
         </mat-panel-title>
         <mat-panel-description>
-          Add a function for the error option
+          Call an error branch if error occured
         </mat-panel-description>
       </mat-expansion-panel-header>
 
@@ -113,7 +112,7 @@
         <mat-form-field fxFlex class="mat-block">
           <mat-label>Branch</mat-label>
           <mat-select formControlName="errorBranch">
-            <mat-option *ngFor="let root of allRoots" [value]="root">
+            <mat-option *ngFor="let root of allErrorBranches" [value]="root">
               {{root.name}}
             </mat-option>
           </mat-select>
@@ -127,9 +126,11 @@
         <mat-form-field fxFlex class="mat-block">
           <mat-label>Branch parameter</mat-label>
           <mat-select formControlName="errorBranchparameter">
-            <mat-option *ngFor="let param of configuration?.errorBranch?.params" [value]="param">
-              {{param.name}} - {{param.input}}
-            </mat-option>
+            <ng-container *ngFor="let param of configuration?.errorBranch?.params">
+              <mat-option *ngIf="param.name !== '_error'" [value]="param">
+                {{param.name}} - {{param.input}}
+              </mat-option>
+            </ng-container>
           </mat-select>
         </mat-form-field>
 

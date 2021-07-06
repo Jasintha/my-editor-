@@ -148,8 +148,8 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
      // switchroot: "",
      // switchisAsync:false,
      // defaultEnabled: false,
-      errorMsg: "",
-      errorAction: "",
+      //errorMsg: "",
+      //errorAction: "",
      // defaultroot: "",
      // defaultisAsync: false
     });
@@ -417,8 +417,8 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         switchsecondproperty: this.configuration.switchsecondproperty,
         // switchroot: this.configuration.switchroot,
         // switchisAsync: this.configuration.switchisAsync,
-        errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction,
+        //errorMsg: this.configuration.errorMsg,
+        //errorAction: this.configuration.errorAction,
         // defaultEnabled: this.configuration.defaultEnabled,
         // defaultisAsync: this.configuration.defaultisAsync,
         // defaultroot: defaultroot
@@ -465,7 +465,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
       );
-      */
+
 
       this.changeSubscription = this.switchNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
@@ -481,6 +481,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.switchNodeConfigFormGroup.get('switchCondition').valueChanges.subscribe(
         (configuration: any) => {

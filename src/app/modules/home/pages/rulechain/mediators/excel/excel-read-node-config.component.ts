@@ -71,6 +71,8 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
     @Input()
     allVariables: any[];
 
+    @Input()
+    allErrorBranches: any[];
 
     @Input()
     allDomainModelsWithSub: any[];
@@ -483,8 +485,8 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             }
 
             let errorBranch = this.configuration.errorBranch;
-            if(errorBranch && this.allRoots){
-                errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+            if(errorBranch && this.allErrorBranches){
+                errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
             }
 
             let excelconstant = this.configuration.excelconstant;
