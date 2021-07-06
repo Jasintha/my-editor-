@@ -574,7 +574,7 @@
                                         [nodeDefinition]="nodeDefinitionValue">
         </virtuan-pdf-node-config>
     </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiexcelWriteNode'">
+    <ng-container *ngIf="nodeClazz === 'xiexcel___WriteNode'">
         <virtuan-excelWrite-node-config #excelWriteNodeConfigComponent
                             formControlName="configuration"
                             [ruleNodeId]="ruleNodeId"
@@ -593,7 +593,7 @@
                             [nodeDefinition]="nodeDefinitionValue">
         </virtuan-excelWrite-node-config>
     </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiexcelReadNode'">
+    <ng-container *ngIf="nodeClazz === 'xiexcel___ReadNode'">
         <virtuan-excelRead-node-config #excelReadNodeConfigComponent
                                    formControlName="configuration"
                                    [ruleNodeId]="ruleNodeId"
@@ -612,7 +612,7 @@
                                    [nodeDefinition]="nodeDefinitionValue">
         </virtuan-excelRead-node-config>
     </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiexcelCopyNode'">
+    <ng-container *ngIf="nodeClazz === 'xiexcel___CopyNode'">
         <virtuan-excelCopy-node-config #excelCopyNodeConfigComponent
                                   formControlName="configuration"
                                   [ruleNodeId]="ruleNodeId"
@@ -632,7 +632,7 @@
         </virtuan-excelCopy-node-config>
     </ng-container>
 
-    <ng-container *ngIf="nodeClazz === 'xiexcelDeleteNode'">
+    <ng-container *ngIf="nodeClazz === 'xiexcel___DeleteNode'">
         <virtuan-excelDelete-node-config #excelDeleteNodeConfigComponent
                                   formControlName="configuration"
                                   [ruleNodeId]="ruleNodeId"
@@ -689,14 +689,14 @@
                                                  [nodeDefinition]="nodeDefinitionValue">
         </virtuan-env-variable-lookup-node-config>
     </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiEmailInitNode'">
+    <ng-container *ngIf="nodeClazz === 'xiEmail___InitNode'">
         <virtuan-email-init-node-config #emailInitNodeConfigComponent
                                         formControlName="configuration"
                                         [ruleNodeId]="ruleNodeId"
                                         [nodeDefinition]="nodeDefinitionValue">
         </virtuan-email-init-node-config>
     </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiEmailSendNode'">
+    <ng-container *ngIf="nodeClazz === 'xiEmail___SendNode'">
         <virtuan-email-send-node-config #emailSendNodeConfigComponent
                                         formControlName="configuration"
                                         [ruleNodeId]="ruleNodeId"
