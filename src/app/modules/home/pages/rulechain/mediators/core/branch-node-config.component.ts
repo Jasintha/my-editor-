@@ -63,6 +63,9 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   allRoots: any[];
 
   @Input()
+  allErrorBranches: any[];
+
+  @Input()
   inputEntities: any[];
 
   @Input()
@@ -374,8 +377,8 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allRoots){
-        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allErrorBranches){
+        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let errorAction = this.configuration.errorAction;

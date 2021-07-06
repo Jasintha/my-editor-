@@ -51,6 +51,9 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
   allRoots: any[];
 
   @Input()
+  allErrorBranches: any[];
+
+  @Input()
   set required(value: boolean) {
     this.requiredValue = coerceBooleanProperty(value);
   }
@@ -425,8 +428,8 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allRoots){
-        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allErrorBranches){
+        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let assignedReference = this.configuration.assignedReference;

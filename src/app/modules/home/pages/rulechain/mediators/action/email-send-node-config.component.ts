@@ -78,6 +78,9 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   apptype: string;
 
   @Input()
+  allErrorBranches: any[];
+
+  @Input()
   allRuleInputs: any[];
 
     domainModelProperties: any[];
@@ -462,8 +465,8 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allRoots){
-        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allErrorBranches){
+        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let c = this.configuration.toemailconstant;

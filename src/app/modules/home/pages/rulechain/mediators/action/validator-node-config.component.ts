@@ -79,6 +79,9 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
   allRoots: any[];
 
   @Input()
+  allErrorBranches: any[];
+
+  @Input()
   allRuleInputs: any[];
 
   @Input() branchAvailability: any;
@@ -406,8 +409,8 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       */
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allRoots){
-        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allErrorBranches){
+        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       this.validatorNodeConfigFormGroup.patchValue({
