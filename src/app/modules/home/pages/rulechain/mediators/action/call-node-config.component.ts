@@ -80,6 +80,9 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
   @Input()
   allRuleInputs: any[];
 
+  @Input()
+  allErrorBranches: any[];
+
     domainModelProperties: any[];
     viewModelProperties: any[];
 
@@ -536,8 +539,8 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allRoots){
-        errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allErrorBranches){
+        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let entity = this.configuration.callreturnentity;

@@ -57,6 +57,9 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
     allRoots: any[];
 
     @Input()
+    allErrorBranches: any[];
+
+    @Input()
     disabled: boolean;
 
     @Input()
@@ -309,8 +312,8 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
             }
 
             let errorBranch = this.configuration.errorBranch;
-            if(errorBranch && this.allRoots){
-                errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+            if(errorBranch && this.allErrorBranches){
+                errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
             }
 
             let propertyreference = this.configuration.propertyreference;

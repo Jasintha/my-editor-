@@ -158,8 +158,8 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       //isAsync: false,
       //secondroot: [],
       //secondisAsync:false,
-      errorMsg: "",
-      errorAction: ""
+      //errorMsg: "",
+      //errorAction: ""
     });
   }
 
@@ -527,8 +527,8 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         //secondroot: secondroot,
         //isAsync: this.configuration.isAsync,
         //secondisAsync: this.configuration.secondisAsync,
-        errorMsg: this.configuration.errorMsg,
-        errorAction: this.configuration.errorAction
+        //errorMsg: this.configuration.errorMsg,
+        //errorAction: this.configuration.errorAction
       });
 
       /*
@@ -560,7 +560,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
       );
 
-      */
+
 
       this.changeSubscription = this.filterNodeConfigFormGroup.get('errorMsg').valueChanges.subscribe(
         (configuration: any) => {
@@ -575,6 +575,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
       );
+      */
 
       this.changeSubscription = this.filterNodeConfigFormGroup.get('condition').valueChanges.subscribe(
         (configuration: any) => {

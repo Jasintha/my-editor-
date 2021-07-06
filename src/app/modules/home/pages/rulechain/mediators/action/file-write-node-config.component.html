@@ -1,70 +1,91 @@
-<div [formGroup]="iteratorNodeConfigFormGroup">
+<div [formGroup]="fileWriteNodeConfigFormGroup">
   <mat-form-field fxFlex class="mat-block">
-    <mat-label>List Input Type</mat-label>
-    <mat-select formControlName="inputType">
-      <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
-      <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
-      <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field *ngIf="configuration.inputType === 'RULE_INPUT'" fxFlex class="mat-block">
-    <mat-label>Rule Input</mat-label>
-    <mat-select formControlName="param">
-      <ng-container *ngFor="let property of allRuleInputs">
-      <mat-option *ngIf="property?.record === 'm'" [value]="property">
-        {{property.inputName}}
-      </mat-option>
-      </ng-container>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.inputType === 'PROPERTY'">
-    <mat-label>Property</mat-label>
-    <mat-select formControlName="property">
-      <!--<mat-option *ngFor="let property of allModelProperties" [value]="property">
-        {{property.name}}
-      </mat-option>-->
-      <ng-container *ngFor="let modelproperty of allModelProperties">
-        <mat-option *ngIf="modelproperty?.record === 'm'" [value]="modelproperty">
-          {{modelproperty.name}}
-        </mat-option>
-      </ng-container>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field *ngIf="configuration.inputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
-    <mat-label>Branch Param</mat-label>
-    <mat-select formControlName="branchparam">
-      <ng-container *ngFor="let param of branchAvailability?.branchParams">
-      <mat-option *ngIf="param?.record === 'm'" [value]="param">
-        {{param.name}}
-      </mat-option>
-      </ng-container>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field fxFlex class="mat-block">
-    <mat-label>Iterate Element</mat-label>
-    <mat-select formControlName="assignedProperty">
-      <!--<mat-option *ngFor="let property of allModelProperties" [value]="property">
-        {{property.name}}
-      </mat-option>-->
-        <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
-          {{modelproperty.name}}
-        </mat-option>
+    <mat-label>Encode Type</mat-label>
+    <mat-select formControlName="encodeType">
+      <mat-option value="JSON">JSON</mat-option>
+      <mat-option value="CSV">CSV</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <!--<section fxLayout="column" fxLayout.gt-sm="row">
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>Write Input Type</mat-label>
+        <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
+          <mat-option *ngIf="!branchAvailability?.branchFound &&  allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+          <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+          <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+          <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
+        </mat-select>
+      </mat-form-field>
+    <section class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.inputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
+        <mat-select formControlName="param">
+          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
+            {{property.inputName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.inputType === 'CONSTANT'" fxFlex class="mat-block">
+        <mat-label>Constant</mat-label>
+        <mat-select formControlName="constant">
+          <mat-option *ngFor="let constant of allConstants" [value]="constant">
+            {{constant.constantName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.inputType === 'PROPERTY'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="property">
+          <mat-option *ngFor="let property of allModelProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.inputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="branchparam">
+          <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+            {{param.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </section>
+
+  </section>
+
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
     <mat-form-field fxFlex class="mat-block">
-      <mat-label>Branch</mat-label>
-      <mat-select formControlName="root">
-        <mat-option *ngFor="let root of allRoots" [value]="root">
-          {{root}}
-        </mat-option>
+      <mat-label>Save File Path Type</mat-label>
+      <mat-select formControlName="assignedtoinputType">
+        <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+        <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-checkbox formControlName="isAsync">
-      Non Blocking
-    </mat-checkbox>
-  </section>-->
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block" *ngIf="configuration.assignedtoinputType === 'PROPERTY'">
+        <mat-label>Value Property</mat-label>
+        <mat-select formControlName="assignedProperty">
+          <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
+            {{modelproperty.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.assignedtoinputType === 'REFERENCE'" fxFlex class="mat-block">
+        <mat-label>Reference Property</mat-label>
+        <mat-select formControlName="assignedReference">
+          <mat-option *ngFor="let property of allReferenceProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </section>
+
+  </section>
 
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Error Message</mat-label>
@@ -79,7 +100,6 @@
       <mat-option value="4">Call an Error Branch</mat-option>
     </mat-select>
   </mat-form-field>
-
   <div *ngIf="configuration.errorAction == '4'">
     <br>
 
@@ -200,6 +220,5 @@
 
     </mat-expansion-panel>
   </div>
-
 </div>
 

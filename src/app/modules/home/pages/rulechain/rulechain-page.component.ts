@@ -174,6 +174,7 @@ export class RuleChainPageComponent extends PageComponent
   allHybridFunctions: any[];
   allSubRules: any[];
   allRoots: any[];
+  allErrorBranches: any[];
   queryDb: string;
   commandDb: string;
   connectorData: any[];
@@ -239,9 +240,14 @@ export class RuleChainPageComponent extends PageComponent
           const labels = this.ruleChainService.getRuleNodeSupportedLinks(sourceNode);
           const allowCustomLabels = this.ruleChainService.ruleNodeAllowCustomLinks(sourceNode.component);
           this.enableHotKeys = false;
-          if(sourceNode.component.clazz == 'xiBranchNode'){
+          if(sourceNode.component.clazz == 'xiBranchNode' || sourceNode.component.clazz == 'xiErrBrNode'){
             let sourcename = sourceNode.name.replace(/\s/g, "");
-            let label = 'BRANCH_' +this.lowerCaseWord(sourcename);
+            let label = '';
+            if (sourceNode.component.clazz == 'xiErrBrNode'){
+                label = 'ERROR_BRANCH_' +this.lowerCaseWord(sourcename);
+            } else {
+                label = 'BRANCH_' +this.lowerCaseWord(sourcename);
+            }
             let rootlabels = [label];
             let rootLink = {source: edge.source, destination: edge.destination, label : label, labels: rootlabels};
             this.enableHotKeys = true;
@@ -386,6 +392,7 @@ export class RuleChainPageComponent extends PageComponent
     this.allSubRules = this.ruleChainMetaData.allSubRules;
     this.allApis = this.ruleChainMetaData.allApis;
     this.allRoots = this.ruleChainMetaData.allRoots;
+    this.allErrorBranches = this.ruleChainMetaData.allErrorBranches;
     this.allEvents = this.ruleChainMetaData.allEvents;
     this.queryDb = this.ruleChainMetaData.queryDb;
     this.commandDb = this.ruleChainMetaData.commandDb;
@@ -997,7 +1004,7 @@ export class RuleChainPageComponent extends PageComponent
       this.editingRuleNodeIndex = this.ruleChainModel.nodes.indexOf(node);
       this.editingRuleNode = deepClone(node, ['component']);
 
-      if (node.component.clazz != 'xiBranchNode'){
+      if (node.component.clazz != 'xiBranchNode' && node.component.clazz != 'xiErrBrNode'){
           let branchNodeAvailability = this.getConnections(this.editingRuleNodeIndex);
           this.branchAvailability = branchNodeAvailability;
       }
@@ -1152,7 +1159,7 @@ export class RuleChainPageComponent extends PageComponent
   checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray){
     let foundNode = allConnections.find(x => x.toIndex === index);
     if(foundNode){
-        if(foundNode.type.startsWith("BRANCH_")){
+        if(foundNode.type.startsWith("BRANCH_") || foundNode.type.startsWith("ERROR_BRANCH_")){
             let obj = {'branchIndex': foundNode.fromIndex, 'branchFound': true, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray};
             return obj;
         } else {
@@ -1589,6 +1596,7 @@ export class RuleChainPageComponent extends PageComponent
         this.allSubRules = this.ruleChainMetaData.allSubRules;
         this.allApis = this.ruleChainMetaData.allApis;
         this.allRoots = this.ruleChainMetaData.allRoots;
+        this.allErrorBranches = this.ruleChainMetaData.allErrorBranches;
         this.allEvents = this.ruleChainMetaData.allEvents;
         this.queryDb = this.ruleChainMetaData.queryDb;
         this.commandDb = this.ruleChainMetaData.commandDb;
@@ -1638,6 +1646,7 @@ export class RuleChainPageComponent extends PageComponent
     const allSubRules = this.ruleChainMetaData.allSubRules;
     const allApis = this.ruleChainMetaData.allApis;
     const allRoots = this.ruleChainMetaData.allRoots;
+    const allErrorBranches = this.ruleChainMetaData.allErrorBranches;
     const allEvents = this.ruleChainMetaData.allEvents;
     const queryDb = this.ruleChainMetaData.queryDb;
     const commandDb = this.ruleChainMetaData.commandDb;
@@ -1694,6 +1703,7 @@ export class RuleChainPageComponent extends PageComponent
         allSubRules,
         allApis,
         allRoots,
+        allErrorBranches,
         queryDb,
         commandDb,
         apptype
@@ -1919,6 +1929,7 @@ export interface AddRuleNodeDialogData {
   allSubRules: any[];
   allApis: any[];
   allRoots: any[];
+  allErrorBranches: any[];
   queryDb: string;
   commandDb: string;
   apptype: string;
@@ -1961,6 +1972,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allSubRules: any[];
   allApis:any[];
   allRoots: any[];
+  allErrorBranches: any[];
   allModelProperties: any[];
   allRuleInputs: any[];
   allEvents: any[];
@@ -2002,6 +2014,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allSubRules = this.data.allSubRules;
     this.allApis = this.data.allApis;
     this.allRoots = this.data.allRoots;
+    this.allErrorBranches = this.data.allErrorBranches;
   //  this.isNodeEdit = this.data.isNodeEdit;
     this.allModelProperties = this.data.allModelProperties;
     this.allRuleInputs = this.data.allRuleInputs;

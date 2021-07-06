@@ -57,6 +57,9 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     allRoots: any[];
 
     @Input()
+    allErrorBranches: any[];
+
+    @Input()
     disabled: boolean;
 
     @Input()
@@ -539,8 +542,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             }
 
             let errorBranch = this.configuration.errorBranch;
-            if(errorBranch && this.allRoots){
-                errorBranch = this.allRoots.find(x => x.name === this.configuration.errorBranch.name );
+            if(errorBranch && this.allErrorBranches){
+                errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
             }
 
             let assignedReference = this.configuration.assignedReference;

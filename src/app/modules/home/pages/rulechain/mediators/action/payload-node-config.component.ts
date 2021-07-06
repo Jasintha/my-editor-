@@ -73,6 +73,12 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   @Input()
   allReferenceProperties: any[];
+  
+  @Input()
+  allErrorBranches: any[];
+  
+  errordatasource: MatTableDataSource<ErrorFunctionParameters>;
+  displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
 
   nodeDefinitionValue: RuleNodeDefinition;
 
@@ -129,7 +135,15 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       propertyconstant: [],
       colName: "",
       childrenParam: [],
-      mapping: []
+      mapping: [],
+      errorBranch: [],
+      errorInputType: [],
+      errorIsAsync: false,
+      errorBranchparameter: [],
+      errorParameterinputType: [],
+      errorParameterparam: [],
+      errorParameterproperty: [],
+      errorParameterbranchparam: []
     });
   }
 
@@ -286,6 +300,90 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
     this.datasource = new MatTableDataSource(this.configuration.payloadParameters);
     this.updateModel(this.configuration);
   }
+  
+  refreshErrorParameterInputTypes(){
+    let errorInputType: string = this.payloadNodeConfigFormGroup.get('errorParameterinputType').value;
+    this.configuration.errorParameterinputType = errorInputType;
+    if (errorInputType === 'RULE_INPUT'){
+      this.configuration.errorParameterproperty= {};
+      this.configuration.errorParameterbranchparam= {};
+      this.payloadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.payloadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'PROPERTY'){
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterbranchparam= {};
+      this.payloadNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
+      this.payloadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'BRANCH_PARAM'){
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.payloadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.payloadNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    }
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
+  }
+
+  deleteErrorRow(index: number): void{
+    this.configuration.errorFunctionParameters.splice(index, 1);
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+    this.updateModel(this.configuration);
+  }
+
+  addErrorParameter(): void{
+
+    let errorInputType: string = this.payloadNodeConfigFormGroup.get('errorParameterinputType').value;
+    let errorBranchparameter = this.payloadNodeConfigFormGroup.get('errorBranchparameter').value;
+
+    if (errorInputType === 'RULE_INPUT'){
+      let selectedErrorParameterParam = this.payloadNodeConfigFormGroup.get('errorParameterparam').value;
+      let errorParameter = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterParam.inputName
+      };
+      this.configuration.errorFunctionParameters.push(errorParameter);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'PROPERTY'){
+      let selectedErrorParameterProperty = this.payloadNodeConfigFormGroup.get('errorParameterproperty').value;
+      let errorParameterproperty = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterProperty.name
+      };
+      this.configuration.errorFunctionParameters.push(errorParameterproperty);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'BRANCH_PARAM'){
+      let selectedErrorParameterBranch = this.payloadNodeConfigFormGroup.get('errorParameterbranchparam').value;
+      let errorParameterbranchparam = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': selectedErrorParameterBranch.name
+      };
+      this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    }
+
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
+
+    this.configuration.errorParameterinputType = '';
+    this.configuration.errorParameterproperty= {};
+    this.configuration.errorParameterparam= {};
+    this.configuration.errorBranchparameter= {};
+    this.configuration.errorParameterbranchparam= {};
+
+    this.payloadNodeConfigFormGroup.get('errorParameterinputType').patchValue([], {emitEvent: false});
+    this.payloadNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    this.payloadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+    this.payloadNodeConfigFormGroup.get('errorBranchparameter').patchValue([], {emitEvent: false});
+    this.payloadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+
+  }
 
   writeValue(value: RuleNodeConfiguration): void {
 
@@ -298,6 +396,11 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.configuration.assignedtoinputType = {};
     }
 
+    if(this.configuration.errorFunctionParameters === null || this.configuration.errorFunctionParameters === undefined){
+      this.configuration.errorFunctionParameters = [];
+    }
+    
+    this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
     this.datasource = new MatTableDataSource(this.configuration.payloadParameters);
 
 
@@ -345,6 +448,11 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
         propertyconstant = this.allConstants.find(x => x.constantName === this.configuration.propertyconstant.constantName );
         console.log("======================",propertyconstant)
       }
+      
+      let errorBranch = this.configuration.errorBranch;
+      if(errorBranch && this.allErrorBranches){
+        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      }
 
       this.payloadNodeConfigFormGroup.patchValue({
         assignedProperty: assignedProperty,
@@ -362,9 +470,53 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
         propertyreference: propertyreference,
         propertyparam: propertyparam,
         propertyconstant: propertyconstant,
-        childrenParam: this.configuration.childrenParam
+        childrenParam: this.configuration.childrenParam,
+        errorBranch: errorBranch,
+        errorInputType: this.configuration.errorInputType,
+        errorBranchparameter: this.configuration.errorBranchparameter,
+        errorParameterinputType: this.configuration.errorParameterinputType,
+        errorParameterparam: this.configuration.errorParameterparam,
+        errorParameterproperty: this.configuration.errorParameterproperty,
+        errorParameterbranchparam: this.configuration.errorParameterbranchparam,
+        errorIsAsync: this.configuration.errorIsAsync
       });
+      
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorIsAsync = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
 
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('errorBranch').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorBranch = configuration;
+
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('errorParameterparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('errorParameterbranchparam').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterbranchparam = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('errorParameterproperty').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.errorParameterproperty = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+      
         this.changeSubscription = this.payloadNodeConfigFormGroup.get('childrenParam').valueChanges.subscribe(
             (configuration: any) => {
                 this.configuration.childrenParam = configuration;
@@ -556,3 +708,10 @@ export interface PayloadParameter {
   type: string;
 }
 
+
+export interface ErrorFunctionParameters {
+  parameterName: string;
+  inputType: string;
+  input: string;
+  property: string;
+}
