@@ -176,9 +176,9 @@ export class APIGroupNodeConfigComponent implements ControlValueAccessor, OnInit
         apiname = this.titleCaseWord(apinameTrimmed);
 
         if (api.type === 'COMMAND' || api.type === 'QUERY'){
-            apiid = api.type + "_" + api.id;
+            apiid = api.type + "_" + api.uuid;
         } else {
-            apiid = "API_" + api.id;
+            apiid = "API_" + api.uuid;
         }
     }
 
