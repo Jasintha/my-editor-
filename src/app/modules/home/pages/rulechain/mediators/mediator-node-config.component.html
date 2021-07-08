@@ -995,4 +995,22 @@
                                           [nodeDefinition]="nodeDefinitionValue">
         </virtuan-error-branch-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiSidecarNode'">
+        <virtuan-sidecar-node-config #SidecarNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [allConstants]=" allConstants"
+                                        [allRuleInputs]="allRuleInputs"
+                                        [inputEntities]=" inputEntities"
+                                        [inputCustomobjects]="inputCustomobjects"
+                                        [allVariables]="allVariables"
+                                        [inputProperties]="inputProperties"
+                                        [branchAvailability]="branchAvailability"
+                                        [apptype]="apptype"
+                                        [allErrorBranches]="allErrorBranches"
+                                        [allModelProperties]="allModelProperties"
+                                        [allReferenceProperties]="allReferenceProperties"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-sidecar-node-config>
+    </ng-container>
 </div>
