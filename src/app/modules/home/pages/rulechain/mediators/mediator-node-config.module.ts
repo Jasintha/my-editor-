@@ -39,6 +39,9 @@ import { FileWriteNodeConfigComponent } from './action/file-write-node-config.co
 
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
+//Sidecar
+import { SidecarNodeConfigComponent } from './sidecar/sidecar-node-config.component';
+
 //filter
 import { FilterNodeConfigComponent } from './filter/filter-node-config.component';
 import { SwitchNodeConfigComponent } from './filter/switch-node-config.component';
@@ -147,7 +150,8 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     CasbinAuthMiddlewareNodeConfigComponent,
     CoreMiddlewareNodeConfigComponent,
     TimeoutMiddlewareNodeConfigComponent,
-    EncryptMiddlewareNodeConfigComponent
+    EncryptMiddlewareNodeConfigComponent,
+    SidecarNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -215,7 +219,8 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     CasbinAuthMiddlewareNodeConfigComponent,
     CoreMiddlewareNodeConfigComponent,
     TimeoutMiddlewareNodeConfigComponent,
-    EncryptMiddlewareNodeConfigComponent
+    EncryptMiddlewareNodeConfigComponent,
+    SidecarNodeConfigComponent
   ],
   providers: []
 })
