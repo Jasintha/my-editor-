@@ -134,11 +134,17 @@ export class CasbinAuthMiddlewareNodeConfigComponent implements ControlValueAcce
     this.casbinAuthMiddlewareNodeConfigFormGroup = this.fb.group({
       policyInputType: "",
       inlinePolicyContent: "",
+      key: "",
       inputType: [],
       param: [],
       constant: [],
       property: [],
-      branchparam: []
+      branchparam: [],
+      secondinputType: [],
+      secondconstant: [],
+      secondparam: [],
+      secondproperty:[],
+      secondbranchparam: []
     });
   }
 
@@ -203,6 +209,51 @@ export class CasbinAuthMiddlewareNodeConfigComponent implements ControlValueAcce
     }
 
   }
+
+  refreshSecondInputTypes(){
+    let inputType: string = this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondinputType').value;
+    this.configuration.secondinputType = inputType;
+
+    if (inputType === 'CONSTANT'){
+      this.configuration.secondparam= {};
+      this.configuration.secondproperty= {};
+      this.configuration.secondbranchparam= {};
+
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
+
+    } else if (inputType === 'RULE_INPUT'){
+      this.configuration.secondconstant= {};
+      this.configuration.secondproperty= {};
+      this.configuration.secondbranchparam= {};
+
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
+      this.configuration.secondconstant= {};
+      this.configuration.secondparam= {};
+      this.configuration.secondbranchparam= {};
+
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.secondconstant= {};
+      this.configuration.secondparam= {};
+      this.configuration.secondproperty= {};
+
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+      this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
+    }
+
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
+  }
   
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
@@ -248,6 +299,27 @@ export class CasbinAuthMiddlewareNodeConfigComponent implements ControlValueAcce
       if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
         branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
       }
+
+
+      let secondparam = this.configuration.secondparam;
+      if(this.configuration.secondinputType === 'RULE_INPUT' && this.allRuleInputs){
+        secondparam = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName );
+      }
+
+      let secondconstant = this.configuration.secondconstant;
+      if(this.configuration.secondinputType === 'CONSTANT' && this.allConstants){
+        secondconstant = this.allConstants.find(x => x.constantName === this.configuration.secondconstant.constantName );
+      }
+
+      let secondproperty = this.configuration.secondproperty;
+      if(this.configuration.secondinputType === 'PROPERTY' && this.allModelProperties){
+        secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name );
+      }
+
+      let secondbranchparam = this.configuration.secondbranchparam;
+      if(this.configuration.secondinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+        secondbranchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.secondbranchparam.name );
+      }
       
       this.casbinAuthMiddlewareNodeConfigFormGroup.patchValue({
         policyInputType: this.configuration.policyInputType,
@@ -256,7 +328,13 @@ export class CasbinAuthMiddlewareNodeConfigComponent implements ControlValueAcce
         param: p,
         constant: c,
         property: property,
-        branchparam: branchparam
+        branchparam: branchparam,
+        secondbranchparam: secondbranchparam,
+        secondinputType: this.configuration.secondinputType,
+        secondparam: secondparam,
+        secondconstant: secondconstant,
+        secondproperty: secondproperty,
+        key: this.configuration.key
       });
 
       this.changeSubscription = this.casbinAuthMiddlewareNodeConfigFormGroup.get('policyInputType').valueChanges.subscribe(
@@ -316,6 +394,41 @@ export class CasbinAuthMiddlewareNodeConfigComponent implements ControlValueAcce
       this.changeSubscription = this.casbinAuthMiddlewareNodeConfigFormGroup.get('property').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.property = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+      
+      this.changeSubscription = this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondbranchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondbranchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondconstant').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondconstant = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondproperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondproperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.casbinAuthMiddlewareNodeConfigFormGroup.get('key').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.key = configuration;
           this.updateModel(this.configuration);
         }
       );
