@@ -1,11 +1,10 @@
 <div [formGroup]="contextPropertyNodeConfigFormGroup">
 
-  <mat-form-field fxFlex class="mat-block">
-    <mat-label>Name</mat-label>
-    <input matInput formControlName="contextpropname"/>
-  </mat-form-field>
-
-  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" >
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Key</mat-label>
+      <input matInput formControlName="contextpropname"/>
+    </mat-form-field>
     <section class="mat-block" fxFlex>
       <mat-form-field fxFlex class="mat-block">
         <mat-label>Value Type</mat-label>

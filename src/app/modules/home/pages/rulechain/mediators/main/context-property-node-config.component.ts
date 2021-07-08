@@ -230,6 +230,7 @@ export class ContextPropertyNodeConfigComponent implements ControlValueAccessor,
     let contextpropname: string = this.contextPropertyNodeConfigFormGroup.get('contextpropname').value;
     let valueinputType: string = this.contextPropertyNodeConfigFormGroup.get('valueinputType').value;
     let valueName: string = '';
+    let valueScope: string = '';
 
     if (valueinputType === 'RULE_INPUT'){
       let selectedValueParam = this.contextPropertyNodeConfigFormGroup.get('valueparam').value;
@@ -238,6 +239,7 @@ export class ContextPropertyNodeConfigComponent implements ControlValueAccessor,
     } else if (valueinputType === 'PROPERTY'){
       let selectedValueProperty = this.contextPropertyNodeConfigFormGroup.get('valueproperty').value;
       valueName = selectedValueProperty.name;
+      valueScope = selectedValueProperty.propertyScope;
 
     } else if (valueinputType === 'BRANCH_PARAM'){
       let selectedValueBranch = this.contextPropertyNodeConfigFormGroup.get('valuebranchparam').value;
@@ -246,13 +248,15 @@ export class ContextPropertyNodeConfigComponent implements ControlValueAccessor,
     } else if (valueinputType === 'CONSTANT'){
       let selectedValueConstant = this.contextPropertyNodeConfigFormGroup.get('valueconstant').value;
       valueName = selectedValueConstant.constantName;
+      valueScope = selectedValueConstant.scope;
 
     }
 
     let assignment = {
       'name': contextpropname,
       'valueinputType': valueinputType,
-      'valueName': valueName
+      'valueName': valueName,
+      'valueScope': valueScope
     };
 
     this.configuration.contextProperties.push(assignment);
@@ -419,5 +423,6 @@ export interface ContextProperty {
   name: string;
   valueinputType: string;
   valueName: string;
+  valueScope: string;
 }
 
