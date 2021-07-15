@@ -124,7 +124,8 @@ export class RuleNodeComponentsResolver implements Resolve<Array<RuleNodeCompone
 
   resolve(route: ActivatedRouteSnapshot): Observable<Array<RuleNodeComponentDescriptor>> {
     const editorType = route.params.editorType;
-    return this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap, editorType);
+    const uid = route.params.uid;
+    return this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap, uid, editorType);
   }
 }
 

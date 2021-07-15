@@ -53,7 +53,7 @@ export class ComponentDescriptorService {
     }
   }
 
-  public getComponentDescriptorsByTypes(componentTypes: Array<ComponentType>, editorType: string,
+  public getComponentDescriptorsByTypes(componentTypes: Array<ComponentType>, uid: string, editorType: string,
                                         config?: RequestConfig): Observable<Array<ComponentDescriptor>> {
     let result: ComponentDescriptor[] = [];
     for (let i = componentTypes.length - 1; i >= 0; i--) {
@@ -67,7 +67,7 @@ export class ComponentDescriptorService {
     if (!componentTypes.length) {
       return of(result);
     } else {
-      return this.http.get<Array<ComponentDescriptor>>(`/api/components?editorType=${editorType}&componentTypes=${componentTypes.join(',')}`,
+      return this.http.get<Array<ComponentDescriptor>>(`/api/components?uid=${uid}&editorType=${editorType}&componentTypes=${componentTypes.join(',')}`,
         defaultHttpOptionsFromConfig(config)).pipe(
         map((componentDescriptors) => {
           componentDescriptors.forEach((componentDescriptor) => {
