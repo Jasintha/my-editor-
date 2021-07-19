@@ -128,7 +128,7 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
 
   datasource: MatTableDataSource<EnvLookup>;
 
-  displayedColumns: string[] = ['propertyinputType', 'propertyName', 'valueinputType', 'valueName', 'actions'];
+  displayedColumns: string[] = ['propertyinputType', 'propertyName', 'valueinputType', 'valueName', 'defaultValue', 'actions'];
 
   private propagateChange = (v: any) => { };
 
@@ -137,6 +137,7 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
               private fb: FormBuilder) {
     this.envlookupNodeConfigFormGroup = this.fb.group({
       propertyinputType: "",
+      defaultValue: "",
       propertyproperty: [],
       propertyreference: [],
       valueconstant:[]
@@ -225,7 +226,8 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
       'valueinputType': valueinputType,
       'valueName': valueName,
       'valueDatatype': valueDatatype,
-      'valueScope':valueScope
+      'valueScope':valueScope,
+      'defaultValue': this.envlookupNodeConfigFormGroup.get('defaultValue').value
     };
 
     this.configuration.envlookups.push(lookup);
@@ -233,12 +235,14 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
     this.datasource = new MatTableDataSource(this.configuration.envlookups);
 
     this.configuration.propertyinputType = '';
+    this.configuration.defaultValue = '';
     this.configuration.propertyproperty= {};
     this.configuration.propertyreference= {};
     this.configuration.valueconstant= {};
 
     this.envlookupNodeConfigFormGroup.patchValue({
       propertyinputType: "",
+      defaultValue: "",
       propertyproperty: [],
       propertyreference: [],
       valueconstant:[]
@@ -286,6 +290,7 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
 
       this.envlookupNodeConfigFormGroup.patchValue({
         inputType: this.configuration.inputType,
+        defaultValue: this.configuration.defaultValue,
         referenceProperty: this.configuration.referenceProperty,
         property: this.configuration.property,
         valueconstant: this.configuration.valueconstant
@@ -302,6 +307,13 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
       this.changeSubscription = this.envlookupNodeConfigFormGroup.get('propertyproperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.propertyproperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.envlookupNodeConfigFormGroup.get('defaultValue').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.defaultValue = configuration;
           this.updateModel(this.configuration);
         }
       );
@@ -328,6 +340,7 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
 
 export interface EnvLookup {
   propertyinputType: string;
+  defaultValue: string;
   propertyName: string;
   propertyDatatype: string;
   propertyType: string;
