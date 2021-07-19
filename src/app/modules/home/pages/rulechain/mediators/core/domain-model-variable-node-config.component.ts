@@ -424,6 +424,10 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
         record = this.domainModelVariableNodeConfigFormGroup.get('proprecord').value;
         propertyScope = this.domainModelVariableNodeConfigFormGroup.get('propertyScope').value;
 
+        if (propertyScope == 'GLOBAL') {
+            name = this.titleCaseWord(name);
+        }
+
         if(propertyDataType === 'MODEL'){
             type = this.domainModelVariableNodeConfigFormGroup.get('propentity').value.name;
         } else if(propertyDataType === 'DTO'){
