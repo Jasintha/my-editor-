@@ -25,6 +25,7 @@ import { Subscription } from 'rxjs';
 import { QuestionBase } from '@shared/models/question-base.models';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { RuleNodeConfigComponent } from './rule-node-config.component';
+import {ConOperationBase} from "@shared/models/ConnectorOperation.models";
 
 @Component({
   selector: 'virtuan-rule-node',
@@ -137,6 +138,8 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   isReadOnly: boolean;
 
   @Input() connectorfields: QuestionBase[];
+
+  @Input() connectorOperations: ConOperationBase[];
 
   @Input() branchAvailability: any;
 

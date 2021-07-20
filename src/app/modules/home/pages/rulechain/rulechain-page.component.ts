@@ -63,7 +63,7 @@ import {
   ruleNodeTypeDescriptors,
   ruleNodeTypesLibrary
 } from '@shared/models/rule-node.models';
-import { QuestionBase,ValueProperty, TextboxQuestion, DropdownQuestion } from '@shared/models/question-base.models';
+import { QuestionBase,ValueProperty } from '@shared/models/question-base.models';
 import { FcRuleNodeModel, FcRuleNodeTypeModel, RuleChainMenuContextInfo } from './rulechain-page.models';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { fromEvent, NEVER, Observable, of } from 'rxjs';
@@ -79,6 +79,7 @@ import { Hotkey } from 'angular2-hotkeys';
 import { EntityType } from '@shared/models/entity-type.models';
 import { DebugEventType, EventType } from '@shared/models/event.models';
 import Timeout = NodeJS.Timeout;
+import {ConOperationBase} from "@shared/models/ConnectorOperation.models";
 
 @Component({
   selector: 'virtuan-rulechain-page',
@@ -181,6 +182,7 @@ export class RuleChainPageComponent extends PageComponent
   allApis:any[];
   apptype: string;
   connectorfields: QuestionBase[];
+  connectorOperations: ConOperationBase[];
   allValueObjectProperties: any[];
   allDomainModelsWithSub: any[];
   allViewModelsWithSub: any[];
@@ -995,6 +997,7 @@ export class RuleChainPageComponent extends PageComponent
 
     this.branchAvailability = {'branchParams': [], 'branchFound': false};
     this.connectorfields = [];
+    this.connectorOperations = [];
     if (node.component.type !== RuleNodeType.INPUT) {
       this.enableHotKeys = false;
       this.updateErrorTooltips(true);
@@ -1013,6 +1016,11 @@ export class RuleChainPageComponent extends PageComponent
       if(node.component.type === 'CONNECTOR'){
           let ruleNodeClass = node.component.clazz;
           this.connectorfields = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).fields;
+      }
+
+      if(node.component.type === 'CONNECTOR'){
+        let ruleNodeClass = node.component.clazz;
+        this.connectorOperations = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).operations;
       }
 
 
@@ -1665,7 +1673,14 @@ export class RuleChainPageComponent extends PageComponent
 
     if(ruleNode.component.type === 'CONNECTOR'){
         let ruleNodeClass = ruleNode.component.clazz;
-        connectorfields = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).fields;
+        connectorfields = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).operations;
+
+    }
+
+    let connectorOperations : ConOperationBase[]= [];
+    if(ruleNode.component.type === 'CONNECTOR'){
+      let ruleNodeClass = ruleNode.component.clazz;
+      connectorOperations = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).operations;
 
     }
 
@@ -1689,6 +1704,7 @@ export class RuleChainPageComponent extends PageComponent
         allVariables,
         allSavedObjects,
         connectorfields,
+        connectorOperations,
         branchAvailability,
         allDomainModels,
         allViewModels,
@@ -1917,6 +1933,7 @@ export interface AddRuleNodeDialogData {
   allVariables: any[];
   allSavedObjects: any[];
   connectorfields: QuestionBase[];
+  connectorOperations: ConOperationBase[];
   allDomainModels: any[];
   allViewModels: any[];
   allModelProperties: any[];
@@ -1961,6 +1978,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allValueObjectProperties: any[];
   allSavedObjects: any[];
   allVariables: any[];
+  connectorOperations: ConOperationBase[];
   connectorfields: QuestionBase[];
   branchAvailability: any;
   allDomainModels: any[];
@@ -2004,6 +2022,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allVariables = this.data.allVariables;
     this.allSavedObjects = this.data.allSavedObjects;
     this.connectorfields = this.data.connectorfields;
+    this.connectorOperations = this.data.connectorOperations;
     this.branchAvailability = this.data.branchAvailability;
     this.allDomainModels = this.data.allDomainModels;
     this.allViewModels = this.data.allViewModels;

@@ -37,6 +37,7 @@ import { RuleChainService } from '@core/http/rule-chain.service';
 import { TranslateService } from '@ngx-translate/core';
 import { JsonObjectEditComponent } from '@shared/components/json-object-edit.component';
 import { deepClone } from '@core/utils';
+import {ConOperationBase} from "@shared/models/ConnectorOperation.models";
 
 @Component({
   selector: 'virtuan-mediator-node-config',
@@ -146,6 +147,8 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   allReferenceProperties: any[];
 
   @Input() connectorfields: QuestionBase[];
+
+  @Input() connectorOperations: ConOperationBase[];
 
   @Input() branchAvailability: any;
 

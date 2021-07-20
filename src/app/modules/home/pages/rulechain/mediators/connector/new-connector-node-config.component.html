@@ -1,0 +1,30 @@
+<div [formGroup]="newConnectorConfigFormGroup">
+    <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Operation</mat-label>
+            <mat-select formControlName="operation">
+                <mat-option *ngFor="let operation of allOperations" [value]="operation">
+                    {{operation}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Input Model</mat-label>
+            <mat-select formControlName="reqModel">
+                <mat-option *ngFor="let model of allModelProperties" [value]="model">
+                    {{model.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Response Model</mat-label>
+            <mat-select formControlName="resModel">
+                <mat-option *ngFor="let model of allModelProperties" [value]="model">
+                    {{model.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </section>
+</div>
