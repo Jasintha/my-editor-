@@ -1,49 +1,66 @@
 <div [formGroup]="mediatorNodeConfigFormGroup" style="margin-top: 10px;margin-bottom: 10px;">
+<!--    <ng-container *ngIf="ruleType === 'CONNECTOR'">-->
+<!--        <ng-container-->
+<!--                *ngIf="nodeClazz === 'CONNECTOR_INIT_xiGmailInitNode_gmail' || nodeClazz === 'CONNECTOR_xiGmailSendNode_gmail' || nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio' || nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio' ;else second">-->
+<!--            <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio'">-->
+<!--                <virtuan-sms-init-node-config #smsInitNodeConfigComponent-->
+<!--                                         formControlName="configuration"-->
+<!--                                         [ruleNodeId]="ruleNodeId"-->
+<!--                                         [nodeDefinition]="nodeDefinitionValue">-->
+<!--                </virtuan-sms-init-node-config>-->
+<!--            </ng-container>-->
+<!--            <ng-container *ngIf="nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio'">-->
+<!--                <virtuan-sms-send-node-config #smsSendNodeConfigComponent-->
+<!--                                         formControlName="configuration"-->
+<!--                                         [ruleNodeId]="ruleNodeId"-->
+<!--                                         [allConstants]=" allConstants"-->
+<!--                                         [allRuleInputs]="allRuleInputs"-->
+<!--                                         [inputEntities]=" inputEntities"-->
+<!--                                         [inputCustomobjects]="inputCustomobjects"-->
+<!--                                         [allVariables]="allVariables"-->
+<!--                                         [inputProperties]="inputProperties"-->
+<!--                                         [apptype]="apptype"-->
+<!--                                         [allModelProperties]="allModelProperties"-->
+<!--                                         [nodeDefinition]="nodeDefinitionValue">-->
+<!--                </virtuan-sms-send-node-config>-->
+<!--            </ng-container>-->
+<!--        </ng-container>-->
+<!--        <ng-template #second>-->
+<!--            <virtuan-connector-node-config #connectorNodeConfigComponent-->
+<!--                                      formControlName="configuration"-->
+<!--                                      [ruleNodeId]="ruleNodeId"-->
+<!--                                      [ruleEntities]="ruleEntities"-->
+<!--                                      [inputCustomobjects]="inputCustomobjects"-->
+<!--                                      [inputProperties]="inputProperties"-->
+<!--                                      [inputEntities]="inputEntities"-->
+<!--                                      [allFields]="allFields"-->
+<!--                                      [allConstants]=" allConstants"-->
+<!--                                      [allSavedObjects]="allSavedObjects"-->
+<!--                                      [allVariables]="allVariables"-->
+<!--                                      [nodeDefinition]="nodeDefinitionValue"-->
+<!--                                      [allValueObjectProperties]="allValueObjectProperties"-->
+<!--                                      [branchAvailability]="branchAvailability"-->
+<!--                                      [fields]="connectorfields">-->
+<!--            </virtuan-connector-node-config>-->
+<!--        </ng-template>-->
+<!--    </ng-container>-->
+
     <ng-container *ngIf="ruleType === 'CONNECTOR'">
-        <ng-container
-                *ngIf="nodeClazz === 'CONNECTOR_INIT_xiGmailInitNode_gmail' || nodeClazz === 'CONNECTOR_xiGmailSendNode_gmail' || nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio' || nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio' ;else second">
-            <ng-container *ngIf="nodeClazz === 'CONNECTOR_INIT_xiTwilioInitNode_twilio'">
-                <virtuan-sms-init-node-config #smsInitNodeConfigComponent
-                                         formControlName="configuration"
-                                         [ruleNodeId]="ruleNodeId"
-                                         [nodeDefinition]="nodeDefinitionValue">
-                </virtuan-sms-init-node-config>
-            </ng-container>
-            <ng-container *ngIf="nodeClazz === 'CONNECTOR_xiTwilioSendNode_twilio'">
-                <virtuan-sms-send-node-config #smsSendNodeConfigComponent
-                                         formControlName="configuration"
-                                         [ruleNodeId]="ruleNodeId"
-                                         [allConstants]=" allConstants"
-                                         [allRuleInputs]="allRuleInputs"
-                                         [inputEntities]=" inputEntities"
-                                         [inputCustomobjects]="inputCustomobjects"
-                                         [allVariables]="allVariables"
-                                         [inputProperties]="inputProperties"
-                                         [apptype]="apptype"
-                                         [allModelProperties]="allModelProperties"
-                                         [nodeDefinition]="nodeDefinitionValue">
-                </virtuan-sms-send-node-config>
-            </ng-container>
-        </ng-container>
-        <ng-template #second>
-            <virtuan-connector-node-config #connectorNodeConfigComponent
-                                      formControlName="configuration"
-                                      [ruleNodeId]="ruleNodeId"
-                                      [ruleEntities]="ruleEntities"
-                                      [inputCustomobjects]="inputCustomobjects"
-                                      [inputProperties]="inputProperties"
-                                      [inputEntities]="inputEntities"
-                                      [allFields]="allFields"
-                                      [allConstants]=" allConstants"
-                                      [allSavedObjects]="allSavedObjects"
-                                      [allVariables]="allVariables"
-                                      [nodeDefinition]="nodeDefinitionValue"
-                                      [allValueObjectProperties]="allValueObjectProperties"
-                                      [branchAvailability]="branchAvailability"
-                                      [fields]="connectorfields">
-            </virtuan-connector-node-config>
-        </ng-template>
+            <virtuan-new-connector-node-config #newConnectorNodeConfigComponent
+                                           formControlName="configuration"
+                                           [ruleNodeId]="ruleNodeId"
+                                           [inputCustomobjects]="inputCustomobjects"
+                                           [inputProperties]="inputProperties"
+                                           [inputEntities]="inputEntities"
+                                           [allModelProperties]="allModelProperties"
+                                           [allConstants]=" allConstants"
+                                           [allVariables]="allVariables"
+                                           [nodeDefinition]="nodeDefinitionValue"
+                                           [branchAvailability]="branchAvailability"
+                                           [operations]="connectorOperations">
+            </virtuan-new-connector-node-config>
     </ng-container>
+
     <ng-container *ngIf="nodeClazz === 'xiBranchNode'">
         <virtuan-root-node-config #rootNodeConfigComponent
                              formControlName="configuration"
