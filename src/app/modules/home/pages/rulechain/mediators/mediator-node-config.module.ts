@@ -89,6 +89,7 @@ import {ExcelWriteNodeConfigComponent} from "@home/pages/rulechain/mediators/exc
 import {ExcelReadNodeConfigComponent} from "@home/pages/rulechain/mediators/excel/excel-read-node-config.component";
 import {ExcelCopyNodeConfigComponent} from "@home/pages/rulechain/mediators/excel/excel-copy-node-config.component";
 import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/excel/excel-delete-node-config.component";
+import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/connector/new-connector-node-config.component";
 @NgModule({
   declarations: [
     MediatorNodeConfigComponent,
@@ -104,6 +105,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     FilterNodeConfigComponent,
     CrudNodeConfigComponent,
     ConnectorNodeConfigComponent,
+    NewConnectorNodeConfigComponent,
     ReferencePropertyNodeConfigComponent,
     ConnectionPropertyNodeConfigComponent,
     EventStoreNodeConfigComponent,
@@ -175,6 +177,7 @@ import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/ex
     FilterNodeConfigComponent,
     CrudNodeConfigComponent,
     ConnectorNodeConfigComponent,
+    NewConnectorNodeConfigComponent,
     EventStoreNodeConfigComponent,
     QueryStoreNodeConfigComponent,
     SmsInitNodeConfigComponent,

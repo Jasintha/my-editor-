@@ -121,11 +121,22 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
   }
 
   addConstant(): void{
+    let scope : string = this.constantNodeConfigFormGroup.get('scope').value;
+    let name : string = this.constantNodeConfigFormGroup.get('constantName').value;
+
+    name = name.replace(/\s/g, "");
+
+    if (scope == 'GLOBAL') {
+      name = this.titleCaseWord(name);
+    } else {
+      name = this.lowerCaseWord(name);
+    }
+
     let constant = {
-      'constantName': this.constantNodeConfigFormGroup.get('constantName').value,
+      'constantName': name,
       'constantType': this.constantNodeConfigFormGroup.get('constantType').value,
       'customValue': this.constantNodeConfigFormGroup.get('customValue').value,
-      'scope': this.constantNodeConfigFormGroup.get('scope').value
+      'scope': scope
     };
     this.configuration.constants.push(constant);
     this.updateModel(this.configuration);
@@ -187,6 +198,16 @@ export class ConstantNodeConfigComponent implements ControlValueAccessor, OnInit
       );
       */
     }
+  }
+
+  titleCaseWord(word: string) {
+    if (!word) return word;
+    return word[0].toUpperCase() + word.substr(1);
+  }
+
+  lowerCaseWord(word: string) {
+    if (!word) return word;
+    return word[0].toLowerCase() + word.substr(1);
   }
 
   private updateModel(configuration: RuleNodeConfiguration) {

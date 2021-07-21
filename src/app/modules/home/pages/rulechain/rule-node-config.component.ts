@@ -38,6 +38,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { TranslateService } from '@ngx-translate/core';
 import { JsonObjectEditComponent } from '@shared/components/json-object-edit.component';
 import { deepClone } from '@core/utils';
+import {ConOperationBase} from "@shared/models/ConnectorOperation.models";
 
 @Component({
   selector: 'virtuan-rule-node-config',
@@ -164,6 +165,8 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
   allReferenceProperties: any[];
 
   @Input() connectorfields: QuestionBase[];
+
+  @Input() connectorOperations: ConOperationBase[];
 
   @Input() branchAvailability: any;
 
