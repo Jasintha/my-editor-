@@ -36,7 +36,7 @@ import { StringTemplateNodeConfigComponent } from './action/string-template-node
 import { CPGetterNodeConfigComponent } from './action/cp-getter-node-config.component';
 import { FileReadNodeConfigComponent } from './action/file-read-node-config.component';
 import { FileWriteNodeConfigComponent } from './action/file-write-node-config.component';
-
+import { GRPCCallNodeConfigComponent } from './action/grpc-call-node-config.component';
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 
 //Sidecar
@@ -134,6 +134,7 @@ import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/c
     FileWriteNodeConfigComponent,
     EnvVariableLookupNodeConfigComponent,
     StringTemplateNodeConfigComponent,
+    GRPCCallNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
      DashboardQueryNodeConfigComponent,
@@ -203,6 +204,7 @@ import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/c
     FileWriteNodeConfigComponent,
     EnvVariableLookupNodeConfigComponent,
     StringTemplateNodeConfigComponent,
+    GRPCCallNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
      DashboardQueryNodeConfigComponent,
