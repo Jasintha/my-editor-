@@ -1,4 +1,110 @@
 <div [formGroup]="grpcCallNodeConfigFormGroup">
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>GRPC Host</mat-label>
+        <mat-select formControlName="secondinputType" (selectionChange)="refreshSecondInputTypes()">
+          <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">
+            Rule Input
+          </mat-option>
+          <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+          <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length"
+            value="BRANCH_PARAM">Branch Param
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.secondinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
+        <mat-select formControlName="secondparam">
+          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
+            {{property.inputName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.secondinputType === 'CONSTANT'" fxFlex class="mat-block">
+        <mat-label>Constant</mat-label>
+        <mat-select formControlName="secondconstant">
+          <mat-option *ngFor="let constant of allConstants" [value]="constant">
+            {{constant.constantName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.secondinputType === 'PROPERTY'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="secondproperty">
+          <mat-option *ngFor="let property of allModelProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.secondinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="secondbranchparam">
+          <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+            {{param.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+  </section>
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>GRPC Port</mat-label>
+        <mat-select formControlName="thirdinputType" (selectionChange)="refreshThirdInputTypes()">
+          <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">
+            Rule Input
+          </mat-option>
+          <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+          <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length"
+            value="BRANCH_PARAM">Branch Param
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.thirdinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
+        <mat-select formControlName="thirdparam">
+          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
+            {{property.inputName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.thirdinputType === 'CONSTANT'" fxFlex class="mat-block">
+        <mat-label>Constant</mat-label>
+        <mat-select formControlName="thirdconstant">
+          <mat-option *ngFor="let constant of allConstants" [value]="constant">
+            {{constant.constantName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.thirdinputType === 'PROPERTY'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="thirdproperty">
+          <mat-option *ngFor="let property of allModelProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.thirdinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="thirdbranchparam">
+          <mat-option *ngFor="let param of branchAvailability?.branchParams" [value]="param">
+            {{param.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+  </section>
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Service Method Type</mat-label>
     <mat-select formControlName="grpcMethod">
@@ -11,20 +117,22 @@
 
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Method Name</mat-label>
-    <input matInput formControlName="apiMethodName"/>
+    <input matInput formControlName="apiMethodName" />
   </mat-form-field>
 
   <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
-      <mat-form-field fxFlex class="mat-block">
-        <mat-label>Method Input Type</mat-label>
-        <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
-          <mat-option *ngIf="!branchAvailability?.branchFound &&  allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
-          <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
-          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
-          <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
-          <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Method Input Type</mat-label>
+      <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
+        <mat-option *ngIf="!branchAvailability?.branchFound &&  allRuleInputs?.length" value="RULE_INPUT">Rule Input
+        </mat-option>
+        <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+        <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+        <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length"
+          value="BRANCH_PARAM">Branch Param</mat-option>
+        <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
+      </mat-select>
+    </mat-form-field>
     <section class="mat-block" fxFlex>
       <mat-form-field *ngIf="configuration.inputType === 'RULE_INPUT'" fxFlex class="mat-block">
         <mat-label>Rule Input</mat-label>
@@ -96,7 +204,7 @@
 
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Error Message</mat-label>
-    <input matInput formControlName="errorMsg"/>
+    <input matInput formControlName="errorMsg" />
   </mat-form-field>
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Error Action</mat-label>
@@ -149,9 +257,11 @@
         <mat-form-field fxFlex class="mat-block">
           <mat-label>Error Parameter Input Type</mat-label>
           <mat-select formControlName="errorParameterinputType" (selectionChange)="refreshErrorParameterInputTypes()">
-            <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+            <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input
+            </mat-option>
             <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
-            <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+            <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length"
+              value="BRANCH_PARAM">Branch Param</mat-option>
           </mat-select>
         </mat-form-field>
         <section class="mat-block" fxFlex>
@@ -180,10 +290,8 @@
             </mat-select>
           </mat-form-field>
         </section>
-        <button mat-icon-button class="virtuan-fullscreen-button-style"
-                (click)="addErrorParameter()"
-                matTooltip="Add Parameter"
-                matTooltipPosition="above">
+        <button mat-icon-button class="virtuan-fullscreen-button-style" (click)="addErrorParameter()"
+          matTooltip="Add Parameter" matTooltipPosition="above">
           <mat-icon color="primary">add</mat-icon>
         </button>
       </section>
@@ -214,9 +322,11 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let element;let i = index">
-              <button mat-icon-button class="virtuan-mat-32" (click)="deleteErrorRow(i)" matTooltip="Delete Parameter" matTooltipPosition="above">
+              <button mat-icon-button class="virtuan-mat-32" (click)="deleteErrorRow(i)" matTooltip="Delete Parameter"
+                matTooltipPosition="above">
                 <mat-icon style="color:red;">delete</mat-icon>
-              </button></td>
+              </button>
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayErroredColumns"></tr>
@@ -228,4 +338,3 @@
     </mat-expansion-panel>
   </div>
 </div>
-

@@ -27,7 +27,7 @@ import { Observable } from 'rxjs';
 import { PageComponent } from '@shared/components/page.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'virtuan-grpc-call-node-config',
@@ -40,7 +40,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('definedConfigContent', {read: ViewContainerRef, static: true}) definedConfigContainer: ViewContainerRef;
+  @ViewChild('definedConfigContent', { read: ViewContainerRef, static: true }) definedConfigContainer: ViewContainerRef;
 
   private requiredValue: boolean;
   get required(): boolean {
@@ -81,8 +81,8 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
   @Input()
   allRuleInputs: any[];
 
-    domainModelProperties: any[];
-    viewModelProperties: any[];
+  domainModelProperties: any[];
+  viewModelProperties: any[];
 
   @Input()
   disabled: boolean;
@@ -99,7 +99,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
     if (this.nodeDefinitionValue !== nodeDefinition) {
       this.nodeDefinitionValue = nodeDefinition;
       if (this.nodeDefinitionValue) {
-       // this.validateDefinedDirective();
+        // this.validateDefinedDirective();
       }
     }
   }
@@ -118,10 +118,10 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
   configuration: RuleNodeConfiguration;
-  
+
   selectedVariableProperties: any[];
   selectedVariablePropertiesForParameter: any[];
-  
+
   errordatasource: MatTableDataSource<ErrorFunctionParameters>;
   displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
 
@@ -129,17 +129,27 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
   private propagateChange = (v: any) => { };
 
   constructor(private translate: TranslateService,
-              private ruleChainService: RuleChainService,
-              private fb: FormBuilder) {
+    private ruleChainService: RuleChainService,
+    private fb: FormBuilder) {
     this.grpcCallNodeConfigFormGroup = this.fb.group({
       inputType: [],
       param: [],
       constant: [],
       property: [],
+      secondinputType: [],
+      secondconstant: [],
+      secondparam: [],
+      secondproperty: [],
+      secondbranchparam: [],
+      thirdinputType: [],
+      thirdconstant: [],
+      thirdparam: [],
+      thirdproperty: [],
+      thirdbranchparam: [],
       errorMsg: "",
       errorAction: "",
-      grpcMethod:"",
-      apiMethodName:"",
+      grpcMethod: "",
+      apiMethodName: "",
       branchparam: [],
       assignedProperty: [],
       assignedtoinputType: "",
@@ -172,24 +182,24 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
     }
   }
 
-  refreshErrorParameterInputTypes(){
+  refreshErrorParameterInputTypes() {
     let errorInputType: string = this.grpcCallNodeConfigFormGroup.get('errorParameterinputType').value;
     this.configuration.errorParameterinputType = errorInputType;
-    if (errorInputType === 'RULE_INPUT'){
-      this.configuration.errorParameterproperty= {};
-      this.configuration.errorParameterbranchparam= {};
-      this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
-      this.configuration.errorParameterparam= {};
-      this.configuration.errorParameterbranchparam= {};
-      this.grpcCallNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'BRANCH_PARAM'){
-      this.configuration.errorParameterparam= {};
-      this.configuration.errorParameterproperty= {};
-      this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    if (errorInputType === 'RULE_INPUT') {
+      this.configuration.errorParameterproperty = {};
+      this.configuration.errorParameterbranchparam = {};
+      this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], { emitEvent: false });
+    } else if (errorInputType === 'PROPERTY') {
+      this.configuration.errorParameterparam = {};
+      this.configuration.errorParameterbranchparam = {};
+      this.grpcCallNodeConfigFormGroup.get('parameterbranchparam').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], { emitEvent: false });
+    } else if (errorInputType === 'BRANCH_PARAM') {
+      this.configuration.errorParameterparam = {};
+      this.configuration.errorParameterproperty = {};
+      this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('errorParameterparam').patchValue([], { emitEvent: false });
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -197,18 +207,18 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
 
   }
 
-  deleteErrorRow(index: number): void{
+  deleteErrorRow(index: number): void {
     this.configuration.errorFunctionParameters.splice(index, 1);
     this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
     this.updateModel(this.configuration);
   }
 
-  addErrorParameter(): void{
+  addErrorParameter(): void {
 
     let errorInputType: string = this.grpcCallNodeConfigFormGroup.get('errorParameterinputType').value;
     let errorBranchparameter = this.grpcCallNodeConfigFormGroup.get('errorBranchparameter').value;
 
-    if (errorInputType === 'RULE_INPUT'){
+    if (errorInputType === 'RULE_INPUT') {
       let selectedErrorParameterParam = this.grpcCallNodeConfigFormGroup.get('errorParameterparam').value;
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
@@ -218,7 +228,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY') {
       let selectedErrorParameterProperty = this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -228,7 +238,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       };
       this.configuration.errorFunctionParameters.push(errorParameterproperty);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'BRANCH_PARAM'){
+    } else if (errorInputType === 'BRANCH_PARAM') {
       let selectedErrorParameterBranch = this.grpcCallNodeConfigFormGroup.get('errorParameterbranchparam').value;
       let errorParameterbranchparam = {
         'parameterName': errorBranchparameter.name,
@@ -243,52 +253,136 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
     this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
 
     this.configuration.errorParameterinputType = '';
-    this.configuration.errorParameterproperty= {};
-    this.configuration.errorParameterparam= {};
-    this.configuration.errorBranchparameter= {};
-    this.configuration.errorParameterbranchparam= {};
+    this.configuration.errorParameterproperty = {};
+    this.configuration.errorParameterparam = {};
+    this.configuration.errorBranchparameter = {};
+    this.configuration.errorParameterbranchparam = {};
 
-    this.grpcCallNodeConfigFormGroup.get('errorParameterinputType').patchValue([], {emitEvent: false});
-    this.grpcCallNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
-    this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
-    this.grpcCallNodeConfigFormGroup.get('errorBranchparameter').patchValue([], {emitEvent: false});
-    this.grpcCallNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
+    this.grpcCallNodeConfigFormGroup.get('errorParameterinputType').patchValue([], { emitEvent: false });
+    this.grpcCallNodeConfigFormGroup.get('errorParameterparam').patchValue([], { emitEvent: false });
+    this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').patchValue([], { emitEvent: false });
+    this.grpcCallNodeConfigFormGroup.get('errorBranchparameter').patchValue([], { emitEvent: false });
+    this.grpcCallNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], { emitEvent: false });
 
   }
-  
-  refreshInputTypes(){
+
+  refreshInputTypes() {
 
     let inputType: string = this.grpcCallNodeConfigFormGroup.get('inputType').value;
     this.configuration.inputType = inputType;
-    if (inputType === 'CONSTANT'){
+    if (inputType === 'CONSTANT') {
 
-      this.configuration.param= {};
-      this.configuration.property= {};
-      this.configuration.branchparam= {};
-      this.grpcCallNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'RULE_INPUT'){
-      this.configuration.constant= {};
-      this.configuration.property= {};
-      this.configuration.branchparam= {};
-      this.grpcCallNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
-      this.configuration.constant= {};
-      this.configuration.param= {};
-      this.configuration.branchparam= {};
-      this.grpcCallNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
-    } else if (inputType === 'BRANCH_PARAM'){
-      this.configuration.constant= {};
-      this.configuration.param= {};
-      this.configuration.property= {};
-      this.grpcCallNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
-      this.grpcCallNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.configuration.param = {};
+      this.configuration.property = {};
+      this.configuration.branchparam = {};
+      this.grpcCallNodeConfigFormGroup.get('param').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('branchparam').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('property').patchValue([], { emitEvent: false });
+    } else if (inputType === 'RULE_INPUT') {
+      this.configuration.constant = {};
+      this.configuration.property = {};
+      this.configuration.branchparam = {};
+      this.grpcCallNodeConfigFormGroup.get('branchparam').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('constant').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('property').patchValue([], { emitEvent: false });
+    } else if (inputType === 'PROPERTY') {
+      this.configuration.constant = {};
+      this.configuration.param = {};
+      this.configuration.branchparam = {};
+      this.grpcCallNodeConfigFormGroup.get('branchparam').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('constant').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('param').patchValue([], { emitEvent: false });
+    } else if (inputType === 'BRANCH_PARAM') {
+      this.configuration.constant = {};
+      this.configuration.param = {};
+      this.configuration.property = {};
+      this.grpcCallNodeConfigFormGroup.get('constant').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('param').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('property').patchValue([], { emitEvent: false });
+    }
+
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
+  }
+
+  refreshSecondInputTypes() {
+    let inputType: string = this.grpcCallNodeConfigFormGroup.get('secondinputType').value;
+    this.configuration.secondinputType = inputType;
+    if (inputType === 'CONSTANT') {
+      this.configuration.secondparam = {};
+      this.configuration.secondproperty = {};
+      this.configuration.secondbranchparam = {};
+      this.grpcCallNodeConfigFormGroup.get('secondparam').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('secondproperty').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('secondbranchparam').patchValue([], { emitEvent: false });
+
+    } else if (inputType === 'RULE_INPUT') {
+
+      this.configuration.secondconstant = {};
+      this.configuration.secondproperty = {};
+      this.configuration.secondbranchparam = {};
+      this.grpcCallNodeConfigFormGroup.get('secondconstant').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('secondproperty').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('secondbranchparam').patchValue([], { emitEvent: false });
+    } else if (inputType === 'PROPERTY') {
+      this.configuration.secondconstant = {};
+      this.configuration.secondparam = {};
+      this.configuration.secondbranchparam = {};
+
+      this.grpcCallNodeConfigFormGroup.get('secondconstant').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('secondparam').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('secondbranchparam').patchValue([], { emitEvent: false });
+    } else if (inputType === 'BRANCH_PARAM') {
+      this.configuration.secondconstant = {};
+      this.configuration.secondparam = {};
+      this.configuration.secondproperty = {};
+      this.grpcCallNodeConfigFormGroup.get('secondconstant').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('secondparam').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('secondproperty').patchValue([], { emitEvent: false });
+    }
+
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
+  }
+
+  refreshThirdInputTypes() {
+    let inputType: string = this.grpcCallNodeConfigFormGroup.get('thirdinputType').value;
+    this.configuration.thirdinputType = inputType;
+    if (inputType === 'CONSTANT') {
+      this.configuration.thirdparam = {};
+      this.configuration.thirdproperty = {};
+      this.configuration.thirdbranchparam = {};
+      this.grpcCallNodeConfigFormGroup.get('thirdparam').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('thirdproperty').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('thirdbranchparam').patchValue([], { emitEvent: false });
+
+    } else if (inputType === 'RULE_INPUT') {
+
+      this.configuration.thirdconstant = {};
+      this.configuration.thirdproperty = {};
+      this.configuration.thirdbranchparam = {};
+      this.grpcCallNodeConfigFormGroup.get('thirdconstant').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('thirdproperty').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('thirdbranchparam').patchValue([], { emitEvent: false });
+    } else if (inputType === 'PROPERTY') {
+      this.configuration.thirdconstant = {};
+      this.configuration.thirdparam = {};
+      this.configuration.thirdbranchparam = {};
+
+      this.grpcCallNodeConfigFormGroup.get('thirdconstant').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('thirdparam').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('thirdbranchparam').patchValue([], { emitEvent: false });
+    } else if (inputType === 'BRANCH_PARAM') {
+      this.configuration.thirdconstant = {};
+      this.configuration.thirdparam = {};
+      this.configuration.thirdproperty = {};
+      this.grpcCallNodeConfigFormGroup.get('thirdconstant').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('thirdparam').patchValue([], { emitEvent: false });
+      this.grpcCallNodeConfigFormGroup.get('thirdproperty').patchValue([], { emitEvent: false });
     }
 
     if (this.definedConfigComponent) {
@@ -303,9 +397,9 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     if (this.disabled) {
-      this.grpcCallNodeConfigFormGroup.disable({emitEvent: false});
+      this.grpcCallNodeConfigFormGroup.disable({ emitEvent: false });
     } else {
-      this.grpcCallNodeConfigFormGroup.enable({emitEvent: false});
+      this.grpcCallNodeConfigFormGroup.enable({ emitEvent: false });
     }
   }
 
@@ -313,7 +407,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
 
     this.configuration = deepClone(value);
 
-    if(this.configuration.errorFunctionParameters === null || this.configuration.errorFunctionParameters === undefined){
+    if (this.configuration.errorFunctionParameters === null || this.configuration.errorFunctionParameters === undefined) {
       this.configuration.errorFunctionParameters = [];
     }
     this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
@@ -331,38 +425,83 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
     } else {
 
       let p = this.configuration.param;
-      if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
-        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+      if (this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs) {
+        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName);
       }
 
       let c = this.configuration.constant;
-      if(this.configuration.inputType === 'CONSTANT' && this.allConstants){
-        c = this.allConstants.find(x => x.constantName === this.configuration.constant.constantName );
+      if (this.configuration.inputType === 'CONSTANT' && this.allConstants) {
+        c = this.allConstants.find(x => x.constantName === this.configuration.constant.constantName);
       }
 
       let property = this.configuration.property;
-      if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
-        property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      if (this.configuration.inputType === 'PROPERTY' && this.allModelProperties) {
+        property = this.allModelProperties.find(x => x.name === this.configuration.property.name);
       }
 
       let branchparam = this.configuration.branchparam;
-      if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
-        branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
+      if (this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams) {
+        branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name);
       }
 
       let assignedProperty = this.configuration.assignedProperty;
-      if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
-        assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      if (this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties) {
+        assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name);
       }
 
       let assignedReference = this.configuration.assignedReference;
-      if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
-        assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
+      if (this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties) {
+        assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name);
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if (errorBranch && this.allErrorBranches) {
+        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name);
+      }
+
+      //second input
+
+      let secondparam = this.configuration.secondparam;
+      if (this.configuration.secondinputType === 'RULE_INPUT' && this.allRuleInputs) {
+        secondparam = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName);
+      }
+
+      let secondconstant = this.configuration.secondconstant;
+      if (this.configuration.secondinputType === 'CONSTANT' && this.allConstants) {
+        secondconstant = this.allConstants.find(x => x.constantName === this.configuration.secondconstant.constantName);
+      }
+
+      let secondproperty = this.configuration.secondproperty;
+      if (this.configuration.secondinputType === 'PROPERTY' && this.allModelProperties) {
+        secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name);
+      }
+
+      let secondbranchparam = this.configuration.secondbranchparam;
+      if (this.configuration.secondinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams) {
+        secondbranchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.secondbranchparam.name);
+      }
+
+
+      //third input
+
+      let thirdparam = this.configuration.thirdparam;
+      if (this.configuration.thirdinputType === 'RULE_INPUT' && this.allRuleInputs) {
+        thirdparam = this.allRuleInputs.find(x => x.inputName === this.configuration.thirdparam.inputName);
+      }
+
+      let thirdconstant = this.configuration.thirdconstant;
+      if (this.configuration.thirdinputType === 'CONSTANT' && this.allConstants) {
+        thirdconstant = this.allConstants.find(x => x.constantName === this.configuration.thirdconstant.constantName);
+      }
+
+      let thirdproperty = this.configuration.thirdproperty;
+      if (this.configuration.thirdinputType === 'PROPERTY' && this.allModelProperties) {
+        thirdproperty = this.allModelProperties.find(x => x.name === this.configuration.thirdproperty.name);
+      }
+
+      let thirdbranchparam = this.configuration.thirdbranchparam;
+      if (this.configuration.thirdinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams) {
+        thirdbranchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.thirdbranchparam.name);
       }
 
       this.grpcCallNodeConfigFormGroup.patchValue({
@@ -373,6 +512,16 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
         constant: c,
         property: property,
         branchparam: branchparam,
+        secondbranchparam: secondbranchparam,
+        secondinputType: this.configuration.secondinputType,
+        secondparam: secondparam,
+        secondconstant: secondconstant,
+        secondproperty: secondproperty,
+        thirdbranchparam: thirdbranchparam,
+        thirdinputType: this.configuration.thirdinputType,
+        thirdparam: thirdparam,
+        thirdconstant: thirdconstant,
+        thirdproperty: thirdproperty,
         assignedProperty: assignedProperty,
         assignedtoinputType: this.configuration.assignedtoinputType,
         assignedReference: assignedReference,
@@ -388,70 +537,127 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
         errorIsAsync: this.configuration.errorIsAsync
       });
 
+
+      this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('secondbranchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondbranchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('secondparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('secondconstant').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondconstant = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('secondproperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.secondproperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('thirdbranchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.thirdbranchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('thirdparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.thirdparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('thirdconstant').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.thirdconstant = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('thirdproperty').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.thirdproperty = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
       this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('grpcMethod').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.grpcMethod = configuration;
           this.updateModel(this.configuration);
         }
-    );
+      );
 
-    this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('apiMethodName').valueChanges.subscribe(
-      (configuration: any) => {
-        this.configuration.apiMethodName = configuration;
-        this.updateModel(this.configuration);
-      }
-  );
+      this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('apiMethodName').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.apiMethodName = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
 
       this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
 
           this.configuration.assignedtoinputType = configuration;
-          if(this.configuration.assignedtoinputType == 'PROPERTY'){
-            this.configuration.assignedReference= {};
-            this.grpcCallNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
-          }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
-            this.configuration.assignedProperty= {};
-            this.grpcCallNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+          if (this.configuration.assignedtoinputType == 'PROPERTY') {
+            this.configuration.assignedReference = {};
+            this.grpcCallNodeConfigFormGroup.get('assignedReference').patchValue([], { emitEvent: false });
+          } else if (this.configuration.assignedtoinputType == 'REFERENCE') {
+            this.configuration.assignedProperty = {};
+            this.grpcCallNodeConfigFormGroup.get('assignedProperty').patchValue([], { emitEvent: false });
           }
           this.updateModel(this.configuration);
         }
       );
 
       this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
-          (configuration: any) => {
-            this.configuration.errorIsAsync = configuration;
-            this.updateModel(this.configuration);
-          }
+        (configuration: any) => {
+          this.configuration.errorIsAsync = configuration;
+          this.updateModel(this.configuration);
+        }
       );
 
       this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('errorBranch').valueChanges.subscribe(
-          (configuration: any) => {
-            this.configuration.errorBranch = configuration;
+        (configuration: any) => {
+          this.configuration.errorBranch = configuration;
 
-            this.updateModel(this.configuration);
-          }
+          this.updateModel(this.configuration);
+        }
       );
 
       this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('errorParameterparam').valueChanges.subscribe(
-          (configuration: any) => {
-            this.configuration.errorParameterparam = configuration;
-            this.updateModel(this.configuration);
-          }
+        (configuration: any) => {
+          this.configuration.errorParameterparam = configuration;
+          this.updateModel(this.configuration);
+        }
       );
 
       this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('errorParameterbranchparam').valueChanges.subscribe(
-          (configuration: any) => {
-            this.configuration.errorParameterbranchparam = configuration;
-            this.updateModel(this.configuration);
-          }
+        (configuration: any) => {
+          this.configuration.errorParameterbranchparam = configuration;
+          this.updateModel(this.configuration);
+        }
       );
 
       this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').valueChanges.subscribe(
-          (configuration: any) => {
-            this.configuration.errorParameterproperty = configuration;
-            this.updateModel(this.configuration);
-          }
+        (configuration: any) => {
+          this.configuration.errorParameterproperty = configuration;
+          this.updateModel(this.configuration);
+        }
       );
 
       this.changeSubscription = this.grpcCallNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
