@@ -38,6 +38,8 @@ import { FileReadNodeConfigComponent } from './action/file-read-node-config.comp
 import { FileWriteNodeConfigComponent } from './action/file-write-node-config.component';
 import { GRPCCallNodeConfigComponent } from './action/grpc-call-node-config.component';
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
+import { ErrorNodeConfigComponent } from './action/error-node-config.component';
+
 
 //Sidecar
 import { SidecarNodeConfigComponent } from './sidecar/sidecar-node-config.component';
@@ -154,7 +156,8 @@ import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/c
     CoreMiddlewareNodeConfigComponent,
     TimeoutMiddlewareNodeConfigComponent,
     EncryptMiddlewareNodeConfigComponent,
-    SidecarNodeConfigComponent
+    SidecarNodeConfigComponent,
+    ErrorNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -225,7 +228,8 @@ import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/c
     CoreMiddlewareNodeConfigComponent,
     TimeoutMiddlewareNodeConfigComponent,
     EncryptMiddlewareNodeConfigComponent,
-    SidecarNodeConfigComponent
+    SidecarNodeConfigComponent,
+    ErrorNodeConfigComponent
   ],
   providers: []
 })
