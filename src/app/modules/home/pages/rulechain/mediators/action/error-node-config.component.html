@@ -2,7 +2,7 @@
   <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
     <section class="mat-block" fxFlex>
       <mat-form-field fxFlex class="mat-block">
-        <mat-label>GRPC Port Input Type</mat-label>
+        <mat-label>Error Input</mat-label>
         <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
           <mat-option *ngIf="!branchAvailability?.branchFound &&  allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
           <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
