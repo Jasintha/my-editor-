@@ -426,7 +426,8 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         'join': join,
         'modelproperty': selectedNode,
         'property': selectedParam.inputName,
-        'modelpropertyName': selectedNode.name
+        'modelpropertyName': selectedNode.name,
+        'scope': ''
       };
       this.configuration.whereClauseBuilders.push(parameterparam);
       this.updateModel(this.configuration);
@@ -438,7 +439,8 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         'join': join,
         'modelproperty': selectedNode,
         'property': selectedProperty.name,
-        'modelpropertyName': selectedNode.name
+        'modelpropertyName': selectedNode.name,
+        'scope': selectedProperty.propertyScope
       };
 
       this.configuration.whereClauseBuilders.push(parameterproperty);
@@ -451,7 +453,8 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         'join': join,
         'modelproperty': selectedNode,
         'property': selectedBranch.name,
-        'modelpropertyName': selectedNode.name
+        'modelpropertyName': selectedNode.name,
+        'scope': ''
       };
 
       this.configuration.whereClauseBuilders.push(parameterbranch);
@@ -464,7 +467,8 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         'join': join,
         'modelproperty': selectedNode,
         'property': selectedConstant.constantName,
-        'modelpropertyName': selectedNode.name
+        'modelpropertyName': selectedNode.name,
+        'scope': selectedConstant.scope
       };
 
       this.configuration.whereClauseBuilders.push(parameterbranch);
@@ -476,7 +480,8 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         'join': join,
         'modelproperty': selectedNode,
         'property': '-',
-        'modelpropertyName': selectedNode.name
+        'modelpropertyName': selectedNode.name,
+        'scope': ''
       };
 
       this.configuration.whereClauseBuilders.push(defaultobj);
@@ -1174,6 +1179,7 @@ export interface QueryBuilder {
   join: string;
   modelproperty: DomainModelProperty;
   modelpropertyName: string;
+  scope: string;
 }
 
 export interface SelectedProperty {

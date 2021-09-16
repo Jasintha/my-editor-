@@ -1030,4 +1030,40 @@
                                         [nodeDefinition]="nodeDefinitionValue">
         </virtuan-sidecar-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiGrpcCallNode'">
+        <virtuan-grpc-call-node-config #grpcCallNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [allConstants]=" allConstants"
+                                        [allRuleInputs]="allRuleInputs"
+                                        [inputEntities]=" inputEntities"
+                                        [inputCustomobjects]="inputCustomobjects"
+                                        [allVariables]="allVariables"
+                                        [inputProperties]="inputProperties"
+                                        [branchAvailability]="branchAvailability"
+                                        [apptype]="apptype"
+                                        [allErrorBranches]="allErrorBranches"
+                                        [allModelProperties]="allModelProperties"
+                                        [allReferenceProperties]="allReferenceProperties"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-grpc-call-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiErrNode'">
+        <virtuan-error-node-config #errNodeConfigComponent
+                                       formControlName="configuration"
+                                       [ruleNodeId]="ruleNodeId"
+                                       [allConstants]=" allConstants"
+                                       [allRuleInputs]="allRuleInputs"
+                                       [inputEntities]=" inputEntities"
+                                       [inputCustomobjects]="inputCustomobjects"
+                                       [allVariables]="allVariables"
+                                       [inputProperties]="inputProperties"
+                                       [branchAvailability]="branchAvailability"
+                                       [apptype]="apptype"
+                                       [allErrorBranches]="allErrorBranches"
+                                       [allModelProperties]="allModelProperties"
+                                       [allReferenceProperties]="allReferenceProperties"
+                                       [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-error-node-config>
+    </ng-container>
 </div>
