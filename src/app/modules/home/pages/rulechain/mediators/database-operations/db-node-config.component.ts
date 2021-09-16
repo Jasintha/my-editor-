@@ -438,7 +438,8 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         'join': join,
         'modelproperty': selectedNode,
         'property': selectedProperty.name,
-        'modelpropertyName': selectedNode.name
+        'modelpropertyName': selectedNode.name,
+        'scope': selectedProperty.propertyScope
       };
 
       this.configuration.whereClauseBuilders.push(parameterproperty);
@@ -464,7 +465,8 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         'join': join,
         'modelproperty': selectedNode,
         'property': selectedConstant.constantName,
-        'modelpropertyName': selectedNode.name
+        'modelpropertyName': selectedNode.name,
+        'scope': selectedConstant.scope
       };
 
       this.configuration.whereClauseBuilders.push(parameterbranch);
@@ -1174,6 +1176,7 @@ export interface QueryBuilder {
   join: string;
   modelproperty: DomainModelProperty;
   modelpropertyName: string;
+  scope: string;
 }
 
 export interface SelectedProperty {
