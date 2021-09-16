@@ -289,7 +289,8 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         'condition': switchCondition,
         'inputType': inputType,
         'input': '-',
-        'property': selectedSwitchParam.inputName
+        'property': selectedSwitchParam.inputName,
+        'scope': ''
       };
       this.configuration.switchCases.push(switchcase);
       this.updateModel(this.configuration);
@@ -300,7 +301,8 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         'condition': switchCondition,
         'inputType': inputType,
         'input': '-',
-        'property': selectedSwitchProperty.name
+        'property': selectedSwitchProperty.name,
+        'scope': selectedSwitchProperty.propertyScope
       };
       this.configuration.switchCases.push(switchcase);
       this.updateModel(this.configuration);
@@ -311,7 +313,8 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         'condition': switchCondition,
         'inputType': inputType,
         'input': '-',
-        'property': selectedSwitchConstant.constantName
+        'property': selectedSwitchConstant.constantName,
+        'scope': selectedSwitchConstant.scope
       };
       this.configuration.switchCases.push(switchcase);
       this.updateModel(this.configuration);
@@ -322,7 +325,8 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         'condition': switchCondition,
         'inputType': inputType,
         'input': '-',
-        'property': selectedSwitchBranchParam.name
+        'property': selectedSwitchBranchParam.name,
+        'scope': ''
       };
       this.configuration.switchCases.push(switchcase);
       this.updateModel(this.configuration);
@@ -567,6 +571,7 @@ export interface ConditionalStatement {
   inputType: string;
   input: string;
   property: string;
+  scope: string;
  // root: string;
  // isAsync: string;
 }
