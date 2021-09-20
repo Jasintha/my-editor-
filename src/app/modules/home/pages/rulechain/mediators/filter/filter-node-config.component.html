@@ -122,12 +122,12 @@
       <mat-label>Condition</mat-label>
       <mat-select formControlName="condition">
         <mat-option value="equal" *ngIf="configuration.param.inputType !== 'TRUE_OR_FALSE' && configuration.param.inputType !== 'Boolean' && configuration.param.inputType !== 'bool' &&
-                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input !== 'Boolean') &&
+                                !(configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Boolean') &&
                                     configuration.constant.constantType !== 'Boolean' && configuration.constant.constantType !== 'TRUE_OR_FALSE' && configuration.constant.constantType !== 'bool' &&
                                     configuration.property.type !== 'Boolean' && configuration.property.type !== 'TRUE_OR_FALSE' && configuration.property.type !== 'bool'">Equal</mat-option>
 
         <mat-option value="notequal" *ngIf="configuration.param.inputType !== 'TRUE_OR_FALSE' && configuration.param.inputType !== 'Boolean' && configuration.param.inputType !== 'bool' &&
-                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input !== 'Boolean') &&
+                                !(configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Boolean') &&
                                     configuration.constant.constantType !== 'Boolean' && configuration.constant.constantType !== 'TRUE_OR_FALSE' && configuration.constant.constantType !== 'bool' &&
                                     configuration.property.type !== 'Boolean' && configuration.property.type !== 'TRUE_OR_FALSE' && configuration.property.type !== 'bool'">Not Equal</mat-option>
 
