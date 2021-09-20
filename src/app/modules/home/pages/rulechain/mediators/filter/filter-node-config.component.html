@@ -121,8 +121,26 @@
     <mat-form-field fxFlex class="mat-block">
       <mat-label>Condition</mat-label>
       <mat-select formControlName="condition">
-        <mat-option value="equal">Equal</mat-option>
-        <mat-option value="notequal">Not Equal</mat-option>
+        <mat-option value="equal" *ngIf="configuration.param.inputType !== 'TRUE_OR_FALSE' && configuration.param.inputType !== 'Boolean' && configuration.param.inputType !== 'bool' &&
+                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input !== 'Boolean') &&
+                                    configuration.constant.constantType !== 'Boolean' && configuration.constant.constantType !== 'TRUE_OR_FALSE' && configuration.constant.constantType !== 'bool' &&
+                                    configuration.property.type !== 'Boolean' && configuration.property.type !== 'TRUE_OR_FALSE' && configuration.property.type !== 'bool'">Equal</mat-option>
+
+        <mat-option value="notequal" *ngIf="configuration.param.inputType !== 'TRUE_OR_FALSE' && configuration.param.inputType !== 'Boolean' && configuration.param.inputType !== 'bool' &&
+                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input !== 'Boolean') &&
+                                    configuration.constant.constantType !== 'Boolean' && configuration.constant.constantType !== 'TRUE_OR_FALSE' && configuration.constant.constantType !== 'bool' &&
+                                    configuration.property.type !== 'Boolean' && configuration.property.type !== 'TRUE_OR_FALSE' && configuration.property.type !== 'bool'">Not Equal</mat-option>
+
+        <mat-option value="istrue" *ngIf="configuration.param.inputType == 'TRUE_OR_FALSE' || configuration.param.inputType == 'Boolean' || configuration.param.inputType == 'bool' ||
+                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Boolean') ||
+                                    configuration.constant.constantType == 'Boolean' || configuration.constant.constantType == 'TRUE_OR_FALSE' || configuration.constant.constantType == 'bool' ||
+                                    configuration.property.type == 'Boolean' || configuration.property.type == 'TRUE_OR_FALSE' || configuration.property.type == 'bool'">Is True</mat-option>
+        <mat-option value="isfalse" *ngIf="configuration.param.inputType == 'TRUE_OR_FALSE' || configuration.param.inputType == 'Boolean' || configuration.param.inputType == 'bool' ||
+                                (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Boolean') ||
+                                    configuration.constant.constantType == 'Boolean' || configuration.constant.constantType == 'TRUE_OR_FALSE' || configuration.constant.constantType == 'bool' ||
+                                    configuration.property.type == 'Boolean' || configuration.property.type == 'TRUE_OR_FALSE' || configuration.property.type == 'bool'">Is False</mat-option>
+
+
         <mat-option *ngIf="configuration.param.inputType == 'NUMBER' || configuration.param.inputType == 'Integer' || configuration.param.inputType == 'int' ||
                            configuration.param.inputType == 'FLOAT' || configuration.param.inputType == 'Float' || configuration.param.inputType == 'float64' ||
                                 (configuration?.branchparam?.inputType == 'PRIMITIVE' && configuration?.branchparam?.input == 'Integer') ||
