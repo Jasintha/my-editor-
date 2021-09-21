@@ -1,0 +1,269 @@
+<div [formGroup]="domainModelVariableNodeConfigFormGroup">
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>Property Name</mat-label>
+        <input matInput formControlName="propertyName"/>
+    </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="modelpropertyType" (selectionChange)="refreshTypes()">
+            <mat-option value="NEW">New</mat-option>
+            <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+            <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+            <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'NEW'" fxFlex class="mat-block">
+        <mat-label>Scope</mat-label>
+        <mat-select formControlName="propertyScope">
+            <mat-option value="RULE">Rule</mat-option>
+            <mat-option value="GLOBAL">Global</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
+        <mat-select formControlName="modelpropertyruleInput">
+            <ng-container *ngFor="let domainModel of allRuleInputs">
+                <mat-option *ngIf="(domainModel?.inputType === 'model' || domainModel?.inputType === 'dto') && domainModel?.record === 's'" [value]="domainModel">
+                    {{domainModel.inputName}} <span *ngIf="domainModel.inputType === 'model'"> - Domain Model</span>
+                    <span *ngIf="domainModel.inputType === 'dto'"> - DTO Model</span>
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="modelpropertybranchParam">
+            <ng-container *ngFor="let domainModel of branchAvailability?.branchParams">
+                <mat-option *ngIf="(domainModel?.inputType === 'MODEL' || domainModel?.inputType === 'DTO') && domainModel?.record === 's'" [value]="domainModel">
+                    {{domainModel.name}} : {{domainModel.input}} <span *ngIf="domainModel.inputType === 'MODEL'"> - Domain Model</span>
+                    <span *ngIf="domainModel.inputType === 'DTO'"> - DTO Model</span>
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'PROPERTY'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="modelpropertyproperty">
+            <ng-container *ngFor="let prop of allModelProperties">
+                <mat-option *ngIf="(prop?.propertyDataType === 'MODEL' || prop?.propertyDataType === 'DTO') && prop?.record === 's'" [value]="prop">
+                    {{prop.name}} : {{prop.type}} <span *ngIf="prop.propertyDataType === 'MODEL'"> - Domain Model</span>
+                    <span *ngIf="prop.propertyDataType === 'DTO'"> - DTO Model</span>
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'NEW'">
+
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Data Type</mat-label>
+            <mat-select formControlName="propinputType">
+                <mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
+                <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>
+                <mat-option value="PRIMITIVE">Primitive</mat-option>
+                <mat-option value="CONSTANT">Constant</mat-option>
+                <mat-option value="MAP">Map</mat-option>
+                <mat-option value="ANY">Any</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.propinputType === 'MODEL'" fxFlex class="mat-block">
+            <mat-label>Model</mat-label>
+            <mat-select formControlName="propentity">
+                <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+                    {{nodeEntity.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.propinputType === 'DTO'" fxFlex class="mat-block">
+            <mat-label>DTO</mat-label>
+            <mat-select formControlName="propcustomObject">
+                <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
+                    {{nodeEntity.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.propinputType === 'PRIMITIVE' || domainModelVariableNodeConfigFormGroup.value.propinputType === 'CONSTANT'" fxFlex class="mat-block">
+            <mat-label>Primitive</mat-label>
+            <mat-select formControlName="propprimitive">
+                <mat-option value="TEXT">Text</mat-option>
+                <mat-option value="NUMBER">Number</mat-option>
+                <mat-option value="FLOAT">FLOAT</mat-option>
+                <mat-option value="DATE">Date</mat-option>
+                <mat-option value="TRUE_OR_FALSE">True/False</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Record</mat-label>
+            <mat-select formControlName="proprecord">
+                <mat-option value="s">Single</mat-option>
+                <mat-option value="m">Multiple</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field  *ngIf="(domainModelVariableNodeConfigFormGroup.value.propinputType === 'PRIMITIVE' || domainModelVariableNodeConfigFormGroup.value.propinputType === 'CONSTANT') && domainModelVariableNodeConfigFormGroup.value.proprecord === 's'" fxFlex class="mat-block">
+            <mat-label>Default Value</mat-label>
+            <input matInput formControlName="defaultValue"/>
+        </mat-form-field>
+
+        <section *ngIf="domainModelVariableNodeConfigFormGroup.value.propinputType === 'MAP'" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+            <section class="mat-block" fxFlex>
+                <mat-form-field fxFlex class="mat-block">
+                    <mat-label>Key Data Type</mat-label>
+                    <mat-select formControlName="keyinputType">
+                        <mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
+                        <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>
+                        <mat-option value="PRIMITIVE">Primitive</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </section>
+
+            <section class="mat-block" fxFlex>
+
+                <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.keyinputType === 'MODEL'" fxFlex class="mat-block">
+                    <mat-label>Model</mat-label>
+                    <mat-select formControlName="keypentity">
+                        <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+                            {{nodeEntity.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.keyinputType === 'DTO'" fxFlex class="mat-block">
+                    <mat-label>DTO</mat-label>
+                    <mat-select formControlName="keycustomObject">
+                        <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
+                            {{nodeEntity.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.keyinputType === 'PRIMITIVE'" fxFlex class="mat-block">
+                    <mat-label>Primitive</mat-label>
+                    <mat-select formControlName="keyprimitive">
+                        <mat-option value="TEXT">Text</mat-option>
+                        <mat-option value="NUMBER">Number</mat-option>
+                        <mat-option value="FLOAT">FLOAT</mat-option>
+                        <mat-option value="DATE">Date</mat-option>
+                        <mat-option value="TRUE_OR_FALSE">True/False</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </section>
+        </section>
+        <section *ngIf="domainModelVariableNodeConfigFormGroup.value.propinputType === 'MAP'" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+            <section class="mat-block" fxFlex>
+                <mat-form-field fxFlex class="mat-block">
+                    <mat-label>Value Data Type</mat-label>
+                    <mat-select formControlName="valueinputType">
+                        <mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
+                        <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>
+                        <mat-option value="PRIMITIVE">Primitive</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </section>
+
+            <section class="mat-block" fxFlex>
+
+                <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.valueinputType === 'MODEL'" fxFlex class="mat-block">
+                    <mat-label>Model</mat-label>
+                    <mat-select formControlName="valueentity">
+                        <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+                            {{nodeEntity.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.valueinputType === 'DTO'" fxFlex class="mat-block">
+                    <mat-label>DTO</mat-label>
+                    <mat-select formControlName="valuecustomObject">
+                        <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
+                            {{nodeEntity.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.valueinputType === 'PRIMITIVE'" fxFlex class="mat-block">
+                    <mat-label>Primitive</mat-label>
+                    <mat-select formControlName="valueprimitive">
+                        <mat-option value="TEXT">Text</mat-option>
+                        <mat-option value="NUMBER">Number</mat-option>
+                        <mat-option value="FLOAT">FLOAT</mat-option>
+                        <mat-option value="DATE">Date</mat-option>
+                        <mat-option value="TRUE_OR_FALSE">True/False</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </section>
+            <section class="mat-block" fxFlex>
+                <mat-form-field fxFlex class="mat-block">
+                    <mat-label>Record</mat-label>
+                    <mat-select formControlName="valuerecord">
+                        <mat-option value="s">Single</mat-option>
+                        <mat-option value="m">Multiple</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </section>
+        </section>
+
+    </ng-container>
+
+    <ng-container *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType !== 'NEW'">
+
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+            <button mat-icon-button disabled></button>
+            <mat-checkbox class="checklist-leaf-node"
+                          [checked]="checklistSelection.isSelected(node)"
+                          (change)="checkboxClick(node)">{{node.name}}</mat-checkbox>
+        </mat-tree-node>
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+            <button mat-icon-button matTreeNodeToggle
+                    [attr.aria-label]="'toggle ' + node.name">
+                <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+            </button>
+            <mat-checkbox [checked]="checklistSelection.isSelected(node)"
+                          (change)="checkboxClick(node)">{{node.name}}</mat-checkbox>
+        </mat-tree-node>
+    </mat-tree>
+    </ng-container>
+
+    <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+    <button mat-icon-button class="virtuan-fullscreen-button-style"
+            (click)="addProperty()"
+            matTooltip="Add Property"
+            matTooltipPosition="above">
+        <mat-icon color="primary">add</mat-icon>
+    </button>
+    </div>
+</div>
+<div fxFlex class="table-container" style="padding: 10px;">
+    <table mat-table [dataSource]="propertydatasource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Property Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="propertyType">
+            <th mat-header-cell *matHeaderCellDef> Created From </th>
+            <td mat-cell *matCellDef="let element"> {{element.propertyType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="propertyDataType">
+            <th mat-header-cell *matHeaderCellDef> Data Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.propertyDataType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element;let i = index">
+                <button mat-icon-button class="virtuan-mat-32" (click)="deleteRow(i)" matTooltip="Delete Property" matTooltipPosition="above">
+                    <mat-icon style="color:red;">delete</mat-icon>
+                </button></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

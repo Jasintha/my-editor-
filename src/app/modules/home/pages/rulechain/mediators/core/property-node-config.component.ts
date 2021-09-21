@@ -49,15 +49,15 @@ interface ExampleFlatNode {
 
 
 @Component({
-  selector: 'virtuan-domain-model-variable-node-config',
-  templateUrl: './domain-model-variable-node-config.component.html',
+  selector: 'virtuan-property-node-config',
+  templateUrl: './property-node-config.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => DomainModelVariableNodeConfigComponent),
+    useExisting: forwardRef(() => PropertyNodeConfigComponent),
     multi: true
   }]
 })
-export class DomainModelVariableNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
+export class PropertyNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('definedConfigContent', {read: ViewContainerRef, static: true}) definedConfigContainer: ViewContainerRef;
 
@@ -191,7 +191,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valuecustomObject: [],
       valueprimitive: '',
       valuerecord: '',
-      propertyScope:''
+      propertyScope:'',
+      defaultValue: ''
     });
   }
 
@@ -239,7 +240,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valuecustomObject: [],
       valueprimitive: '',
       valuerecord: '',
-      propertyScope: ''
+      propertyScope: '',
+      defaultValue: ''
     });
 
     } else if (modelpropertyType === 'PROPERTY'){
@@ -265,7 +267,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valuecustomObject: [],
       valueprimitive: '',
       valuerecord: '',
-      propertyScope: ''
+      propertyScope: '',
+      defaultValue: ''
     });
 
     } else if (modelpropertyType === 'BRANCH_PARAM'){
@@ -291,7 +294,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valuecustomObject: [],
       valueprimitive: '',
       valuerecord: '',
-      propertyScope: ''
+      propertyScope: '',
+      defaultValue: ''
     });
 
     } else if (modelpropertyType === 'NEW'){
@@ -331,6 +335,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     let mapValueType: string = '';
     let mapValueRecord: string = '';
     let propertyScope: string = '';
+    let defaultValue: string = '';
 
     //let modelTitleName = '';
     let modelName = '';
@@ -424,6 +429,9 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
         record = this.domainModelVariableNodeConfigFormGroup.get('proprecord').value;
         propertyScope = this.domainModelVariableNodeConfigFormGroup.get('propertyScope').value;
 
+        if ((propertyDataType === 'PRIMITIVE' || propertyDataType === 'CONSTANT') && record == 's') {
+            defaultValue = this.domainModelVariableNodeConfigFormGroup.get('defaultValue').value;
+        }
         if (propertyScope == 'GLOBAL') {
             name = this.titleCaseWord(name);
         }
@@ -456,6 +464,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
 
             mapValueRecord = this.domainModelVariableNodeConfigFormGroup.get('valuerecord').value;
 
+        }  else if(propertyDataType === 'CONSTANT'){
+            type = this.domainModelVariableNodeConfigFormGroup.get('propprimitive').value;
         }
     }
 
@@ -472,10 +482,11 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       mapValue: mapValue,
       mapValueType: mapValueType,
       mapValueRecord: mapValueRecord,
-      propertyScope: propertyScope
+      propertyScope: propertyScope,
+      defaultValue: defaultValue
     };
-    this.configuration.modelproperties.push(property);
-    this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
+    this.configuration.properties.push(property);
+    this.propertydatasource = new MatTableDataSource(this.configuration.properties);
     this.updateModel(this.configuration);
 
     this.domainModelVariableNodeConfigFormGroup.patchValue({
@@ -487,8 +498,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
   }
 
   deleteRow(index: number): void{
-    this.configuration.modelproperties.splice(index, 1);
-    this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
+    this.configuration.properties.splice(index, 1);
+    this.propertydatasource = new MatTableDataSource(this.configuration.properties);
     this.updateModel(this.configuration);
   }
 
@@ -505,10 +516,10 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
 
     this.configuration = deepClone(value);
 
-    if(this.configuration.modelproperties === null || this.configuration.modelproperties === undefined){
-        this.configuration.modelproperties = [];
+    if(this.configuration.properties === null || this.configuration.properties === undefined){
+        this.configuration.properties = [];
     }
-    this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
+    this.propertydatasource = new MatTableDataSource(this.configuration.properties);
 
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
@@ -612,7 +623,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
               valueentity: [],
               valuecustomObject: [],
               valueprimitive: '',
-              valuerecord: ''
+              valuerecord: '',
+              defaultValue: ''
             });
         } else if(propinputType === 'DTO'){
             this.domainModelVariableNodeConfigFormGroup.patchValue({
@@ -626,10 +638,11 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
               valueentity: [],
               valuecustomObject: [],
               valueprimitive: '',
-              valuerecord: ''
+              valuerecord: '',
+              defaultValue: ''
             });
 
-        } else if(propinputType === 'PRIMITIVE'){
+        } else if(propinputType === 'PRIMITIVE' || propinputType === 'CONSTANT'){
             this.domainModelVariableNodeConfigFormGroup.patchValue({
               propentity: [],
               propcustomObject: [],
@@ -648,7 +661,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
             this.domainModelVariableNodeConfigFormGroup.patchValue({
               propentity: [],
               propcustomObject: [],
-              propprimitive: ''
+              propprimitive: '',
+              defaultValue: ''
             });
         }
 
@@ -743,6 +757,7 @@ export interface Property {
   mapValueType: string;
   mapValueRecord: string;
   propertyScope: string;
+  defaultValue: string;
 }
 
 /*

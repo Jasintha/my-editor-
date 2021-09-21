@@ -1066,4 +1066,21 @@
                                        [nodeDefinition]="nodeDefinitionValue">
         </virtuan-error-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiPropertyNode'">
+        <virtuan-property-node-config #modelNodeConfigComponent
+                                                   formControlName="configuration"
+                                                   [ruleNodeId]="ruleNodeId"
+                                                   [allDomainModels]=" allDomainModels"
+                                                   [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                                   [allViewModelsWithSub]="allViewModelsWithSub"
+                                                   [allModelProperties]="allModelProperties"
+                                                   [allViewModels]="allViewModels"
+                                                   [allRuleInputs]="allRuleInputs"
+                                                   [allVariables]="allVariables"
+                                                   [inputEntities]="inputEntities"
+                                                   [inputCustomobjects]="inputCustomobjects"
+                                                   [branchAvailability]="branchAvailability"
+                                                   [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-property-node-config>
+    </ng-container>
 </div>

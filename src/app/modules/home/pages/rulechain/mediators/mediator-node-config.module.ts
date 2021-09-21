@@ -13,6 +13,7 @@ import { BranchNodeConfigComponent } from './core/branch-node-config.component';
 import { DomainModelVariableNodeConfigComponent } from './core/domain-model-variable-node-config.component';
 import { ReferencePropertyNodeConfigComponent } from './core/reference-property-node-config.component';
 import { ConnectionPropertyNodeConfigComponent } from './core/connection-property-node-config.component';
+import { PropertyNodeConfigComponent } from './core/property-node-config.component';
 
 //action
 import { PayloadNodeConfigComponent } from './action/payload-node-config.component';
@@ -157,7 +158,8 @@ import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/c
     TimeoutMiddlewareNodeConfigComponent,
     EncryptMiddlewareNodeConfigComponent,
     SidecarNodeConfigComponent,
-    ErrorNodeConfigComponent
+    ErrorNodeConfigComponent,
+    PropertyNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -229,7 +231,8 @@ import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/c
     TimeoutMiddlewareNodeConfigComponent,
     EncryptMiddlewareNodeConfigComponent,
     SidecarNodeConfigComponent,
-    ErrorNodeConfigComponent
+    ErrorNodeConfigComponent,
+    PropertyNodeConfigComponent
   ],
   providers: []
 })
