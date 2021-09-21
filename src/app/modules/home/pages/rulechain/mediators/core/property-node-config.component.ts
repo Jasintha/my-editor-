@@ -109,7 +109,7 @@ export class PropertyNodeConfigComponent implements ControlValueAccessor, OnInit
 
   propertydatasource: MatTableDataSource<Property>;
 
-  displayedColumns: string[] = ['name', 'propertyType', 'propertyDataType', 'type', 'actions'];
+  displayedColumns: string[] = ['name', 'propertyType', 'selectedInput', 'propertyDataType', 'type', 'record', 'defaultValue', 'actions'];
 
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
