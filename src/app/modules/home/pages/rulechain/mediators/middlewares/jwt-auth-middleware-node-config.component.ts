@@ -70,6 +70,9 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -252,7 +255,7 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
       this.jwtAuthMiddlewareNodeConfigComponent.get('branchparam').patchValue([], {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('constant').patchValue([], {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.configuration.branchparam= {};
@@ -294,7 +297,7 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
       this.jwtAuthMiddlewareNodeConfigComponent.get('basepathbranchparam').patchValue([], {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('basepathconstant').patchValue([], {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('basepathproperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.basepathconstant= {};
       this.configuration.basepathparam= {};
       this.configuration.basepathbranchparam= {};
@@ -336,7 +339,7 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
       this.jwtAuthMiddlewareNodeConfigComponent.get('secondbranchparam').patchValue([], {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('secondconstant').patchValue([], {emitEvent: false});
       this.jwtAuthMiddlewareNodeConfigComponent.get('secondproperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.secondconstant= {};
       this.configuration.secondparam= {};
       this.configuration.secondbranchparam= {};
@@ -468,7 +471,9 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
           }      
           if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
             property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
-          }      
+          } else if(this.configuration.inputType === 'VPROP' && this.allProperties){
+            property = this.allProperties.find(x => x.name === this.configuration.property.name );
+          }
           if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.customClaims){
             branchparam = this.branchAvailability.customClaims.find(x => x.name === this.configuration.branchparam.name );
           } 
@@ -495,7 +500,10 @@ export class JWTAuthMiddlewareNodeConfigComponent implements ControlValueAccesso
           }      
           if(this.configuration.secondinputType === 'PROPERTY' && this.allModelProperties){
             secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name );
-          }      
+          }
+          if(this.configuration.secondinputType === 'VPROP' && this.allProperties){
+            secondproperty = this.allProperties.find(x => x.name === this.configuration.secondproperty.name );
+          }
           if(this.configuration.secondinputType === 'BRANCH_PARAM' && this.branchAvailability.customClaims){
             secondbranchparam = this.branchAvailability.customClaims.find(x => x.name === this.configuration.secondbranchparam.name );
           } 

@@ -70,6 +70,9 @@ export class BodyLimitMiddlewareNodeConfigComponent implements ControlValueAcces
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()

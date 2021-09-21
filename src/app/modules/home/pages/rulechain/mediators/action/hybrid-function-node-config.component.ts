@@ -88,6 +88,9 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
   @Input()
   allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
   @Input() branchAvailability: any;
 
   @Input()
@@ -198,7 +201,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       this.configuration.errorParameterbranchparam= {};
       this.hybridFunctionNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.hybridFunctionNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.hybridFunctionNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -225,7 +228,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       this.hybridFunctionNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
       this.hybridFunctionNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
       this.hybridFunctionNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.parameterparam= {};
       this.configuration.parameterbranch= {};
       this.configuration.parameterconstant= {};
@@ -274,7 +277,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.hybridFunctionNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -343,7 +346,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       };
       this.configuration.hybridParameters.push(parameter);
       this.updateModel(this.configuration);
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       let selectedParameterProperty = this.hybridFunctionNodeConfigFormGroup.get('parameterproperty').value;
       let parameterproperty = {
         'parameterName': functionparameter.paramName,
@@ -425,6 +428,8 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       let assignedProperty = this.configuration.assignedProperty;
       if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      } else if(this.configuration.assignedtoinputType === 'VPROP' && assignedProperty && this.allProperties){
+        assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name );
       }
 
       let errorBranch = this.configuration.errorBranch;
@@ -585,7 +590,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
         (configuration: RuleNodeConfiguration) => {
 
           this.configuration.assignedtoinputType = configuration;
-          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+          if(this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP' ){
             this.configuration.assignedReference= {};
             this.hybridFunctionNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
           }else if (this.configuration.assignedtoinputType == 'REFERENCE'){

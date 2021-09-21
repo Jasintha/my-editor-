@@ -70,6 +70,9 @@ export class CoreMiddlewareNodeConfigComponent implements ControlValueAccessor, 
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()

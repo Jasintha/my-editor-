@@ -70,6 +70,9 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -169,7 +172,7 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
     let inputType: string = this.assignNodeConfigFormGroup.get('propertyinputType').value;
     this.configuration.propertyinputType = inputType;
 
-    if (inputType === 'PROPERTY'){
+    if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.propertyreference= {};
       this.assignNodeConfigFormGroup.get('propertyreference').patchValue([], {emitEvent: false});
     } else if (inputType === 'REFERENCE'){
@@ -203,7 +206,7 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.assignNodeConfigFormGroup.get('valueconstant').patchValue([], {emitEvent: false});
       this.assignNodeConfigFormGroup.get('valueproperty').patchValue([], {emitEvent: false});
       this.assignNodeConfigFormGroup.get('valuebranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.valueconstant= {};
       this.configuration.valueparam= {};
       this.configuration.valuebranchparam= {};

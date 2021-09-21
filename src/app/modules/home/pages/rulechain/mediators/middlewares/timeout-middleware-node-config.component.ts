@@ -70,6 +70,9 @@ export class TimeoutMiddlewareNodeConfigComponent implements ControlValueAccesso
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()

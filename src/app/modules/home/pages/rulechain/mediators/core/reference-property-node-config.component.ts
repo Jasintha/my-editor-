@@ -92,6 +92,9 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   inputEntities: any[];
 
   @Input()

@@ -70,6 +70,9 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   allErrorBranches: any[];
 
   @Input()
@@ -190,7 +193,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       this.configuration.errorParameterbranchparam = {};
       this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').patchValue([], { emitEvent: false });
       this.grpcCallNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], { emitEvent: false });
-    } else if (errorInputType === 'PROPERTY') {
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP') {
       this.configuration.errorParameterparam = {};
       this.configuration.errorParameterbranchparam = {};
       this.grpcCallNodeConfigFormGroup.get('parameterbranchparam').patchValue([], { emitEvent: false });
@@ -228,7 +231,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY') {
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP') {
       let selectedErrorParameterProperty = this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -285,7 +288,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       this.grpcCallNodeConfigFormGroup.get('branchparam').patchValue([], { emitEvent: false });
       this.grpcCallNodeConfigFormGroup.get('constant').patchValue([], { emitEvent: false });
       this.grpcCallNodeConfigFormGroup.get('property').patchValue([], { emitEvent: false });
-    } else if (inputType === 'PROPERTY') {
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ) {
       this.configuration.constant = {};
       this.configuration.param = {};
       this.configuration.branchparam = {};
@@ -326,7 +329,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       this.grpcCallNodeConfigFormGroup.get('secondconstant').patchValue([], { emitEvent: false });
       this.grpcCallNodeConfigFormGroup.get('secondproperty').patchValue([], { emitEvent: false });
       this.grpcCallNodeConfigFormGroup.get('secondbranchparam').patchValue([], { emitEvent: false });
-    } else if (inputType === 'PROPERTY') {
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ) {
       this.configuration.secondconstant = {};
       this.configuration.secondparam = {};
       this.configuration.secondbranchparam = {};
@@ -368,7 +371,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       this.grpcCallNodeConfigFormGroup.get('thirdconstant').patchValue([], { emitEvent: false });
       this.grpcCallNodeConfigFormGroup.get('thirdproperty').patchValue([], { emitEvent: false });
       this.grpcCallNodeConfigFormGroup.get('thirdbranchparam').patchValue([], { emitEvent: false });
-    } else if (inputType === 'PROPERTY') {
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ) {
       this.configuration.thirdconstant = {};
       this.configuration.thirdparam = {};
       this.configuration.thirdbranchparam = {};
@@ -437,6 +440,8 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       let property = this.configuration.property;
       if (this.configuration.inputType === 'PROPERTY' && this.allModelProperties) {
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name);
+      } else if (this.configuration.inputType === 'VPROP' && this.allProperties) {
+        property = this.allProperties.find(x => x.name === this.configuration.property.name);
       }
 
       let branchparam = this.configuration.branchparam;
@@ -447,6 +452,8 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       let assignedProperty = this.configuration.assignedProperty;
       if (this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties) {
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name);
+      } else if (this.configuration.assignedtoinputType === 'VPROP' && assignedProperty && this.allProperties) {
+        assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name);
       }
 
       let assignedReference = this.configuration.assignedReference;
@@ -474,8 +481,9 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       let secondproperty = this.configuration.secondproperty;
       if (this.configuration.secondinputType === 'PROPERTY' && this.allModelProperties) {
         secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name);
+      } else if (this.configuration.secondinputType === 'VPROP' && this.allProperties) {
+        secondproperty = this.allProperties.find(x => x.name === this.configuration.secondproperty.name);
       }
-
       let secondbranchparam = this.configuration.secondbranchparam;
       if (this.configuration.secondinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams) {
         secondbranchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.secondbranchparam.name);
@@ -497,6 +505,8 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       let thirdproperty = this.configuration.thirdproperty;
       if (this.configuration.thirdinputType === 'PROPERTY' && this.allModelProperties) {
         thirdproperty = this.allModelProperties.find(x => x.name === this.configuration.thirdproperty.name);
+      } else if (this.configuration.thirdinputType === 'VPROP' && this.allProperties) {
+        thirdproperty = this.allProperties.find(x => x.name === this.configuration.thirdproperty.name);
       }
 
       let thirdbranchparam = this.configuration.thirdbranchparam;
@@ -613,7 +623,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
         (configuration: RuleNodeConfiguration) => {
 
           this.configuration.assignedtoinputType = configuration;
-          if (this.configuration.assignedtoinputType == 'PROPERTY') {
+          if (this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP' ) {
             this.configuration.assignedReference = {};
             this.grpcCallNodeConfigFormGroup.get('assignedReference').patchValue([], { emitEvent: false });
           } else if (this.configuration.assignedtoinputType == 'REFERENCE') {

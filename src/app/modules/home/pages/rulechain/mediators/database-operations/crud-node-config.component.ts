@@ -80,6 +80,9 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
   @Input()
   allModelProperties: any[];
+
+  @Input()
+  allProperties: any[];
   
   @Input() branchAvailability: any;
   
@@ -207,7 +210,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
       this.crudNodeConfigFormGroup.get('crudconstant').patchValue([], {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudproperty').patchValue([], {emitEvent: false});
       this.crudNodeConfigFormGroup.get('crudbranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.crudparam= {};
       this.configuration.crudconstant= {};
       this.configuration.crudbranchparam= {};
@@ -456,7 +459,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
         (configuration: RuleNodeConfiguration) => {
 
           this.configuration.assignedtoinputType = configuration;
-          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+          if(this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP' ){
             this.configuration.assignedReference= {};
             this.crudNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
           }else if (this.configuration.assignedtoinputType == 'REFERENCE'){

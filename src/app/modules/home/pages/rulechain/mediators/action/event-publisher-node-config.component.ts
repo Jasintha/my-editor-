@@ -69,6 +69,9 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   allConstants: any[];
 
   @Input()
@@ -173,7 +176,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       this.configuration.errorParameterbranchparam= {};
       this.eventPublisherNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.eventPublisherNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.eventPublisherNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -211,7 +214,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.eventPublisherNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -270,7 +273,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       this.eventPublisherNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.eventPublisherNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
       this.eventPublisherNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.configuration.branchparam= {};
@@ -325,8 +328,9 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       let property = this.configuration.property;
       if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      } else if(this.configuration.inputType === 'VPROP' && this.allProperties){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
       }
-
       let branchparam = this.configuration.branchparam;
       if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
         branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );

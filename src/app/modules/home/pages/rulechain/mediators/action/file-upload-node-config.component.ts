@@ -79,6 +79,9 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   allReferenceProperties: any[];
 
   @Input()
@@ -192,7 +195,7 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
       this.fileUploadNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       this.fileUploadNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.fileUploadNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.configuration.branchparam= {};
@@ -223,7 +226,7 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
       this.configuration.errorParameterbranchparam= {};
       this.fileUploadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.fileUploadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.fileUploadNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -273,7 +276,7 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.fileUploadNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -357,6 +360,8 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
       let assignedProperty = this.configuration.assignedProperty;
       if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      } else if(this.configuration.assignedtoinputType === 'VPROP' && assignedProperty && this.allProperties){
+        assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name );
       }
       
       let assignedReference = this.configuration.assignedReference;
@@ -478,7 +483,7 @@ export class FileUploadNodeConfigComponent implements ControlValueAccessor, OnIn
         (configuration: RuleNodeConfiguration) => {
 
           this.configuration.assignedtoinputType = configuration;
-          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+          if(this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP' ){
             this.configuration.assignedReference= {};
             this.fileUploadNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
           }else if (this.configuration.assignedtoinputType == 'REFERENCE'){

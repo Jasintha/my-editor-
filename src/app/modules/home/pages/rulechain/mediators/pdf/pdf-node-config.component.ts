@@ -92,6 +92,9 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     @Input()
     allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
     @Input() branchAvailability: any;
 
     @Input()
@@ -219,6 +222,37 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 }
             }
         }
+        for (let modelprop of this.allProperties){
+            let parent = modelprop.name
+            if (modelprop.propertyType === "NEW" && modelprop.record === "m" && modelprop.propertyDataType === "MODEL"){
+                for (let domModel of this.allDomainModelsWithSub){
+                    if (modelprop.type === domModel.nameTitleCase){
+                        for (let child of domModel.design.children){
+                            let childProp = {
+                                'name' : parent+"."+child.data.name,
+                                'inputType' : child.data.type,
+                                'childName': child.data.name
+                            }
+                            this.allProperties.push(childProp)
+                        }
+                    }
+                }
+            }
+            if (modelprop.record === "m"){
+                for (let domModel of this.allDomainModelsWithSub){
+                    if (modelprop.modelproperty.name === domModel.name){
+                        for (let child of domModel.design.children){
+                            let childProp = {
+                                'name' : parent+"."+child.data.name,
+                                'inputType' : child.data.type,
+                                'childName': child.data.name,
+                            }
+                            this.allProperties.push(childProp)
+                        }
+                    }
+                }
+            }
+        }
         for (let rerprop of this.allReferenceProperties){
             let parent = rerprop.name
             if (rerprop.record === "m"){
@@ -294,7 +328,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             this.configuration.errorParameterbranchparam= {};
             this.pdfNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-        } else if (errorInputType === 'PROPERTY'){
+        } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
             this.configuration.errorParameterparam= {};
             this.configuration.errorParameterbranchparam= {};
             this.pdfNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -323,7 +357,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             this.pdfNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-        } else if (inputType === 'PROPERTY'){
+        } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
             this.configuration.parameterparam= {};
             this.configuration.parameterbranch= {};
             this.configuration.parameterconstant= {};
@@ -387,7 +421,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             };
             this.configuration.errorFunctionParameters.push(errorParameter);
             this.updateModel(this.configuration);
-        } else if (errorInputType === 'PROPERTY'){
+        } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
             let selectedErrorParameterProperty = this.pdfNodeConfigFormGroup.get('errorParameterproperty').value;
             let errorParameterproperty = {
                 'parameterName': errorBranchparameter.name,
@@ -445,7 +479,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             };
             this.configuration.pdfParameters.push(parameter);
             this.updateModel(this.configuration);
-        } else if (inputType === 'PROPERTY'){
+        } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
             let selectedParameterProperty = this.pdfNodeConfigFormGroup.get('parameterproperty').value;
             let parameterproperty = {
                 'key': key,
@@ -539,6 +573,9 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             let assignedProperty = this.configuration.assignedProperty;
             if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
                 assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+            }
+            if(this.configuration.assignedtoinputType === 'VPROP' && assignedProperty && this.allProperties){
+                assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name );
             }
 
             let errorBranch = this.configuration.errorBranch;
@@ -686,7 +723,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 (configuration: RuleNodeConfiguration) => {
 
                     this.configuration.assignedtoinputType = configuration;
-                    if(this.configuration.assignedtoinputType == 'PROPERTY'){
+                    if(this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP' ){
                         this.configuration.assignedReference= {};
                         this.pdfNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
                     }else if (this.configuration.assignedtoinputType == 'REFERENCE'){

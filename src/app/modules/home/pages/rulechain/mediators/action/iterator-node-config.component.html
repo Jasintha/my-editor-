@@ -3,7 +3,8 @@
     <mat-label>List Input Type</mat-label>
     <mat-select formControlName="inputType">
       <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
-      <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+      <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+      <mat-option *ngIf="allProperties?.length" value="VPROP">Property</mat-option>
       <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
     </mat-select>
   </mat-form-field>
@@ -18,12 +19,22 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field fxFlex class="mat-block" *ngIf="configuration.inputType === 'PROPERTY'">
-    <mat-label>Property</mat-label>
+    <mat-label>Value Property</mat-label>
     <mat-select formControlName="property">
       <!--<mat-option *ngFor="let property of allModelProperties" [value]="property">
         {{property.name}}
       </mat-option>-->
       <ng-container *ngFor="let modelproperty of allModelProperties">
+        <mat-option *ngIf="modelproperty?.record === 'm'" [value]="modelproperty">
+          {{modelproperty.name}}
+        </mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.inputType === 'VPROP'">
+    <mat-label>Property</mat-label>
+    <mat-select formControlName="property">
+      <ng-container *ngFor="let modelproperty of allProperties">
         <mat-option *ngIf="modelproperty?.record === 'm'" [value]="modelproperty">
           {{modelproperty.name}}
         </mat-option>
@@ -123,7 +134,8 @@
           <mat-label>Error Parameter Input Type</mat-label>
           <mat-select formControlName="errorParameterinputType" (selectionChange)="refreshErrorParameterInputTypes()">
             <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
-            <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+            <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+            <mat-option *ngIf="allProperties?.length" value="VPROP">Property</mat-option>
             <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
           </mat-select>
         </mat-form-field>
@@ -137,9 +149,17 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field *ngIf="configuration.errorParameterinputType === 'PROPERTY'" fxFlex class="mat-block">
-            <mat-label>Property</mat-label>
+            <mat-label>Value Property</mat-label>
             <mat-select formControlName="errorParameterproperty">
               <mat-option *ngFor="let property of allModelProperties" [value]="property">
+                {{property.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="configuration.errorParameterinputType === 'VPROP'" fxFlex class="mat-block">
+            <mat-label>Property</mat-label>
+            <mat-select formControlName="errorParameterproperty">
+              <mat-option *ngFor="let property of allProperties" [value]="property">
                 {{property.name}}
               </mat-option>
             </mat-select>

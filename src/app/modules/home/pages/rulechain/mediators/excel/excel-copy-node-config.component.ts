@@ -90,6 +90,9 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
     @Input()
     allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
     @Input() branchAvailability: any;
 
     @Input()
@@ -181,7 +184,7 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
             this.configuration.errorParameterbranchparam= {};
             this.excelCopyNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
             this.excelCopyNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-        } else if (errorInputType === 'PROPERTY'){
+        } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
             this.configuration.errorParameterparam= {};
             this.configuration.errorParameterbranchparam= {};
             this.excelCopyNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -202,7 +205,7 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
         let inputType: string = this.excelCopyNodeConfigFormGroup.get('propertyinputType').value;
         this.configuration.propertyinputType = inputType;
 
-        if (inputType === 'PROPERTY'){
+        if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
             this.configuration.propertyreference= {};
             this.excelCopyNodeConfigFormGroup.get('propertyreference').patchValue([], {emitEvent: false});
         } else if (inputType === 'REFERENCE'){
@@ -246,7 +249,7 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
             };
             this.configuration.errorFunctionParameters.push(errorParameter);
             this.updateModel(this.configuration);
-        } else if (errorInputType === 'PROPERTY'){
+        } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
             let selectedErrorParameterProperty = this.excelCopyNodeConfigFormGroup.get('errorParameterproperty').value;
             let errorParameterproperty = {
                 'parameterName': errorBranchparameter.name,
@@ -309,7 +312,10 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
             let propertyproperty = this.configuration.propertyproperty;
             if(this.configuration.propertyinputType === 'PROPERTY' && this.allModelProperties){
                 propertyproperty = this.allModelProperties.find(x => x.name === this.configuration.propertyproperty.name );
+            } else if(this.configuration.propertyinputType === 'VPROP' && this.allProperties){
+                propertyproperty = this.allProperties.find(x => x.name === this.configuration.propertyproperty.name );
             }
+
 
             let errorBranch = this.configuration.errorBranch;
             if(errorBranch && this.allErrorBranches){
@@ -318,7 +324,7 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
 
             let propertyreference = this.configuration.propertyreference;
             if(this.configuration.propertyinputType === 'REFERENCE' && this.allReferenceProperties){
-                propertyreference = this.allModelProperties.find(x => x.name === this.configuration.propertyreference.name );
+                propertyreference = this.allReferenceProperties.find(x => x.name === this.configuration.propertyreference.name );
             }
 
 

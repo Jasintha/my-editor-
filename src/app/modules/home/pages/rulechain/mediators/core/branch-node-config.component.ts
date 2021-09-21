@@ -86,6 +86,9 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   @Input()
   allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
   @Input() branchAvailability: any;
 
   datasource: MatTableDataSource<CallFunctionParameters>;
@@ -186,7 +189,7 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.configuration.parameterbranchparam= {};
       this.branchNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
       this.branchNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.parameterparam= {};
       this.configuration.parameterbranchparam= {};
       this.branchNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -211,7 +214,7 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.configuration.errorParameterbranchparam= {};
       this.branchNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.branchNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.branchNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -249,7 +252,7 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       };
       this.configuration.callFunctionParameters.push(parameter);
       this.updateModel(this.configuration);
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       let selectedParameterProperty = this.branchNodeConfigFormGroup.get('parameterproperty').value;
       let parameterproperty = {
         'parameterName': branchparameter.name,
@@ -308,7 +311,7 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.branchNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,

@@ -106,6 +106,9 @@ export class DashboardQueryNodeConfigComponent implements ControlValueAccessor, 
 
   @Input()
   allModelProperties: any[];
+
+  @Input()
+  allProperties: any[];
   
   @Input() branchAvailability: any;
   

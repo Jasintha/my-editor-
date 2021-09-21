@@ -92,6 +92,9 @@ export class PropertyNodeConfigComponent implements ControlValueAccessor, OnInit
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   inputEntities: any[];
 
   @Input()

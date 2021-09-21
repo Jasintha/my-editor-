@@ -89,6 +89,9 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
     @Input()
     allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
     @Input() branchAvailability: any;
 
     @Input()
@@ -192,7 +195,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
         let inputType: string = this.excelReadNodeConfigFormGroup.get('propertyinputType').value;
         this.configuration.propertyinputType = inputType;
 
-        if (inputType === 'PROPERTY'){
+        if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
             this.configuration.propertyreference= {};
             this.excelReadNodeConfigFormGroup.get('propertyreference').patchValue([], {emitEvent: false});
         } else if (inputType === 'REFERENCE'){
@@ -213,7 +216,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             this.configuration.errorParameterbranchparam= {};
             this.excelReadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
             this.excelReadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-        } else if (errorInputType === 'PROPERTY'){
+        } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
             this.configuration.errorParameterparam= {};
             this.configuration.errorParameterbranchparam= {};
             this.excelReadNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -301,7 +304,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             };
             this.configuration.errorFunctionParameters.push(errorParameter);
             this.updateModel(this.configuration);
-        } else if (errorInputType === 'PROPERTY'){
+        } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
             let selectedErrorParameterProperty = this.excelReadNodeConfigFormGroup.get('errorParameterproperty').value;
             let errorParameterproperty = {
                 'parameterName': errorBranchparameter.name,
@@ -351,7 +354,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
 
         console.log("@@@@@@@@@@@@@@@@",inputType,colName)
 
-        if (inputType === 'PROPERTY') {
+        if (inputType === 'PROPERTY' || inputType === 'VPROP' ) {
             let selectedParameterProperty = this.excelReadNodeConfigFormGroup.get('childrenParam').value;
             let parameterproperty = {
                 'colName': colName,
@@ -402,7 +405,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             };
             this.configuration.excelReadInput = parameter;
             this.updateModel(this.configuration);
-        } else if (inputType === 'PROPERTY') {
+        } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ) {
             let selectedParameterProperty = this.excelReadNodeConfigFormGroup.get('excelproperty').value;
             let parameterproperty = {
                 'sheetName': sheetName,
@@ -476,7 +479,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
         } else {
             let excelbranch = this.configuration.excelbranch;
             if(this.configuration.excelinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
-                excelbranch = this.allModelProperties.find(x => x.name === this.configuration.excelbranch.name );
+                excelbranch = this.branchAvailability.branchParams.find(x => x.name === this.configuration.excelbranch.name );
             }
 
             let excelparam = this.configuration.excelparam;
@@ -497,8 +500,9 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             let excelproperty = this.configuration.excelproperty;
             if(this.configuration.excelinputType === 'PROPERTY' && this.allModelProperties){
                 excelproperty = this.allModelProperties.find(x => x.name === this.configuration.excelproperty.name );
+            } else if(this.configuration.excelinputType === 'VPROP' && this.allProperties){
+                excelproperty = this.allProperties.find(x => x.name === this.configuration.excelproperty.name );
             }
-
             let excelreference = this.configuration.excelreference;
             if(this.configuration.excelinputType === 'REFERENCE' && this.allReferenceProperties){
                 excelreference = this.allReferenceProperties.find(x => x.name === this.configuration.excelreference.name );
@@ -507,11 +511,13 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             let propertyproperty = this.configuration.propertyproperty;
             if(this.configuration.propertyinputType === 'PROPERTY' && this.allModelProperties){
                 propertyproperty = this.allModelProperties.find(x => x.name === this.configuration.propertyproperty.name );
+            } else if(this.configuration.propertyinputType === 'VPROP' && this.allProperties){
+                propertyproperty = this.allProperties.find(x => x.name === this.configuration.propertyproperty.name );
             }
 
             let propertyreference = this.configuration.propertyreference;
             if(this.configuration.propertyinputType === 'REFERENCE' && this.allReferenceProperties){
-                propertyreference = this.allModelProperties.find(x => x.name === this.configuration.propertyreference.name );
+                propertyreference = this.allReferenceProperties.find(x => x.name === this.configuration.propertyreference.name );
             }
 
             this.excelReadNodeConfigFormGroup.patchValue({
@@ -624,7 +630,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
                         this.excelReadNodeConfigFormGroup.get('excelbranch').patchValue([], {emitEvent: false});
                         this.excelReadNodeConfigFormGroup.get('excelconstant').patchValue([], {emitEvent: false});
                         this.excelReadNodeConfigFormGroup.get('excelreference').patchValue([], {emitEvent: false});
-                    } else if (this.configuration.excelinputType == 'PROPERTY'){
+                    } else if (this.configuration.excelinputType == 'PROPERTY' || this.configuration.excelinputType == 'VPROP'){
                         this.configuration.excelparam = {};
                         this.configuration.excelbranch = {};
                         this.configuration.excelconstant = {};

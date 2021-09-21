@@ -70,6 +70,9 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   allRuleInputs: any[];
 
   @Input()
@@ -170,7 +173,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.configuration.property= {};
       this.smsSendNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.smsSendNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.smsSendNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
@@ -192,7 +195,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
       //this.configuration.parametervariableProperty = {};
       this.smsSendNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
       //this.smsSendNodeConfigFormGroup.get('parametervariableProperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.parameterparam= {};
       this.smsSendNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
     }
@@ -217,7 +220,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
       };
       this.configuration.smsbodyParameters.push(parameter);
       this.updateModel(this.configuration);
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       let selectedParameterProperty = this.smsSendNodeConfigFormGroup.get('parameterproperty').value;
       let parameterproperty = {
         'parameterName': '$'+ number,
@@ -285,8 +288,9 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
       let property = this.configuration.property;
       if(this.configuration.inputType === 'PROPERTY'){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      } else if(this.configuration.inputType === 'VPROP'){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
       }
-
       this.smsSendNodeConfigFormGroup.patchValue({
         inputType: this.configuration.inputType,
         param: p,

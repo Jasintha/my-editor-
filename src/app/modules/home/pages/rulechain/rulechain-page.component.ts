@@ -164,6 +164,7 @@ export class RuleChainPageComponent extends PageComponent
   allSavedObjects: any[];
   allDomainModels: any[];
   allModelProperties: any[];
+  allProperties: any[];
   allGlobalProperties: any[];
   allGlobalConnectionProperties: any[];
   allGlobalConstants: any[];
@@ -400,6 +401,7 @@ export class RuleChainPageComponent extends PageComponent
     this.commandDb = this.ruleChainMetaData.commandDb;
     this.apptype = this.ruleChainMetaData.apptype;
     this.allModelProperties = this.ruleChainMetaData.allModelProperties;
+    this.allProperties = this.ruleChainMetaData.allProperties;
     this.allGlobalProperties = this.ruleChainMetaData.allGlobalProperties;
     this.allGlobalConstants = this.ruleChainMetaData.allGlobalConstants;
     this.allGlobalConnectionProperties = this.ruleChainMetaData.allGlobalConnectionProperties;
@@ -1065,7 +1067,7 @@ export class RuleChainPageComponent extends PageComponent
         }
       });
 
-      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], [], []);
+      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], [], [], []);
 
       let golbalProperties = this.allGlobalProperties;
 
@@ -1134,10 +1136,10 @@ export class RuleChainPageComponent extends PageComponent
               valueProperty.valueType = "primitive";
               valueObjectPropertyArray.push(valueProperty)
             }
-            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties};
+            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties,  'vproperties': branchFoundObj.vproperties};
             return obj;
         } else {
-            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties};
+            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties, 'vproperties': branchFoundObj.vproperties};
             return obj;
         }
 
@@ -1164,7 +1166,7 @@ export class RuleChainPageComponent extends PageComponent
 
   }
 
-  checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray){
+  checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray, nodeVPropertiesArray){
     let foundNode = allConnections.find(x => x.toIndex === index);
     if(foundNode){
         if(foundNode.type.startsWith("BRANCH_") || foundNode.type.startsWith("ERROR_BRANCH_")){
@@ -1179,6 +1181,11 @@ export class RuleChainPageComponent extends PageComponent
             if(nodes[foundNode.fromIndex].component.clazz === 'xiModelPropertyNode'){
                 if(nodes[foundNode.fromIndex].configuration.modelproperties !== null && nodes[foundNode.fromIndex].configuration.modelproperties !== undefined ){
                     nodePropertyArray = nodePropertyArray.concat(nodes[foundNode.fromIndex].configuration.modelproperties);
+                }
+
+            } else if(nodes[foundNode.fromIndex].component.clazz === 'xiPropertyNode'){
+                if(nodes[foundNode.fromIndex].configuration.properties !== null && nodes[foundNode.fromIndex].configuration.properties !== undefined ){
+                    nodeVPropertiesArray = nodeVPropertiesArray.concat(nodes[foundNode.fromIndex].configuration.properties);
                 }
 
             } else if (nodes[foundNode.fromIndex].component.clazz === 'xiConstantNode') {
@@ -1196,11 +1203,11 @@ export class RuleChainPageComponent extends PageComponent
                 }
             }
 
-            let branchCheckVal = this.checkForBranchConnection(foundNode.fromIndex, allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray);
+            let branchCheckVal = this.checkForBranchConnection(foundNode.fromIndex, allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray, nodeVPropertiesArray);
             return branchCheckVal;
         }
     } else {
-        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray};
+        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray, 'vproperties': nodeVPropertiesArray};
         return obj;
     }
   }
@@ -1610,6 +1617,7 @@ export class RuleChainPageComponent extends PageComponent
         this.commandDb = this.ruleChainMetaData.commandDb;
         this.apptype = this.ruleChainMetaData.apptype;
         this.allModelProperties = this.ruleChainMetaData.allModelProperties;
+        this.allProperties = this.ruleChainMetaData.allProperties;
         this.allGlobalProperties = this.ruleChainMetaData.allGlobalProperties;
         this.connectorData = this.ruleChainMetaData.connectors;
         this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
@@ -1660,6 +1668,7 @@ export class RuleChainPageComponent extends PageComponent
     const commandDb = this.ruleChainMetaData.commandDb;
     const apptype = this.ruleChainMetaData.apptype;
     const allModelProperties = this.ruleChainMetaData.allModelProperties;
+    const allProperties = this.ruleChainMetaData.allProperties;
     const inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
     const inputProperties = this.ruleChainMetaData.inputProperties;
     const allFields = this.ruleChainMetaData.allFields;
@@ -1709,6 +1718,7 @@ export class RuleChainPageComponent extends PageComponent
         allDomainModels,
         allViewModels,
         allModelProperties,
+        allProperties,
         allRuleInputs,
         allEvents,
         allValueObjectProperties,
@@ -1937,6 +1947,7 @@ export interface AddRuleNodeDialogData {
   allDomainModels: any[];
   allViewModels: any[];
   allModelProperties: any[];
+  allProperties: any[];
   allRuleInputs: any[];
   allEvents: any[];
   allLambdaFunctions: any[];
@@ -1992,6 +2003,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allRoots: any[];
   allErrorBranches: any[];
   allModelProperties: any[];
+  allProperties: any[];
   allRuleInputs: any[];
   allEvents: any[];
   queryDb: string;
@@ -2036,6 +2048,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allErrorBranches = this.data.allErrorBranches;
   //  this.isNodeEdit = this.data.isNodeEdit;
     this.allModelProperties = this.data.allModelProperties;
+    this.allProperties = this.data.allProperties;
     this.allRuleInputs = this.data.allRuleInputs;
     this.allEvents = this.data.allEvents;
     this.queryDb = this.data.queryDb;

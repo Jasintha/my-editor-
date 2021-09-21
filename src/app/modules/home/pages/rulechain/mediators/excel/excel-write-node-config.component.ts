@@ -88,6 +88,9 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
     @Input()
     allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
     @Input() branchAvailability: any;
 
     @Input()
@@ -218,6 +221,35 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
                 }
             }
         }
+        for (let modelprop of this.allProperties){
+            let parent = modelprop.name
+            if (modelprop.propertyType === "NEW" && modelprop.record === "m" && modelprop.propertyDataType === "MODEL"){
+                for (let domModel of this.allDomainModelsWithSub){
+                    if (modelprop.type === domModel.nameTitleCase){
+                        for (let child of domModel.design.children){
+                            let childProp = {
+                                'name' : parent+"."+child.data.name,
+                                'inputType' : child.data.type
+                            }
+                            this.allProperties.push(childProp)
+                        }
+                    }
+                }
+            }
+            if (modelprop.record === "m"){
+                for (let domModel of this.allDomainModelsWithSub){
+                    if (modelprop.modelproperty.name === domModel.name){
+                        for (let child of domModel.design.children){
+                            let childProp = {
+                                'name' : parent+"."+child.data.name,
+                                'inputType' : child.data.type
+                            }
+                            this.allProperties.push(childProp)
+                        }
+                    }
+                }
+            }
+        }
         for (let rerprop of this.allReferenceProperties){
             let parent = rerprop.name
             if (rerprop.record === "m"){
@@ -290,7 +322,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
             this.configuration.errorParameterbranchparam= {};
             this.excelWriteNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
             this.excelWriteNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-        } else if (errorInputType === 'PROPERTY'){
+        } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
             this.configuration.errorParameterparam= {};
             this.configuration.errorParameterbranchparam= {};
             this.excelWriteNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -319,7 +351,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
             this.excelWriteNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
             this.excelWriteNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
             this.excelWriteNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-        } else if (inputType === 'PROPERTY'){
+        } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
             this.configuration.parameterparam= {};
             this.configuration.parameterbranch= {};
             this.configuration.parameterconstant= {};
@@ -383,7 +415,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
             };
             this.configuration.errorFunctionParameters.push(errorParameter);
             this.updateModel(this.configuration);
-        } else if (errorInputType === 'PROPERTY'){
+        } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
             let selectedErrorParameterProperty = this.excelWriteNodeConfigFormGroup.get('errorParameterproperty').value;
             let errorParameterproperty = {
                 'parameterName': errorBranchparameter.name,
@@ -441,7 +473,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
             };
             this.configuration.excelWriteParameters.push(parameter);
             this.updateModel(this.configuration);
-        } else if (inputType === 'PROPERTY'){
+        } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
             let selectedParameterProperty = this.excelWriteNodeConfigFormGroup.get('parameterproperty').value;
             let parameterproperty = {
                 'colName': colName,
@@ -520,7 +552,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
             };
             this.configuration.excelWriteInput = parameter;
             this.updateModel(this.configuration);
-        } else if (inputType === 'PROPERTY') {
+        } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ) {
             let selectedParameterProperty = this.excelWriteNodeConfigFormGroup.get('excelproperty').value;
             let parameterproperty = {
                 'sheetName': sheetName,
@@ -596,6 +628,8 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
             let assignedProperty = this.configuration.assignedProperty;
             if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
                 assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+            } else if(this.configuration.assignedtoinputType === 'VPROP' && assignedProperty && this.allProperties){
+                assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name );
             }
 
             let errorBranch = this.configuration.errorBranch;
@@ -610,7 +644,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
 
             let excelbranch = this.configuration.excelbranch;
             if(this.configuration.excelinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
-                excelbranch = this.allModelProperties.find(x => x.name === this.configuration.excelbranch.name );
+                excelbranch = this.branchAvailability.branchParams.find(x => x.name === this.configuration.excelbranch.name );
             }
 
             let excelparam = this.configuration.excelparam;
@@ -626,6 +660,8 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
             let excelproperty = this.configuration.excelproperty;
             if(this.configuration.excelinputType === 'PROPERTY' && this.allModelProperties){
                 excelproperty = this.allModelProperties.find(x => x.name === this.configuration.excelproperty.name );
+            } else if(this.configuration.excelinputType === 'VPROP' && this.allProperties){
+                excelproperty = this.allProperties.find(x => x.name === this.configuration.excelproperty.name );
             }
 
             let excelreference = this.configuration.excelreference;
@@ -817,7 +853,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
                 (configuration: RuleNodeConfiguration) => {
 
                     this.configuration.assignedtoinputType = configuration;
-                    if(this.configuration.assignedtoinputType == 'PROPERTY'){
+                    if(this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP' ){
                         this.configuration.assignedReference= {};
                         this.excelWriteNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
                     }else if (this.configuration.assignedtoinputType == 'REFERENCE'){

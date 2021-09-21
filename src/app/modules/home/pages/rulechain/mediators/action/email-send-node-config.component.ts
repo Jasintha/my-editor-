@@ -75,6 +75,9 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -189,7 +192,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       this.configuration.errorParameterbranchparam= {};
       this.emailSendNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.emailSendNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.emailSendNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -213,7 +216,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     if (emailBodyType === 'INLINE'){
         this.configuration.emailBodyProperty= {};
         this.emailSendNodeConfigFormGroup.get('emailBodyProperty').patchValue([], {emitEvent: false});
-    } else if (emailBodyType === 'PROPERTY'){
+    } else if (emailBodyType === 'PROPERTY' || emailBodyType === 'VPROP'){
         this.configuration.parameterinputType = ""
         this.configuration.parameterproperty= {};
         this.configuration.parameterparam= {};
@@ -254,7 +257,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       this.emailSendNodeConfigFormGroup.get('toemailproperty').patchValue([], {emitEvent: false});
       //this.emailSendNodeConfigFormGroup.get('toemailvariable').patchValue([], {emitEvent: false});
       //this.emailSendNodeConfigFormGroup.get('toemailvariableProperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       this.configuration.toemailconstant= {};
       this.configuration.toemailparam= {};
       this.emailSendNodeConfigFormGroup.get('toemailconstant').patchValue([], {emitEvent: false});
@@ -284,7 +287,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       //this.configuration.parametervariableProperty = {};
       this.emailSendNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
       //this.emailSendNodeConfigFormGroup.get('parametervariableProperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       this.configuration.parameterparam= {};
       this.emailSendNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
     }
@@ -315,7 +318,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.emailSendNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -368,7 +371,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       };
       this.configuration.emailbodyParameters.push(parameter);
       this.updateModel(this.configuration);
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       let selectedParameterProperty = this.emailSendNodeConfigFormGroup.get('parameterproperty').value;
       let parameterproperty = {
         'parameterName': '$'+ number,
@@ -477,11 +480,15 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       let property = this.configuration.toemailproperty;
       if(this.configuration.toemailinputType === 'PROPERTY'){
         property = this.allModelProperties.find(x => x.name === this.configuration.toemailproperty.name );
+      } else if(this.configuration.toemailinputType === 'VPROP'){
+        property = this.allProperties.find(x => x.name === this.configuration.toemailproperty.name );
       }
 
       let emailBodyProperty = this.configuration.emailBodyProperty;
       if(this.configuration.emailBodyType === 'PROPERTY'){
         emailBodyProperty = this.allModelProperties.find(x => x.name === this.configuration.emailBodyProperty.name );
+      } else if(this.configuration.emailBodyType === 'VPROP'){
+        emailBodyProperty = this.allProperties.find(x => x.name === this.configuration.emailBodyProperty.name );
       }
 
       this.emailSendNodeConfigFormGroup.patchValue({

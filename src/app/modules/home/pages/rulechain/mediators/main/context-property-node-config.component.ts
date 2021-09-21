@@ -70,6 +70,9 @@ export class ContextPropertyNodeConfigComponent implements ControlValueAccessor,
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -167,7 +170,7 @@ export class ContextPropertyNodeConfigComponent implements ControlValueAccessor,
     let inputType: string = this.contextPropertyNodeConfigFormGroup.get('propertyinputType').value;
     this.configuration.propertyinputType = inputType;
 
-    if (inputType === 'PROPERTY'){
+    if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.propertyreference= {};
       this.contextPropertyNodeConfigFormGroup.get('propertyreference').patchValue([], {emitEvent: false});
     } else if (inputType === 'REFERENCE'){
@@ -201,7 +204,7 @@ export class ContextPropertyNodeConfigComponent implements ControlValueAccessor,
       this.contextPropertyNodeConfigFormGroup.get('valueconstant').patchValue([], {emitEvent: false});
       this.contextPropertyNodeConfigFormGroup.get('valueproperty').patchValue([], {emitEvent: false});
       this.contextPropertyNodeConfigFormGroup.get('valuebranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.valueconstant= {};
       this.configuration.valueparam= {};
       this.configuration.valuebranchparam= {};
@@ -236,7 +239,7 @@ export class ContextPropertyNodeConfigComponent implements ControlValueAccessor,
       let selectedValueParam = this.contextPropertyNodeConfigFormGroup.get('valueparam').value;
       valueName = selectedValueParam.inputName;
 
-    } else if (valueinputType === 'PROPERTY'){
+    } else if (valueinputType === 'PROPERTY' || valueinputType === 'VPROP'){
       let selectedValueProperty = this.contextPropertyNodeConfigFormGroup.get('valueproperty').value;
       valueName = selectedValueProperty.name;
       valueScope = selectedValueProperty.propertyScope;

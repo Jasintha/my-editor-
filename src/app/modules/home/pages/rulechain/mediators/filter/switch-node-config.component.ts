@@ -70,6 +70,9 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -193,7 +196,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.switchNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.configuration.branchparam= {};
@@ -236,7 +239,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.switchNodeConfigFormGroup.get('switchsecondconstant').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('switchsecondproperty').patchValue([], {emitEvent: false});
       this.switchNodeConfigFormGroup.get('switchsecondbranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.switchsecondconstant= {};
       this.configuration.switchsecondparam= {};
       this.configuration.switchsecondbranchparam= {};
@@ -294,7 +297,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       };
       this.configuration.switchCases.push(switchcase);
       this.updateModel(this.configuration);
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       let selectedSwitchProperty = this.switchNodeConfigFormGroup.get('switchsecondproperty').value;
       let switchcase = {
         'name' : casename,
@@ -391,6 +394,8 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
       let property = this.configuration.property;
       if(this.configuration.firstinputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      } else if(this.configuration.firstinputType === 'VPROP' && this.allProperties){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
       }
 
       let branchparam = this.configuration.branchparam;

@@ -73,6 +73,9 @@ export class NewConnectorNodeConfigComponent implements ControlValueAccessor, On
     @Input()
     allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
     @Input()
     apptype: string;
 
@@ -186,12 +189,12 @@ export class NewConnectorNodeConfigComponent implements ControlValueAccessor, On
 
             let reqModel = this.configuration.reqModel;
             if(this.configuration.reqModel){
-                reqModel = this.allModelProperties.find(x => x.name === this.configuration.reqModel.name );
+                reqModel = this.allProperties.find(x => x.name === this.configuration.reqModel.name );
             }
 
             let resModel = this.configuration.resModel;
             if(this.configuration.resModel){
-                resModel = this.allModelProperties.find(x => x.name === this.configuration.resModel.name );
+                resModel = this.allProperties.find(x => x.name === this.configuration.resModel.name );
             }
 
             this.newConnectorConfigFormGroup.patchValue({

@@ -159,7 +159,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
       this.configuration.errorParameterbranchparam= {};
       this.eventReceiverNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.eventReceiverNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.eventReceiverNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -197,7 +197,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.eventReceiverNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,

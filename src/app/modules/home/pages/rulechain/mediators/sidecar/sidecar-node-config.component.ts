@@ -73,6 +73,9 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   allReferenceProperties: any[];
 
   @Input()
@@ -179,7 +182,7 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.configuration.errorParameterbranchparam= {};
       this.sidecarNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.sidecarNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.sidecarNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -217,7 +220,7 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.sidecarNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -274,7 +277,7 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.sidecarNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       this.sidecarNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.sidecarNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.configuration.branchparam= {};
@@ -343,6 +346,10 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
       if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
       }
+      
+      if(this.configuration.inputType === 'VPROP' && this.allProperties){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
+      }
 
       let branchparam = this.configuration.branchparam;
       if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
@@ -354,6 +361,9 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
       }
 
+      if(this.configuration.assignedtoinputType === 'VPROP' && assignedProperty && this.allProperties){
+        assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      }
       let assignedReference = this.configuration.assignedReference;
       if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
         assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
@@ -389,7 +399,7 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
         (configuration: RuleNodeConfiguration) => {
 
           this.configuration.assignedtoinputType = configuration;
-          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+          if(this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP' ){
             this.configuration.assignedReference= {};
             this.sidecarNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
           }else if (this.configuration.assignedtoinputType == 'REFERENCE'){

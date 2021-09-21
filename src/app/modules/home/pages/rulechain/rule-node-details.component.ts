@@ -118,6 +118,9 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   allConnectionProperties: any[];
 
   allReferenceProperties: any[];
@@ -218,12 +221,14 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
         this.allVariables = this.branchAvailability.variables;
         this.allValueObjectProperties= this.branchAvailability.valueObjectProperties;
         this.allConnectionProperties = this.branchAvailability.connectionProperties;
+        this.allProperties = this.branchAvailability.vproperties;
     } else {
         this.allModelProperties = this.branchAvailability.properties;
         this.allConstants = this.branchAvailability.constants;
         this.allVariables = this.branchAvailability.variables;
         this.allValueObjectProperties= this.branchAvailability.valueObjectProperties;
         this.allConnectionProperties = this.branchAvailability.connectionProperties;
+        this.allProperties = this.branchAvailability.vproperties;
     }
     this.allReferenceProperties = this.branchAvailability.referenceProperties;
   }

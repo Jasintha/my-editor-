@@ -112,6 +112,9 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
   @Input()
   allModelProperties: any[];
+
+  @Input()
+  allProperties: any[];
   
   @Input() branchAvailability: any;
   
@@ -300,7 +303,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       this.configuration.errorParameterbranchparam= {};
       this.dbNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.dbNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.dbNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -327,7 +330,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       this.dbNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
       this.dbNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
       this.dbNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.parameterparam= {};
       this.configuration.parameterbranch= {};
       this.configuration.parameterconstant= {};
@@ -367,7 +370,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       this.dbNodeConfigFormGroup.get('crudconstant').patchValue([], {emitEvent: false});
       this.dbNodeConfigFormGroup.get('crudproperty').patchValue([], {emitEvent: false});
       this.dbNodeConfigFormGroup.get('crudbranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.crudparam= {};
       this.configuration.crudconstant= {};
       this.configuration.crudbranchparam= {};
@@ -431,7 +434,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       };
       this.configuration.whereClauseBuilders.push(parameterparam);
       this.updateModel(this.configuration);
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       let selectedProperty = this.dbNodeConfigFormGroup.get('parameterproperty').value;
       let parameterproperty = {
         'inputType': inputType,
@@ -530,7 +533,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.dbNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -847,13 +850,16 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       let crudproperty = this.configuration.crudproperty;
       if(this.configuration.crudinputType === 'PROPERTY' && this.allModelProperties){
         crudproperty = this.allModelProperties.find(x => x.name === this.configuration.crudproperty.name );
+      } else if(this.configuration.crudinputType === 'VPROP' && this.allProperties){
+        crudproperty = this.allProperties.find(x => x.name === this.configuration.crudproperty.name );
       }
       
       let assignedProperty = this.configuration.assignedProperty;
       if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      } else if(this.configuration.assignedtoinputType === 'VPROP' && assignedProperty && this.allProperties){
+        assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name );
       }
-      
       let assignedReference = this.configuration.assignedReference;
       if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
         assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
@@ -1008,7 +1014,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         (configuration: RuleNodeConfiguration) => {
 
           this.configuration.assignedtoinputType = configuration;
-          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+          if(this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP' ){
             this.configuration.assignedReference= {};
             this.dbNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
           }else if (this.configuration.assignedtoinputType == 'REFERENCE'){

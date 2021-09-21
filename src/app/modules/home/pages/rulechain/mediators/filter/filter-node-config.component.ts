@@ -70,6 +70,9 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -275,7 +278,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.filterNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('variable').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('variableProperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.configuration.branchparam= {};
@@ -390,7 +393,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       //this.filterNodeConfigFormGroup.get('secondvariable').patchValue([], {emitEvent: false});
       //this.filterNodeConfigFormGroup.get('secondvariableProperty').patchValue([], {emitEvent: false});
       this.filterNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.secondconstant= {};
       this.configuration.secondparam= {};
       this.configuration.secondbranchparam= {};
@@ -455,6 +458,8 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       let property = this.configuration.property;
       if(this.configuration.firstinputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      } else if(this.configuration.firstinputType === 'VPROP' && this.allProperties){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
       }
 
       let branchparam = this.configuration.branchparam;
@@ -478,6 +483,8 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
       let secondproperty = this.configuration.secondproperty;
       if(this.configuration.secondinputType === 'PROPERTY' && this.allModelProperties){
         secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name );
+      } else if(this.configuration.secondinputType === 'VPROP' && this.allProperties){
+        secondproperty = this.allProperties.find(x => x.name === this.configuration.secondproperty.name );
       }
 
       let secondbranchparam = this.configuration.secondbranchparam;

@@ -70,6 +70,9 @@ export class CasbinAuthMiddlewareNodeConfigComponent implements ControlValueAcce
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -188,7 +191,7 @@ export class CasbinAuthMiddlewareNodeConfigComponent implements ControlValueAcce
       this.casbinAuthMiddlewareNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       this.casbinAuthMiddlewareNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.casbinAuthMiddlewareNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.configuration.branchparam= {};
@@ -231,7 +234,7 @@ export class CasbinAuthMiddlewareNodeConfigComponent implements ControlValueAcce
       this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
       this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
       this.casbinAuthMiddlewareNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.secondconstant= {};
       this.configuration.secondparam= {};
       this.configuration.secondbranchparam= {};
@@ -293,6 +296,8 @@ export class CasbinAuthMiddlewareNodeConfigComponent implements ControlValueAcce
       let property = this.configuration.property;
       if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      } else if(this.configuration.inputType === 'VPROP' && this.allProperties){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
       }
 
       let branchparam = this.configuration.branchparam;
@@ -314,6 +319,8 @@ export class CasbinAuthMiddlewareNodeConfigComponent implements ControlValueAcce
       let secondproperty = this.configuration.secondproperty;
       if(this.configuration.secondinputType === 'PROPERTY' && this.allModelProperties){
         secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name );
+      } else if(this.configuration.secondinputType === 'VPROP' && this.allProperties){
+        secondproperty = this.allProperties.find(x => x.name === this.configuration.secondproperty.name );
       }
 
       let secondbranchparam = this.configuration.secondbranchparam;

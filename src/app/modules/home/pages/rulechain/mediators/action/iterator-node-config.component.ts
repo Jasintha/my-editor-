@@ -82,6 +82,9 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   allRoots: any[];
 
   @Input() branchAvailability: any;
@@ -165,7 +168,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       this.configuration.errorParameterbranchparam= {};
       this.iteratorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.iteratorNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.iteratorNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -221,7 +224,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.iteratorNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -294,6 +297,8 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       let property = this.configuration.property;
       if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      } else if(this.configuration.inputType === 'VPROP' && this.allProperties){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
       }
 
       let errorBranch = this.configuration.errorBranch;
@@ -433,7 +438,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       this.changeSubscription = this.iteratorNodeConfigFormGroup.get('inputType').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.inputType = configuration;
-          if(this.configuration.inputType == 'PROPERTY'){
+          if(this.configuration.inputType == 'PROPERTY' || this.configuration.inputType == 'VPROP' ){
             this.configuration.branchparam= {};
             this.iteratorNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
           }else if (this.configuration.inputType == 'BRANCH_PARAM'){

@@ -72,6 +72,9 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
   @Input()
   allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
   @Input() branchAvailability: any;
 
   @Input()
@@ -206,7 +209,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       this.configuration.errorParameterbranchparam= {};
       this.callNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.callNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.callNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -240,7 +243,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       this.callNodeConfigFormGroup.get('valueconstant').patchValue([], {emitEvent: false});
       this.callNodeConfigFormGroup.get('valueproperty').patchValue([], {emitEvent: false});
       this.callNodeConfigFormGroup.get('valuebranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       this.configuration.valueconstant= {};
       this.configuration.valueparam= {};
       this.configuration.valuebranchparam= {};
@@ -268,7 +271,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
     if (inputType === 'CONSTANT'){
       this.configuration.keyproperty= {};
       this.callNodeConfigFormGroup.get('keyproperty').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       this.configuration.keyconstant= {};
       this.callNodeConfigFormGroup.get('keyconstant').patchValue([], {emitEvent: false});
     }
@@ -327,28 +330,28 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       targetParameter.valuePropertyType = '-';
     }
 
-    if (keyInputType === 'PROPERTY'){
+    if (keyInputType === 'PROPERTY' || keyInputType === 'VPROP'){
       targetParameter.keyRaw = '-';
       targetParameter.keyPropertyType = keyPropertyType;
       if (keyPropertyType === 'CONSTANT'){
         let selectedKeyConstant = this.callNodeConfigFormGroup.get('keyconstant').value;
         targetParameter.keyPropertyScope = selectedKeyConstant.scope;
         targetParameter.keyProperty = selectedKeyConstant.constantName;
-      } else if (keyPropertyType === 'PROPERTY'){
+      } else if (keyPropertyType === 'PROPERTY' || keyPropertyType === 'VPROP'){
         let selectedKeyProperty = this.callNodeConfigFormGroup.get('keyproperty').value;
         targetParameter.keyPropertyScope = selectedKeyProperty.propertyScope;
         targetParameter.keyProperty = selectedKeyProperty.name;
       }
     }
 
-    if (valueInputType === 'PROPERTY'){
+    if (valueInputType === 'PROPERTY' || valueInputType === 'VPROP'){
       targetParameter.valueRaw = '-';
       targetParameter.valuePropertyType = valuePropertyType;
       if (valuePropertyType === 'CONSTANT'){
         let selectedValueConstant = this.callNodeConfigFormGroup.get('valueconstant').value;
         targetParameter.valuePropertyScope = selectedValueConstant.scope;
         targetParameter.valueProperty = selectedValueConstant.constantName;
-      } else if (valuePropertyType === 'PROPERTY'){
+      } else if (valuePropertyType === 'PROPERTY' || valuePropertyType === 'VPROP'){
         let selectedValueProperty = this.callNodeConfigFormGroup.get('valueproperty').value;
         targetParameter.valuePropertyScope = selectedValueProperty.propertyScope;
         targetParameter.valueProperty = selectedValueProperty.name;
@@ -420,7 +423,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.callNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -551,6 +554,8 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       let assignedProperty = this.configuration.assignedProperty;
       if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      } else if(this.configuration.assignedtoinputType === 'VPROP' && assignedProperty && this.allProperties){
+        assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name );
       }
 
       let assignedReference = this.configuration.assignedReference;
@@ -617,7 +622,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         (configuration: RuleNodeConfiguration) => {
 
           this.configuration.assignedtoinputType = configuration;
-          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+          if(this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP'){
             this.configuration.assignedReference= {};
             this.callNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
           }else if (this.configuration.assignedtoinputType == 'REFERENCE'){

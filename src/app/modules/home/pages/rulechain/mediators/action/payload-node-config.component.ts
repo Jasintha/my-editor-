@@ -72,6 +72,9 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   allReferenceProperties: any[];
   
   @Input()
@@ -223,7 +226,7 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
     let inputType: string = this.payloadNodeConfigFormGroup.get('propertyinputType').value;
     this.configuration.propertyinputType = inputType;
 
-    if (inputType === 'PROPERTY'){
+    if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.propertyreference= {};
       this.configuration.propertyparam= {};
       this.configuration.propertyconstant= {};
@@ -262,7 +265,7 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
     let inputType: string = this.payloadNodeConfigFormGroup.get('assignedtoinputType').value;
     let colName = this.payloadNodeConfigFormGroup.get('colName').value;
 
-    if (inputType === 'PROPERTY') {
+    if (inputType === 'PROPERTY' || inputType === 'VPROP' ) {
       let selectedParameterProperty = this.payloadNodeConfigFormGroup.get('childrenParam').value;
       let parameterproperty = {
         'colName': colName,
@@ -309,7 +312,7 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.configuration.errorParameterbranchparam= {};
       this.payloadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.payloadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.payloadNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -347,7 +350,7 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.payloadNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -419,8 +422,10 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
           this.addChildrenProperties(assignedProperty,'valueProperty')
+      } else if(this.configuration.assignedtoinputType === 'VPROP' && assignedProperty && this.allProperties){
+        assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name );
+          this.addChildrenProperties(assignedProperty,'valueProperty')
       }
-
       let assignedReference = this.configuration.assignedReference;
       if(this.configuration.assignedtoinputType === 'REFERENCE' && assignedReference && this.allReferenceProperties){
         assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
@@ -430,6 +435,8 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       let propertyproperty = this.configuration.propertyproperty;
       if(this.configuration.propertyinputType === 'PROPERTY' && this.allModelProperties){
         propertyproperty = this.allModelProperties.find(x => x.name === this.configuration.propertyproperty.name );
+      } else if(this.configuration.propertyinputType === 'VPROP' && this.allProperties){
+        propertyproperty = this.allProperties.find(x => x.name === this.configuration.propertyproperty.name );
       }
 
       let propertyreference = this.configuration.propertyreference;
@@ -527,7 +534,7 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('propertyinputType').valueChanges.subscribe(
           (configuration: any) => {
             this.configuration.propertyinputType = configuration;
-            if (this.configuration.propertyinputType == 'PROPERTY'){
+            if (this.configuration.propertyinputType == 'PROPERTY' || this.configuration.propertyinputType == 'VPROP'){
                 this.configuration.propertyconstant = {};
                 this.configuration.propertyreferenc = {};
                 this.configuration.propertyparam = {};
@@ -669,7 +676,7 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
         (configuration: RuleNodeConfiguration) => {
 
           this.configuration.assignedtoinputType = configuration;
-          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+          if(this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP' ){
             this.configuration.assignedReference= {};
             this.payloadNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
           }else if (this.configuration.assignedtoinputType == 'REFERENCE'){

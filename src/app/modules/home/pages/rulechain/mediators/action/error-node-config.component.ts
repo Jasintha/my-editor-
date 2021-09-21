@@ -73,6 +73,9 @@ export class ErrorNodeConfigComponent implements ControlValueAccessor, OnInit, O
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -167,7 +170,7 @@ export class ErrorNodeConfigComponent implements ControlValueAccessor, OnInit, O
       this.errorNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       this.errorNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.errorNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.configuration.branchparam= {};
@@ -239,6 +242,9 @@ export class ErrorNodeConfigComponent implements ControlValueAccessor, OnInit, O
       let property = this.configuration.property;
       if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      }
+      if(this.configuration.inputType === 'VPROP' && this.allProperties){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
       }
 
       let branchparam = this.configuration.branchparam;

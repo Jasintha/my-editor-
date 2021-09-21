@@ -79,6 +79,9 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input() branchAvailability: any;
@@ -164,7 +167,7 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       };
       this.configuration.logFieldProperties.push(logparameter);
       this.updateModel(this.configuration);
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       let selectedProperty = this.logNodeConfigFormGroup.get('logproperty').value;
       let logproperty = {
         'logFieldName': logfieldName,
@@ -220,7 +223,7 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       this.configuration.logbranchparam= {};
       this.logNodeConfigFormGroup.get('logproperty').patchValue([], {emitEvent: false});
       this.logNodeConfigFormGroup.get('logbranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.logparam= {};
       this.configuration.logbranchparam= {};
       this.logNodeConfigFormGroup.get('logparam').patchValue([], {emitEvent: false});

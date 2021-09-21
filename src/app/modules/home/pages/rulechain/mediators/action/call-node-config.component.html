@@ -82,7 +82,8 @@
         <mat-label>Key Property Type</mat-label>
         <mat-select formControlName="keyinputType" (selectionChange)="refreshKeyInputTypes()">
           <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
-          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+          <mat-option *ngIf="allProperties?.length" value="VPROP">Property</mat-option>
         </mat-select>
       </mat-form-field>
       <section *ngIf="configuration.keyType === 'PROPERTY'" class="mat-block" fxFlex>
@@ -95,9 +96,17 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field *ngIf="configuration.keyinputType === 'PROPERTY'" fxFlex class="mat-block">
-          <mat-label>Property</mat-label>
+          <mat-label>Value Property</mat-label>
           <mat-select formControlName="keyproperty">
             <mat-option *ngFor="let property of allModelProperties" [value]="property">
+              {{property.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="configuration.keyinputType === 'VPROP'" fxFlex class="mat-block">
+          <mat-label>Property</mat-label>
+          <mat-select formControlName="keyproperty">
+            <mat-option *ngFor="let property of allProperties" [value]="property">
               {{property.name}}
             </mat-option>
           </mat-select>
@@ -119,7 +128,8 @@
       <mat-select formControlName="valueinputType" (selectionChange)="refreshValueInputTypes()">
         <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
         <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
-        <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+        <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+        <mat-option *ngIf="allProperties?.length" value="VPROP">Property</mat-option>
         <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
       </mat-select>
     </mat-form-field>
@@ -133,13 +143,23 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field *ngIf="configuration.valueinputType === 'PROPERTY'" fxFlex class="mat-block">
-        <mat-label>Property</mat-label>
+        <mat-label>Value Property</mat-label>
         <mat-select formControlName="valueproperty">
           <mat-option *ngFor="let property of allModelProperties" [value]="property">
             {{property.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.valueinputType === 'VPROP'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="valueproperty">
+          <mat-option *ngFor="let property of allProperties" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <mat-form-field *ngIf="configuration.valueinputType === 'RULE_INPUT'" fxFlex class="mat-block">
         <mat-label>Rule Input</mat-label>
         <mat-select formControlName="valueparam">
@@ -394,6 +414,7 @@
       <mat-label>Save Result Type</mat-label>
       <mat-select formControlName="assignedtoinputType">
         <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+        <mat-option *ngIf="allProperties?.length" value="VPROP">Property</mat-option>
         <mat-option *ngIf="allReferenceProperties?.length" value="REFERENCE">Reference Property</mat-option>
       </mat-select>
     </mat-form-field>
@@ -402,6 +423,15 @@
         <mat-label>Value Property</mat-label>
         <mat-select formControlName="assignedProperty">
           <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
+            {{modelproperty.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex class="mat-block" *ngIf="configuration.assignedtoinputType === 'VPROP'">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="assignedProperty">
+          <mat-option *ngFor="let modelproperty of allProperties" [value]="modelproperty">
             {{modelproperty.name}}
           </mat-option>
         </mat-select>
@@ -478,7 +508,8 @@
           <mat-label>Error Parameter Input Type</mat-label>
           <mat-select formControlName="errorParameterinputType" (selectionChange)="refreshErrorParameterInputTypes()">
             <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
-            <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+            <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+            <mat-option *ngIf="allProperties?.length" value="VPROP">Property</mat-option>
             <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
           </mat-select>
         </mat-form-field>
@@ -492,13 +523,23 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field *ngIf="configuration.errorParameterinputType === 'PROPERTY'" fxFlex class="mat-block">
-            <mat-label>Property</mat-label>
+            <mat-label>Value Property</mat-label>
             <mat-select formControlName="errorParameterproperty">
               <mat-option *ngFor="let property of allModelProperties" [value]="property">
                 {{property.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
+
+          <mat-form-field *ngIf="configuration.errorParameterinputType === 'VPROP'" fxFlex class="mat-block">
+            <mat-label>Property</mat-label>
+            <mat-select formControlName="errorParameterproperty">
+              <mat-option *ngFor="let property of allProperties" [value]="property">
+                {{property.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <mat-form-field *ngIf="configuration.errorParameterinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
             <mat-label>Branch Param</mat-label>
             <mat-select formControlName="errorParameterbranchparam">

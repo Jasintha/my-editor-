@@ -92,6 +92,9 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   inputEntities: any[];
 
   @Input()

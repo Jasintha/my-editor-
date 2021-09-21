@@ -12,7 +12,7 @@
         <mat-form-field fxFlex class="mat-block">
             <mat-label>Input Model</mat-label>
             <mat-select formControlName="reqModel">
-                <mat-option *ngFor="let model of allModelProperties" [value]="model">
+                <mat-option *ngFor="let model of allProperties" [value]="model">
                     {{model.name}}
                 </mat-option>
             </mat-select>
@@ -21,7 +21,7 @@
         <mat-form-field fxFlex class="mat-block">
             <mat-label>Response Model</mat-label>
             <mat-select formControlName="resModel">
-                <mat-option *ngFor="let model of allModelProperties" [value]="model">
+                <mat-option *ngFor="let model of allProperties" [value]="model">
                     {{model.name}}
                 </mat-option>
             </mat-select>

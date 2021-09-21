@@ -70,6 +70,9 @@ export class CPGetterNodeConfigComponent implements ControlValueAccessor, OnInit
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -169,7 +172,7 @@ export class CPGetterNodeConfigComponent implements ControlValueAccessor, OnInit
     let inputType: string = this.cpGetterNodeConfigFormGroup.get('propertyinputType').value;
     this.configuration.propertyinputType = inputType;
 
-    if (inputType === 'PROPERTY'){
+    if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       this.configuration.propertyreference= {};
       this.cpGetterNodeConfigFormGroup.get('propertyreference').patchValue([], {emitEvent: false});
     } else if (inputType === 'REFERENCE'){
@@ -203,7 +206,7 @@ export class CPGetterNodeConfigComponent implements ControlValueAccessor, OnInit
       this.cpGetterNodeConfigFormGroup.get('valueconstant').patchValue([], {emitEvent: false});
       this.cpGetterNodeConfigFormGroup.get('valueproperty').patchValue([], {emitEvent: false});
       this.cpGetterNodeConfigFormGroup.get('valuebranchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       this.configuration.valueconstant= {};
       this.configuration.valueparam= {};
       this.configuration.valuebranchparam= {};
@@ -241,7 +244,7 @@ export class CPGetterNodeConfigComponent implements ControlValueAccessor, OnInit
       let selectedPropertyReference = this.cpGetterNodeConfigFormGroup.get('propertyreference').value;
       propertyName = selectedPropertyReference.name;
 
-    } else if (propinputType === 'PROPERTY'){
+    } else if (propinputType === 'PROPERTY' || propinputType === 'VPROP'){
       let selectedPropertyProperty = this.cpGetterNodeConfigFormGroup.get('propertyproperty').value;
       propertyName = selectedPropertyProperty.name;
       propertyScope = selectedPropertyProperty.propertyScope;
@@ -252,7 +255,7 @@ export class CPGetterNodeConfigComponent implements ControlValueAccessor, OnInit
       let selectedValueParam = this.cpGetterNodeConfigFormGroup.get('valueparam').value;
       valueName = selectedValueParam.inputName;
 
-    } else if (valueinputType === 'PROPERTY'){
+    } else if (valueinputType === 'PROPERTY' || valueinputType === 'VPROP'){
       let selectedValueProperty = this.cpGetterNodeConfigFormGroup.get('valueproperty').value;
       valueName = selectedValueProperty.name;
       valueScope = selectedValueProperty.propertyScope;

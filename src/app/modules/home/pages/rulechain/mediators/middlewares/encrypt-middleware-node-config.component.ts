@@ -69,6 +69,9 @@ export class EncryptMiddlewareNodeConfigComponent implements ControlValueAccesso
     @Input()
     allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
     @Input()
     apptype: string;
 

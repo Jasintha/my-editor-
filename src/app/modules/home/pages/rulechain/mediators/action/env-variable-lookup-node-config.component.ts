@@ -70,6 +70,9 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -166,7 +169,7 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
     let inputType: string = this.envlookupNodeConfigFormGroup.get('propertyinputType').value;
     this.configuration.propertyinputType = inputType;
 
-    if (inputType === 'PROPERTY'){
+    if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       this.configuration.propertyreference= {};
       this.envlookupNodeConfigFormGroup.get('propertyreference').patchValue([], {emitEvent: false});
     } else if (inputType === 'REFERENCE'){
@@ -199,7 +202,7 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
       propertyType = selectedPropertyReference.type;
       //propertyScope = selectedPropertyReference.propertyScope;
 
-    } else if (propinputType === 'PROPERTY'){
+    } else if (propinputType === 'PROPERTY' || propinputType === 'VPROP'){
       let selectedPropertyProperty = this.envlookupNodeConfigFormGroup.get('propertyproperty').value;
       propertyName = selectedPropertyProperty.name;
       propertyType = selectedPropertyProperty.type;

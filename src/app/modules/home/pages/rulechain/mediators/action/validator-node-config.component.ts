@@ -76,6 +76,9 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   allRoots: any[];
 
   @Input()
@@ -178,7 +181,7 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       this.configuration.errorParameterbranchparam= {};
       this.validatorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.validatorNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.validatorNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -203,7 +206,7 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       this.configuration.validatorbranch= {};
       this.validatorNodeConfigFormGroup.get('validatorproperty').patchValue([], {emitEvent: false});
       this.validatorNodeConfigFormGroup.get('validatorbranch').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.validatorparam= {};
       this.configuration.validatorbranch= {};
       this.validatorNodeConfigFormGroup.get('validatorparam').patchValue([], {emitEvent: false});
@@ -242,7 +245,7 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.validatorNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -312,7 +315,7 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
       };
       this.configuration.validators.push(validatorparam);
       this.updateModel(this.configuration);
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       let selectedProperty = this.validatorNodeConfigFormGroup.get('validatorproperty').value;
       let validatorproperty = {
         'inputType': inputType,

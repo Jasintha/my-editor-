@@ -70,6 +70,9 @@ export class APIGroupNodeConfigComponent implements ControlValueAccessor, OnInit
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()

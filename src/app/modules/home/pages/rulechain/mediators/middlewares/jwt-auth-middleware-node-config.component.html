@@ -14,7 +14,8 @@
                 <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
                     <!--<mat-option *ngIf="!branchAvailability?.branchFound &&  allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>-->
                     <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
-                    <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+                    <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+                    <mat-option *ngIf="allProperties?.length" value="VPROP">Property</mat-option>
                     <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
                     <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
                 </mat-select>
@@ -38,9 +39,17 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field *ngIf="configuration.inputType === 'PROPERTY'" fxFlex class="mat-block">
-                <mat-label>Property</mat-label>
+                <mat-label>Value Property</mat-label>
                 <mat-select formControlName="property">
                     <mat-option *ngFor="let property of allModelProperties" [value]="property">
+                        {{property.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="configuration.inputType === 'VPROP'" fxFlex class="mat-block">
+                <mat-label>Property</mat-label>
+                <mat-select formControlName="property">
+                    <mat-option *ngFor="let property of allProperties" [value]="property">
                         {{property.name}}
                     </mat-option>
                 </mat-select>
@@ -114,7 +123,8 @@
                 <mat-select formControlName="secondinputType" (selectionChange)="refreshSecondInputTypes()">
                     <!--<mat-option *ngIf="!branchAvailability?.branchFound &&  allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>-->
                     <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
-                    <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+                    <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+                    <mat-option *ngIf="allProperties?.length" value="VPROP">Property</mat-option>
                     <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
                     <!--<mat-option *ngIf="allVariables?.length" value="VARIABLE">Variable</mat-option>-->
                 </mat-select>
@@ -138,9 +148,17 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field *ngIf="configuration.secondinputType === 'PROPERTY'" fxFlex class="mat-block">
-                <mat-label>Property</mat-label>
+                <mat-label>Value Property</mat-label>
                 <mat-select formControlName="secondproperty">
                     <mat-option *ngFor="let property of allModelProperties" [value]="property">
+                        {{property.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="configuration.secondinputType === 'VPROP'" fxFlex class="mat-block">
+                <mat-label>Property</mat-label>
+                <mat-select formControlName="secondproperty">
+                    <mat-option *ngFor="let property of allProperties" [value]="property">
                         {{property.name}}
                     </mat-option>
                 </mat-select>

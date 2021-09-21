@@ -70,6 +70,9 @@ export class BasicAuthMiddlewareNodeConfigComponent implements ControlValueAcces
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()

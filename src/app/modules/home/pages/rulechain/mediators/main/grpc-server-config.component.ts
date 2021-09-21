@@ -73,6 +73,9 @@ export class GRPCServerNodeConfigComponent implements ControlValueAccessor, OnIn
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   apptype: string;
 
   @Input()
@@ -162,7 +165,7 @@ export class GRPCServerNodeConfigComponent implements ControlValueAccessor, OnIn
       this.grpcServerNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       this.grpcServerNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.grpcServerNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.configuration.branchparam= {};
@@ -222,6 +225,8 @@ export class GRPCServerNodeConfigComponent implements ControlValueAccessor, OnIn
       let property = this.configuration.property;
       if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      } else if(this.configuration.inputType === 'VPROP' && this.allProperties){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
       }
 
       let branchparam = this.configuration.branchparam;

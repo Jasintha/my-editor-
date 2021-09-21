@@ -82,6 +82,9 @@ export class ConnectionPropertyNodeConfigComponent implements ControlValueAccess
     @Input()
     allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
     @Input() branchAvailability: any;
 
     @Input()
@@ -183,7 +186,7 @@ export class ConnectionPropertyNodeConfigComponent implements ControlValueAccess
       this.connectionPropertyNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.connectionPropertyNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
       this.connectionPropertyNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.conpropertyconstant= {};
       this.configuration.conpropertyparam= {};
       this.configuration.conpropertybranchparam= {};
@@ -251,7 +254,7 @@ export class ConnectionPropertyNodeConfigComponent implements ControlValueAccess
       input = '-';
       propertyscope = '-'
       property = selectedParam.inputName;
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       let selectedProperty = this.connectionPropertyNodeConfigFormGroup.get('property').value;
       input = '-';
       property = selectedProperty.name;

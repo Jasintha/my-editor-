@@ -52,6 +52,7 @@ export interface RuleChainMetaData {
   allDomainModels?: any[];
   allValueObjectProperties?: any[];
   allModelProperties?: any[];
+  allProperties?: any[];
   allGlobalProperties?: any[];
   allGlobalConstants?: any[];
   allGlobalConnectionProperties?: any[];

@@ -78,6 +78,9 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
     @Input()
     allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
     @Input()
     allRoots: any[];
 
@@ -174,7 +177,7 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
             this.aggregateNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
             this.aggregateNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
             this.aggregateNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
-        } else if (inputType === 'PROPERTY'){
+        } else if (inputType === 'PROPERTY' || inputType === 'VPROP'){
             this.configuration.secondconstant= {};
             this.configuration.secondparam= {};
             this.configuration.secondbranchparam= {};
@@ -237,8 +240,9 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
             let secondproperty = this.configuration.secondproperty;
             if(this.configuration.secondinputType === 'PROPERTY' && this.allModelProperties){
                 secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name );
+            } else if(this.configuration.secondinputType === 'VPROP' && this.allProperties){
+                secondproperty = this.allProperties.find(x => x.name === this.configuration.secondproperty.name );
             }
-
             let secondbranchparam = this.configuration.secondbranchparam;
             if(this.configuration.secondinputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
                 secondbranchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.secondbranchparam.name );
@@ -247,8 +251,9 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
             let property = this.configuration.property;
             if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
                 property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+            } else if(this.configuration.inputType === 'VPROP' && this.allProperties){
+                property = this.allProperties.find(x => x.name === this.configuration.property.name );
             }
-
             let referenceProperty = this.configuration.referenceProperty;
             if(this.configuration.inputType === 'REFERENCE' && this.allReferenceProperties){
                 referenceProperty = this.allReferenceProperties.find(x => x.name === this.configuration.referenceProperty.name );
@@ -331,7 +336,7 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
             this.changeSubscription = this.aggregateNodeConfigFormGroup.get('inputType').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.inputType = configuration;
-                    if(this.configuration.inputType == 'PROPERTY'){
+                    if(this.configuration.inputType == 'PROPERTY' || this.configuration.inputType == 'VPROP'){
                         this.configuration.branchparam= {};
                         this.configuration.referenceProperty = {};
                         this.aggregateNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});

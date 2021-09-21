@@ -73,6 +73,9 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
   allModelProperties: any[];
 
   @Input()
+  allProperties: any[];
+
+  @Input()
   allErrorBranches: any[];
 
   @Input()
@@ -174,7 +177,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       this.configuration.errorParameterbranchparam= {};
       this.fileDownloadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.fileDownloadNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.fileDownloadNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -210,7 +213,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       this.fileDownloadNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
       this.fileDownloadNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
       this.fileDownloadNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP'){
       this.configuration.constant= {};
       this.configuration.param= {};
       this.configuration.branchparam= {};
@@ -265,7 +268,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.fileDownloadNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -341,6 +344,8 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       let property = this.configuration.property;
       if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      } else if(this.configuration.inputType === 'VPROP' && this.allProperties){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
       }
 
       let branchparam = this.configuration.branchparam;

@@ -83,6 +83,9 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
   @Input()
   allModelProperties: any[];
 
+  @Input()
+  allProperties: any[];
+
   @Input() branchAvailability: any;
 
   @Input()
@@ -198,7 +201,7 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.subRuleNodeConfigFormGroup.get('parameterproperty').patchValue([], {emitEvent: false});
       this.subRuleNodeConfigFormGroup.get('parameterbranch').patchValue([], {emitEvent: false});
       this.subRuleNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       this.configuration.parameterparam= {};
       this.configuration.parameterbranch= {};
       this.configuration.parameterconstant= {};
@@ -257,7 +260,7 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
       };
       this.configuration.subRuleInputs.push(parameter);
       this.updateModel(this.configuration);
-    } else if (inputType === 'PROPERTY'){
+    } else if (inputType === 'PROPERTY' || inputType === 'VPROP' ){
       let selectedParameterProperty = this.subRuleNodeConfigFormGroup.get('parameterproperty').value;
       let parameterproperty = {
         'parameterName': subruleInput.paramName,
@@ -315,7 +318,7 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.configuration.errorParameterbranchparam= {};
       this.subRuleNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.subRuleNodeConfigFormGroup.get('errorParameterbranchparam').patchValue([], {emitEvent: false});
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       this.configuration.errorParameterparam= {};
       this.configuration.errorParameterbranchparam= {};
       this.subRuleNodeConfigFormGroup.get('parameterbranchparam').patchValue([], {emitEvent: false});
@@ -353,7 +356,7 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
-    } else if (errorInputType === 'PROPERTY'){
+    } else if (errorInputType === 'PROPERTY' || errorInputType === 'VPROP'){
       let selectedErrorParameterProperty = this.subRuleNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
         'parameterName': errorBranchparameter.name,
@@ -423,6 +426,8 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
       let assignedProperty = this.configuration.assignedProperty;
       if(this.configuration.assignedtoinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      } else if(this.configuration.assignedtoinputType === 'VPROP' && assignedProperty && this.allProperties){
+        assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name );
       }
 
       let assignedReference = this.configuration.assignedReference;
@@ -583,7 +588,7 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
         (configuration: RuleNodeConfiguration) => {
 
           this.configuration.assignedtoinputType = configuration;
-          if(this.configuration.assignedtoinputType == 'PROPERTY'){
+          if(this.configuration.assignedtoinputType == 'PROPERTY' || this.configuration.assignedtoinputType == 'VPROP' ){
             this.configuration.assignedReference= {};
             this.subRuleNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
           }else if (this.configuration.assignedtoinputType == 'REFERENCE'){
