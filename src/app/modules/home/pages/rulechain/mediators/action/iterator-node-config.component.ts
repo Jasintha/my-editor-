@@ -131,6 +131,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
     this.iteratorNodeConfigFormGroup = this.fb.group({
       property: [],
       inputType: '',
+      firstinputType:'',
       branchparam: [],
       assignedProperty: [],
       param: [],
@@ -262,6 +263,14 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
 
   }
 
+  refreshParameterInputTypes(){
+    this.configuration.assignedProperty= {};
+    this.iteratorNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+   }
+
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
@@ -307,10 +316,13 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       }
 
       let assignedProperty = this.configuration.assignedProperty;
-      if(assignedProperty && this.allModelProperties){
+      if(this.configuration.firstinputType === 'PROPERTY' && assignedProperty && this.allModelProperties){
         assignedProperty = this.allModelProperties.find(x => x.name === this.configuration.assignedProperty.name );
       }
 
+      if(this.configuration.firstinputType === 'VPROP' && assignedProperty && this.allProperties){
+        assignedProperty = this.allProperties.find(x => x.name === this.configuration.assignedProperty.name );
+      }
       let branchparam = this.configuration.branchparam;
       if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
         branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
@@ -322,6 +334,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
         param:param,
         branchparam: branchparam,
         inputType: this.configuration.inputType,
+        firstinputType: this.configuration.firstinputType,
        // root: root,
        // isAsync: this.configuration.isAsync,
         errorMsg: this.configuration.errorMsg,
@@ -351,7 +364,12 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
             this.updateModel(this.configuration);
           }
       );
-
+      this.changeSubscription = this.iteratorNodeConfigFormGroup.get('firstinputType').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.firstinputType = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
       this.changeSubscription = this.iteratorNodeConfigFormGroup.get('errorBranch').valueChanges.subscribe(
           (configuration: any) => {
             this.configuration.errorBranch = configuration;

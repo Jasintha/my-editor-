@@ -267,6 +267,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         join: "",
         selectAs: "",
         fieldFunction: "",
+        firstinputType: "",
       errorBranch: [],
       errorInputType: [],
       errorIsAsync: false,
@@ -292,6 +293,14 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
   ngOnDestroy(): void {
     if (this.definedConfigComponentRef) {
       this.definedConfigComponentRef.destroy();
+    }
+  }
+
+  refreshCreateUpdatePropertyInputTypes(){
+    this.configuration.property= {};
+    this.dbNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
     }
   }
 
@@ -612,6 +621,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
     this.configuration.dbAction = action;
 
     if(action === 'QUERY'){
+      this.configuration.firstinputType = "";
       this.configuration.crudinputType= "";
       this.configuration.crudparam= {};
       this.configuration.crudconstant= {};
@@ -627,7 +637,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       this.configuration.property= {};
 
       this.dbNodeConfigFormGroup.get('entity').patchValue([], {emitEvent: false});
-
+      this.dbNodeConfigFormGroup.get('firstinputType').patchValue("", {emitEvent: false});
       this.dbNodeConfigFormGroup.get('assignedtoinputType').patchValue("", {emitEvent: false});
       this.dbNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});
       this.dbNodeConfigFormGroup.get('assignedReference').patchValue([], {emitEvent: false});
@@ -692,8 +702,10 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       this.dbNodeConfigFormGroup.get('parameterconstant').patchValue([], {emitEvent: false});
       this.dbNodeConfigFormGroup.get('join').patchValue("", {emitEvent: false});
     } else {
+      this.configuration.firstinputType = "";
       this.configuration.property= {};
       this.dbNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.dbNodeConfigFormGroup.get('firstinputType').patchValue("", {emitEvent: false});
 
       if(action === 'DELETE' || action === 'DELETEALL'){
         this.configuration.assignedtoinputType= "";
@@ -830,10 +842,13 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       }
 
       let property = this.configuration.property;
-      if((this.configuration.dbAction === 'CREATE' || this.configuration.dbAction === 'UPDATE') && property && this.allModelProperties){
+      if((this.configuration.dbAction === 'CREATE' || this.configuration.dbAction === 'UPDATE') && this.configuration.firstinputType === 'PROPERTY' && property && this.allModelProperties){
         property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
       }
 
+      if((this.configuration.dbAction === 'CREATE' || this.configuration.dbAction === 'UPDATE') && this.configuration.firstinputType === 'VPROP' && property && this.allProperties){
+        property = this.allProperties.find(x => x.name === this.configuration.property.name );
+      }
       //crud input
 
 
@@ -904,7 +919,8 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         errorParameterparam: this.configuration.errorParameterparam,
         errorParameterproperty: this.configuration.errorParameterproperty,
         errorParameterbranchparam: this.configuration.errorParameterbranchparam,
-        errorIsAsync: this.configuration.errorIsAsync
+        errorIsAsync: this.configuration.errorIsAsync,
+        firstinputType: this.configuration.firstinputType
       });
 
       /*
@@ -915,6 +931,13 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         }
       );
       */
+
+      this.changeSubscription = this.dbNodeConfigFormGroup.get('firstinputType').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.firstinputType = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
 
       this.changeSubscription = this.dbNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
           (configuration: any) => {

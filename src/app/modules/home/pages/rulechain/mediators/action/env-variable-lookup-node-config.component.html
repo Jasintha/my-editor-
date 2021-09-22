@@ -40,12 +40,31 @@
   </section>
 
   <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+
     <mat-form-field fxFlex class="mat-block">
+      <mat-label>Constant Type</mat-label>
+      <mat-select formControlName="constantinputType" (selectionChange)="refreshParameterInputTypes()">
+        <mat-option *ngIf="allProperties?.length" value="VPROP">Property</mat-option>
+        <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex class="mat-block" *ngIf="configuration.constantinputType === 'CONSTANT'">
       <mat-label>Constant</mat-label>
       <mat-select formControlName="valueconstant">
         <mat-option *ngFor="let constant of allConstants" [value]="constant">
           {{constant.constantName}}
         </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex class="mat-block" *ngIf="configuration.constantinputType === 'VPROP'">
+      <mat-label>Constant</mat-label>
+      <mat-select formControlName="valuepropertyconstant">
+        <ng-container *ngFor="let constant of allProperties">
+          <mat-option *ngIf="constant?.propertyType === 'NEW' && constant?.propertyDataType === 'CONSTANT' && constant?.record === 's'" [value]="property">
+            {{property.name}}
+          </mat-option>
+        </ng-container>
       </mat-select>
     </mat-form-field>
   </section>

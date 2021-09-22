@@ -35,14 +35,34 @@
     </mat-form-field>
   </section>
 
-  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.dbAction === 'CREATE' || configuration.dbAction === 'UPDATE'">
-    <mat-label>Input Property</mat-label>
-    <mat-select formControlName="property">
-      <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
-        {{modelproperty.name}}
-      </mat-option>
+
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" *ngIf="configuration.dbAction === 'CREATE' || configuration.dbAction === 'UPDATE'">
+
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Input Property Type</mat-label>
+    <mat-select formControlName="firstinputType" (selectionChange)="refreshCreateUpdatePropertyInputTypes()">
+      <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Value Property</mat-option>
+      <mat-option *ngIf="allProperties?.length" value="VPROP">Property</mat-option>
     </mat-select>
   </mat-form-field>
+
+    <mat-form-field fxFlex class="mat-block" *ngIf="configuration.firstinputType === 'PROPERTY'">
+      <mat-label>Input Property</mat-label>
+      <mat-select formControlName="property">
+        <mat-option *ngFor="let modelproperty of allModelProperties" [value]="modelproperty">
+          {{modelproperty.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex class="mat-block" *ngIf="configuration.firstinputType === 'VPROP'">
+      <mat-label>Input Property</mat-label>
+      <mat-select formControlName="property">
+        <mat-option *ngFor="let modelproperty of allProperties" [value]="modelproperty">
+          {{modelproperty.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
 
   <section *ngIf="configuration.dbAction === 'DELETE' || configuration.dbAction === 'FIND' || configuration.dbAction === 'DELETEALL' || configuration.dbAction === 'FINDALL'" class="mat-block" fxFlex>
     <mat-form-field fxFlex class="mat-block">

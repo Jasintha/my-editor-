@@ -143,6 +143,8 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
       defaultValue: "",
       propertyproperty: [],
       propertyreference: [],
+      constantinputType: "",
+      valuepropertyconstant: [],
       valueconstant:[]
     });
   }
@@ -182,10 +184,25 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
 
   }
 
+  refreshParameterInputTypes(){
+    let inputType: string = this.envlookupNodeConfigFormGroup.get('constantinputType').value;
+    this.configuration.constantinputType = inputType;
+    if (inputType === 'VPROP'){
+      this.configuration.valueconstant= {};
+      this.envlookupNodeConfigFormGroup.get('valueconstant').patchValue([], {emitEvent: false});
+    } else if (inputType === 'CONSTANT'){
+      this.configuration.valuepropertyconstant= {};
+      this.envlookupNodeConfigFormGroup.get('valuepropertyconstant').patchValue([], {emitEvent: false});
+    }
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+  }
+
   addLookup(): void{
 
     let propinputType: string = this.envlookupNodeConfigFormGroup.get('propertyinputType').value;
-    let valueinputType: string = 'CONSTANT';
+    let valueinputType: string = '';
 
     let propertyName: string = '';
     let propertyScope: string = '';
@@ -210,13 +227,25 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
       propertyScope = selectedPropertyProperty.propertyScope;
 
     }
-    
-    let selectedValueConstant = this.envlookupNodeConfigFormGroup.get('valueconstant').value;
 
-    if(selectedValueConstant){
-        valueName = selectedValueConstant.constantName;
-        valueScope = selectedValueConstant.scope;
-        valueDatatype = selectedValueConstant.constantType;
+    valueinputType = this.envlookupNodeConfigFormGroup.get('constantinputType').value;
+
+    if (valueinputType === 'VPROP'){
+        let selectedValuePropConstant = this.envlookupNodeConfigFormGroup.get('valuepropertyconstant').value;
+
+        if(selectedValuePropConstant){
+            valueName = selectedValuePropConstant.name;
+            valueScope = selectedValuePropConstant.propertyScope;
+            valueDatatype = selectedValuePropConstant.propertyDataType;
+        }
+    } else if (valueinputType === 'CONSTANT') {
+        let selectedValueConstant = this.envlookupNodeConfigFormGroup.get('valueconstant').value;
+
+        if(selectedValueConstant){
+            valueName = selectedValueConstant.constantName;
+            valueScope = selectedValueConstant.scope;
+            valueDatatype = selectedValueConstant.constantType;
+        }
     }
 
 
@@ -328,6 +357,12 @@ export class EnvVariableLookupNodeConfigComponent implements ControlValueAccesso
         }
       );
 
+      this.changeSubscription = this.envlookupNodeConfigFormGroup.get('valuepropertyconstant').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.valuepropertyconstant = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
     }
   }
 
