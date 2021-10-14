@@ -339,7 +339,8 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
         'parameterName': functionparameter.paramName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterParam.inputName
+        'property': selectedParameterParam.inputName,
+        'propertyScope': ''
       };
       this.configuration.hybridParameters.push(parameter);
       this.updateModel(this.configuration);
@@ -349,7 +350,8 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
         'parameterName': functionparameter.paramName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterProperty.name
+        'property': selectedParameterProperty.name,
+        'propertyScope': selectedParameterProperty.propertyScope
       };
       this.configuration.hybridParameters.push(parameterproperty);
       this.updateModel(this.configuration);
@@ -359,7 +361,8 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
         'parameterName': functionparameter.paramName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterBranch.name
+        'property': selectedParameterBranch.name,
+        'propertyScope': ''
       };
       this.configuration.hybridParameters.push(parameterbranch);
       this.updateModel(this.configuration);
@@ -369,7 +372,8 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
         'parameterName': functionparameter.paramName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterConstant.constantName
+        'property': selectedParameterConstant.constantName,
+        'propertyScope': selectedParameterConstant.scope
       };
       this.configuration.hybridParameters.push(parameterconstant);
       this.updateModel(this.configuration);
@@ -654,6 +658,7 @@ export interface HybridParameters {
   inputType: string;
   input: string;
   property: string;
+  propertyScope: string;
 }
 
 export interface ErrorFunctionParameters {
@@ -661,4 +666,5 @@ export interface ErrorFunctionParameters {
   inputType: string;
   input: string;
   property: string;
+  propertyScope: string;
 }

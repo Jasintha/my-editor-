@@ -245,7 +245,8 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         'parameterName': branchparameter.name,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterParam.inputName
+        'property': selectedParameterParam.inputName,
+        'propertyScope': ''
       };
       this.configuration.callFunctionParameters.push(parameter);
       this.updateModel(this.configuration);
@@ -255,7 +256,8 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         'parameterName': branchparameter.name,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterProperty.name
+        'property': selectedParameterProperty.name,
+        'propertyScope': selectedParameterProperty.propertyScope
       };
       this.configuration.callFunctionParameters.push(parameterproperty);
       this.updateModel(this.configuration);
@@ -265,7 +267,8 @@ export class BranchNodeConfigComponent implements ControlValueAccessor, OnInit, 
         'parameterName': branchparameter.name,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterBranch.name
+        'property': selectedParameterBranch.name,
+        'propertyScope': ''
       };
       this.configuration.callFunctionParameters.push(parameterbranchparam);
       this.updateModel(this.configuration);
@@ -511,6 +514,7 @@ export interface CallFunctionParameters {
   inputType: string;
   input: string;
   property: string;
+  propertyScope: string;
 }
 
 export interface ErrorFunctionParameters {
@@ -518,4 +522,5 @@ export interface ErrorFunctionParameters {
   inputType: string;
   input: string;
   property: string;
+  propertyScope: string;
 }
