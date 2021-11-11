@@ -21,9 +21,12 @@
       <mat-form-field *ngIf="configuration.toemailinputType === 'RULE_INPUT'" fxFlex class="mat-block">
         <mat-label>Rule Input</mat-label>
         <mat-select formControlName="toemailparam">
-          <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-            {{property.inputName}}
-          </mat-option>
+          <ng-container *ngFor="let domainModel of allRuleInputs">
+            <mat-option *ngIf="(domainModel?.inputType === 'model' || domainModel?.inputType === 'dto' || domainModel?.inputType === 'string') " [value]="domainModel">
+              {{domainModel.inputName}}
+            </mat-option>
+          </ng-container>
+
         </mat-select>
       </mat-form-field>
       <mat-form-field *ngIf="configuration.toemailinputType === 'CONSTANT'" fxFlex class="mat-block">
@@ -37,9 +40,11 @@
       <mat-form-field *ngIf="configuration.toemailinputType === 'PROPERTY'" fxFlex class="mat-block">
         <mat-label>Property</mat-label>
         <mat-select formControlName="toemailproperty">
-          <mat-option *ngFor="let property of allModelProperties" [value]="property">
-            {{property.name}}
-          </mat-option>
+          <ng-container *ngFor="let prop of allModelProperties">
+            <mat-option *ngIf="(prop?.propertyDataType === 'MODEL' || prop?.propertyDataType === 'DTO' || (prop?.propertyDataType === 'PRIMITIVE' && prop?.type === 'TEXT'))" [value]="prop">
+              {{prop.name}}
+            </mat-option>
+          </ng-container>
         </mat-select>
       </mat-form-field>
       <!--<mat-form-field *ngIf="configuration.toemailinputType === 'VARIABLE'" fxFlex class="mat-block">
@@ -69,6 +74,28 @@
 
 
   </section>
+
+  <ng-container *ngIf="configuration?.toemailparam?.inputType === 'model' || configuration?.toemailparam?.inputType === 'dto' || configuration?.toemailproperty?.propertyDataType === 'MODEL' || configuration?.toemailproperty?.propertyDataType === 'DTO'">
+
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+        <button mat-icon-button disabled></button>
+        <mat-checkbox class="checklist-leaf-node"
+                      [checked]="checklistSelection.isSelected(node)"
+                      (change)="checkboxClick(node)">{{node.name}}</mat-checkbox>
+      </mat-tree-node>
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <button mat-icon-button matTreeNodeToggle
+                [attr.aria-label]="'toggle ' + node.name">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+        <mat-checkbox [checked]="checklistSelection.isSelected(node)"
+                      (change)="checkboxClick(node)">{{node.name}}</mat-checkbox>
+      </mat-tree-node>
+    </mat-tree>
+  </ng-container>
 
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Email Content Type</mat-label>

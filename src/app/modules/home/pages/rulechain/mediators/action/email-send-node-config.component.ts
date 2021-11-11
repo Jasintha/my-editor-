@@ -28,6 +28,23 @@ import { PageComponent } from '@shared/components/page.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import {SelectionModel} from '@angular/cdk/collections';
+
+interface DomainModelNode {
+  label: string;
+  data: any;
+  children?: DomainModelNode[];
+}
+
+interface ExampleFlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
+  data: any;
+}
+
 
 @Component({
   selector: 'virtuan-email-send-node-config',
@@ -81,6 +98,12 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   allErrorBranches: any[];
 
   @Input()
+  allDomainModelsWithSub: any[];
+
+  @Input()
+  allViewModelsWithSub: any[];
+
+  @Input()
   allRuleInputs: any[];
 
     domainModelProperties: any[];
@@ -118,7 +141,49 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
   configuration: RuleNodeConfiguration;
-  
+
+    private _transformer = (node: DomainModelNode, level: number) => {
+      return {
+        expandable: !!node.children && node.children.length > 0,
+        name: node.label,
+        level: level,
+        data: node.data
+      };
+    }
+
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+    node => node.level, node => node.expandable);
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer, node => node.level, node => node.expandable, node => node.children);
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+  getLevel = (node: ExampleFlatNode) => node.level;
+
+/** The selection for checklist */
+  checklistSelection = new SelectionModel<ExampleFlatNode>(false /* multiple */);
+
+  checkboxClick(node){
+    this.checklistSelection.toggle(node);
+
+    //console.log(node);
+
+
+    let checklistSelection = this.checklistSelection.selected[0];
+    console.log(checklistSelection);
+    let selectedNode : DomainModelProperty;
+    if(checklistSelection){
+         selectedNode = {
+          name: checklistSelection.name,
+          data: checklistSelection.data
+        };
+        this.configuration.selectedNode = selectedNode;
+        this.updateModel(this.configuration);
+    }
+  }
   selectedVariableProperties: any[];
   selectedVariablePropertiesForParameter: any[];
   
@@ -231,7 +296,8 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   }
   
   refreshInputTypes(){
-
+    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    this.configuration.selectedNode= {};
     let inputType: string = this.emailSendNodeConfigFormGroup.get('toemailinputType').value;
     this.configuration.toemailinputType = inputType;
     if (inputType === 'CONSTANT'){
@@ -438,6 +504,15 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     }
   }
 
+  selectNode(node){
+    for (let i = 0; i < this.treeControl.dataNodes.length; i++) {
+        if(this.treeControl.dataNodes[i].data.path === node.data.path ){
+            this.checklistSelection.toggle(this.treeControl.dataNodes[i]);
+            this.treeControl.expand(this.treeControl.dataNodes[i]);
+        }
+    }
+  }
+
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
@@ -462,7 +537,31 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       let p = this.configuration.toemailparam;
       if(this.configuration.toemailinputType === 'RULE_INPUT'){
         p = this.allRuleInputs.find(x => x.inputName === this.configuration.toemailparam.inputName );
-      }
+          if(this.configuration.toemailparam.inputType === 'model'){
+            let selectedmodelpropertydomainModel = this.allDomainModelsWithSub.find(x => x.nameTitleCase === this.configuration.toemailparam.inputName );
+              if(selectedmodelpropertydomainModel){
+              let designtree : any[] = [];
+              designtree.push(selectedmodelpropertydomainModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+                if(this.configuration.selectedNode){
+                    this.selectNode(this.configuration.selectedNode);
+                }
+            }
+          } else if (this.configuration.toemailparam.inputType === 'dto'){
+            let selectedmodelpropertyviewModel = this.allViewModelsWithSub.find(x => x.nameTitleCase === this.configuration.toemailparam.inputName );
+              if(selectedmodelpropertyviewModel){
+              let designtree : any[] = [];
+              designtree.push(selectedmodelpropertyviewModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+                if(this.configuration.selectedNode){
+                    this.selectNode(this.configuration.selectedNode);
+                }
+            }
+          }
+
+        }
 
       let errorBranch = this.configuration.errorBranch;
       if(errorBranch && this.allErrorBranches){
@@ -477,7 +576,30 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       let property = this.configuration.toemailproperty;
       if(this.configuration.toemailinputType === 'PROPERTY'){
         property = this.allModelProperties.find(x => x.name === this.configuration.toemailproperty.name );
-      }
+          if(this.configuration.toemailproperty.propertyDataType === 'MODEL'){
+            let selectedbranchparamdomainModel = this.allDomainModelsWithSub.find(x => x.nameTitleCase === this.configuration.toemailproperty.type );
+              if(selectedbranchparamdomainModel){
+              let designtree : any[] = [];
+              designtree.push(selectedbranchparamdomainModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+                if(this.configuration.selectedNode){
+                    this.selectNode(this.configuration.selectedNode);
+                }
+            }
+          } else if (this.configuration.toemailproperty.propertyDataType === 'DTO'){
+            let selectedbranchparamviewModel = this.allViewModelsWithSub.find(x => x.nameTitleCase === this.configuration.toemailproperty.type );
+              if(selectedbranchparamviewModel){
+              let designtree : any[] = [];
+              designtree.push(selectedbranchparamviewModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+                if(this.configuration.selectedNode){
+                    this.selectNode(this.configuration.selectedNode);
+                }
+            }
+          }
+        }
 
       let emailBodyProperty = this.configuration.emailBodyProperty;
       if(this.configuration.emailBodyType === 'PROPERTY'){
@@ -567,6 +689,24 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         (configuration: any) => {
           this.configuration.toemailparam = configuration;
           this.updateModel(this.configuration);
+
+          if(configuration.inputType === 'model'){
+            let selectedmodelpropertydomainModel = this.allDomainModelsWithSub.find(x => x.nameTitleCase === configuration.inputName );
+              if(selectedmodelpropertydomainModel){
+              let designtree : any[] = [];
+              designtree.push(selectedmodelpropertydomainModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+            }
+          } else if (configuration.inputType === 'dto'){
+            let selectedmodelpropertyviewModel = this.allViewModelsWithSub.find(x => x.nameTitleCase === configuration.inputName );
+              if(selectedmodelpropertyviewModel){
+              let designtree : any[] = [];
+              designtree.push(selectedmodelpropertyviewModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+            }
+          }
         }
       );
 
@@ -589,7 +729,23 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       this.changeSubscription = this.emailSendNodeConfigFormGroup.get('toemailproperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.toemailproperty = configuration;
-
+          if(configuration.propertyDataType === 'MODEL'){
+            let selectedbranchparamdomainModel = this.allDomainModelsWithSub.find(x => x.nameTitleCase === configuration.type );
+              if(selectedbranchparamdomainModel){
+              let designtree : any[] = [];
+              designtree.push(selectedbranchparamdomainModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+            }
+          } else if (configuration.propertyDataType === 'DTO'){
+            let selectedbranchparamviewModel = this.allViewModelsWithSub.find(x => x.nameTitleCase === configuration.type );
+              if(selectedbranchparamviewModel){
+              let designtree : any[] = [];
+              designtree.push(selectedbranchparamviewModel.design);
+              //this.dataSource.data = null;
+              this.dataSource.data = designtree;
+            }
+          }
 
           this.updateModel(this.configuration);
         }
@@ -668,4 +824,10 @@ export interface ErrorFunctionParameters {
   inputType: string;
   input: string;
   property: string;
+}
+
+export interface DomainModelProperty {
+  name: string;
+ // key: string;
+  data: any;
 }
