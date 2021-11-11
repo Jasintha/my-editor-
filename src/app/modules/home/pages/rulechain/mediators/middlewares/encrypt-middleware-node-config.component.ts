@@ -132,7 +132,18 @@ export class EncryptMiddlewareNodeConfigComponent implements ControlValueAccesso
                 private ruleChainService: RuleChainService,
                 private fb: FormBuilder) {
         this.encryptMiddlewareNodeConfigFormGroup = this.fb.group({
-            encryption: ""
+          encryption: "",
+          keyType: "",
+          inputType: [],
+          param: [],
+          constant: [],
+          property: [],
+          branchparam: [],
+          secondinputType: [],
+          secondconstant: [],
+          secondparam: [],
+          secondproperty:[],
+          secondbranchparam: []
         });
     }
 
@@ -147,7 +158,121 @@ export class EncryptMiddlewareNodeConfigComponent implements ControlValueAccesso
 
 
     }
+    
+  refreshKeyInputType(){
+    let keyType: string = this.encryptMiddlewareNodeConfigFormGroup.get('keyType').value;
+    this.configuration.keyType = keyType;
+    
+    if (keyType === 'KEY'){
+      this.configuration.secondinputType= "";
+      this.configuration.secondparam= {};
+      this.configuration.secondproperty= {};
+      this.configuration.secondbranchparam= {};
+      this.configuration.secondconstant= {};
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondinputType').patchValue("", {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
+    } else if (keyType === 'FILE'){
+      this.configuration.inputType= "";
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.configuration.branchparam= {};
+      this.configuration.constant= {};
+      this.encryptMiddlewareNodeConfigFormGroup.get('inputType').patchValue("", {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+    }
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+    
+  }
 
+  refreshInputTypes(){
+
+    let inputType: string = this.encryptMiddlewareNodeConfigFormGroup.get('inputType').value;
+    this.configuration.inputType = inputType;
+    if (inputType === 'CONSTANT'){
+
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.configuration.branchparam= {};
+      this.encryptMiddlewareNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+    } else if (inputType === 'RULE_INPUT'){
+      this.configuration.constant= {};
+      this.configuration.property= {};
+      this.configuration.branchparam= {};
+      this.encryptMiddlewareNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.branchparam= {};
+      this.encryptMiddlewareNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.encryptMiddlewareNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+    }
+
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
+  }
+  
+  refreshSecondInputTypes(){
+
+    let inputType: string = this.encryptMiddlewareNodeConfigFormGroup.get('secondinputType').value;
+    this.configuration.secondinputType = inputType;
+    if (inputType === 'CONSTANT'){
+
+      this.configuration.secondparam= {};
+      this.configuration.secondproperty= {};
+      this.configuration.secondbranchparam= {};
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
+    } else if (inputType === 'RULE_INPUT'){
+      this.configuration.secondconstant= {};
+      this.configuration.secondproperty= {};
+      this.configuration.secondbranchparam= {};
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
+      this.configuration.secondconstant= {};
+      this.configuration.secondparam= {};
+      this.configuration.secondbranchparam= {};
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondbranchparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.secondconstant= {};
+      this.configuration.secondparam= {};
+      this.configuration.secondproperty= {};
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondconstant').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondparam').patchValue([], {emitEvent: false});
+      this.encryptMiddlewareNodeConfigFormGroup.get('secondproperty').patchValue([], {emitEvent: false});
+    }
+
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+
+  }  
     ngOnDestroy(): void {
         if (this.definedConfigComponentRef) {
             this.definedConfigComponentRef.destroy();
@@ -181,10 +306,117 @@ export class EncryptMiddlewareNodeConfigComponent implements ControlValueAccesso
                 this.updateModel(configuration);
             });
         } else {
+        
+             let p = this.configuration.param;
+             let c = this.configuration.constant;
+             let property = this.configuration.property;
+             let branchparam = this.configuration.branchparam;
+                          
+             let secondp = this.configuration.secondparam;
+             let secondc = this.configuration.secondconstant;
+             let secondproperty = this.configuration.secondproperty;
+             let secondbranchparam = this.configuration.secondbranchparam;
+             
+             if(this.configuration.keyType === 'KEY'){
+                  if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
+                    p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+                  }      
+                  if(this.configuration.inputType === 'CONSTANT' && this.allConstants){
+                    c = this.allConstants.find(x => x.constantName === this.configuration.constant.constantName );
+                  }      
+                  if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
+                    property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+                  }      
+                  if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.customClaims){
+                    branchparam = this.branchAvailability.customClaims.find(x => x.name === this.configuration.branchparam.name );
+                  } 
+             } else if(this.configuration.keyType === 'FILE'){
+        
+                  if(this.configuration.secondinputType === 'RULE_INPUT' && this.allRuleInputs){
+                    secondp = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName );
+                  }      
+                  if(this.configuration.secondinputType === 'CONSTANT' && this.allConstants){
+                    secondc = this.allConstants.find(x => x.constantName === this.configuration.secondconstant.constantName );
+                  }      
+                  if(this.configuration.secondinputType === 'PROPERTY' && this.allModelProperties){
+                    secondproperty = this.allModelProperties.find(x => x.name === this.configuration.secondproperty.name );
+                  }      
+                  if(this.configuration.secondinputType === 'BRANCH_PARAM' && this.branchAvailability.customClaims){
+                    secondbranchparam = this.branchAvailability.customClaims.find(x => x.name === this.configuration.secondbranchparam.name );
+                  } 
+                  
+             }        
             this.encryptMiddlewareNodeConfigFormGroup.patchValue({
+                keyType: this.configuration.keyType,
+                inputType: this.configuration.inputType,
+                secondinputType: this.configuration.secondinputType,
+                param: p,
+                constant: c,
+                property: property,
+                branchparam: branchparam, 
+                secondparam: secondp,
+                secondconstant: secondc,
+                secondproperty: secondproperty,
+                secondbranchparam: secondbranchparam, 
                 encryption: this.configuration.encryption
             });
-
+            
+      
+          this.changeSubscription = this.encryptMiddlewareNodeConfigFormGroup.get('param').valueChanges.subscribe(
+            (configuration: any) => {
+              this.configuration.param = configuration;
+              this.updateModel(this.configuration);
+            }
+          );
+    
+          this.changeSubscription = this.encryptMiddlewareNodeConfigFormGroup.get('branchparam').valueChanges.subscribe(
+            (configuration: any) => {
+              this.configuration.branchparam = configuration;
+              this.updateModel(this.configuration);
+            }
+          );
+    
+          this.changeSubscription = this.encryptMiddlewareNodeConfigFormGroup.get('constant').valueChanges.subscribe(
+            (configuration: any) => {
+              this.configuration.constant = configuration;
+              this.updateModel(this.configuration);
+            }
+          );
+    
+          this.changeSubscription = this.encryptMiddlewareNodeConfigFormGroup.get('property').valueChanges.subscribe(
+            (configuration: any) => {
+              this.configuration.property = configuration;
+              this.updateModel(this.configuration);
+            }
+          );
+              
+          this.changeSubscription = this.encryptMiddlewareNodeConfigFormGroup.get('secondparam').valueChanges.subscribe(
+            (configuration: any) => {
+              this.configuration.secondparam = configuration;
+              this.updateModel(this.configuration);
+            }
+          );
+    
+          this.changeSubscription = this.encryptMiddlewareNodeConfigFormGroup.get('secondbranchparam').valueChanges.subscribe(
+            (configuration: any) => {
+              this.configuration.secondbranchparam = configuration;
+              this.updateModel(this.configuration);
+            }
+          );
+    
+          this.changeSubscription = this.encryptMiddlewareNodeConfigFormGroup.get('secondconstant').valueChanges.subscribe(
+            (configuration: any) => {
+              this.configuration.secondconstant = configuration;
+              this.updateModel(this.configuration);
+            }
+          );
+    
+          this.changeSubscription = this.encryptMiddlewareNodeConfigFormGroup.get('secondproperty').valueChanges.subscribe(
+            (configuration: any) => {
+              this.configuration.secondproperty = configuration;
+              this.updateModel(this.configuration);
+            }
+          );      
             this.changeSubscription = this.encryptMiddlewareNodeConfigFormGroup.get('encryption').valueChanges.subscribe(
                 (configuration: any) => {
                     this.configuration.encryption = configuration;
