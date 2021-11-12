@@ -81,6 +81,10 @@ export class RuleChainService {
     return this.http.post<RuleChain>('/api/ruleChain', ruleChain, defaultHttpOptionsFromConfig(config));
   }
 
+  public getRuleChainMicroserviceData(username, config?: RequestConfig): Observable<any> {
+    return this.http.get<any>(`/api/ruleChain/microservices/${username}`, defaultHttpOptionsFromConfig(config));
+  }
+
   public deleteRuleChain(ruleChainId: string, config?: RequestConfig) {
     return this.http.delete(`/api/ruleChain/${ruleChainId}`, defaultHttpOptionsFromConfig(config));
   }

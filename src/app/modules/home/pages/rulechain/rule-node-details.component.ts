@@ -137,6 +137,9 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   @Input()
   isReadOnly: boolean;
 
+  @Input()
+  allMicroservices: any[];
+
   @Input() connectorfields: QuestionBase[];
 
   @Input() connectorOperations: ConOperationBase[];

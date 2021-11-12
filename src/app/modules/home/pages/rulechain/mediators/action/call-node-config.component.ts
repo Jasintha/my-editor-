@@ -95,6 +95,11 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
    @Input()
    allReferenceProperties: any[];
 
+   @Input()
+   allMicroservices: any[];
+
+   apiItems: any[];
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
@@ -177,7 +182,10 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       valueconstant: [],
       valueproperty: [],
       valueparam: [],
-      valuebranchparam: []
+      valuebranchparam: [],
+      isInternal: false,
+      microservice:[],
+      microserviceApi:[]
     });
   }
 
@@ -192,6 +200,59 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
   }
 
+  refreshMicroservices() {
+    this.apiItems = [];
+    const microservice = this.callNodeConfigFormGroup.get(['microservice']).value;
+
+    this.configuration.microservice= microservice.name;
+    this.configuration.apiresourcepath= '';
+    this.updateModel(this.configuration);
+
+    if (microservice.microserviceApis) {
+      for (let i = 0; i < microservice.microserviceApis.length; i++) {
+        const apiObj = {
+          'apiType': 'API',
+          'api': microservice.microserviceApis[i],
+        };
+        this.apiItems.push(apiObj);
+      }
+    }
+
+    if (microservice.commands) {
+      for (let i = 0; i < microservice.commands.length; i++) {
+        const commandObj = {
+          'apiType': 'COMMAND',
+          'api': microservice.commands[i],
+        };
+        this.apiItems.push(commandObj);
+      }
+    }
+
+    if (microservice.queries) {
+      for (let i = 0; i < microservice.queries.length; i++) {
+        const queryObj = {
+          'apiType': 'QUERY',
+          'api': microservice.queries[i],
+        };
+        this.apiItems.push(queryObj);
+      }
+    }
+  }
+
+  onChangeMicroserviceAPI() {
+    const api = this.callNodeConfigFormGroup.get(['microserviceApi']).value;
+    if (api) {
+      const apiStart: boolean = api.resourcePath.startsWith('/');
+      let suggestedPath = '';
+      if (apiStart) {
+        suggestedPath = api.resourcePath;
+      } else {
+        suggestedPath = '/' + api.resourcePath;
+      }
+      this.configuration.apiresourcepath= suggestedPath;
+      this.updateModel(this.configuration);
+    }
+  }
   ngOnDestroy(): void {
     if (this.definedConfigComponentRef) {
       this.definedConfigComponentRef.destroy();
@@ -500,7 +561,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
   }
 
   writeValue(value: RuleNodeConfiguration): void {
-
+    this.apiItems = [];
     this.configuration = deepClone(value);
     
     if(this.configuration.callTargets){
@@ -541,6 +602,50 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       let errorBranch = this.configuration.errorBranch;
       if(errorBranch && this.allErrorBranches){
         errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      }
+
+      let microservice;
+      let microserviceApi;
+      let microserviceName = this.configuration.microservice;
+      let microserviceResourcePath = this.configuration.apiresourcepath;
+      if (this.configuration.isInternal && microserviceName && this.allMicroservices){
+        microservice = this.allMicroservices.find(x => x.name === microserviceName );
+
+        if (microservice && microservice.microserviceApis) {
+          for (let i = 0; i < microservice.microserviceApis.length; i++) {
+            const apiObj = {
+              'apiType': 'API',
+              'api': microservice.microserviceApis[i],
+            };
+            this.apiItems.push(apiObj);
+          }
+        }
+
+        if (microservice && microservice.commands) {
+          for (let i = 0; i < microservice.commands.length; i++) {
+            const commandObj = {
+              'apiType': 'COMMAND',
+              'api': microservice.commands[i],
+            };
+            this.apiItems.push(commandObj);
+          }
+        }
+
+        if (microservice && microservice.queries) {
+          for (let i = 0; i < microservice.queries.length; i++) {
+            const queryObj = {
+              'apiType': 'QUERY',
+              'api': microservice.queries[i],
+            };
+            this.apiItems.push(queryObj);
+          }
+        }
+
+        let searchedmicroserviceApi = this.apiItems.find(x => x.api.resourcePath === microserviceResourcePath);
+        if(searchedmicroserviceApi){
+            microserviceApi = searchedmicroserviceApi.api;
+        }
+
       }
 
       let entity = this.configuration.callreturnentity;
@@ -596,8 +701,24 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         valueconstant: this.configuration.valueconstant,
         valueproperty: this.configuration.valueproperty,
         valueparam: this.configuration.valueparam,
-        valuebranchparam: this.configuration.valuebranchparam
+        valuebranchparam: this.configuration.valuebranchparam,
+        isInternal: this.configuration.isInternal,
+        microservice: microservice,
+        microserviceApi: microserviceApi
       });
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('isInternal').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.isInternal = configuration;
+          if(configuration){
+            this.configuration.url = '';
+          } else {
+            this.configuration.microservice= '';
+            this.configuration.apiresourcepath= '';
+          }
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.callNodeConfigFormGroup.get('assignedProperty').valueChanges.subscribe(
         (configuration: any) => {

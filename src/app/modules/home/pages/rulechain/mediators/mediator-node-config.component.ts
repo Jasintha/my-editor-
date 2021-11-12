@@ -38,6 +38,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { JsonObjectEditComponent } from '@shared/components/json-object-edit.component';
 import { deepClone } from '@core/utils';
 import {ConOperationBase} from "@shared/models/ConnectorOperation.models";
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'virtuan-mediator-node-config',
@@ -142,6 +144,10 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
 
   @Input()
   allVariables: any[];
+
+  @Input()
+  allMicroservices: any[];
+
 
   @Input()
   allReferenceProperties: any[];

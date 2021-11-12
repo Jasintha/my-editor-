@@ -186,6 +186,7 @@ export class RuleChainPageComponent extends PageComponent
   allValueObjectProperties: any[];
   allDomainModelsWithSub: any[];
   allViewModelsWithSub: any[];
+  allMicroservices: any[];
 
   username: string;
   uid: string;
@@ -373,10 +374,13 @@ export class RuleChainPageComponent extends PageComponent
       this.connectionPropertyTemplates = this.route.snapshot.data.connectionPropertyTemplates;
       this.username = this.route.snapshot.params.username;
       this.uid = this.route.snapshot.params.uid;
-      console.log(this.username);
-      console.log(this.uid);
-      console.log(this.route.snapshot.params);
-      console.log(this.route.snapshot);
+      this.ruleChainService.getRuleChainMicroserviceData(this.username).subscribe((microservices) => {
+        if (microservices){
+            this.allMicroservices = microservices;
+        } else {
+            this.allMicroservices = [];
+        }
+      });
     }
 
     this.ruleType = this.ruleChainMetaData.name;
@@ -1667,6 +1671,7 @@ export class RuleChainPageComponent extends PageComponent
     const allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
     const allVariables = this.ruleChainMetaData.allVariables;
     const allSavedObjects = this.ruleChainMetaData.allSavedObjects;
+    const allMicroservices = this.allMicroservices;
 
     let connectorfields : QuestionBase[]= [];
     let branchAvailability = {'branchParams': [], 'branchFound': false};
@@ -1722,7 +1727,8 @@ export class RuleChainPageComponent extends PageComponent
         allErrorBranches,
         queryDb,
         commandDb,
-        apptype
+        apptype,
+        allMicroservices
    //     isNodeEdit
       }
     }).afterClosed().subscribe(
@@ -1951,6 +1957,7 @@ export interface AddRuleNodeDialogData {
   commandDb: string;
   apptype: string;
   branchAvailability: any;
+  allMicroservices: any[];
 //  isNodeEdit: boolean;
 }
 
@@ -1997,6 +2004,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   queryDb: string;
   commandDb: string;
   apptype: string;
+  allMicroservices: any[];
  // isNodeEdit: boolean;
 
   submitted = false;
@@ -2041,6 +2049,7 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.queryDb = this.data.queryDb;
     this.commandDb = this.data.commandDb;
     this.apptype = this.data.apptype;
+    this.allMicroservices = this.data.allMicroservices;
 
   }
 
