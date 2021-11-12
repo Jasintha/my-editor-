@@ -17,7 +17,7 @@
             <mat-option value="FILE">File</mat-option>
         </mat-select>
     </mat-form-field>
-    <section fxLayout="column"  *ngIf="configuration.signingKeyType === 'KEY'" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <section fxLayout="column"  *ngIf="configuration.keyType === 'KEY'" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <section class="mat-block" fxFlex>
             <mat-form-field fxFlex class="mat-block">
                 <mat-label>Key Input Type</mat-label>
@@ -68,7 +68,7 @@
 
     </section>
 
-    <section fxLayout="column"  *ngIf="configuration.signingKeyType === 'FILE'" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <section fxLayout="column"  *ngIf="configuration.keyType === 'FILE'" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <section class="mat-block" fxFlex>
             <mat-form-field fxFlex class="mat-block">
                 <mat-label>File Name Input Type</mat-label>
