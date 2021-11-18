@@ -164,7 +164,8 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
             errorParameterinputType: [],
             errorParameterparam: [],
             errorParameterproperty: [],
-            errorParameterbranchparam: []
+            errorParameterbranchparam: [],
+            isReturn: true
         });
     }
 
@@ -663,8 +664,16 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
                 errorParameterparam: this.configuration.errorParameterparam,
                 errorParameterproperty: this.configuration.errorParameterproperty,
                 errorParameterbranchparam: this.configuration.errorParameterbranchparam,
-                errorIsAsync: this.configuration.errorIsAsync
+                errorIsAsync: this.configuration.errorIsAsync,
+                isReturn: this.configuration.isReturn
             });
+
+            this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.isReturn = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
 
             this.changeSubscription = this.excelWriteNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
                 (configuration: any) => {

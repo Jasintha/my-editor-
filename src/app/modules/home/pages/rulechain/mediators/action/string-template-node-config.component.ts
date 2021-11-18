@@ -157,7 +157,8 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
       errorParameterinputType: [],
       errorParameterparam: [],
       errorParameterproperty: [],
-      errorParameterbranchparam: []
+      errorParameterbranchparam: [],
+      isReturn: false
     });
   }
 
@@ -454,8 +455,16 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
         errorParameterparam: this.configuration.errorParameterparam,
         errorParameterproperty: this.configuration.errorParameterproperty,
         errorParameterbranchparam: this.configuration.errorParameterbranchparam,
-        errorIsAsync: this.configuration.errorIsAsync
+        errorIsAsync: this.configuration.errorIsAsync,
+        isReturn: this.configuration.isReturn
       });
+
+      this.changeSubscription = this.stringTemplateNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.isReturn = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
 
       this.changeSubscription = this.stringTemplateNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
           (configuration: any) => {

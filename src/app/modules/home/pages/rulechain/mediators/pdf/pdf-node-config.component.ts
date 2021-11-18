@@ -163,7 +163,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             errorParameterinputType: [],
             errorParameterparam: [],
             errorParameterproperty: [],
-            errorParameterbranchparam: []
+            errorParameterbranchparam: [],
+            isReturn: false
         });
     }
 
@@ -574,8 +575,16 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 errorParameterparam: this.configuration.errorParameterparam,
                 errorParameterproperty: this.configuration.errorParameterproperty,
                 errorParameterbranchparam: this.configuration.errorParameterbranchparam,
-                errorIsAsync: this.configuration.errorIsAsync
+                errorIsAsync: this.configuration.errorIsAsync,
+                isReturn: this.configuration.isReturn
             });
+
+            this.changeSubscription = this.pdfNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.isReturn = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
 
             this.changeSubscription = this.pdfNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
                 (configuration: any) => {

@@ -143,7 +143,8 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       errorParameterinputType: [],
       errorParameterparam: [],
       errorParameterproperty: [],
-      errorParameterbranchparam: []
+      errorParameterbranchparam: [],
+      isReturn: false
     });
   }
 
@@ -478,9 +479,17 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
         errorParameterparam: this.configuration.errorParameterparam,
         errorParameterproperty: this.configuration.errorParameterproperty,
         errorParameterbranchparam: this.configuration.errorParameterbranchparam,
-        errorIsAsync: this.configuration.errorIsAsync
+        errorIsAsync: this.configuration.errorIsAsync,
+        isReturn: this.configuration.isReturn
       });
-      
+
+      this.changeSubscription = this.payloadNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.isReturn = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
       this.changeSubscription = this.payloadNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
           (configuration: any) => {
             this.configuration.errorIsAsync = configuration;

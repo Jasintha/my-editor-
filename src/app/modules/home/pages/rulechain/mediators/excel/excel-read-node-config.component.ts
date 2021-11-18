@@ -165,7 +165,8 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             errorParameterinputType: [],
             errorParameterparam: [],
             errorParameterproperty: [],
-            errorParameterbranchparam: []
+            errorParameterbranchparam: [],
+            isReturn: true
         });
     }
 
@@ -541,8 +542,16 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
                 errorParameterparam: this.configuration.errorParameterparam,
                 errorParameterproperty: this.configuration.errorParameterproperty,
                 errorParameterbranchparam: this.configuration.errorParameterbranchparam,
-                errorIsAsync: this.configuration.errorIsAsync
+                errorIsAsync: this.configuration.errorIsAsync,
+                isReturn: this.configuration.isReturn
             });
+
+            this.changeSubscription = this.excelReadNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
+                (configuration: any) => {
+                    this.configuration.isReturn = configuration;
+                    this.updateModel(this.configuration);
+                }
+            );
 
             this.changeSubscription = this.excelReadNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
                 (configuration: any) => {

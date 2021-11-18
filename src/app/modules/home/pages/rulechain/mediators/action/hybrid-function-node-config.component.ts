@@ -158,7 +158,8 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       errorParameterinputType: [],
       errorParameterparam: [],
       errorParameterproperty: [],
-      errorParameterbranchparam: []
+      errorParameterbranchparam: [],
+      isReturn: false
     });
   }
 
@@ -475,8 +476,16 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
         errorParameterparam: this.configuration.errorParameterparam,
         errorParameterproperty: this.configuration.errorParameterproperty,
         errorParameterbranchparam: this.configuration.errorParameterbranchparam,
-        errorIsAsync: this.configuration.errorIsAsync
+        errorIsAsync: this.configuration.errorIsAsync,
+        isReturn: this.configuration.isReturn
       });
+
+      this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.isReturn = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
 
       this.changeSubscription = this.hybridFunctionNodeConfigFormGroup.get('errorIsAsync').valueChanges.subscribe(
           (configuration: any) => {

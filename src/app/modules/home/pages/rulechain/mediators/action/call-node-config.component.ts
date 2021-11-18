@@ -185,7 +185,8 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       valuebranchparam: [],
       isInternal: false,
       microservice:[],
-      microserviceApi:[]
+      microserviceApi:[],
+      isReturn: false
     });
   }
 
@@ -704,8 +705,16 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         valuebranchparam: this.configuration.valuebranchparam,
         isInternal: this.configuration.isInternal,
         microservice: microservice,
-        microserviceApi: microserviceApi
+        microserviceApi: microserviceApi,
+        isReturn: this.configuration.isReturn
       });
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.isReturn = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.callNodeConfigFormGroup.get('isInternal').valueChanges.subscribe(
         (configuration: any) => {

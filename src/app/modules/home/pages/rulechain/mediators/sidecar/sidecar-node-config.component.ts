@@ -150,7 +150,8 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
       errorParameterinputType: [],
       errorParameterparam: [],
       errorParameterproperty: [],
-      errorParameterbranchparam: []
+      errorParameterbranchparam: [],
+      isReturn: false
     });
   }
 
@@ -382,9 +383,17 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
         errorParameterparam: this.configuration.errorParameterparam,
         errorParameterproperty: this.configuration.errorParameterproperty,
         errorParameterbranchparam: this.configuration.errorParameterbranchparam,
-        errorIsAsync: this.configuration.errorIsAsync
+        errorIsAsync: this.configuration.errorIsAsync,
+        isReturn: this.configuration.isReturn
       });
-      
+
+      this.changeSubscription = this.sidecarNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.isReturn = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
       this.changeSubscription = this.sidecarNodeConfigFormGroup.get('assignedtoinputType').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
 
