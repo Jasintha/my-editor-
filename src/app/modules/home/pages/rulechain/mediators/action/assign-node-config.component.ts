@@ -175,6 +175,9 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
     } else if (inputType === 'REFERENCE'){
       this.configuration.propertyproperty= {};
       this.assignNodeConfigFormGroup.get('propertyproperty').patchValue([], {emitEvent: false});
+    } else if (inputType === 'RETURN'){
+      this.configuration.propertyreference= {};
+      this.configuration.propertyproperty= {};
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
