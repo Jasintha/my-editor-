@@ -166,7 +166,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
             errorParameterparam: [],
             errorParameterproperty: [],
             errorParameterbranchparam: [],
-            isReturn: true
+            isReturn: false
         });
     }
 

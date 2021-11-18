@@ -165,7 +165,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
             errorParameterparam: [],
             errorParameterproperty: [],
             errorParameterbranchparam: [],
-            isReturn: true
+            isReturn: false
         });
     }
 

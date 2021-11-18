@@ -272,7 +272,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
       errorParameterparam: [],
       errorParameterproperty: [],
       errorParameterbranchparam: [],
-      isReturn: true
+      isReturn: false
     });
   }
 
