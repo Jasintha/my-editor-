@@ -152,6 +152,7 @@ export class RuleChainPageComponent extends PageComponent
 
   ruleType: string;
   ruleInputs: any[];
+  ruleReturn: any;
   name: string;
 
   dataModels: any[];
@@ -385,6 +386,7 @@ export class RuleChainPageComponent extends PageComponent
 
     this.ruleType = this.ruleChainMetaData.name;
     this.ruleInputs = this.ruleChainMetaData.ruleInputs;
+    this.ruleReturn = this.ruleChainMetaData.ruleReturn;
     this.name = this.ruleChainMetaData.name;
 
     this.dataModels = this.ruleChainMetaData.dataModels;
@@ -1524,6 +1526,7 @@ export class RuleChainPageComponent extends PageComponent
         ruleChainId: this.ruleChain.id,
         name: this.name,
         ruleInputs: this.ruleInputs,
+        ruleReturn: this.ruleReturn,
         ruleType: this.ruleType,
         allVariables: this.allVariables,
         nodes: [],
@@ -1594,6 +1597,7 @@ export class RuleChainPageComponent extends PageComponent
         this.ruleChainMetaData = savedRuleChainMetaData;
         this.ruleType = this.ruleChainMetaData.name;
         this.ruleInputs = this.ruleChainMetaData.ruleInputs;
+        this.ruleReturn = this.ruleChainMetaData.ruleReturn;
         this.name = this.ruleChainMetaData.name;
         this.dataModels = this.ruleChainMetaData.dataModels;
         this.inputDataModels = this.ruleChainMetaData.inputDataModels;

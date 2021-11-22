@@ -36,6 +36,7 @@ export interface RuleChainMetaData {
   name?: string;
   ruleType?: string;
   ruleInputs?: any[];
+  ruleReturn?: any;
   firstNodeIndex?: number;
   nodes: Array<RuleNode>;
   connections: Array<NodeConnectionInfo>;
