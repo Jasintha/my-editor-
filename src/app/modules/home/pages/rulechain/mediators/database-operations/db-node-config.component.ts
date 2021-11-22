@@ -697,6 +697,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
         this.configuration.assignedtoinputType= "";
         this.configuration.assignedProperty= {};
         this.configuration.assignedReference= {};
+        this.configuration.isReturn = false;
 
         this.dbNodeConfigFormGroup.get('assignedtoinputType').patchValue("", {emitEvent: false});
         this.dbNodeConfigFormGroup.get('assignedProperty').patchValue([], {emitEvent: false});

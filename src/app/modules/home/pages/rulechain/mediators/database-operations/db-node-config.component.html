@@ -386,11 +386,16 @@
       </mat-form-field>
 
     </section>
-    <mat-checkbox formControlName="isReturn">
-      Return Saved Result
-    </mat-checkbox>
+
 
   </section>
+  <ng-container
+          *ngIf="configuration.dbAction === 'CREATE' || configuration.dbAction === 'UPDATE' || configuration.dbAction === 'FIND' || configuration.dbAction === 'FINDALL' || configuration.dbAction === 'QUERY'">
+    <mat-checkbox formControlName="isReturn">
+      Respond Saved Result
+    </mat-checkbox>
+  </ng-container>
+
   <mat-form-field fxFlex class="mat-block">
     <mat-label>Error Message</mat-label>
     <input matInput formControlName="errorMsg"/>
