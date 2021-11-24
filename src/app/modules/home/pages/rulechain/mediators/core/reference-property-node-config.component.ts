@@ -257,11 +257,11 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
 
     let modelName = '';
     if(propertyType === 'RULE_INPUT'){
-        let paramName = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.paramName;
+        let paramName = this.referencePropertyNodeConfigFormGroup.get('modelpropertyruleInput').value.paramName;
         if(paramName && paramName != '') {
             selectedInput = paramName;
         } else {
-            selectedInput = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.inputName;
+            selectedInput = this.referencePropertyNodeConfigFormGroup.get('modelpropertyruleInput').value.inputName;
         }
         //selectedInput = this.referencePropertyNodeConfigFormGroup.get('modelpropertyruleInput').value.inputName;
         let pkg = this.referencePropertyNodeConfigFormGroup.get('modelpropertyruleInput').value.inputType;
