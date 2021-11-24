@@ -50,7 +50,8 @@
         <mat-select formControlName="valueparam">
           <ng-container *ngFor="let cpproperty of allRuleInputs">
             <mat-option *ngIf="((cpproperty?.inputType | lowercase) === 'text' || (cpproperty?.inputType | lowercase) === 'string') && cpproperty?.record === 's'" [value]="cpproperty">
-              {{cpproperty.inputName}}
+              <span *ngIf="cpproperty?.paramName">{{cpproperty.paramName}}</span>
+              <span *ngIf="!cpproperty?.paramName">{{cpproperty.inputName}}</span>
             </mat-option>
           </ng-container>
         </mat-select>

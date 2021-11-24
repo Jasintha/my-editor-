@@ -417,7 +417,11 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       } else if (valuePropertyType === 'RULE_INPUT'){
         let selectedValueRuleProperty = this.callNodeConfigFormGroup.get('valueparam').value;
         targetParameter.valuePropertyScope = '-';
-        targetParameter.valueProperty = selectedValueRuleProperty.inputName;
+        if(selectedValueRuleProperty.paramName && selectedValueRuleProperty.paramName != ''){
+            targetParameter.valueProperty = selectedValueRuleProperty.paramName;
+        } else {
+            targetParameter.valueProperty = selectedValueRuleProperty.inputName;
+        }
       } else if (valuePropertyType === 'BRANCH_PARAM'){
         let selectedValueBranchParam = this.callNodeConfigFormGroup.get('valuebranchparam').value;
         targetParameter.valuePropertyScope = selectedValueBranchParam.propertyScope;
@@ -474,11 +478,17 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.callNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);

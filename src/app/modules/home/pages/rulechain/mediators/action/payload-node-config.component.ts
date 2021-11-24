@@ -340,11 +340,17 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.payloadNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
@@ -439,12 +445,11 @@ export class PayloadNodeConfigComponent implements ControlValueAccessor, OnInit,
       }
 
       let propertyparam = this.configuration.propertyparam;
-      if(this.configuration.propertyinputType === 'RULE_INPUT' && this.allReferenceProperties){
-        propertyparam = this.allRuleInputs.find(x => x.inputName === this.configuration.propertyparam.inputName );
+      if(this.configuration.propertyinputType === 'RULE_INPUT' && this.allRuleInputs){
+        propertyparam = this.allRuleInputs.find(x => x.inputName === this.configuration.propertyparam.inputName && x.paramName === this.configuration.propertyparam.paramName );
       }
 
       let propertyconstant = this.configuration.propertyconstant;
-        console.log("*********************",propertyconstant)
       if(this.configuration.propertyinputType === 'CONSTANT' && this.allReferenceProperties){
         propertyconstant = this.allConstants.find(x => x.constantName === this.configuration.propertyconstant.constantName );
         console.log("======================",propertyconstant)

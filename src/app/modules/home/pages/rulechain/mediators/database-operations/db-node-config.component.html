@@ -74,7 +74,8 @@
         <mat-label>Rule Input</mat-label>
         <mat-select formControlName="crudparam">
           <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-            {{property.inputName}}
+            <span *ngIf="property?.paramName">{{property.paramName}}</span>
+            <span *ngIf="!property?.paramName">{{property.inputName}}</span>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -270,7 +271,8 @@
           <mat-label>Rule Input</mat-label>
           <mat-select formControlName="parameterparam">
             <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-              {{property.inputName}}
+              <span *ngIf="property?.paramName">{{property.paramName}}</span>
+              <span *ngIf="!property?.paramName">{{property.inputName}}</span>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -462,7 +464,8 @@
             <mat-label>Rule Input</mat-label>
             <mat-select formControlName="errorParameterparam">
               <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-                {{property.inputName}}
+                <span *ngIf="property?.paramName">{{property.paramName}}</span>
+                <span *ngIf="!property?.paramName">{{property.inputName}}</span>
               </mat-option>
             </mat-select>
           </mat-form-field>

@@ -23,7 +23,8 @@
         <mat-select formControlName="toemailparam">
           <ng-container *ngFor="let domainModel of allRuleInputs">
             <mat-option *ngIf="(domainModel?.inputType === 'model' || domainModel?.inputType === 'dto' || domainModel?.inputType === 'string') " [value]="domainModel">
-              {{domainModel.inputName}}
+              <span *ngIf="domainModel?.paramName">{{domainModel.paramName}}</span>
+              <span *ngIf="!domainModel?.paramName">{{domainModel.inputName}}</span>
             </mat-option>
           </ng-container>
 
@@ -142,7 +143,8 @@
         <mat-label>Rule Input</mat-label>
         <mat-select formControlName="parameterparam">
           <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-            {{property.inputName}}
+            <span *ngIf="property?.paramName">{{property.paramName}}</span>
+            <span *ngIf="!property?.paramName">{{property.inputName}}</span>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -290,7 +292,8 @@
             <mat-label>Rule Input</mat-label>
             <mat-select formControlName="errorParameterparam">
               <mat-option *ngFor="let property of allRuleInputs" [value]="property">
-                {{property.inputName}}
+                <span *ngIf="property?.paramName">{{property.paramName}}</span>
+                <span *ngIf="!property?.paramName">{{property.inputName}}</span>
               </mat-option>
             </mat-select>
           </mat-form-field>

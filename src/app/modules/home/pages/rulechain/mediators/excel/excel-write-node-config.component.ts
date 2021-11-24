@@ -376,11 +376,17 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
 
         if (errorInputType === 'RULE_INPUT'){
             let selectedErrorParameterParam = this.excelWriteNodeConfigFormGroup.get('errorParameterparam').value;
+            let propName = '';
+            if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+                propName = selectedErrorParameterParam.paramName;
+            } else {
+                propName = selectedErrorParameterParam.inputName;
+            }
             let errorParameter = {
                 'parameterName': errorBranchparameter.name,
                 'inputType': errorInputType,
                 'input': '-',
-                'property': selectedErrorParameterParam.inputName
+                'property': propName
             };
             this.configuration.errorFunctionParameters.push(errorParameter);
             this.updateModel(this.configuration);
@@ -434,11 +440,17 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
 
         if (inputType === 'RULE_INPUT'){
             let selectedParameterParam = this.excelWriteNodeConfigFormGroup.get('parameterparam').value;
+            let propname = '';
+            if(selectedParameterParam.paramName && selectedParameterParam.paramName != ''){
+                propname = selectedParameterParam.paramName;
+            } else {
+                propname = selectedParameterParam.inputName;
+            }
             let parameter = {
                 'colName': colName,
                 'inputType': inputType,
                 'input': '-',
-                'property': selectedParameterParam.inputName
+                'property': propname
             };
             this.configuration.excelWriteParameters.push(parameter);
             this.updateModel(this.configuration);
@@ -513,11 +525,17 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
 
         if (inputType === 'RULE_INPUT') {
             let selectedParameterParam = this.excelWriteNodeConfigFormGroup.get('excelparam').value;
+            let propname = '';
+            if(selectedParameterParam.paramName && selectedParameterParam.paramName != ''){
+                propname = selectedParameterParam.paramName;
+            } else {
+                propname = selectedParameterParam.inputName;
+            }
             let parameter = {
                 'sheetName': sheetName,
                 'inputType': inputType,
                 'input': '-',
-                'property': selectedParameterParam.inputName
+                'property': propname
             };
             this.configuration.excelWriteInput = parameter;
             this.updateModel(this.configuration);
@@ -616,7 +634,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
 
             let excelparam = this.configuration.excelparam;
             if(this.configuration.excelinputType === 'RULE_INPUT' && this.allRuleInputs){
-                excelparam = this.allRuleInputs.find(x => x.inputName === this.configuration.excelparam.inputName );
+                excelparam = this.allRuleInputs.find(x => x.inputName === this.configuration.excelparam.inputName && x.paramName === this.configuration.excelparam.paramName );
             }
 
             let excelconstant = this.configuration.excelconstant;

@@ -210,11 +210,17 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.sidecarNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
@@ -332,7 +338,7 @@ export class SidecarNodeConfigComponent implements ControlValueAccessor, OnInit,
 
       let p = this.configuration.param;
       if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
-        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName && x.paramName === this.configuration.param.paramName );
       }
 
       let c = this.configuration.constant;

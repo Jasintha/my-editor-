@@ -226,7 +226,7 @@ export class AggregateNodeConfigComponent implements ControlValueAccessor, OnIni
 
             let secondparam = this.configuration.secondparam;
             if(this.configuration.secondinputType === 'RULE_INPUT' && this.allRuleInputs){
-                secondparam = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName );
+                secondparam = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName && x.paramName === this.configuration.secondparam.paramName );
             }
 
             let secondconstant = this.configuration.secondconstant;

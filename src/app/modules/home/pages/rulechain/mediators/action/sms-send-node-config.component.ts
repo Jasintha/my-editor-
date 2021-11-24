@@ -209,11 +209,17 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
     
     if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.smsSendNodeConfigFormGroup.get('parameterparam').value;
+      let propname = '';
+      if(selectedParameterParam.paramName && selectedParameterParam.paramName != ''){
+        propname = selectedParameterParam.paramName;
+      } else {
+        propname = selectedParameterParam.inputName;
+      }
       let parameter = {
         'parameterName': '$'+ number,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterParam.inputName
+        'property': propname
       };
       this.configuration.smsbodyParameters.push(parameter);
       this.updateModel(this.configuration);
@@ -274,7 +280,7 @@ export class SmsSendNodeConfigComponent implements ControlValueAccessor, OnInit,
 
       let p = this.configuration.param;
       if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
-        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName &&  x.paramName === this.configuration.param.paramName);
       }
 
       let c = this.configuration.constant;

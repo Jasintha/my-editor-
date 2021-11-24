@@ -156,11 +156,17 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     
     if (inputType === 'RULE_INPUT'){
       let selectedParam = this.logNodeConfigFormGroup.get('logparam').value;
+      let propname = '';
+      if(selectedParam.paramName && selectedParam.paramName != ''){
+        propname = selectedParam.paramName;
+      } else {
+        propname = selectedParam.inputName;
+      }
       let logparameter = {
         'logFieldName': logfieldName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParam.inputName
+        'property': propname
       };
       this.configuration.logFieldProperties.push(logparameter);
       this.updateModel(this.configuration);

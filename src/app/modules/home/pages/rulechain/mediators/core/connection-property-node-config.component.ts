@@ -248,9 +248,15 @@ export class ConnectionPropertyNodeConfigComponent implements ControlValueAccess
 
     if (inputType === 'RULE_INPUT'){
       let selectedParam = this.connectionPropertyNodeConfigFormGroup.get('param').value;
+      let propname = '';
+      if (selectedParam.paramName && selectedParam.paramName != '') {
+        propname = selectedParam.paramName;
+      } else {
+        propname = selectedParam.inputName;
+      }
       input = '-';
       propertyscope = '-'
-      property = selectedParam.inputName;
+      property = propname;
     } else if (inputType === 'PROPERTY'){
       let selectedProperty = this.connectionPropertyNodeConfigFormGroup.get('property').value;
       input = '-';

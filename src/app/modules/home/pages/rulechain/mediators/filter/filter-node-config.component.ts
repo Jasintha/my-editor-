@@ -444,7 +444,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
       let param = this.configuration.param;
       if(this.configuration.firstinputType === 'RULE_INPUT' && this.allRuleInputs){
-        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName && x.paramName === this.configuration.param.paramName );
       }
 
       let constant = this.configuration.constant;
@@ -467,7 +467,7 @@ export class FilterNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
       let secondparam = this.configuration.secondparam;
       if(this.configuration.secondinputType === 'RULE_INPUT' && this.allRuleInputs){
-        secondparam = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName );
+        secondparam = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName && x.paramName === this.configuration.secondparam.paramName );
       }
 
       let secondconstant = this.configuration.secondconstant;

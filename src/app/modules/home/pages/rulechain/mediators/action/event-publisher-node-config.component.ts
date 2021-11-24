@@ -203,11 +203,17 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.eventPublisherNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
@@ -314,7 +320,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
       let param = this.configuration.param;
       if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
-        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName && x.paramName === this.configuration.param.paramName );
       }
 
       let constant = this.configuration.constant;

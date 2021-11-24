@@ -1153,7 +1153,13 @@ export class RuleChainPageComponent extends PageComponent
 
           for (let param of this.allRuleInputs) {
             let valueProperty = new ValueProperty();
-            valueProperty.name = param.inputName;
+            let valuePropertyName = '';
+            if(param.paramName && param.paramName != ''){
+                valuePropertyName = param.paramName;
+            } else {
+                valuePropertyName = param.inputName;
+            }
+            valueProperty.name = valuePropertyName;
             valueProperty.type = "RULE_INPUT";
             if(param.inputType === 'model' || param.inputType === 'dto'){
                 valueProperty.valueType = "object";

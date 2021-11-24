@@ -380,11 +380,17 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
 
         if (errorInputType === 'RULE_INPUT'){
             let selectedErrorParameterParam = this.pdfNodeConfigFormGroup.get('errorParameterparam').value;
+              let propName = '';
+              if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+                propName = selectedErrorParameterParam.paramName;
+              } else {
+                propName = selectedErrorParameterParam.inputName;
+              }
             let errorParameter = {
                 'parameterName': errorBranchparameter.name,
                 'inputType': errorInputType,
                 'input': '-',
-                'property': selectedErrorParameterParam.inputName
+                'property': propName
             };
             this.configuration.errorFunctionParameters.push(errorParameter);
             this.updateModel(this.configuration);
@@ -438,11 +444,17 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
 
         if (inputType === 'RULE_INPUT'){
             let selectedParameterParam = this.pdfNodeConfigFormGroup.get('parameterparam').value;
+              let propname = '';
+              if(selectedParameterParam.paramName && selectedParameterParam.paramName != '') {
+                propname = selectedParameterParam.paramName;
+              } else {
+                propname = selectedParameterParam.inputName;
+              }
             let parameter = {
                 'key': key,
                 'inputType': inputType,
                 'input': '-',
-                'property': selectedParameterParam.inputName
+                'property': propname
             };
             this.configuration.pdfParameters.push(parameter);
             this.updateModel(this.configuration);

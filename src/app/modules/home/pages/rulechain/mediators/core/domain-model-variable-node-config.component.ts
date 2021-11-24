@@ -335,7 +335,13 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     //let modelTitleName = '';
     let modelName = '';
     if(propertyType === 'RULE_INPUT'){
-        selectedInput = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.inputName;
+        let paramName = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.paramName;
+        if(paramName && paramName != '') {
+            selectedInput = paramName;
+        } else {
+            selectedInput = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.inputName;
+        }
+
         let pkg = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.inputType;
 
         if(selectedNode.data.type === 'collection' || selectedNode.data.type === 'list'){

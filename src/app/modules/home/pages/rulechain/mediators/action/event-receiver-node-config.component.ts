@@ -189,11 +189,17 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.eventReceiverNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);

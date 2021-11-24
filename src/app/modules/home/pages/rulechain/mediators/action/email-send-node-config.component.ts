@@ -373,11 +373,17 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.emailSendNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
@@ -426,11 +432,18 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     
     if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.emailSendNodeConfigFormGroup.get('parameterparam').value;
+      let propName = '';
+      if(selectedParameterParam.paramName && selectedParameterParam.paramName != ''){
+        propName = selectedParameterParam.paramName;
+      } else {
+        propName = selectedParameterParam.inputName;
+      }
+
       let parameter = {
         'parameterName': '$'+ number,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterParam.inputName
+        'property': propName
       };
       this.configuration.emailbodyParameters.push(parameter);
       this.updateModel(this.configuration);
@@ -536,7 +549,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
 
       let p = this.configuration.toemailparam;
       if(this.configuration.toemailinputType === 'RULE_INPUT'){
-        p = this.allRuleInputs.find(x => x.inputName === this.configuration.toemailparam.inputName );
+        p = this.allRuleInputs.find(x => x.inputName === this.configuration.toemailparam.inputName && x.paramName === this.configuration.toemailparam.paramName );
           if(this.configuration.toemailparam.inputType === 'model'){
             let selectedmodelpropertydomainModel = this.allDomainModelsWithSub.find(x => x.nameTitleCase === this.configuration.toemailparam.inputName );
               if(selectedmodelpropertydomainModel){

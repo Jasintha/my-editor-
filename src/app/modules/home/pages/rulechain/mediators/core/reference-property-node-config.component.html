@@ -16,7 +16,9 @@
         <mat-select formControlName="modelpropertyruleInput">
             <ng-container *ngFor="let domainModel of allRuleInputs">
             <mat-option *ngIf="(domainModel?.inputType === 'model' || domainModel?.inputType === 'dto') && domainModel?.record === 's'" [value]="domainModel">
-                {{domainModel.inputName}} <span *ngIf="domainModel.inputType === 'model'"> - Domain Model</span>
+                <span *ngIf="domainModel?.paramName">{{domainModel.paramName}}</span>
+                <span *ngIf="!domainModel?.paramName">{{domainModel.inputName}}</span>
+                <span *ngIf="domainModel.inputType === 'model'"> - Domain Model</span>
                 <span *ngIf="domainModel.inputType === 'dto'"> - DTO Model</span>
             </mat-option>
             </ng-container>

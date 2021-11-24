@@ -234,11 +234,17 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.validatorNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
@@ -303,12 +309,18 @@ export class ValidatorNodeConfigComponent implements ControlValueAccessor, OnIni
 
     if (inputType === 'RULE_INPUT'){
       let selectedParam = this.validatorNodeConfigFormGroup.get('validatorparam').value;
+      let propname = '';
+      if(selectedParam.paramName && selectedParam.paramName != '') {
+        propname = selectedParam.paramName;
+      } else {
+        propname = selectedParam.inputName;
+      }
       let validatorparam = {
         'inputType': inputType,
         'condition': this.validatorNodeConfigFormGroup.get('validatorcondition').value,
         'join': join,
         'value': customvalue,
-        'property': selectedParam.inputName
+        'property': propname
       };
       this.configuration.validators.push(validatorparam);
       this.updateModel(this.configuration);

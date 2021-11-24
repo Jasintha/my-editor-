@@ -349,7 +349,7 @@ export class CrudNodeConfigComponent implements ControlValueAccessor, OnInit, On
 
       let crudparam = this.configuration.crudparam;
       if(this.configuration.crudinputType === 'RULE_INPUT' && this.allRuleInputs){
-        crudparam = this.allRuleInputs.find(x => x.inputName === this.configuration.crudparam.inputName );
+        crudparam = this.allRuleInputs.find(x => x.inputName === this.configuration.crudparam.inputName && x.paramName === this.configuration.crudparam.paramName );
       }
 
       let crudconstant = this.configuration.crudconstant;

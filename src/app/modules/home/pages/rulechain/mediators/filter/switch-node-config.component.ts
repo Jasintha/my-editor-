@@ -284,12 +284,19 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
     if (inputType === 'RULE_INPUT'){
       let selectedSwitchParam = this.switchNodeConfigFormGroup.get('switchsecondparam').value;
+      let propname = '';
+      if(selectedSwitchParam.paramName && selectedSwitchParam.paramName != ''){
+        propname = selectedSwitchParam.paramName;
+      } else {
+        propname = selectedSwitchParam.inputName;
+      }
+
       let switchcase = {
         'name' : casename,
         'condition': switchCondition,
         'inputType': inputType,
         'input': '-',
-        'property': selectedSwitchParam.inputName,
+        'property': propname,
         'scope': ''
       };
       this.configuration.switchCases.push(switchcase);
@@ -380,7 +387,7 @@ export class SwitchNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
       let param = this.configuration.param;
       if(this.configuration.firstinputType === 'RULE_INPUT' && this.allRuleInputs){
-        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+        param = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName && x.paramName === this.configuration.param.paramName );
       }
 
       let constant = this.configuration.constant;

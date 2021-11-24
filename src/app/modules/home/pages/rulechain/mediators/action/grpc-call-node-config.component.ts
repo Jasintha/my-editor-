@@ -221,11 +221,17 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
 
     if (errorInputType === 'RULE_INPUT') {
       let selectedErrorParameterParam = this.grpcCallNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
@@ -427,7 +433,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
 
       let p = this.configuration.param;
       if (this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs) {
-        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName);
+        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName && x.paramName === this.configuration.param.paramName);
       }
 
       let c = this.configuration.constant;
@@ -464,7 +470,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
 
       let secondparam = this.configuration.secondparam;
       if (this.configuration.secondinputType === 'RULE_INPUT' && this.allRuleInputs) {
-        secondparam = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName);
+        secondparam = this.allRuleInputs.find(x => x.inputName === this.configuration.secondparam.inputName && x.paramName === this.configuration.secondparam.paramName);
       }
 
       let secondconstant = this.configuration.secondconstant;
@@ -487,7 +493,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
 
       let thirdparam = this.configuration.thirdparam;
       if (this.configuration.thirdinputType === 'RULE_INPUT' && this.allRuleInputs) {
-        thirdparam = this.allRuleInputs.find(x => x.inputName === this.configuration.thirdparam.inputName);
+        thirdparam = this.allRuleInputs.find(x => x.inputName === this.configuration.thirdparam.inputName && x.paramName === this.configuration.thirdparam.paramName);
       }
 
       let thirdconstant = this.configuration.thirdconstant;

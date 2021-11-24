@@ -250,7 +250,11 @@ export class CPGetterNodeConfigComponent implements ControlValueAccessor, OnInit
     
     if (valueinputType === 'RULE_INPUT'){
       let selectedValueParam = this.cpGetterNodeConfigFormGroup.get('valueparam').value;
-      valueName = selectedValueParam.inputName;
+      if(selectedValueParam.paramName && selectedValueParam.paramName != ''){
+        valueName = selectedValueParam.paramName;
+      } else{
+        valueName = selectedValueParam.inputName;
+      }
 
     } else if (valueinputType === 'PROPERTY'){
       let selectedValueProperty = this.cpGetterNodeConfigFormGroup.get('valueproperty').value;

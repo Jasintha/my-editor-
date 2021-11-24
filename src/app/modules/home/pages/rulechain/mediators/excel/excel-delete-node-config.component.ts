@@ -237,11 +237,17 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
 
         if (errorInputType === 'RULE_INPUT'){
             let selectedErrorParameterParam = this.excelDeleteNodeConfigFormGroup.get('errorParameterparam').value;
+            let propName = '';
+            if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+                propName = selectedErrorParameterParam.paramName;
+            } else {
+                propName = selectedErrorParameterParam.inputName;
+            }
             let errorParameter = {
                 'parameterName': errorBranchparameter.name,
                 'inputType': errorInputType,
                 'input': '-',
-                'property': selectedErrorParameterParam.inputName
+                'property': propName
             };
             this.configuration.errorFunctionParameters.push(errorParameter);
             this.updateModel(this.configuration);

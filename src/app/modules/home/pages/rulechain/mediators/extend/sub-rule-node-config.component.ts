@@ -250,11 +250,17 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
     
     if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.subRuleNodeConfigFormGroup.get('parameterparam').value;
+      let propname = '';
+      if(selectedParameterParam.paramName && selectedParameterParam.paramName != ''){
+        propname = selectedParameterParam.paramName;
+      } else {
+        propname = selectedParameterParam.inputName;
+      }
       let parameter = {
         'parameterName': subruleInput.paramName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterParam.inputName,
+        'property': propname,
         'propertyScope': ''
       };
       this.configuration.subRuleInputs.push(parameter);
@@ -350,11 +356,17 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.subRuleNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);

@@ -294,11 +294,17 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
 
         if (errorInputType === 'RULE_INPUT'){
             let selectedErrorParameterParam = this.excelReadNodeConfigFormGroup.get('errorParameterparam').value;
+            let propName = '';
+            if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+                propName = selectedErrorParameterParam.paramName;
+            } else {
+                propName = selectedErrorParameterParam.inputName;
+            }
             let errorParameter = {
                 'parameterName': errorBranchparameter.name,
                 'inputType': errorInputType,
                 'input': '-',
-                'property': selectedErrorParameterParam.inputName
+                'property': propName
             };
             this.configuration.errorFunctionParameters.push(errorParameter);
             this.updateModel(this.configuration);
@@ -395,11 +401,17 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
 
         if (inputType === 'RULE_INPUT') {
             let selectedParameterParam = this.excelReadNodeConfigFormGroup.get('excelparam').value;
+            let propname = '';
+            if(selectedParameterParam.paramName && selectedParameterParam.paramName != ''){
+                propname = selectedParameterParam.paramName;
+            } else {
+                propname = selectedParameterParam.inputName
+            }
             let parameter = {
                 'sheetName': sheetName,
                 'inputType': inputType,
                 'input': '-',
-                'property': selectedParameterParam.inputName
+                'property': propname
             };
             this.configuration.excelReadInput = parameter;
             this.updateModel(this.configuration);
@@ -482,7 +494,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
 
             let excelparam = this.configuration.excelparam;
             if(this.configuration.excelinputType === 'RULE_INPUT' && this.allRuleInputs){
-                excelparam = this.allRuleInputs.find(x => x.inputName === this.configuration.excelparam.inputName );
+                excelparam = this.allRuleInputs.find(x => x.inputName === this.configuration.excelparam.inputName && x.paramName === this.configuration.excelparam.paramName );
             }
 
             let errorBranch = this.configuration.errorBranch;

@@ -253,7 +253,11 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
     
     if (valueinputType === 'RULE_INPUT'){
       let selectedValueParam = this.assignNodeConfigFormGroup.get('valueparam').value;
-      valueName = selectedValueParam.inputName;
+      if(selectedValueParam.paramName && selectedValueParam.paramName != ''){
+        valueName = selectedValueParam.paramName;
+      } else {
+        valueName = selectedValueParam.inputName;
+      }
 
     } else if (valueinputType === 'PROPERTY'){
       let selectedValueProperty = this.assignNodeConfigFormGroup.get('valueproperty').value;

@@ -228,7 +228,7 @@ export class ErrorNodeConfigComponent implements ControlValueAccessor, OnInit, O
     } else {
       let p = this.configuration.param;
       if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
-        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName && x.paramName === this.configuration.param.paramName );
       }
 
       let c = this.configuration.constant;

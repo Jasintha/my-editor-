@@ -421,12 +421,19 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
     if (inputType === 'RULE_INPUT'){
       let selectedParam = this.dbNodeConfigFormGroup.get('parameterparam').value;
+      let propname = '';
+      if (selectedParam.paramName && selectedParam.paramName != ''){
+        propname = selectedParam.paramName;
+      } else {
+        propname = selectedParam.inputName;
+      }
+
       let parameterparam = {
         'inputType': inputType,
         'condition': this.dbNodeConfigFormGroup.get('querycondition').value,
         'join': join,
         'modelproperty': selectedNode,
-        'property': selectedParam.inputName,
+        'property': propname,
         'modelpropertyName': selectedNode.name,
         'scope': ''
       };
@@ -523,11 +530,17 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.dbNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
@@ -838,7 +851,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
       let crudparam = this.configuration.crudparam;
       if(this.configuration.crudinputType === 'RULE_INPUT' && this.allRuleInputs){
-        crudparam = this.allRuleInputs.find(x => x.inputName === this.configuration.crudparam.inputName );
+        crudparam = this.allRuleInputs.find(x => x.inputName === this.configuration.crudparam.inputName && x.paramName === this.configuration.crudparam.paramName );
       }
 
       let crudconstant = this.configuration.crudconstant;

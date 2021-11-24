@@ -268,11 +268,17 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.lambdaFunctionNodeConfigFormGroup.get('errorParameterparam').value;
+      let propName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
@@ -337,11 +343,17 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
 
     if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.lambdaFunctionNodeConfigFormGroup.get('parameterparam').value;
+      let propname = '';
+      if(selectedParameterParam.paramName && selectedParameterParam.paramName != ''){
+        propname = selectedParameterParam.paramName;
+      } else {
+        propname = selectedParameterParam.inputName
+      }
       let parameter = {
         'parameterName': functionparameter.inputName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterParam.inputName,
+        'property': propname,
         'propertyScope': ''
       };
       this.configuration.lambdaParameters.push(parameter);

@@ -267,11 +267,17 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.hybridFunctionNodeConfigFormGroup.get('errorParameterparam').value;
+      let selectedErrorParameterParam.inputName = '';
+      if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
+        propName = selectedErrorParameterParam.paramName;
+      } else {
+        propName = selectedErrorParameterParam.inputName;
+      }
       let errorParameter = {
         'parameterName': errorBranchparameter.name,
         'inputType': errorInputType,
         'input': '-',
-        'property': selectedErrorParameterParam.inputName
+        'property': propName
       };
       this.configuration.errorFunctionParameters.push(errorParameter);
       this.updateModel(this.configuration);
@@ -336,11 +342,17 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
     
     if (inputType === 'RULE_INPUT'){
       let selectedParameterParam = this.hybridFunctionNodeConfigFormGroup.get('parameterparam').value;
+      let propname = '';
+      if(selectedParameterParam.paramName && selectedParameterParam.paramName != ''){
+        propname = selectedParameterParam.paramName;
+      } else {
+       propname = selectedParameterParam.inputName;
+      }
       let parameter = {
         'parameterName': functionparameter.paramName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterParam.inputName,
+        'property': propname,
         'propertyScope': ''
       };
       this.configuration.hybridParameters.push(parameter);

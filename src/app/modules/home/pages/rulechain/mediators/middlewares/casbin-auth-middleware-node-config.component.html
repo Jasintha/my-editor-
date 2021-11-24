@@ -69,7 +69,7 @@
             <mat-form-field fxFlex class="mat-block">
                 <mat-label>Model Conf File Path</mat-label>
                 <mat-select formControlName="secondinputType" (selectionChange)="refreshSecondInputTypes()">
-                    <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+                    <!--<mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>-->
                     <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
                     <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
                     <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
