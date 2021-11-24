@@ -267,7 +267,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
 
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.hybridFunctionNodeConfigFormGroup.get('errorParameterparam').value;
-      let selectedErrorParameterParam.inputName = '';
+      let propName = '';
       if(selectedErrorParameterParam.paramName && selectedErrorParameterParam.paramName != ''){
         propName = selectedErrorParameterParam.paramName;
       } else {
