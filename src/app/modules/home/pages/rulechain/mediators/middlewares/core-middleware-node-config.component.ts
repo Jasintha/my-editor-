@@ -134,7 +134,8 @@ export class CoreMiddlewareNodeConfigComponent implements ControlValueAccessor, 
     this.coreMiddlewareNodeConfigFormGroup = this.fb.group({
       enableLogger: true,
       enableRecover: true,
-      enableCors: true
+      enableCors: true,
+      enableMultiTenant: true
     });
   }
 
@@ -186,7 +187,8 @@ export class CoreMiddlewareNodeConfigComponent implements ControlValueAccessor, 
       this.coreMiddlewareNodeConfigFormGroup.patchValue({
         enableLogger: this.configuration.enableLogger,
         enableRecover: this.configuration.enableRecover,
-        enableCors: this.configuration.enableCors
+        enableCors: this.configuration.enableCors,
+        enableMultiTenant: this.configuration.enableMultiTenant
       });
 
       this.changeSubscription = this.coreMiddlewareNodeConfigFormGroup.get('enableLogger').valueChanges.subscribe(
@@ -208,6 +210,13 @@ export class CoreMiddlewareNodeConfigComponent implements ControlValueAccessor, 
           this.configuration.enableCors = configuration;
           this.updateModel(this.configuration);
         }
+      );
+
+      this.changeSubscription = this.coreMiddlewareNodeConfigFormGroup.get('enableMultiTenant').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.enableMultiTenant = configuration;
+            this.updateModel(this.configuration);
+          }
       );
 
     }
