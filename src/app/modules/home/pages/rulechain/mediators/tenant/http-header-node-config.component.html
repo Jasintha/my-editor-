@@ -1,0 +1,254 @@
+<div [formGroup]="httpHeaderNodeConfigFormGroup">
+  <mat-form-field fxFlex class="mat-block">
+    <mat-label>Header Type</mat-label>
+    <mat-select formControlName="headerType">
+      <mat-option value="REQUEST">Request</mat-option>
+      <mat-option value="RESPONSE">Response</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>Key Type</mat-label>
+        <mat-select formControlName="propertyinputType" (selectionChange)="refreshKeyInputTypes()">
+          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+          <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+          <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+          <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.propertyinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
+        <mat-select formControlName="propertyparam">
+          <ng-container *ngFor="let cpproperty of allRuleInputs">
+            <mat-option *ngIf="((cpproperty?.inputType | lowercase) === 'text' || (cpproperty?.inputType | lowercase) === 'string') && cpproperty?.record === 's'" [value]="cpproperty">
+              {{cpproperty.inputName}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.propertyinputType === 'CONSTANT'" fxFlex class="mat-block">
+        <mat-label>Constant</mat-label>
+        <mat-select formControlName="propertyconstant">
+          <ng-container *ngFor="let cpconstant of allConstants">
+            <mat-option *ngIf="((cpconstant?.constantType | lowercase) === 'text' || (cpconstant?.constantType | lowercase) === 'string')" [value]="cpconstant">
+              {{cpconstant.constantName}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.propertyinputType === 'PROPERTY'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="propertyproperty">
+          <ng-container *ngFor="let cpmproperty of allModelProperties">
+            <mat-option *ngIf="((cpmproperty?.type | lowercase) === 'text' || (cpmproperty?.type | lowercase) === 'string') && cpmproperty?.propertyDataType === 'PRIMITIVE' && cpmproperty?.record === 's'" [value]="cpmproperty">
+              {{cpmproperty.name}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.propertyinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="propertybranchparam">
+          <ng-container *ngFor="let cpparam of branchAvailability?.branchParams">
+            <mat-option *ngIf="((cpparam?.inputType | lowercase) === 'text' || (cpparam?.inputType | lowercase) === 'string') && cpparam?.record === 's'" [value]="cpparam">
+              {{cpparam.name}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+
+      </section>
+  </section>
+
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>Value Type</mat-label>
+        <mat-select formControlName="valueinputType" (selectionChange)="refreshSecondInputTypes()">
+          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+          <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+          <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+          <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+
+    <section class="mat-block" fxFlex>
+
+      <mat-form-field *ngIf="configuration.valueinputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
+        <mat-select formControlName="valueparam">
+          <ng-container *ngFor="let cpproperty of allRuleInputs">
+            <mat-option *ngIf="((cpproperty?.inputType | lowercase) === 'text' || (cpproperty?.inputType | lowercase) === 'string') && cpproperty?.record === 's'" [value]="cpproperty">
+              {{cpproperty.inputName}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.valueinputType === 'CONSTANT'" fxFlex class="mat-block">
+        <mat-label>Constant</mat-label>
+        <mat-select formControlName="valueconstant">
+          <ng-container *ngFor="let cpconstant of allConstants">
+            <mat-option *ngIf="((cpconstant?.constantType | lowercase) === 'text' || (cpconstant?.constantType | lowercase) === 'string')" [value]="cpconstant">
+              {{cpconstant.constantName}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="configuration.valueinputType === 'PROPERTY'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="valueproperty">
+          <ng-container *ngFor="let cpmproperty of allModelProperties">
+            <mat-option *ngIf="((cpmproperty?.type | lowercase) === 'text' || (cpmproperty?.type | lowercase) === 'string') && cpmproperty?.propertyDataType === 'PRIMITIVE' && cpmproperty?.record === 's'" [value]="cpmproperty">
+              {{cpmproperty.name}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.valueinputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="valuebranchparam">
+          <ng-container *ngFor="let cpparam of branchAvailability?.branchParams">
+            <mat-option *ngIf="((cpparam?.inputType | lowercase) === 'text' || (cpparam?.inputType | lowercase) === 'string') && cpparam?.record === 's'" [value]="cpparam">
+              {{cpparam.name}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+    </section>
+
+  </section>
+  <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+  <button mat-icon-button class="virtuan-fullscreen-button-style"
+          (click)="addHTTPHeader()"
+          matTooltip="Add HTTP Header Value"
+          matTooltipPosition="above">
+    <mat-icon color="primary">add</mat-icon>
+  </button>
+
+</div>
+  <div fxFlex class="table-container" style="padding: 20px;margin-bottom-5px;">
+    <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+      <ng-container matColumnDef="headerType">
+
+        <th mat-header-cell *matHeaderCellDef> Header Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.headerType}} </td>
+      </ng-container>
+      <ng-container matColumnDef="keyinputType">
+
+        <th mat-header-cell *matHeaderCellDef> Key Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.keyinputType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="keyName">
+        <th mat-header-cell *matHeaderCellDef> Key Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.keyName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="valueinputType">
+        <th mat-header-cell *matHeaderCellDef> Value type </th>
+        <td mat-cell *matCellDef="let element"> {{element.valueinputType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="valueName">
+        <th mat-header-cell *matHeaderCellDef> Value Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.valueName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element;let i = index">
+          <button mat-icon-button class="virtuan-mat-32" (click)="deleteRow(i)" matTooltip="Delete" matTooltipPosition="above">
+            <mat-icon style="color:red;">delete</mat-icon>
+          </button></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-checkbox fxFlex class="mat-block" formControlName="redirectAvailable">
+    Redirect
+  </mat-checkbox>
+  <mat-form-field *ngIf="configuration.redirectAvailable" fxFlex class="mat-block">
+    <mat-label>Redirect Type</mat-label>
+    <mat-select formControlName="redirectType">
+      <mat-option value="300">300: Multiple Choice</mat-option>
+      <mat-option value="301">301: Moved Permanently</mat-option>
+      <mat-option value="302">302: Found</mat-option>
+      <mat-option value="303">303: See Other</mat-option>
+      <mat-option value="304">304: Not Modified</mat-option>
+      <mat-option value="307">307: Temporary Redirect</mat-option>
+      <mat-option value="308">308: Permanent Redirect</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <section *ngIf="configuration.redirectAvailable" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <section class="mat-block" fxFlex>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label>Redirect URL</mat-label>
+        <mat-select formControlName="inputType" (selectionChange)="refreshInputTypes()">
+          <mat-option *ngIf="!branchAvailability?.branchFound &&  allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
+          <mat-option *ngIf="allConstants?.length" value="CONSTANT">Constant</mat-option>
+          <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
+          <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section class="mat-block" fxFlex>
+      <mat-form-field *ngIf="configuration.inputType === 'RULE_INPUT'" fxFlex class="mat-block">
+        <mat-label>Rule Input</mat-label>
+        <mat-select formControlName="param">
+          <ng-container *ngFor="let cpproperty of allRuleInputs">
+            <mat-option *ngIf="((cpproperty?.inputType | lowercase) === 'text' || (cpproperty?.inputType | lowercase) === 'string') && cpproperty?.record === 's'" [value]="cpproperty">
+              {{cpproperty.inputName}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.inputType === 'CONSTANT'" fxFlex class="mat-block">
+        <mat-label>Constant</mat-label>
+        <mat-select formControlName="constant">
+          <ng-container *ngFor="let cpconstant of allConstants">
+            <mat-option *ngIf="((cpconstant?.constantType | lowercase) === 'text' || (cpconstant?.constantType | lowercase) === 'string')" [value]="cpconstant">
+              {{cpconstant.constantName}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.inputType === 'PROPERTY'" fxFlex class="mat-block">
+        <mat-label>Property</mat-label>
+        <mat-select formControlName="property">
+          <ng-container *ngFor="let cpmproperty of allModelProperties">
+            <mat-option *ngIf="((cpmproperty?.type | lowercase) === 'text' || (cpmproperty?.type | lowercase) === 'string') && cpmproperty?.propertyDataType === 'PRIMITIVE' && cpmproperty?.record === 's'" [value]="cpmproperty">
+              {{cpmproperty.name}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="configuration.inputType === 'BRANCH_PARAM'" fxFlex class="mat-block">
+        <mat-label>Branch Param</mat-label>
+        <mat-select formControlName="branchparam">
+          <ng-container *ngFor="let cpparam of branchAvailability?.branchParams">
+            <mat-option *ngIf="((cpparam?.inputType | lowercase) === 'text' || (cpparam?.inputType | lowercase) === 'string') && cpparam?.record === 's'" [value]="cpparam">
+              {{cpparam.name}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+    </section>
+
+  </section>
+
+</div>
+

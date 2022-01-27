@@ -1086,4 +1086,22 @@
                                                    [nodeDefinition]="nodeDefinitionValue">
         </virtuan-property-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiHttpHeaderNode'">
+        <virtuan-http-header-node-config #httpHeaderNodeConfigComponent
+                                       formControlName="configuration"
+                                       [ruleNodeId]="ruleNodeId"
+                                       [allConstants]=" allConstants"
+                                       [inputEntities]=" inputEntities"
+                                       [inputCustomobjects]="inputCustomobjects"
+                                       [allRuleInputs]="allRuleInputs"
+                                       [allVariables]="allVariables"
+                                       [inputProperties]="inputProperties"
+                                       [apptype]="apptype"
+                                       [allModelProperties]="allModelProperties"
+                                       [branchAvailability]="branchAvailability"
+                                       [allRoots]="allRoots"
+                                       [allReferenceProperties]="allReferenceProperties"
+                                       [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-http-header-node-config>
+    </ng-container>
 </div>

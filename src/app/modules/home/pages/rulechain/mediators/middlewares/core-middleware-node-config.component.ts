@@ -135,7 +135,7 @@ export class CoreMiddlewareNodeConfigComponent implements ControlValueAccessor, 
       enableLogger: true,
       enableRecover: true,
       enableCors: true,
-      enableMultiTenant: true
+      enableMultiTenant: false
     });
   }
 

@@ -41,6 +41,8 @@ import { GRPCCallNodeConfigComponent } from './action/grpc-call-node-config.comp
 import { ConnectorNodeConfigComponent } from './connector/connector-node-config.component';
 import { ErrorNodeConfigComponent } from './action/error-node-config.component';
 
+//tenant
+import { HttpHeaderNodeConfigComponent } from './tenant/http-header-node-config.component';
 
 //Sidecar
 import { SidecarNodeConfigComponent } from './sidecar/sidecar-node-config.component';
@@ -158,6 +160,7 @@ import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/c
     TimeoutMiddlewareNodeConfigComponent,
     EncryptMiddlewareNodeConfigComponent,
     SidecarNodeConfigComponent,
+    HttpHeaderNodeConfigComponent,
     ErrorNodeConfigComponent,
     PropertyNodeConfigComponent
   ],
@@ -231,6 +234,7 @@ import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/c
     TimeoutMiddlewareNodeConfigComponent,
     EncryptMiddlewareNodeConfigComponent,
     SidecarNodeConfigComponent,
+    HttpHeaderNodeConfigComponent,
     ErrorNodeConfigComponent,
     PropertyNodeConfigComponent
   ],
