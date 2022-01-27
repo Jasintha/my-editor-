@@ -1,11 +1,13 @@
 <div [formGroup]="httpHeaderNodeConfigFormGroup">
-  <mat-form-field fxFlex class="mat-block">
-    <mat-label>Header Type</mat-label>
-    <mat-select formControlName="headerType">
-      <mat-option value="REQUEST">Request</mat-option>
-      <mat-option value="RESPONSE">Response</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label>Header Type</mat-label>
+      <mat-select formControlName="headerType">
+        <mat-option value="REQUEST">Request</mat-option>
+        <mat-option value="RESPONSE">Response</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
 
   <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
     <section class="mat-block" fxFlex>
@@ -137,7 +139,7 @@
   </button>
 
 </div>
-  <div fxFlex class="table-container" style="padding: 20px;margin-bottom-5px;">
+  <div fxFlex class="table-container" style="padding-left: 10px; padding-right: 10px; padding-top: 20px; padding-bottom: 25px;margin-bottom-5px;">
     <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
       <ng-container matColumnDef="headerType">
 
@@ -178,9 +180,9 @@
     </table>
   </div>
   <mat-checkbox fxFlex class="mat-block" formControlName="redirectAvailable">
-    Redirect
+    Add URL Redirection
   </mat-checkbox>
-  <mat-form-field *ngIf="configuration.redirectAvailable" fxFlex class="mat-block">
+  <mat-form-field *ngIf="configuration.redirectAvailable" fxFlex class="mat-block" style="padding-top: 10px;">
     <mat-label>Redirect Type</mat-label>
     <mat-select formControlName="redirectType">
       <mat-option value="300">300: Multiple Choice</mat-option>
@@ -192,7 +194,7 @@
       <mat-option value="308">308: Permanent Redirect</mat-option>
     </mat-select>
   </mat-form-field>
-  <section *ngIf="configuration.redirectAvailable" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+  <section *ngIf="configuration.redirectAvailable" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" >
     <section class="mat-block" fxFlex>
       <mat-form-field fxFlex class="mat-block">
         <mat-label>Redirect URL</mat-label>

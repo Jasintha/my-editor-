@@ -564,6 +564,12 @@ export class HttpHeaderNodeConfigComponent implements ControlValueAccessor, OnIn
             this.configuration.param= {};
             this.configuration.property= {};
             this.configuration.branchparam= {};
+            this.httpHeaderNodeConfigFormGroup.get('inputType').patchValue('', {emitEvent: false});
+            this.httpHeaderNodeConfigFormGroup.get('redirectType').patchValue('', {emitEvent: false});
+            this.httpHeaderNodeConfigFormGroup.get('param').patchValue([], {emitEvent: false});
+            this.httpHeaderNodeConfigFormGroup.get('branchparam').patchValue([], {emitEvent: false});
+            this.httpHeaderNodeConfigFormGroup.get('property').patchValue([], {emitEvent: false});
+            this.httpHeaderNodeConfigFormGroup.get('constant').patchValue([], {emitEvent: false});
           }
           this.configuration.redirectAvailable = configuration;
           this.updateModel(this.configuration);
