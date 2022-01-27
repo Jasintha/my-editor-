@@ -1,14 +1,16 @@
 <div [formGroup]="coreMiddlewareNodeConfigFormGroup">
-    <mat-checkbox fxFlex class="mat-block" formControlName="enableLogger">
-        Enable Logger
-    </mat-checkbox>
-    <mat-checkbox fxFlex class="mat-block" formControlName="enableRecover">
-        Enable Recover
-    </mat-checkbox>
-    <mat-checkbox fxFlex class="mat-block" formControlName="enableCors">
-        Enable CORS
-    </mat-checkbox>
-    <mat-checkbox fxFlex class="mat-block" formControlName="enableMultiTenant">
-        Enable Multi-Tenancy
-    </mat-checkbox>
+    <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
+        <mat-checkbox fxFlex class="mat-block" formControlName="enableLogger">
+            Enable Logger
+        </mat-checkbox>
+        <mat-checkbox fxFlex class="mat-block" formControlName="enableRecover">
+            Enable Recover
+        </mat-checkbox>
+        <mat-checkbox fxFlex class="mat-block" formControlName="enableCors">
+            Enable CORS
+        </mat-checkbox>
+        <mat-checkbox fxFlex class="mat-block" formControlName="enableMultiTenant">
+            Enable Multi-Tenancy
+        </mat-checkbox>
+    </section>
 </div>
