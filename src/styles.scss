@@ -175,7 +175,8 @@ section.virtuan-header-buttons {
 }
 
 section.virtuan-footer-buttons {
-  position: fixed;
+  float: right;
+  padding-right: 20px;
   right: 20px;
   bottom: 20px;
   z-index: 30;

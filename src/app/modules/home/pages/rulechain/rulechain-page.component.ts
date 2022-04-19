@@ -21,6 +21,7 @@ import {
   HostBinding,
   Inject,
   OnInit,
+  Input,
   QueryList,
   SkipSelf,
   ViewChild,
@@ -146,8 +147,13 @@ export class RuleChainPageComponent extends PageComponent
   ruleNodeSearch = '';
   ruleNodeTypeSearch = '';
 
+  @Input()
   ruleChain: RuleChain;
+
+  @Input()
   ruleChainMetaData: ResolvedRuleChainMetaData;
+
+  @Input()
   connectionPropertyTemplates: ConnectionPropertyTemplate[];
 
   ruleType: string;
@@ -189,7 +195,10 @@ export class RuleChainPageComponent extends PageComponent
   allViewModelsWithSub: any[];
   allMicroservices: any[];
 
+  @Input()
   username: string;
+
+  @Input()
   uid: string;
 
   branchAvailability: any;
@@ -315,11 +324,14 @@ export class RuleChainPageComponent extends PageComponent
     }
   };
 
+  @Input()
   ruleNodeComponents: Array<RuleNodeComponentDescriptor>;
 
   flowchartConstants = FlowchartConstants;
 
   private tooltipTimeout: Timeout;
+
+  routerType: string;
 
   constructor(protected store: Store<AppState>,
               private route: ActivatedRoute,
@@ -332,10 +344,42 @@ export class RuleChainPageComponent extends PageComponent
               public dialogService: DialogService,
               public fb: FormBuilder) {
     super(store);
-    this.init();
+    this.route.params.subscribe(params => {
+      this.routerType = params['routerType'];
+      this.username = params['username'];
+      this.uid = params['uid'];
+    });
+      this.isImport = false;
+      this.route.data.subscribe(({ ruleNodeComponents }) => {
+        this.ruleNodeComponents = ruleNodeComponents;
+      });
+      this.route.data.subscribe(({ ruleChain }) => {
+        this.ruleChain = ruleChain;
+      });
+      this.route.data.subscribe(({ ruleChainMetaData }) => {
+        this.ruleChainMetaData = ruleChainMetaData;
+      });
+      this.route.data.subscribe(
+      ({ connectionPropertyTemplates }) => {
+        this.connectionPropertyTemplates = connectionPropertyTemplates;
+      });
+//     const routerType = this.route.snapshot.params.routerType;
+    if (this.routerType == "R") {
+        console.log("called");
+        this.init();
+    }
+
   }
 
   ngOnInit() {
+  console.log("called 2");
+//     const routerType = this.route.snapshot.params.routerType;
+    if (this.routerType != "R") {
+        this.init();
+    }
+//      console.log("kkkkkk");
+//      console.log(this.ruleChainMetaData);
+//      this.init();
   }
 
   ngAfterViewInit() {
@@ -363,18 +407,24 @@ export class RuleChainPageComponent extends PageComponent
 
   private init() {
     this.initHotKeys();
-    this.isImport = this.route.snapshot.data.import;
+//     const routerType = this.route.snapshot.params.routerType;
+    if (this.routerType == "R") {
+
+    } else {
+        this.isImport = false;
+    }
     if (this.isImport) {
       const ruleChainImport: RuleChainImport = this.itembuffer.getRuleChainImport();
       this.ruleChain = ruleChainImport.ruleChain;
       this.ruleChainMetaData = ruleChainImport.resolvedMetadata;
 
     } else {
-      this.ruleChain = this.route.snapshot.data.ruleChain;
-      this.ruleChainMetaData = this.route.snapshot.data.ruleChainMetaData;
-      this.connectionPropertyTemplates = this.route.snapshot.data.connectionPropertyTemplates;
-      this.username = this.route.snapshot.params.username;
-      this.uid = this.route.snapshot.params.uid;
+
+//       this.ruleChain = this.route.snapshot.data.ruleChain;
+//       this.ruleChainMetaData = this.route.snapshot.data.ruleChainMetaData;
+//       this.connectionPropertyTemplates = this.route.snapshot.data.connectionPropertyTemplates;
+//       this.username = this.route.snapshot.params.username;
+//       this.uid = this.route.snapshot.params.uid;
       this.ruleChainService.getRuleChainMicroserviceData(this.username).subscribe((microservices) => {
         if (microservices){
             this.allMicroservices = microservices;
@@ -384,6 +434,7 @@ export class RuleChainPageComponent extends PageComponent
       });
     }
 
+    if(this.ruleChainMetaData){
     this.ruleType = this.ruleChainMetaData.name;
     this.ruleInputs = this.ruleChainMetaData.ruleInputs;
     this.ruleReturn = this.ruleChainMetaData.ruleReturn;
@@ -419,8 +470,8 @@ export class RuleChainPageComponent extends PageComponent
     this.allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
     this.allDomainModelsWithSub = this.ruleChainMetaData.allDomainModelsWithSub;
     this.allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
+    }
 
-    this.ruleNodeComponents = this.route.snapshot.data.ruleNodeComponents;
     for (const type of ruleNodeTypesLibrary) {
       const desc = ruleNodeTypeDescriptors.get(type);
       if (!desc.special) {
@@ -763,6 +814,7 @@ export class RuleChainPageComponent extends PageComponent
       });
     }
     if (this.ruleChainCanvas) {
+    console.log(this.ruleChainCanvas);
       this.ruleChainCanvas.adjustCanvasSize(true);
     }
     this.isDirtyValue = false;

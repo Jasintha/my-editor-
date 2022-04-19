@@ -1,0 +1,76 @@
+<!--<div class="mat-content" fxFlex virtuan-fullscreen [fullscreen]="isFullscreen" virtuan-hotkeys
+     fxLayout="column" class="virtuan-rulechain">
+    <div>
+        <button (click)='coins()'>Deposit Coins</button>
+        <button (click)='notes()'>Deposit notes</button>
+        <div *ngIf="ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded">
+            <virtuan-rulechain-page [ruleChain]="ruleChain"
+                                    [ruleChainMetaData]="ruleChainMetaData"
+                                    [connectionPropertyTemplates]="connectionPropertyTemplates"
+                                    [username]="username"
+                                    [uid]="uid"
+                                    [ruleNodeComponents]="ruleNodeComponents"></virtuan-rulechain-page>
+            &lt;!&ndash;<router-outlet></router-outlet>&ndash;&gt;
+        </div>
+    </div>
+
+</div>-->
+
+<div style="width: 100%; height: 900px; background: #ffffff;">
+    <as-split direction="horizontal">
+        <as-split-area [size]="70">
+           <!-- <router-outlet></router-outlet>-->
+            <virtuan-rulechain-page  *ngIf="ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded" [ruleChain]="ruleChain"
+                                     [ruleChainMetaData]="ruleChainMetaData"
+                                     [connectionPropertyTemplates]="connectionPropertyTemplates"
+                                     [username]="username"
+                                     [uid]="uid"
+                                     [ruleNodeComponents]="ruleNodeComponents"></virtuan-rulechain-page>
+        </as-split-area>
+        <as-split-area [size]="30">
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                    <button mat-icon-button disabled></button>
+                    {{node.name}}
+                    <button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
+                            [matMenuTriggerData]="{ item: node.data }"
+                            [matMenuTriggerFor]="actionsMenu"
+                            mat-icon-button
+                            type="button">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </mat-tree-node>
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                    <button mat-icon-button
+                            [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </button>
+                    {{node.name}}
+                    <mat-progress-bar *ngIf="node.isLoading"
+                                      mode="indeterminate"
+                                      class="example-tree-progress-bar"></mat-progress-bar>
+                </mat-tree-node>
+            </mat-tree>
+        </as-split-area>
+    </as-split>
+</div>
+
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+    <ng-template let-item="item" matMenuContent>
+        <button (click)="viewRule(item)" mat-menu-item>
+            <!--<mat-icon [icIcon]="icEdit"></mat-icon>-->
+            <span>View</span>
+        </button>
+        <button (click)="edit(item)" mat-menu-item>
+            <!--<mat-icon [icIcon]="icDelete"></mat-icon>-->
+            <span>Edit</span>
+        </button>
+        <button (click)="edit(item)" mat-menu-item>
+            <!--<mat-icon [icIcon]="icDelete"></mat-icon>-->
+            <span>Delete</span>
+        </button>
+    </ng-template>
+</mat-menu>

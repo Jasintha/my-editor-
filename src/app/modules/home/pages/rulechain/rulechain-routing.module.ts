@@ -36,6 +36,7 @@ import { BreadCrumbConfig, BreadCrumbLabelFunction } from '@shared/components/br
 import { ResolvedRuleChainMetaData, RuleChain, ConnectionPropertyTemplate } from '@shared/models/rule-chain.models';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { RuleChainPageComponent } from '@home/pages/rulechain/rulechain-page.component';
+import { MainRuleChainComponent } from '@home/pages/rulechain/main-rulechain.component';
 import { RuleNodeComponentDescriptor } from '@shared/models/rule-node.models';
 import { ConfirmOnExitGuard } from '@core/guards/confirm-on-exit.guard';
 
@@ -164,6 +165,7 @@ export const importRuleChainBreadcumbLabelFunction: BreadCrumbLabelFunction<Rule
 const routes: Routes = [
   {
     path: 'ruleChains',
+    component: MainRuleChainComponent,
     data: {
       breadcrumb: {
         label: 'rulechain.rulechains',
@@ -172,7 +174,7 @@ const routes: Routes = [
     },
     children: [
       {
-        path: ':ruleChainId/:editorType/:username/:uid',
+        path: ':ruleChainId/:editorType/:username/:uid/:routerType',
         component: RuleChainPageComponent,
         canDeactivate: [ConfirmOnExitGuard],
         data: {
@@ -192,6 +194,18 @@ const routes: Routes = [
         }
       }
     ]
+  },
+  {
+    path: 'mainruleChains',
+    component: MainRuleChainComponent,
+    data: {
+      breadcrumb: {
+        label: 'rulechain.rulechains',
+        icon: 'settings_ethernet'
+      } as BreadCrumbConfig<MainRuleChainComponent>,
+      auth: [Authority.TENANT_ADMIN],
+      title: 'rulechain.rulechain',
+    }
   }
 ];
 

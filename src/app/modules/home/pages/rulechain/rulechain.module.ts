@@ -25,16 +25,20 @@ import {
   AddRuleNodeLinkDialogComponent,
   RuleChainPageComponent
 } from './rulechain-page.component';
+import { MainRuleChainComponent } from '@home/pages/rulechain/main-rulechain.component';
+import { AngularSplitModule } from 'angular-split';
 import { RuleNodeComponent } from '@home/pages/rulechain/rulenode.component';
 import { FC_NODE_COMPONENT_CONFIG } from 'ngx-flowchart/dist/ngx-flowchart';
 import { RuleNodeDetailsComponent } from './rule-node-details.component';
 import { RuleNodeLinkComponent } from './rule-node-link.component';
 import { LinkLabelsComponent } from '@home/pages/rulechain/link-labels.component';
 import { RuleNodeConfigComponent } from './rule-node-config.component';
+import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
   declarations: [
     RuleChainPageComponent,
+    MainRuleChainComponent,
     RuleNodeComponent,
     RuleNodeDetailsComponent,
     RuleNodeConfigComponent,
@@ -56,7 +60,9 @@ import { RuleNodeConfigComponent } from './rule-node-config.component';
     SharedModule,
     HomeComponentsModule,
     RuleChainRoutingModule,
-    MediatorNodeConfigModule
+    MediatorNodeConfigModule,
+    AngularSplitModule,
+    MatTreeModule
   ]
 })
 export class RuleChainModule { }

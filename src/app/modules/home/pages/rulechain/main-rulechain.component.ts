@@ -1,0 +1,229 @@
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {FlatTreeControl} from '@angular/cdk/tree';
+import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+
+import { ActivatedRoute, Router} from '@angular/router';
+import {
+  inputNodeComponent,
+  NodeConnectionInfo,
+  ResolvedRuleChainMetaData,
+  RuleChain,
+  ConnectionPropertyTemplate,
+  RuleChainConnectionInfo,
+  RuleChainImport,
+  RuleChainMetaData,
+  ruleChainNodeComponent
+} from '@shared/models/rule-chain.models';
+import { RuleChainService } from '@core/http/rule-chain.service';
+import { FcItemInfo, FlowchartConstants, NgxFlowchartComponent, UserCallbacks } from 'ngx-flowchart/dist/ngx-flowchart';
+import {
+  FcRuleEdge,
+  FcRuleNode,
+  FcRuleNodeType,
+  getRuleNodeHelpLink,
+  LinkLabel,
+  RuleNode,
+  RuleNodeComponentDescriptor,
+  RuleNodeType,
+  ruleNodeTypeDescriptors,
+  ruleNodeTypesLibrary
+} from '@shared/models/rule-node.models';
+import { ProjectService } from '@core/projectservices/project.service';
+import * as AngularCommon from '@angular/common';
+import * as AngularForms from '@angular/forms';
+import * as AngularCdkCoercion from '@angular/cdk/coercion';
+import * as AngularCdkKeycodes from '@angular/cdk/keycodes';
+import * as AngularMaterialChips from '@angular/material/chips';
+import * as AngularMaterialAutocomplete from '@angular/material/autocomplete';
+import * as AngularMaterialDialog from '@angular/material/dialog';
+import * as NgrxStore from '@ngrx/store';
+import * as TranslateCore from '@ngx-translate/core';
+import * as VirtuanCore from '@core/public-api';
+import { ItemBufferService } from '@core/public-api';
+import * as VirtuanShared from '@shared/public-api';
+import * as VirtuanHomeComponents from '@home/components/public-api';
+import * as _moment from 'moment';
+import * as AngularRouter from '@angular/router';
+import * as AngularCore from '@angular/core';
+import * as RxJs from 'rxjs';
+import * as RxJsOperators from 'rxjs/operators';
+
+declare const SystemJS;
+
+const ruleNodeConfigResourcesModulesMap = {
+  '@angular/core': SystemJS.newModule(AngularCore),
+  '@angular/common': SystemJS.newModule(AngularCommon),
+  '@angular/forms': SystemJS.newModule(AngularForms),
+  '@angular/router': SystemJS.newModule(AngularRouter),
+  '@angular/cdk/keycodes': SystemJS.newModule(AngularCdkKeycodes),
+  '@angular/cdk/coercion': SystemJS.newModule(AngularCdkCoercion),
+  '@angular/material/chips': SystemJS.newModule(AngularMaterialChips),
+  '@angular/material/autocomplete': SystemJS.newModule(AngularMaterialAutocomplete),
+  '@angular/material/dialog': SystemJS.newModule(AngularMaterialDialog),
+  '@ngrx/store': SystemJS.newModule(NgrxStore),
+  rxjs: SystemJS.newModule(RxJs),
+  'rxjs/operators': SystemJS.newModule(RxJsOperators),
+  '@ngx-translate/core': SystemJS.newModule(TranslateCore),
+  '@core/public-api': SystemJS.newModule(VirtuanCore),
+  '@shared/public-api': SystemJS.newModule(VirtuanShared),
+  '@home/components/public-api': SystemJS.newModule(VirtuanHomeComponents),
+  moment: SystemJS.newModule(_moment)
+};
+
+const TREE_DATA: any[] = [
+  {
+    name: 'API',
+    children: [{name: 'api1'}, {name: 'api2'}, {name: 'api3'}],
+  },
+  {
+    name: 'Task',
+    children: [{name: 'task1'}, {name: 'task2'}, {name: 'task3'}],
+  },
+  {
+    name: 'Process',
+    children: [{name: 'process1'}, {name: 'process2'}, {name: 'process3'}],
+  },
+  {
+    name: 'Models',
+    children: [
+      {
+        name: 'model1'
+      },
+      {
+        name: 'model2'
+      },
+    ],
+  },
+];
+
+@Component({
+  selector: 'virtuan-main-rulechain-page',
+  templateUrl: './main-rulechain.component.html',
+  styleUrls: ['./rulechain-page.component.scss']
+})
+export class MainRuleChainComponent implements OnInit {
+
+
+  ruleChain: RuleChain;
+  ruleChainMetaData: ResolvedRuleChainMetaData;
+  connectionPropertyTemplates: ConnectionPropertyTemplate[];
+  username: string;
+  uid: string;
+  ruleNodeComponents: Array<RuleNodeComponentDescriptor>;
+  ruleChainLoaded: boolean;
+  ruleChainMetaDataLoaded: boolean;
+  ruleNodeComponentsLoaded: boolean;
+  connectionPropertyTemplatesLoaded: boolean;
+
+  private _transformer = (node: any, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      data: node,
+      level: level,
+    };
+  };
+
+  treeControl = new FlatTreeControl<any>(
+    node => node.level,
+    node => node.expandable,
+  );
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer,
+    node => node.level,
+    node => node.expandable,
+    node => node.children,
+  );
+
+  hasChild = (_: number, node: any) => node.expandable;
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+  constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService, private projectService: ProjectService) {
+
+    }
+
+
+//   viewRule(item){
+// //   this.router.navigate(["/ruleChains"]);
+//     console.log(item);
+// //     let url = item.ruleid +'/default/' + item.username + '/' + item.projectuuid +'/R';
+//     let url = 'ruleChains/' + item.ruleid +'/default/' + item.username + '/' + item.projectuuid +'/R';
+// //     this.router.navigate([url], {relativeTo:this.route});
+//     this.router.navigate([url]);
+//   }
+
+
+  viewRule(item){
+    this.ruleChainLoaded = false;
+    this.ruleChainMetaDataLoaded = false;
+    this.connectionPropertyTemplatesLoaded = false;
+    this.ruleNodeComponentsLoaded = false;
+
+    this.username = item.username;
+    this.uid = item.projectuuid;
+    this.ruleChainService.getRuleChainWithUsernameAndUID(item.ruleid, item.username, item.projectuuid).subscribe((ruleChain) => {
+      console.log("ruleChain");
+      console.log(ruleChain);
+      this.ruleChainLoaded = true;
+      this.ruleChain = ruleChain;
+    });
+    this.ruleChainService.getResolvedRuleChainMetadata(item.ruleid, item.username, item.projectuuid).subscribe((ruleChainMetaData) => {
+      this.ruleChainMetaDataLoaded = true;
+      this.ruleChainMetaData = ruleChainMetaData;
+    });
+
+    this.ruleChainService.getConnectionPropertyTemplates().subscribe((connectionPropertyTemplates) => {
+      this.connectionPropertyTemplatesLoaded = true;
+      this.connectionPropertyTemplates = connectionPropertyTemplates;
+    });
+    this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap, item.projectuuid, "default").subscribe((ruleNodeComponents) => {
+      this.ruleNodeComponentsLoaded = true;
+      this.ruleNodeComponents = ruleNodeComponents;
+    });
+
+  }
+
+
+
+  ngOnInit(): void {
+/*   console.log("fetch data !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    this.username = "user3@gmail.com";
+    this.uid = "PgLG2MtA4oUYak7TFznxB4_user3gmailcom";
+    this.ruleChainService.getRuleChainWithUsernameAndUID("c9em5d9svk1hvkl2b5t0", "user3@gmail.com", "PgLG2MtA4oUYak7TFznxB4_user3gmailcom").subscribe((ruleChain) => {
+      console.log("ruleChain");
+      console.log(ruleChain);
+      this.ruleChainLoaded = true;
+      this.ruleChain = ruleChain;
+    });
+    this.ruleChainService.getResolvedRuleChainMetadata("c9em5d9svk1hvkl2b5t0", "user3@gmail.com", "PgLG2MtA4oUYak7TFznxB4_user3gmailcom").subscribe((ruleChainMetaData) => {
+      this.ruleChainMetaDataLoaded = true;
+      this.ruleChainMetaData = ruleChainMetaData;
+    });
+
+    this.ruleChainService.getConnectionPropertyTemplates().subscribe((connectionPropertyTemplates) => {
+      this.connectionPropertyTemplatesLoaded = true;
+      this.connectionPropertyTemplates = connectionPropertyTemplates;
+    });
+    this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap, "PgLG2MtA4oUYak7TFznxB4_user3gmailcom", "default").subscribe((ruleNodeComponents) => {
+      this.ruleNodeComponentsLoaded = true;
+      this.ruleNodeComponents = ruleNodeComponents;
+    }); */
+//    this.dataSource.data = TREE_DATA;
+    this.projectService.findAllProjectComponents().subscribe((comps) => {
+        this.dataSource.data = comps;
+    });
+  }
+
+  coins(){
+    let url = 'c9em5d9svk1hvkl2b5t0/default/user3@gmail.com/PgLG2MtA4oUYak7TFznxB4_user3gmailcom/R';
+
+    this.router.navigate([url], {relativeTo:this.route});
+  }
+
+  notes(){
+    this.router.navigate(['notes'], {relativeTo:this.route});
+  }
+
+}

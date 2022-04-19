@@ -194,14 +194,7 @@
           </virtuan-details-panel>
         </mat-drawer>
         <mat-drawer-content class="virtuan-rulechain-graph-content">
-          <button mat-button
-                  type="button"
-                  mat-icon-button class="virtuan-fullscreen-button"
-                  (click)="isFullscreen = !isFullscreen"
-                  matTooltip="{{(isFullscreen ? 'fullscreen.exit' : 'fullscreen.expand') | translate}}"
-                  matTooltipPosition="above">
-            <mat-icon>{{ isFullscreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
-          </button>
+
           <div class="virtuan-absolute-fill virtuan-rulechain-graph" (contextmenu)="openRuleChainContextMenu($event)">
             <div #ruleChainMenuTrigger="matMenuTrigger" style="visibility: hidden; position: fixed"
                  [style.left]="ruleChainMenuPosition.x"
@@ -277,6 +270,13 @@
                     matTooltip="{{ 'action.decline-changes' | translate }}"
                     matTooltipPosition="above">
               <mat-icon>close</mat-icon>
+            </button>
+            <button
+                    mat-fab color="accent" class="virtuan-btn-footer"
+                    (click)="isFullscreen = !isFullscreen"
+                    matTooltip="{{(isFullscreen ? 'fullscreen.exit' : 'fullscreen.expand') | translate}}"
+                    matTooltipPosition="above">
+              <mat-icon>{{ isFullscreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
             </button>
           </section>
         </mat-drawer-content>
