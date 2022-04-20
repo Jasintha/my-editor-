@@ -191,6 +191,16 @@ export class MainRuleChainComponent implements OnInit {
         });
     }
 
+    viewComponent(item){
+        if(item.type === 'MODEL'){
+            // load model design editor
+        } else if(item.type === 'LAMBDA'){
+            // load lambda function editor
+        } else {
+            this.viewRule(item);
+        }
+    }
+
 
     viewRule(item) {
         this.ruleChainLoaded = false;

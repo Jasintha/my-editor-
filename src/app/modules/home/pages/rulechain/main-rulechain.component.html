@@ -20,7 +20,7 @@
 
     <as-split direction="vertical">
         <!--<as-split-area [size]="15">TOP</as-split-area>-->
-        <as-split-area [size]="70">
+        <as-split-area [size]="85">
             <as-split direction="horizontal">
                 <as-split-area [size]="75">
                         <!-- <router-outlet></router-outlet>-->
@@ -75,7 +75,7 @@
 
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
     <ng-template let-item="item" matMenuContent>
-        <button (click)="viewRule(item)" mat-menu-item>
+        <button *ngIf="item.type !== 'HYBRID' && item.type !== 'EVENT'" (click)="viewComponent(item)" mat-menu-item>
             <!--<mat-icon [icIcon]="icEdit"></mat-icon>-->
             <span>View</span>
         </button>
