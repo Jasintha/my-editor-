@@ -39,6 +39,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {CreateApiModule} from '@home/pages/create-api/create-api.module';
 import {CreateSubruleModule} from '@home/pages/create-subrule/create-subrule.module';
+import {CreateModelModule} from '@home/pages/create-model/create-model.module';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import {CreateSubruleModule} from '@home/pages/create-subrule/create-subrule.mod
     MatButtonModule,
     MatDialogModule,
     CreateApiModule,
-    CreateSubruleModule
+    CreateSubruleModule,
+      CreateModelModule
   ]
 })
 export class RuleChainModule { }

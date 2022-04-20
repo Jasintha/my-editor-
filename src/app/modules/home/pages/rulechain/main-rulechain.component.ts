@@ -50,6 +50,7 @@ import * as RxJsOperators from 'rxjs/operators';
 import {CreateApiComponent} from '@home/pages/create-api/create-api.component';
 import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.component';
 import {MatDialog} from '@angular/material/dialog';
+import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
 
 declare const SystemJS;
 
@@ -163,6 +164,8 @@ export class MainRuleChainComponent implements OnInit {
             this.createApi();
         } else if (node.type === 'PARENT_PROCESS') {
             this.createSubrule();
+        } else if (node.type === 'PARENT_MODEL'){
+            this.createModel();
         }
     }
 
@@ -181,6 +184,18 @@ export class MainRuleChainComponent implements OnInit {
 
     createSubrule() {
         const dialogRef = this.dialog.open(CreateSubruleComponent, {
+            data: {
+                projectUid: this.projectUid
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+            this.loadTreeData();
+        });
+    }
+
+    createModel() {
+        const dialogRef = this.dialog.open(CreateModelComponent, {
             data: {
                 projectUid: this.projectUid
             }
