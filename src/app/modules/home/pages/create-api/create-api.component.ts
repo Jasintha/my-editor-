@@ -1210,6 +1210,7 @@ export class CreateApiComponent implements OnInit {
   protected onSaveSuccess() {
     // this.spinnerService.hide();
     this.isSaving = false;
+    this.dialogRef.close();
     // this.previousState();
   }
 

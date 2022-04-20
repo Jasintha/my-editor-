@@ -14,6 +14,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.
         CommonModule,
         MatRadioModule,
         FormsModule,
-        MatTableModule
+        MatTableModule,
+        MatSnackBarModule
     ],
     exports:[
         CreateSubruleComponent

@@ -15,6 +15,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.component';
 import {CreateApiComponent} from '@home/pages/create-api/create-api.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {CreateApiComponent} from '@home/pages/create-api/create-api.component';
         CommonModule,
         MatRadioModule,
         FormsModule,
-        MatTableModule
+        MatTableModule,
+        MatSnackBarModule
     ],
     exports:[
         CreateApiComponent

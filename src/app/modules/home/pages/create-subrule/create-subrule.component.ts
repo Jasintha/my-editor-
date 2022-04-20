@@ -15,6 +15,7 @@ import {Observable} from 'rxjs';
 import {SubruleService} from '@home/pages/create-subrule/sub-rule.service';
 import {ProjectService} from '@core/projectservices/project.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 interface Item {
   value: any;
   label: string;
@@ -73,6 +74,7 @@ export class CreateSubruleComponent implements OnInit {
       protected projectService: ProjectService,
       public dialogRef: MatDialogRef<CreateSubruleComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
+      private _snackBar: MatSnackBar
   ) {
   }
 
@@ -445,14 +447,18 @@ export class CreateSubruleComponent implements OnInit {
   protected onSaveSuccess() {
     // this.spinnerService.hide();
     this.isSaving = false;
-    this.previousState();
+    this.dialogRef.close();
+    this._snackBar.open('Saved successfully!', 'Close');
+    // this.previousState();
   }
 
   protected onSaveError() {
     // this.spinnerService.hide();
     this.isSaving = false;
+    this._snackBar.open('Error occurred while saving!', 'Close');
   }
   protected onError(errorMessage: string) {
+    this._snackBar.open('Error occurred while saving!', 'Close');
     // this.logger.error(errorMessage);
   }
 

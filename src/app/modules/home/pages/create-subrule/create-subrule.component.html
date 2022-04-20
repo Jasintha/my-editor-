@@ -1,5 +1,5 @@
 <form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()" >
-    <h2 mat-dialog-title>CREATE API</h2>
+    <h2 mat-dialog-title>CREATE SubRule</h2>
     <mat-dialog-content>
         <div class="row">
 
@@ -56,7 +56,7 @@
                             <div class="col-md-3">
                                 <mat-form-field class="flex-auto" >
                                     <mat-label>Choose Param Type</mat-label>
-                                    <mat-select formControlName="paramType">
+                                    <mat-select formControlName="paramRecordType">
                                         <mat-option *ngFor="let option of paramRecorditems" [value]="option.value">
                                             {{option.label}}
                                         </mat-option>
@@ -80,19 +80,19 @@
                         <!-- Name Column -->
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef>Name</th>
-                            <td mat-cell *matCellDef="let element">{{element.inputName}}</td>
+                            <td mat-cell *matCellDef="let element">{{element.paramName}}</td>
                         </ng-container>
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="datatype">
                             <th mat-header-cell *matHeaderCellDef>Data Type</th>
-                            <td mat-cell *matCellDef="let element">{{element.inputType}}</td>
+                            <td mat-cell *matCellDef="let element">{{element.inputName}}</td>
                         </ng-container>
 
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="recordtype">
                             <th mat-header-cell *matHeaderCellDef>Param</th>
-                            <td mat-cell *matCellDef="let element">{{element.paramType}}</td>
+                            <td mat-cell *matCellDef="let element">{{element.paramRecordType}}</td>
                         </ng-container>
 
                         <ng-container matColumnDef="actions">
@@ -117,6 +117,6 @@
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-button type="submit" [mat-dialog-close]="true" cdkFocusInitial>SAVE</button>
+        <button mat-button type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>
     </mat-dialog-actions>
 </form>
