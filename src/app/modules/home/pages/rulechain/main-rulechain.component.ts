@@ -117,6 +117,7 @@ export class MainRuleChainComponent implements OnInit {
   ruleChainMetaDataLoaded: boolean;
   ruleNodeComponentsLoaded: boolean;
   connectionPropertyTemplatesLoaded: boolean;
+  projectUid: string;
 
   private _transformer = (node: any, level: number) => {
     return {
@@ -151,8 +152,8 @@ export class MainRuleChainComponent implements OnInit {
 //   viewRule(item){
 // //   this.router.navigate(["/ruleChains"]);
 //     console.log(item);
-// //     let url = item.ruleid +'/default/' + item.username + '/' + item.projectuuid +'/R';
-//     let url = 'ruleChains/' + item.ruleid +'/default/' + item.username + '/' + item.projectuuid +'/R';
+// //     let url = item.ruleid +'/default/' + item.username + '/' + this.projectUid +'/R';
+//     let url = 'ruleChains/' + item.ruleid +'/default/' + item.username + '/' + this.projectUid +'/R';
 // //     this.router.navigate([url], {relativeTo:this.route});
 //     this.router.navigate([url]);
 //   }
@@ -189,14 +190,14 @@ export class MainRuleChainComponent implements OnInit {
     this.ruleNodeComponentsLoaded = false;
 
     this.username = item.username;
-    this.uid = item.projectuuid;
-    this.ruleChainService.getRuleChainWithUsernameAndUID(item.ruleid, item.username, item.projectuuid).subscribe((ruleChain) => {
+    this.uid = this.projectUid;
+    this.ruleChainService.getRuleChainWithUsernameAndUID(item.ruleid, item.username, this.projectUid).subscribe((ruleChain) => {
       console.log("ruleChain");
       console.log(ruleChain);
       this.ruleChainLoaded = true;
       this.ruleChain = ruleChain;
     });
-    this.ruleChainService.getResolvedRuleChainMetadata(item.ruleid, item.username, item.projectuuid).subscribe((ruleChainMetaData) => {
+    this.ruleChainService.getResolvedRuleChainMetadata(item.ruleid, item.username, this.projectUid).subscribe((ruleChainMetaData) => {
       this.ruleChainMetaDataLoaded = true;
       this.ruleChainMetaData = ruleChainMetaData;
     });
@@ -205,7 +206,7 @@ export class MainRuleChainComponent implements OnInit {
       this.connectionPropertyTemplatesLoaded = true;
       this.connectionPropertyTemplates = connectionPropertyTemplates;
     });
-    this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap, item.projectuuid, "default").subscribe((ruleNodeComponents) => {
+    this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap, this.projectUid, "default").subscribe((ruleNodeComponents) => {
       this.ruleNodeComponentsLoaded = true;
       this.ruleNodeComponents = ruleNodeComponents;
     });
@@ -215,6 +216,9 @@ export class MainRuleChainComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.projectUid = params['projectUid'];
+    });
 /*   console.log("fetch data !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     this.username = "user3@gmail.com";
     this.uid = "PgLG2MtA4oUYak7TFznxB4_user3gmailcom";
@@ -238,7 +242,7 @@ export class MainRuleChainComponent implements OnInit {
       this.ruleNodeComponents = ruleNodeComponents;
     }); */
 //    this.dataSource.data = TREE_DATA;
-    this.projectService.findAllProjectComponents().subscribe((comps) => {
+    this.projectService.findAllProjectComponents(this.projectUid).subscribe((comps) => {
         this.dataSource.data = comps;
     });
   }

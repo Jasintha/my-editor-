@@ -33,8 +33,8 @@ export class ProjectService {
 
   constructor(protected http: HttpClient) {}
 
-  findAllProjectComponents(): Observable<any[]> {
-    return this.http.get<any[]>(`/api/editor/projects/components`, defaultHttpOptions());
+  findAllProjectComponents(projectUid): Observable<any[]> {
+    return this.http.get<any[]>(`/api/editor/projects/components/${projectUid}`, defaultHttpOptions());
   }
 
   create(project: IProject): Observable<EntityResponseType> {
