@@ -41,6 +41,7 @@ import {CreateApiModule} from '@home/pages/create-api/create-api.module';
 import {CreateSubruleModule} from '@home/pages/create-subrule/create-subrule.module';
 import {CreateModelModule} from '@home/pages/create-model/create-model.module';
 import {CreateEventModule} from '@home/pages/create-event/create-event.module';
+import {CreateHybridfunctionModule} from '@home/pages/create-hybridfunction/create-hybridfunction.module';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import {CreateEventModule} from '@home/pages/create-event/create-event.module';
     CreateApiModule,
     CreateSubruleModule,
     CreateModelModule,
-    CreateEventModule
+    CreateEventModule,
+    CreateHybridfunctionModule
   ]
 })
 export class RuleChainModule { }

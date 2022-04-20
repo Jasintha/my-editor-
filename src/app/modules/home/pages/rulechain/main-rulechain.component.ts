@@ -52,6 +52,7 @@ import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.
 import {MatDialog} from '@angular/material/dialog';
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
 import {CreateEventComponent} from '@home/pages/create-event/create-event.component';
+import {CreateHybridfunctionComponent} from '@home/pages/create-hybridfunction/create-hybridfunction.component';
 
 declare const SystemJS;
 
@@ -169,6 +170,8 @@ export class MainRuleChainComponent implements OnInit {
             this.createModel();
         } else if (node.type === 'PARENT_EVENT'){
             this.createEvent();
+        } else if (node.type === 'PARENT_HYBRID'){
+            this.createHybridFunction();
         }
     }
 
@@ -211,6 +214,18 @@ export class MainRuleChainComponent implements OnInit {
 
     createEvent() {
         const dialogRef = this.dialog.open(CreateEventComponent, {
+            data: {
+                projectUid: this.projectUid
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+            this.loadTreeData();
+        });
+    }
+
+    createHybridFunction() {
+        const dialogRef = this.dialog.open(CreateHybridfunctionComponent, {
             data: {
                 projectUid: this.projectUid
             }
