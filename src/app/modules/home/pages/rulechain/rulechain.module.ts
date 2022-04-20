@@ -40,6 +40,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {CreateApiModule} from '@home/pages/create-api/create-api.module';
 import {CreateSubruleModule} from '@home/pages/create-subrule/create-subrule.module';
 import {CreateModelModule} from '@home/pages/create-model/create-model.module';
+import {CreateEventModule} from '@home/pages/create-event/create-event.module';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import {CreateModelModule} from '@home/pages/create-model/create-model.module';
     MatDialogModule,
     CreateApiModule,
     CreateSubruleModule,
-      CreateModelModule
+    CreateModelModule,
+    CreateEventModule
   ]
 })
 export class RuleChainModule { }

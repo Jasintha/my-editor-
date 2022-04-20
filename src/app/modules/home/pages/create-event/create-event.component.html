@@ -1,0 +1,74 @@
+<form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()" >
+    <h2 mat-dialog-title>CREATE EVENT</h2>
+    <mat-dialog-content>
+        <div class="row">
+
+            <div class="form-group" [hidden]="!editForm.get('id').value">
+                <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
+            </div>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Name</mat-label>
+                <input type="text" formControlName="name" matInput>
+                <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Description</mat-label>
+                <input type="text" formControlName="description" matInput>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Domain Model</mat-label>
+                <mat-select formControlName="selectedAggregate">
+                    <mat-option *ngFor="let option of aggregateItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Domain Model</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option *ngFor="let option of typeItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+<!--            <div class="pt-3 pb-3"  *ngIf="editForm.value.type === 'DOMAIN'">-->
+<!--                <label id="example-radio-group-label">Type</label>-->
+<!--                <mat-radio-group aria-labelledby="example-radio-group-label" class="ps-5" aria-label="Select an option" formControlName="isSyncOrAsync">-->
+<!--                    <div class="row col-md-12 mt-1">-->
+<!--                        <div class="mt-1">-->
+<!--                            <mat-radio-button class="pe-3" value="synchronous">Synchronous</mat-radio-button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row col-md-12 mt-1">-->
+<!--                        <div class="mt-1">-->
+<!--                            <mat-radio-button value="asynchronous">Asynchronous</mat-radio-button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </mat-radio-group>-->
+<!--            </div>-->
+
+            <div class="pt-3 pb-5" *ngIf="editForm.value.type === 'DOMAIN'">
+                <mat-radio-group class="ps-5" aria-label="Select an option" formControlName="isSyncOrAsync">
+                    <mat-radio-button class="pe-5" value="synchronous">Synchronous</mat-radio-button>
+                    <mat-radio-button value="asynchronous">Asynchronous</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>
+    </mat-dialog-actions>
+</form>

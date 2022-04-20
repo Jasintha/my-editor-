@@ -51,6 +51,7 @@ import {CreateApiComponent} from '@home/pages/create-api/create-api.component';
 import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.component';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
+import {CreateEventComponent} from '@home/pages/create-event/create-event.component';
 
 declare const SystemJS;
 
@@ -166,6 +167,8 @@ export class MainRuleChainComponent implements OnInit {
             this.createSubrule();
         } else if (node.type === 'PARENT_MODEL'){
             this.createModel();
+        } else if (node.type === 'PARENT_EVENT'){
+            this.createEvent();
         }
     }
 
@@ -196,6 +199,18 @@ export class MainRuleChainComponent implements OnInit {
 
     createModel() {
         const dialogRef = this.dialog.open(CreateModelComponent, {
+            data: {
+                projectUid: this.projectUid
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+            this.loadTreeData();
+        });
+    }
+
+    createEvent() {
+        const dialogRef = this.dialog.open(CreateEventComponent, {
             data: {
                 projectUid: this.projectUid
             }
