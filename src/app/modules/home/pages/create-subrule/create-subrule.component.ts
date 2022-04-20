@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {APIInput, APIInputType, APIParamType, IAPIInput} from '@shared/models/model/api-input.model';
 import {MatTableDataSource} from '@angular/material/table';
@@ -14,6 +14,7 @@ import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SubruleService} from '@home/pages/create-subrule/sub-rule.service';
 import {ProjectService} from '@core/projectservices/project.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 interface Item {
   value: any;
   label: string;
@@ -70,6 +71,8 @@ export class CreateSubruleComponent implements OnInit {
       protected subruleService: SubruleService,
       protected activatedRoute: ActivatedRoute,
       protected projectService: ProjectService,
+      public dialogRef: MatDialogRef<CreateSubruleComponent>,
+      @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {
   }
 
@@ -84,6 +87,7 @@ export class CreateSubruleComponent implements OnInit {
   // }
 
   getSubRuleData() {
+    this.projectUid = this.data.projectUid;
     this.isSaving = false;
     this.returnItems = [];
     this.allReturnItems = [];

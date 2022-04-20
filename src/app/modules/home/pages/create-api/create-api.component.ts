@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
@@ -29,6 +29,7 @@ import {ApiService} from '@core/projectservices/api.service';
 import {CommandService} from '@core/projectservices/microservice-command.service';
 import {ProjectService} from '@core/projectservices/project.service';
 import {QueryService} from '@core/projectservices/microservice-query.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 interface Item {
   value: any;
   label: string;
@@ -281,6 +282,8 @@ export class CreateApiComponent implements OnInit {
       protected queryService: QueryService,
       protected commandService: CommandService,
       protected projectService: ProjectService,
+      public dialogRef: MatDialogRef<CreateApiComponent>,
+      @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {
   }
 
@@ -307,7 +310,7 @@ export class CreateApiComponent implements OnInit {
     this.addPrimitivesForReturnSelect();
     this.activatedRoute.params.subscribe(params => {
       this.apiID = params.id;
-      this.projectUid = params.projectUid;
+      this.projectUid = this.data.projectUid;
       this.editType = params.type;
       this.apiStyle = params.apiStyle;
       if (this.projectUid) {
@@ -1207,7 +1210,7 @@ export class CreateApiComponent implements OnInit {
   protected onSaveSuccess() {
     // this.spinnerService.hide();
     this.isSaving = false;
-    this.previousState();
+    // this.previousState();
   }
 
   protected onSaveError() {
