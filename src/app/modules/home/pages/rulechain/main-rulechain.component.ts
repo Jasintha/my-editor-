@@ -175,6 +175,7 @@ export class MainRuleChainComponent implements OnInit {
         dialogRef.afterClosed(
         ).subscribe(result => {
             console.log(`Dialog result: ${result}`);
+            this.loadTreeData();
         });
     }
 
@@ -186,6 +187,7 @@ export class MainRuleChainComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
+            this.loadTreeData();
         });
     }
 
@@ -248,6 +250,10 @@ export class MainRuleChainComponent implements OnInit {
               this.ruleNodeComponents = ruleNodeComponents;
             }); */
 //    this.dataSource.data = TREE_DATA;
+      this.loadTreeData();
+    }
+
+    loadTreeData(){
         this.projectService.findAllProjectComponents(this.projectUid).subscribe((comps) => {
             this.dataSource.data = comps;
         });
