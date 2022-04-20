@@ -44,6 +44,7 @@
                                     type="button">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
+                            <button *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'" mat-icon-button (click)="createPopups(node.data)" ><mat-icon>add</mat-icon></button>
                         </mat-tree-node>
                         <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
                             <button mat-icon-button
@@ -53,10 +54,11 @@
                                 </mat-icon>
                             </button>
                             {{node.name}}
+                            <button *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'" mat-icon-button (click)="createPopups(node.data)" ><mat-icon>add</mat-icon></button>
                             <mat-progress-bar *ngIf="node.isLoading"
                                               mode="indeterminate"
                                               class="example-tree-progress-bar"></mat-progress-bar>
-                            <button *ngIf="node.name != 'Main Tasks'" mat-icon-button (click)="createPopups(node.data)" ><mat-icon>add</mat-icon></button>
+
                         </mat-tree-node>
                     </mat-tree>
                 </as-split-area>
@@ -77,11 +79,11 @@
             <!--<mat-icon [icIcon]="icEdit"></mat-icon>-->
             <span>View</span>
         </button>
-        <button (click)="edit(item)" mat-menu-item>
+        <button *ngIf="item.type !== 'MAIN_TASK'" (click)="edit(item)" mat-menu-item>
             <!--<mat-icon [icIcon]="icDelete"></mat-icon>-->
             <span>Edit</span>
         </button>
-        <button (click)="edit(item)" mat-menu-item>
+        <button *ngIf="item.type !== 'MAIN_TASK'" (click)="delete(item)" mat-menu-item>
             <!--<mat-icon [icIcon]="icDelete"></mat-icon>-->
             <span>Delete</span>
         </button>
