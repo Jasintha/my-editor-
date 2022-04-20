@@ -34,6 +34,11 @@ import { RuleNodeLinkComponent } from './rule-node-link.component';
 import { LinkLabelsComponent } from '@home/pages/rulechain/link-labels.component';
 import { RuleNodeConfigComponent } from './rule-node-config.component';
 import { MatTreeModule } from '@angular/material/tree';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {CreateApiModule} from '@home/pages/create-api/create-api.module';
+import {CreateSubruleModule} from '@home/pages/create-subrule/create-subrule.module';
 
 @NgModule({
   declarations: [
@@ -62,7 +67,12 @@ import { MatTreeModule } from '@angular/material/tree';
     RuleChainRoutingModule,
     MediatorNodeConfigModule,
     AngularSplitModule,
-    MatTreeModule
+    MatTreeModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatDialogModule,
+    CreateApiModule,
+    CreateSubruleModule
   ]
 })
 export class RuleChainModule { }

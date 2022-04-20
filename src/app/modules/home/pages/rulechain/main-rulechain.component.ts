@@ -47,6 +47,9 @@ import * as AngularRouter from '@angular/router';
 import * as AngularCore from '@angular/core';
 import * as RxJs from 'rxjs';
 import * as RxJsOperators from 'rxjs/operators';
+import {CreateApiComponent} from '@home/pages/create-api/create-api.component';
+import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.component';
+import {MatDialog} from '@angular/material/dialog';
 
 declare const SystemJS;
 
@@ -140,7 +143,7 @@ export class MainRuleChainComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService, private projectService: ProjectService) {
+  constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService, private projectService: ProjectService, public dialog: MatDialog) {
 
     }
 
@@ -153,6 +156,30 @@ export class MainRuleChainComponent implements OnInit {
 // //     this.router.navigate([url], {relativeTo:this.route});
 //     this.router.navigate([url]);
 //   }
+
+  createPopups(node){
+    if (node.name === 'API'){
+      this.createApi();
+    } else if (node.name === 'Process'){
+      this.createSubrule();
+    }
+  }
+
+  createApi() {
+    const dialogRef = this.dialog.open(CreateApiComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  createSubrule() {
+    const dialogRef = this.dialog.open(CreateSubruleComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 
 
   viewRule(item){

@@ -24,8 +24,20 @@ import { LoginModule } from '@modules/login/login.module';
 import { HomeModule } from '@home/home.module';
 
 import { AppComponent } from './app.component';
-//import { DashboardRoutingModule } from '@modules/dashboard/dashboard-routing.module';
+// import { DashboardRoutingModule } from '@modules/dashboard/dashboard-routing.module';
 import { RouterModule, Routes } from '@angular/router';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {CommonModule} from '@angular/common';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 
 const routes: Routes = [
   { path: '**',
@@ -35,7 +47,21 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)],
+    RouterModule.forChild(routes),
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatDividerModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    CommonModule,
+    MatRadioModule,
+    FormsModule,
+    MatTableModule
+  ],
   exports: [RouterModule]
 })
 export class PageNotFoundRoutingModule { }
