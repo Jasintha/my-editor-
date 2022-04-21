@@ -51,8 +51,14 @@
                                 <mat-icon class="mat-icon-rtl-mirror">
                                     {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                 </mat-icon>
+                                <mat-icon class="mat-icon-rtl-mirror">
+                                    {{ treeControl.isExpanded(node) ?  "folder_open" :"folder"  }}
+                                </mat-icon>
                             </button>
-                            {{node.name}}
+                            <div style="margin-left: 10px">
+                                {{node.name}}
+                            </div>
+
                             <button mat-icon-button color="accent"  *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="createPopups(node.data)" ><mat-icon>add</mat-icon></button>
                             <mat-progress-bar *ngIf="node.isLoading"
                                               mode="indeterminate"
