@@ -37,6 +37,9 @@ import { MatTreeModule } from '@angular/material/tree';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatDividerModule} from '@angular/material/divider';
+
 import {CreateApiModule} from '@home/pages/create-api/create-api.module';
 import {CreateSubruleModule} from '@home/pages/create-subrule/create-subrule.module';
 import {CreateModelModule} from '@home/pages/create-model/create-model.module';
@@ -79,6 +82,8 @@ import {CreateTaskModule} from '@home/pages/create-task/create-task.module';
     CreateApiModule,
     CreateSubruleModule,
     CreateModelModule,
+    MatToolbarModule,
+    MatDividerModule,
     CreateEventModule,
     CreateHybridfunctionModule,
     CreateLamdafunctionModule,
