@@ -1,1 +1,338 @@
-<p>create-task works!</p>
+<form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()" >
+    <h2 mat-dialog-title>CREATE TASK</h2>
+    <mat-dialog-content>
+        <div class="row">
+
+            <div class="form-group" [hidden]="!editForm.get('id').value">
+                <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
+            </div>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Name</mat-label>
+                <input type="text" formControlName="name" matInput>
+                <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Description</mat-label>
+                <input type="text" formControlName="description" matInput>
+            </mat-form-field>
+
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Frequency</mat-label>
+                <mat-select formControlName="frequency" >
+                    <mat-option *ngFor="let option of frequencyItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <ng-container *ngIf="editForm.value.frequency === 'MULTIPLE'">
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>Unit of Time</mat-label>
+                    <mat-select formControlName="timeUnit" >
+                        <mat-option *ngFor="let option of timeUnitItems" [value]="option.value">
+                            {{option.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>Interval</mat-label>
+                    <input type="number" formControlName="time" matInput name="time" id="field_time">
+                </mat-form-field>
+
+            </ng-container>
+            <!--<div class="form-group">
+                <label class="form-control-label">Category</label>
+                <p-dropdown placeholder="Choose" name="category" [options]="categoryItems" formControlName="category" filter="true" [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}">
+                </p-dropdown>
+            </div>-->
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Operation</mat-label>
+                <mat-select formControlName="operation" (selectionChange)="workflowMapItemsOnOperationChange('operation')">
+                    <mat-option *ngFor="let option of operationItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <ng-container *ngIf="editForm.value.operation === 'FILE_READER'">
+                <!--<div class="form-group">
+                    <label class="form-control-label">File Type</label>
+                    <p-dropdown placeholder="Choose" name="fileType" [options]="fileTypeItems" formControlName="fileType" filter="true" [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}">
+                    </p-dropdown>
+                </div>-->
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>File Input</mat-label>
+                    <mat-select formControlName="fileinput" name="fileinput">
+                        <mat-option *ngFor="let option of filetargetItems" [value]="option.value">
+                            {{option.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>File Location</mat-label>
+                    <input type="text" formControlName="fileLocation" matInput name="fileLocation" id="field_fileLocation">
+                </mat-form-field>
+
+            </ng-container>
+
+            <ng-container *ngIf="editForm.value.operation === 'SERVICE_CALL'">
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>Service Call Type</mat-label>
+                    <mat-select formControlName="serviceCallType" name="serviceCallType">
+                        <mat-option *ngFor="let option of serviceCallTypeItems" [value]="option.value">
+                            {{option.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>URL</mat-label>
+                    <input type="text" formControlName="url" matInput name="url" id="field_url">
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>Action</mat-label>
+                    <mat-select formControlName="action" name="action">
+                        <mat-option *ngFor="let option of actionItems" [value]="option.value">
+                            {{option.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>Request Payload</mat-label>
+                    <mat-select formControlName="targetInput" name="targetInput">
+                        <mat-option *ngFor="let option of items" [value]="option.value">
+                            {{option.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>Return Object</mat-label>
+                    <mat-select formControlName="returnObj" name="returnObj" (selectionChange)="onReturnObjChange()">
+                        <mat-option *ngFor="let option of returnItems" [value]="option.value">
+                            {{option.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="pt-3 pb-3"  *ngIf="editForm.value.returnObj">
+                    <label id="example-radio-group-label">Return Object Record</label>
+                    <mat-radio-group aria-labelledby="example-radio-group-label" class="ps-5" aria-label="Select an option" formControlName="returnRecordType">
+                        <div class="row col-md-12 mt-1">
+                            <div class="mt-1">
+                                <mat-radio-button class="pe-3" value="s">Single</mat-radio-button>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mt-1">
+                            <div class="mt-1">
+                                <mat-radio-button value="m">Multiple</mat-radio-button>
+                            </div>
+                        </div>
+                    </mat-radio-group>
+                </div>
+
+
+                <label class="form-control-label">Add URL Params</label>
+                <div class="card">
+                    <div class="card-body row">
+
+                        <div class="col-md-3">
+                            <mat-form-field class="flex-auto" >
+                                <mat-label>Name</mat-label>
+                                <input type="text" formControlName="paramName" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field class="flex-auto" >
+                                <mat-label>Choose Type</mat-label>
+                                <mat-select formControlName="paramDataType">
+                                    <mat-option *ngFor="let option of paramDataTypeItems" [value]="option.value">
+                                        {{option.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-3">
+                            <mat-form-field class="flex-auto" >
+                                <mat-label>Choose Param Type</mat-label>
+                                <mat-select formControlName="paramType">
+                                    <mat-option *ngFor="let option of paramitems" [value]="option.value">
+                                        {{option.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-3" style='text-align: center'>
+                            <!--                                <button mat-icon-button color="accent" aria-label="Example icon button with a home icon" (click)="addRow()">-->
+                            <!--                                    <mat-icon>add</mat-icon>-->
+                            <!--                                </button>-->
+                            <button type="button" mat-raised-button (click)="addRow()"><mat-icon>add</mat-icon> ADD</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div  style="padding-top:20px;padding-bottom:20px;">
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef>Param Name</th>
+                            <td mat-cell *matCellDef="let element">{{element.inputName}}</td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="datatype">
+                            <th mat-header-cell *matHeaderCellDef>Data Type</th>
+                            <td mat-cell *matCellDef="let element">{{element.inputType}}</td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="recordtype">
+                            <th mat-header-cell *matHeaderCellDef>Param</th>
+                            <td mat-cell *matCellDef="let element">{{element.paramRecordType}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header >ACTION</th>
+                            <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                <button (click)="deleteRow(row)"
+                                        mat-icon-button
+                                        type="button">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="editForm.value.operation === 'MESSAGE_SUBSCRIBER'">
+
+                <mat-form-field class="flex-auto" >
+                    <mat-label>Event</mat-label>
+                    <mat-select formControlName="selectedEvent" (selectionChange)="onEventChange()">
+                        <mat-option *ngFor="let option of eventItems" [value]="option.value">
+                            {{option.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>Subject</mat-label>
+                    <input type="text" formControlName="subject" matInput name="subject" id="field_subject">
+                </mat-form-field>
+
+            </ng-container>
+
+            <section class="flex-auto">
+                <mat-checkbox formControlName="createWorkflow">
+                    Auto create workflow
+                </mat-checkbox>
+            </section>
+
+            <mat-form-field class="flex-auto" *ngIf="!editForm.value.createWorkflow">
+                <mat-label>Event</mat-label>
+                <mat-select formControlName="selectedSubrule" (selectionChange)="onWorkflowChange()">
+                    <mat-option *ngFor="let option of subruleItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <ng-container *ngIf="!editForm.value.createWorkflow" >
+                <div class="form-group">
+                    <label class="form-control-label">Workflow Input Mapping</label>
+                    <div class="card">
+                        <div class="card-body row">
+
+                            <div class="col-md-4">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Choose Workflow Input</mat-label>
+                                    <mat-select formControlName="workflowInput">
+                                        <mat-option *ngFor="let option of workflowInputItems" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Choose API Input</mat-label>
+                                    <mat-select formControlName="mappedApiInput">
+                                        <mat-option *ngFor="let option of mappedApiInputItems" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4" style='text-align: center'>
+                                <button type="button" mat-raised-button (click)="addMappingRow()"><mat-icon>add</mat-icon> ADD</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div style="padding-top:20px;padding-bottom:20px;">
+                    <table mat-table [dataSource]="workFlowSource" class="mat-elevation-z8 demo-table">
+
+                        <ng-container matColumnDef="workflowinput">
+                            <th mat-header-cell *matHeaderCellDef>Workflow Input</th>
+                            <td mat-cell *matCellDef="let element">{{element.subruleInput.paramName}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="apiinput">
+                            <th mat-header-cell *matHeaderCellDef>Mapped API Input</th>
+                            <td mat-cell *matCellDef="let element">{{element.mappedInput.paramType}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header >ACTION</th>
+                            <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                <button (click)="deleteMappingRow(row)"
+                                        mat-icon-button
+                                        type="button">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsWorkflow"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsWorkflow;"></tr>
+                    </table>
+                </div>
+
+            </ng-container>
+
+
+
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>
+    </mat-dialog-actions>
+</form>

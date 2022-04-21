@@ -360,6 +360,7 @@ export class CreateLamdafunctionComponent implements OnInit {
 
   previousState() {
     // this.isVisibleEvent.emit(false);
+    this.dialogRef.close();
   }
 
   save() {
