@@ -53,6 +53,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
 import {CreateEventComponent} from '@home/pages/create-event/create-event.component';
 import {CreateHybridfunctionComponent} from '@home/pages/create-hybridfunction/create-hybridfunction.component';
+import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';
+import {CreateTaskComponent} from '@home/pages/create-task/create-task.component';
 
 declare const SystemJS;
 
@@ -172,6 +174,10 @@ export class MainRuleChainComponent implements OnInit {
             this.createEvent();
         } else if (node.type === 'PARENT_HYBRID'){
             this.createHybridFunction();
+        } else if (node.type === 'PARENT_LAMBDA'){
+            this.createLambdaFunction();
+        } else if (node.type === 'PARENT_TASK'){
+            this.createTask();
         }
     }
 
@@ -226,6 +232,30 @@ export class MainRuleChainComponent implements OnInit {
 
     createHybridFunction() {
         const dialogRef = this.dialog.open(CreateHybridfunctionComponent, {
+            data: {
+                projectUid: this.projectUid
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+            this.loadTreeData();
+        });
+    }
+
+    createLambdaFunction() {
+        const dialogRef = this.dialog.open(CreateLamdafunctionComponent, {
+            data: {
+                projectUid: this.projectUid
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+            this.loadTreeData();
+        });
+    }
+
+    createTask() {
+        const dialogRef = this.dialog.open(CreateTaskComponent, {
             data: {
                 projectUid: this.projectUid
             }
