@@ -351,3 +351,10 @@
     }
   }
 }
+.mat-tree-node {
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  flex: 1;
+  word-wrap: break-word;
+}
