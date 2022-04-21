@@ -252,7 +252,7 @@
             </section>
 
             <mat-form-field class="flex-auto" *ngIf="!editForm.value.createWorkflow">
-                <mat-label>Event</mat-label>
+                <mat-label>Workflow</mat-label>
                 <mat-select formControlName="selectedSubrule" (selectionChange)="onWorkflowChange()">
                     <mat-option *ngFor="let option of subruleItems" [value]="option.value">
                         {{option.label}}
