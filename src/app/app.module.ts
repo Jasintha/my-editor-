@@ -38,6 +38,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 const routes: Routes = [
   { path: '**',
@@ -79,7 +80,8 @@ export class PageNotFoundRoutingModule { }
     LoginModule,
     HomeModule,
 //    DashboardRoutingModule,
-    PageNotFoundRoutingModule
+    PageNotFoundRoutingModule,
+    MonacoEditorModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,41 @@
+<!--<div>
+    <h2 id="page-heading">
+        <span>Function Editor : {{lamdafunction.name}}</span>
+
+    </h2>
+</div>
+<p-toast></p-toast>-->
+<div style="height: 100%; width: 100%; overflow: hidden;">
+
+    <div class="col-md-12" style="min-height: 35px;">
+        <!--<button id="save-entity" style="margin-left:10px;" class="btn btn-primary float-right create-entity create-page-actions" (click)="save()">
+            <i class="fas fa-save"></i>
+            <span>
+            Save
+            </span>
+        </button>-->
+        <button style="float:right;" mat-button type="button" (click)="save()" cdkFocusInitial>Save</button>
+        <!--<button mat-button type="button" (click)="save()" cdkFocusInitial>Save</button>
+        <button type="button" id="cancel-save" class="btn btn-secondary float-right" (click)="previousState()" style="background-color: #6D7F8B; color: white; margin-left: 10px;">
+        <i class="fas fa-arrow-left"></i>&nbsp;<span>Back</span>-->
+<!--    </button>-->
+        <!--<p-dropdown placeholder="Choose Theme" name="theme" [options]="themeItems" (onChange)="onChange()"
+                    [(ngModel)]="theme" filter="true" [style]="{'float':'right' , 'height':'100%'}">
+        </p-dropdown>
+        <mat-select (selectionChange)="onChange()">
+            <mat-option *ngFor="let option of themeItems" [value]="option.value">
+                {{option.label}}
+            </mat-option>
+        </mat-select>-->
+
+    </div>
+    <!--<div style="height: 650px;width: 100%;margin: 10px; border: 2px solid #e4e5e6;">-->
+    <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
+    <!--</div>-->
+
+</div>
+<!--
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Please wait... </p>
+</ngx-spinner>
+-->

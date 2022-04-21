@@ -116,14 +116,15 @@ export class MainRuleChainComponent implements OnInit {
     ruleChainMetaData: ResolvedRuleChainMetaData;
     connectionPropertyTemplates: ConnectionPropertyTemplate[];
     username: string;
-    uid: string;
+//     uid: string;
     ruleNodeComponents: Array<RuleNodeComponentDescriptor>;
     ruleChainLoaded: boolean;
     ruleChainMetaDataLoaded: boolean;
     ruleNodeComponentsLoaded: boolean;
+    loadFunctionEditor: boolean;
     connectionPropertyTemplatesLoaded: boolean;
     projectUid: string;
-
+    lambdauid: string;
     private _transformer = (node: any, level: number) => {
         return {
             expandable: !!node.children && node.children.length > 0,
@@ -270,21 +271,36 @@ export class MainRuleChainComponent implements OnInit {
         if(item.type === 'MODEL'){
             // load model design editor
         } else if(item.type === 'LAMBDA'){
-            // load lambda function editor
+            this.viewFuncEditor(item);
         } else {
             this.viewRule(item);
         }
     }
 
+    viewFuncEditor(item){
+        this.ruleChainLoaded = false;
+        this.ruleChainMetaDataLoaded = false;
+        this.connectionPropertyTemplatesLoaded = false;
+        this.ruleNodeComponentsLoaded = false;
+        this.ruleChain = null;
+        this.ruleChainMetaData = null;
+        this.connectionPropertyTemplates = null;
+        this.ruleNodeComponents = null;
+        this.lambdauid = "";
+        this.lambdauid = item.uuid;
+        this.loadFunctionEditor = true;
+    }
 
     viewRule(item) {
+        this.lambdauid = "";
+        this.loadFunctionEditor = false;
         this.ruleChainLoaded = false;
         this.ruleChainMetaDataLoaded = false;
         this.connectionPropertyTemplatesLoaded = false;
         this.ruleNodeComponentsLoaded = false;
 
         this.username = item.username;
-        this.uid = this.projectUid;
+//         this.uid = this.projectUid;
         this.ruleChainService.getRuleChainWithUsernameAndUID(item.ruleid, item.username, this.projectUid).subscribe((ruleChain) => {
             console.log('ruleChain');
             console.log(ruleChain);

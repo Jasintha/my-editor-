@@ -25,6 +25,7 @@
             "assets": [
               "src/virtuan.ico",
               "src/assets",
+              { "glob": "**/*", "input": "node_modules/ngx-monaco-editor/assets/monaco", "output": "./assets/monaco/" },
               { "glob": "worker-html.js", "input": "./node_modules/ace-builds/src-min/", "output": "/" },
               { "glob": "worker-css.js", "input": "./node_modules/ace-builds/src-min/", "output": "/" },
               { "glob": "worker-json.js", "input": "./node_modules/ace-builds/src-min/", "output": "/" },
@@ -84,7 +85,8 @@
               "node_modules/ace-builds/src-min/snippets/java.js",
               "node_modules/ace-builds/src-min/snippets/javascript.js",
               "node_modules/systemjs/dist/system.js",
-              "node_modules/jstree/dist/jstree.min.js"
+              "node_modules/jstree/dist/jstree.min.js",
+              "node_modules/ngx-monaco-editor/assets/monaco/vs/loader.js"
             ],
             "es5BrowserSupport": true,
             "customWebpackConfig": {

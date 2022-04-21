@@ -1,14 +1,12 @@
 <!--<div class="mat-content" fxFlex virtuan-fullscreen [fullscreen]="isFullscreen" virtuan-hotkeys
      fxLayout="column" class="virtuan-rulechain">
     <div>
-        <button (click)='coins()'>Deposit Coins</button>
-        <button (click)='notes()'>Deposit notes</button>
         <div *ngIf="ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded">
             <virtuan-rulechain-page [ruleChain]="ruleChain"
                                     [ruleChainMetaData]="ruleChainMetaData"
                                     [connectionPropertyTemplates]="connectionPropertyTemplates"
                                     [username]="username"
-                                    [uid]="uid"
+                                    [uid]="projectUid"
                                     [ruleNodeComponents]="ruleNodeComponents"></virtuan-rulechain-page>
             &lt;!&ndash;<router-outlet></router-outlet>&ndash;&gt;
         </div>
@@ -24,11 +22,12 @@
             <as-split direction="horizontal">
                 <as-split-area [size]="75">
                         <!-- <router-outlet></router-outlet>-->
-                            <virtuan-rulechain-page  *ngIf="ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded" [ruleChain]="ruleChain"
+                    <virtuan-lamdafunction-editor *ngIf="loadFunctionEditor" [projectUid]="projectUid" [lamdafunctionUuid]="lambdauid"></virtuan-lamdafunction-editor>
+                    <virtuan-rulechain-page  *ngIf="ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded" [ruleChain]="ruleChain"
                                                      [ruleChainMetaData]="ruleChainMetaData"
                                                      [connectionPropertyTemplates]="connectionPropertyTemplates"
                                                      [username]="username"
-                                                     [uid]="uid"
+                                                     [uid]="projectUid"
                                                      [ruleNodeComponents]="ruleNodeComponents"></virtuan-rulechain-page>
 
                 </as-split-area>

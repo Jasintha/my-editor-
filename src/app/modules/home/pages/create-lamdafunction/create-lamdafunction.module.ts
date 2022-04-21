@@ -15,11 +15,13 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';
-
+import {LamdafunctionEditorComponent} from '@home/pages/create-lamdafunction/function-editor.component';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 @NgModule({
     declarations:[
-        CreateLamdafunctionComponent
+        CreateLamdafunctionComponent,
+        LamdafunctionEditorComponent
     ],
     imports: [
         CommonModule,
@@ -39,10 +41,12 @@ import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/cre
         MatRadioModule,
         FormsModule,
         MatTableModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MonacoEditorModule
     ],
     exports:[
-        CreateLamdafunctionComponent
+        CreateLamdafunctionComponent,
+        LamdafunctionEditorComponent
     ]
 })
 export class CreateLamdafunctionModule {
