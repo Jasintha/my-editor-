@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { LamdafunctionService } from '@core/projectservices/function.service';
   selector: 'virtuan-lamdafunction-editor',
   templateUrl: './function-editor.component.html'
 })
-export class LamdafunctionEditorComponent implements OnInit, OnDestroy {
+export class LamdafunctionEditorComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input()
   lamdafunctionUuid: string;
@@ -33,7 +33,13 @@ export class LamdafunctionEditorComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
+    this.loadCode();
+  }
+
+  loadCode(){
+    this.code = "";
+    this.editorOptions = { theme: this.theme };
     if (this.lamdafunctionUuid && this.projectUid) {
       this.lamdafunctionService
           .find(this.lamdafunctionUuid, this.projectUid)
@@ -50,6 +56,9 @@ export class LamdafunctionEditorComponent implements OnInit, OnDestroy {
               (res: HttpErrorResponse) => this.onError(res.message)
           );
     }
+  }
+
+  ngOnInit() {
 //     this.activatedRoute.data.subscribe(({ lamdafunction }) => {
 //       this.lamdafunction = lamdafunction;
 //       this.editorOptions = { theme: this.theme, language: this.lamdafunction.language };
