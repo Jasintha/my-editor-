@@ -29,6 +29,10 @@ import {
     ruleNodeTypesLibrary
 } from '@shared/models/rule-node.models';
 import {ProjectService} from '@core/projectservices/project.service';
+import {DeleteOperationService} from '@core/projectservices/delete-operations.service';
+import { EventManagerService } from '@shared/events/event.type';
+import { EventTypes } from '@shared/events/event.queue';
+import { Subscription } from 'rxjs';
 import * as AngularCommon from '@angular/common';
 import * as AngularForms from '@angular/forms';
 import * as AngularCdkCoercion from '@angular/cdk/coercion';
@@ -128,6 +132,7 @@ export class MainRuleChainComponent implements OnInit {
     projectUid: string;
     lambdauid: string;
     modelUid: string;
+    eventSubscriber: Subscription;
     private _transformer = (node: any, level: number) => {
         return {
             expandable: !!node.children && node.children.length > 0,
@@ -153,7 +158,9 @@ export class MainRuleChainComponent implements OnInit {
 
     dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-    constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService, private projectService: ProjectService, public dialog: MatDialog) {
+    constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService,
+    private projectService: ProjectService,private deleteOperationService: DeleteOperationService, public dialog: MatDialog,
+    private eventManager: EventManagerService) {
 
     }
 
@@ -166,6 +173,15 @@ export class MainRuleChainComponent implements OnInit {
 // //     this.router.navigate([url], {relativeTo:this.route});
 //     this.router.navigate([url]);
 //   }
+  registerChangeEditorTree() {
+    this.eventSubscriber = this.eventManager
+      .on(EventTypes.editorTreeListModification)
+      .subscribe(event => this.loadTreeData());
+  }
+
+    delete(item){
+      this.deleteOperationService.delete(item, this.projectUid);
+    }
 
     createPopups(node) {
         if (node.type === 'PARENT_API') {
@@ -390,6 +406,7 @@ export class MainRuleChainComponent implements OnInit {
             }); */
 //    this.dataSource.data = TREE_DATA;
         this.loadTreeData();
+        this.registerChangeEditorTree();
     }
 
     loadTreeData(){
