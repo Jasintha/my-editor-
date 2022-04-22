@@ -187,6 +187,7 @@ export class MainRuleChainComponent implements OnInit {
 
     createApi() {
         const dialogRef = this.dialog.open(CreateApiComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.projectUid
             }
@@ -200,6 +201,7 @@ export class MainRuleChainComponent implements OnInit {
 
     createSubrule() {
         const dialogRef = this.dialog.open(CreateSubruleComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.projectUid
             }
@@ -212,6 +214,7 @@ export class MainRuleChainComponent implements OnInit {
 
     createModel() {
         const dialogRef = this.dialog.open(CreateModelComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.projectUid
             }
@@ -224,6 +227,7 @@ export class MainRuleChainComponent implements OnInit {
 
     createEvent() {
         const dialogRef = this.dialog.open(CreateEventComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.projectUid
             }
@@ -236,6 +240,7 @@ export class MainRuleChainComponent implements OnInit {
 
     createHybridFunction() {
         const dialogRef = this.dialog.open(CreateHybridfunctionComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.projectUid
             }
@@ -248,6 +253,7 @@ export class MainRuleChainComponent implements OnInit {
 
     createLambdaFunction() {
         const dialogRef = this.dialog.open(CreateLamdafunctionComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.projectUid
             }
@@ -260,6 +266,7 @@ export class MainRuleChainComponent implements OnInit {
 
     createTask() {
         const dialogRef = this.dialog.open(CreateTaskComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.projectUid
             }

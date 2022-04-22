@@ -1,6 +1,6 @@
-<form class="mat-form-dialog" [formGroup]="form" (ngSubmit)="save()" >
-    <mat-toolbar color="primary" style="margin-bottom: 20px">
-        <h2 mat-dialog-title>Create API</h2>
+<form class="mat-form-dialog" [formGroup]="form" (ngSubmit)="save()">
+    <mat-toolbar color="primary">
+        <h2>Create API</h2>
         <span fxFlex></span>
         <button mat-icon-button
                 mat-dialog-close
@@ -8,8 +8,7 @@
             <mat-icon class="material-icons">close</mat-icon>
         </button>
     </mat-toolbar>
-
-    <mat-dialog-content>
+    <div mat-dialog-content>
         <div class="row">
 
             <div class="form-group" [hidden]="!form.get('id').value">
@@ -170,9 +169,9 @@
                             </div>
 
                             <div class="col-md-3" style='text-align: center'>
-<!--                                <button mat-icon-button color="accent" aria-label="Example icon button with a home icon" (click)="addRow()">-->
-<!--                                    <mat-icon>add</mat-icon>-->
-<!--                                </button>-->
+                                <!--                                <button mat-icon-button color="accent" aria-label="Example icon button with a home icon" (click)="addRow()">-->
+                                <!--                                    <mat-icon>add</mat-icon>-->
+                                <!--                                </button>-->
                                 <button type="button"  mat-raised-button (click)="addRow()"><mat-icon>add</mat-icon> ADD</button>
                             </div>
                         </div>
@@ -181,7 +180,7 @@
                 </div>
 
                 <div *ngIf="form.value.apiStyleType !== 'GRPC'" style="padding-top:20px;padding-bottom:20px;">
-                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+                    <table mat-table matSort  [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
                         <!-- Name Column -->
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -224,14 +223,14 @@
                 </section>
             </div>
 
-                <mat-form-field class="flex-auto" *ngIf="!form.value.createWorkflow">
-                    <mat-label>Workflow</mat-label>
-                    <mat-select formControlName="selectedSubrule" (selectionChange)="onWorkflowChange()">
-                        <mat-option *ngFor="let option of subruleItems" [value]="option.value">
-                            {{option.label}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <mat-form-field class="flex-auto" *ngIf="!form.value.createWorkflow">
+                <mat-label>Workflow</mat-label>
+                <mat-select formControlName="selectedSubrule" (selectionChange)="onWorkflowChange()">
+                    <mat-option *ngFor="let option of subruleItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
 
             <ng-container *ngIf="!form.value.createWorkflow">
@@ -268,7 +267,7 @@
                 </div>
 
                 <div style="padding-top:20px;padding-bottom:20px;">
-                    <table mat-table [dataSource]="workFlowSource" class="mat-elevation-z8 demo-table">
+                    <table mat-table matSort  [dataSource]="workFlowSource" class="mat-elevation-z8 demo-table">
 
                         <ng-container matColumnDef="workflowinput">
                             <th mat-header-cell *matHeaderCellDef>Workflow Input</th>
@@ -302,9 +301,16 @@
 
 
         </div>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-        <button mat-button color="primary" mat-dialog-close>Cancel</button>
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isSaving" >SAVE</button>
-    </mat-dialog-actions>
+    </div>
+    <div mat-dialog-actions fxLayoutAlign="end center">
+        <button mat-raised-button color="primary" [disabled]="form.invalid || isSaving"
+                type="submit" cdkFocusInitial>
+            Save
+        </button>
+        <button mat-button color="primary"
+                type="button"
+                mat-dialog-close >
+            Cancel
+        </button>
+    </div>
 </form>

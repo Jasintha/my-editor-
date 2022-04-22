@@ -1,5 +1,5 @@
 <form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()" >
-    <mat-toolbar color="primary" style="margin-bottom: 20px">
+    <mat-toolbar color="primary" >
         <h2 mat-dialog-title>Create Event</h2>
         <span fxFlex></span>
         <button mat-icon-button
@@ -68,16 +68,17 @@
                 </mat-radio-group>
             </div>
 
-
-
-
-
-
-
         </div>
     </mat-dialog-content>
-    <mat-dialog-actions align="end">
-        <button mat-button color="primary" mat-dialog-close>Cancel</button>
-        <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>
-    </mat-dialog-actions>
+    <div mat-dialog-actions fxLayoutAlign="end center">
+        <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving"
+                type="submit" cdkFocusInitial>
+            Save
+        </button>
+        <button mat-button color="primary"
+                type="button"
+                mat-dialog-close >
+            Cancel
+        </button>
+    </div>
 </form>

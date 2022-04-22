@@ -18,7 +18,7 @@ import {CreateApiComponent} from '@home/pages/create-api/create-api.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
-
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
     declarations:[
@@ -44,7 +44,8 @@ import {FlexModule} from '@angular/flex-layout';
         MatTableModule,
         MatSnackBarModule,
         MatToolbarModule,
-        FlexModule
+        FlexModule,
+        SharedModule
     ],
     exports:[
         CreateApiComponent

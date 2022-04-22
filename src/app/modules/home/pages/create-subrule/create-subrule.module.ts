@@ -17,6 +17,7 @@ import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
+import { SharedModule } from '@shared/shared.module';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {FlexModule} from '@angular/flex-layout';
         MatTableModule,
         MatSnackBarModule,
         MatToolbarModule,
-        FlexModule
+        FlexModule,
+        SharedModule
     ],
     exports:[
         CreateSubruleComponent

@@ -17,6 +17,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
+import { SharedModule } from '@shared/shared.module';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {FlexModule} from '@angular/flex-layout';
         MatTableModule,
         MatSnackBarModule,
         MatToolbarModule,
-        FlexModule
+        FlexModule,
+        SharedModule
     ],
     exports:[
         CreateModelComponent

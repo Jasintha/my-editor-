@@ -1,5 +1,5 @@
 <form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="checkNameAvailability()" >
-    <mat-toolbar color="primary" style="margin-bottom: 20px">
+    <mat-toolbar color="primary" >
         <h2 mat-dialog-title>Create Model</h2>
         <span fxFlex></span>
         <button mat-icon-button
@@ -77,7 +77,7 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-        <button mat-button color="primary" mat-dialog-close>Cancel</button>
         <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>
+        <button mat-button color="primary" mat-dialog-close>Cancel</button>
     </mat-dialog-actions>
 </form>
