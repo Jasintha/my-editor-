@@ -2,11 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
-import {AggregateService} from '@home/pages/create-model/microservice-aggregate.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { EventManagerService } from '@shared/events/event.type';
 import { AppEvent } from '@shared/events/app.event.class';
 import { EventTypes } from '@shared/events/event.queue';
+import {AggregateService} from '@core/projectservices/microservice-aggregate.service';
 
 @Component({
   selector: 'virtuan-microservice-model-delete-dialog',

@@ -13,29 +13,49 @@ export class AddOperationService {
 
     public constructor(public dialog: MatDialog) {}
 
-    createPopups(node , projectUid) {
+    createPopups(node , projectUid, status) {
         if (node.type === 'PARENT_API') {
-            this.createApi(projectUid);
+            this.createApi(node ,projectUid , status);
         } else if (node.type === 'PARENT_PROCESS') {
-            this.createSubrule(projectUid);
+            this.createSubrule(node ,projectUid , status);
         } else if (node.type === 'PARENT_MODEL'){
-            this.createModel(projectUid);
+            this.createModel(node ,projectUid , status);
         } else if (node.type === 'PARENT_EVENT'){
-            this.createEvent(projectUid);
+            this.createEvent(node ,projectUid , status);
         } else if (node.type === 'PARENT_HYBRID'){
-            this.createHybridFunction(projectUid);
+            this.createHybridFunction(node ,projectUid , status);
         } else if (node.type === 'PARENT_LAMBDA'){
-            this.createLambdaFunction(projectUid);
+            this.createLambdaFunction(node ,projectUid , status);
         } else if (node.type === 'PARENT_TASK'){
-            this.createTask(projectUid);
+            this.createTask(node ,projectUid , status);
         }
     }
 
-    createApi(projectUId) {
+    editPopups(item, projectUid, status) {
+        if (item.type === 'API') {
+           this.createApi(item, projectUid , status);
+        } else if (item.type === 'PROCESS') {
+            this.createSubrule(item, projectUid , status);
+        } else if (item.type === 'MODEL'){
+            this.createModel(item, projectUid , status);
+        } else if (item.type === 'EVENT'){
+            this.createEvent(item, projectUid , status);
+        } else if (item.type === 'HYBRID'){
+            this.createHybridFunction(item, projectUid , status);
+        } else if (item.type === 'LAMBDA'){
+            this.createLambdaFunction(item, projectUid , status);
+        } else if (item.type === 'TASK'){
+            this.createTask(item,projectUid , status);
+        }
+    }
+
+    createApi(item, projectUId , status) {
         const dialogRef = this.dialog.open(CreateApiComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
-                projectUid: projectUId
+                projectUid: projectUId,
+                createStatus: status,
+                uuid: item.uuid,
             }
         });
         dialogRef.afterClosed(
@@ -44,11 +64,12 @@ export class AddOperationService {
         });
     }
 
-    createSubrule(projectUId) {
+    createSubrule(item, projectUId , status) {
         const dialogRef = this.dialog.open(CreateSubruleComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
-                projectUid: projectUId
+                projectUid: projectUId,
+                createStatus: status
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -56,11 +77,12 @@ export class AddOperationService {
         });
     }
 
-    createModel(projectUId) {
+    createModel(item, projectUId , status) {
         const dialogRef = this.dialog.open(CreateModelComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
-                projectUid: projectUId
+                projectUid: projectUId,
+                createStatus: status
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -68,11 +90,12 @@ export class AddOperationService {
         });
     }
 
-    createEvent(projectUId) {
+    createEvent(item, projectUId , status) {
         const dialogRef = this.dialog.open(CreateEventComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
-                projectUid: projectUId
+                projectUid: projectUId,
+                createStatus: status
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -80,11 +103,12 @@ export class AddOperationService {
         });
     }
 
-    createHybridFunction(projectUId) {
+    createHybridFunction(item, projectUId , status) {
         const dialogRef = this.dialog.open(CreateHybridfunctionComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
-                projectUid: projectUId
+                projectUid: projectUId,
+                createStatus: status
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -92,11 +116,12 @@ export class AddOperationService {
         });
     }
 
-    createLambdaFunction(projectUId) {
+    createLambdaFunction(item, projectUId , status) {
         const dialogRef = this.dialog.open(CreateLamdafunctionComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
-                projectUid: projectUId
+                projectUid: projectUId,
+                createStatus: status
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -104,11 +129,12 @@ export class AddOperationService {
         });
     }
 
-    createTask(projectUId) {
+    createTask(item, projectUId , status) {
         const dialogRef = this.dialog.open(CreateTaskComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
-                projectUid: projectUId
+                projectUid: projectUId,
+                createStatus: status
             }
         });
         dialogRef.afterClosed().subscribe(result => {

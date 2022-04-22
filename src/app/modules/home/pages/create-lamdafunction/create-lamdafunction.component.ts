@@ -366,7 +366,7 @@ export class CreateLamdafunctionComponent implements OnInit {
     this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
           name: 'editorTreeListModification',
-          content: 'Add an API',
+          content: 'Add an LambdaFunction',
         })
     );
     // this.isVisibleEvent.emit(false);

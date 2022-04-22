@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { TreeNode, MenuItem } from 'primeng/api';
-import { AggregateService } from './microservice-aggregate.service';
+import { AggregateService } from '@core/projectservices/microservice-aggregate.service';
 import { IProject } from '@app/shared/models/model/project.model';
 
 import {MatDialog} from "@angular/material/dialog";

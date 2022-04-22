@@ -3,7 +3,7 @@ import {HttpResponse, HttpErrorResponse} from "@angular/common/http";
 import { IAggregate } from '@app/shared/models/model/aggregate.model';
 import {filter, map} from "rxjs/operators";
 // import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {AggregateService} from "@home/pages/aggregate/microservice-aggregate.service";
+import {AggregateService} from "@core/projectservices/microservice-aggregate.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SelectItem} from "primeng/api";
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';

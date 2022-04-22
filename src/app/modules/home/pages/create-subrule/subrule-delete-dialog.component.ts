@@ -2,11 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
-import {SubruleService} from '@home/pages/create-subrule/sub-rule.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { EventManagerService } from '@shared/events/event.type';
 import { AppEvent } from '@shared/events/app.event.class';
 import { EventTypes } from '@shared/events/event.queue';
+import {SubruleService} from '@core/projectservices/sub-rule.service';
 
 @Component({
   selector: 'virtuan-subrule-delete-dialog',

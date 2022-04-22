@@ -4,7 +4,7 @@ import {Aggregate, IAggregate} from '@shared/models/model/aggregate.model';
 import {IProject} from '@shared/models/model/project.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProjectService} from '@core/projectservices/project.service';
-import {AggregateService} from '@home/pages/create-model/microservice-aggregate.service';
+import {AggregateService} from '@core/projectservices/microservice-aggregate.service';
 import {filter, map} from 'rxjs/operators';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -198,7 +198,7 @@ export class CreateModelComponent implements OnInit {
     this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
           name: 'editorTreeListModification',
-          content: 'Add an Hybrid Function',
+          content: 'Add an Model',
         })
     );
     this.dialogRef.close();

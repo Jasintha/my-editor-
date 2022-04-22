@@ -776,6 +776,12 @@ export class CreateTaskComponent implements OnInit {
   }
 
   previousState() {
+    // this.eventManager.dispatch(
+    //     new AppEvent(EventTypes.editorTreeListModification, {
+    //       name: 'editorTreeListModification',
+    //       content: 'Add an Task',
+    //     })
+    // );
     this.dialogRef.close();
   }
 
@@ -887,18 +893,17 @@ export class CreateTaskComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
-    // this.spinnerService.hide();
+    this.eventManager.dispatch(
+            new AppEvent(EventTypes.editorTreeListModification, {
+              name: 'editorTreeListModification',
+              content: 'Add an Task',
+            })
+        );
     this.isSaving = false;
     this.previousState();
   }
 
   protected onSaveError() {
-    this.eventManager.dispatch(
-        new AppEvent(EventTypes.editorTreeListModification, {
-          name: 'editorTreeListModification',
-          content: 'Add an Hybrid Function',
-        })
-    );
     // this.spinnerService.hide();
     this.isSaving = false;
   }

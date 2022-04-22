@@ -185,7 +185,11 @@ export class MainRuleChainComponent implements OnInit {
     }
 
     add(node){
-        this.addOperationService.createPopups(node, this.projectUid);
+        this.addOperationService.createPopups(node, this.projectUid, 'Create');
+    }
+
+    edit(item){
+        this.addOperationService.editPopups(item, this.projectUid, 'Update');
     }
 
     viewComponent(item){

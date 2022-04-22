@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {AggregateService} from '@home/pages/create-model/microservice-aggregate.service';
+import {AggregateService} from '@core/projectservices/microservice-aggregate.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {IAggregate} from '@shared/models/model/aggregate.model';

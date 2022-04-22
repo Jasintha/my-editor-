@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { createRequestOption } from '@shared/util/request-util';
-import { ISubrule } from '@app/shared/models/model/subrule.model';
+import { ISubrule } from '@shared/models/model/subrule.model';
 
 type EntityResponseType = HttpResponse<ISubrule>;
 type EntityArrayResponseType = HttpResponse<ISubrule[]>;

@@ -3,9 +3,10 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { TreeNode } from 'primeng/api';
-import { IAggregate } from '@app/shared/models/model/aggregate.model';
-import { IProject } from '@app/shared/models/model/project.model';
-import { IStatusChangeRequest } from '@app/shared/models/model/status-change-request.model';
+import { IAggregate } from '@shared/models/model/aggregate.model';
+import { IProject } from '@shared/models/model/project.model';
+import { IStatusChangeRequest } from '@shared/models/model/status-change-request.model';
+import {createRequestOption} from '@shared/util/request-util';
 
 type EntityResponseType = HttpResponse<IAggregate>;
 type EntityArrayResponseType = HttpResponse<IAggregate[]>;
@@ -79,6 +80,10 @@ export class AggregateService {
     return this.http.get(`${this.exportResoucreURL}/${uuid}/${id}`, { observe: 'response', responseType: 'arraybuffer' });
   }
 
+  findAggregateModelMapKeys(req?: any, uuid?: string): Observable<StringArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<string[]>(`${this.aggregateModelKeysResourceUrl}/${uuid}`, { params: options, observe: 'response' });
+  }
 
 
   findNameAvailability(name: string, uuid: string): Observable<HttpResponse<any>> {

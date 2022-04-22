@@ -296,6 +296,8 @@ export class CreateApiComponent implements OnInit {
   }
 
   getApiData() {
+    debugger
+    this.apiID = this.data.uuid;
     this.builApidForm();
     this.setApiCategoryValidators();
     this.onReturnObjChangeQuery();
@@ -313,7 +315,7 @@ export class CreateApiComponent implements OnInit {
     this.apitypeItems = [];
     this.addPrimitivesForReturnSelect();
     this.activatedRoute.params.subscribe(params => {
-      this.apiID = params.id;
+      this.apiID = this.data.uuid;
       this.projectUid = this.data.projectUid;
       this.editType = params.type;
       this.apiStyle = params.apiStyle;
@@ -363,7 +365,22 @@ export class CreateApiComponent implements OnInit {
                     this.loadSubrules();
                   }
 
-                  this.loadUpdateForm();
+                  if (this.data.createStatus === 'Update'){
+                    this.apiService
+                        .find(this.apiID, this.projectUid)
+                        .pipe(
+                            filter((mayBeOk: HttpResponse<IApi>) => mayBeOk.ok),
+                            map((response: HttpResponse<IApi>) => response.body)
+                        )
+                        .subscribe(
+                            (res: IApi) => {
+                              this.currentApi = res;
+                              this.apiStyle = res.apiStyleType;
+                              this.editType = res.type;
+                              this.loadUpdateForm();
+                            }
+                        );
+                  }
                   // this.loadEntities();
                   // this.loadCustomObjects();
                 },
@@ -429,6 +446,7 @@ export class CreateApiComponent implements OnInit {
   }
 
   loadUpdateForm() {
+    debugger
     let enableSecurity = false;
     // if (!this.projectSecurity) {
     //   enableSecurity = false;
@@ -462,6 +480,9 @@ export class CreateApiComponent implements OnInit {
                     }
                     if (this.currentApi.subruleMapping) {
                       this.worlflowMappings = this.currentApi.subruleMapping;
+
+                      this.WORKFLOW_MAP = this.currentApi.subruleMapping;
+                      this.workFlowSource = new MatTableDataSource(this.WORKFLOW_MAP);
                     }
 
                     // if (this.projectSecurity) {
@@ -514,6 +535,9 @@ export class CreateApiComponent implements OnInit {
                     }
                     if (this.currentCommand.subruleMapping) {
                       this.worlflowMappings = this.currentCommand.subruleMapping;
+
+                      this.WORKFLOW_MAP = this.currentApi.subruleMapping;
+                      this.workFlowSource = new MatTableDataSource(this.WORKFLOW_MAP);
                     }
 
                     // if (this.projectSecurity) {
@@ -565,6 +589,9 @@ export class CreateApiComponent implements OnInit {
                     }
                     if (this.currentQuery.subruleMapping) {
                       this.worlflowMappings = this.currentQuery.subruleMapping;
+
+                      this.WORKFLOW_MAP = this.currentApi.subruleMapping;
+                      this.workFlowSource = new MatTableDataSource(this.WORKFLOW_MAP);
                     }
 
                     let viewmodel: IViewmodel;
@@ -619,6 +646,9 @@ export class CreateApiComponent implements OnInit {
                       }
                       if (this.currentApi.subruleMapping) {
                         this.worlflowMappings = this.currentApi.subruleMapping;
+
+                        this.WORKFLOW_MAP = this.currentApi.subruleMapping;
+                        this.workFlowSource = new MatTableDataSource(this.WORKFLOW_MAP);
                       }
                       // if (this.projectSecurity) {
                       enableSecurity = this.currentApi.enableSecurity;
@@ -667,6 +697,9 @@ export class CreateApiComponent implements OnInit {
                   }
                   if (this.currentApi.subruleMapping) {
                     this.worlflowMappings = this.currentApi.subruleMapping;
+
+                    this.WORKFLOW_MAP = this.currentApi.subruleMapping;
+                    this.workFlowSource = new MatTableDataSource(this.WORKFLOW_MAP);
                   }
 
                   this.form.patchValue({

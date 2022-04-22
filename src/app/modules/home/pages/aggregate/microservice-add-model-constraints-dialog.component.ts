@@ -5,7 +5,7 @@ import { filter, map } from 'rxjs/operators';
 import {SelectItem} from 'primeng/api';
 import {ProjectService} from '@core/projectservices/project.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AggregateService} from "@home/pages/aggregate/microservice-aggregate.service";
+import {AggregateService} from "@core/projectservices/microservice-aggregate.service";
 import { IProject } from '@app/shared/models/model/project.model';
 
 

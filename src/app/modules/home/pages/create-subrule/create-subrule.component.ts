@@ -12,7 +12,7 @@ import {ActivatedRoute} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {SubruleService} from '@home/pages/create-subrule/sub-rule.service';
+import {SubruleService} from '@core/projectservices/sub-rule.service';
 import {ProjectService} from '@core/projectservices/project.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -454,7 +454,7 @@ export class CreateSubruleComponent implements OnInit {
     this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
           name: 'editorTreeListModification',
-          content: 'Add an Hybrid Function',
+          content: 'Add an SubRule',
         })
     );
     this.dialogRef.close();
