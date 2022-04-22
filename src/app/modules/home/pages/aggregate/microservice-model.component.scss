@@ -27,3 +27,16 @@
   color: #333333;
   /* padding: 0.571em 1em; */
 }
+::ng-deep .redNoMatch
+{
+  color:white;
+  font-size: 30px;
+  width: auto;
+  background: #F44336 !important;
+}
+
+::ng-deep .greenNoMatch
+{
+  color:white;
+  background: #1ab94f !important;
+}

@@ -1,25 +1,38 @@
 
 <div class="card-body" >
-    <h2>
-        <div class="row">
+        <div class="row" style="height: 100%; overflow-y: hidden;">
             <div class="col-sm-6">
-                <mat-title>Domain Model Design</mat-title>
+                <h2>Domain Model Design</h2>
             </div>
             <div class="col-sm-6">
                 <div style="text-align: right; align-items: end">
-                    <button mat-raised-button > <mat-icon>cancel</mat-icon>Cancel</button>&nbsp;
-                    <button mat-raised-button style="background-color: #007ad9; color: white;" (click)="save()"> <mat-icon>save</mat-icon>SAVE</button>
+                        <button mat-fab aria-label="Example icon button with a delete icon"
+                                #tooltip="matTooltip"
+                                matTooltip="Cancel"
+                                matTooltipPosition="above"
+                                matTooltipHideDelay="100">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                        &nbsp;&nbsp;
+                        <button style="background-color: #007ad9; color: white;" (click)="save()" mat-fab aria-label="Example icon button with a delete icon"
+                                #tooltip="matTooltip"
+                                matTooltip="Save"
+                                matTooltipPosition="above"
+                                matTooltipHideDelay="100">
+                            <mat-icon>save</mat-icon>
+                        </button>
+
+<!--                    <button mat-raised-button > <mat-icon>cancel</mat-icon>Cancel</button>&nbsp;-->
+<!--                    <button mat-raised-button style="background-color: #007ad9; color: white;" (click)="save()"> <mat-icon>save</mat-icon>SAVE</button>-->
 
                 </div>
             </div>
 
         </div>
-
-
-    </h2>
-    <div class="scroll-bar" style="margin-top:20px;margin-bottom:10px;height: 620px;  overflow-y: scroll;">
+    <hr>
+    <div class="scroll-bar" style="margin-top:20px;margin-bottom:10px;height: 590px;  overflow-y: scroll;">
         <p-tree [style]="{'border': 'none'}"
-                [value]="data" layout="horizontal" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="cm" (onNodeContextMenuSelect)="contextMenu($event, cm)"
+                [value]="data"  layout="horizontal" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="cm" (onNodeContextMenuSelect)="contextMenu($event, cm)"
                 (onNodeSelect)="onNodeSelect($event)"></p-tree>
         <p-contextMenu #cm appendTo="body" [style]="{'text-decoration': 'none'}" [model]="items"></p-contextMenu>
     </div>

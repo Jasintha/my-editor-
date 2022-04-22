@@ -31,7 +31,12 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MicroserviceAddModelDialogComponent } from './microservice-add-model-dialog.component';
 import { MicroserviceAddModelConstraintsDialogComponent } from './microservice-add-model-constraints-dialog.component';
 import {MatCardModule} from '@angular/material/card';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {FlexModule} from '@angular/flex-layout';
+
+import { SharedModule } from '@shared/shared.module';
 @NgModule({
   declarations: [MicroserviceModelComponent, MicroserviceAddModelDialogComponent, MicroserviceAddModelConstraintsDialogComponent],
   imports: [
@@ -65,7 +70,11 @@ import {MatCardModule} from '@angular/material/card';
     FormsModule,
     MatTableModule,
     MatSnackBarModule,
-    MatCardModule
+    MatCardModule,
+    MatTooltipModule,
+    MatToolbarModule,
+    FlexModule,
+    SharedModule
   ],exports:[MicroserviceModelComponent, MicroserviceAddModelDialogComponent, MicroserviceAddModelConstraintsDialogComponent]
 })
 export class AggregateModule { }

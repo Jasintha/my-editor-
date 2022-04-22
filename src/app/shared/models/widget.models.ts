@@ -47,69 +47,69 @@ export interface WidgetTypeData {
 }
 
 export const widgetTypesData = new Map<widgetType, WidgetTypeData>(
-  [
     [
-      widgetType.timeseries,
-      {
-        name: 'widget.timeseries',
-        icon: 'timeline',
-        configHelpLinkId: 'widgetsConfigTimeseries',
-        template: {
-          bundleAlias: 'charts',
-          alias: 'basic_timeseries'
+      [
+        widgetType.timeseries,
+        {
+          name: 'widget.timeseries',
+          icon: 'timeline',
+          configHelpLinkId: 'widgetsConfigTimeseries',
+          template: {
+            bundleAlias: 'charts',
+            alias: 'basic_timeseries'
+          }
         }
-      }
-    ],
-    [
-      widgetType.latest,
-      {
-        name: 'widget.latest-values',
-        icon: 'track_changes',
-        configHelpLinkId: 'widgetsConfigLatest',
-        template: {
-          bundleAlias: 'cards',
-          alias: 'attributes_card'
+      ],
+      [
+        widgetType.latest,
+        {
+          name: 'widget.latest-values',
+          icon: 'track_changes',
+          configHelpLinkId: 'widgetsConfigLatest',
+          template: {
+            bundleAlias: 'cards',
+            alias: 'attributes_card'
+          }
         }
-      }
-    ],
-    [
-      widgetType.rpc,
-      {
-        name: 'widget.rpc',
-        icon: 'mdi:developer-board',
-        configHelpLinkId: 'widgetsConfigRpc',
-        isMdiIcon: true,
-        template: {
-          bundleAlias: 'gpio_widgets',
-          alias: 'basic_gpio_control'
+      ],
+      [
+        widgetType.rpc,
+        {
+          name: 'widget.rpc',
+          icon: 'mdi:developer-board',
+          configHelpLinkId: 'widgetsConfigRpc',
+          isMdiIcon: true,
+          template: {
+            bundleAlias: 'gpio_widgets',
+            alias: 'basic_gpio_control'
+          }
         }
-      }
-    ],
-    [
-      widgetType.alarm,
-      {
-        name: 'widget.alarm',
-        icon: 'error',
-        configHelpLinkId: 'widgetsConfigAlarm',
-        template: {
-          bundleAlias: 'alarm_widgets',
-          alias: 'alarms_table'
+      ],
+      [
+        widgetType.alarm,
+        {
+          name: 'widget.alarm',
+          icon: 'error',
+          configHelpLinkId: 'widgetsConfigAlarm',
+          template: {
+            bundleAlias: 'alarm_widgets',
+            alias: 'alarms_table'
+          }
         }
-      }
-    ],
-    [
-      widgetType.static,
-      {
-        name: 'widget.static',
-        icon: 'font_download',
-        configHelpLinkId: 'widgetsConfigStatic',
-        template: {
-          bundleAlias: 'cards',
-          alias: 'html_card'
+      ],
+      [
+        widgetType.static,
+        {
+          name: 'widget.static',
+          icon: 'font_download',
+          configHelpLinkId: 'widgetsConfigStatic',
+          template: {
+            bundleAlias: 'cards',
+            alias: 'html_card'
+          }
         }
-      }
+      ]
     ]
-  ]
 );
 
 export interface WidgetResource {
@@ -123,12 +123,12 @@ export interface WidgetActionSource {
 }
 
 export const widgetActionSources: {[acionSourceId: string]: WidgetActionSource} = {
-    headerButton:
-    {
-      name: 'widget-action.header-button',
-      value: 'headerButton',
-      multiple: true,
-    }
+  headerButton:
+      {
+        name: 'widget-action.header-button',
+        value: 'headerButton',
+        multiple: true,
+      }
 };
 
 export interface WidgetTypeDescriptor {
@@ -177,10 +177,10 @@ export enum LegendDirection {
 }
 
 export const legendDirectionTranslationMap = new Map<LegendDirection, string>(
-  [
-    [ LegendDirection.column, 'direction.column' ],
-    [ LegendDirection.row, 'direction.row' ]
-  ]
+    [
+      [ LegendDirection.column, 'direction.column' ],
+      [ LegendDirection.row, 'direction.row' ]
+    ]
 );
 
 export enum LegendPosition {
@@ -191,12 +191,12 @@ export enum LegendPosition {
 }
 
 export const legendPositionTranslationMap = new Map<LegendPosition, string>(
-  [
-    [ LegendPosition.top, 'position.top' ],
-    [ LegendPosition.bottom, 'position.bottom' ],
-    [ LegendPosition.left, 'position.left' ],
-    [ LegendPosition.right, 'position.right' ]
-  ]
+    [
+      [ LegendPosition.top, 'position.top' ],
+      [ LegendPosition.bottom, 'position.bottom' ],
+      [ LegendPosition.left, 'position.left' ],
+      [ LegendPosition.right, 'position.right' ]
+    ]
 );
 
 export interface LegendConfig {
@@ -247,10 +247,10 @@ export enum DatasourceType {
 }
 
 export const datasourceTypeTranslationMap = new Map<DatasourceType, string>(
-  [
-    [ DatasourceType.function, 'function.function' ],
-    [ DatasourceType.entity, 'entity.entity' ]
-  ]
+    [
+      [ DatasourceType.function, 'function.function' ],
+      [ DatasourceType.entity, 'entity.entity' ]
+    ]
 );
 
 export interface Datasource {
@@ -316,13 +316,13 @@ export enum WidgetActionType {
 }
 
 export const widgetActionTypeTranslationMap = new Map<WidgetActionType, string>(
-  [
-    [ WidgetActionType.openDashboardState, 'widget-action.open-dashboard-state' ],
-    [ WidgetActionType.updateDashboardState, 'widget-action.update-dashboard-state' ],
-    [ WidgetActionType.openDashboard, 'widget-action.open-dashboard' ],
-    [ WidgetActionType.custom, 'widget-action.custom' ],
-    [ WidgetActionType.customPretty, 'widget-action.custom-pretty' ]
-  ]
+    [
+      [ WidgetActionType.openDashboardState, 'widget-action.open-dashboard-state' ],
+      [ WidgetActionType.updateDashboardState, 'widget-action.update-dashboard-state' ],
+      [ WidgetActionType.openDashboard, 'widget-action.open-dashboard' ],
+      [ WidgetActionType.custom, 'widget-action.custom' ],
+      [ WidgetActionType.customPretty, 'widget-action.custom-pretty' ]
+    ]
 );
 
 export interface CustomActionDescriptor {

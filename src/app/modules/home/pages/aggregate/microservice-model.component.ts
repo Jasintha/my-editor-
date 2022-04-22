@@ -14,6 +14,7 @@ import {MicroserviceAddModelDialogComponent} from "@home/pages/aggregate/microse
 import {
   MicroserviceAddModelConstraintsDialogComponent
 } from "@home/pages/aggregate/microservice-add-model-constraints-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -44,7 +45,8 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
       // protected toolbarTrackerService: ToolbarTrackerService,
       // private spinnerService: NgxSpinnerService,
       // private modalService: NgbModal,
-      protected aggregateService: AggregateService
+      protected aggregateService: AggregateService,
+      private snackBar: MatSnackBar
   ) {
     // this.toolbarTrackerService.setIsEntityPage('yes');
   }
@@ -64,6 +66,8 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
               this.data = [];
               console.log(res)
               this.data.push(res);
+
+              this.expandAll();
             },
             (res: HttpErrorResponse) => this.onError()
         );
@@ -122,6 +126,20 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
     //console.log(this.data);
   }
 
+
+  expandAll(){
+    this.data.forEach( node => {
+      this.expandRecursive(node, true);
+    } );
+  }
+  private expandRecursive(node:TreeNode, isExpand:boolean){
+    node.expanded = isExpand;
+    // if (node.children){
+    //   node.children.forEach( childNode => {
+    //     this.expandRecursive(childNode, isExpand);
+    //   } );
+    // }
+  }
   getProjectType() {
     console.log(this.projectUid)
     if (this.projectUid) {
@@ -173,6 +191,7 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
     let namelength: number = currentNameLowercase.length;
     let currentNodeType = event.node.data.type;
     const dialogRef = this.dialog.open(MicroserviceAddModelDialogComponent, {
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
       data: {
         edit: true,
         type: event.node.data.type,
@@ -185,6 +204,7 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
       }
     });
     dialogRef.afterClosed().subscribe((result: any) => {
+
       let eventkey = event.node.key.slice(0, -namelength);
             let nameTrimmed = result.name.replace(/\s/g, '');
             let nameLowerCase = nameTrimmed.toLowerCase();
@@ -252,6 +272,7 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
     const datakey = event.node.key;
     const type = event.node.data.type;
     const dialogRef = this.dialog.open(MicroserviceAddModelConstraintsDialogComponent, {
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
       data: {
         edit : true,
         data : event.node.data,
@@ -261,7 +282,7 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
       }
     });
     dialogRef.afterClosed().subscribe((result: any) => {
-          console.log(`Dialog result: `, result);
+          // console.log(`Dialog result: `, result);
             let styleClass = 'fa fa-list';
             if (type === 'property') {
               styleClass = 'fa fa-check';
@@ -271,7 +292,9 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
             event.node.icon = styleClass;
             event.node.label = currentName;
             event.node.key = datakey;
+
             event.node.data = Object.assign(event.node.data, result);
+      console.log(event.node.data)
         }
     );
     // const modalRef = this.modalService.open(MicroServiceAddModelConstraintsDialogComponent, {
@@ -303,6 +326,7 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
 
   addModel(event) {
     const dialogRef = this.dialog.open(MicroserviceAddModelDialogComponent, {
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
       data: {
         edit : false,
         modelId : this.aggregateId,
@@ -402,7 +426,14 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
   }
 
   protected onSaveSuccess() {
+    console.log("Successfully")
     // this.spinnerService.hide();
+    this.snackBar.open('Login Successfully!', 'Close', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['greenNoMatch']
+    });
     this.loadDesign()
   }
 

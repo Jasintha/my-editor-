@@ -84,16 +84,18 @@ export class MicroserviceAddModelConstraintsDialogComponent implements OnInit {
     this.apiItems = [];
     this.loadMicroserviceProjects();
     if (this.data.edit) {
+      console.log(this.data)
       this.constraintForm.patchValue({
-        isPropertyUnique: this.data.isUnique,
-        isPropertyEncrypted: this.data.isEncrypted,
-        propertyLength: this.data.length,
-        propertyDefaultValue: this.data.defaultValue,
-        fieldController: this.data.fieldController,
-        isRequired: this.data.isRequired,
-        placeholder: this.data.placeholder,
-        label: this.data.label,
-        choiceUrl: this.data.choiceUrl,
+
+        isPropertyUnique: this.data.data.isUnique,
+        isPropertyEncrypted: this.data.data.isEncrypted,
+        propertyLength: this.data.data.length,
+        propertyDefaultValue: this.data.data.defaultValue,
+        fieldController: this.data.data.fieldController,
+        isRequired: this.data.data.isRequired,
+        placeholder: this.data.data.placeholder,
+        label: this.data.data.label,
+        choiceUrl: this.data.data.choiceUrl,
       });
     }
     if (this.data && this.data.propertytype && this.projectType === 'task.ui') {

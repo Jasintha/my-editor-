@@ -78,7 +78,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
 
   loadAllAggregates() {
     this.aggregateService
-        .findByProjectUUId("8fegJqCoMUWfP3N5WecKhk","XbRvmEwfWyv7ofF7nNFugA_user3gmailcom")
+        .findByProjectUUId(this.propdata.modelId,this.propdata.projectUid)
         .pipe(
             filter((res: HttpResponse<IAggregate[]>) => res.ok),
             map((res: HttpResponse<IAggregate[]>) => res.body)
