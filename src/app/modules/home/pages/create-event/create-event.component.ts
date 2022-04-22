@@ -10,6 +10,9 @@ import {Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {EventService} from '@core/projectservices/microservice-event.service';
+import {EventManagerService} from '@shared/events/event.type';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
 interface Item {
   value: any;
   label: string;
@@ -61,6 +64,7 @@ export class CreateEventComponent implements OnInit {
       protected aggregateService: AggregateService,
       protected activatedRoute: ActivatedRoute,
       private fb: FormBuilder,
+      protected eventManager: EventManagerService,
       public dialogRef: MatDialogRef<CreateEventComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {}
@@ -202,6 +206,12 @@ export class CreateEventComponent implements OnInit {
   protected onSaveSuccess() {
     // this.spinnerService.hide();
     this.isSaving = false;
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorTreeListModification, {
+          name: 'editorTreeListModification',
+          content: 'Add an Event',
+        })
+    );
     this.dialogRef.close();
     // this.previousState();
   }

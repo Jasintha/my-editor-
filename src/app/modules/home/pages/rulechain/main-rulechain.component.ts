@@ -60,6 +60,7 @@ import {CreateEventComponent} from '@home/pages/create-event/create-event.compon
 import {CreateHybridfunctionComponent} from '@home/pages/create-hybridfunction/create-hybridfunction.component';
 import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';
 import {CreateTaskComponent} from '@home/pages/create-task/create-task.component';
+import {AddOperationService} from '@core/projectservices/add-operations.service';
 
 declare const SystemJS;
 
@@ -159,7 +160,7 @@ export class MainRuleChainComponent implements OnInit {
     dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService,
-    private projectService: ProjectService,private deleteOperationService: DeleteOperationService, public dialog: MatDialog,
+    private projectService: ProjectService,private deleteOperationService: DeleteOperationService,private addOperationService:AddOperationService, public dialog: MatDialog,
     private eventManager: EventManagerService) {
 
     }
@@ -183,114 +184,8 @@ export class MainRuleChainComponent implements OnInit {
       this.deleteOperationService.delete(item, this.projectUid);
     }
 
-    createPopups(node) {
-        if (node.type === 'PARENT_API') {
-            this.createApi();
-        } else if (node.type === 'PARENT_PROCESS') {
-            this.createSubrule();
-        } else if (node.type === 'PARENT_MODEL'){
-            this.createModel();
-        } else if (node.type === 'PARENT_EVENT'){
-            this.createEvent();
-        } else if (node.type === 'PARENT_HYBRID'){
-            this.createHybridFunction();
-        } else if (node.type === 'PARENT_LAMBDA'){
-            this.createLambdaFunction();
-        } else if (node.type === 'PARENT_TASK'){
-            this.createTask();
-        }
-    }
-
-    createApi() {
-        const dialogRef = this.dialog.open(CreateApiComponent, {
-            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-            data: {
-                projectUid: this.projectUid
-            }
-        });
-        dialogRef.afterClosed(
-        ).subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-            this.loadTreeData();
-        });
-    }
-
-    createSubrule() {
-        const dialogRef = this.dialog.open(CreateSubruleComponent, {
-            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-            data: {
-                projectUid: this.projectUid
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-            this.loadTreeData();
-        });
-    }
-
-    createModel() {
-        const dialogRef = this.dialog.open(CreateModelComponent, {
-            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-            data: {
-                projectUid: this.projectUid
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-            this.loadTreeData();
-        });
-    }
-
-    createEvent() {
-        const dialogRef = this.dialog.open(CreateEventComponent, {
-            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-            data: {
-                projectUid: this.projectUid
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-            this.loadTreeData();
-        });
-    }
-
-    createHybridFunction() {
-        const dialogRef = this.dialog.open(CreateHybridfunctionComponent, {
-            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-            data: {
-                projectUid: this.projectUid
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-            this.loadTreeData();
-        });
-    }
-
-    createLambdaFunction() {
-        const dialogRef = this.dialog.open(CreateLamdafunctionComponent, {
-            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-            data: {
-                projectUid: this.projectUid
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-            this.loadTreeData();
-        });
-    }
-
-    createTask() {
-        const dialogRef = this.dialog.open(CreateTaskComponent, {
-            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-            data: {
-                projectUid: this.projectUid
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-            this.loadTreeData();
-        });
+    add(node){
+        this.addOperationService.createPopups(node, this.projectUid);
     }
 
     viewComponent(item){

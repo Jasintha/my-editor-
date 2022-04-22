@@ -63,7 +63,7 @@
                                         type="button">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
-                                <button mat-icon-button color="primary"  *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="createPopups(node.data)" ><mat-icon>add_circle</mat-icon></button>
+                                <button mat-icon-button color="primary"  *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="add(node.data)" ><mat-icon>add_circle</mat-icon></button>
                             </mat-tree-node>
                             <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
                                 <button mat-icon-button
@@ -80,7 +80,7 @@
                                 </div>
 
 
-                            <button mat-icon-button color="primary" class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="createPopups(node.data)" ><mat-icon >add_circle</mat-icon></button>
+                            <button mat-icon-button color="primary"  *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="add(node.data)" ><mat-icon >add_circle</mat-icon></button>
                             <mat-progress-bar *ngIf="node.isLoading"
                                               mode="indeterminate"
                                               class="example-tree-progress-bar"></mat-progress-bar>

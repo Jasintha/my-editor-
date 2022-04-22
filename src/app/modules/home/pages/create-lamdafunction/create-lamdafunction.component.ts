@@ -13,6 +13,9 @@ import {filter, map} from 'rxjs/operators';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
+import {EventManagerService} from '@shared/events/event.type';
 interface Item {
   value: any;
   label: string;
@@ -73,6 +76,7 @@ export class CreateLamdafunctionComponent implements OnInit {
       protected activatedRoute: ActivatedRoute,
       private fb: FormBuilder,
       protected projectService: ProjectService,
+      protected eventManager: EventManagerService,
       public dialogRef: MatDialogRef<CreateLamdafunctionComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {}
@@ -359,6 +363,12 @@ export class CreateLamdafunctionComponent implements OnInit {
   }
 
   previousState() {
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorTreeListModification, {
+          name: 'editorTreeListModification',
+          content: 'Add an API',
+        })
+    );
     // this.isVisibleEvent.emit(false);
     this.dialogRef.close();
   }

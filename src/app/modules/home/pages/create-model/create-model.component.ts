@@ -9,6 +9,9 @@ import {filter, map} from 'rxjs/operators';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
+import {EventManagerService} from '@shared/events/event.type';
 interface Item {
   value: any;
   label: string;
@@ -75,6 +78,7 @@ export class CreateModelComponent implements OnInit {
       private router: Router,
       public dialogRef: MatDialogRef<CreateModelComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
+      protected eventManager: EventManagerService,
   ) {}
 
   ngOnInit(): void {
@@ -191,6 +195,12 @@ export class CreateModelComponent implements OnInit {
   protected onSaveSuccess(res) {
     const createdAggregate: IAggregate = res.body;
     this.isSaving = false;
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorTreeListModification, {
+          name: 'editorTreeListModification',
+          content: 'Add an Hybrid Function',
+        })
+    );
     this.dialogRef.close();
     // if (createdAggregate.uuid) {
     //   if (createdAggregate.isComplexObj) {

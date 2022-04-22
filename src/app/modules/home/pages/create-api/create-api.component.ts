@@ -30,6 +30,9 @@ import {CommandService} from '@core/projectservices/microservice-command.service
 import {ProjectService} from '@core/projectservices/project.service';
 import {QueryService} from '@core/projectservices/microservice-query.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {EventManagerService} from '@shared/events/event.type';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
 interface Item {
   value: any;
   label: string;
@@ -282,6 +285,7 @@ export class CreateApiComponent implements OnInit {
       protected queryService: QueryService,
       protected commandService: CommandService,
       protected projectService: ProjectService,
+      protected eventManager: EventManagerService,
       public dialogRef: MatDialogRef<CreateApiComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {
@@ -915,7 +919,7 @@ export class CreateApiComponent implements OnInit {
   }
 
   previousState() {
-    window.history.back();
+    //window.history.back();
   }
 
   save() {
@@ -1210,6 +1214,12 @@ export class CreateApiComponent implements OnInit {
   protected onSaveSuccess() {
     // this.spinnerService.hide();
     this.isSaving = false;
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorTreeListModification, {
+          name: 'editorTreeListModification',
+          content: 'Add an API',
+        })
+    );
     this.dialogRef.close();
     // this.previousState();
   }

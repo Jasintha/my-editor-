@@ -18,6 +18,9 @@ import {filter, map} from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material/table';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {EventManagerService} from '@shared/events/event.type';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
 interface Item {
   value: any;
   label: string;
@@ -81,6 +84,7 @@ export class CreateHybridfunctionComponent implements OnInit {
       protected activatedRoute: ActivatedRoute,
       private fb: FormBuilder,
       protected projectService: ProjectService,
+      protected eventManager: EventManagerService,
       @Inject(MAT_DIALOG_DATA)  public data: any,
       public dialogRef: MatDialogRef<CreateHybridfunctionComponent>,
   ) {}
@@ -437,6 +441,12 @@ export class CreateHybridfunctionComponent implements OnInit {
   protected onSaveSuccess() {
     // this.spinnerService.hide();
     this.isSaving = false;
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorTreeListModification, {
+          name: 'editorTreeListModification',
+          content: 'Add an Hybrid Function',
+        })
+    );
     this.dialogRef.close();
     //this.previousState();
   }

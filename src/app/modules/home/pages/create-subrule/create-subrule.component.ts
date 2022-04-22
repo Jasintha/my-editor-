@@ -16,6 +16,9 @@ import {SubruleService} from '@home/pages/create-subrule/sub-rule.service';
 import {ProjectService} from '@core/projectservices/project.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {EventManagerService} from '@shared/events/event.type';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
 interface Item {
   value: any;
   label: string;
@@ -74,7 +77,8 @@ export class CreateSubruleComponent implements OnInit {
       protected projectService: ProjectService,
       public dialogRef: MatDialogRef<CreateSubruleComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
-      private _snackBar: MatSnackBar
+      private _snackBar: MatSnackBar,
+      protected eventManager: EventManagerService,
   ) {
   }
 
@@ -447,6 +451,12 @@ export class CreateSubruleComponent implements OnInit {
   protected onSaveSuccess() {
     // this.spinnerService.hide();
     this.isSaving = false;
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorTreeListModification, {
+          name: 'editorTreeListModification',
+          content: 'Add an Hybrid Function',
+        })
+    );
     this.dialogRef.close();
     this._snackBar.open('Saved successfully!', 'Close');
     // this.previousState();

@@ -16,6 +16,9 @@ import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {filter, map} from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material/table';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
+import {EventManagerService} from '@shared/events/event.type';
 interface Item {
   value: any;
   label: string;
@@ -264,6 +267,7 @@ export class CreateTaskComponent implements OnInit {
       private fb: FormBuilder,
       public dialogRef: MatDialogRef<CreateTaskComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
+      protected eventManager: EventManagerService,
   ) {}
 
   ngOnInit(): void {
@@ -889,6 +893,12 @@ export class CreateTaskComponent implements OnInit {
   }
 
   protected onSaveError() {
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorTreeListModification, {
+          name: 'editorTreeListModification',
+          content: 'Add an Hybrid Function',
+        })
+    );
     // this.spinnerService.hide();
     this.isSaving = false;
   }
