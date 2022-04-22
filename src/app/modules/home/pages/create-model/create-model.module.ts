@@ -15,6 +15,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {FlexModule} from '@angular/flex-layout';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import {CreateModelComponent} from '@home/pages/create-model/create-model.compon
         MatRadioModule,
         FormsModule,
         MatTableModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatToolbarModule,
+        FlexModule
     ],
     exports:[
         CreateModelComponent

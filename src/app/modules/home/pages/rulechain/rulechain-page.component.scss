@@ -358,3 +358,17 @@
   flex: 1;
   word-wrap: break-word;
 }
+
+
+.top-node {
+  position: absolute;
+  left: 90%;
+  margin-left: 1px;
+}
+
+.add-btn {
+  cursor: pointer;
+  position: fixed;
+  left: 93%;
+  margin-top: -5px;
+}

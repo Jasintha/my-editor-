@@ -15,6 +15,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {CreateEventComponent} from '@home/pages/create-event/create-event.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {FlexModule} from '@angular/flex-layout';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import {CreateEventComponent} from '@home/pages/create-event/create-event.compon
         MatRadioModule,
         FormsModule,
         MatTableModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatToolbarModule,
+        FlexModule
     ],
     exports:[
         CreateEventComponent

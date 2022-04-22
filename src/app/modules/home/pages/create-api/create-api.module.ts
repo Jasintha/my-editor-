@@ -16,6 +16,8 @@ import {MatTableModule} from '@angular/material/table';
 import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.component';
 import {CreateApiComponent} from '@home/pages/create-api/create-api.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {FlexModule} from '@angular/flex-layout';
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
         MatRadioModule,
         FormsModule,
         MatTableModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatToolbarModule,
+        FlexModule
     ],
     exports:[
         CreateApiComponent

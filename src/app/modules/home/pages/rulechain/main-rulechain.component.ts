@@ -51,6 +51,7 @@ import {CreateApiComponent} from '@home/pages/create-api/create-api.component';
 import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.component';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
+import {MicroserviceModelComponent} from "@home/pages/aggregate/microservice-model.component";
 import {CreateEventComponent} from '@home/pages/create-event/create-event.component';
 import {CreateHybridfunctionComponent} from '@home/pages/create-hybridfunction/create-hybridfunction.component';
 import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';

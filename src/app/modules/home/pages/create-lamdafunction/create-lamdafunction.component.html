@@ -1,5 +1,14 @@
 <form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()" >
-    <h2 mat-dialog-title>CREATE LAMBDA FUNCTION</h2>
+    <mat-toolbar color="primary" style="margin-bottom: 20px">
+        <h2 mat-dialog-title>Create Lambda Function</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+
     <mat-dialog-content>
         <div class="row">
 
@@ -126,6 +135,6 @@
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-button type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>
     </mat-dialog-actions>
 </form>

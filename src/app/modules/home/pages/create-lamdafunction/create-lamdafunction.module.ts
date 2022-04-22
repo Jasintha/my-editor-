@@ -17,6 +17,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';
 import {LamdafunctionEditorComponent} from '@home/pages/create-lamdafunction/function-editor.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {FlexModule} from '@angular/flex-layout';
 
 @NgModule({
     declarations:[
@@ -42,7 +44,9 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
         FormsModule,
         MatTableModule,
         MatSnackBarModule,
-        MonacoEditorModule
+        MonacoEditorModule,
+        MatToolbarModule,
+        FlexModule
     ],
     exports:[
         CreateLamdafunctionComponent,
