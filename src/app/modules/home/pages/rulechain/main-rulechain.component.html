@@ -35,6 +35,7 @@
                 <as-split-area [size]="75">
 
                         <!-- <router-outlet></router-outlet>-->
+                    <virtuan-microservice-model *ngIf="loadModelView" [projectUid]="projectUid" [modelUid]="modelUid"></virtuan-microservice-model>
                     <virtuan-lamdafunction-editor *ngIf="loadFunctionEditor" [projectUid]="projectUid" [lamdafunctionUuid]="lambdauid"></virtuan-lamdafunction-editor>
                     <virtuan-rulechain-page  *ngIf="ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded" [ruleChain]="ruleChain"
                                                      [ruleChainMetaData]="ruleChainMetaData"
