@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '@shared/shared.module';
+
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
@@ -15,6 +17,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';
+import {LamdafunctionDeleteDialogComponent} from '@home/pages/create-lamdafunction/function-delete-dialog.component';
 import {LamdafunctionEditorComponent} from '@home/pages/create-lamdafunction/function-editor.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -23,10 +26,12 @@ import {FlexModule} from '@angular/flex-layout';
 @NgModule({
     declarations:[
         CreateLamdafunctionComponent,
-        LamdafunctionEditorComponent
+        LamdafunctionEditorComponent,
+        LamdafunctionDeleteDialogComponent
     ],
     imports: [
         CommonModule,
+        SharedModule,
         RouterModule,
         MatSidenavModule,
         MatFormFieldModule,
@@ -47,10 +52,12 @@ import {FlexModule} from '@angular/flex-layout';
         MonacoEditorModule,
         MatToolbarModule,
         FlexModule
+        MatToolbarModule
     ],
     exports:[
         CreateLamdafunctionComponent,
-        LamdafunctionEditorComponent
+        LamdafunctionEditorComponent,
+        LamdafunctionDeleteDialogComponent
     ]
 })
 export class CreateLamdafunctionModule {
