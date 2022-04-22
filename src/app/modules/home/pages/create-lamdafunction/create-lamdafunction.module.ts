@@ -51,7 +51,7 @@ import {FlexModule} from '@angular/flex-layout';
         MatSnackBarModule,
         MonacoEditorModule,
         MatToolbarModule,
-        FlexModule
+        FlexModule,
         MatToolbarModule
     ],
     exports:[
