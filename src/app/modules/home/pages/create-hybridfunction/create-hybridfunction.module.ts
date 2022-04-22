@@ -15,6 +15,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {CreateHybridfunctionComponent} from '@home/pages/create-hybridfunction/create-hybridfunction.component';
+import {HybridfunctionDeleteDialogComponent} from '@home/pages/create-hybridfunction/hybrid-function-delete-dialog.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import {SharedModule} from '@shared/shared.module';
@@ -23,6 +24,7 @@ import {SharedModule} from '@shared/shared.module';
 @NgModule({
     declarations:[
         CreateHybridfunctionComponent,
+        HybridfunctionDeleteDialogComponent
     ],
     imports: [
         CommonModule,
@@ -48,7 +50,8 @@ import {SharedModule} from '@shared/shared.module';
         SharedModule
     ],
     exports:[
-        CreateHybridfunctionComponent
+        CreateHybridfunctionComponent,
+        HybridfunctionDeleteDialogComponent
     ]
 })
 export class CreateHybridfunctionModule {

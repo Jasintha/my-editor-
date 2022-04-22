@@ -4,22 +4,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import {LamdafunctionService} from '@core/projectservices/function.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {EventService} from '@core/projectservices/microservice-event.service';
 import { EventManagerService } from '@shared/events/event.type';
 import { AppEvent } from '@shared/events/app.event.class';
 import { EventTypes } from '@shared/events/event.queue';
 
 @Component({
-  selector: 'virtuan-lamdafunction-delete-dialog',
-  templateUrl: './function-delete-dialog.component.html',
+  selector: 'virtuan-event-delete-dialog',
+  templateUrl: './event-delete-dialog.component.html',
 })
-export class LamdafunctionDeleteDialogComponent {
+export class EventDeleteDialogComponent {
   uuid: string;
   name: string;
   projectUid: string;
 
-  constructor(protected lamdafunctionService: LamdafunctionService,
+  constructor(protected eventService: EventService,
               protected eventManager: EventManagerService,
-              public dialogRef: MatDialogRef<LamdafunctionDeleteDialogComponent>,
+              public dialogRef: MatDialogRef<EventDeleteDialogComponent>,
               @Inject(MAT_DIALOG_DATA)  public data: any) {
     this.uuid = this.data.uuid;
     this.name = this.data.name;
@@ -31,7 +32,7 @@ export class LamdafunctionDeleteDialogComponent {
   }
 
   confirmDelete(id: string) {
-    this.lamdafunctionService.delete(id, this.projectUid).subscribe(response => {
+    this.eventService.delete(id, this.projectUid).subscribe(response => {
       // this.eventManager.broadcast({
       //   name: 'lamdafunctionListModification',
       //   content: 'Deleted an lamdafunction'
@@ -39,7 +40,7 @@ export class LamdafunctionDeleteDialogComponent {
       this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
           name: 'editorTreeListModification',
-          content: 'Deleted an lamdafunction',
+          content: 'Deleted an event',
         })
       );
       this.dialogRef.close(this.uuid);

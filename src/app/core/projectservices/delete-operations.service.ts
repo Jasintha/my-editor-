@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {LamdafunctionDeleteDialogComponent} from '@home/pages/create-lamdafunction/function-delete-dialog.component';
+import {MicroserviceModelDeleteDialogComponent} from '@home/pages/create-model/microservice-model-delete-dialog.component';
+import {SubruleDeleteDialogComponent} from '@home/pages/create-subrule/subrule-delete-dialog.component';
+import {TaskDeleteDialogComponent} from '@home/pages/create-task/task-delete-dialog.component';
+import {HybridfunctionDeleteDialogComponent} from '@home/pages/create-hybridfunction/hybrid-function-delete-dialog.component';
+import {EventDeleteDialogComponent} from '@home/pages/create-event/event-delete-dialog.component';
+import {ApiDeleteDialogComponent} from '@home/pages/create-api/api-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class DeleteOperationService {
@@ -8,25 +14,122 @@ export class DeleteOperationService {
   public constructor(public dialog: MatDialog) {}
   
     delete(item, projectUid) {
-        if (item.type === 'API') {
-//             this.deleteApi();
-        } else if (item.type === 'PROCESS') {
-//             this.deleteSubrule();
+        if (item.type === 'API' || item.type === 'COMMAND' || item.type === 'QUERY') {
+            this.deleteApi(item, projectUid);
+        } else if (item.type === 'WORKFLOW') {
+            this.deleteSubrule(item, projectUid);
         } else if (item.type === 'MODEL'){
-//             this.deleteModel();
+            this.deleteModel(item, projectUid);
         } else if (item.type === 'EVENT'){
-//             this.deleteEvent();
+            this.deleteEvent(item, projectUid);
         } else if (item.type === 'HYBRID'){
-//             this.deleteHybridFunction();
+            this.deleteHybridFunction(item, projectUid);
         } else if (item.type === 'LAMBDA'){
             this.deleteLambdaFunction(item, projectUid);
         } else if (item.type === 'TASK'){
-//             this.deleteTask();
+            this.deleteTask(item, projectUid);
         }
     }
 
     deleteLambdaFunction(item, projectUid) {
         const dialogRef = this.dialog.open(LamdafunctionDeleteDialogComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUid,
+                uuid: item.uuid,
+                name: item.name
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+//         return false;
+    }
+
+    deleteApi(item, projectUid) {
+        const dialogRef = this.dialog.open(ApiDeleteDialogComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUid,
+                uuid: item.uuid,
+                name: item.name,
+                apitype: item.type
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+//         return false;
+    }
+
+    deleteEvent(item, projectUid) {
+        const dialogRef = this.dialog.open(EventDeleteDialogComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUid,
+                uuid: item.uuid,
+                name: item.name
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+//         return false;
+    }
+
+    deleteHybridFunction(item, projectUid) {
+        const dialogRef = this.dialog.open(HybridfunctionDeleteDialogComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUid,
+                uuid: item.uuid,
+                name: item.name
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+//         return false;
+    }
+
+    deleteTask(item, projectUid) {
+        const dialogRef = this.dialog.open(TaskDeleteDialogComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUid,
+                uuid: item.uuid,
+                name: item.name
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+//         return false;
+    }
+
+    deleteSubrule(item, projectUid) {
+        const dialogRef = this.dialog.open(SubruleDeleteDialogComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUid,
+                uuid: item.uuid,
+                name: item.name
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+//         return false;
+    }
+
+    deleteModel(item, projectUid) {
+        const dialogRef = this.dialog.open(MicroserviceModelDeleteDialogComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUid,

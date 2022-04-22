@@ -13,8 +13,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
-import {CreateSubruleComponent} from '@home/pages/create-subrule/create-subrule.component';
 import {CreateApiComponent} from '@home/pages/create-api/create-api.component';
+import {ApiDeleteDialogComponent} from '@home/pages/create-api/api-delete-dialog.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
@@ -23,6 +23,7 @@ import { SharedModule } from '@shared/shared.module';
 @NgModule({
     declarations:[
         CreateApiComponent,
+        ApiDeleteDialogComponent
     ],
     imports: [
         CommonModule,
@@ -48,7 +49,8 @@ import { SharedModule } from '@shared/shared.module';
         SharedModule
     ],
     exports:[
-        CreateApiComponent
+        CreateApiComponent,
+        ApiDeleteDialogComponent
     ]
 })
 export class CreateApiModule {

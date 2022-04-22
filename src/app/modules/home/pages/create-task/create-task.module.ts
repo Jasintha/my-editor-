@@ -15,6 +15,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {CreateTaskComponent} from '@home/pages/create-task/create-task.component';
+import {TaskDeleteDialogComponent} from '@home/pages/create-task/task-delete-dialog.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import {SharedModule} from '@shared/shared.module';
@@ -22,7 +23,8 @@ import {SharedModule} from '@shared/shared.module';
 
 @NgModule({
     declarations:[
-        CreateTaskComponent
+        CreateTaskComponent,
+        TaskDeleteDialogComponent
     ],
     imports: [
         CommonModule,
@@ -48,7 +50,8 @@ import {SharedModule} from '@shared/shared.module';
         SharedModule
     ],
     exports:[
-        CreateTaskComponent
+        CreateTaskComponent,
+        TaskDeleteDialogComponent
     ]
 })
 export class CreateTaskModule {

@@ -15,6 +15,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
+import {MicroserviceModelDeleteDialogComponent} from '@home/pages/create-model/microservice-model-delete-dialog.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import { SharedModule } from '@shared/shared.module';
@@ -23,6 +24,7 @@ import { SharedModule } from '@shared/shared.module';
 @NgModule({
     declarations:[
         CreateModelComponent,
+        MicroserviceModelDeleteDialogComponent
     ],
     imports: [
         CommonModule,
@@ -48,7 +50,8 @@ import { SharedModule } from '@shared/shared.module';
         SharedModule
     ],
     exports:[
-        CreateModelComponent
+        CreateModelComponent,
+        MicroserviceModelDeleteDialogComponent
     ]
 })
 export class CreateModelModule {

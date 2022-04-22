@@ -2,24 +2,24 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
-import {LamdafunctionService} from '@core/projectservices/function.service';
+import {SubruleService} from '@home/pages/create-subrule/sub-rule.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { EventManagerService } from '@shared/events/event.type';
 import { AppEvent } from '@shared/events/app.event.class';
 import { EventTypes } from '@shared/events/event.queue';
 
 @Component({
-  selector: 'virtuan-lamdafunction-delete-dialog',
-  templateUrl: './function-delete-dialog.component.html',
+  selector: 'virtuan-subrule-delete-dialog',
+  templateUrl: './subrule-delete-dialog.component.html',
 })
-export class LamdafunctionDeleteDialogComponent {
+export class SubruleDeleteDialogComponent {
   uuid: string;
   name: string;
   projectUid: string;
 
-  constructor(protected lamdafunctionService: LamdafunctionService,
+  constructor(protected subruleService: SubruleService,
               protected eventManager: EventManagerService,
-              public dialogRef: MatDialogRef<LamdafunctionDeleteDialogComponent>,
+              public dialogRef: MatDialogRef<SubruleDeleteDialogComponent>,
               @Inject(MAT_DIALOG_DATA)  public data: any) {
     this.uuid = this.data.uuid;
     this.name = this.data.name;
@@ -31,7 +31,7 @@ export class LamdafunctionDeleteDialogComponent {
   }
 
   confirmDelete(id: string) {
-    this.lamdafunctionService.delete(id, this.projectUid).subscribe(response => {
+    this.subruleService.delete(id, this.projectUid).subscribe(response => {
       // this.eventManager.broadcast({
       //   name: 'lamdafunctionListModification',
       //   content: 'Deleted an lamdafunction'
@@ -39,7 +39,7 @@ export class LamdafunctionDeleteDialogComponent {
       this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
           name: 'editorTreeListModification',
-          content: 'Deleted an lamdafunction',
+          content: 'Deleted an subrule',
         })
       );
       this.dialogRef.close(this.uuid);
