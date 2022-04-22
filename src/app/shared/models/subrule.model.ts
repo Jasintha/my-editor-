@@ -1,4 +1,6 @@
-import { IAPIInput, APIInputType } from './api-input.model';
+import { IAPIInput } from './model/api-input.model';
+import { APIInputType } from './api-input.model';
+
 
 export interface ISubrule {
   uuid?: string;

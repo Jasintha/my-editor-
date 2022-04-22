@@ -21,14 +21,9 @@
   color: white;
 }
 
-.scroll-bar .ui-tree .ui-treenode-parent .ui-treenode-label {
-  background-color: #9f3c3c;
-}
-
-.scroll-bar .ui-tree .ui-treenode-children .ui-treenode-label {
-  background-color: #d5b229;
-}
-
-:host ::ng-deep .ui-tree.my-tree {
-  width: 100%;
+:host ::ng-deep body .ui-tree {
+  border: none;
+  background-color: #e79999;
+  color: #333333;
+  /* padding: 0.571em 1em; */
 }

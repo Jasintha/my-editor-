@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {HttpResponse, HttpErrorResponse} from "@angular/common/http";
-import { IAggregate } from '@app/shared/models/aggregate.model';
+import { IAggregate } from '@app/shared/models/model/aggregate.model';
 import {filter, map} from "rxjs/operators";
 // import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {AggregateService} from "@home/pages/aggregate/microservice-aggregate.service";

@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {IProject} from '@shared/models/project.model';
 import { filter, map } from 'rxjs/operators';
 import {SelectItem} from 'primeng/api';
 import {ProjectService} from '@core/projectservices/project.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AggregateService} from "@home/pages/aggregate/microservice-aggregate.service";
+import { IProject } from '@app/shared/models/model/project.model';
 
 
 // tslint:disable-next-line:class-name

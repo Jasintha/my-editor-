@@ -1,5 +1,5 @@
 
-<div class="card-body">
+<div class="card-body" >
     <h2>
         <div class="row">
             <div class="col-sm-6">
@@ -17,8 +17,9 @@
 
 
     </h2>
-    <div class="scroll-bar" style="margin-top:20px;margin-bottom:10px;height: 620px; overflow-y: scroll;">
-        <p-tree [value]="data" layout="horizontal" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="cm" (onNodeContextMenuSelect)="contextMenu($event, cm)"
+    <div class="scroll-bar" style="margin-top:20px;margin-bottom:10px;height: 620px;  overflow-y: scroll;">
+        <p-tree [style]="{'border': 'none'}"
+                [value]="data" layout="horizontal" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="cm" (onNodeContextMenuSelect)="contextMenu($event, cm)"
                 (onNodeSelect)="onNodeSelect($event)"></p-tree>
         <p-contextMenu #cm appendTo="body" [style]="{'text-decoration': 'none'}" [model]="items"></p-contextMenu>
     </div>
