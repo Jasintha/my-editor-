@@ -365,7 +365,7 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
 
   save() {
     // this.spinnerService.show();
-    const aggregateData = { aggregateId: this.aggregateId, data: this.data };
+    const aggregateData = { aggregateId: this.modelUid, data: this.data };
     console.log(aggregateData)
     this.subscribeToSaveResponse(this.aggregateService.saveModelDesign(aggregateData, this.projectUid));
 
