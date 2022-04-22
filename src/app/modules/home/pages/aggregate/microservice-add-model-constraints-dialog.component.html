@@ -1,0 +1,151 @@
+<form class="mat-form-dialog" [formGroup]="constraintForm" (ngSubmit)="save()" >
+    <h2 mat-dialog-title>Property Configurations</h2>
+    <hr>
+    <h5 style="color: #193052; font-weight: bold">Add Constraints</h5>
+        <mat-dialog-content>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <section class="flex-auto"  >
+                        <mat-checkbox formControlName="isPropertyUnique">
+                            Unique
+                        </mat-checkbox>
+                    </section>
+                </div>
+                <div class="col-sm-6">
+                    <section class="flex-auto" >
+                        <mat-checkbox formControlName="isPropertyEncrypted">
+                            Encrypted
+                        </mat-checkbox>
+                    </section>
+                </div>
+            </div>
+            <br>
+        <div class="row">
+
+            <div class="col-sm-6">
+                <mat-form-field class="flex-auto" appearance="fill"  style="width: 90%">
+                    <mat-label>Length</mat-label>
+                    <input  type="text" formControlName="propertyLength" matInput>
+                    <mat-error *ngIf="constraintForm.controls.propertyLength.hasError('required')">This field is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field class="flex-auto" appearance="fill"  style="width: 90%">
+                    <mat-label>Default Values</mat-label>
+                    <input  type="text" formControlName="propertyDefaultValue" matInput>
+                    <mat-error *ngIf="constraintForm.controls.propertyDefaultValue.hasError('required')">This field is required</mat-error>
+                </mat-form-field>
+            </div>
+
+
+
+        </div>
+            <div *ngIf="projectType === 'task.ui'" style="padding: inherit">
+                <h5 style="color: #193052; font-weight: bold">Form Controllers</h5>
+                <div class="form-group">
+                    <div *ngIf="propertyType === 'TEXT' || propertyType === 'NUMBER'|| propertyType === 'FLOAT'">
+                        <label class="form-control-label">Controller </label>
+                        <p-dropdown placeholder="Choose" name="fieldController"
+                                    [options]="controllerTypeItems" formControlName="fieldController"
+                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                        <br>
+                    </div>
+                </div>
+                <div *ngIf="propertyType === 'DATE'">
+                    <label class="form-control-label">Controller </label>
+                    <input type="text" readonly class="form-control" name="fieldController"
+                           formControlName="fieldController"/>
+                </div>
+                <div *ngIf="propertyType === 'TRUE_OR_FALSE'">
+                    <label class="form-control-label">Controller </label>
+                    <input type="text" readonly class="form-control" name="fieldController"
+                           formControlName="fieldController"/>
+                </div>
+                <div *ngIf="propertyType === 'EMAIL'">
+                    <label class="form-control-label">Controller </label>
+                    <input readonly type="text" class="form-control" name="fieldController"
+                           formControlName="fieldController"/>
+                </div>
+                <div class="form-group" style="text-align: center">
+                    <img *ngIf="this.constraintForm.value.fieldController === 'Textbox'"
+                         src="../../../content/images/form_control/textbox.jpg"
+                         style="width: 30%; height: 10%">
+                    <img *ngIf="this.constraintForm.value.fieldController === 'Radiobutton'"
+                         src="../../../content/images/form_control/radio.jpg"
+                         style="width: 30%; height: 10% ">
+                    <img *ngIf="this.constraintForm.value.fieldController === 'Checkbox'"
+                         src="../../../content/images/form_control/checkbox.jpg"
+                         style="width: 30%; height: 10% ">
+                    <img *ngIf="this.constraintForm.value.fieldController === 'Dropdown'"
+                         src="../../../content/images/form_control/dropdown.jpg"
+                         style="width: 30%; height: 10% ">
+                    <br>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label class="form-control-label">Label </label>
+                        <input class="form-control" type="text" formControlName="label">
+                    </div>
+                    <div class="form-group col-sm-6" *ngIf="this.constraintForm.value.fieldController === 'Textbox'">
+                        <label class="form-control-label">Placeholder </label>
+                        <input class="form-control" type="text" formControlName="placeholder"></div>
+                    <div class="form-group col-sm-6">
+                        <p-checkbox name="isRequired"
+                                    formControlName="isRequired" binary="true"></p-checkbox>
+                        <label class="form-control-label p-sm-2">Required </label>
+                    </div>
+                </div>
+
+                <div
+                        *ngIf="this.constraintForm.value.fieldController === 'Dropdown'|| this.constraintForm.value.fieldController === 'Radiobutton'">
+                    <h6>{{this.constraintForm.value.fieldController}} Choices</h6>
+
+                    <div *ngIf="this.constraintForm.value.fieldController === 'Dropdown'" class="form-group">
+                        <label class="form-control-label">API Path</label>
+
+                        <div class="form-group"
+                             style=" padding-top: 5px; ">
+                            <p-checkbox formControlName="search" binary="true"></p-checkbox>
+                            <label class="form-control-label p-sm-2">Search API from Microservices</label>
+                        </div>
+                        <div class="row">
+
+                            <div *ngIf="constraintForm.value.search" class="form-group col-md-6">
+                                <label class="form-control-label">Microservice</label>
+                                <p-dropdown placeholder="Choose" [options]="microserviceProjectItems"
+                                            formControlName="microservice" filter="true" [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"
+                                            (onChange)="onChangeMicroserviceProject()"></p-dropdown>
+                            </div>
+                            <div *ngIf="constraintForm.value.search" class="form-group col-md-6">
+                                <label class="form-control-label">API</label>
+                                <p-dropdown placeholder="Choose" [options]="apiItems" formControlName="api"
+                                            filter="true" (onChange)="onChangeMicroserviceAPI()"
+                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" name="choiceUrl"
+                               formControlName="resourcePath"/>
+                    </div>
+
+                    <div style="float: right">
+                        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                        <input type="button" (click)="insertChoiceFormControllersGroup('')"
+                               value="Add choice" style="background-color: #4cc792; color: black; border: none">
+                    </div>
+                    <br>
+                    <div style="padding-top: 10px"
+                         *ngFor="let choice of choiceFormGroup['controls']; let k = index">
+                        <div [formGroup]="choice">
+                            <label class="form-control-label">Choice {{k + 1}} </label>
+                            <input class="form-control" type="text" formControlName="choiceLabel"></div>
+                    </div>
+                </div>
+            </div>
+    </mat-dialog-content>
+    <hr>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button style="background-color: #007ad9"  type="submit" [disabled]="constraintForm.invalid || isSaving" cdkFocusInitial>SAVE</button>
+    </mat-dialog-actions>
+</form>

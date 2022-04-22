@@ -1,0 +1,25 @@
+
+<div class="card-body">
+    <h2>
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-title>Domain Model Design</mat-title>
+            </div>
+            <div class="col-sm-6">
+                <div style="text-align: right; align-items: end">
+                    <button mat-raised-button > <mat-icon>cancel</mat-icon>Cancel</button>&nbsp;
+                    <button mat-raised-button style="background-color: #007ad9" (click)="save()"> <mat-icon>save</mat-icon>SAVE</button>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </h2>
+    <div class="scroll-bar" style="margin-top:20px;margin-bottom:10px;height: 620px; overflow-y: scroll;">
+        <p-tree [value]="data" layout="horizontal" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="cm" (onNodeContextMenuSelect)="contextMenu($event, cm)"
+                (onNodeSelect)="onNodeSelect($event)"></p-tree>
+        <p-contextMenu #cm appendTo="body" [style]="{'text-decoration': 'none'}" [model]="items"></p-contextMenu>
+    </div>
+</div>

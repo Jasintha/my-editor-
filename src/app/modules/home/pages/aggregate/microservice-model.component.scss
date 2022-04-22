@@ -1,0 +1,34 @@
+.aggregate-tree {
+  .fa-cube {
+    color: black !important;
+  }
+}
+
+.backImg {
+  height: 386px;
+  width: 400px;
+  background-blend-mode: initial;
+  background-repeat: no-repeat;
+}
+
+.ui-button {
+  background-color: #dee6eb;
+  color: #6d7f8b;
+  border: none;
+}
+
+.modal-title-color {
+  color: white;
+}
+
+.scroll-bar .ui-tree .ui-treenode-parent .ui-treenode-label {
+  background-color: #9f3c3c;
+}
+
+.scroll-bar .ui-tree .ui-treenode-children .ui-treenode-label {
+  background-color: #d5b229;
+}
+
+:host ::ng-deep .ui-tree.my-tree {
+  width: 100%;
+}
