@@ -311,7 +311,7 @@ export class MainRuleChainComponent implements OnInit {
             this.ruleChainMetaDataLoaded = true;
             this.ruleChainMetaData = ruleChainMetaData;
         });
-
+//        path: ':ruleChainId/:editorType/:username/:uid/:routerType',
         this.ruleChainService.getConnectionPropertyTemplates().subscribe((connectionPropertyTemplates) => {
             this.connectionPropertyTemplatesLoaded = true;
             this.connectionPropertyTemplates = connectionPropertyTemplates;
@@ -321,12 +321,16 @@ export class MainRuleChainComponent implements OnInit {
             this.ruleNodeComponents = ruleNodeComponents;
         });
 
+        let url = 'ruleChains/'+item.ruleid+'/default/'+item.username+'/'+this.projectUid+'/X';
+        this.router.navigate([url]);
+
     }
 
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
-            this.projectUid = params['projectUid'];
+
+            this.projectUid = 'MPMA64avZnbVRRCSaD7Xzb_user3gmailcom';
         });
         /*   console.log("fetch data !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             this.username = "user3@gmail.com";

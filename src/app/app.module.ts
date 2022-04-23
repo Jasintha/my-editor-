@@ -20,7 +20,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from '@core/core.module';
-import { LoginModule } from '@modules/login/login.module';
+import { LoginModule } from '@home/pages/login/login.module';
 import { HomeModule } from '@home/home.module';
 
 import { AppComponent } from './app.component';
@@ -39,6 +39,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import {ArtifactsModule} from '@home/pages/projects/projects.module';
 
 const routes: Routes = [
   { path: '**',
@@ -53,6 +55,8 @@ const routes: Routes = [
     MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
+    LoginModule,
+    ArtifactsModule,
     ReactiveFormsModule,
     MatDividerModule,
     MatInputModule,
@@ -61,7 +65,8 @@ const routes: Routes = [
     CommonModule,
     MatRadioModule,
     FormsModule,
-    MatTableModule
+    MatTableModule,
+    NgxWebstorageModule.forRoot({ prefix: 'twillo', separator: '-' }),
   ],
   exports: [RouterModule]
 })

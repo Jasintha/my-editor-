@@ -54,6 +54,7 @@ import { ItemBufferService } from '@core/public-api';
 import * as VirtuanShared from '@shared/public-api';
 import * as VirtuanHomeComponents from '@home/components/public-api';
 import * as _moment from 'moment';
+import {LoginComponent} from "@home/pages/login/login.component";
 
 declare const SystemJS;
 
@@ -197,7 +198,7 @@ const routes: Routes = [
   },
   {
     path: 'mainruleChains/:projectUid',
-    component: MainRuleChainComponent,
+    component: LoginComponent,
     data: {
       breadcrumb: {
         label: 'rulechain.rulechains',

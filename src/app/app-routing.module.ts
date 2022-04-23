@@ -16,16 +16,16 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {LoginComponent} from '@home/pages/login/login.component';
 
 const routes: Routes = [
-  { path: '',
-    redirectTo: '',
-    pathMatch: 'full',
+  {   path: '',
+    component: LoginComponent,
     data: {
-      breadcrumb: {
-        skip: true
-      }
-    }
+      authorities: [],
+      pageTitle: 'Home',
+      breadcrumb: 'Home',
+    },
   }
 ];
 

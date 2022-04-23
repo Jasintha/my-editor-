@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
     this.storageService.testLocalStorage();
 
     this.setupTranslate();
-    this.setupAuth();
+    // this.setupAuth();
   }
 
   setupTranslate() {

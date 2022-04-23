@@ -16,10 +16,18 @@
 
 import { NgModule } from '@angular/core';
 import { RuleChainModule } from '@modules/home/pages/rulechain/rulechain.module';
+import { LoginComponent } from './login/login.component';
+import {RouterModule} from '@angular/router';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {SharedModule} from '@shared/shared.module';
 
 @NgModule({
   exports: [
     RuleChainModule
-  ]
+  ],
+  imports: [
+    RouterModule, FormsModule, SharedModule,ReactiveFormsModule
+  ],
+  declarations: [LoginComponent]
 })
 export class HomePagesModule { }

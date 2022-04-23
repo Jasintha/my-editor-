@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="missing_modules">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/missing_modules/@date-io.zip!/" />
+      <root url="jar://$PROJECT_DIR$/missing_modules/ngx-flowchart.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

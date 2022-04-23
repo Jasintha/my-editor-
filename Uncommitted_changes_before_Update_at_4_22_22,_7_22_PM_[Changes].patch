@@ -1,0 +1,488 @@
+Index: package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package.json b/package.json
+--- a/package.json	
++++ b/package.json	
+@@ -93,7 +93,9 @@
+     "typeface-roboto": "^0.0.75",
+     "zone.js": "~0.10.3",
+     "monaco-editor": "^0.20.0",
+-    "ngx-monaco-editor": "9.0.0"
++    "ngx-monaco-editor": "9.0.0",
++    "ngx-cookie": "5.0.2",
++    "ngx-webstorage": "5.0.0"
+   },
+   "devDependencies": {
+     "@angular-builders/custom-webpack": "^9.1.0",
+Index: src/app/modules/home/pages/home-pages.module.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/modules/home/pages/home-pages.module.ts b/src/app/modules/home/pages/home-pages.module.ts
+--- a/src/app/modules/home/pages/home-pages.module.ts	
++++ b/src/app/modules/home/pages/home-pages.module.ts	
+@@ -16,10 +16,18 @@
+ 
+ import { NgModule } from '@angular/core';
+ import { RuleChainModule } from '@modules/home/pages/rulechain/rulechain.module';
++import { LoginComponent } from './login/login.component';
++import {RouterModule} from '@angular/router';
++import {FormsModule, ReactiveFormsModule} from '@angular/forms';
++import {SharedModule} from '@shared/shared.module';
+ 
+ @NgModule({
+   exports: [
+     RuleChainModule
+-  ]
++  ],
++  imports: [
++    RouterModule, FormsModule, SharedModule,ReactiveFormsModule
++  ],
++  declarations: [LoginComponent]
+ })
+ export class HomePagesModule { }
+Index: src/app/modules/home/pages/rulechain/main-rulechain.component.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/modules/home/pages/rulechain/main-rulechain.component.html b/src/app/modules/home/pages/rulechain/main-rulechain.component.html
+--- a/src/app/modules/home/pages/rulechain/main-rulechain.component.html	
++++ b/src/app/modules/home/pages/rulechain/main-rulechain.component.html	
+@@ -20,6 +20,52 @@
+             <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+             <a [routerLink]="['/mainruleChains', projectUid ]" mat-button>Editor</a>
+             <a [routerLink]="['/generatorChain', projectUid ]" mat-button>Generator</a>
++            <button mat-button [matMenuTriggerFor]="animals">Animal index</button>
++            <mat-menu #animals="matMenu">
++                <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
++                <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button>
++            </mat-menu>
++
++            <mat-menu #vertebrates="matMenu">
++                <button mat-menu-item [matMenuTriggerFor]="fish">Fishes</button>
++                <button mat-menu-item [matMenuTriggerFor]="amphibians">Amphibians</button>
++                <button mat-menu-item [matMenuTriggerFor]="reptiles">Reptiles</button>
++                <button mat-menu-item>Birds</button>
++                <button mat-menu-item>Mammals</button>
++            </mat-menu>
++
++            <mat-menu #invertebrates="matMenu">
++                <button mat-menu-item>Insects</button>
++                <button mat-menu-item>Molluscs</button>
++                <button mat-menu-item>Crustaceans</button>
++                <button mat-menu-item>Corals</button>
++                <button mat-menu-item>Arachnids</button>
++                <button mat-menu-item>Velvet worms</button>
++                <button mat-menu-item>Horseshoe crabs</button>
++            </mat-menu>
++
++            <mat-menu #fish="matMenu">
++                <button mat-menu-item>Baikal oilfish</button>
++                <button mat-menu-item>Bala shark</button>
++                <button mat-menu-item>Ballan wrasse</button>
++                <button mat-menu-item>Bamboo shark</button>
++                <button mat-menu-item>Banded killifish</button>
++            </mat-menu>
++
++            <mat-menu #amphibians="matMenu">
++                <button mat-menu-item>Sonoran desert toad</button>
++                <button mat-menu-item>Western toad</button>
++                <button mat-menu-item>Arroyo toad</button>
++                <button mat-menu-item>Yosemite toad</button>
++            </mat-menu>
++
++            <mat-menu #reptiles="matMenu">
++                <button mat-menu-item>Banded Day Gecko</button>
++                <button mat-menu-item>Banded Gila Monster</button>
++                <button mat-menu-item>Black Tree Monitor</button>
++                <button mat-menu-item>Blue Spiny Lizard</button>
++                <button mat-menu-item disabled>Velociraptor</button>
++            </mat-menu>
+ <!--        <a href="#" mat-button>Menu Item 3</a>
+             <a href="#" mat-button>Menu Item 4</a>
+             <a href="#" mat-button>Menu Item 5</a>
+@@ -34,14 +80,14 @@
+             <as-split direction="horizontal">
+                 <as-split-area [size]="75">
+ 
+-                        <!-- <router-outlet></router-outlet>-->
+-                    <virtuan-lamdafunction-editor *ngIf="loadFunctionEditor" [projectUid]="projectUid" [lamdafunctionUuid]="lambdauid"></virtuan-lamdafunction-editor>
+-                    <virtuan-rulechain-page  *ngIf="ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded" [ruleChain]="ruleChain"
+-                                                     [ruleChainMetaData]="ruleChainMetaData"
+-                                                     [connectionPropertyTemplates]="connectionPropertyTemplates"
+-                                                     [username]="username"
+-                                                     [uid]="projectUid"
+-                                                     [ruleNodeComponents]="ruleNodeComponents"></virtuan-rulechain-page>
++                         <router-outlet></router-outlet>
++<!--                    <virtuan-lamdafunction-editor *ngIf="loadFunctionEditor" [projectUid]="projectUid" [lamdafunctionUuid]="lambdauid"></virtuan-lamdafunction-editor>-->
++<!--                    <virtuan-rulechain-page  *ngIf="ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded" [ruleChain]="ruleChain"-->
++<!--                                                     [ruleChainMetaData]="ruleChainMetaData"-->
++<!--                                                     [connectionPropertyTemplates]="connectionPropertyTemplates"-->
++<!--                                                     [username]="username"-->
++<!--                                                     [uid]="projectUid"-->
++<!--                                                     [ruleNodeComponents]="ruleNodeComponents"></virtuan-rulechain-page>-->
+ 
+                 </as-split-area>
+                 <as-split-area [size]="25">
+Index: src/tslint.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tslint.json b/src/tslint.json
+--- a/src/tslint.json	
++++ b/src/tslint.json	
+@@ -1,6 +1,7 @@
+ {
+   "extends": "../tslint.json",
+   "rules": {
++    "only-arrow-functions": false,
+     "directive-selector": [
+       true,
+       "attribute",
+Index: src/app/app.component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/app.component.ts b/src/app/app.component.ts
+--- a/src/app/app.component.ts	
++++ b/src/app/app.component.ts	
+@@ -71,7 +71,7 @@
+     this.storageService.testLocalStorage();
+ 
+     this.setupTranslate();
+-    this.setupAuth();
++    // this.setupAuth();
+   }
+ 
+   setupTranslate() {
+Index: src/app/modules/home/pages/rulechain/main-rulechain.component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/modules/home/pages/rulechain/main-rulechain.component.ts b/src/app/modules/home/pages/rulechain/main-rulechain.component.ts
+--- a/src/app/modules/home/pages/rulechain/main-rulechain.component.ts	
++++ b/src/app/modules/home/pages/rulechain/main-rulechain.component.ts	
+@@ -311,7 +311,7 @@
+             this.ruleChainMetaDataLoaded = true;
+             this.ruleChainMetaData = ruleChainMetaData;
+         });
+-
++//        path: ':ruleChainId/:editorType/:username/:uid/:routerType',
+         this.ruleChainService.getConnectionPropertyTemplates().subscribe((connectionPropertyTemplates) => {
+             this.connectionPropertyTemplatesLoaded = true;
+             this.connectionPropertyTemplates = connectionPropertyTemplates;
+@@ -321,12 +321,16 @@
+             this.ruleNodeComponents = ruleNodeComponents;
+         });
+ 
++        let url = 'ruleChains/'+item.ruleid+'/default/'+item.username+'/'+this.projectUid+'/X';
++        this.router.navigate([url]);
++
+     }
+ 
+ 
+     ngOnInit(): void {
+         this.route.params.subscribe(params => {
+-            this.projectUid = params['projectUid'];
++
++            this.projectUid = 'MPMA64avZnbVRRCSaD7Xzb_user3gmailcom';
+         });
+         /*   console.log("fetch data !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+             this.username = "user3@gmail.com";
+Index: src/app/modules/home/pages/rulechain/rulechain-routing.module.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/modules/home/pages/rulechain/rulechain-routing.module.ts b/src/app/modules/home/pages/rulechain/rulechain-routing.module.ts
+--- a/src/app/modules/home/pages/rulechain/rulechain-routing.module.ts	
++++ b/src/app/modules/home/pages/rulechain/rulechain-routing.module.ts	
+@@ -54,6 +54,7 @@
+ import * as VirtuanShared from '@shared/public-api';
+ import * as VirtuanHomeComponents from '@home/components/public-api';
+ import * as _moment from 'moment';
++import {LoginComponent} from "@home/pages/login/login.component";
+ 
+ declare const SystemJS;
+ 
+@@ -197,7 +198,7 @@
+   },
+   {
+     path: 'mainruleChains/:projectUid',
+-    component: MainRuleChainComponent,
++    component: LoginComponent,
+     data: {
+       breadcrumb: {
+         label: 'rulechain.rulechains',
+Index: src/app/app-routing.module.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/app-routing.module.ts b/src/app/app-routing.module.ts
+--- a/src/app/app-routing.module.ts	
++++ b/src/app/app-routing.module.ts	
+@@ -16,16 +16,16 @@
+ 
+ import { NgModule } from '@angular/core';
+ import { RouterModule, Routes } from '@angular/router';
++import {LoginComponent} from '@home/pages/login/login.component';
+ 
+ const routes: Routes = [
+-  { path: '',
+-    redirectTo: '',
+-    pathMatch: 'full',
++  {   path: '',
++    component: LoginComponent,
+     data: {
+-      breadcrumb: {
+-        skip: true
+-      }
+-    }
++      authorities: [],
++      pageTitle: 'Home',
++      breadcrumb: 'Home',
++    },
+   }
+ ];
+ 
+Index: src/app/app.module.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/app.module.ts b/src/app/app.module.ts
+--- a/src/app/app.module.ts	
++++ b/src/app/app.module.ts	
+@@ -39,6 +39,7 @@
+ import {MatDialogModule} from '@angular/material/dialog';
+ import {MatButtonModule} from '@angular/material/button';
+ import { MonacoEditorModule } from 'ngx-monaco-editor';
++import { NgxWebstorageModule } from 'ngx-webstorage';
+ 
+ const routes: Routes = [
+   { path: '**',
+@@ -61,7 +62,8 @@
+     CommonModule,
+     MatRadioModule,
+     FormsModule,
+-    MatTableModule
++    MatTableModule,
++    NgxWebstorageModule.forRoot({ prefix: 'twillo', separator: '-' }),
+   ],
+   exports: [RouterModule]
+ })
+Index: package-lock.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package-lock.json b/package-lock.json
+--- a/package-lock.json	
++++ b/package-lock.json	
+@@ -37,6 +37,7 @@
+         "@ngx-translate/http-loader": "^4.0.0",
+         "ace-builds": "^1.4.11",
+         "angular-gridster2": "^9.1.0",
++        "angular-split": "^5.0.0",
+         "angular2-hotkeys": "^2.2.0",
+         "base64-js": "^1.3.1",
+         "canvas-gauges": "^2.1.7",
+@@ -61,12 +62,16 @@
+         "material-design-icons": "^3.0.1",
+         "messageformat": "^2.3.0",
+         "moment": "^2.24.0",
++        "monaco-editor": "^0.20.0",
+         "ngx-clipboard": "^13.0.1",
+         "ngx-color-picker": "^9.1.0",
++        "ngx-cookie": "5.0.2",
+         "ngx-daterangepicker-material": "^3.0.1",
+         "ngx-flowchart": "git://github.com/thingsboard/ngx-flowchart.git#master",
+         "ngx-hm-carousel": "^2.0.0-rc.1",
++        "ngx-monaco-editor": "9.0.0",
+         "ngx-translate-messageformat-compiler": "^4.6.0",
++        "ngx-webstorage": "5.0.0",
+         "objectpath": "^2.0.0",
+         "prop-types": "^15.7.2",
+         "raphael": "^2.3.0",
+@@ -2987,6 +2992,24 @@
+       "resolved": "https://registry.npmjs.org/angular-gridster2/-/angular-gridster2-9.1.0.tgz",
+       "integrity": "sha512-oaJx7dRfC0cDcPBtUzf7DjLDLA04nxsekR2Ygls4iVigB+IXkurqwUpIUVgDJAipNemusVEC5j5+7on1CfwD9Q=="
+     },
++    "node_modules/angular-split": {
++      "version": "5.0.0",
++      "resolved": "https://registry.npmjs.org/angular-split/-/angular-split-5.0.0.tgz",
++      "integrity": "sha512-V7m/mdp31189EGeVRw5j6MOfb8EiYoDqr8XTay4D7GcCpEm2+7oHD1n6eWbCvQMuRb8X3ZfP2pZNDmJs8bLaAg==",
++      "dependencies": {
++        "tslib": "^2.0.0"
++      },
++      "peerDependencies": {
++        "@angular/common": ">=9.0.0",
++        "@angular/core": ">=9.0.0",
++        "rxjs": ">=6.0.0"
++      }
++    },
++    "node_modules/angular-split/node_modules/tslib": {
++      "version": "2.3.1",
++      "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz",
++      "integrity": "sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw=="
++    },
+     "node_modules/angular2-hotkeys": {
+       "version": "2.2.0",
+       "resolved": "https://registry.npmjs.org/angular2-hotkeys/-/angular2-hotkeys-2.2.0.tgz",
+@@ -10400,6 +10423,11 @@
+         "node": "*"
+       }
+     },
++    "node_modules/monaco-editor": {
++      "version": "0.20.0",
++      "resolved": "https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.20.0.tgz",
++      "integrity": "sha512-hkvf4EtPJRMQlPC3UbMoRs0vTAFAYdzFQ+gpMb8A+9znae1c43q8Mab9iVsgTcg/4PNiLGGn3SlDIa8uvK1FIQ=="
++    },
+     "node_modules/mousetrap": {
+       "version": "1.6.5",
+       "resolved": "https://registry.npmjs.org/mousetrap/-/mousetrap-1.6.5.tgz",
+@@ -10533,6 +10561,23 @@
+       "resolved": "https://registry.npmjs.org/ngx-color-picker/-/ngx-color-picker-9.1.0.tgz",
+       "integrity": "sha512-ViYBfXb4IL1UbM15LaZHYqHyHPYVEKg+rZB1GWSLqXVuDol3Cgt38D8XfOcivVAO60CziQ77k3ThDo31T6wC6A=="
+     },
++    "node_modules/ngx-cookie": {
++      "version": "5.0.2",
++      "resolved": "https://registry.npmjs.org/ngx-cookie/-/ngx-cookie-5.0.2.tgz",
++      "integrity": "sha512-auivWhAhC5bW1HssvtQild1TREHWb1JtcKO0e+VGe9T7LHrfi5w2qcP8C58ly64PT+brZHQBvT1Azb7a6goHZA==",
++      "dependencies": {
++        "tslib": "^2.0.0"
++      },
++      "peerDependencies": {
++        "@angular/common": ">9.0.0",
++        "@angular/core": ">9.0.0"
++      }
++    },
++    "node_modules/ngx-cookie/node_modules/tslib": {
++      "version": "2.4.0",
++      "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz",
++      "integrity": "sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ=="
++    },
+     "node_modules/ngx-daterangepicker-material": {
+       "version": "3.0.1",
+       "resolved": "https://registry.npmjs.org/ngx-daterangepicker-material/-/ngx-daterangepicker-material-3.0.1.tgz",
+@@ -10558,11 +10603,31 @@
+         "resize-observer-polyfill": "^1.5.1"
+       }
+     },
++    "node_modules/ngx-monaco-editor": {
++      "version": "9.0.0",
++      "resolved": "https://registry.npmjs.org/ngx-monaco-editor/-/ngx-monaco-editor-9.0.0.tgz",
++      "integrity": "sha512-fPXT3M8W920Vs0KPMX6iA7GJYjBRnl9naug9A7D2inPPzxQGtgPZrSEatIPf37a6ir9Ts+8fwt1bTkFzfTgIpQ==",
++      "peerDependencies": {
++        "@angular/common": "^9.0.0",
++        "@angular/core": "^9.0.0",
++        "tslib": "^1.10.0"
++      }
++    },
+     "node_modules/ngx-translate-messageformat-compiler": {
+       "version": "4.6.0",
+       "resolved": "https://registry.npmjs.org/ngx-translate-messageformat-compiler/-/ngx-translate-messageformat-compiler-4.6.0.tgz",
+       "integrity": "sha512-tX2iMZ51Gh6YfMeuTdUfgYipKbcz1Z1q/lbZLOWsMqyRzKcpL9nhM2fPkWfaangKu4o4kUJloWN0kFsyy6Ge5g=="
+     },
++    "node_modules/ngx-webstorage": {
++      "version": "5.0.0",
++      "resolved": "https://registry.npmjs.org/ngx-webstorage/-/ngx-webstorage-5.0.0.tgz",
++      "integrity": "sha512-m96dBjUgLCpaknLRKfsJMEik393xrSX0EwO3paNSkS5d+xj2/cAendE3NwJeKY/W1D9EkKAhCvSUDX9/bAwCUg==",
++      "peerDependencies": {
++        "@angular/common": "^9.0.0",
++        "@angular/core": "^9.0.0",
++        "tslib": "^1.10.0"
++      }
++    },
+     "node_modules/ngx-window-token": {
+       "version": "3.0.0",
+       "resolved": "https://registry.npmjs.org/ngx-window-token/-/ngx-window-token-3.0.0.tgz",
+@@ -20023,6 +20088,21 @@
+       "resolved": "https://registry.npmjs.org/angular-gridster2/-/angular-gridster2-9.1.0.tgz",
+       "integrity": "sha512-oaJx7dRfC0cDcPBtUzf7DjLDLA04nxsekR2Ygls4iVigB+IXkurqwUpIUVgDJAipNemusVEC5j5+7on1CfwD9Q=="
+     },
++    "angular-split": {
++      "version": "5.0.0",
++      "resolved": "https://registry.npmjs.org/angular-split/-/angular-split-5.0.0.tgz",
++      "integrity": "sha512-V7m/mdp31189EGeVRw5j6MOfb8EiYoDqr8XTay4D7GcCpEm2+7oHD1n6eWbCvQMuRb8X3ZfP2pZNDmJs8bLaAg==",
++      "requires": {
++        "tslib": "^2.0.0"
++      },
++      "dependencies": {
++        "tslib": {
++          "version": "2.3.1",
++          "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz",
++          "integrity": "sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw=="
++        }
++      }
++    },
+     "angular2-hotkeys": {
+       "version": "2.2.0",
+       "resolved": "https://registry.npmjs.org/angular2-hotkeys/-/angular2-hotkeys-2.2.0.tgz",
+@@ -26313,6 +26393,11 @@
+       "resolved": "https://registry.npmjs.org/moment/-/moment-2.24.0.tgz",
+       "integrity": "sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg=="
+     },
++    "monaco-editor": {
++      "version": "0.20.0",
++      "resolved": "https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.20.0.tgz",
++      "integrity": "sha512-hkvf4EtPJRMQlPC3UbMoRs0vTAFAYdzFQ+gpMb8A+9znae1c43q8Mab9iVsgTcg/4PNiLGGn3SlDIa8uvK1FIQ=="
++    },
+     "mousetrap": {
+       "version": "1.6.5",
+       "resolved": "https://registry.npmjs.org/mousetrap/-/mousetrap-1.6.5.tgz",
+@@ -26433,6 +26518,21 @@
+       "resolved": "https://registry.npmjs.org/ngx-color-picker/-/ngx-color-picker-9.1.0.tgz",
+       "integrity": "sha512-ViYBfXb4IL1UbM15LaZHYqHyHPYVEKg+rZB1GWSLqXVuDol3Cgt38D8XfOcivVAO60CziQ77k3ThDo31T6wC6A=="
+     },
++    "ngx-cookie": {
++      "version": "5.0.2",
++      "resolved": "https://registry.npmjs.org/ngx-cookie/-/ngx-cookie-5.0.2.tgz",
++      "integrity": "sha512-auivWhAhC5bW1HssvtQild1TREHWb1JtcKO0e+VGe9T7LHrfi5w2qcP8C58ly64PT+brZHQBvT1Azb7a6goHZA==",
++      "requires": {
++        "tslib": "^2.0.0"
++      },
++      "dependencies": {
++        "tslib": {
++          "version": "2.4.0",
++          "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz",
++          "integrity": "sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ=="
++        }
++      }
++    },
+     "ngx-daterangepicker-material": {
+       "version": "3.0.1",
+       "resolved": "https://registry.npmjs.org/ngx-daterangepicker-material/-/ngx-daterangepicker-material-3.0.1.tgz",
+@@ -26461,11 +26561,23 @@
+         "resize-observer-polyfill": "^1.5.1"
+       }
+     },
++    "ngx-monaco-editor": {
++      "version": "9.0.0",
++      "resolved": "https://registry.npmjs.org/ngx-monaco-editor/-/ngx-monaco-editor-9.0.0.tgz",
++      "integrity": "sha512-fPXT3M8W920Vs0KPMX6iA7GJYjBRnl9naug9A7D2inPPzxQGtgPZrSEatIPf37a6ir9Ts+8fwt1bTkFzfTgIpQ==",
++      "requires": {}
++    },
+     "ngx-translate-messageformat-compiler": {
+       "version": "4.6.0",
+       "resolved": "https://registry.npmjs.org/ngx-translate-messageformat-compiler/-/ngx-translate-messageformat-compiler-4.6.0.tgz",
+       "integrity": "sha512-tX2iMZ51Gh6YfMeuTdUfgYipKbcz1Z1q/lbZLOWsMqyRzKcpL9nhM2fPkWfaangKu4o4kUJloWN0kFsyy6Ge5g=="
+     },
++    "ngx-webstorage": {
++      "version": "5.0.0",
++      "resolved": "https://registry.npmjs.org/ngx-webstorage/-/ngx-webstorage-5.0.0.tgz",
++      "integrity": "sha512-m96dBjUgLCpaknLRKfsJMEik393xrSX0EwO3paNSkS5d+xj2/cAendE3NwJeKY/W1D9EkKAhCvSUDX9/bAwCUg==",
++      "requires": {}
++    },
+     "ngx-window-token": {
+       "version": "3.0.0",
+       "resolved": "https://registry.npmjs.org/ngx-window-token/-/ngx-window-token-3.0.0.tgz",
