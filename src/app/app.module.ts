@@ -40,7 +40,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import {ArtifactsModule} from '@home/pages/projects/projects.module';
+import {ProjectsModule} from '@home/pages/projects/projects.module';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {GlobalHttpInterceptor} from '@core/interceptors/global-http-interceptor';
 
 const routes: Routes = [
   { path: '**',
@@ -56,7 +58,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatIconModule,
     LoginModule,
-    ArtifactsModule,
+    ProjectsModule,
     ReactiveFormsModule,
     MatDividerModule,
     MatInputModule,
@@ -88,7 +90,13 @@ export class PageNotFoundRoutingModule { }
     PageNotFoundRoutingModule,
     MonacoEditorModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GlobalHttpInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

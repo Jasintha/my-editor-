@@ -44,7 +44,7 @@ let tmpHeaders = {};
 export class GlobalHttpInterceptor implements HttpInterceptor {
 
   private AUTH_SCHEME = 'Bearer ';
-  private AUTH_HEADER_NAME = 'X-Authorization';
+  private AUTH_HEADER_NAME = 'Authorization';
 
   private internalUrlPrefixes = [
     '/api/auth/token',
@@ -60,6 +60,7 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    debugger;
     if (req.url.startsWith('/api/')) {
       const config = this.getInterceptorConfig(req);
       const isLoading = !this.isInternalUrlPrefix(req.url);
@@ -237,11 +238,10 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
   }
 
   private isTokenBasedAuthEntryPoint(url): boolean {
-   // return  url.startsWith('/api/') &&
-     // !url.startsWith(Constants.entryPoints.login) &&
-     // !url.startsWith(Constants.entryPoints.tokenRefresh) &&
-     // !url.startsWith(Constants.entryPoints.nonTokenBased);
-    return false;
+   return  url.startsWith('/api/') &&
+     !url.startsWith(Constants.entryPoints.login) &&
+     !url.startsWith(Constants.entryPoints.tokenRefresh) &&
+     !url.startsWith(Constants.entryPoints.nonTokenBased);
   }
 
   private updateLoadingState(config: InterceptorConfig, isLoading: boolean) {

@@ -26,7 +26,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   sortField: string;
   sortOrder: number;
   // items: MenuItem[];
-  projectUid: string;
+  projectUid = '123456';
 
   constructor(
     protected artifactsService: ProjectsService,

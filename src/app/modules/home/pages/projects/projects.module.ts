@@ -34,4 +34,4 @@ const ENTITY_STATES = [...projectsRoute];
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ArtifactsModule {}
+export class ProjectsModule {}

@@ -24,7 +24,7 @@ export class ArtifactsResolve implements Resolve<IProject> {
 
 export const projectsRoute: Routes = [
   {
-    path: ':id',
+    path: 'projects',
     component: ProjectsComponent,
     data: {
       authorities: ['ROLE_USER', 'ROLE_ADMIN'],

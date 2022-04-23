@@ -7,6 +7,8 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {StateStorageService} from '@core/auth/state-storage.service';
 import {AccountService} from '@core/auth/account.service';
+import {Subscription} from 'rxjs';
+import { Account } from '@core/user/account.model';
 
 @Component({
   selector: 'virtuan-loginx',
@@ -24,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   auth: boolean;
   version = '';
-
+  eventSubscriber: Subscription;
   account: Account;
   // modalRef: NgbModalRef;
   // jhiAlertService: any;
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit {
       // protected homeTrackerService: HomeTrackerService,
        private router: Router,
        private fb: FormBuilder,
+
        private loginService: LoginService,
        private stateStorageService: StateStorageService,
      //  private messageService: MessageService,
@@ -109,10 +112,10 @@ export class LoginComponent implements OnInit {
     //   );
     // }
     //
-    // this.accountService.identity().then((account: Account) => {
-    //   this.account = account;
-    // });
-    // this.registerAuthenticationSuccess();
+    this.accountService.identity().then((account: Account) => {
+      this.account = account;
+    });
+    this.registerAuthenticationSuccess();
     // this.displayCookieConsent();
   }
 
@@ -146,13 +149,13 @@ export class LoginComponent implements OnInit {
   //   this.version = '';
   // }
 
-  // registerAuthenticationSuccess() {
-  //   this.eventSubscriber = this.eventManager.on(EventTypes.authenticationSuccess).subscribe(event =>
-  //       this.accountService.identity().then(account => {
-  //         this.account = account;
-  //       })
-  //   );
-  // }
+  registerAuthenticationSuccess() {
+    this.eventSubscriber = this.eventManager.on(EventTypes.authenticationSuccess).subscribe(event =>
+        this.accountService.identity().then(account => {
+          this.account = account;
+        })
+    );
+  }
 
   // isAuthenticated() {
   //   let auth: boolean = this.accountService.isAuthenticated();
@@ -199,10 +202,6 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['']);
           }
 
-          // this.eventManager.broadcast({
-          //   name: 'authenticationSuccess',
-          //   content: 'Sending Authentication Success'
-          // });
           this.eventManager.dispatch(
               new AppEvent(EventTypes.authenticationSuccess, {
                 name: 'authenticationSuccess',

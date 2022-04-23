@@ -11,6 +11,7 @@ import { WebsocketService } from '../tracker/websocket.service';
 import { BreakpointTrackerService } from '../tracker/breakpoint.service';
 import { ThemeTrackerService } from '../tracker/theme.service';
 import { BuildWebsocketService } from '../tracker/buildWebSocket.service';
+import {Router} from "@angular/router";
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -26,15 +27,16 @@ export class AccountService {
     private bws: BuildWebsocketService,
     private ts: ToolbarTrackerService,
     private ps: BreakpointTrackerService,
-    private themeService: ThemeTrackerService
+    private themeService: ThemeTrackerService,
+    private router: Router,
   ) {}
 
   fetch(): Observable<HttpResponse<Account>> {
-    return this.http.get<Account>(SERVER_API_URL + 'api/account', { observe: 'response' });
+    return this.http.get<Account>('/api/account', { observe: 'response' });
   }
 
   save(account: any): Observable<HttpResponse<any>> {
-    return this.http.post(SERVER_API_URL + 'api/account', account, { observe: 'response' });
+    return this.http.post( '/api/account', account, { observe: 'response' });
   }
 
   authenticate(identity) {
@@ -95,7 +97,7 @@ export class AccountService {
           this.ts.setProjectId(0);
           this.ts.setProjectUUID('');
           this.ws.connect(account.email);
-          //this.bws.connect(account.email);
+          // this.bws.connect(account.email);
           this.ps.setBreakpoint(-1);
           this.themeService.setDefaultTheme(1);
           // After retrieve the account info, the language will be changed to
@@ -104,6 +106,8 @@ export class AccountService {
             const langKey = this.sessionStorage.retrieve('locale') || this.userIdentity.langKey;
             //  this.languageService.changeLanguage(langKey);
           }
+          const url = 'projects';
+          this.router.navigate([url]);
         } else {
           this.userIdentity = null;
           this.authenticated = false;
