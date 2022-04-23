@@ -12,6 +12,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
+import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
+import {IApi} from '@shared/models/model/microservice-api.model';
 interface Item {
   value: any;
   label: string;
@@ -65,8 +67,15 @@ export class CreateModelComponent implements OnInit {
               this.editForm.get('type').setValidators([Validators.required]);
               this.editForm.get('type').updateValueAndValidity();
             }
+
+            if (this.data.createStatus === 'Update') {
+              this.loadUpdateForm();
+            }
           });
     } else {
+      if (this.data.createStatus === 'Update') {
+        this.loadUpdateForm();
+      }
     }
   }
 
@@ -119,11 +128,21 @@ export class CreateModelComponent implements OnInit {
     }
   }
 
-  // loadUpdateForm() {
-  //   const obj = JSON.parse(this.rowData);
-  //   this.currentAggregate = obj;
-  //   this.updateForm(obj);
-  // }
+  loadUpdateForm() {
+    this.aggregateService
+        .find(this.data.uuid ,this.projectUid)
+        .pipe(
+            filter((mayBeOk: HttpResponse<IHybridfunction>) => mayBeOk.ok),
+            map((response: HttpResponse<IHybridfunction>) => response.body)
+        )
+        .subscribe(
+            (res: IApi) => {
+              this.currentAggregate = res;
+              this.updateForm(res);
+            }
+        );
+    // const obj = JSON.parse(this.rowData);
+  }
 
   updateForm(aggregate: IAggregate) {
     let modelType: string = aggregate.type;

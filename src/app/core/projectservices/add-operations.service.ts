@@ -83,7 +83,8 @@ export class AddOperationService {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUId,
-                createStatus: status
+                createStatus: status,
+                uuid: item.uuid,
             }
         });
         dialogRef.afterClosed().subscribe(result => {

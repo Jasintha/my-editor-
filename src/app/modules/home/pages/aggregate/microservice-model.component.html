@@ -14,7 +14,7 @@
                             <mat-icon>cancel</mat-icon>
                         </button>
                         &nbsp;&nbsp;
-                        <button style="background-color: #007ad9; color: white;" (click)="save()" mat-fab aria-label="Example icon button with a delete icon"
+                        <button  (click)="save()" mat-fab aria-label="Example icon button with a delete icon"
                                 #tooltip="matTooltip"
                                 matTooltip="Save"
                                 matTooltipPosition="above"
@@ -30,7 +30,7 @@
 
         </div>
     <hr>
-    <div class="scroll-bar" style="margin-top:20px;margin-bottom:10px;height: 590px;  overflow-y: scroll;">
+    <div class="scroll-bar" style="margin-top:20px;margin-bottom:10px;height: 590px;  overflow-y: auto;">
         <p-tree [style]="{'border': 'none'}"
                 [value]="data"  layout="horizontal" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="cm" (onNodeContextMenuSelect)="contextMenu($event, cm)"
                 (onNodeSelect)="onNodeSelect($event)"></p-tree>

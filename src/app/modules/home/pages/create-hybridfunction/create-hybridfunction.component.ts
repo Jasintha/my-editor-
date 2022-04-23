@@ -419,6 +419,7 @@ export class CreateHybridfunctionComponent implements OnInit {
   }
 
   previousState() {
+    this.dialogRef.close();
     // this.isVisibleEvent.emit(false);
   }
 
@@ -462,8 +463,7 @@ export class CreateHybridfunctionComponent implements OnInit {
           content: 'Add an Hybrid Function',
         })
     );
-    this.dialogRef.close();
-    //this.previousState();
+    this.previousState();
   }
 
   protected onSaveError() {
