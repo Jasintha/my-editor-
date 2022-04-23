@@ -21,6 +21,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
+import {IEvent} from '@shared/models/model/microservice-event.model';
+import {IApi} from '@shared/models/model/microservice-api.model';
 interface Item {
   value: any;
   label: string;
@@ -127,9 +129,9 @@ export class CreateHybridfunctionComponent implements OnInit {
                 } else if (this.project.apptypesID === 'virtuan.webapp-v2') {
                   this.loadWebappModels();
                 }
-                // if (this.createStatus == 'update') {
-                //   this.loadUpdateForm();
-                // }
+                if (this.data.createStatus === 'Update') {
+                  this.loadUpdateForm();
+                }
               },
               (res: HttpErrorResponse) => this.onError(res.message)
           );
@@ -384,15 +386,28 @@ export class CreateHybridfunctionComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
   }
 
-  // loadUpdateForm() {
-  //   const obj = JSON.parse(this.rowData);
-  //   this.currentHybridfunction = obj;
-  //   this.updateForm(obj);
-  // }
+  loadUpdateForm() {
+    // const obj = JSON.parse(this.rowData);
+    this.hybridfunctionService
+        .find(this.data.uuid ,this.projectUid)
+        .pipe(
+            filter((mayBeOk: HttpResponse<IHybridfunction>) => mayBeOk.ok),
+            map((response: HttpResponse<IHybridfunction>) => response.body)
+        )
+        .subscribe(
+            (res: IApi) => {
+              this.currentHybridfunction = res;
+              this.updateForm(res);
+            }
+        );
+  }
 
   updateForm(hybridfunction: IHybridfunction) {
     if (this.currentHybridfunction.params) {
       this.hybridfunctionParams = this.currentHybridfunction.params;
+
+      this.ELEMENT_DATA = this.currentHybridfunction.params;
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
     }
 
     this.editForm.patchValue({

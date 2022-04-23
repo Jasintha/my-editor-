@@ -32,7 +32,7 @@
         <!--<as-split-area [size]="15">TOP</as-split-area>-->
         <as-split-area [size]="85">
             <as-split direction="horizontal">
-                <as-split-area [size]="80">
+                <as-split-area [size]="85">
 
                         <!-- <router-outlet></router-outlet>-->
                         <virtuan-microservice-model *ngIf="loadModelView" [projectUid]="projectUid" [modelUid]="modelUid"></virtuan-microservice-model>
@@ -45,7 +45,7 @@
                                                  [ruleNodeComponents]="ruleNodeComponents"></virtuan-rulechain-page>
 
                 </as-split-area>
-                <as-split-area [size]="20">
+                <as-split-area [size]="15">
                     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
                             <button mat-icon-button disabled></button>
@@ -63,9 +63,9 @@
                                         type="button">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
-                                <button mat-icon-button color="primary"  *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="add(node.data)" ><mat-icon>add_circle</mat-icon></button>
+                                <button mat-icon-button color="primary"  *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="add(node.data)" ><mat-icon>note_add</mat-icon></button>
                             </mat-tree-node>
-                            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding >
                                 <button mat-icon-button
                                         [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
                                     <mat-icon class="mat-icon-rtl-mirror">
@@ -80,7 +80,7 @@
                                 </div>
 
 
-                            <button mat-icon-button color="primary"  *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="add(node.data)" ><mat-icon >add_circle</mat-icon></button>
+                            <button mat-icon-button color="primary" class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="add(node.data)" ><mat-icon >add_circle</mat-icon></button>
                             <mat-progress-bar *ngIf="node.isLoading"
                                               mode="indeterminate"
                                               class="example-tree-progress-bar"></mat-progress-bar>

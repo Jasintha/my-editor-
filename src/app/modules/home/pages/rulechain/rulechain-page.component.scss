@@ -361,9 +361,10 @@
 
 
 .top-node {
-  position: absolute;
-  left: 90%;
+  position: fixed;
+  left: 97%;
   margin-left: 1px;
+  float: right;
 }
 
 .add-btn {

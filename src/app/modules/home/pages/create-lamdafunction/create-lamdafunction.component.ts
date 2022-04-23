@@ -16,6 +16,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
+import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
+import {IApi} from '@shared/models/model/microservice-api.model';
 interface Item {
   value: any;
   label: string;
@@ -120,9 +122,9 @@ export class CreateLamdafunctionComponent implements OnInit {
                 if (this.viewmodels) {
                   // this.loadViewmodels();
                 }
-                // if (this.createStatus == 'update') {
-                //   this.loadUpdateForm();
-                // }
+                if (this.data.createStatus === 'Update') {
+                  this.loadUpdateForm();
+                }
               },
               (res: HttpErrorResponse) => this.onError(res.message)
           );
@@ -332,15 +334,28 @@ export class CreateLamdafunctionComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
   }
 
-  // loadUpdateForm() {
-  //   const obj = JSON.parse(this.rowData);
-  //   this.currentLamdafunction = obj;
-  //   this.updateForm(obj);
-  // }
+  loadUpdateForm() {
+    // const obj = JSON.parse(this.rowData);
+    this.lamdafunctionService
+        .find(this.data.uuid ,this.projectUid)
+        .pipe(
+            filter((mayBeOk: HttpResponse<IHybridfunction>) => mayBeOk.ok),
+            map((response: HttpResponse<IHybridfunction>) => response.body)
+        )
+        .subscribe(
+            (res: IApi) => {
+              this.currentLamdafunction = res;
+              this.updateForm(res);
+            }
+        );
+  }
 
   updateForm(lamdafunction: ILamdafunction) {
     if (this.currentLamdafunction.params) {
       this.lamdafunctionParams = this.currentLamdafunction.params;
+
+      this.ELEMENT_DATA = this.currentLamdafunction.params;
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
     }
 
     let returnObj: APIInput;
@@ -363,12 +378,6 @@ export class CreateLamdafunctionComponent implements OnInit {
   }
 
   previousState() {
-    this.eventManager.dispatch(
-        new AppEvent(EventTypes.editorTreeListModification, {
-          name: 'editorTreeListModification',
-          content: 'Add an LambdaFunction',
-        })
-    );
     // this.isVisibleEvent.emit(false);
     this.dialogRef.close();
   }
@@ -409,6 +418,12 @@ export class CreateLamdafunctionComponent implements OnInit {
 
   protected onSaveSuccess() {
     this.isSaving = false;
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorTreeListModification, {
+          name: 'editorTreeListModification',
+          content: 'Add an LambdaFunction',
+        })
+    );
     this.previousState();
   }
 

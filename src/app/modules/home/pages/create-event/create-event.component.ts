@@ -13,6 +13,7 @@ import {EventService} from '@core/projectservices/microservice-event.service';
 import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
+import {IApi} from '@shared/models/model/microservice-api.model';
 interface Item {
   value: any;
   label: string;
@@ -99,24 +100,35 @@ export class CreateEventComponent implements OnInit {
               (res: IAggregate[]) => {
                 this.aggregates = this.filterModels(res);
                 this.loadAggregates();
-                // if (this.createStatus == 'update') {
-                //   this.loadUpdateForm();
-                // }
+                if (this.data.createStatus === 'Update') {
+                  this.loadUpdateForm();
+                }
               },
               (res: HttpErrorResponse) => this.onError(res.message)
           );
     } else {
-      // if (this.createStatus == 'update') {
-      //   this.loadUpdateForm();
-      // }
+      if (this.data.createStatus === 'Update') {
+        this.loadUpdateForm();
+      }
     }
   }
 
-  // loadUpdateForm() {
-  //   const obj = JSON.parse(this.rowData);
-  //   this.currentEvent = obj;
-  //   this.updateForm(obj);
-  // }
+  loadUpdateForm() {
+    this.eventService
+        .find(this.data.uuid ,this.projectUid)
+        .pipe(
+            filter((mayBeOk: HttpResponse<IEvent>) => mayBeOk.ok),
+            map((response: HttpResponse<IEvent>) => response.body)
+        )
+        .subscribe(
+            (res: IApi) => {
+              this.currentEvent = res;
+              this.updateForm(res);
+            }
+        );
+    // const obj = JSON.parse(this.rowData);
+    // this.currentEvent = obj;
+  }
 
   filterModels(aggregateList: any) {
     const entArr = [];

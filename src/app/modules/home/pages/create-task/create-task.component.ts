@@ -19,6 +19,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
+import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
+import {IApi} from '@shared/models/model/microservice-api.model';
 interface Item {
   value: any;
   label: string;
@@ -325,9 +327,9 @@ export class CreateTaskComponent implements OnInit {
                 if (this.allSubRules) {
                   this.loadSubrules();
                 }
-                // if (this.createStatus == 'update') {
-                //   this.loadUpdateForm();
-                // }
+                if (this.data.createStatus === 'Update') {
+                  this.loadUpdateForm();
+                }
               },
               (res: HttpErrorResponse) => this.onError(res.message)
           );
@@ -429,11 +431,21 @@ export class CreateTaskComponent implements OnInit {
     }
   }
 
-  // loadUpdateForm() {
-  //   const obj = JSON.parse(this.rowData);
-  //   this.currentTask = obj;
-  //   this.updateForm(obj);
-  // }
+  loadUpdateForm() {
+    this.taskService
+        .find(this.data.uuid ,this.projectUid)
+        .pipe(
+            filter((mayBeOk: HttpResponse<IHybridfunction>) => mayBeOk.ok),
+            map((response: HttpResponse<IHybridfunction>) => response.body)
+        )
+        .subscribe(
+            (res: IApi) => {
+              this.currentTask = res;
+              this.updateForm(res);
+            }
+        );
+    // const obj = JSON.parse(this.rowData);
+  }
 
   loadEvents() {
     for (let i = 0; i < this.events.length; i++) {
@@ -653,6 +665,9 @@ export class CreateTaskComponent implements OnInit {
       }
       if (task.subruleMapping) {
         this.worlflowMappings = task.subruleMapping;
+
+        this.WORKFLOW_MAP = task.subruleMapping;
+        this.workFlowSource = new MatTableDataSource(this.WORKFLOW_MAP);
       }
 
       this.editForm.patchValue({
@@ -680,6 +695,9 @@ export class CreateTaskComponent implements OnInit {
       }
       if (task.subruleMapping) {
         this.worlflowMappings = task.subruleMapping;
+
+        this.WORKFLOW_MAP = task.subruleMapping;
+        this.workFlowSource = new MatTableDataSource(this.WORKFLOW_MAP);
       }
 
       this.editForm.patchValue({
@@ -698,6 +716,9 @@ export class CreateTaskComponent implements OnInit {
     } else if (operation === 'SERVICE_CALL') {
       if (task.params) {
         this.apiParams = task.params;
+
+        this.ELEMENT_DATA = task.params;
+        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
       }
 
       let subrule: ISubrule;
@@ -712,6 +733,9 @@ export class CreateTaskComponent implements OnInit {
       }
       if (task.subruleMapping) {
         this.worlflowMappings = task.subruleMapping;
+
+        this.WORKFLOW_MAP = task.subruleMapping;
+        this.workFlowSource = new MatTableDataSource(this.WORKFLOW_MAP);
       }
 
       this.editForm.patchValue({
@@ -733,6 +757,9 @@ export class CreateTaskComponent implements OnInit {
     } else if (operation === 'GENERAL') {
       if (task.params) {
         this.apiParams = task.params;
+
+        this.ELEMENT_DATA = task.params;
+        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
       }
 
       let subrule: ISubrule;
@@ -747,6 +774,9 @@ export class CreateTaskComponent implements OnInit {
       }
       if (task.subruleMapping) {
         this.worlflowMappings = task.subruleMapping;
+
+        this.WORKFLOW_MAP = task.subruleMapping;
+        this.workFlowSource = new MatTableDataSource(this.WORKFLOW_MAP);
       }
 
       this.editForm.patchValue({

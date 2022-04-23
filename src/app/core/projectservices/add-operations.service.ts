@@ -34,7 +34,7 @@ export class AddOperationService {
     editPopups(item, projectUid, status) {
         if (item.type === 'API') {
            this.createApi(item, projectUid , status);
-        } else if (item.type === 'PROCESS') {
+        } else if (item.type === 'WORKFLOW') {
             this.createSubrule(item, projectUid , status);
         } else if (item.type === 'MODEL'){
             this.createModel(item, projectUid , status);
@@ -69,7 +69,8 @@ export class AddOperationService {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUId,
-                createStatus: status
+                createStatus: status,
+                uuid: item.uuid,
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -95,7 +96,8 @@ export class AddOperationService {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUId,
-                createStatus: status
+                createStatus: status,
+                uuid: item.uuid,
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -108,7 +110,8 @@ export class AddOperationService {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUId,
-                createStatus: status
+                createStatus: status,
+                uuid: item.uuid,
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -121,7 +124,8 @@ export class AddOperationService {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUId,
-                createStatus: status
+                createStatus: status,
+                uuid: item.uuid,
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -134,7 +138,8 @@ export class AddOperationService {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUId,
-                createStatus: status
+                createStatus: status,
+                uuid: item.uuid,
             }
         });
         dialogRef.afterClosed().subscribe(result => {

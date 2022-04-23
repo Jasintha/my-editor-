@@ -19,6 +19,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
+import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
+import {IApi} from '@shared/models/model/microservice-api.model';
 interface Item {
   value: any;
   label: string;
@@ -120,6 +122,10 @@ export class CreateSubruleComponent implements OnInit {
                   this.loadMicroserviceModels();
                 } else if (this.project.apptypesID === 'virtuan.webapp-v2') {
                   this.loadWebappModels();
+                }
+
+                if (this.data.createStatus === 'Update') {
+                  this.loadUpdateForm();
                 }
               },
               (res: HttpErrorResponse) => this.onError(res.message)
@@ -385,33 +391,46 @@ export class CreateSubruleComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
   }
 
-  // loadUpdateForm() {
-  //   const obj = JSON.parse(this.rowData);
-  //   this.currentSubrule = obj;
-  //   this.updateForm(obj);
-  // }
+  loadUpdateForm() {
+    this.subruleService
+        .find(this.data.uuid ,this.projectUid)
+        .pipe(
+            filter((mayBeOk: HttpResponse<IHybridfunction>) => mayBeOk.ok),
+            map((response: HttpResponse<IHybridfunction>) => response.body)
+        )
+        .subscribe(
+            (res: IApi) => {
+              this.currentSubrule = res;
+              this.updateForm(res);
+            }
+        );
+    // const obj = JSON.parse(this.rowData);
+  }
 
-  // updateForm(subrule: ISubrule) {
-  //   if (this.currentSubrule.params) {
-  //     this.subruleParams = this.currentSubrule.params;
-  //   }
-  //   let returnObj: APIInput;
-  //
-  //   if (subrule.returnObj) {
-  //     returnObj = this.allReturnItems.find(
-  //         item => item.inputType === subrule.returnObj.inputType && item.inputName === subrule.returnObj.inputName
-  //     );
-  //   } else {
-  //     returnObj = subrule.returnObj;
-  //   }
-  //
-  //   this.editForm.patchValue({
-  //     id: subrule.uuid,
-  //     name: subrule.name,
-  //     returnObj: returnObj,
-  //     returnRecordType: subrule.returnRecordType,
-  //   });
-  // }
+  updateForm(subrule: ISubrule) {
+    if (this.currentSubrule.params) {
+      this.subruleParams = this.currentSubrule.params;
+
+      this.ELEMENT_DATA = this.currentSubrule.params;
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+    }
+    let returnObj: APIInput;
+
+    if (subrule.returnObj) {
+      returnObj = this.allReturnItems.find(
+          item => item.inputType === subrule.returnObj.inputType && item.inputName === subrule.returnObj.inputName
+      );
+    } else {
+      returnObj = subrule.returnObj;
+    }
+
+    this.editForm.patchValue({
+      id: subrule.uuid,
+      name: subrule.name,
+      returnObj: returnObj,
+      returnRecordType: subrule.returnRecordType,
+    });
+  }
 
   previousState() {
     // this.isVisibleEvent.emit(false);

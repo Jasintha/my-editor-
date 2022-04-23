@@ -296,7 +296,6 @@ export class CreateApiComponent implements OnInit {
   }
 
   getApiData() {
-    debugger
     this.apiID = this.data.uuid;
     this.builApidForm();
     this.setApiCategoryValidators();
@@ -446,7 +445,6 @@ export class CreateApiComponent implements OnInit {
   }
 
   loadUpdateForm() {
-    debugger
     let enableSecurity = false;
     // if (!this.projectSecurity) {
     //   enableSecurity = false;
@@ -465,6 +463,8 @@ export class CreateApiComponent implements OnInit {
                     this.currentApi = res;
                     if (this.currentApi.params) {
                       this.apiParams = this.currentApi.params;
+                      this.ELEMENT_DATA = this.currentApi.params;
+                      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
                       this.workflowMapParamChange();
                     }
 
@@ -572,6 +572,8 @@ export class CreateApiComponent implements OnInit {
                     this.currentQuery = res;
                     if (this.currentQuery.params) {
                       this.apiParams = this.currentQuery.params;
+                      this.ELEMENT_DATA = this.currentApi.params;
+                      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
                       this.workflowMapParamChange();
                     }
                     // if (this.projectSecurity) {
@@ -631,6 +633,8 @@ export class CreateApiComponent implements OnInit {
                       this.currentApi = res;
                       if (this.currentApi.params) {
                         this.apiParams = this.currentApi.params;
+                        this.ELEMENT_DATA = this.currentApi.params;
+                        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
                         this.workflowMapParamChange();
                       }
 
