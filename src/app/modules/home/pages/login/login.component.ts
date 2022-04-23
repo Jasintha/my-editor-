@@ -181,7 +181,6 @@ export class LoginComponent implements OnInit {
   // }
 
   login() {
-    debugger
     this.isLogin = true;
     this.loginService
         .login({
