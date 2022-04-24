@@ -20,22 +20,20 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { SharedModule } from '@app/shared/shared.module';
-import { MenuLinkComponent } from '@modules/home/menu/menu-link.component';
-import { MenuToggleComponent } from '@modules/home/menu/menu-toggle.component';
-import { SideMenuComponent } from '@modules/home/menu/side-menu.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
-  declarations:
-    [
-      HomeComponent,
-      MenuLinkComponent,
-      MenuToggleComponent,
-      SideMenuComponent
+    declarations:
+        [
+            HomeComponent,
+        ],
+    exports: [
     ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    HomeRoutingModule
-  ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        HomeRoutingModule,
+        MatListModule
+    ]
 })
 export class HomeModule { }

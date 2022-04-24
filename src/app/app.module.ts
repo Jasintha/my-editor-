@@ -20,6 +20,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from '@core/core.module';
+import { LoginModule } from '@modules/login/login.module';
 import { HomeModule } from '@home/home.module';
 
 import { AppComponent } from './app.component';
@@ -38,6 +39,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import {NgxWebstorageModule} from 'ngx-webstorage';
 
 const routes: Routes = [
   { path: '**',
@@ -48,8 +50,10 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
+    NgxWebstorageModule.forRoot({prefix: '', separator: ''}),
     MatButtonModule,
     MatDialogModule,
+    LoginModule,
     MatFormFieldModule,
     MatIconModule,
     ReactiveFormsModule,
@@ -76,10 +80,11 @@ export class PageNotFoundRoutingModule { }
     BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,
+    LoginModule,
     HomeModule,
 //    DashboardRoutingModule,
     PageNotFoundRoutingModule,
-    MonacoEditorModule.forRoot()
+    MonacoEditorModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

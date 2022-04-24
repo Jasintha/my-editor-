@@ -95,11 +95,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       })
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: GlobalHttpInterceptor,
-      multi: true
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: GlobalHttpInterceptor,
+    //   multi: true
+    // },
     WINDOW_PROVIDERS
   ],
   exports: []

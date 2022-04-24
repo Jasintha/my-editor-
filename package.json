@@ -95,7 +95,10 @@
     "typeface-roboto": "^0.0.75",
     "zone.js": "~0.10.3",
     "monaco-editor": "^0.20.0",
-    "ngx-monaco-editor": "9.0.0"
+    "ngx-monaco-editor": "9.0.0",
+    "ngx-cookie": "5.0.2",
+    "ngx-webstorage": "5.0.0",
+    "ng-lottie": "^0.3.2"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^9.1.0",

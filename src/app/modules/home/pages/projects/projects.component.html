@@ -1,0 +1,146 @@
+<div>
+    <h2 id="page-heading">
+        <span>Modules</span>
+
+    </h2>
+
+    <br/>
+    <div class="alert alert-warning" *ngIf="artifacts?.length === 0">
+        <span>No modules found</span>
+    </div>
+    <div class="scroll-bar">
+        <div *ngIf="artifacts?.length > 0">
+            <p-dataView #dv [value]="artifacts" [paginator]="true" [rows]="20" paginatorPosition="top" filterBy="name"
+                        [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+                <p-header>
+                    <div class="ui-helper-clearfix">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-10">
+                                <p-dropdown [options]="sortOptions" placeholder="Sort By" (onChange)="onSortChange($event)"
+                                            [style]="{'min-width':'140px'}"></p-dropdown>
+                            </div>
+                            <div class="ui-g-6 ui-md-2" style="text-align:center;">
+                                <div style="position:relative">
+                                    <input class="ui-inputtext ui-corner-all ui-state-default ui-widget" type="search"
+                                           pInputText placeholder="Search by name" (input)="dv.filter($event.target.value)">
+                                </div>
+                            </div>
+                            <!--                        <div class="ui-g-6 ui-md-4" style="text-align:right">-->
+                            <!--                            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>-->
+                            <!--                        </div>-->
+                        </div>
+                    </div>
+
+                </p-header>
+                <ng-template let-project pTemplate="gridItem">
+                    <div style="padding:.15em" class="ui-g-12 ui-md-3">
+                        <p-panel [header]="project.displayName" [style]="{'text-align':'center'}">
+
+                            <div class="ui-panel ui-widget ui-widget-content ui-corner-all justify-content-center box-two" [ngClass]="{'borderMicroservice': project.apptypesID === 'microservice',
+                         'borderTaskui' : project.apptypesID === 'task.ui', 'borderDesignproject' : project.apptypesID === 'design' }" >
+
+                                <div (click)="routeToDetailPage(project)"  class="clickable" style="display: flex">
+
+                                    <h5 class="text-truncate" style="margin-top: 20px; margin-left: 70px; margin-right: 30px; text-align: left" title="{{project.displayName}}"><b>{{project.displayName}}</b></h5>
+
+                                    <div class="" style="font-size: 30px; margin-top: 9px; padding-left: 15px; position: absolute;" >
+                                        <i class="fa fa-empire" aria-hidden="true"
+                                           *ngIf="project.apptypesID === 'microservice'"></i>
+                                        <i class="fa fa-ravelry" aria-hidden="true"
+                                           *ngIf="project.apptypesID === 'task.ui'"></i>
+                                        <i class="fa fa-superpowers" aria-hidden="true"
+                                           *ngIf="project.apptypesID === 'design'"></i>
+                                    </div>
+
+                                </div>
+                                <div  class="card-body clickable " style="padding-bottom: 2px;">
+
+
+<!--                                <div class="fw-bold">-->
+<!--                                    <div class="row-cols-md-4 detail">Version: <b>{{project.version}}</b></div><br>-->
+<!--                                    <div class="row-cols-md-2 detail d-inline-block text-truncate " style="max-width: 220px;">Description: <b>{{project.description}}</b></div><br>-->
+<!--                                    <div class="row-cols-md-4 garage-des detail">NameSpace: <b>{{project.namespace}}</b></div><br>-->
+<!--                                    <div class="row-cols-md-4 garage-des detail">Template: <b>{{project.template}}</b></div><br>-->
+<!--                                    <div class="row-cols-md-4 garage-des detail">ContextRoot: <b>{{project.contextRoot}}</b></div><br>-->
+<!--                                    <div class="row-cols-md-4 garage-des detail">ProjectType: <b>{{project.projecttype}}</b></div><br>-->
+<!--                                    <div class="row-cols-md-4 garage-des detail">GenCount: <b>{{project.genCount}}</b></div><br>-->
+
+<!--                                </div>-->
+
+                                    <dl (click)="routeToDetailPage(project)"  class="row float-start">
+                                        <dt class="col-sm-5 detail text-truncate" style="margin-bottom: 2px">AppType:</dt>
+                                        <dd class="col-sm-7 detail text-truncate float-start">{{project.apptypesID}}</dd>
+
+                                        <dt class="col-sm-5 detail align-baseline" style="margin-bottom: 2px">Version:</dt>
+                                        <dd class="col-sm-7 detail float-start align-baseline" >{{project.version}}</dd>
+
+                                        <dt class="col-sm-5 detail text-truncate" title="{{project.description}}" style="margin-bottom: 5px">Description:</dt>
+                                        <dd class="col-sm-7 detail d-inline-block text-truncate float-start" title="{{project.description}}" style="max-width: 200px; margin-bottom: 5px"> {{project.description}}
+                                        </dd>
+
+                                        <dt class="col-sm-5 detail text-truncate" style="margin-bottom: 2px">Namespace:</dt>
+                                        <dd class="col-sm-7 detail text-truncate float-start" style=" max-width: 200px; ">{{project.namespace}}</dd>
+
+                                        <dt class="col-sm-5 detail" style="margin-bottom: 2px">Access:</dt>
+                                        <dd class="col-sm-7 detail text-truncate float-start" >{{project.projecttype}}</dd>
+                                        <dt class="col-sm-5 detail text-truncate" style="margin-bottom: 5px">Gen. Status:</dt>
+                                        <dd class="col-sm-7 detail text-truncate float-start" >{{project.currentGenStatus}}</dd>
+
+                                    </dl>
+
+
+                                    <div class="row">
+                                        <ng-template #popContent><a href="{{project.gitRepoURL}}" target="_blank">{{project.gitRepoURL}}</a></ng-template>
+                                        <ng-template #popTitle> <b>Repository URL: </b></ng-template>
+                                        <div class="col-5 text-truncate git-rep"><b> Git Repo: </b></div>
+                                        <div triggers="mouseenter:mouseleave" class="col-7 text-truncate git-url" placement="top"
+                                        >
+                                            {{project.gitRepoURL}}
+                                        </div>
+                                        <div></div>
+                                    </div>
+
+
+                                    <div *ngIf="project.solution" class="row-cols-md-4">Try-it: <b><a
+                                            [routerLink]="['/solution', project.solution?.id, 'view' ]">{{project.solution?.name}}</a></b>
+                                    </div>
+
+                                </div>
+
+                                <div class=" bg-transparent  d-flex justify-content-center">
+                                    <div class="align-items-center">
+                                        <button pButton type="submit" (click)="routeToDetailPage(project)"
+                                                class="ui-button ui-button-raised"
+                                                style="margin-right: 8px; margin-bottom: 8px; " icon="pi pi-eye"
+                                                label="View"></button>
+
+                                        <button style="margin-right: 8px; margin-bottom: 8px; " pButton type="submit"
+                                                [routerLink]="['/project', project.projectUuid,project.apptypesID, 'edit']"
+                                                [queryParams]="{solutionId: solution?.id}"
+                                                class="ui-button ui-button-raised" icon="pi pi-pencil" label="Edit">
+                                        </button>
+
+                                        <button style="margin-right: 8px; margin-bottom: 8px;" pButton type="submit"
+                                                [routerLink]="['/project', { outlets: { popup: project.projectUuid + '/delete'} }]"
+                                                replaceUrl="true"
+                                                queryParamsHandling="merge"
+                                                class="ui-button ui-button-raised" icon="pi pi-trash" label="Delete">
+                                        </button>
+
+
+                                    </div>
+                                </div>
+                                <!--                            <div class="card-footer">-->
+                                <!--                                <small class="text-muted">Created at: {{formatValues(project.createdAt)}}</small>-->
+                                <!--                            </div>-->
+                            </div>
+                        </p-panel>
+                    </div>
+                </ng-template>
+            </p-dataView>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Please wait... </p>
+</ngx-spinner>

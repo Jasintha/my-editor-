@@ -1,40 +1,50 @@
-///
-///
-///
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///     http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatTableModule} from '@angular/material/table';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {LoginComponent} from '@modules/login/pages/login/login.component';
+// import {LoginComponent} from './pages/login/login.component';
 
-import { LoginRoutingModule } from './login-routing.module';
-import { LoginComponent } from './pages/login/login.component';
-import { SharedModule } from '@app/shared/shared.module';
-import { ResetPasswordRequestComponent } from '@modules/login/pages/login/reset-password-request.component';
-import { ResetPasswordComponent } from '@modules/login/pages/login/reset-password.component';
-import { CreatePasswordComponent } from '@modules/login/pages/login/create-password.component';
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    ResetPasswordRequestComponent,
-    ResetPasswordComponent,
-    CreatePasswordComponent
+  declarations:[
+     LoginComponent
   ],
   imports: [
     CommonModule,
-    SharedModule,
-    LoginRoutingModule
+    RouterModule,
+    MatSidenavModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatDividerModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    CommonModule,
+    MatRadioModule,
+    FormsModule,
+    MatTableModule,
+    MatSnackBarModule
+  ],
+  exports:[
+     LoginComponent
   ]
 })
-export class LoginModule { }
+export class LoginModule {
+}

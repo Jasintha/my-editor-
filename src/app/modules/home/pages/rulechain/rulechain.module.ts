@@ -51,6 +51,7 @@ import {AggregateModule} from '@home/pages/aggregate/aggregate.module';
 
 @NgModule({
   declarations: [
+
     RuleChainPageComponent,
     MainRuleChainComponent,
     RuleNodeComponent,

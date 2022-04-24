@@ -1,7 +1,6 @@
 <!--
 
 
-
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
@@ -16,61 +15,16 @@
 
 -->
 <mat-sidenav-container>
-  <!--<mat-sidenav #sidenav class="virtuan-site-sidenav mat-elevation-z2"
-               (click)="sidenavClicked()"
-               [mode]="sidenavMode"
-               [opened]="sidenavOpened && !forceFullscreen">
-    <header class="virtuan-nav-header">
-      <mat-toolbar color="primary" class="virtuan-nav-header-toolbar">
-        <div fxFlex="auto" fxLayout="row">
-          <img [src]="logo"
-               aria-label="logo" class="virtuan-logo-title"/>
-        </div>
-      </mat-toolbar>
-    </header>
-    <mat-toolbar color="primary" fxFlex="0%" class="virtuan-side-menu-toolbar" fxLayout="column" role="navigation">
-      <virtuan-side-menu></virtuan-side-menu>
-    </mat-toolbar>
-  </mat-sidenav>-->
   <mat-sidenav-content>
     <div fxLayout="column" role="main" style="height: 100%;">
-      <!--<mat-toolbar fxLayout="row" color="primary" class="mat-elevation-z1 virtuan-primary-toolbar">
+      <mat-toolbar fxLayout="row" color="primary" class="mat-elevation-z1 virtuan-primary-toolbar">
         <button [fxShow]="!forceFullscreen" mat-icon-button id="main"
                 [ngClass]="{'virtuan-invisible': displaySearchMode()}"
                 fxHide.gt-sm (click)="sidenav.toggle()">
           <mat-icon class="material-icons">menu</mat-icon>
         </button>
-        <button [fxShow]="forceFullscreen" mat-icon-button
-                [ngClass]="{'virtuan-invisible': displaySearchMode()}"
-                (click)="goBack()">
-          <mat-icon class="material-icons">arrow_back</mat-icon>
-        </button>
-        <button mat-icon-button
-                [ngClass]="{'virtuan-invisible': !displaySearchMode()}"
-                (click)="closeSearch()">
-          <mat-icon class="material-icons">arrow_back</mat-icon>
-        </button>
-        <virtuan-breadcrumb [fxShow]="!displaySearchMode()"
-             fxFlex [activeComponent]="activeComponent" class="mat-toolbar-tools">
-        </virtuan-breadcrumb>
-        <div [fxShow]="displaySearchMode()" fxFlex fxLayout="row" class="virtuan-dark">
-          <mat-form-field fxFlex floatLabel="always">
-            <mat-label></mat-label>
-            <input #searchInput matInput
-                   [(ngModel)]="searchText"
-                   placeholder="{{ 'common.enter-search' | translate }}"/>
-          </mat-form-field>
-        </div>
-        <button [fxShow]="searchEnabled"
-                mat-icon-button (click)="openSearch()">
-          <mat-icon class="material-icons">search</mat-icon>
-        </button>
-        <button *ngIf="fullscreenEnabled" [fxShow]="!displaySearchMode()"
-                mat-icon-button fxHide.lt-md (click)="toggleFullscreen()">
-          <mat-icon class="material-icons">{{ isFullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
-        </button>
-        <virtuan-user-menu [displayUserInfo]="!displaySearchMode()"></virtuan-user-menu>
-      </mat-toolbar>-->
+        <span>virtuan</span>
+      </mat-toolbar>
       <mat-progress-bar color="warn" style="z-index: 10; margin-bottom: -4px; width: 100%;" mode="indeterminate"
                         *ngIf="isLoading$ | async">
       </mat-progress-bar>
