@@ -20,7 +20,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from '@core/core.module';
-import { LoginModule } from '@modules/login/login.module';
 import { HomeModule } from '@home/home.module';
 
 import { AppComponent } from './app.component';
@@ -77,7 +76,6 @@ export class PageNotFoundRoutingModule { }
     BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,
-    LoginModule,
     HomeModule,
 //    DashboardRoutingModule,
     PageNotFoundRoutingModule,
