@@ -25,10 +25,10 @@ import { distinctUntilChanged, filter, map, tap, withLatestFrom } from 'rxjs/ope
 import { SettingsActions, SettingsActionTypes, } from './settings.actions';
 import { selectSettingsState } from './settings.selectors';
 import { AppState } from '@app/core/core.state';
-import { LocalStorageService } from '@app/core/local-storage/local-storage.service';
+// import { LocalStorageService } from '@app/core/local-storage/local-storage.service';
 import { TitleService } from '@app/core/services/title.service';
 import { updateUserLang } from '@app/core/settings/settings.utils';
-import { AuthService } from '@core/auth/auth.service';
+// import { AuthService } from '@core/auth/auth.service';
 import { UtilsService } from '@core/services/utils.service';
 import { getCurrentAuthUser } from '@core/auth/auth.selectors';
 import { ActionAuthUpdateLastPublicDashboardId } from '../auth/auth.actions';
@@ -40,10 +40,10 @@ export class SettingsEffects {
   constructor(
     private actions$: Actions<SettingsActions>,
     private store: Store<AppState>,
-    private authService: AuthService,
+    // private authService: AuthService,
     private utils: UtilsService,
     private router: Router,
-    private localStorageService: LocalStorageService,
+    // private localStorageService: LocalStorageService,
     private titleService: TitleService,
     private translate: TranslateService
   ) {
@@ -55,9 +55,9 @@ export class SettingsEffects {
       SettingsActionTypes.CHANGE_LANGUAGE,
     ),
     withLatestFrom(this.store.pipe(select(selectSettingsState))),
-    tap(([action, settings]) =>
-      this.localStorageService.setItem(SETTINGS_KEY, settings)
-    )
+    // tap(([action, settings]) =>
+    //   this.localStorageService.setItem(SETTINGS_KEY, settings)
+    // )
   );
 
   @Effect({dispatch: false})

@@ -24,7 +24,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Inject, Injectable } from '@angular/core';
-import { AuthService } from '@core/auth/auth.service';
+// import { AuthService } from '@core/auth/auth.service';
 import { Constants } from '@shared/models/constants';
 import { InterceptorHttpParams } from './interceptor-http-params';
 import { catchError, delay, mergeMap, switchMap, tap } from 'rxjs/operators';
@@ -57,7 +57,7 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
   constructor(@Inject(Store) private store: Store<AppState>,
               @Inject(DialogService) private dialogService: DialogService,
               @Inject(TranslateService) private translate: TranslateService,
-              @Inject(AuthService) private authService: AuthService,
+              // @Inject(AuthService) private authService: AuthService,
               private localStorage: LocalStorageService, private sessionStorage: SessionStorageService) {
   }
 

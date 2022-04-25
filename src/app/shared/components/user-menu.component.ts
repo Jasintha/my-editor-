@@ -21,7 +21,7 @@ import { select, Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 import { selectAuthUser, selectUserDetails } from '@core/auth/auth.selectors';
 import { map } from 'rxjs/operators';
-import { AuthService } from '@core/auth/auth.service';
+// import { AuthService } from '@core/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -52,7 +52,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<AppState>,
               private router: Router,
-              private authService: AuthService) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -106,7 +106,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.authService.logout();
+    // this.authService.logout();
   }
 
 }

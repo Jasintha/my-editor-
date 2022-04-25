@@ -29,7 +29,7 @@ import {
   DeviceSearchQuery
 } from '@app/shared/models/device.models';
 import { EntitySubtype } from '@app/shared/models/entity-type.models';
-import { AuthService } from '@core/auth/auth.service';
+// import { AuthService } from '@core/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -76,29 +76,29 @@ export class DeviceService {
     return this.http.get<Array<EntitySubtype>>('/api/device/types', defaultHttpOptionsFromConfig(config));
   }
 
-  public getDeviceCredentials(deviceId: string, sync: boolean = false, config?: RequestConfig): Observable<DeviceCredentials> {
-    const url = `/api/device/${deviceId}/credentials`;
-    if (sync) {
-      const responseSubject = new ReplaySubject<DeviceCredentials>();
-      const request = new XMLHttpRequest();
-      request.open('GET', url, false);
-      request.setRequestHeader('Accept', 'application/json, text/plain, */*');
-      const jwtToken = AuthService.getJwtToken();
-      if (jwtToken) {
-        request.setRequestHeader('X-Authorization', 'Bearer ' + jwtToken);
-      }
-      request.send(null);
-      if (request.status === 200) {
-        const credentials = JSON.parse(request.responseText) as DeviceCredentials;
-        responseSubject.next(credentials);
-      } else {
-        responseSubject.error(null);
-      }
-      return responseSubject.asObservable();
-    } else {
-      return this.http.get<DeviceCredentials>(url, defaultHttpOptionsFromConfig(config));
-    }
-  }
+  // public getDeviceCredentials(deviceId: string, sync: boolean = false, config?: RequestConfig): Observable<DeviceCredentials> {
+  //   const url = `/api/device/${deviceId}/credentials`;
+  //   if (sync) {
+  //     const responseSubject = new ReplaySubject<DeviceCredentials>();
+  //     const request = new XMLHttpRequest();
+  //     request.open('GET', url, false);
+  //     request.setRequestHeader('Accept', 'application/json, text/plain, */*');
+  //     const jwtToken = AuthService.getJwtToken();
+  //     if (jwtToken) {
+  //       request.setRequestHeader('X-Authorization', 'Bearer ' + jwtToken);
+  //     }
+  //     request.send(null);
+  //     if (request.status === 200) {
+  //       const credentials = JSON.parse(request.responseText) as DeviceCredentials;
+  //       responseSubject.next(credentials);
+  //     } else {
+  //       responseSubject.error(null);
+  //     }
+  //     return responseSubject.asObservable();
+  //   } else {
+  //     return this.http.get<DeviceCredentials>(url, defaultHttpOptionsFromConfig(config));
+  //   }
+  // }
 
   public saveDeviceCredentials(deviceCredentials: DeviceCredentials, config?: RequestConfig): Observable<DeviceCredentials> {
     return this.http.post<DeviceCredentials>('/api/device/credentials', deviceCredentials, defaultHttpOptionsFromConfig(config));

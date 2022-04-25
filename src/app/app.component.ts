@@ -23,13 +23,13 @@ import { environment as env } from '@env/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
-import { LocalStorageService } from '@core/local-storage/local-storage.service';
+// import { LocalStorageService } from '@core/local-storage/local-storage.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { combineLatest } from 'rxjs';
 import { selectIsAuthenticated, selectIsUserLoaded } from '@core/auth/auth.selectors';
 import { distinctUntilChanged, filter, map, skip } from 'rxjs/operators';
-import { AuthService } from '@core/auth/auth.service';
+// import { AuthService } from '@core/auth/auth.service';
 
 @Component({
   selector: 'virtuan-root',
@@ -39,11 +39,11 @@ import { AuthService } from '@core/auth/auth.service';
 export class AppComponent implements OnInit {
 
   constructor(private store: Store<AppState>,
-              private storageService: LocalStorageService,
+              // private storageService: LocalStorageService,
               private translate: TranslateService,
               private matIconRegistry: MatIconRegistry,
               private domSanitizer: DomSanitizer,
-              private authService: AuthService) {
+  ) {
 
     console.log(`Virtuan Version: ${env.virtuanVersion}`);
 
@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
       )
     );
 
-    this.storageService.testLocalStorage();
+    // this.storageService.testLocalStorage();
 
     this.setupTranslate();
     this.setupAuth();
@@ -95,9 +95,9 @@ export class AppComponent implements OnInit {
       filter((data) => data.isUserLoaded ),
       skip(1),
     ).subscribe((data) => {
-      this.authService.gotoDefaultPlace(data.isAuthenticated);
+      // this.authService.gotoDefaultPlace(data.isAuthenticated);
     });
-    this.authService.reloadUser();
+    // this.authService.reloadUser();
   }
 
   ngOnInit() {

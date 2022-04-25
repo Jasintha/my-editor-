@@ -38,7 +38,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { DialogService } from '@core/services/dialog.service';
-import { AuthService } from '@core/auth/auth.service';
+// import { AuthService } from '@core/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   inputNodeComponent,
@@ -337,7 +337,7 @@ export class RuleChainPageComponent extends PageComponent
               private route: ActivatedRoute,
               private router: Router,
               private ruleChainService: RuleChainService,
-              private authService: AuthService,
+              // private authService: AuthService,
               private translate: TranslateService,
               private itembuffer: ItemBufferService,
               public dialog: MatDialog,

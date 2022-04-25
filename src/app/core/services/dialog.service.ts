@@ -18,7 +18,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from '@core/auth/auth.service';
+// import { AuthService } from '@core/auth/auth.service';
 import {
   ColorPickerDialogComponent,
   ColorPickerDialogData
@@ -40,7 +40,7 @@ export class DialogService {
 
   constructor(
     private translate: TranslateService,
-    private authService: AuthService,
+    // private authService: AuthService,
     public dialog: MatDialog
   ) {
   }
@@ -118,7 +118,7 @@ export class DialogService {
     );
     observable.subscribe((res) => {
       if (res) {
-        this.authService.logout();
+        // this.authService.logout();
       }
     });
     return observable;

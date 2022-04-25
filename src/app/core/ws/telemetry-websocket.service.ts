@@ -31,7 +31,7 @@ import {
 } from '@app/shared/models/telemetry/telemetry.models';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
-import { AuthService } from '@core/auth/auth.service';
+// import { AuthService } from '@core/auth/auth.service';
 import { selectIsAuthenticated } from '@core/auth/auth.selectors';
 import { WINDOW } from '@core/services/window.service';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
@@ -68,7 +68,7 @@ export class TelemetryWebsocketService implements TelemetryService {
   dataStream: WebSocketSubject<TelemetryPluginCmdsWrapper | WebsocketDataMsg>;
 
   constructor(private store: Store<AppState>,
-              private authService: AuthService,
+              // private authService: AuthService,
               private ngZone: NgZone,
               @Inject(WINDOW) private window: Window) {
     this.store.pipe(select(selectIsAuthenticated)).subscribe(
@@ -208,25 +208,25 @@ export class TelemetryWebsocketService implements TelemetryService {
 
   private tryOpenSocket() {
     if (this.isActive) {
-      if (!this.isOpened && !this.isOpening) {
-        this.isOpening = true;
-        if (AuthService.isJwtTokenValid()) {
-          this.openSocket(AuthService.getJwtToken());
-        } else {
-          this.authService.refreshJwtToken().subscribe(() => {
-              this.openSocket(AuthService.getJwtToken());
-            },
-            () => {
-              this.isOpening = false;
-              this.authService.logout(true);
-            }
-          );
-        }
-      }
-      if (this.socketCloseTimer) {
-        clearTimeout(this.socketCloseTimer);
-        this.socketCloseTimer = null;
-      }
+      // if (!this.isOpened && !this.isOpening) {
+      //   this.isOpening = true;
+      //   if (AuthService.isJwtTokenValid()) {
+      //     this.openSocket(AuthService.getJwtToken());
+      //   } else {
+      //     this.authService.refreshJwtToken().subscribe(() => {
+      //         this.openSocket(AuthService.getJwtToken());
+      //       },
+      //       () => {
+      //         this.isOpening = false;
+      //         this.authService.logout(true);
+      //       }
+      //     );
+      //   }
+      // }
+      // if (this.socketCloseTimer) {
+      //   clearTimeout(this.socketCloseTimer);
+      //   this.socketCloseTimer = null;
+      // }
     }
   }
 

@@ -894,20 +894,20 @@ export class EntityService {
   public saveEntityData(entityId: EntityId, entityData: ImportEntityData, config?: RequestConfig): Observable<any> {
     const observables: Observable<string>[] = [];
     let observable: Observable<string>;
-    if (entityData.accessToken && entityData.accessToken !== '') {
-      observable = this.deviceService.getDeviceCredentials(entityId.id, false, config).pipe(
-        mergeMap((credentials) => {
-          credentials.credentialsId = entityData.accessToken;
-          credentials.credentialsType = DeviceCredentialsType.ACCESS_TOKEN;
-          credentials.credentialsValue = null;
-          return this.deviceService.saveDeviceCredentials(credentials, config).pipe(
-            map(() => 'ok'),
-            catchError(err => of('error'))
-          );
-        })
-      );
-      observables.push(observable);
-    }
+    // if (entityData.accessToken && entityData.accessToken !== '') {
+    //   observable = this.deviceService.getDeviceCredentials(entityId.id, false, config).pipe(
+    //     mergeMap((credentials) => {
+    //       credentials.credentialsId = entityData.accessToken;
+    //       credentials.credentialsType = DeviceCredentialsType.ACCESS_TOKEN;
+    //       credentials.credentialsValue = null;
+    //       return this.deviceService.saveDeviceCredentials(credentials, config).pipe(
+    //         map(() => 'ok'),
+    //         catchError(err => of('error'))
+    //       );
+    //     })
+    //   );
+    //   observables.push(observable);
+    // }
     if (entityData.attributes.shared && entityData.attributes.shared.length) {
       observable = this.attributeService.saveEntityAttributes(entityId, AttributeScope.SHARED_SCOPE,
         entityData.attributes.shared, config).pipe(

@@ -19,8 +19,8 @@ import { storeFreeze } from 'ngrx-store-freeze';
 
 import { environment as env } from '@env/environment';
 
-import { initStateFromLocalStorage } from './meta-reducers/init-state-from-local-storage.reducer';
-import { debug } from './meta-reducers/debug.reducer';
+// import { initStateFromLocalStorage } from './meta-reducers/init-state-from-local-storage.reducer';
+// import { debug } from './meta-reducers/debug.reducer';
 import { LoadState } from './interceptors/load.models';
 import { loadReducer } from './interceptors/load.reducer';
 import { AuthState } from './auth/auth.models';
@@ -41,11 +41,11 @@ export const reducers: ActionReducerMap<AppState> = {
 };
 
 export const metaReducers: MetaReducer<AppState>[] = [
-  initStateFromLocalStorage
+  // initStateFromLocalStorage
 ];
 if (!env.production) {
   metaReducers.unshift(storeFreeze);
-  metaReducers.unshift(debug);
+  // metaReducers.unshift(debug);
 }
 
 export const effects: Type<any>[] = [
