@@ -29,7 +29,7 @@ export const Constants = {
     tooManyUpdates: 34
   },
   entryPoints: {
-    login: '/api/auth/login',
+    login: '/api/authenticate',
     tokenRefresh: '/api/auth/token',
     nonTokenBased: '/api/noauth'
   }

@@ -17,7 +17,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from '@core/core.module';
 import { LoginModule } from '@modules/login/login.module';
@@ -40,6 +40,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import {NgxWebstorageModule} from 'ngx-webstorage';
+import {GlobalHttpInterceptor} from '@core/interceptors/global-http-interceptor';
 
 const routes: Routes = [
   { path: '**',
@@ -87,11 +88,11 @@ export class PageNotFoundRoutingModule { }
     MonacoEditorModule.forRoot(),
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: GlobalHttpInterceptor,
-    //   multi: true
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GlobalHttpInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })
