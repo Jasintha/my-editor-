@@ -11,7 +11,7 @@ export class AuthServerProvider {
   constructor(private http: HttpClient, private $localStorage: LocalStorageService, private $sessionStorage: SessionStorageService) {}
 
   getToken() {
-    return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken');
+    return this.$localStorage.retrieve('jwt_token') || this.$sessionStorage.retrieve('jwt_token');
   }
 
   login(credentials): Observable<any> {
@@ -52,8 +52,8 @@ export class AuthServerProvider {
 
   logout(): Observable<any> {
     return new Observable(observer => {
-      this.$localStorage.clear('authenticationToken');
-      this.$sessionStorage.clear('authenticationToken');
+      this.$localStorage.clear('jwt_token');
+      this.$sessionStorage.clear('jwt_token');
       observer.complete();
     });
   }

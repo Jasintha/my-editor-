@@ -41,6 +41,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import {NgxWebstorageModule} from 'ngx-webstorage';
 import {GlobalHttpInterceptor} from '@core/interceptors/global-http-interceptor';
+import {ProjectsModule} from '@home/pages/projects/projects.module';
 
 const routes: Routes = [
   { path: '**',
@@ -78,6 +79,7 @@ export class PageNotFoundRoutingModule { }
   ],
   imports: [
     BrowserModule,
+    ProjectsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,

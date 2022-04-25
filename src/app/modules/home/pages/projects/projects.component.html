@@ -107,29 +107,29 @@
 
                                 </div>
 
-                                <div class=" bg-transparent  d-flex justify-content-center">
-                                    <div class="align-items-center">
-                                        <button pButton type="submit" (click)="routeToDetailPage(project)"
-                                                class="ui-button ui-button-raised"
-                                                style="margin-right: 8px; margin-bottom: 8px; " icon="pi pi-eye"
-                                                label="View"></button>
+<!--                                <div class=" bg-transparent  d-flex justify-content-center">-->
+<!--                                    <div class="align-items-center">-->
+<!--                                        <button pButton type="submit" (click)="routeToDetailPage(project)"-->
+<!--                                                class="ui-button ui-button-raised"-->
+<!--                                                style="margin-right: 8px; margin-bottom: 8px; " icon="pi pi-eye"-->
+<!--                                                label="View"></button>-->
 
-                                        <button style="margin-right: 8px; margin-bottom: 8px; " pButton type="submit"
-                                                [routerLink]="['/project', project.projectUuid,project.apptypesID, 'edit']"
-                                                [queryParams]="{solutionId: solution?.id}"
-                                                class="ui-button ui-button-raised" icon="pi pi-pencil" label="Edit">
-                                        </button>
+<!--                                        <button style="margin-right: 8px; margin-bottom: 8px; " pButton type="submit"-->
+<!--                                                [routerLink]="['/project', project.projectUuid,project.apptypesID, 'edit']"-->
+<!--                                                [queryParams]="{solutionId: solution?.id}"-->
+<!--                                                class="ui-button ui-button-raised" icon="pi pi-pencil" label="Edit">-->
+<!--                                        </button>-->
 
-                                        <button style="margin-right: 8px; margin-bottom: 8px;" pButton type="submit"
-                                                [routerLink]="['/project', { outlets: { popup: project.projectUuid + '/delete'} }]"
-                                                replaceUrl="true"
-                                                queryParamsHandling="merge"
-                                                class="ui-button ui-button-raised" icon="pi pi-trash" label="Delete">
-                                        </button>
+<!--                                        <button style="margin-right: 8px; margin-bottom: 8px;" pButton type="submit"-->
+<!--                                                [routerLink]="['/project', { outlets: { popup: project.projectUuid + '/delete'} }]"-->
+<!--                                                replaceUrl="true"-->
+<!--                                                queryParamsHandling="merge"-->
+<!--                                                class="ui-button ui-button-raised" icon="pi pi-trash" label="Delete">-->
+<!--                                        </button>-->
 
 
-                                    </div>
-                                </div>
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <!--                            <div class="card-footer">-->
                                 <!--                                <small class="text-muted">Created at: {{formatValues(project.createdAt)}}</small>-->
                                 <!--                            </div>-->

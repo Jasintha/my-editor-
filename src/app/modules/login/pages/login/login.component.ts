@@ -73,114 +73,21 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit() {
     this.isLogin = false;
-    // this.navbarService
-    //     .findVersion()
-    //     .pipe(
-    //         filter((res: HttpResponse<string>) => res.ok),
-    //         map((res: HttpResponse<string>) => res.body)
-    //     )
-    //     .subscribe(
-    //         (res: string) => {
-    //           this.version = res;
-    //         },
-    //         (res: HttpErrorResponse) => this.onError(res.message)
-    //     );
-    //
-    // this.auth = this.accountService.isAuthenticated();
-    //
-    // this.sortOptions = [
-    //   { label: 'Price High to Low', value: '!price' },
-    //   { label: 'Price Low to High', value: 'price' },
-    // ];
 
-    // this.primengConfig.ripple = true;
-
-    // if(this.auth){
-
-    //   this.apptypesService
-    //   .query()
-    //   .pipe(
-    //     filter((mayBeOk: HttpResponse<IApptypes[]>) => mayBeOk.ok),
-    //     map((response: HttpResponse<IApptypes[]>) => response.body)
-    //   )
-    //   .subscribe(
-    //     (res: IApptypes[]) => {
-    //       this.apptypes = res;
-    //     },
-    //     (res: HttpErrorResponse) => this.onError(res.message)
-    //   );
-    // }
-    //
-    this.accountService.identity().then((account: Account) => {
-      this.account = account;
-    });
+    // this.accountService.identity().then((account: Account) => {
+    //   this.account = account;
+    // });
     this.registerAuthenticationSuccess();
-    // this.displayCookieConsent();
   }
-
-  // displayCookieConsent() {
-  //   const cookiePlicy = this.cookieService.check('virtuanCookiePolicy');
-  //   if (!cookiePlicy) {
-  //     setTimeout(() => {
-  //       this.showCookieConsent = true;
-  //     }, 2000);
-  //   }
-  // }
-
-  setAcceptCookiePolicy() {
-  //  this.cookieService.set('virtuanCookiePolicy', 'accepted', 1000);
-    this.showCookieConsent = false;
-  }
-
-  // onSortChange(event) {
-  //   const value = event.value;
-  //
-  //   if (value.indexOf('!') === 0) {
-  //     this.sortOrder = -1;
-  //     this.sortField = value.substring(1, value.length);
-  //   } else {
-  //     this.sortOrder = 1;
-  //     this.sortField = value;
-  //   }
-  // }
-  //
-  // protected onError(errorMessage: string) {
-  //   this.version = '';
-  // }
 
   registerAuthenticationSuccess() {
     this.eventSubscriber = this.eventManager.on(EventTypes.authenticationSuccess).subscribe(event =>
         this.accountService.identity().then(account => {
           this.account = account;
+          this.router.navigate(['projects']);
         })
     );
   }
-
-  // isAuthenticated() {
-  //   let auth: boolean = this.accountService.isAuthenticated();
-  //   this.auth = auth;
-  //   return auth;
-  // }
-
-  // loadAppTypes() {
-  //   if (this.apptypes === null || this.apptypes === undefined || this.apptypes.length === 0) {
-  //     this.apptypesService
-  //         .query()
-  //         .pipe(
-  //             filter((mayBeOk: HttpResponse<IApptypes[]>) => mayBeOk.ok),
-  //             map((response: HttpResponse<IApptypes[]>) => response.body)
-  //         )
-  //         .subscribe(
-  //             (res: IApptypes[]) => {
-  //               this.apptypes = res;
-  //               return this.apptypes;
-  //             },
-  //             (res: HttpErrorResponse) => this.onError(res.message)
-  //         );
-  //   }
-  //
-  //   return this.apptypes;
-  // }
 
   login() {
     this.isLogin = true;

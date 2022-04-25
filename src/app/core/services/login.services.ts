@@ -4,13 +4,15 @@ import { AuthServerProvider } from '@core/auth/auth-jwt.service';
 import { AppEvent } from '@shared/events/app.event.class';
 import { EventTypes } from '@shared/events/event.queue';
 import { EventManagerService } from '@shared/events/event.type';
+import {Router} from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
     constructor(
         private eventManager: EventManagerService,
         private accountService: AccountService,
-        private authServerProvider: AuthServerProvider
+        private authServerProvider: AuthServerProvider,
+        private router: Router,
     ) {}
 
     login(credentials, callback?) {

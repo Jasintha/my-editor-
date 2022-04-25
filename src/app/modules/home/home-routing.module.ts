@@ -30,8 +30,8 @@ const routes: Routes = [
         skip: true
       }
     },
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+    // canActivate: [AuthGuard],
+    // canActivateChild: [AuthGuard],
     loadChildren: () => import('./pages/home-pages.module').then(m => m.HomePagesModule)
   }
 ];

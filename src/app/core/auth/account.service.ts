@@ -25,7 +25,6 @@ export class AccountService {
     private ts: ToolbarTrackerService,
     private ps: BreakpointTrackerService,
     private themeService: ThemeTrackerService,
-    private router: Router,
   ) {}
 
   fetch(): Observable<HttpResponse<Account>> {
@@ -90,17 +89,7 @@ export class AccountService {
         if (account) {
           this.userIdentity = account;
           this.authenticated = true;
-          this.ts.setIsEntityPage('no');
-          this.ts.setProjectId(0);
-          this.ts.setProjectUUID('');
-          this.ws.connect(account.email);
-          // this.bws.connect(account.email);
-          this.ps.setBreakpoint(-1);
           this.themeService.setDefaultTheme(1);
-          // After retrieve the account info, the language will be changed to
-          // the user's preferred language configured in the account setting
-          const url = 'projects';
-          this.router.navigate([url]);
         } else {
           this.userIdentity = null;
           this.authenticated = false;
