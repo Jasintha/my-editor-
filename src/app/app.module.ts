@@ -86,7 +86,13 @@ export class PageNotFoundRoutingModule { }
     PageNotFoundRoutingModule,
     MonacoEditorModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: GlobalHttpInterceptor,
+    //   multi: true
+    // },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
