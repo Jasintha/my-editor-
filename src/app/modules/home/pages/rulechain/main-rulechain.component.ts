@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { filter, map } from 'rxjs/operators';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
@@ -28,8 +29,15 @@ import {
     ruleNodeTypeDescriptors,
     ruleNodeTypesLibrary
 } from '@shared/models/rule-node.models';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import {ProjectService} from '@core/projectservices/project.service';
+import {ApptypesService} from '@core/projectservices/apptypes.service';
 import {DeleteOperationService} from '@core/projectservices/delete-operations.service';
+import { WebsocketService } from '@core/tracker/websocket.service';
+import { BreakpointTrackerService } from '@core/tracker/breakpoint.service';
+import { ThemeTrackerService } from '@core/tracker/theme.service';
+import { IProject, Project} from '@shared/models/model/project.model';
+import { IGenerator } from '@shared/models/model/generator-chain.model';
 import { EventManagerService } from '@shared/events/event.type';
 import { EventTypes } from '@shared/events/event.queue';
 import { Subscription } from 'rxjs';
@@ -84,32 +92,6 @@ const ruleNodeConfigResourcesModulesMap = {
     moment: SystemJS.newModule(_moment)
 };
 
-const TREE_DATA: any[] = [
-    {
-        name: 'API',
-        children: [{name: 'api1'}, {name: 'api2'}, {name: 'api3'}],
-    },
-    {
-        name: 'Task',
-        children: [{name: 'task1'}, {name: 'task2'}, {name: 'task3'}],
-    },
-    {
-        name: 'Process',
-        children: [{name: 'process1'}, {name: 'process2'}, {name: 'process3'}],
-    },
-    {
-        name: 'Models',
-        children: [
-            {
-                name: 'model1'
-            },
-            {
-                name: 'model2'
-            },
-        ],
-    },
-];
-
 @Component({
     selector: 'virtuan-main-rulechain-page',
     templateUrl: './main-rulechain.component.html',
@@ -134,6 +116,14 @@ export class MainRuleChainComponent implements OnInit {
     lambdauid: string;
     modelUid: string;
     eventSubscriber: Subscription;
+
+    isGenerating: boolean;
+    theme: string = 'vs-dark';
+    editorOptions: any = { theme: 'vs-dark', language: 'json' };
+    code: string = '';
+    generatorList: { [key: number]: string } = {};
+    generatorChain: IGenerator[];
+
     private _transformer = (node: any, level: number) => {
         return {
             expandable: !!node.children && node.children.length > 0,
@@ -161,7 +151,8 @@ export class MainRuleChainComponent implements OnInit {
 
     constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService,
     private projectService: ProjectService,private deleteOperationService: DeleteOperationService,private addOperationService:AddOperationService, public dialog: MatDialog,
-    private eventManager: EventManagerService) {
+    private eventManager: EventManagerService, private socket: WebsocketService, private breakpointService: BreakpointTrackerService, private themeService: ThemeTrackerService,
+    protected appTypeService: ApptypesService) {
 
     }
 
@@ -263,49 +254,29 @@ export class MainRuleChainComponent implements OnInit {
         this.loadFunctionEditor = false;
         this.modelUid = item.uuid;
         this.loadModelView = true;
-
-
-        // const dialogRef = this.dialog.open(MicroserviceModelComponent, {
-        //     data: {
-        //         projectUid: this.projectUid
-        //     }
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     console.log(`Dialog result: ${result}`);
-        //     this.loadTreeData();
-        // });
-
     }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.projectUid = params['projectUid'];
         });
-        /*   console.log("fetch data !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            this.username = "user3@gmail.com";
-            this.uid = "PgLG2MtA4oUYak7TFznxB4_user3gmailcom";
-            this.ruleChainService.getRuleChainWithUsernameAndUID("c9em5d9svk1hvkl2b5t0", "user3@gmail.com", "PgLG2MtA4oUYak7TFznxB4_user3gmailcom").subscribe((ruleChain) => {
-              console.log("ruleChain");
-              console.log(ruleChain);
-              this.ruleChainLoaded = true;
-              this.ruleChain = ruleChain;
-            });
-            this.ruleChainService.getResolvedRuleChainMetadata("c9em5d9svk1hvkl2b5t0", "user3@gmail.com", "PgLG2MtA4oUYak7TFznxB4_user3gmailcom").subscribe((ruleChainMetaData) => {
-              this.ruleChainMetaDataLoaded = true;
-              this.ruleChainMetaData = ruleChainMetaData;
-            });
-
-            this.ruleChainService.getConnectionPropertyTemplates().subscribe((connectionPropertyTemplates) => {
-              this.connectionPropertyTemplatesLoaded = true;
-              this.connectionPropertyTemplates = connectionPropertyTemplates;
-            });
-            this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap, "PgLG2MtA4oUYak7TFznxB4_user3gmailcom", "default").subscribe((ruleNodeComponents) => {
-              this.ruleNodeComponentsLoaded = true;
-              this.ruleNodeComponents = ruleNodeComponents;
-            }); */
-//    this.dataSource.data = TREE_DATA;
         this.loadTreeData();
         this.registerChangeEditorTree();
+        this.appTypeService.getDevChainByAppType(this.projectUid)
+          .pipe(
+            filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
+            map((response: HttpResponse<IGenerator[]>) => response.body)
+          )
+          .subscribe(
+            (res: IGenerator[]) => {
+              this.generatorChain = res;
+              if (this.generatorChain.length !== 0) {
+                this.generatorChain.forEach(c => {
+                  this.generatorList[c.position] = c.generator.name;
+                });
+              }
+            });
+        this.loadChatbox(this.projectUid);
     }
 
     loadTreeData(){
@@ -314,14 +285,148 @@ export class MainRuleChainComponent implements OnInit {
         });
     }
 
-    coins() {
-        let url = 'c9em5d9svk1hvkl2b5t0/default/user3@gmail.com/PgLG2MtA4oUYak7TFznxB4_user3gmailcom/R';
-
-        this.router.navigate([url], {relativeTo: this.route});
+  generateProject() {
+    this.code = '';
+    this.isGenerating = true;
+    setTimeout(() => {
+      this.isGenerating = false;
+    }, 16000);
+    //console.log(this.socket.socket);
+    this.socket.logSocket();
+    let genType = 'Dev';
+    const projectUUID: string = this.projectUid;
+    let project: Project = new Project();
+    if (projectUUID) {
+      let breakpoint = this.breakpointService.getBreakpoint();
+      let defaultTheme = this.themeService.getDefaultTheme();
+      this.projectService.generateFromProjectId(projectUUID, breakpoint, defaultTheme, genType, project, projectUUID).subscribe(
+        (res: any) => {
+            let project: IProject = res.body;
+            this.socket.send('generator');
+            this.onSaveSuccess();
+            },
+        (res: HttpErrorResponse) => this.onSaveError());
     }
+  }
 
-    notes() {
-        this.router.navigate(['notes'], {relativeTo: this.route});
+  protected onSaveSuccess() {
+//     this.messageService.add({
+//       severity: 'success',
+//       summary: 'Generation Started',
+//       detail: 'Generation process started successfully.',
+//     });
+    if(this.code != '') {
+        this.code = this.code + ",\n";
     }
+    this.code = this.code + '{"status": "Success", "detail": "Generation process started successfully"}';
+//     this.code = this.code + '{"status": "Success", "detail": "Generation process started successfully"},' + "/n";
+    setTimeout(() => {
+      this.isGenerating = false;
+    }, 10000);
+  }
+
+  protected onSaveError() {
+//     this.messageService.add({
+//       severity: 'error',
+//       summary: 'Generation failed',
+//       detail: 'Generation request failed.',
+//     });
+    if(this.code != '') {
+        this.code = this.code + ",\n";
+    }
+    this.code = this.code + '{"status": "Error", "detail": "Generation request failed"}';
+    this.isGenerating = false;
+  }
+
+
+  loadChatbox(uuid) {
+    this.socket.getEventListener().subscribe(event => {
+      if (event.type === 'message') {
+        let topic = event.data.topic;
+        if (topic === 'generator') {
+          let data = event.data.content;
+
+          let projectUUID = '';
+          let status = '';
+          let time = '';
+          let position = -1;
+
+          let allKeyValuePairs = data.split(',');
+          if (allKeyValuePairs) {
+            allKeyValuePairs.forEach(keyval => {
+              let keyAndValArr = keyval.split('=', 2);
+              let key = '';
+              let val = '';
+
+              if (keyAndValArr) {
+                for (let i = 0; i < keyAndValArr.length; i++) {
+                  if (i === 0) {
+                    key = keyAndValArr[i];
+                  } else {
+                    val = keyAndValArr[i];
+                  }
+                }
+              }
+
+              if (key === 'projectuuid') {
+                projectUUID = val;
+              } else if (key === 'status') {
+                status = val;
+              } else if (key === 'time') {
+                time = val;
+              } else if (key === 'position') {
+                position = +val;
+              }
+            });
+          }
+
+          if (uuid === projectUUID) {
+            if (status) {
+              if (status.trim() === 'didnot') {
+//                 if (this.generatorList[position] === 'Compiler') {
+//                   this.messageService.add({
+//                     severity: 'error',
+//                     summary: 'Compilation Failed',
+//                   });
+//                 } else {
+//                   this.messageService.add({
+//                     severity: 'error',
+//                     summary: 'Generation Failed at ' + this.generatorList[position],
+//                   });
+//                 }
+                  if(this.code != '') {
+                    this.code = this.code + ",\n";
+                  }
+                  this.code = this.code + '{"status": "Error", "detail": "Generation failed at "'+ this.generatorList[position] + '}';
+
+              } else if (status.trim() === 'done') {
+//                 if (this.generatorList[position] === 'Compiler') {
+//                   this.messageService.add({
+//                     severity: 'success',
+//                     summary: 'Successfully Compiled',
+//                   });
+//                 } else {
+//                   this.messageService.add({
+//                     severity: 'success',
+//                     summary: 'Generation is Successful at ' + this.generatorList[position],
+//                   });
+//                 }
+                  if(this.code != '') {
+                    this.code = this.code + ",\n";
+                  }
+                  this.code = this.code + '{"status": "Success", "detail": "Generation successful at "'+ this.generatorList[position] + '}';
+
+                } else if (status.trim() === 'done') {
+                  if(this.code != '') {
+                    this.code = this.code + ",\n";
+                  }
+                  this.code = this.code + '{"status": "In progress", "detail": "Generation started at "'+ this.generatorList[position] + '}';
+                }
+            }
+          }
+        }
+      }
+    });
+  }
 
 }

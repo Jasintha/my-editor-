@@ -39,6 +39,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatDividerModule} from '@angular/material/divider';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import {CreateApiModule} from '@home/pages/create-api/create-api.module';
 import {CreateSubruleModule} from '@home/pages/create-subrule/create-subrule.module';
@@ -89,7 +90,9 @@ import {AggregateModule} from '@home/pages/aggregate/aggregate.module';
     CreateEventModule,
     CreateHybridfunctionModule,
     CreateLamdafunctionModule,
-    CreateTaskModule,AggregateModule
+    CreateTaskModule,
+    AggregateModule,
+    MonacoEditorModule
   ]
 })
 export class RuleChainModule { }

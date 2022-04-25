@@ -31,7 +31,7 @@
 
         <as-split direction="vertical">
             <!--<as-split-area [size]="15">TOP</as-split-area>-->
-            <as-split-area [size]="85">
+            <as-split-area [size]="65">
                 <as-split direction="horizontal">
                     <as-split-area [size]="74" style="overflow: auto">
 
@@ -108,11 +108,16 @@
                     </as-split-area>
                 </as-split>
             </as-split-area>
-            <as-split-area [size]="15">
-                <mat-tab-group>
+            <as-split-area [size]="35">
+                <mat-tab-group dynamicHeight>
                     <mat-tab label="Console">
                         <ng-template matTabContent>
-                            Generator
+                            <div style="min-height: 200px; height:100% !important; width: 100%;">
+                                <div style="min-height: 40px;margin: 5px;">
+                                    <button mat-raised-button color="primary" type="button" style="float:right;" [disabled]="isGenerating" (click)="generateProject()" cdkFocusInitial>Generate</button></div>
+
+                                <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
+                            </div>
                         </ng-template>
                     </mat-tab>
                     <mat-tab label="Git">
