@@ -23,7 +23,18 @@
                 fxHide.gt-sm (click)="sidenav.toggle()">
           <mat-icon class="material-icons">menu</mat-icon>
         </button>
-        <span>virtuan</span>
+        <h1 class="display-4"><img src="../../../assets/images/logo_white.png" width="150px" ></h1>
+        <span fxFlex></span>
+
+        <button  fxFlex="none"  mat-icon-button type="button">
+          <mat-icon class="mat-icon-rtl-mirror" style="color: white; font-size: 30px" >
+            account_circle
+          </mat-icon>
+
+          <mat-icon class="mat-icon-rtl-mirror" style="color: white; font-size: 20px" >
+            arrow_drop_down
+          </mat-icon>
+        </button>
       </mat-toolbar>
       <mat-progress-bar color="warn" style="z-index: 10; margin-bottom: -4px; width: 100%;" mode="indeterminate"
                         *ngIf="isLoading$ | async">
