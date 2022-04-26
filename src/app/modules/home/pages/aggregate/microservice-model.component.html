@@ -6,21 +6,18 @@
             </div>
             <div class="col-sm-6">
                 <div style="text-align: right; align-items: end">
-                        <button mat-fab aria-label="Example icon button with a delete icon"
-                                #tooltip="matTooltip"
-                                matTooltip="Cancel"
-                                matTooltipPosition="above"
-                                matTooltipHideDelay="100">
-                            <mat-icon>cancel</mat-icon>
-                        </button>
-                        &nbsp;&nbsp;
-                        <button  (click)="save()" mat-fab aria-label="Example icon button with a delete icon"
-                                #tooltip="matTooltip"
-                                matTooltip="Save"
-                                matTooltipPosition="above"
-                                matTooltipHideDelay="100">
-                            <mat-icon>save</mat-icon>
-                        </button>
+
+                    <button mat-fab color="accent" class="virtuan-btn-footer"
+                            (click)="save()"
+                            matTooltip="{{ 'action.apply-changes' | translate }}"
+                            matTooltipPosition="above">
+                        <mat-icon>done</mat-icon>
+                    </button>
+                    <!--<button mat-fab color="accent" class="virtuan-btn-footer"
+                            matTooltip="{{ 'action.decline-changes' | translate }}"
+                            matTooltipPosition="above">
+                        <mat-icon>close</mat-icon>
+                    </button>-->
 
 <!--                    <button mat-raised-button > <mat-icon>cancel</mat-icon>Cancel</button>&nbsp;-->
 <!--                    <button mat-raised-button style="background-color: #007ad9; color: white;" (click)="save()"> <mat-icon>save</mat-icon>SAVE</button>-->

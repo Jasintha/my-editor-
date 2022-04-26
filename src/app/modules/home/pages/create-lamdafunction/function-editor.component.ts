@@ -20,7 +20,7 @@ export class LamdafunctionEditorComponent implements OnInit, OnChanges, OnDestro
 
   lamdafunction: ILamdafunction;
   //projectId: number;
-  theme: string = 'vs-dark';
+  theme: string = 'vs';
   editorOptions: any;
   code: string = '';
   themeItems: any[] = [
