@@ -196,7 +196,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'mainruleChains/:projectUid',
+    path: 'home',
     component: MainRuleChainComponent,
     data: {
       breadcrumb: {

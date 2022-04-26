@@ -47,10 +47,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
        private accountService: AccountService,
-      // protected navbarService: NavbarService,
-      // private loginModalService: LoginModalService,
        private eventManager: EventManagerService,
-      // protected homeTrackerService: HomeTrackerService,
        private router: Router,
        private fb: FormBuilder,
 
@@ -84,7 +81,7 @@ export class LoginComponent implements OnInit {
     this.eventSubscriber = this.eventManager.on(EventTypes.authenticationSuccess).subscribe(event =>
         this.accountService.identity().then(account => {
           this.account = account;
-          this.router.navigate(['projects']);
+          this.router.navigate(['home']);
         })
     );
   }
