@@ -58,9 +58,12 @@
                                     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                                         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
                                             <button mat-icon-button disabled></button>
-                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >
-                                                description
+                                            <mat-icon class="mat-icon-rtl-mirror" color="primary">
+                                                {{node.data.isParent ? 'folder' : 'description'}}
                                             </mat-icon>
+<!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
+<!--                                                description-->
+<!--                                            </mat-icon>-->
                                             <div style="margin-left: 15px">
                                                 {{node.name}}
                                             </div>
@@ -72,7 +75,7 @@
                                                     type="button">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
-                                            <button mat-icon-button color="primary"  *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="add(node.data)" ><mat-icon>note_add</mat-icon></button>
+                                            <button mat-icon-button color="primary" class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK'"  (click)="add(node.data)" ><mat-icon>add_circle</mat-icon></button>
                                         </mat-tree-node>
                                         <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding >
                                             <button mat-icon-button
