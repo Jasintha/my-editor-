@@ -175,4 +175,7 @@ export class HomeComponent extends PageComponent implements AfterViewInit, OnIni
       this.searchableComponent.onSearchTextUpdated(this.searchText);
     }
   }
+
+  logout(){
+  }
 }

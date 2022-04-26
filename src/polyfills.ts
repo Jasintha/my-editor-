@@ -76,7 +76,7 @@ import './zone-flags';
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 import 'core-js/es/array';
 import moment from 'moment';
-
+import '@angular/localize/init';
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */

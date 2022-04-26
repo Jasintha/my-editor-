@@ -26,15 +26,40 @@
         <h1 class="display-4"><img src="../../../assets/images/logo_white.png" width="150px" ></h1>
         <span fxFlex></span>
 
-        <button  fxFlex="none"  mat-icon-button type="button" style="margin-right: 10px">
-          <mat-icon class="mat-icon-rtl-mirror" style="color: white; font-size: 30px" >
-            account_circle
-          </mat-icon>
+<!--        <button  fxFlex="none"  mat-icon-button type="button" style="margin-right: 10px">-->
+<!--          <mat-icon class="mat-icon-rtl-mirror" style="color: white; font-size: 30px" >-->
+<!--            account_circle-->
+<!--          </mat-icon>-->
 
-          <mat-icon class="mat-icon-rtl-mirror" style="color: white; font-size: 20px" >
-            arrow_drop_down
-          </mat-icon>
-        </button>
+<!--          <mat-icon class="mat-icon-rtl-mirror" style="color: white; font-size: 20px" >-->
+<!--            arrow_drop_down-->
+<!--          </mat-icon>-->
+<!--        </button>-->
+
+        <ul class="navbar-nav">
+          <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
+              <button  fxFlex="none"  mat-icon-button type="button" style="margin-right: 10px">
+                <mat-icon class="mat-icon-rtl-mirror" style="color: white; font-size: 30px" >
+                  account_circle
+                </mat-icon>
+
+<!--                <mat-icon class="mat-icon-rtl-mirror" style="color: white; font-size: 20px" >-->
+<!--                  arrow_drop_down-->
+<!--                </mat-icon>-->
+              </button>
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+              <li >
+                <a class="dropdown-item" (click)="logout()" id="logout">
+                  <i class="fas fa-sign-out-alt" fixedWidth="true" style="color: black; margin-right: 4px"></i>
+                  <span>Sign out</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
       </mat-toolbar>
       <mat-progress-bar color="warn" style="z-index: 10; margin-bottom: -4px; width: 100%;" mode="indeterminate"
                         *ngIf="isLoading$ | async">

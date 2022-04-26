@@ -21,6 +21,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { SharedModule } from '@app/shared/shared.module';
 import {MatListModule} from '@angular/material/list';
+import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations:
@@ -33,7 +34,9 @@ import {MatListModule} from '@angular/material/list';
         CommonModule,
         SharedModule,
         HomeRoutingModule,
-        MatListModule
-    ]
+        MatListModule,
+        NgbDropdownModule
+    ],
+    providers: [NgbDropdownModule]
 })
 export class HomeModule { }
