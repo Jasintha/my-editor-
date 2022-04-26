@@ -16,7 +16,6 @@ import {
     ruleChainNodeComponent
 } from '@shared/models/rule-chain.models';
 import {RuleChainService} from '@core/http/rule-chain.service';
-import {FcItemInfo, FlowchartConstants, NgxFlowchartComponent, UserCallbacks} from 'ngx-flowchart/dist/ngx-flowchart';
 import {
     FcRuleEdge,
     FcRuleNode,
@@ -172,6 +171,7 @@ export class MainRuleChainComponent implements OnInit {
   }
 
     delete(item){
+      this.projectUid = item.projectuuid;
       this.deleteOperationService.delete(item, this.projectUid);
     }
 
@@ -180,10 +180,12 @@ export class MainRuleChainComponent implements OnInit {
     }
 
     edit(item){
+        this.projectUid = item.projectuuid;
         this.addOperationService.editPopups(item, this.projectUid, 'Update');
     }
 
     viewComponent(item){
+        this.projectUid = item.projectuuid;
         if(item.type === 'MODEL'){
             // load model design editor
             this.viewModel(item);
@@ -280,7 +282,7 @@ export class MainRuleChainComponent implements OnInit {
     }
 
     loadTreeData(){
-        this.projectService.findAllProjectComponents(this.projectUid).subscribe((comps) => {
+        this.projectService.findAllProjectComponents().subscribe((comps) => {
             this.dataSource.data = comps;
         });
     }

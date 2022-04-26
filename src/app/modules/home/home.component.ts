@@ -30,6 +30,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { AuthState } from '@core/auth/auth.models';
 import { WINDOW } from '@core/services/window.service';
 import { instanceOfSearchableComponent, ISearchableComponent } from '@home/models/searchable-component.models';
+import {LoginService} from '@core/services/login.services';
+import {Router} from '@angular/router';
 
 const screenfull = _screenfull as _screenfull.Screenfull;
 
@@ -69,6 +71,8 @@ export class HomeComponent extends PageComponent implements AfterViewInit, OnIni
 
   constructor(protected store: Store<AppState>,
               @Inject(WINDOW) private window: Window,
+              private loginService: LoginService,
+              private router: Router,
               public breakpointObserver: BreakpointObserver) {
     super(store);
   }
@@ -177,5 +181,7 @@ export class HomeComponent extends PageComponent implements AfterViewInit, OnIni
   }
 
   logout(){
+    this.loginService.logout();
+    this.router.navigate(['']);
   }
 }
