@@ -15,20 +15,34 @@
     limitations under the License.
 
 -->
+
 <div
    (dblclick)="userNodeCallbacks.doubleClick($event, node)"
    (mousedown)="userNodeCallbacks.mouseDown($event, node)"
    (mouseenter)="userNodeCallbacks.mouseEnter($event, node)"
    (mouseleave)="userNodeCallbacks.mouseLeave($event, node)">
-  <div class="fc-node-overlay"></div>
-  <div class="virtuan-rule-node {{node.nodeClass}}"
+<!--  <div class="fc-node-overlay">-->
+<!--    -->
+<!--  </div>-->
+  <div
+    class="application-resource-tree__node-kind-icon application-resource-tree__node-kind-icon--big" style="display: flex; align-items: center; justify-content: center">
+    <img class="gen-icon"  src="/content/images/gen/skeleton.png" width="25"
+         height="25"
+         alt="">
+  </div>
+  <div class="virtuan-rule-node"
        [ngClass]="{'virtuan-rule-node-highlighted' : node.highlighted,
                    'virtuan-rule-node-invalid': node.error }">
-    <mat-icon *ngIf="!iconUrl" fxFlex="15">{{node.icon}}</mat-icon>
-    <img *ngIf="iconUrl" fxFlex="15" [src]="iconUrl"/>
+
+<!--    <mat-icon *ngIf="!iconUrl" fxFlex="15">{{node.icon}}</mat-icon>-->
+<!--    <img *ngIf="iconUrl" fxFlex="15" [src]="iconUrl"/>-->
     <div fxLayout="column" fxFlex="85" fxLayoutAlign="center">
-      <span class="virtuan-node-type">{{ node.component.name }}</span>
-      <span class="virtuan-node-title" *ngIf="node.name">{{ node.name }}</span>
+      <div style="margin-left: 34px">
+        <span class="virtuan-node-type truncate">{{ node.component.name }}</span>
+      </div>
+      <div style="margin-left: 34px">
+        <span class="virtuan-node-title truncate" *ngIf="node.name">{{ node.name }}</span>
+      </div>
     </div>
     <div class="{{flowchartConstants.leftConnectorClass}}">
       <div fc-magnet [connector]="connector" [callbacks]="callbacks"
@@ -51,6 +65,21 @@
       </div>
     </div>
   </div>
+  <div class="application-resource-tree__node-menu">
+    <div class="gen-dropdown">
+      <div class="gen-dropdown__anchor">
+        <button (click)="displayMenu(i+ 1);$event.stopPropagation();"
+                class="gen-button gen-button--light gen-button--lg gen-button--short">
+          <i class="fa fa-ellipsis-v"></i></button>
+      </div>
+    </div>
+    <div class="controller-menu">
+      <div [className]="selectedId ===  i+ 1? 'visible' : 'hide'">
+        <p-menu [model]="items"></p-menu>
+      </div>
+    </div>
+  </div>
+
   <section *ngIf="modelservice.isEditable() && !node.readonly">
     <div class="fc-nodeedit" (click)="userNodeCallbacks.nodeEdit($event, node)">
       <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -60,3 +89,6 @@
     </div>
   </section>
 </div>
+
+
+
