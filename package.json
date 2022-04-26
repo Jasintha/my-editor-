@@ -5,8 +5,8 @@
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "ng": "ng",
     "start": "ng serve --port 3000 --host 0.0.0.0",
-    "build": "ng build --sourceMap=false --base-href /editor/",
-    "build:prod": "ng build --prod --vendor-chunk --base-href /editor/",
+    "build": "ng build --sourceMap=false --base-href /",
+    "build:prod": "ng build --prod --vendor-chunk --base-href /",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
