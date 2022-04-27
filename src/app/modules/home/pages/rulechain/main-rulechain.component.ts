@@ -115,7 +115,7 @@ export class MainRuleChainComponent implements OnInit {
     lambdauid: string;
     modelUid: string;
     eventSubscriber: Subscription;
-
+    currentTab: string;
     isGenerating: boolean;
     theme: string = 'vs-dark';
     editorOptions: any = { theme: 'vs-dark', language: 'json' };
@@ -176,7 +176,7 @@ export class MainRuleChainComponent implements OnInit {
     }
 
     add(node){
-        this.addOperationService.createPopups(node, this.projectUid, 'Create');
+        this.addOperationService.createPopups(node, node.projectUid, 'Create');
     }
 
     edit(item){
@@ -259,6 +259,7 @@ export class MainRuleChainComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.currentTab = 'design'
         this.route.params.subscribe(params => {
             this.projectUid = params['projectUid'];
         });

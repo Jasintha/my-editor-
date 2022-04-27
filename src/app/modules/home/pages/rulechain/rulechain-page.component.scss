@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 @import './rule-node-colors';
+@import "bootstrap-4-vertical-tabs/scss/custom-variables";
+@import "bootstrap-4-vertical-tabs/scss/responsive-vertical-tabs";
 
 .virtuan-rulechain {
   width: 100%;
@@ -361,10 +363,11 @@
 
 
 .top-node {
-  position: fixed;
-  left: 97%;
-  margin-left: 1px;
-  float: right;
+  //position: fixed;
+  //left: 94%;
+  //margin-left: 1px;
+  //float: right;
+  margin-top: 12px;
 }
 
 .add-btn {
@@ -393,4 +396,18 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #1558b0;
+}
+
+.right-tabs.sideways-tabs, .left-tabs.sideways-tabs, .right-tabs.nav-tabs, .left-tabs.nav-tabs {
+  height: 100%;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-right: -95px;
+  margin-top: 55px;
+}
+
+.size-limit{
+  max-width: 90%;
+  overflow: auto;
+  height: 95vh;
 }

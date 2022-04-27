@@ -47,23 +47,34 @@
 
                     </as-split-area>
                     <as-split-area [size]="26">
-                        <mat-tab-group dynamicHeight>
-                            <mat-tab label="Design">
-                                <ng-template matTabContent>
-
-                                </ng-template>
-                            </mat-tab>
-                            <mat-tab label="Service">
-                                <ng-template matTabContent>
+                        <div>
+                            <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist" style="position: fixed">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" (click)="currentTab = 'design'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"  aria-selected="false">Design</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" (click)="currentTab = 'service'"  data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab" aria-selected="true">Service</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" (click)="currentTab = 'portal'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"  aria-selected="false">UI</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'design'}" role="tabpanel"
+                                     aria-labelledby="home-tab">
+                                  Design
+                                </div>
+                                <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'service'}" role="tabpanel"
+                                     aria-labelledby="profile-tab">
                                     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                                         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
                                             <button mat-icon-button disabled></button>
                                             <mat-icon class="mat-icon-rtl-mirror" color="primary">
                                                 {{node.data.isParent ? 'folder' : 'description'}}
                                             </mat-icon>
-<!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
-<!--                                                description-->
-<!--                                            </mat-icon>-->
+                                            <!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
+                                            <!--                                                description-->
+                                            <!--                                            </mat-icon>-->
                                             <div style="margin-left: 15px">
                                                 {{node.name}}
                                             </div>
@@ -99,14 +110,13 @@
 
                                         </mat-tree-node>
                                     </mat-tree>
-                                </ng-template>
-                            </mat-tab>
-                            <mat-tab label="UI">
-                                <ng-template matTabContent>
-
-                                </ng-template>
-                            </mat-tab>
-                        </mat-tab-group>
+                                </div>
+                                <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'portal'}" role="tabpanel"
+                                     aria-labelledby="contact-tab">
+                                   Portal
+                                </div>
+                            </div>
+                        </div>
 
                     </as-split-area>
                 </as-split>
