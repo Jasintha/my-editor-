@@ -356,14 +356,14 @@
 .mat-tree-node {
   display: flex;
   align-items: center;
-  min-height: 2.9em !important;
-  height: 2.9em;
+  min-height: 2.6em !important;
+  height: 2.6em;
   flex: 1;
   word-wrap: break-word;
 }
 .mat-tree-node, .mat-nested-tree-node {
   font-weight: 400;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .top-node {
@@ -413,7 +413,7 @@
   height: 100%;
   -ms-flex-direction: column;
   flex-direction: column;
-  margin-right: -95px;
+  margin-right: -85px;
   margin-top: 55px;
   background-color: white;
   z-index: 1;
@@ -430,4 +430,27 @@
   border-right: 1px solid #b6b6b6;
   border-bottom: 1px solid transparent;
   border-left: 1px solid #b6b6b6;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
+
+body, button, html, input, select, textarea, td, th {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
 }
