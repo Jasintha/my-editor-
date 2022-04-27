@@ -17,11 +17,11 @@
 <div style="height: 90vh;">
     <div style="width: 100%; height: 92vh; background: #ffffff;">
 
-        <as-split direction="vertical">
+        <as-split direction="horizontal">
             <!--<as-split-area [size]="15">TOP</as-split-area>-->
-            <as-split-area [size]="65">
-                <as-split direction="horizontal">
-                    <as-split-area [size]="80" style="overflow: auto">
+            <as-split-area [size]="80">
+                <as-split direction="vertical">
+                    <as-split-area [size]="65" style="overflow: auto">
 
                         <!-- <router-outlet></router-outlet>-->
                         <virtuan-microservice-model *ngIf="loadModelView" [projectUid]="projectUid" [modelUid]="modelUid"></virtuan-microservice-model>
@@ -34,105 +34,105 @@
                                                  [ruleNodeComponents]="ruleNodeComponents"></virtuan-rulechain-page>
 
                     </as-split-area>
-                    <as-split-area [size]="20">
-                        <div>
-                            <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist" style="position: fixed">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" (click)="currentTab = 'design'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"  aria-selected="false">Design</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" (click)="currentTab = 'service'"  data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab" aria-selected="true">Service</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" (click)="currentTab = 'portal'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"  aria-selected="false">UI</button>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'design'}" role="tabpanel"
-                                     aria-labelledby="home-tab">
-                                  Design
-                                </div>
-                                <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'service'}" role="tabpanel"
-                                     aria-labelledby="profile-tab">
-                                    <button mat-icon-button  class="top-node" style="float: right" (click)="add('PARENT_SERVICE')"><mat-icon >add</mat-icon></button>
-                                    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" style="margin-top: 25px;">
-                                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
-                                            <button mat-icon-button disabled></button>
-                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" [ngClass]="{ 'background-highlight': activeNode === node }">
-                                                {{node.data.isParent ? 'folder' : 'description'}}
-                                            </mat-icon>
-                                            <!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
-                                            <!--                                                description-->
-                                            <!--                                            </mat-icon>-->
-                                            <div style="margin-left: 15px">
-                                                {{node.name}}
-                                            </div>
+                    <as-split-area [size]="35">
+                        <mat-tab-group dynamicHeight>
+                            <mat-tab label="Console">
+                                <ng-template matTabContent>
+                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
+                                        <div style="min-height: 40px;margin: 5px;">
+                                            <button mat-raised-button color="primary" type="button" style="float:right;" [disabled]="isGenerating" (click)="generateProject()" cdkFocusInitial>Generate</button></div>
 
-                                            <button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
-                                                    [matMenuTriggerData]="{ item: node.data }"
-                                                    [matMenuTriggerFor]="actionsMenu"
-                                                    mat-icon-button
-                                                    type="button">
-                                                <mat-icon>more_vert</mat-icon>
-                                            </button>
-                                            <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
-                                        </mat-tree-node>
-                                        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding >
-                                            <button mat-icon-button
-                                                    [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
-                                                <mat-icon class="mat-icon-rtl-mirror">
-                                                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                                                </mat-icon>
-                                                <mat-icon class="mat-icon-rtl-mirror" color="primary">
-                                                    {{ treeControl.isExpanded(node) ?  "folder_open" :"folder"  }}
-                                                </mat-icon>
-                                            </button>
-                                            <div style="margin-left: 15px">
-                                                {{node.name}}
-                                            </div>
-
-
-                                            <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon >add</mat-icon></button>
-                                            <mat-progress-bar *ngIf="node.isLoading"
-                                                              mode="indeterminate"
-                                                              class="example-tree-progress-bar"></mat-progress-bar>
-
-                                        </mat-tree-node>
-                                    </mat-tree>
-                                </div>
-                                <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'portal'}" role="tabpanel"
-                                     aria-labelledby="contact-tab">
-                                   Portal
-                                </div>
-                            </div>
-                        </div>
+                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab label="Git">
+                                <ng-template matTabContent>
+                                    Debugger
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab label="Run">
+                                <ng-template matTabContent>
+                                    Run
+                                </ng-template>
+                            </mat-tab>
+                        </mat-tab-group>
 
                     </as-split-area>
                 </as-split>
             </as-split-area>
-            <as-split-area [size]="35">
-                <mat-tab-group dynamicHeight>
-                    <mat-tab label="Console">
-                        <ng-template matTabContent>
-                            <div style="min-height: 200px; height:100% !important; width: 100%;">
-                                <div style="min-height: 40px;margin: 5px;">
-                                    <button mat-raised-button color="primary" type="button" style="float:right;" [disabled]="isGenerating" (click)="generateProject()" cdkFocusInitial>Generate</button></div>
+            <as-split-area [size]="20">
+                <div>
+                    <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist" style="position: fixed">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" (click)="currentTab = 'design'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"  aria-selected="false">Design</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" (click)="currentTab = 'service'"  data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab" aria-selected="true">Service</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" (click)="currentTab = 'portal'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"  aria-selected="false">UI</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'design'}" role="tabpanel"
+                             aria-labelledby="home-tab">
+                            Design
+                        </div>
+                        <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'service'}" role="tabpanel"
+                             aria-labelledby="profile-tab">
+                            <button mat-icon-button  class="top-node" style="float: right" (click)="add('PARENT_SERVICE')"><mat-icon >add</mat-icon></button>
+                            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" style="margin-top: 25px;">
+                                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
+                                    <button mat-icon-button disabled></button>
+                                    <mat-icon class="mat-icon-rtl-mirror" color="primary" [ngClass]="{ 'background-highlight': activeNode === node }">
+                                        {{node.data.isParent ? 'folder' : 'description'}}
+                                    </mat-icon>
+                                    <!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
+                                    <!--                                                description-->
+                                    <!--                                            </mat-icon>-->
+                                    <div style="margin-left: 15px">
+                                        {{node.name}}
+                                    </div>
 
-                                <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
-                            </div>
-                        </ng-template>
-                    </mat-tab>
-                    <mat-tab label="Git">
-                        <ng-template matTabContent>
-                            Debugger
-                        </ng-template>
-                    </mat-tab>
-                    <mat-tab label="Run">
-                        <ng-template matTabContent>
-                            Run
-                        </ng-template>
-                    </mat-tab>
-                </mat-tab-group>
+                                    <button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
+                                            [matMenuTriggerData]="{ item: node.data }"
+                                            [matMenuTriggerFor]="actionsMenu"
+                                            mat-icon-button
+                                            type="button">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
+                                </mat-tree-node>
+                                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding >
+                                    <button mat-icon-button
+                                            [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
+                                        <mat-icon class="mat-icon-rtl-mirror">
+                                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                        </mat-icon>
+                                        <mat-icon class="mat-icon-rtl-mirror" color="primary">
+                                            {{ treeControl.isExpanded(node) ?  "folder_open" :"folder"  }}
+                                        </mat-icon>
+                                    </button>
+                                    <div style="margin-left: 15px">
+                                        {{node.name}}
+                                    </div>
+
+
+                                    <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon >add</mat-icon></button>
+                                    <mat-progress-bar *ngIf="node.isLoading"
+                                                      mode="indeterminate"
+                                                      class="example-tree-progress-bar"></mat-progress-bar>
+
+                                </mat-tree-node>
+                            </mat-tree>
+                        </div>
+                        <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'portal'}" role="tabpanel"
+                             aria-labelledby="contact-tab">
+                            Portal
+                        </div>
+                    </div>
+                </div>
             </as-split-area>
         </as-split>
     </div>
