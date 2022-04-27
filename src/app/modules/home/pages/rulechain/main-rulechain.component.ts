@@ -117,7 +117,7 @@ export class MainRuleChainComponent implements OnInit {
     modelUid: string;
     eventSubscriber: Subscription;
     currentTab: string;
-    activeNode: boolean;
+    activeNode: any;
 
     isGenerating: boolean;
     theme: string = 'vs-dark';
@@ -158,6 +158,11 @@ export class MainRuleChainComponent implements OnInit {
 
     }
 
+    selectActiveNode(node) {
+        this.activeNode = node;
+        this.projectUid = this.activeNode.data.projectuuid;
+        this.viewComponent(node.data);
+    }
 
 //   viewRule(item){
 // //   this.router.navigate(["/ruleChains"]);

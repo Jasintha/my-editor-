@@ -55,7 +55,7 @@
                                 <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'service'}" role="tabpanel"
                                      aria-labelledby="profile-tab">
                                     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" >
-                                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="activeNode = node" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
+                                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
                                             <button mat-icon-button disabled></button>
                                             <mat-icon class="mat-icon-rtl-mirror" color="primary" [ngClass]="{ 'background-highlight': activeNode === node }">
                                                 {{node.data.isParent ? 'folder' : 'description'}}
