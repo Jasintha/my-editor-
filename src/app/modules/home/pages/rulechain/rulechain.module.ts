@@ -49,6 +49,7 @@ import {CreateHybridfunctionModule} from '@home/pages/create-hybridfunction/crea
 import {CreateLamdafunctionModule} from '@home/pages/create-lamdafunction/create-lamdafunction.module';
 import {CreateTaskModule} from '@home/pages/create-task/create-task.module';
 import {AggregateModule} from '@home/pages/aggregate/aggregate.module';
+import {CreateServiceModule} from '@home/pages/create-service/create-service.module';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import {AggregateModule} from '@home/pages/aggregate/aggregate.module';
     CreateLamdafunctionModule,
     CreateTaskModule,
     AggregateModule,
-    MonacoEditorModule
+    MonacoEditorModule,
+      CreateServiceModule
   ]
 })
 export class RuleChainModule { }

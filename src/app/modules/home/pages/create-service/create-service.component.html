@@ -1,0 +1,131 @@
+<form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()" >
+    <mat-toolbar color="primary" >
+        <h2 mat-dialog-title>Create service project</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-dialog-content>
+        <div class="row">
+
+            <div class="form-group" [hidden]="!editForm.get('id').value">
+                <input type="hidden" class="form-control" id="id" name="id" formControlName="id"/>
+            </div>
+
+            <input type="hidden" class="form-control" id="apptype" name="apptype" formControlName="apptype"/>
+
+
+
+<!--            <div class="form-group">-->
+<!--                <label class="form-control-label">Project Type</label>-->
+<!--                <p-dropdown  (onChange)="onTypeChange()" placeholder="Choose" name="appCategory" [showClear]="true" [options]="projectTypes"-->
+<!--                             formControlName="appCategory" [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>-->
+<!--                <div-->
+<!--                        *ngIf="editForm.get('appCategory').invalid && (editForm.get('appCategory').dirty || editForm.get('appCategory').touched)">-->
+<!--                    <small class="form-text text-danger">-->
+<!--                        Project type is required.-->
+<!--                    </small>-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Name</mat-label>
+                <input type="text" formControlName="name" matInput (keyup)="onEnterName($event)">
+                <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Namespace</mat-label>
+                <input type="text" formControlName="namespace" matInput>
+                <mat-error *ngIf="editForm.controls.namespace.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Version</mat-label>
+                <input type="text" formControlName="version" matInput>
+                <mat-error *ngIf="editForm.controls.version.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Description</mat-label>
+                <input type="text" formControlName="description" matInput>
+            </mat-form-field>
+
+
+            <div class="pt-3 pb-3">
+                <label id="example-radio-group-label">Scope</label>
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="ps-5" aria-label="Select an option" formControlName="projectType">
+                    <div class="row col-md-12 mt-1">
+                        <div class="mt-1">
+                            <mat-radio-button class="pe-3" value="PRIVATE">Private (Visible only to project creator)</mat-radio-button>
+                        </div>
+                    </div>
+                    <div class="row col-md-12 mt-1">
+                        <div class="mt-1">
+                            <mat-radio-button value="PUBLIC">Shared (Visible to the organization or selected users)</mat-radio-button>
+                        </div>
+                    </div>
+                </mat-radio-group>
+            </div>
+
+            <mat-form-field class="flex-auto" *ngIf="editForm.get('appCategory').value === 'microservice'">
+                <mat-label>Template</mat-label>
+                <mat-select formControlName="template" >
+                    <mat-option *ngFor="let option of templateItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
+<!--            <ng-container *ngIf="editForm.get('appCategory').value === 'task.ui'">-->
+<!--                <div class="form-group" style=" padding-top: 5px; ">-->
+<!--                    <label class="form-control-label" for="field_contextroot">Context Root</label>-->
+<!--                    <input type="text" class="form-control" name="contextRoot" id="field_contextroot"-->
+<!--                           formControlName="contextRoot"/>-->
+<!--                </div>-->
+
+<!--            </ng-container>-->
+
+            <!--                <div class="form-group">-->
+            <!--                    <label class="form-control-label">Source Repository</label>-->
+            <!--                    <p-dropdown placeholder="Choose" name="internalAcc" [showClear]="true" [options]="accTypeItems"-->
+            <!--                                formControlName="internalAcc" [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"-->
+            <!--                                [disabled]="editForm.get('id').value"></p-dropdown>-->
+            <!--                    <div-->
+            <!--                        *ngIf="editForm.get('internalAcc').invalid && (editForm.get('internalAcc').dirty || editForm.get('internalAcc').touched)">-->
+            <!--                        <small class="form-text text-danger">-->
+            <!--                            Source Repository is required.-->
+            <!--                        </small>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="form-group">-->
+            <!--                    <label class="form-control-label">Container Repository</label>-->
+            <!--                    <p-dropdown placeholder="Choose" name="dockerAcc" [showClear]="true" [options]="dockerAccTypeItems"-->
+            <!--                                formControlName="dockerAcc" [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"-->
+            <!--                                [disabled]="editForm.get('id').value"></p-dropdown>-->
+            <!--                    <div-->
+            <!--                        *ngIf="editForm.get('dockerAcc').invalid && (editForm.get('dockerAcc').dirty || editForm.get('dockerAcc').touched)">-->
+            <!--                        <small class="form-text text-danger">-->
+            <!--                            Container Repository is required.-->
+            <!--                        </small>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+
+            <div class="flex-auto" *ngIf="apptype ==='microservice'">
+                <mat-checkbox  formControlName="multiTenancy" >Add Multi-Tenancy</mat-checkbox>
+            </div>
+
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>
+        <button mat-button color="primary" mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+</form>
