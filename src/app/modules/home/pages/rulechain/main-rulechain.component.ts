@@ -116,6 +116,8 @@ export class MainRuleChainComponent implements OnInit {
     modelUid: string;
     eventSubscriber: Subscription;
     currentTab: string;
+    activeNode: boolean;
+
     isGenerating: boolean;
     theme: string = 'vs-dark';
     editorOptions: any = { theme: 'vs-dark', language: 'json' };
@@ -176,7 +178,7 @@ export class MainRuleChainComponent implements OnInit {
     }
 
     add(node){
-        this.addOperationService.createPopups(node, node.projectUid, 'Create');
+        this.addOperationService.createPopups(node, node.projectuuid, 'Create');
     }
 
     edit(item){

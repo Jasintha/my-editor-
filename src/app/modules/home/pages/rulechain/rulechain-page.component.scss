@@ -367,7 +367,9 @@
   //left: 94%;
   //margin-left: 1px;
   //float: right;
-  margin-top: 12px;
+  margin-left: 12px;
+  font-size: 1px;
+  color: #858585;
 }
 
 .add-btn {
@@ -396,6 +398,11 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #1558b0;
+}
+
+.background-highlight {
+  background-color: #e1e1e1;
+  cursor: pointer;
 }
 
 .right-tabs.sideways-tabs, .left-tabs.sideways-tabs, .right-tabs.nav-tabs, .left-tabs.nav-tabs {
