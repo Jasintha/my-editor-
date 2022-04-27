@@ -369,7 +369,7 @@
   //float: right;
   margin-left: 12px;
   font-size: 1px;
-  color: #858585;
+  color: #e0e0e0;
 }
 
 .add-btn {
@@ -419,4 +419,11 @@
   max-width: 90%;
   overflow: auto;
   height: 95vh;
+}
+
+.sideways-tabs.right-tabs .nav-link.active {
+  border-top: 1px solid #b6b6b6;
+  border-right: 1px solid #b6b6b6;
+  border-bottom: 1px solid transparent;
+  border-left: 1px solid #b6b6b6;
 }

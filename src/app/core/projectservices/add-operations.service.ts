@@ -7,6 +7,7 @@ import {CreateEventComponent} from '@home/pages/create-event/create-event.compon
 import {CreateHybridfunctionComponent} from '@home/pages/create-hybridfunction/create-hybridfunction.component';
 import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';
 import {CreateTaskComponent} from '@home/pages/create-task/create-task.component';
+import {CreateServiceComponent} from '@home/pages/create-service/create-service.component';
 
 @Injectable({ providedIn: 'root' })
 export class AddOperationService {
@@ -28,6 +29,8 @@ export class AddOperationService {
             this.createLambdaFunction(node ,projectUid , status);
         } else if (node.type === 'PARENT_TASK'){
             this.createTask(node ,projectUid , status);
+        } else if (node === 'PARENT_SERVICE'){
+            this.createService(node ,projectUid , status);
         }
     }
 
@@ -47,6 +50,21 @@ export class AddOperationService {
         } else if (item.type === 'TASK'){
             this.createTask(item,projectUid , status);
         }
+    }
+
+    createService(item, projectUId , status) {
+        const dialogRef = this.dialog.open(CreateServiceComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUId,
+                createStatus: status,
+                uuid: item.uuid,
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
     }
 
     createApi(item, projectUId , status) {
