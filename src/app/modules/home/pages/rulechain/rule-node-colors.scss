@@ -13,62 +13,120 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//@mixin rule-node-colors {
+//  &.virtuan-filter-type {
+//    background-color: #4cbaed;
+//  }
+//
+//  &.virtuan-enrichment-type {
+//    background-color: #cdf14e;
+//  }
+//
+//  &.virtuan-transformation-type {
+//    background-color: #79cef1;
+//  }
+//
+//  &.virtuan-action-type {
+//    background-color: #d65151;
+//  }
+//
+//  &.virtuan-external-type {
+//    background-color: #fbc766;
+//  }
+//
+//  &.virtuan-rule-chain-type {
+//    background-color: #d6c4f1;
+//  }
+//
+//  &.virtuan-unknown-type {
+//    background-color: #f16c29;
+//  }
+//
+//  &.virtuan-cqrs-type {
+//    background-color: #f16c29;
+//  }
+//
+//  &.virtuan-messaging-type {
+//    background-color: #cdf14e;
+//  }
+//
+//  &.virtuan-core-type {
+//    background-color: #3ca55c;
+//  }
+//
+//  &.virtuan-database_operations-type {
+//    background-color: #f1e861;
+//  }
+//
+//  &.virtuan-middleware-type {
+//    background-color: #dea8ff;
+//  }
+//
+//  &.virtuan-connector-type {
+//    background-color: #fbc766;
+//  }
+//
+//  &.virtuan-rooting-type {
+//    background-color: #337a57;
+//  }
+//
+//
+//}
+
 @mixin rule-node-colors {
-  &.virtuan-filter-type {
-    background-color: #4cbaed;
+  &.virtuan-filter-type{
+    color: #4cbaed;
   }
 
-  &.virtuan-enrichment-type {
-    background-color: #cdf14e;
+  &.virtuan-enrichment-type{
+    color: #cdf14e;
   }
 
-  &.virtuan-transformation-type {
-    background-color: #79cef1;
+  &.virtuan-transformation-type{
+    color: #79cef1;
   }
 
-  &.virtuan-action-type {
-    background-color: #d65151;
+  &.virtuan-action-type{
+    color: #d65151;
   }
 
   &.virtuan-external-type {
-    background-color: #fbc766;
+    color: #fbc766;
   }
 
   &.virtuan-rule-chain-type {
-    background-color: #d6c4f1;
+    color: #d6c4f1;
   }
 
   &.virtuan-unknown-type {
-    background-color: #f16c29;
+    color: #f16c29;
   }
 
   &.virtuan-cqrs-type {
-    background-color: #f16c29;
+    color: #f16c29;
   }
 
   &.virtuan-messaging-type {
-    background-color: #cdf14e;
+    color: #cdf14e;
   }
 
-  &.virtuan-core-type {
-    background-color: #3ca55c;
+  &.virtuan-core-type{
+    color: #3ca55c;
   }
 
   &.virtuan-database_operations-type {
-    background-color: #f1e861;
+    color: #f1e861;
   }
 
   &.virtuan-middleware-type {
-    background-color: #dea8ff;
+    color: #a62bf1;
   }
 
   &.virtuan-connector-type {
-    background-color: #fbc766;
+    color: #fbc766;
   }
 
   &.virtuan-rooting-type {
-    background-color: #337a57;
+    color: #337a57;
   }
-
-
 }

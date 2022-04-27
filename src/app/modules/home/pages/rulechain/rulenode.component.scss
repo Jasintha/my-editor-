@@ -52,8 +52,9 @@
     //box-sizing: content-box;
     display: flex;
     flex-direction: row;
-    max-width: 182px;
-    min-width: 182px;
+    width: 165px;
+    //max-width: 182px;
+    //min-width: 182px;
     height: 32px;
     min-height: 32px;
     max-height: 32px;
@@ -183,12 +184,12 @@
 }
 
 .application-resource-tree__node-kind-icon--big {
-  background: #8fa4b1;
+  background: #dae5ec;
   position: absolute;
   width: 50px;
   height: 50px;
   border-radius: 33px;
-  left: -7px;
+  left: -11px;
   top: -3px;
   border: 4px solid white;
   text-align: center;
@@ -230,4 +231,59 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.virtuan-filter-type{
+  color: #575aef;
+}
+
+.virtuan-enrichment-type{
+  color: #cdf14e;
+}
+
+.virtuan-transformation-type{
+  color: #79cef1;
+}
+
+.virtuan-action-type{
+  color: #1a73e8;
+}
+
+.virtuan-external-type {
+  color: #fbc766;
+}
+
+.virtuan-rule-chain-type {
+  color: #d6c4f1;
+}
+
+.virtuan-unknown-type {
+  color: #f16c29;
+}
+
+.virtuan-cqrs-type {
+  color: #f16c29;
+}
+
+.virtuan-messaging-type {
+  color: #036666;
+}
+
+.virtuan-core-type{
+  color: #00a74e;
+}
+
+.virtuan-database_operations-type {
+  color: #d69b0d;
+}
+
+.virtuan-middleware-type {
+  color: #a62bf1;
+}
+
+.virtuan-connector-type {
+  color: #fbc766;
+}
+.virtuan-rooting-type {
+  color: #000000;
 }

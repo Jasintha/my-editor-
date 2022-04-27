@@ -26,16 +26,17 @@
 <!--  </div>-->
   <div
     class="application-resource-tree__node-kind-icon application-resource-tree__node-kind-icon--big" style="display: flex; align-items: center; justify-content: center">
-    <img class="gen-icon"  src="/content/images/gen/skeleton.png" width="25"
-         height="25"
-         alt="">
+<!--    <img class="gen-icon"  src="/content/images/gen/skeleton.png" width="25"-->
+<!--         height="25"-->
+<!--         alt="">-->
+        <mat-icon class="{{node.nodeClass}}" *ngIf="!iconUrl" fxFlex="15" style="margin-right: 18px;">{{node.icon}}</mat-icon>
+<!--        <img *ngIf="iconUrl" fxFlex="15" [src]="iconUrl"/>-->
   </div>
   <div class="virtuan-rule-node"
        [ngClass]="{'virtuan-rule-node-highlighted' : node.highlighted,
-                   'virtuan-rule-node-invalid': node.error }">
+                   'virtuan-rule-node-invalid': node.error }">s
 
-<!--    <mat-icon *ngIf="!iconUrl" fxFlex="15">{{node.icon}}</mat-icon>-->
-<!--    <img *ngIf="iconUrl" fxFlex="15" [src]="iconUrl"/>-->
+
     <div fxLayout="column" fxFlex="85" fxLayoutAlign="center">
       <div style="margin-left: 34px">
         <span class="virtuan-node-type truncate">{{ node.component.name }}</span>
