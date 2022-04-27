@@ -264,7 +264,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         name: 'rulenode.type-database_operations',
         details: 'rulenode.type-database_operations-details',
         nodeClass: 'virtuan-database_operations-type',
-        icon: 'cloud_upload'
+        icon: 'dns'
       }
     ],
     [
