@@ -356,11 +356,15 @@
 .mat-tree-node {
   display: flex;
   align-items: center;
-  min-height: 0;
+  min-height: 2.9em !important;
+  height: 2.9em;
   flex: 1;
   word-wrap: break-word;
 }
-
+.mat-tree-node, .mat-nested-tree-node {
+  font-weight: 400;
+  font-size: 13px;
+}
 
 .top-node {
   //position: fixed;
@@ -369,7 +373,7 @@
   //float: right;
   margin-left: 12px;
   font-size: 1px;
-  color: #e0e0e0;
+  color: #adadad !important;
 }
 
 .add-btn {
