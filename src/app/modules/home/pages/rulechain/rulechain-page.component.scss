@@ -396,3 +396,17 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #1558b0;
 }
+
+.right-tabs.sideways-tabs, .left-tabs.sideways-tabs, .right-tabs.nav-tabs, .left-tabs.nav-tabs {
+  height: 100%;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-right: -100px;
+  margin-top: 55px;
+}
+
+.size-limit{
+  max-width: 90%;
+  overflow: auto;
+  height: 95vh;
+}

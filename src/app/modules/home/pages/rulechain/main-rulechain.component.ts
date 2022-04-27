@@ -94,7 +94,8 @@ const ruleNodeConfigResourcesModulesMap = {
 @Component({
     selector: 'virtuan-main-rulechain-page',
     templateUrl: './main-rulechain.component.html',
-    styleUrls: ['./rulechain-page.component.scss']
+    styleUrls: ['./rulechain-page.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class MainRuleChainComponent implements OnInit {
 
@@ -115,6 +116,7 @@ export class MainRuleChainComponent implements OnInit {
     lambdauid: string;
     modelUid: string;
     eventSubscriber: Subscription;
+    currentTab: string;
 
     isGenerating: boolean;
     theme: string = 'vs-dark';

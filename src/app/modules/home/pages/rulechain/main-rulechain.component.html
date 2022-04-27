@@ -109,27 +109,35 @@
 <!--                        </mat-tab-group>-->
 
                         <div>
-                            <ul class="nav nav-tabs right-tabs sideways-tabs" id="myTab" role="tablist" style="position: fixed">
+                            <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist" style="position: fixed">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Design</button>
+                                    <button class="nav-link" (click)="currentTab = 'design'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"  aria-selected="false">Design</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Service</button>
+                                    <button class="nav-link" (click)="currentTab = 'service'"  data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab" aria-selected="true">Service</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">UI</button>
+                                    <button class="nav-link" (click)="currentTab = 'portal'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"  aria-selected="false">UI</button>
                                 </li>
                             </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home" role="tabpanel"
+                            <div class="tab-content">
+                                <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'design'}" role="tabpanel"
                                      aria-labelledby="home-tab">
-
+                                    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+                                    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
                                 </div>
-                                <div class="tab-pane fade" id="profile" role="tabpanel"
+                                <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'service'}" role="tabpanel"
                                      aria-labelledby="profile-tab">
+                                    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+                                    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+                                    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
                                 </div>
-                                <div class="tab-pane fade" id="contact" role="tabpanel"
-                                     aria-labelledby="contact-tab"></div>
+                                <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'portal'}" role="tabpanel"
+                                     aria-labelledby="contact-tab">
+                                    ttttttttttttttttttttttttttttttttttttttttttt
+                                    tttttttttttttttttttttttttttttttttttttttttttttttttt
+                                    tttttttttttttttttttttttttttttttttttttttttttttttttttttt
+                                </div>
                             </div>
                         </div>
 
