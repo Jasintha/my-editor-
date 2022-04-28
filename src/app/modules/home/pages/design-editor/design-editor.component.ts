@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, OnChanges, SimpleChanges, Input } from '@angular/core';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
-import { faPerson } from '@fortawesome/free-solid-svg-icons';
-import { faDisplay } from '@fortawesome/free-solid-svg-icons';
-import { faGears } from '@fortawesome/free-solid-svg-icons';
+// import { faPlus } from '@fortawesome/free-solid-svg-icons';
+// import { faPencil } from '@fortawesome/free-solid-svg-icons';
+// import { faClose } from '@fortawesome/free-solid-svg-icons';
+// import { faPerson } from '@fortawesome/free-solid-svg-icons';
+// import { faDisplay } from '@fortawesome/free-solid-svg-icons';
+// import { faGears } from '@fortawesome/free-solid-svg-icons';
 import {RequirementService} from '@core/projectservices/requirement.service';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -18,13 +18,12 @@ import { IRequirement, Requirement, IEpic, IStory } from '@shared/models/model/r
   encapsulation: ViewEncapsulation.None
 })
 export class DesignEditorComponent implements OnInit, OnChanges {
-  title = 'jasiz';
-  faPlus = faPlus;
-  faPencilSquare = faPencil;
-  faWindowClose = faClose;
-  faPerson = faPerson;
-  faMobileScreen = faDisplay;
-  faGear = faGears;
+//   faPlus = faPlus;
+//   faPencilSquare = faPencil;
+//   faWindowClose = faClose;
+//   faPerson = faPerson;
+//   faMobileScreen = faDisplay;
+//   faGear = faGears;
   @Input()
   requirementUid: string;
 
@@ -35,8 +34,6 @@ export class DesignEditorComponent implements OnInit, OnChanges {
   constructor( private requirementService: RequirementService) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log("this.requirementUid");
-    console.log(this.requirementUid);
     this.loadReq();
   }
 

@@ -23,7 +23,7 @@ import {CreateRequirementComponent} from '@home/pages/design-editor/create-requi
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import {SharedModule} from '@shared/shared.module';
-
+import { EditorModule } from 'primeng/editor';
 @NgModule({
     declarations:[
         DesignEditorComponent,
@@ -50,6 +50,7 @@ import {SharedModule} from '@shared/shared.module';
         MatSnackBarModule,
         MatToolbarModule,
         FlexModule,
+        EditorModule,
         SharedModule,
         NgbModule,
         FontAwesomeModule
