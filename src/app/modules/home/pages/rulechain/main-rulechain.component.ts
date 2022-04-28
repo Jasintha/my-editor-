@@ -187,8 +187,8 @@ export class MainRuleChainComponent implements OnInit {
 
     registerChangeUIEditor() {
         this.eventSubscriberUi = this.eventManager
-            .on(EventTypes.editorTreeListModification)
-            .subscribe(event => this.loadTreeData());
+            .on(EventTypes.editorUITreeListModification)
+            .subscribe(event => this.loadUITreeData());
     }
 
     delete(item){
