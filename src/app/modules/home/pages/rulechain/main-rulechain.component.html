@@ -24,6 +24,7 @@
                     <as-split-area [size]="65" style="overflow: auto">
 
                         <!-- <router-outlet></router-outlet>-->
+                        <virtuan-design-editor *ngIf="loadDesignRequirement" [requirementUid]="requirementUid" [desprojectUid]="desprojectUid"></virtuan-design-editor>
                         <virtuan-microservice-model *ngIf="loadModelView" [projectUid]="projectUid" [modelUid]="modelUid"></virtuan-microservice-model>
                         <virtuan-lamdafunction-editor *ngIf="loadFunctionEditor" [projectUid]="projectUid" [lamdafunctionUuid]="lambdauid"></virtuan-lamdafunction-editor>
                         <virtuan-rulechain-page  *ngIf="ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded" [ruleChain]="ruleChain"
@@ -77,7 +78,45 @@
                     <div class="tab-content">
                         <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'design'}" role="tabpanel"
                              aria-labelledby="home-tab">
-                            Design
+                            <mat-tree [dataSource]="designdataSource" [treeControl]="treeControl" style="margin-top: 25px;">
+                                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding style="cursor: pointer" (click)="viewComponent(node.data)" >
+                                    <button mat-icon-button disabled></button>
+                                    <mat-icon class="mat-icon-rtl-mirror" color="primary">
+                                        {{node.data.isParent ? 'folder' : 'description'}}
+                                    </mat-icon>
+                                    <!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
+                                    <!--                                                description-->
+                                    <!--                                            </mat-icon>-->
+                                    <div style="margin-left: 15px">
+                                        {{node.name}}
+                                    </div>
+
+                                    <!--<button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
+                                            [matMenuTriggerData]="{ item: node.data }"
+                                            [matMenuTriggerFor]="actionsMenu"
+                                            mat-icon-button
+                                            type="button">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>-->
+                                    <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type == 'PARENT_REQUIREMENT'"  (click)="add(node.data)" ><mat-icon>add</mat-icon></button>
+                                </mat-tree-node>
+                                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding >
+                                    <button mat-icon-button
+                                            [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
+                                        <mat-icon class="mat-icon-rtl-mirror">
+                                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                        </mat-icon>
+                                        <mat-icon class="mat-icon-rtl-mirror" color="primary">
+                                            {{ treeControl.isExpanded(node) ?  "folder_open" :"folder"  }}
+                                        </mat-icon>
+                                    </button>
+                                    <div style="margin-left: 15px">
+                                        {{node.name}}
+                                    </div>
+                                    <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type == 'PARENT_REQUIREMENT'"  (click)="add(node.data)" ><mat-icon>add</mat-icon></button>
+
+                                </mat-tree-node>
+                            </mat-tree>
                         </div>
                         <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'service'}" role="tabpanel"
                              aria-labelledby="profile-tab">

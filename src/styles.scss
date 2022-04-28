@@ -23,6 +23,8 @@
 @import './scss/animations';
 @import './scss/mixins';
 @import './scss/fonts';
+@import '../node_modules/quill/dist/quill.snow.css';
+
 
 body, html {
   height: 100%;

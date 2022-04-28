@@ -50,6 +50,7 @@ import {CreateLamdafunctionModule} from '@home/pages/create-lamdafunction/create
 import {CreateTaskModule} from '@home/pages/create-task/create-task.module';
 import {AggregateModule} from '@home/pages/aggregate/aggregate.module';
 import {CreateServiceModule} from '@home/pages/create-service/create-service.module';
+import {DesignEditorModule} from '@home/pages/design-editor/design-editor.module';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import {CreateServiceModule} from '@home/pages/create-service/create-service.mod
     CreateTaskModule,
     AggregateModule,
     MonacoEditorModule,
-      CreateServiceModule
+    CreateServiceModule,
+    DesignEditorModule
   ]
 })
 export class RuleChainModule { }

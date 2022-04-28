@@ -8,6 +8,7 @@ import {CreateHybridfunctionComponent} from '@home/pages/create-hybridfunction/c
 import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';
 import {CreateTaskComponent} from '@home/pages/create-task/create-task.component';
 import {CreateServiceComponent} from '@home/pages/create-service/create-service.component';
+import {CreateRequirementComponent} from '@home/pages/design-editor/create-requirement.component';
 
 @Injectable({ providedIn: 'root' })
 export class AddOperationService {
@@ -31,6 +32,8 @@ export class AddOperationService {
             this.createTask(node ,projectUid , status);
         } else if (node === 'PARENT_SERVICE'){
             this.createService(node ,projectUid , status);
+        } else if (node.type === 'PARENT_REQUIREMENT'){
+            this.createRequirement(node ,projectUid , status);
         }
     }
 
@@ -54,6 +57,21 @@ export class AddOperationService {
 
     createService(item, projectUId , status) {
         const dialogRef = this.dialog.open(CreateServiceComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUId,
+                createStatus: status,
+                uuid: item.uuid,
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    createRequirement(item, projectUId , status) {
+        const dialogRef = this.dialog.open(CreateRequirementComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUId,
