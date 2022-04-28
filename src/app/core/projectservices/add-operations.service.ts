@@ -36,7 +36,7 @@ export class AddOperationService {
             this.createService(node ,projectUid , status);
         } else if (node.type === 'PARENT_REQUIREMENT'){
             this.createRequirement(node ,projectUid , status);
-        } else if (node.type === 'UI_PAGE'){
+        } else if (node.type === 'PARENT_UI_PAGES'){
             this.createUIPages(node ,projectUid , status);
         }  else if (node.type === 'PARENT_UI_MAIN_MENU'){
             this.createMainMenu(node ,projectUid , status);
