@@ -30,6 +30,7 @@ import {
 } from '@shared/models/rule-node.models';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import {ProjectService} from '@core/projectservices/project.service';
+import {RequirementService} from '@core/projectservices/requirement.service';
 import {ApptypesService} from '@core/projectservices/apptypes.service';
 import {DeleteOperationService} from '@core/projectservices/delete-operations.service';
 import { WebsocketService } from '@core/tracker/websocket.service';
@@ -110,9 +111,12 @@ export class MainRuleChainComponent implements OnInit {
     ruleChainMetaDataLoaded: boolean;
     ruleNodeComponentsLoaded: boolean;
     loadFunctionEditor: boolean;
+    loadDesignRequirement: boolean;
     connectionPropertyTemplatesLoaded: boolean;
     loadModelView: boolean;
     projectUid: string;
+    requirementUid: string;
+    desprojectUid: string;
     lambdauid: string;
     modelUid: string;
     eventSubscriber: Subscription;
@@ -150,8 +154,9 @@ export class MainRuleChainComponent implements OnInit {
     hasChild = (_: number, node: any) => node.expandable;
 
     dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    designdataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-    constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService,
+    constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService, private requirementService: RequirementService,
     private projectService: ProjectService,private deleteOperationService: DeleteOperationService,private addOperationService:AddOperationService, public dialog: MatDialog,
     private eventManager: EventManagerService, private socket: WebsocketService, private breakpointService: BreakpointTrackerService, private themeService: ThemeTrackerService,
     protected appTypeService: ApptypesService) {
@@ -184,6 +189,7 @@ export class MainRuleChainComponent implements OnInit {
     }
 
     add(node){
+        console.log(node);
         this.addOperationService.createPopups(node, node.projectuuid, 'Create');
     }
 
@@ -199,6 +205,10 @@ export class MainRuleChainComponent implements OnInit {
             this.viewModel(item);
         } else if(item.type === 'LAMBDA'){
             this.viewFuncEditor(item);
+        } else if(item.type === 'REQUIREMENT'){
+            this.viewReqEditor(item);
+        } else if(item.type === 'PARENT_ACTOR'){
+
         } else {
             this.viewRule(item);
         }
@@ -213,10 +223,32 @@ export class MainRuleChainComponent implements OnInit {
         this.ruleChainMetaData = null;
         this.connectionPropertyTemplates = null;
         this.ruleNodeComponents = null;
+        this.loadDesignRequirement = false;
+        this.requirementUid = "";
         this.lambdauid = "";
         this.lambdauid = item.uuid;
         this.loadFunctionEditor = true;
         this.loadModelView = false;
+    }
+
+    viewReqEditor(item){
+        console.log(item);
+        this.ruleChainLoaded = false;
+        this.ruleChainMetaDataLoaded = false;
+        this.connectionPropertyTemplatesLoaded = false;
+        this.ruleNodeComponentsLoaded = false;
+        this.ruleChain = null;
+        this.ruleChainMetaData = null;
+        this.connectionPropertyTemplates = null;
+        this.ruleNodeComponents = null;
+        this.lambdauid = "";
+        this.loadFunctionEditor = false;
+        this.loadModelView = false;
+        this.requirementUid = "";
+        this.desprojectUid = "";
+        this.requirementUid = item.uuid;
+        this.desprojectUid = item.projectuuid;
+        this.loadDesignRequirement = true;
     }
 
     viewRule(item) {
@@ -227,6 +259,8 @@ export class MainRuleChainComponent implements OnInit {
         this.connectionPropertyTemplatesLoaded = false;
         this.ruleNodeComponentsLoaded = false;
         this.loadModelView = false;
+        this.loadDesignRequirement = false;
+        this.requirementUid = "";
 
         this.username = item.username;
 //         this.uid = this.projectUid;
@@ -264,6 +298,8 @@ export class MainRuleChainComponent implements OnInit {
         this.loadFunctionEditor = false;
         this.modelUid = item.uuid;
         this.loadModelView = true;
+        this.loadDesignRequirement = false;
+        this.requirementUid = "";
     }
 
     ngOnInit(): void {
@@ -272,28 +308,44 @@ export class MainRuleChainComponent implements OnInit {
             this.projectUid = params['projectUid'];
         });
         this.loadTreeData();
+        this.loadDesignTreeData();
         this.registerChangeEditorTree();
-        this.appTypeService.getDevChainByAppType(this.projectUid)
-          .pipe(
-            filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
-            map((response: HttpResponse<IGenerator[]>) => response.body)
-          )
-          .subscribe(
-            (res: IGenerator[]) => {
-              this.generatorChain = res;
-              if (this.generatorChain.length !== 0) {
-                this.generatorChain.forEach(c => {
-                  this.generatorList[c.position] = c.generator.name;
-                });
-              }
-            });
-        this.loadChatbox(this.projectUid);
+//         this.appTypeService.getDevChainByAppType(this.projectUid)
+//           .pipe(
+//             filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
+//             map((response: HttpResponse<IGenerator[]>) => response.body)
+//           )
+//           .subscribe(
+//             (res: IGenerator[]) => {
+//               this.generatorChain = res;
+//               if (this.generatorChain.length !== 0) {
+//                 this.generatorChain.forEach(c => {
+//                   this.generatorList[c.position] = c.generator.name;
+//                 });
+//               }
+//             });
+//         this.loadChatbox(this.projectUid);
     }
 
     loadTreeData(){
         this.projectService.findAllProjectComponents().subscribe((comps) => {
             this.dataSource.data = comps;
         });
+    }
+
+    loadDesignTreeData(){
+
+      this.requirementService
+          .findAllDesignTreeData()
+          .pipe(
+              filter((mayBeOk: HttpResponse<any[]>) => mayBeOk.ok),
+              map((response: HttpResponse<any[]>) => response.body)
+          )
+          .subscribe(
+              (res: any[]) => {
+                this.designdataSource.data = res;
+              }
+          );
     }
 
   generateProject() {
