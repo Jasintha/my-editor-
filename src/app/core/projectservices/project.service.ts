@@ -37,6 +37,10 @@ export class ProjectService {
     return this.http.get<any[]>(`/api/editor/projects/all/components`, defaultHttpOptions());
   }
 
+  findAllUIComponents(): Observable<any[]> {
+    return this.http.get<any[]>(`/api/editor/projects/portal/components`, defaultHttpOptions());
+  }
+
   create(project: IProject): Observable<EntityResponseType> {
     return this.http.post<IProject>(this.resourceUrl, project, { observe: 'response' });
   }

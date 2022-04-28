@@ -116,6 +116,7 @@ export class MainRuleChainComponent implements OnInit {
     lambdauid: string;
     modelUid: string;
     eventSubscriber: Subscription;
+    eventSubscriberUi: Subscription;
     currentTab: string;
     activeNode: any;
 
@@ -150,6 +151,7 @@ export class MainRuleChainComponent implements OnInit {
     hasChild = (_: number, node: any) => node.expandable;
 
     dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    uiTreeDaSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService,
     private projectService: ProjectService,private deleteOperationService: DeleteOperationService,private addOperationService:AddOperationService, public dialog: MatDialog,
@@ -177,6 +179,12 @@ export class MainRuleChainComponent implements OnInit {
       .on(EventTypes.editorTreeListModification)
       .subscribe(event => this.loadTreeData());
   }
+
+    registerChangeUIEditor() {
+        this.eventSubscriberUi = this.eventManager
+            .on(EventTypes.editorTreeListModification)
+            .subscribe(event => this.loadTreeData());
+    }
 
     delete(item){
       this.projectUid = item.projectuuid;
@@ -272,7 +280,9 @@ export class MainRuleChainComponent implements OnInit {
             this.projectUid = params['projectUid'];
         });
         this.loadTreeData();
+        this.loadUITreeData()
         this.registerChangeEditorTree();
+        this.registerChangeUIEditor();
         this.appTypeService.getDevChainByAppType(this.projectUid)
           .pipe(
             filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
@@ -293,6 +303,12 @@ export class MainRuleChainComponent implements OnInit {
     loadTreeData(){
         this.projectService.findAllProjectComponents().subscribe((comps) => {
             this.dataSource.data = comps;
+        });
+    }
+
+    loadUITreeData(){
+        this.projectService.findAllUIComponents().subscribe((comps) => {
+            this.uiTreeDaSource.data = comps;
         });
     }
 

@@ -129,7 +129,50 @@
                         </div>
                         <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'portal'}" role="tabpanel"
                              aria-labelledby="contact-tab">
-                            Portal
+                            <mat-tree [dataSource]="uiTreeDaSource" [treeControl]="treeControl" style="margin-top: 25px;">
+                                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
+                                    <button mat-icon-button disabled></button>
+                                    <mat-icon class="mat-icon-rtl-mirror" color="primary" [ngClass]="{ 'background-highlight': activeNode === node }">
+                                        {{node.data.isParent ? 'folder' : 'description'}}
+                                    </mat-icon>
+                                    <!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
+                                    <!--                                                description-->
+                                    <!--                                            </mat-icon>-->
+                                    <div style="margin-left: 15px">
+                                        {{node.name}}
+                                    </div>
+
+                                    <button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
+                                            [matMenuTriggerData]="{ item: node.data }"
+                                            [matMenuTriggerFor]="actionsMenu"
+                                            mat-icon-button
+                                            type="button">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <button mat-icon-button  class="top-node" *ngIf="node.data.isParent"  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
+                                </mat-tree-node>
+                                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding >
+                                    <button mat-icon-button
+                                            [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
+                                        <mat-icon class="mat-icon-rtl-mirror">
+                                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                        </mat-icon>
+                                        <mat-icon class="mat-icon-rtl-mirror" color="primary">
+                                            {{ treeControl.isExpanded(node) ?  "folder_open" :"folder"  }}
+                                        </mat-icon>
+                                    </button>
+                                    <div style="margin-left: 15px">
+                                        {{node.name}}
+                                    </div>
+
+
+                                    <button mat-icon-button  class="top-node" *ngIf="node.data.isParent"  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon >add</mat-icon></button>
+                                    <mat-progress-bar *ngIf="node.isLoading"
+                                                      mode="indeterminate"
+                                                      class="example-tree-progress-bar"></mat-progress-bar>
+
+                                </mat-tree-node>
+                            </mat-tree>
                         </div>
                     </div>
                 </div>
