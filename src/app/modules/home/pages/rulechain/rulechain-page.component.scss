@@ -426,10 +426,24 @@
 }
 
 .sideways-tabs.right-tabs .nav-link.active {
-  border-top: 1px solid #b6b6b6;
-  border-right: 1px solid #b6b6b6;
-  border-bottom: 1px solid transparent;
-  border-left: 1px solid #b6b6b6;
+  border: none;
+  border-top: 8px solid #eeeeff;
+}
+
+.sideways-tabs.right-tabs .nav-link{
+  width: 8rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: lightgrey;
+  border-color: lightgrey;
+  border: none;
+}
+
+.sideways-tabs.right-tabs .nav-link:hover{
+  border: none;
+  color: grey;
 }
 
 .material-icons {
