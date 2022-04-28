@@ -1,0 +1,112 @@
+<div>
+    <h2 id="page-heading">
+        <span>Data Pages</span>
+    </h2>
+    <br/>
+    <div class="scroll-bar" *ngIf="builtInPages?.length > 0">
+        <p-dataView #dv [value]="builtInPages" [paginator]="true" [rows]="20" paginatorPosition="top"
+                    filterBy="name"
+                    [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+            <p-header>
+                <div class="ui-helper-clearfix">
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-10">
+                            <p-dropdown [options]="sortOptions" placeholder="Sort By"
+                                        (onChange)="onSortChange($event)"
+                                        [style]="{'min-width':'140px'}"></p-dropdown>
+                        </div>
+                        <div class="ui-g-6 ui-md-2" style="text-align:center;">
+                            <div style="position:relative">
+                                <input class="ui-inputtext ui-corner-all ui-state-default ui-widget" type="search"
+                                       pInputText placeholder="Search by name"
+                                       (input)="dv.filter($event.target.value)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </p-header>
+            <ng-template let-page pTemplate="gridItem">
+                <div style="padding:.15em" class="ui-g-12 ui-md-2">
+                    <p-panel [header]="page.pagetitle" [style]="{'text-align':'center'}">
+
+                        <div
+                                class="ui-panel ui-widget ui-widget-content ui-corner-all justify-content-center box-two "
+                                [ngClass]="{'borderMicroservice': true }">
+
+                            <div class="clickable">
+
+                                <h5 class="card-title text-truncate"
+                                    style="margin-top: 5px;  text-align: center;padding-top: 5px; margin-left: 10px"
+                                    title="{{page.pagetitle}}"><b>{{page.pagetitle}}</b></h5>
+                                <!--                                <button *ngIf="page.status === 'ENABLED'" pButton type="submit"-->
+                                <!--                                        -->
+                                <!--                                        class="ui-button ui-button-raised" icon="fa fa-pencil-square-o"-->
+                                <!--                                        pTooltip="Edit Details" tooltipPosition="bottom" life="2000" style="margin-right: 8px; ">-->
+                                <!--                                </button>-->
+                                <div class="ui-panel-content ui-widget-content"
+                                     (click)="navigateToPage(page)">
+                                    <img *ngIf="page.pagetemplate == 'login-page'" class="pageTmpImg"
+                                         src="../../../../../assets/images/pages/login.jpg"
+                                         alt="Template">
+                                    <img
+                                            *ngIf="page.pagetemplate == 'table-page' || page.pagetemplate == 'aio-table'"
+                                            class="pageTmpImg" src="../../../../../assets/images/pages/allinone.jpg"
+                                            alt="Template">
+                                    <img
+                                            *ngIf="page.pagetemplate == 'form-page' || page.pagetemplate == 'file-upload-page' || page.pagetemplate == 'form-wizard-page'"
+                                            class="pageTmpImg" src="../../../../../assets/images/pages/form.jpg"
+                                            alt="Template">
+                                    <img *ngIf="page.pagetemplate == 'register-page'"
+                                         class="pageTmpImg" src="../../../../../assets/images/pages/register.jpg"
+                                         alt="Template">
+                                    <img *ngIf="page.pagetemplate == 'aio-grid'"
+                                         class="pageTmpImg" src="../../../../../assets/images/pages/grid.jpg"
+                                         alt="Template">
+                                    <img *ngIf="page.pagetemplate == 'grid-page'"
+                                         class="pageTmpImg" src="../../../../../assets/images/pages/grid.jpg"
+                                         alt="Template">
+                                </div>
+                            </div>
+
+                            <div class="card-body clickable " style="padding-top: 2px;padding-bottom: 2px;">
+
+
+                                <dl class="row float-start">
+                                    <dt class="col-sm-5 detail text-truncate" style="margin-bottom: 2px">Type:</dt>
+                                    <dd class="col-sm-7 detail text-truncate float-start">{{page.pagetemplate}}</dd>
+
+                                    <dt class="col-sm-7 detail align-baseline text-truncate"
+                                        style="margin-bottom: 2px;" title="{{page.uiTemplate}}">Template:
+                                    </dt>
+                                    <dd class="col-sm-5 detail float-start align-baseline text-truncate">{{page.uiTemplate}}</dd>
+                                </dl>
+                            </div>
+                            <div class="card-footer bg-transparent border-primary  d-flex justify-content-center"
+                                 style="background-color: transparent; border-top: 0px; ">
+                                <div class="align-items-center">
+                                    <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="openPageControllerConfig(page.uuid)"
+                                            style="margin-right: 8px;">
+                                        <mat-icon>favorite</mat-icon>
+                                    </button>
+
+                                    <button *ngIf="page.pagetemplate !== 'file-upload-page'" type="button" mat-mini-fab aria-label="Example icon-button with a heart icon"
+                                            style="margin-right: 8px;" (click)="openPageAttributeConfig(page.uuid)">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+
+                                    <button *ngIf="page.pagetemplate !== 'file-upload-page'" type="submit" mat-mini-fab aria-label="Example icon-button with a heart icon"
+                                            style="margin-right: 8px;" (click)="openPageAttributeConfig(page.uuid)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </p-panel>
+                </div>
+            </ng-template>
+        </p-dataView>
+    </div>
+</div>

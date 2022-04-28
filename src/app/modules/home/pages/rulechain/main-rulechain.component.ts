@@ -105,6 +105,7 @@ export class MainRuleChainComponent implements OnInit {
     ruleChainMetaData: ResolvedRuleChainMetaData;
     connectionPropertyTemplates: ConnectionPropertyTemplate[];
     username: string;
+    pageId: string;
 //     uid: string;
     ruleNodeComponents: Array<RuleNodeComponentDescriptor>;
     ruleChainLoaded: boolean;
@@ -123,7 +124,7 @@ export class MainRuleChainComponent implements OnInit {
     eventSubscriberUi: Subscription;
     currentTab: string;
     activeNode: any;
-
+    loadPageEditor : boolean;
     isGenerating: boolean;
     theme: string = 'vs-dark';
     editorOptions: any = { language: 'json', readOnly: true };
@@ -217,9 +218,32 @@ export class MainRuleChainComponent implements OnInit {
             this.viewReqEditor(item);
         } else if(item.type === 'PARENT_ACTOR'){
 
-        } else {
+        } else if(item.type === 'UI_PAGE'){
+            this.viewPageEditor(item)
+        }
+        else {
             this.viewRule(item);
         }
+    }
+
+    viewPageEditor(item){
+        debugger
+        this.loadPageEditor = true;
+        this.ruleChainLoaded = false;
+        this.ruleChainMetaDataLoaded = false;
+        this.connectionPropertyTemplatesLoaded = false;
+        this.ruleNodeComponentsLoaded = false;
+        this.ruleChain = null;
+        this.ruleChainMetaData = null;
+        this.connectionPropertyTemplates = null;
+        this.ruleNodeComponents = null;
+        this.loadDesignRequirement = false;
+        this.requirementUid = "";
+        this.lambdauid = "";
+        this.loadFunctionEditor = false;
+        this.loadModelView = false;
+        this.projectUid = item.projectuuid;
+        this.pageId = item.uuid
     }
 
     viewFuncEditor(item){
@@ -237,6 +261,7 @@ export class MainRuleChainComponent implements OnInit {
         this.lambdauid = item.uuid;
         this.loadFunctionEditor = true;
         this.loadModelView = false;
+        this.loadPageEditor = false;
     }
 
     viewReqEditor(item){
@@ -257,6 +282,7 @@ export class MainRuleChainComponent implements OnInit {
         this.requirementUid = item.uuid;
         this.desprojectUid = item.projectuuid;
         this.loadDesignRequirement = true;
+        this.loadPageEditor = false;
     }
 
     viewRule(item) {
@@ -269,6 +295,7 @@ export class MainRuleChainComponent implements OnInit {
         this.loadModelView = false;
         this.loadDesignRequirement = false;
         this.requirementUid = "";
+        this.loadPageEditor = false;
 
         this.username = item.username;
 //         this.uid = this.projectUid;
@@ -308,6 +335,7 @@ export class MainRuleChainComponent implements OnInit {
         this.loadModelView = true;
         this.loadDesignRequirement = false;
         this.requirementUid = "";
+        this.loadPageEditor = false;
     }
 
     ngOnInit(): void {
@@ -319,6 +347,7 @@ export class MainRuleChainComponent implements OnInit {
         this.loadDesignTreeData();
         this.loadUITreeData();
         this.registerChangeEditorTree();
+        this.registerChangeUIEditor();
 //         this.appTypeService.getDevChainByAppType(this.projectUid)
 //           .pipe(
 //             filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),

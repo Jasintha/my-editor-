@@ -1,0 +1,59 @@
+<form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()" >
+    <mat-toolbar color="primary" >
+        <h2 mat-dialog-title>Create Main Menu</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-dialog-content>
+        <div class="row">
+
+
+            <div class="form-group" [hidden]="!editForm.get('id').value">
+                <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
+            </div>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Name</mat-label>
+                <input type="text" formControlName="name" matInput name="name" id="field_name">
+                <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Menutype</mat-label>
+                <mat-select formControlName="menuType" >
+                    <mat-option *ngFor="let option of menuTypeItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Icon</mat-label>
+                <mat-select formControlName="icon" >
+                    <mat-option *ngFor="let option of iconItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto" *ngIf="editForm.value.menuType === 'link'">
+                <mat-label>Page</mat-label>
+                <mat-select formControlName="page" >
+                    <mat-option *ngFor="let option of pageItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>
+        <button mat-button color="primary" mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+</form>

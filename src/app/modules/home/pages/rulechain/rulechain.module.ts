@@ -51,6 +51,9 @@ import {CreateTaskModule} from '@home/pages/create-task/create-task.module';
 import {AggregateModule} from '@home/pages/aggregate/aggregate.module';
 import {CreateServiceModule} from '@home/pages/create-service/create-service.module';
 import {DesignEditorModule} from '@home/pages/design-editor/design-editor.module';
+import {BuiltInPageModule} from '@home/pages/built-in-page/built-in-page.module';
+import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
+import { MainMenuModule } from '../main-menu/main-menu.module';
 
 @NgModule({
   declarations: [
@@ -63,7 +66,7 @@ import {DesignEditorModule} from '@home/pages/design-editor/design-editor.module
     LinkLabelsComponent,
     RuleNodeLinkComponent,
     AddRuleNodeLinkDialogComponent,
-    AddRuleNodeDialogComponent
+    AddRuleNodeDialogComponent,
   ],
   providers: [
     {
@@ -96,7 +99,10 @@ import {DesignEditorModule} from '@home/pages/design-editor/design-editor.module
     AggregateModule,
     MonacoEditorModule,
     CreateServiceModule,
-    DesignEditorModule
+    DesignEditorModule,
+    CreateServiceModule,
+    BuiltInPageModule,
+      MainMenuModule,
   ]
 })
 export class RuleChainModule { }
