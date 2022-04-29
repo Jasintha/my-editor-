@@ -520,7 +520,7 @@ export class MainRuleChainComponent implements OnInit {
                   if(this.code != '') {
                     this.code = this.code + ",\n";
                   }
-                  this.code = this.code + '{"status": "Error", "detail": "Generation failed at "'+ this.generatorList[position] + '}';
+                  this.code = this.code + '{"status": "Error", "detail": "Generation failed at '+ this.generatorList[position] + '"}';
 
               } else if (status.trim() === 'done') {
 //                 if (this.generatorList[position] === 'Compiler') {
@@ -537,13 +537,13 @@ export class MainRuleChainComponent implements OnInit {
                   if(this.code != '') {
                     this.code = this.code + ",\n";
                   }
-                  this.code = this.code + '{"status": "Success", "detail": "Generation successful at "'+ this.generatorList[position] + '}';
+                  this.code = this.code + '{"status": "Success", "detail": "Generation successful at '+ this.generatorList[position] + '"}';
 
                 } else if (status.trim() === 'done') {
                   if(this.code != '') {
                     this.code = this.code + ",\n";
                   }
-                  this.code = this.code + '{"status": "In progress", "detail": "Generation started at "'+ this.generatorList[position] + '}';
+                  this.code = this.code + '{"status": "In progress", "detail": "Generation started at '+ this.generatorList[position] + '"}';
                 }
             }
           }
