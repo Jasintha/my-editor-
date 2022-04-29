@@ -17,6 +17,8 @@ import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
 import {IApi} from '@shared/models/model/microservice-api.model';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {EventManagerService} from '@shared/events/event.type';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
 
 @Component({
   selector: 'virtuan-main-menu',
@@ -157,6 +159,7 @@ export class MainMenuComponent implements OnInit {
 
   previousState() {
     // this.isVisibleEvent.emit(false);
+    this.dialogRef.close();
   }
 
   save() {
@@ -206,6 +209,12 @@ export class MainMenuComponent implements OnInit {
   protected onSaveSuccess() {
     // this.spinnerService.hide();
     this.isSaving = false;
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorUITreeListModification, {
+          name: 'editorUITreeListModification',
+          content: 'Add an main menu',
+        })
+    );
     this.previousState();
   }
 

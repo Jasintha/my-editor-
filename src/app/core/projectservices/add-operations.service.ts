@@ -11,6 +11,7 @@ import {CreateServiceComponent} from '@home/pages/create-service/create-service.
 import {CreateRequirementComponent} from '@home/pages/design-editor/create-requirement.component';
 import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
+import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 
 @Injectable({ providedIn: 'root' })
 export class AddOperationService {
@@ -42,6 +43,8 @@ export class AddOperationService {
             this.createMainMenu(node ,projectUid , status);
         } else if (node.type === 'PARENT_UI_MODEL'){
             this.createModel(node ,projectUid , status, 'task.ui');
+        } else if (node.type === 'PARENT_PAGE_NAVIGATIONS'){
+            this.createNavigation(node ,projectUid , status);
         }
     }
 
@@ -65,6 +68,21 @@ export class AddOperationService {
 
     createService(item, projectUId , status) {
         const dialogRef = this.dialog.open(CreateServiceComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUId,
+                createStatus: status,
+                uuid: item.uuid,
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    createNavigation(item, projectUId , status) {
+        const dialogRef = this.dialog.open(PageNavigationComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUId,

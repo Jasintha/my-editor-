@@ -54,6 +54,7 @@ import {DesignEditorModule} from '@home/pages/design-editor/design-editor.module
 import {BuiltInPageModule} from '@home/pages/built-in-page/built-in-page.module';
 import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
 import { MainMenuModule } from '../main-menu/main-menu.module';
+import {PageNavigationModule} from '@home/pages/page-navigation/page-navigation.module';
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import { MainMenuModule } from '../main-menu/main-menu.module';
     CreateServiceModule,
     BuiltInPageModule,
       MainMenuModule,
+      PageNavigationModule
   ]
 })
 export class RuleChainModule { }
