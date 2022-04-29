@@ -1,0 +1,369 @@
+<form name="addSecretForm" [formGroup]="form" (ngSubmit)="addFormControllers()">
+    <div class="modal-header dialog-tit-bar">
+        <h4 class="modal-title modal-title-color">Select Form Controllers</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div formArrayName="formFieldsGroup">
+            <div *ngFor="let emp of formFieldsGroup.controls; let i = index">
+                <div class="row-g-12" [formGroup]="emp">
+                    <div class="tile row" *ngIf="!isFieldSelected">
+                        <div class="col-md-4 form-group" *ngIf="!isFieldSelected">
+                            <input class="form-control" readonly type="text" formControlName="propertyName"
+                                   style=" width: 70%" >
+                        </div>
+                        <div class="col-md-5" *ngIf="!isFieldSelected">
+                            <div class="form-group" style="text-align: center">
+
+                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'"
+                                     src="../../../../../assets/images/form_control/textbox.jpg"
+                                     style="width: 70%; height: 3%">
+                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Radiobutton'"
+                                     src="../../../../../assets/images/form_control/radio.jpg"
+                                     style="width: 70%; height: 3% ">
+                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Checkbox'"
+                                     src="../../../../../assets/images/form_control/checkbox.jpg"
+                                     style="width: 70%; height: 3% ">
+                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Dropdown'"
+                                     src="../../../../../assets/images/form_control/dropdown.jpg"
+                                     style="width: 70%; height: 3% ">
+
+                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'DATE_INPUT'"
+                                     src="../../../../../assets/images/form_control/date.jpg"
+                                     style="width: 70%; height: 3% ">
+
+                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'TRUE_OR_FALSE_PICKER'"
+                                     src="../../../../../assets/images/form_control/tureorfalse.jpg"
+                                     style="width: 70%; height: 3% ">
+
+                                <i *ngIf="this.form.value.formFieldsGroup[i].fieldcategory === 'object'"
+                                   style="font-size:30px " class="fa fa-exchange" aria-hidden="true"></i>
+
+                                <br>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="text-align: end">
+                            <button *ngIf="!isFieldSelected" type="button" (click)="onSelectController(i)"
+                                    value="Edit Form Fields" class="btn"
+                                    style="background-color: #6D7F8B; color:white;border: none;">Edit
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="selectedFieldIndex === i && isFieldSelected" style="width: 100%; padding: 3%">
+                        <div *ngIf="this.form.value.formFieldsGroup[i].fieldcategory === 'property'">
+                            <div class="form-group">
+                                <div *ngIf="this.form.value.formFieldsGroup[i].propertyType === 'TEXT' || this.form.value.formFieldsGroup[i].propertyType === 'NUMBER'||
+                                 this.form.value.formFieldsGroup[i].propertyType === 'FLOAT'">
+                                    <label class="form-control-label">Controller </label>
+                                    <p-dropdown placeholder="Choose" name="fieldController"
+                                                [options]="controllerTypeItems" formControlName="fieldController"
+                                                [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                                    <br>
+                                </div>
+
+                                <div *ngIf="this.form.value.formFieldsGroup[i].propertyType === 'DATE'">
+                                    <label class="form-control-label">Controller </label>
+                                    <input type="text" readonly class="form-control" name="fieldController"
+                                           formControlName="fieldController"/>
+                                </div>
+                                <div *ngIf="this.form.value.formFieldsGroup[i].propertyType === 'TRUE_OR_FALSE'">
+                                    <label class="form-control-label">Controller </label>
+                                    <input type="text" readonly class="form-control" name="fieldController"
+                                           formControlName="fieldController"/>
+                                </div>
+                                <div *ngIf="this.form.value.formFieldsGroup[i].propertyType === 'EMAIL'">
+                                    <label class="form-control-label">Controller </label>
+                                    <input readonly type="text" class="form-control" name="fieldController"
+                                           formControlName="fieldController"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Label </label>
+                                <input class="form-control" type="text" formControlName="label">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Default Value </label>
+                                <input class="form-control" type="text" formControlName="defaultvalue">
+                            </div>
+                            <div class="form-group"
+                                 *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'">
+                                <label class="form-control-label">Placeholder </label>
+                                <input class="form-control" type="text" formControlName="placeholder"></div>
+                            <div class="form-group">
+                                <p-checkbox name="isrequired"
+                                            formControlName="isrequired" binary="true"></p-checkbox>
+                                <label class="form-control-label p-sm-2">Required </label>
+                            </div>
+                        </div>
+                        <div *ngIf="this.form.value.formFieldsGroup[i].fieldcategory === 'object'">
+                            <div *ngFor="let child of childFormGroup['controls']; let k = index">
+                                <div class="row-g-12" [formGroup]="child">
+                                    <div class="tile row" *ngIf="!isChildFieldSelected">
+                                        <div class="col-md-4">
+                                            <div *ngIf="!isChildFieldSelected" class="form-group">
+                                                <input class="form-control" readonly type="text"
+                                                       formControlName="propertyName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5" *ngIf="!isChildFieldSelected">
+                                            <div class="form-group" style="text-align: center">
+                                                <img
+                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Textbox'"
+                                                    src="../../../../../assets/images/form_control/textbox.jpg"
+                                                    style="width: 70%; height: 3%">
+                                                <img
+                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Radiobutton'"
+                                                    src="../../../../../assets/images/form_control/radio.jpg"
+                                                    style="width: 70%; height: 3% ">
+                                                <img
+                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Checkbox'"
+                                                    src="../../../../../assets/images/form_control/checkbox.jpg"
+                                                    style="width: 70%; height: 3% ">
+                                                <img
+                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown'"
+                                                    src="../../../../../assets/images/form_control/dropdown.jpg"
+                                                    style="width: 70%; height: 3% ">
+                                                <img *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'DATE_INPUT'"
+                                                     src="../../../../../assets/images/form_control/date.jpg"
+                                                     style="width: 70%; height: 3% ">
+
+                                                <img *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'TRUE_OR_FALSE_PICKER'"
+                                                     src="../../../../../assets/images/form_control/tureorfalse.jpg"
+                                                     style="width: 70%; height: 3% ">
+
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3" style="text-align: end">
+                                            <button *ngIf="!isChildFieldSelected" type="button"
+                                                    (click)="onSelectChildController(k)"
+                                                    value="Edit Form Fields" class="btn"
+                                                    style="background-color: #6D7F8B; color:white;border: none;">Edit
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                    <div *ngIf="selectedChildIndex === k && isChildFieldSelected">
+                                        <div class="form-group">
+                                            <div *ngIf="this.form.value.formFieldsGroup[i].children[k].propertyType === 'TEXT' || this.form.value.formFieldsGroup[i].children[k].propertyType === 'NUMBER'||
+                                 this.form.value.formFieldsGroup[i].children[k].propertyType === 'FLOAT'">
+                                                <label class="form-control-label">Controller </label>
+                                                <p-dropdown placeholder="Choose" name="fieldController"
+                                                            [options]="controllerTypeItems"
+                                                            (onClick)="onClickChildFormControl(k)"
+                                                            formControlName="fieldController"
+                                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                                                <br>
+                                            </div>
+
+                                            <div
+                                                *ngIf="this.form.value.formFieldsGroup[i].children[k].propertyType === 'DATE'">
+                                                <label class="form-control-label">Controller </label>
+                                                <input type="text" readonly class="form-control" name="fieldController"
+                                                       formControlName="fieldController"/>
+                                            </div>
+                                            <div
+                                                *ngIf="this.form.value.formFieldsGroup[i].children[k].propertyType === 'TRUE_OR_FALSE'">
+                                                <label class="form-control-label">Controller </label>
+                                                <input type="text" readonly class="form-control" name="fieldController"
+                                                       formControlName="fieldController"/>
+                                            </div>
+                                            <div
+                                                *ngIf="this.form.value.formFieldsGroup[i].children[k].propertyType === 'EMAIL'">
+                                                <label class="form-control-label">Controller </label>
+                                                <input readonly type="text" class="form-control" name="fieldController"
+                                                       formControlName="fieldController"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Label </label>
+                                            <input class="form-control" type="text" formControlName="label">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Default Value </label>
+                                            <input class="form-control" type="text" formControlName="defaultvalue">
+                                        </div>
+                                        <div class="form-group"
+                                             *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'">
+                                            <label class="form-control-label">Placeholder </label>
+                                            <input class="form-control" type="text" formControlName="placeholder"></div>
+                                        <div class="form-group">
+                                            <p-checkbox name="isrequired"
+                                                        formControlName="isrequired" binary="true"></p-checkbox>
+                                            <label class="form-control-label p-sm-2">Required </label>
+                                        </div>
+                                        <div
+                                            *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown'|| this.form.value.formFieldsGroup[i].children[k].fieldController === 'Radiobutton'">
+                                            <h5>{{this.form.value.formFieldsGroup[i].fieldController}} Choices</h5>
+
+                                            <div class="form-group"  *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown' ">
+                                                <label class="form-control-label">Choice Type </label>
+                                                <p-dropdown placeholder="Choose" name="choiceType"
+                                                            [options]="choiceType" formControlName="choiceType"
+                                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" ></p-dropdown>
+                                            </div>
+
+                                            <div
+                                                *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown' && this.form.value.formFieldsGroup[i].children[k].choiceType === 'API'">
+                                                <div class="form-group"
+                                                     style=" padding-top: 5px; ">
+                                                    <p-checkbox formControlName="search" binary="true"></p-checkbox>
+                                                    <label class="form-control-label p-sm-2">Search API from
+                                                        Microservices</label>
+                                                </div>
+                                                <div class="row">
+                                                    <div *ngIf="this.form.value.formFieldsGroup[i].children[k].search"
+                                                         class="form-group col-md-6">
+                                                        <label class="form-control-label">Microservice</label>
+                                                        <p-dropdown placeholder="Choose"
+                                                                    [options]="microserviceProjectItems"
+                                                                    formControlName="microservice" filter="true"
+                                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"
+                                                                    (onChange)="onChangeMicroserviceProjectInChild()"></p-dropdown>
+                                                    </div>
+                                                    <div *ngIf="this.form.value.formFieldsGroup[i].children[k].search"
+                                                         class="form-group col-md-6">
+                                                        <label class="form-control-label">API</label>
+                                                        <p-dropdown placeholder="Choose" [options]="apiItems"
+                                                                    formControlName="api"
+                                                                    filter="true"
+                                                                    (onChange)="onChangeMicroserviceAPIInChild()"
+                                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" name="choiceUrl"
+                                                       formControlName="choiceUrl"/>
+                                            </div>
+                                            <div class="scroll-choices" *ngIf="this.form.value.formFieldsGroup[i].children[k].choiceType === 'Manually'">
+                                                <div style="float: right; margin-top: 2%; margin-right: 6%">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                                                    <input type="button"
+                                                           (click)="insertChildChoiceFormControllersGroup(i,k)"
+                                                           value="Add choice"  class="btn fa fa-plus"
+                                                           style="background-color: #6D7F8B; color:white;border: none;">
+                                                </div>
+                                                <br>
+                                                <div style="padding-top: 10px"
+                                                     *ngFor="let choice of childChoiceFormGroup['controls']; let k = index">
+                                                    <div [formGroup]="choice">
+                                                        <label class="form-control-label">Choice {{k + 1}} </label>
+                                                        <div class="row">
+                                                            <div class="col-10">
+                                                                <input class="form-control" type="text"
+                                                                       formControlName="choiceLabel">
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <button pButton type="button"
+                                                                        (click)="removeChildChoiceFormController(k)"
+                                                                        class="ui-button-danger ui-button-raised"
+                                                                        icon="fa fa-trash-o">
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 5%">
+                                            <input type="button" (click)="backToChildFields()" value="Save and Back" class="btn"
+                                                   style="background-color: #4cc792; color: white;width: 100%">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Dropdown'|| this.form.value.formFieldsGroup[i].fieldController === 'Radiobutton'">
+                            <h5>{{this.form.value.formFieldsGroup[i].fieldController}} Choices</h5>
+
+                            <div class="form-group">
+                                <label class="form-control-label">Choice Type </label>
+                                <p-dropdown placeholder="Choose" name="choiceType"
+                                            [options]="choiceType" formControlName="choiceType"
+                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" filter="true"></p-dropdown>
+                            </div>
+
+                            <div *ngIf="this.form.value.formFieldsGroup[i].choiceType === 'API'">
+                                <div class="form-group"
+                                     style=" padding-top: 5px; ">
+                                    <p-checkbox formControlName="search" binary="true"></p-checkbox>
+                                    <label class="form-control-label p-sm-2">Search API from Microservices</label>
+                                </div>
+                                <div class="row">
+
+                                    <div *ngIf="this.form.value.formFieldsGroup[i].search" class="form-group col-md-6">
+                                        <label class="form-control-label">Microservice</label>
+                                        <p-dropdown placeholder="Choose" [options]="microserviceProjectItems"
+                                                    formControlName="microservice" filter="true"
+                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"
+                                                    (onChange)="onChangeMicroserviceProject()"></p-dropdown>
+                                    </div>
+                                    <div *ngIf="this.form.value.formFieldsGroup[i].search" class="form-group col-md-6">
+                                        <label class="form-control-label">API</label>
+                                        <p-dropdown placeholder="Choose" [options]="apiItems" formControlName="api"
+                                                    filter="true" (onChange)="onChangeMicroserviceAPI()"
+                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" name="choiceUrl"
+                                       formControlName="choiceUrl"/>
+                            </div>
+
+                            <div class="scroll-choices" *ngIf="this.form.value.formFieldsGroup[i].choiceType === 'Manually'">
+                                <div style="float: right; margin-top: 2%; margin-right: 6%">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                                    <input type="button" (click)="insertChoiceFormControllersGroup(i)"
+                                           value="Add choice" class="btn fa fa-plus"
+                                           style="background-color: #6D7F8B; color:white;border: none;">
+                                </div>
+                                <br>
+                                <div style="padding-top: 10px"
+                                     *ngFor="let choice of choiceFormGroup['controls']; let k = index">
+                                    <div [formGroup]="choice">
+
+                                        <label class="form-control-label">Choice {{k + 1}} </label>
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <input class="form-control" type="text" formControlName="choiceLabel">
+                                            </div>
+
+                                            <div class="col-2">
+                                                <button pButton type="button" (click)="removeChoiceFormControllers(k)" class="ui-button-danger ui-button-raised"
+                                                        icon="fa fa-trash-o">
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div style="margin-top: 2%">
+                            <input *ngIf="!isChildFieldSelected" type="button" (click)="backToFields()" value="Save and Back"
+                                   class="btn"
+                                   style="background-color: #4cc792; color: white; width: 100%">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="d-grid gap-2" style="text-align: center; margin-top: 2%">
+            <button type="submit" *ngIf="!isFieldSelected" value="Save" class="btn savebtn">Save</button>
+        </div>
+
+    </div>
+
+
+</form>

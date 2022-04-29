@@ -9,6 +9,9 @@ import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/cre
 import {CreateTaskComponent} from '@home/pages/create-task/create-task.component';
 import {CreateServiceComponent} from '@home/pages/create-service/create-service.component';
 import {CreateRequirementComponent} from '@home/pages/design-editor/create-requirement.component';
+import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
+import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
+import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 
 @Injectable({ providedIn: 'root' })
 export class AddOperationService {
@@ -21,7 +24,7 @@ export class AddOperationService {
         } else if (node.type === 'PARENT_PROCESS') {
             this.createSubrule(node ,projectUid , status);
         } else if (node.type === 'PARENT_MODEL'){
-            this.createModel(node ,projectUid , status);
+            this.createModel(node ,projectUid , status, 'microservice');
         } else if (node.type === 'PARENT_EVENT'){
             this.createEvent(node ,projectUid , status);
         } else if (node.type === 'PARENT_HYBRID'){
@@ -34,6 +37,14 @@ export class AddOperationService {
             this.createService(node ,projectUid , status);
         } else if (node.type === 'PARENT_REQUIREMENT'){
             this.createRequirement(node ,projectUid , status);
+        } else if (node.type === 'PARENT_UI_PAGES'){
+            this.createUIPages(node ,projectUid , status);
+        }  else if (node.type === 'PARENT_UI_MAIN_MENU'){
+            this.createMainMenu(node ,projectUid , status);
+        } else if (node.type === 'PARENT_UI_MODEL'){
+            this.createModel(node ,projectUid , status, 'task.ui');
+        } else if (node.type === 'PARENT_PAGE_NAVIGATIONS'){
+            this.createNavigation(node ,projectUid , status);
         }
     }
 
@@ -43,7 +54,7 @@ export class AddOperationService {
         } else if (item.type === 'WORKFLOW') {
             this.createSubrule(item, projectUid , status);
         } else if (item.type === 'MODEL'){
-            this.createModel(item, projectUid , status);
+            this.createModel(item, projectUid , status, 'microservice');
         } else if (item.type === 'EVENT'){
             this.createEvent(item, projectUid , status);
         } else if (item.type === 'HYBRID'){
@@ -57,6 +68,51 @@ export class AddOperationService {
 
     createService(item, projectUId , status) {
         const dialogRef = this.dialog.open(CreateServiceComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUId,
+                createStatus: status,
+                uuid: item.uuid,
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    createNavigation(item, projectUId , status) {
+        const dialogRef = this.dialog.open(PageNavigationComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUId,
+                createStatus: status,
+                uuid: item.uuid,
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    createMainMenu(item, projectUId , status) {
+        const dialogRef = this.dialog.open(MainMenuComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUId,
+                createStatus: status,
+                uuid: item.uuid,
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    createUIPages(item, projectUId , status) {
+        const dialogRef = this.dialog.open(InitPageCreationComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUId,
@@ -114,13 +170,14 @@ export class AddOperationService {
         });
     }
 
-    createModel(item, projectUId , status) {
+    createModel(item, projectUId , status, appType) {
         const dialogRef = this.dialog.open(CreateModelComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUId,
                 createStatus: status,
                 uuid: item.uuid,
+                appType
             }
         });
         dialogRef.afterClosed().subscribe(result => {

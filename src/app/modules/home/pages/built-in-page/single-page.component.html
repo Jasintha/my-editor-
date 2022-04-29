@@ -1,0 +1,587 @@
+<div class="row justify-content-center" style="margin-top: 100px; overflow-x: hidden" >
+    <div class="col-10">
+        <div class="justify-content-center">
+            <form name="editForm" role="form" novalidate (ngSubmit)="checkPageNameExist()" [formGroup]="editForm">
+
+
+                    <div class="form-group" [hidden]="!editForm.get('id').value">
+                        <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
+                    </div>
+
+                    <div class="row justify-content-center title-temp" >
+
+                        <div  class="col-md-8">
+                            <h3 *ngIf="formDisable">{{pageTitle}}</h3>
+                            <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
+                                <mat-label>Page Title</mat-label>
+                                <input type="text" formControlName="pagetitle" matInput name="pagetitle" id="field_pagetitle">
+                                <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required</mat-error>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="enableToEdit()">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </div>
+
+
+
+<!--                            <div class="form-group" style="padding: 4%">-->
+<!--                                <label class="form-control-label" for="field_pagetitle">Page Title</label><span>{{pageTitle}}</span>-->
+<!--                                <input type="text" class="form-control" name="pagetitle" id="field_pagetitle"-->
+<!--                                       formControlName="pagetitle"/>-->
+<!--                                <div *ngIf="editForm.get('pagetitle').invalid && (editForm.get('pagetitle').dirty || editForm.get('pagetitle').touched)">-->
+<!--                                    <small class="form-text text-danger" >-->
+<!--                                        Page Title is required.-->
+<!--                                    </small>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+
+                    </div>
+                <div class="scroll-bar-page">
+                    <div class="row">
+                        <div class="col-4 temp-image">
+                            <div class="ui-panel-content ui-widget-content justify-content-center" style="padding-top: 5px">
+                                <img *ngIf="editForm.value.pagetemplate == 'login-page'" class="pageTmpImgInPage" src="../../../../../assets/images/pages/login.jpg"
+                                     alt="Template" style="width: 100%">
+                                <img *ngIf="editForm.value.pagetemplate == 'aio-table'|| editForm.value.pagetemplate =='table-page'"
+                                     class="pageTmpImgInPage" src="../../../../../assets/images/pages/allinone.jpg"
+                                     alt="Template" style="width: 100%">
+                                <img *ngIf="editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'file-upload-page'"
+                                     class="pageTmpImgInPage" src="../../../../../assets/images/pages/form.jpg"
+                                     alt="Template" style="width: 100%">
+                                <img *ngIf="editForm.value.pagetemplate == 'register-page'"
+                                     class="pageTmpImgInPage" src="../../../../../assets/images/pages/register.jpg"
+                                     alt="Template" style="width: 100%">
+                                <img *ngIf="editForm.value.pagetemplate == 'aio-grid'"
+                                     class="pageTmpImgInPage" src="../../../../../assets/images/pages/grid.jpg"
+                                     alt="Template" style="width: 100%">
+                            </div>
+                            <div>
+                                <div class="form-group" style="padding: 1%; margin-top: 3%">
+                                    <mat-form-field  [style]="{'width':'100%'}">
+                                        <mat-label>Page Template</mat-label>
+                                        <mat-select formControlName="pagetemplate" [disabled]="formDisable">
+                                            <mat-option *ngFor="let option of pageTemplateItems" [value]="option.value">
+                                                {{option.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+<!--                                    <label class="form-control-label">Page Template</label>-->
+                                    <!--<select class="form-control" name="pagetemplate" id="field_pagetemplate" formControlName="pagetemplate">
+                                        <option value="aio-table">Table View</option>
+                                        <option value="aio-grid">Grid View</option>
+                                    </select>-->
+<!--                                    <div>-->
+<!--                                        <p-dropdown [options]="pageTemplateItems" formControlName="pagetemplate" [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" placeholder="Choose" (onChange)="onchangePageTemplate()" [disabled]="formDisable">-->
+<!--                                            <ng-template let-item pTemplate="selectedItem">-->
+<!--                                                &lt;!&ndash;<img  src="/content/images/apptype/webapp.png" style="width:16px;vertical-align:middle" />&ndash;&gt;-->
+<!--                                                <span style="vertical-align:middle">{{item.label}}</span>-->
+<!--                                            </ng-template>-->
+<!--                                            <ng-template let-pagetemplate pTemplate="item">-->
+<!--                                                &lt;!&ndash;<img  src="/content/images/apptype/webapp.png" style="width:16px;vertical-align:middle" />&ndash;&gt;-->
+<!--                                                <span style="vertical-align:middle">{{pagetemplate.label}}</span>-->
+<!--                                            </ng-template>-->
+<!--                                        </p-dropdown>-->
+<!--                                    </div>-->
+<!--                                    <div *ngIf="editForm.get('pagetemplate').invalid && (editForm.get('pagetemplate').dirty || editForm.get('pagetemplate').touched)">-->
+<!--                                        <small class="form-text text-danger" >-->
+<!--                                            Page Template is required.-->
+<!--                                        </small>-->
+<!--                                    </div>-->
+                                </div>
+                            </div>
+
+                            <div style="padding: 10px 0 15px 0">
+                                <h6 id="page-config-heading">
+                                    <span>Page Configurations</span>
+                                </h6>
+                                <p-table [value]="pageConfigs" dataKey="property" editMode="row">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Property</th>
+                                            <th>Value</th>
+                                            <th style="width:8em"></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                                        <tr [pEditableRow]="rowData">
+                                            <td>
+                                                {{rowData.property}}
+                                            </td>
+                                            <td>
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" formControlName="pageconfig"  [(ngModel)]="rowData.property_value" style="width: 70%">
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{rowData.property_value}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td style="text-align:center">
+                                                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)" pTooltip="Edit" tooltipPosition="bottom" life="2000"></button>
+                                                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData, ri)" pTooltip="Save" tooltipPosition="bottom" life="2000"></button>
+                                                <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)" pTooltip="Cancel" tooltipPosition="bottom" life="2000"></button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+
+                        </div>
+                        <div class="col-8 model-type">
+                            <ng-container *ngIf="project?.apptypesID === 'task.ui' && editForm.value.pagetemplate">
+<!--                                <div class="form-group"-->
+<!--                                     *ngIf="editForm.value.pagetemplate !== 'file-upload-page' && editForm.value.pagetemplate !== 'dashboard-page'">-->
+<!--                                    <label class="form-control-label">Model</label>-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-md-7">-->
+<!--                                            <p-dropdown placeholder="Choose" [options]="aggregateItems"-->
+<!--                                                        formControlName="selectedAggregate" filter="true"-->
+<!--                                                        [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"-->
+<!--                                                        (onChange)="onChangePageModel($event,false)" [disabled]="formDisable"></p-dropdown>-->
+<!--                                            <div-->
+<!--                                                *ngIf="editForm.get('selectedAggregate').invalid && (editForm.get('selectedAggregate').dirty || editForm.get('selectedAggregate').touched)">-->
+<!--                                                <small class="form-text text-danger">-->
+<!--                                                    Model is required.-->
+<!--                                                </small>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-5" >-->
+<!--                                            <button type="button"  class="btn btn-info" style="float: right"-->
+<!--                                                    (click)="newSideBarVisible()">-->
+<!--                                                <i class="fas fa-plus"></i>&nbsp;<span>Add Model</span>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+<!--                                </div>-->
+
+                                <!--<div class="form-group">
+                                    <label class="form-control-label">Operation</label>
+                                    <p-dropdown placeholder="Choose" name="operation" [options]="crudItems" formControlName="operation"
+                                                [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                                </div>-->
+
+                                <div class="form-group"
+                                     *ngIf="editForm.value.pagetemplate === 'table-page' || editForm.value.pagetemplate === 'form-page'|| editForm.value.pagetemplate === 'form-wizard-page' || editForm.value.pagetemplate === 'file-upload-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div *ngIf="project?.apptypesID === 'task.ui'" class="form-group"
+                                                 style=" padding-top: 5px; ">
+                                                    <mat-checkbox [disabled]="formDisable"  formControlName="search" >Search API from Microservices</mat-checkbox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div *ngIf="project?.apptypesID === 'task.ui' && editForm.value.search"
+                                                 class="form-group">
+                                                <mat-form-field  [style]="{'width':'100%'}">
+                                                    <mat-label>Microservice</mat-label>
+                                                    <mat-select formControlName="microservice" (selectionChange)="onChangeMicroserviceProject()"
+                                                                [disabled]="formDisable">
+                                                        <mat-option *ngFor="let option of microserviceProjectItems" [value]="option.value">
+                                                            {{option.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div *ngIf="project?.apptypesID === 'task.ui' && editForm.value.search"
+                                                 class="form-group col-md-6">
+                                                <mat-form-field  [style]="{'width':'100%'}">
+                                                    <mat-label>API</mat-label>
+                                                    <mat-select formControlName="api" (selectionChange)="onChangeMicroserviceAPI()"
+                                                                [disabled]="formDisable">
+                                                        <mat-option *ngFor="let option of apiItems" [value]="option.value">
+                                                            {{option.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <mat-form-field  [style]="{'width':'100%'}">
+                                        <mat-label>Resource Path</mat-label>
+                                        <input type="text" formControlName="resourcePath" matInput name="resourcepath" id="field_resourcepath"  [disabled]="formDisable">
+                                        <mat-error *ngIf="editForm.controls.resourcePath.hasError('required')">This field is required</mat-error>
+                                    </mat-form-field>
+
+
+                                    <div class="form-group" style=" padding-top: 5px; ">
+                                        <mat-checkbox [disabled]="formDisable" formControlName="isSecurePage" >Limit page access to a role</mat-checkbox>
+                                    </div>
+
+                                    <div class="form-group" *ngIf="editForm.value.isSecurePage">
+                                        <mat-form-field  [style]="{'width':'100%'}" >
+                                            <mat-label>Add authorized role</mat-label>
+                                            <input  type="text" formControlName="authority" [disabled]="formDisable" matInput name="resourcepath" id="field_authority">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="wiz-step" *ngIf="editForm.value.pagetemplate === 'form-wizard-page'"
+                                     formArrayName="wizardDetailsGroup">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <h6>Add wizard page steps</h6>
+                                        </div>
+                                        <div class="col-md-5" style='text-align: right'>
+                                            <button type="button" style="float: right;" mat-raised-button color="primary"
+                                                    (click)="insertWizardDetailsGroup('')">
+                                                <mat-icon>add</mat-icon>
+                                                Add More
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="padding-top: 10px"
+                                         *ngFor="let step of wizardDetailsGroup.controls; let i = index">
+                                        <div [formGroup]="step">
+                                            <label class="form-control-label" for="field_pagetitle">Step Header</label>
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <mat-form-field  [style]="{'width':'100%'}">
+<!--                                                        <mat-label>Add authorized role</mat-label>-->
+                                                        <input type="text" formControlName="stepHeading" matInput  name="stepHeading">
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-2">
+                                            <span class="flex-auto">
+                                                <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="removeWizardDetailsGroup(i)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <ng-container *ngIf="editForm.value.pagetemplate === 'form-wizard-page'">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Add form fields to steps</label>
+                                        <div class="card">
+                                            <div class="card-body row">
+                                                <div class="col-md-3" style="margin-right: 20px">
+                                                    <p-dropdown placeholder="Choose Model Property" name="fieldName"
+                                                                [options]="modelPropertyList"
+                                                                formControlName="fieldName" filter="true"
+                                                                [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p-dropdown placeholder="Choose the Step" name="stepHeader"
+                                                                [options]="stepHeadersList"
+                                                                formControlName="stepHeader"
+                                                                [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                                                </div>
+                                                <div class="col-md-3" style='text-align: left'>
+                                                    <button type="button" class="btn btn-info"
+                                                            (click)="getAllWizardSteps()">
+                                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                    </button>
+
+                                                </div>
+                                                <div class="col-md-2" style='text-align: right'>
+                                                    <button type="button" class="btn btn-info" (click)="addFieldsToSteps()">
+                                                        <i class="fas fa-plus"></i>&nbsp;<span>Add</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="padding-top:20px;padding-bottom:20px;">
+                                            <p-table [value]="stepFieldArr">
+                                                <ng-template pTemplate="header">
+                                                    <tr>
+                                                        <th>Field</th>
+                                                        <th>Step in wizard</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template pTemplate="body" let-param>
+                                                    <tr>
+                                                        <td>{{param.field}}</td>
+                                                        <td>{{param.stepHeader}}</td>
+                                                        <td>
+                                                            <button pButton type="button" (click)="deleteFieldSteps(param)"
+                                                                    class="ui-button-danger ui-button-raised"
+                                                                    icon="fa fa-trash-o">
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="form-group" *ngIf="editForm.value.pagetemplate === 'login-page'">
+                                    <label class="form-control-label">Match properties for credentials input</label>
+                                    <div class="card">
+                                        <div class="card-body row">
+                                            <div class="col-md-3">
+                                                <p-dropdown placeholder="Choose Param Type" name="paramType"
+                                                            [options]="loginInputs"
+                                                            formControlName="inputValType"
+                                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" [disabled]="formDisable"></p-dropdown>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p-dropdown placeholder="Choose Model Property" name="property"
+                                                            [options]="modelPropertyList"
+                                                            formControlName="matchedProperty" filter="true"
+                                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" [disabled]="formDisable"></p-dropdown>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="button" id="add-param" class="btn btn-info"
+                                                        (click)="addParamMapping()">
+                                                    <i class="fas fa-plus"></i>&nbsp;<span>Add</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="padding-top:20px;padding-bottom:20px;">
+                                        <p-table [value]="loginParams">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th>Input</th>
+                                                    <th>Param</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-param>
+                                                <tr>
+                                                    <td>{{param.inputType}}</td>
+                                                    <td>{{param.paramName}}</td>
+                                                    <td>
+                                                        <button pButton type="button"
+                                                                (click)="deleteParamMapping(param)"
+                                                                class="ui-button-danger ui-button-raised"
+                                                                icon="fa fa-trash-o">
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+
+                                    </div>
+                                </div>
+                                <!--                        <ng-container *ngIf="editForm.value.pagetemplate === 'table-page' || editForm.value.pagetemplate === 'form-page' || editForm.value.pagetemplate === 'file-upload-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">-->
+                                <!--                            <div class="form-group">-->
+                                <!--                                <label class="form-control-label">Add Params</label>-->
+                                <!--                                <div class="card">-->
+                                <!--                                    <div class="card-body row">-->
+                                <!--                                        <div class="col-md-3">-->
+                                <!--                                            <input type="text" class="form-control" name="name" id="field_paramName" placeholder="Name"-->
+                                <!--                                                   formControlName="paramName"/>-->
+                                <!--                                        </div>-->
+                                <!--                                        <div class="col-md-3">-->
+                                <!--                                            <p-dropdown placeholder="Choose Type" name="paramDataType" [options]="paramDataTypeItems"-->
+                                <!--                                                        formControlName="paramDataType" [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}">-->
+                                <!--                                                <ng-template let-item pTemplate="selectedItem">-->
+                                <!--                                                    <img src="/content/images/property_type/{{item.value | lowercase}}.png"-->
+                                <!--                                                         style="width:20px;vertical-align:middle;margin-right:5px;"/>-->
+                                <!--                                                    <span style="vertical-align:middle">{{item.label}}</span>-->
+                                <!--                                                </ng-template>-->
+                                <!--                                                <ng-template let-template pTemplate="item">-->
+                                <!--                                                    <img src="/content/images/property_type/{{template.value | lowercase}}.png"-->
+                                <!--                                                         style="width:20px;vertical-align:middle;margin-right:5px;"/>-->
+                                <!--                                                    <span style="vertical-align:middle">{{template.label}}</span>-->
+                                <!--                                                </ng-template>-->
+                                <!--                                            </p-dropdown>-->
+                                <!--                                        </div>-->
+                                <!--                                        <div class="col-md-3">-->
+                                <!--                                            <p-dropdown placeholder="Choose Param Type" name="paramType" [options]="paramitems"-->
+                                <!--                                                        formControlName="paramType" [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>-->
+                                <!--                                        </div>-->
+                                <!--                                        <div class="col-md-3">-->
+                                <!--                                            <button type="button" id="add-row" class="btn btn-info" (click)="addRow()" style="float: right;">-->
+                                <!--                                                <i class="fas fa-plus"></i>&nbsp;<span>Add</span>-->
+                                <!--                                            </button>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+
+                                <!--                                </div>-->
+                                <!--                            </div>-->
+
+                                <!--                            <div style="padding-top:20px;padding-bottom:20px;">-->
+                                <!--                                <p-table [value]="apiParams">-->
+                                <!--                                    <ng-template pTemplate="header">-->
+                                <!--                                        <tr>-->
+                                <!--                                            <th>Name</th>-->
+                                <!--                                            <th>Data Type</th>-->
+                                <!--                                            <th>Param</th>-->
+                                <!--                                            <th>Action</th>-->
+                                <!--                                        </tr>-->
+                                <!--                                    </ng-template>-->
+                                <!--                                    <ng-template pTemplate="body" let-param>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <td>{{param.inputName}}</td>-->
+                                <!--                                            <td>{{param.inputType}}</td>-->
+                                <!--                                            <td>{{param.paramType}}</td>-->
+                                <!--                                            <td><button pButton type="button" (click)="deleteRow(param)" class="ui-button-danger ui-button-raised" icon="fa fa-trash-o">-->
+                                <!--                                            </button></td>-->
+                                <!--                                        </tr>-->
+                                <!--                                    </ng-template>-->
+                                <!--                                </p-table>-->
+
+                                <!--                            </div>-->
+                                <!--                        </ng-container>-->
+                                <ng-container
+                                    *ngIf="editForm.value.pagetemplate === 'aio-table' || editForm.value.pagetemplate === 'aio-grid'">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Add API Details</label>
+                                        <div class="card">
+                                            <div class="card-body row">
+                                                <div class="row col-md-12">
+                                                    <div *ngIf="project?.apptypesID === 'task.ui'"
+                                                         style=" padding-top: 5px; ">
+                                                        <p-checkbox formControlName="aiosearch"
+                                                                    binary="true" [disabled]="formDisable"></p-checkbox>
+                                                        <label class="form-control-label" style="margin-left: 5px;">Search API from
+                                                            Microservices</label>
+                                                    </div>
+                                                </div>
+                                                    <div class="row">
+                                                    <div
+                                                        *ngIf="project?.apptypesID === 'task.ui' && editForm.value.aiosearch"
+                                                        class="form-group col-md-6">
+                                                        <label class="form-control-label">Microservice</label>
+                                                        <p-dropdown placeholder="Choose"
+                                                                    [options]="microserviceProjectItems"
+                                                                    formControlName="aiomicroservice" filter="true"
+                                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"
+                                                                    (onChange)="onChangeAioTableMicroserviceProject()" [disabled]="formDisable"></p-dropdown>
+                                                    </div>
+                                                    <div
+                                                        *ngIf="project?.apptypesID === 'task.ui' && editForm.value.aiosearch"
+                                                        class="form-group col-md-6">
+                                                        <label class="form-control-label">API</label>
+                                                        <p-dropdown placeholder="Choose" [options]="apiItems"
+                                                                    formControlName="aioapi"
+                                                                    filter="true"
+                                                                    (onChange)="onChangeAioTableMicroserviceAPI()"
+                                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" [disabled]="formDisable" ></p-dropdown>
+                                                    </div>
+                                                    </div>
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-4">
+                                                        <p-dropdown placeholder="Choose Operation" name="apiOperation"
+                                                                    [options]="crudItems"
+                                                                    formControlName="apiOperation"
+                                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" [disabled]="formDisable"></p-dropdown>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control" name="name"
+                                                               id="field_apiResourcePath" placeholder="Resource Path" [disabled]="formDisable"
+                                                               formControlName="apiResourcePath"/>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" id="add-api-row" class="btn btn-info"
+                                                                (click)="addAIOTableRow()" style="float: right;">
+                                                            <i class="fas fa-plus"></i>&nbsp;<span>Add</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div style="padding-top:20px;padding-bottom:20px;">
+                                        <p-table [value]="apiResourceDetails">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th>Operation</th>
+                                                    <th>Resource Path</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-apiDetail>
+                                                <tr>
+                                                    <td>{{apiDetail.apiOperation}}</td>
+                                                    <td>{{apiDetail.apiResourcePath}}</td>
+                                                    <td>
+                                                        <button pButton type="button"
+                                                                (click)="deleteaddAIOTableRow(apiDetail)"
+                                                                class="ui-button-danger ui-button-raised"
+                                                                icon="fa fa-trash-o">
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+
+                                    </div>
+                                </ng-container>
+
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 model-type">
+                            <div class="form-group"
+                                 *ngIf="editForm.value.pagetemplate !== 'file-upload-widget' && editForm.value.pagetemplate !== 'dashboard-page'">
+<!--                                <div class="row" style="padding-bottom: 20px">-->
+<!--                                    <div class="col-6">-->
+<!--&lt;!&ndash;                                        <label class="form-control-label">Model</label>&ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                    <div class="col-6">-->
+<!--                                        <button type="button" style="float: right;" mat-raised-button color="primary"-->
+<!--                                                (click)="createModel()">-->
+<!--                                            <mat-icon>add</mat-icon>-->
+<!--                                            Add Model-->
+<!--                                        </button>-->
+
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <mat-form-field  [style]="{'width':'100%'}">
+                                            <mat-label>Model</mat-label>
+                                            <mat-select formControlName="selectedAggregate" (selectionChange)="onChangePageModel($event,false)"
+                                                        [disabled]="formDisable">
+                                                <mat-option *ngFor="let option of aggregateItems" [value]="option.value">
+                                                    {{option.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <virtuan-microservice-model [aggregateId]="aggregateId" [projectUid]='projectUid' [isCompactView] = true>
+                            </virtuan-microservice-model>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-button-footer">
+<!--                    <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()" style="margin-right: 8px">-->
+<!--                        <i class="fa fa-chevron-circle-left"></i>&nbsp;<span>Back</span>-->
+<!--                    </button>-->
+                    <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving || formDisable"
+                            type="submit" cdkFocusInitial>
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Please wait... </p>
+</ngx-spinner>
+
+
+<p-sidebar *ngIf="isSelected" [(visible)]="isSidebarVisible" [style]="{width:'50%',overflow: 'hidden'}" position="right" [blockScroll]="true" [showCloseIcon]="false" (onHide)="sidenavClosed()">
+    <virtuan-add-new-microservice-aggregate *ngIf="!sidebar" [projectUid] ='projectUid'  [isVisible]="isSidebarVisible" [createStatus]="createStatus" (isVisibleEvent)="backSidebar($event)" (aggregateId)="aggregate($event)" ></virtuan-add-new-microservice-aggregate>
+</p-sidebar>
+
+

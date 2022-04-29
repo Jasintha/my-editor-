@@ -28,6 +28,7 @@ export class CreateModelComponent implements OnInit {
   isSaving: boolean;
   project: IProject;
   projectUid: string;
+  appType: string;
   currentAggregate: IAggregate;
   aggregateModelKey: string[];
   aggregateModelKeyItems: Item[];
@@ -38,12 +39,12 @@ export class CreateModelComponent implements OnInit {
   ];
   editForm: FormGroup;
 
-  buildAggreForm() {
+  buildAggreForm(type) {
     this.editForm = this.fb.group({
       id: [],
       name: ['', [Validators.required]],
       description: [],
-      type: ['DTO', [Validators.required]],
+      type: [type, [Validators.required]],
       representation: ['TREE', [Validators.required]],
       template: [],
     });
@@ -102,8 +103,13 @@ export class CreateModelComponent implements OnInit {
 
   getAggregateData() {
     this.projectUid = this.data.projectUid;
+    this.appType = this.data.appType;
+    if(this.appType === 'task.ui') {
+      this.buildAggreForm('MODEL');
+    } else {
+      this.buildAggreForm('DTO');
+    }
     this.aggregateModelKeyItems = [];
-    this.buildAggreForm();
     this.setAggreCategoryValidators();
     this.isSaving = false;
 
@@ -215,8 +221,8 @@ export class CreateModelComponent implements OnInit {
     const createdAggregate: IAggregate = res.body;
     this.isSaving = false;
     this.eventManager.dispatch(
-        new AppEvent(EventTypes.editorTreeListModification, {
-          name: 'editorTreeListModification',
+        new AppEvent(EventTypes.editorUITreeListModification, {
+          name: 'editorUITreeListModification',
           content: 'Add an Model',
         })
     );
