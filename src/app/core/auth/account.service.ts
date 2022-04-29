@@ -90,6 +90,8 @@ export class AccountService {
           this.userIdentity = account;
           this.authenticated = true;
           this.themeService.setDefaultTheme(1);
+          this.ws.connect(account.email);
+          this.ps.setBreakpoint(-1);
         } else {
           this.userIdentity = null;
           this.authenticated = false;
