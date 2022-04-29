@@ -256,7 +256,6 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    debugger
     this.formDisable = true;
     this.buildNewForm();
     this.datamodels = [];
@@ -479,7 +478,6 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
   }
 
   loadUpdateForm() {
-    debugger
     this.widgetService
       .find(this.projectUid, this.widgetId)
       .pipe(
@@ -666,7 +664,6 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
   }
 
   updateForm(widgetData: IWidget) {
-    debugger
     if (widgetData.model && widgetData.model.config) {
       this.onChangePageModel(widgetData.model, true);
     }

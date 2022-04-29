@@ -136,7 +136,6 @@ export class MainMenuComponent implements OnInit {
   }
 
   loadPages() {
-    debugger
     for (let i = 0; i < this.pages.length; i++) {
       if (this.pages[i].status === 'ENABLED') {
         const dropdownLabel = this.pages[i].pagetitle;

@@ -257,6 +257,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
         .subscribe(
           (res: IProject) => {
             this.project = res;
+            this.numOfPages();
             //  this.getPageTemplates();
             if (this.project.apptypesID === 'task.ui') {
               this.aggregates = this.project.aggregates;
@@ -283,6 +284,21 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   onchangePageTemplate() {
     this.apiItems = [];
     this.panelItems = [];
+  }
+
+  numOfPages(){
+    this.builtInPageService
+        .findBuiltInPagesForProjectId(this.projectUid ,this.projectUid)
+        .pipe(
+            filter((res: HttpResponse<IPage[]>) => res.ok),
+            map((res: HttpResponse<IPage[]>) => res.body)
+        )
+        .subscribe(
+            (res: IPage[]) => {
+              this.totalPageCount = res.length;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
   }
 
   save(pageViewType, pageTitle, pageTemplate) {

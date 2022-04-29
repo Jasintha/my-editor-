@@ -227,7 +227,6 @@ export class MainRuleChainComponent implements OnInit {
     }
 
     viewPageEditor(item){
-        debugger
         this.loadPageEditor = true;
         this.ruleChainLoaded = false;
         this.ruleChainMetaDataLoaded = false;

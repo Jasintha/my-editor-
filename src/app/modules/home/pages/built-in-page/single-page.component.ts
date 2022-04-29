@@ -32,7 +32,7 @@ import {CreateModelComponent} from '@home/pages/create-model/create-model.compon
   templateUrl: './single-page.component.html',
   styleUrls: ['./built-in-page.component.scss'],
 })
-export class SinglePageViewComponent implements OnInit, OnDestroy , OnChanges{
+export class SinglePageViewComponent implements OnDestroy , OnChanges{
   @Input() projectUid: string;
   @Input() pageId: string;
   isSaving: boolean;
@@ -268,9 +268,9 @@ export class SinglePageViewComponent implements OnInit, OnDestroy , OnChanges{
     this.loadPage()
   }
 
-  ngOnInit() {
-    this.loadPage();
-  }
+  // ngOnInit() {
+  //   this.loadPage();
+  // }
 
   loadPage(){
     this.formDisable = true;
@@ -493,10 +493,10 @@ export class SinglePageViewComponent implements OnInit, OnDestroy , OnChanges{
               this.updateForm(res);
             }
         );
-    this.activatedRoute.data.subscribe(({ builtInPage }) => {
-      this.currentPage = builtInPage;
-      this.updateForm(builtInPage);
-    });
+    // this.activatedRoute.data.subscribe(({ builtInPage }) => {
+    //   this.currentPage = builtInPage;
+    //   this.updateForm(builtInPage);
+    // });
   }
 
   onChangeMicroserviceAPI() {
@@ -856,6 +856,7 @@ export class SinglePageViewComponent implements OnInit, OnDestroy , OnChanges{
   }
 
   ngOnDestroy() {
+    // this.eventSubscriber.unsubscribe();
     // this.toolbarTrackerService.setProjectUUID('');
     // this.toolbarTrackerService.setIsEntityPage('no');
     // this.toolbarTrackerService.setIsPageLayout('no');
