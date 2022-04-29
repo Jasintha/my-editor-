@@ -41,7 +41,7 @@
                                 <ng-template matTabContent>
                                     <div style="min-height: 200px; height:100% !important; width: 100%;">
                                         <div style="min-height: 40px;margin: 5px;">
-                                            <button mat-raised-button color="primary" type="button" style="float:right;" [disabled]="isGenerating" (click)="generateProject()" cdkFocusInitial>Generate</button></div>
+                                            <button mat-raised-button color="primary" type="button" style="float:right;" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>
 
                                         <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
                                     </div>

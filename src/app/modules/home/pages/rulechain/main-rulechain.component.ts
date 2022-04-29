@@ -363,29 +363,46 @@ export class MainRuleChainComponent implements OnInit {
         });
     }
 
-  generateProject() {
-    this.code = '';
-    this.isGenerating = true;
-    setTimeout(() => {
-      this.isGenerating = false;
-    }, 16000);
-    //console.log(this.socket.socket);
-    this.socket.logSocket();
-    let genType = 'Dev';
-    const projectUUID: string = this.projectUid;
-    let project: Project = new Project();
-    if (projectUUID) {
-      let breakpoint = this.breakpointService.getBreakpoint();
-      let defaultTheme = this.themeService.getDefaultTheme();
-      this.projectService.generateFromProjectId(projectUUID, breakpoint, defaultTheme, genType, project, projectUUID).subscribe(
-        (res: any) => {
-            let project: IProject = res.body;
-            this.socket.send('generator');
-            this.onSaveSuccess();
-            },
-        (res: HttpErrorResponse) => this.onSaveError());
+    generateProject() {
+        if(this.projectUid){
+            this.loadChatbox(this.projectUid);
+            this.appTypeService.getDevChainByAppType(this.projectUid)
+                .pipe(
+                    filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
+                    map((response: HttpResponse<IGenerator[]>) => response.body)
+                )
+                .subscribe(
+                    (res: IGenerator[]) => {
+                        this.generatorChain = res;
+                        if (this.generatorChain.length !== 0) {
+                            this.generatorChain.forEach(c => {
+                                this.generatorList[c.position] = c.generator.name;
+                            });
+                        }
+                    });
+            this.code = '';
+            this.isGenerating = true;
+            setTimeout(() => {
+                this.isGenerating = false;
+            }, 16000);
+            //console.log(this.socket.socket);
+            this.socket.logSocket();
+            let genType = 'Dev';
+            const projectUUID: string = this.projectUid;
+            let project: Project = new Project();
+            if (projectUUID) {
+                let breakpoint = this.breakpointService.getBreakpoint();
+                let defaultTheme = this.themeService.getDefaultTheme();
+                this.projectService.generateFromProjectId(projectUUID, breakpoint, defaultTheme, genType, project, projectUUID).subscribe(
+                    (res: any) => {
+                        let project: IProject = res.body;
+                        this.socket.send('generator');
+                        this.onSaveSuccess();
+                    },
+                    (res: HttpErrorResponse) => this.onSaveError());
+            }
+        }
     }
-  }
 
   protected onSaveSuccess() {
 //     this.messageService.add({
