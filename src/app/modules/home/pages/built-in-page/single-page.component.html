@@ -563,11 +563,12 @@
                     </div>
                 </div>
                 <div class="form-button-footer">
-                    <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()" style="margin-right: 8px">
-                        <i class="fa fa-chevron-circle-left"></i>&nbsp;<span>Back</span>
-                    </button>
-                    <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving || formDisable" class="btn btn-primary">
-                        <i class="fas fa-save"></i>&nbsp;<span>Save</span>
+<!--                    <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()" style="margin-right: 8px">-->
+<!--                        <i class="fa fa-chevron-circle-left"></i>&nbsp;<span>Back</span>-->
+<!--                    </button>-->
+                    <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving || formDisable"
+                            type="submit" cdkFocusInitial>
+                        Save
                     </button>
                 </div>
             </form>
