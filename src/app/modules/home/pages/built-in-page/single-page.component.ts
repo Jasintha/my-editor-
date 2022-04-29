@@ -23,6 +23,9 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
 import {IApi} from '@shared/models/model/microservice-api.model';
+import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
+import {MatDialog} from '@angular/material/dialog';
+import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -257,7 +260,8 @@ export class SinglePageViewComponent implements OnInit, OnDestroy , OnChanges{
     protected microserviceService: MicroserviceInstallerService,
     protected eventManager: EventManagerService,
     private router: Router,
-    protected pageConfigService: PageConfigService
+    protected pageConfigService: PageConfigService,
+    public dialog: MatDialog
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -860,10 +864,21 @@ export class SinglePageViewComponent implements OnInit, OnDestroy , OnChanges{
   enableToEdit() {
     this.formDisable = !this.formDisable;
   }
-  newSideBarVisible() {
-    this.isSidebarVisible = true;
-    this.isSelected = true;
-    this.createStatus = 'new';
+
+
+  createModel() {
+    const dialogRef = this.dialog.open(CreateModelComponent, {
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+      data: {
+        projectUid: this.projectUid,
+        createStatus: 'Create',
+        uuid: this.pageId,
+        appType: 'task.ui'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   backSidebar($event) {

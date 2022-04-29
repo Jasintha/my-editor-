@@ -22,7 +22,7 @@
                 <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
             </mat-form-field>
 
-            <div class="pt-3 pb-3"  *ngIf=" project?.apptypesID !== 'task.ui' &&  project?.apptypesID !== 'dashboard'">
+            <div *ngIf="appType !== 'task.ui'" class="pt-3 pb-3">
                 <label id="example-radio-group-label">Type</label>
                 <mat-radio-group aria-labelledby="example-radio-group-label" class="ps-5" aria-label="Select an option" formControlName="type">
                     <div class="row col-md-12 mt-1">
@@ -30,7 +30,7 @@
                         <mat-radio-button class="pe-3" value="MODEL">Data persistent object (Model)</mat-radio-button>
                         </div>
                     </div>
-                    <div class="row col-md-12 mt-1">
+                    <div   class="row col-md-12 mt-1">
                         <div class="mt-1">
                         <mat-radio-button value="DTO">Data transfer object (DTO)</mat-radio-button>
                         </div>
