@@ -62,6 +62,9 @@ export class ActorNodeConfigComponent implements ControlValueAccessor, OnInit, O
   @Input()
   ruleNodeId: string;
 
+  @Input()
+  projectUid: string;
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   datasource: MatTableDataSource<Actor>;
@@ -138,9 +141,6 @@ export class ActorNodeConfigComponent implements ControlValueAccessor, OnInit, O
         (res: any[]) => {
           if (res) {
             this.allActors = res;
-            for (let i = 0; i < this.allActors.length; i++) {
-              this.actorItems.push({ label: this.allActors[i].name, value: this.allActors[i] });
-            }
           } else {
             this.allActors = [];
           }

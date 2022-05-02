@@ -18,8 +18,8 @@
     <mat-form-field *ngIf="actorNodeConfigFormGroup.value.createType === 'Existing'" fxFlex class="mat-block">
       <mat-label>Actor</mat-label>
       <mat-select formControlName="actor">
-        <mat-option *ngFor="let param of allActors" [value]="param.value">
-          {{param.label}}
+        <mat-option *ngFor="let param of allActors" [value]="param">
+          {{param.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
