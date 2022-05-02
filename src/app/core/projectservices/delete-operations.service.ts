@@ -7,6 +7,7 @@ import {TaskDeleteDialogComponent} from '@home/pages/create-task/task-delete-dia
 import {HybridfunctionDeleteDialogComponent} from '@home/pages/create-hybridfunction/hybrid-function-delete-dialog.component';
 import {EventDeleteDialogComponent} from '@home/pages/create-event/event-delete-dialog.component';
 import {ApiDeleteDialogComponent} from '@home/pages/create-api/api-delete-dialog.component';
+import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-in-page-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class DeleteOperationService {
@@ -28,7 +29,25 @@ export class DeleteOperationService {
             this.deleteLambdaFunction(item, projectUid);
         } else if (item.type === 'TASK'){
             this.deleteTask(item, projectUid);
+        }else if (item.type === 'UI_PAGE'){
+            this.deleteUIPages(item, projectUid);
         }
+    }
+
+    deleteUIPages(item, projectUid) {
+        const dialogRef = this.dialog.open(BuiltInPageDeleteDialogComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUid,
+                uuid: item.uuid,
+                name: item.name
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+//         return false;
     }
 
     deleteLambdaFunction(item, projectUid) {

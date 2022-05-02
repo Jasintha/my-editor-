@@ -32,6 +32,7 @@ import {SingleWidgetComponent} from '@home/pages/built-in-page/single-widget.com
 import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import {SinglePageViewComponent} from '@home/pages/built-in-page/single-page.component';
+import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-in-page-delete-dialog.component';
 
 @NgModule({
     declarations:[
@@ -39,7 +40,8 @@ import {SinglePageViewComponent} from '@home/pages/built-in-page/single-page.com
         InitPageCreationComponent,
         AddFormControllersComponent,
         SingleWidgetComponent,
-        SinglePageViewComponent
+        SinglePageViewComponent,
+        BuiltInPageDeleteDialogComponent
     ],
     imports: [
         CommonModule,
@@ -77,7 +79,8 @@ import {SinglePageViewComponent} from '@home/pages/built-in-page/single-page.com
         InitPageCreationComponent,
         AddFormControllersComponent,
         SingleWidgetComponent,
-        SinglePageViewComponent
+        SinglePageViewComponent,
+        BuiltInPageDeleteDialogComponent
     ],
     providers: [ ]
 })
