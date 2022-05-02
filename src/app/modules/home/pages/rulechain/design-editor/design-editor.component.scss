@@ -233,6 +233,7 @@
                 display: none;
             }
             &:hover{
+                cursor: pointer;
                 .edit{
                     visibility: visible;
                     opacity: 1;

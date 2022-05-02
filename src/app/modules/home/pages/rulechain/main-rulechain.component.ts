@@ -278,6 +278,7 @@ export class MainRuleChainComponent implements OnInit {
         this.loadModelView = false;
         this.requirementUid = "";
         this.desprojectUid = "";
+        this.loadDesignRequirement = false;
         this.requirementUid = item.uuid;
         this.desprojectUid = item.projectuuid;
         this.loadDesignRequirement = true;

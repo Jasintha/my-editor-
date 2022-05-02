@@ -8,7 +8,7 @@ import {CreateHybridfunctionComponent} from '@home/pages/create-hybridfunction/c
 import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';
 import {CreateTaskComponent} from '@home/pages/create-task/create-task.component';
 import {CreateServiceComponent} from '@home/pages/create-service/create-service.component';
-import {CreateRequirementComponent} from '@home/pages/design-editor/create-requirement.component';
+import {CreateRequirementComponent} from '@home/pages/rulechain/design-editor/create-requirement.component';
 import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';

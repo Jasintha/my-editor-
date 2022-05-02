@@ -65,6 +65,10 @@ export class StoryService {
     return this.http.get<TreeNode[]>(`${this.storyresourceUrl}/project/epic/treedata/${uuid}/${id}`, { observe: 'response' });
   }
 
+  findStorieByEpic(uuid: string, id: string): Observable<HttpResponse<any[]>> {
+    return this.http.get<any[]>(`${this.storyresourceUrl}/project/epic/${uuid}/${id}`, { observe: 'response' });
+  }
+
   createWorkflowActivator(story: any, uuid: string): Observable<HttpResponse<any>> {
     return this.http.post<any>(`${this.workflowresourceUrl}/activator/${uuid}`, story, { observe: 'response' });
   }

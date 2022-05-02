@@ -41,6 +41,27 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatDividerModule} from '@angular/material/divider';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
+
+import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatTableModule} from '@angular/material/table';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {DesignEditorComponent} from '@home/pages/rulechain/design-editor/design-editor.component';
+import {CreateRequirementComponent} from '@home/pages/rulechain/design-editor/create-requirement.component';
+import {CreateStoryComponent} from '@home/pages/rulechain/design-editor/create-story.component';
+import {RequirementAddEpicDialogComponent} from '@home/pages/rulechain/design-editor/requirement-add-epic-dialog.component';
+import {FlexModule} from '@angular/flex-layout';
+import { EditorModule } from 'primeng/editor';
+
 import {CreateApiModule} from '@home/pages/create-api/create-api.module';
 import {CreateSubruleModule} from '@home/pages/create-subrule/create-subrule.module';
 import {CreateModelModule} from '@home/pages/create-model/create-model.module';
@@ -50,7 +71,6 @@ import {CreateLamdafunctionModule} from '@home/pages/create-lamdafunction/create
 import {CreateTaskModule} from '@home/pages/create-task/create-task.module';
 import {AggregateModule} from '@home/pages/aggregate/aggregate.module';
 import {CreateServiceModule} from '@home/pages/create-service/create-service.module';
-import {DesignEditorModule} from '@home/pages/design-editor/design-editor.module';
 import {BuiltInPageModule} from '@home/pages/built-in-page/built-in-page.module';
 import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
 import { MainMenuModule } from '../main-menu/main-menu.module';
@@ -77,7 +97,11 @@ import {
     AddRuleNodeDialogComponent,
     AddDesignRuleNodeDialogComponent,
     AddDesignRuleNodeLinkDialogComponent,
-    StoryDesignPageComponent
+    StoryDesignPageComponent,
+    DesignEditorComponent,
+    CreateRequirementComponent,
+    RequirementAddEpicDialogComponent,
+    CreateStoryComponent
   ],
   providers: [
     {
@@ -110,11 +134,25 @@ import {
     AggregateModule,
     MonacoEditorModule,
     CreateServiceModule,
-    DesignEditorModule,
     CreateServiceModule,
     BuiltInPageModule,
       MainMenuModule,
-      PageNavigationModule
+      PageNavigationModule,
+        RouterModule,
+        MatFormFieldModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatRadioModule,
+        FormsModule,
+        MatTableModule,
+        MatSnackBarModule,
+        FlexModule,
+        EditorModule,
+        NgbModule,
+        FontAwesomeModule
   ]
 })
 export class RuleChainModule { }
