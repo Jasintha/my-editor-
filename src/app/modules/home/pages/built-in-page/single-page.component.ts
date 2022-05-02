@@ -861,6 +861,14 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   protected onSaveSuccess() {
     this.isSaving = false;
+    if (this.editForm.get(['pagetitle']).value !== this.currentPage.pagetitle){
+      this.eventManager.dispatch(
+          new AppEvent(EventTypes.editorUITreeListModification, {
+            name: 'editorUITreeListModification',
+            content: 'Deleted an built in page',
+          })
+      );
+    }
     this.pageTitle = this.editForm.get(['pagetitle']).value;
     // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Form saved' });
     this.enableToEdit();

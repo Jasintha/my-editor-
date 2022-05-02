@@ -1,6 +1,5 @@
-<div class="row justify-content-center" style="margin-top: 100px; overflow-x: hidden" >
-    <div class="col-10">
-        <div class="justify-content-center">
+<div class="justify-content-center" style="margin-top: 100px; overflow-x: auto; padding: 0 50px 0 50px" >
+
             <form name="editForm" role="form" novalidate (ngSubmit)="checkPageNameExist()" [formGroup]="editForm">
 
 
@@ -42,7 +41,7 @@
 
 
                     </div>
-                <div class="scroll-bar-page">
+                <div>
                     <div class="row">
                         <div class="col-4 temp-image">
                             <div class="ui-panel-content ui-widget-content justify-content-center" style="padding-top: 5px">
@@ -639,7 +638,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-button-footer">
+                <div class="form-button-footer" style="padding-top: 25px; float: right">
 <!--                    <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()" style="margin-right: 8px">-->
 <!--                        <i class="fa fa-chevron-circle-left"></i>&nbsp;<span>Back</span>-->
 <!--                    </button>-->
@@ -649,8 +648,7 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </div>
+
 </div>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
     <p style="color: white">Please wait... </p>
