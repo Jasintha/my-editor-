@@ -74,9 +74,9 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
   @Input()
   storyuuid: string;
 
+  @Input()
   serviceUuid: string;
 
-  serviceMasterUuid: string;
 
   inputitems: any[];
 
@@ -138,23 +138,6 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
 
   ngOnInit(): void {
 
-  this.serviceUuid = "PgLG2MtA4oUYak7TFznxB4_user3gmailcom";
-
-//     this.storyService
-//       .findTechDetailByProjectId(this.projectUid, this.storyuuid)
-//       .pipe(
-//         filter((mayBeOk: HttpResponse<any>) => mayBeOk.ok),
-//         map((response: HttpResponse<any>) => response.body)
-//       )
-//       .subscribe(
-//         (res: any) => {
-//           let story = res;
-//           this.serviceUuid = story.serviceUUID;
-//           this.serviceMasterUuid = story.serviceMasterUUID;
-//         },
-//         (res: HttpErrorResponse) => this.onError()
-//       );
-
   }
 
   ngOnDestroy(): void {
@@ -192,7 +175,6 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
     } else {
 
     let modeluuid = this.configuration.modeluuid;
-//         let modeluuid = "5ndvxHXrJUUjAvNorifEBM"
 //     if(modeluuid){
         this.loadAggregatesForService(modeluuid);
 //     }
