@@ -1104,4 +1104,33 @@
                                        [nodeDefinition]="nodeDefinitionValue">
         </virtuan-http-header-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiActorNode'">
+        <virtuan-actor-node-config #cactorNodeConfigComponent
+                                      formControlName="configuration"
+                                      [ruleNodeId]="ruleNodeId"
+                                      [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-actor-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiStoryModelNode'">
+        <virtuan-story-model-node-config #cactorNodeConfigComponent
+                                      formControlName="configuration"
+                                      [ruleNodeId]="ruleNodeId"
+                                      [isNodeEdit]="isNodeEdit"
+                                      [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-story-model-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiProcessNode'">
+        <virtuan-process-node-config #cactorNodeConfigComponent
+                                      formControlName="configuration"
+                                      [ruleNodeId]="ruleNodeId"
+                                      [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-process-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiScreenNode'">
+        <virtuan-screen-node-config #cactorNodeConfigComponent
+                                     formControlName="configuration"
+                                     [ruleNodeId]="ruleNodeId"
+                                     [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-screen-node-config>
+    </ng-container>
 </div>

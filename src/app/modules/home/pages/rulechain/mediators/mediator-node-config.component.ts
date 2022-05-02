@@ -158,6 +158,8 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
 
   @Input() branchAvailability: any;
 
+  @Input() isNodeEdit: boolean;
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()

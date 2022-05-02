@@ -73,6 +73,9 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
   isNodeEdit: boolean;
 
   @Input()
+  isDesignNode: boolean;
+
+  @Input()
   allDomainModels: any[];
 
   @Input()

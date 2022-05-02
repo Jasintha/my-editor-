@@ -173,6 +173,8 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
 
   @Input() branchAvailability: any;
 
+  @Input() isNodeEdit: boolean;
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()

@@ -1591,6 +1591,8 @@
         "type-rooting-details": "Add new Root",
         "type-filter": "Filter",
         "type-filter-details": "Filter incoming messages with configured conditions",
+        "type-design": "Story Design",
+        "type-design-details": "Design story components",
         "type-enrichment": "Enrichment",
         "type-enrichment-details": "Add additional information into Message Metadata",
         "type-transformation": "Transformation",

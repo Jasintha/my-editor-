@@ -56,6 +56,12 @@ import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-cre
 import { MainMenuModule } from '../main-menu/main-menu.module';
 import {PageNavigationModule} from '@home/pages/page-navigation/page-navigation.module';
 
+import {
+  AddDesignRuleNodeDialogComponent,
+  AddDesignRuleNodeLinkDialogComponent,
+  StoryDesignPageComponent
+} from './story-design-page.component';
+
 @NgModule({
   declarations: [
 
@@ -68,6 +74,10 @@ import {PageNavigationModule} from '@home/pages/page-navigation/page-navigation.
     RuleNodeLinkComponent,
     AddRuleNodeLinkDialogComponent,
     AddRuleNodeDialogComponent,
+    AddRuleNodeDialogComponent,
+    AddDesignRuleNodeDialogComponent,
+    AddDesignRuleNodeLinkDialogComponent,
+    StoryDesignPageComponent
   ],
   providers: [
     {

@@ -1,0 +1,28 @@
+<div [formGroup]="modelNodeConfigFormGroup">
+    <mat-form-field *ngIf="!isNodeEdit" fxFlex class="mat-block">
+        <mat-label>Create Type</mat-label>
+        <mat-select formControlName="createType">
+            <mat-option value="New">New</mat-option>
+            <mat-option value="Existing">Existing</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="!isNodeEdit && modelNodeConfigFormGroup.value.createType === 'New'" fxFlex class="mat-block">
+        <mat-label>Model Name</mat-label>
+        <input matInput formControlName="modelName"/>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isNodeEdit || modelNodeConfigFormGroup.value.createType === 'Existing'" fxFlex class="mat-block">
+        <mat-label>Model</mat-label>
+        <mat-select formControlName="modelselection" >
+            <mat-option *ngFor="let param of inputitems" [value]="param.value">
+                {{param.label}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div *ngIf="isNodeEdit" style="margin-top:20px;margin-bottom:10px;">
+        <p-tree [value]="modeldata" layout="horizontal" selectionMode="single" [(selection)]="selectedModelNode" [contextMenu]="cm" (onNodeContextMenuSelect)="modelcontextMenu($event, cm)"
+                (onNodeSelect)="onModelNodeSelect($event)"></p-tree>
+        <p-contextMenu #cm appendTo="body" [style]="{'text-decoration': 'none'}" [model]="modelitems"></p-contextMenu>
+    </div>
+</div>
+

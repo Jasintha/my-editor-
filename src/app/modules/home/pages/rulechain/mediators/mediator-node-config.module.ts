@@ -95,6 +95,16 @@ import {ExcelReadNodeConfigComponent} from "@home/pages/rulechain/mediators/exce
 import {ExcelCopyNodeConfigComponent} from "@home/pages/rulechain/mediators/excel/excel-copy-node-config.component";
 import {ExcelDeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/excel/excel-delete-node-config.component";
 import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/connector/new-connector-node-config.component";
+
+//design
+import {ActorNodeConfigComponent} from "@home/pages/rulechain/mediators/design/actor-node-config.component";
+import {ModelNodeConfigComponent} from "@home/pages/rulechain/mediators/design/model-node-config.component";
+import {ProcessNodeConfigComponent} from "@home/pages/rulechain/mediators/design/process-node-config.component";
+import {ScreenNodeConfigComponent} from "@home/pages/rulechain/mediators/design/screen-node-config.component";
+
+import {TreeModule} from "primeng/tree";
+import { ContextMenuModule } from 'primeng/contextmenu';
+
 @NgModule({
   declarations: [
     MediatorNodeConfigComponent,
@@ -162,13 +172,19 @@ import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/c
     SidecarNodeConfigComponent,
     HttpHeaderNodeConfigComponent,
     ErrorNodeConfigComponent,
-    PropertyNodeConfigComponent
+    PropertyNodeConfigComponent,
+    ActorNodeConfigComponent,
+    ModelNodeConfigComponent,
+    ProcessNodeConfigComponent,
+    ScreenNodeConfigComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     MatTableModule,
-    MatTreeModule
+    MatTreeModule,
+    TreeModule,
+    ContextMenuModule
   ],
   exports: [
     MediatorNodeConfigComponent,
@@ -236,7 +252,11 @@ import {NewConnectorNodeConfigComponent} from "@home/pages/rulechain/mediators/c
     SidecarNodeConfigComponent,
     HttpHeaderNodeConfigComponent,
     ErrorNodeConfigComponent,
-    PropertyNodeConfigComponent
+    PropertyNodeConfigComponent,
+    ActorNodeConfigComponent,
+    ModelNodeConfigComponent,
+    ProcessNodeConfigComponent,
+    ScreenNodeConfigComponent
   ],
   providers: []
 })

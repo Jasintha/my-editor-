@@ -191,7 +191,8 @@ export enum RuleNodeType {
   CORE = 'CORE',
   CQRS = 'CQRS',
   MESSAGING = 'MESSAGING',
-  MIDDLEWARE = 'MIDDLEWARE'
+  MIDDLEWARE = 'MIDDLEWARE',
+  DESIGN = 'DESIGN'
 }
 
 export const ruleNodeTypesLibrary = [
@@ -206,6 +207,10 @@ export const ruleNodeTypesLibrary = [
   RuleNodeType.CONNECTOR
 ];
 
+export const storyruleNodeTypesLibrary = [
+  RuleNodeType.DESIGN
+];
+
 export interface RuleNodeTypeDescriptor {
   value: RuleNodeType;
   name: string;
@@ -214,6 +219,22 @@ export interface RuleNodeTypeDescriptor {
   icon: string;
   special?: boolean;
 }
+
+export const storyruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescriptor>(
+  [
+    [
+      RuleNodeType.DESIGN,
+      {
+        value: RuleNodeType.DESIGN,
+        name: 'rulenode.type-design',
+        details: 'rulenode.type-design-details',
+        nodeClass: 'virtuan-design-type',
+        icon: 'filter_list'
+      }
+    ]
+  ]
+);
+
 
 export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescriptor>(
   [

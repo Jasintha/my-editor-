@@ -28,7 +28,8 @@ export enum ComponentType {
   CORE = 'CORE',
   CQRS = 'CQRS',
   MESSAGING = 'MESSAGING',
-  MIDDLEWARE = 'MIDDLEWARE'
+  MIDDLEWARE = 'MIDDLEWARE',
+  DESIGN = 'DESIGN'
 }
 
 export enum ComponentScope {

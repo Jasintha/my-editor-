@@ -31,7 +31,7 @@
             {{ 'rulenode.debug-mode' | translate }}
           </mat-checkbox>-->
         </section>
-        <ng-container *ngIf="isNodeEdit">
+        <ng-container *ngIf="isNodeEdit || isDesignNode">
         <virtuan-rule-node-config #ruleNodeConfigComponent
                              formControlName="configuration"
                              [ruleNodeId]="ruleNode.ruleNodeId?.id"
@@ -70,7 +70,8 @@
                              [branchAvailability]="branchAvailability"
                              [connectorfields]="connectorfields"
                              [connectorOperations]="connectorOperations"
-                             [allPdfs]="allPdfs">
+                             [allPdfs]="allPdfs"
+                             [isNodeEdit]="isNodeEdit">
         </virtuan-rule-node-config>
         </ng-container>
         <div formGroupName="additionalInfo" fxLayout="column">
