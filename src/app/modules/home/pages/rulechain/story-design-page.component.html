@@ -149,7 +149,10 @@
                               [allPdfs]="allPdfs"
                               [isEdit]="true"
                               [isNodeEdit]="true"
-                              [isReadOnly]="false">
+                              [isReadOnly]="false"
+                              [projectUid]="projectUid"
+                              [serviceUuid]="serviceUuid"
+                              [storyuuid]="storyuuid">
                 </virtuan-rule-node>
               </mat-tab>
               <mat-tab *ngIf="editingRuleNode.ruleNodeId" label="{{ 'rulenode.events' | translate }}" #eventsTab="matTab">

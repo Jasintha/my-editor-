@@ -149,6 +149,15 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
 
   @Input() branchAvailability: any;
 
+  @Input()
+  projectUid: string;
+
+  @Input()
+  storyuuid: string;
+
+  @Input()
+  serviceUuid: string;
+
   ruleNodeType = RuleNodeType;
   entityType = EntityType;
 

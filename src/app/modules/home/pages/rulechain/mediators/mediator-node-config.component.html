@@ -1108,6 +1108,7 @@
         <virtuan-actor-node-config #cactorNodeConfigComponent
                                       formControlName="configuration"
                                       [ruleNodeId]="ruleNodeId"
+                                      [projectUid]="projectUid"
                                       [nodeDefinition]="nodeDefinitionValue">
         </virtuan-actor-node-config>
     </ng-container>
@@ -1116,6 +1117,9 @@
                                       formControlName="configuration"
                                       [ruleNodeId]="ruleNodeId"
                                       [isNodeEdit]="isNodeEdit"
+                                      [projectUid]="projectUid"
+                                      [serviceUuid]="serviceUuid"
+                                      [storyuuid]="storyuuid"
                                       [nodeDefinition]="nodeDefinitionValue">
         </virtuan-story-model-node-config>
     </ng-container>
@@ -1123,6 +1127,7 @@
         <virtuan-process-node-config #cactorNodeConfigComponent
                                       formControlName="configuration"
                                       [ruleNodeId]="ruleNodeId"
+                                      [projectUid]="projectUid"
                                       [nodeDefinition]="nodeDefinitionValue">
         </virtuan-process-node-config>
     </ng-container>
@@ -1130,6 +1135,9 @@
         <virtuan-screen-node-config #cactorNodeConfigComponent
                                      formControlName="configuration"
                                      [ruleNodeId]="ruleNodeId"
+                                     [projectUid]="projectUid"
+                                     [serviceUuid]="serviceUuid"
+                                     [storyuuid]="storyuuid"
                                      [nodeDefinition]="nodeDefinitionValue">
         </virtuan-screen-node-config>
     </ng-container>

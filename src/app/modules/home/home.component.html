@@ -15,7 +15,7 @@
 
 -->
 <mat-sidenav-container>
-  <mat-sidenav-content>
+  <mat-sidenav-content fxLayout="column">
     <div fxLayout="column" role="main" style="height: 100%;">
       <mat-toolbar fxLayout="row" color="primary" class="mat-elevation-z1 virtuan-primary-toolbar">
         <button [fxShow]="!forceFullscreen" mat-icon-button id="main"
@@ -64,9 +64,23 @@
       <mat-progress-bar color="warn" style="z-index: 10; margin-bottom: -4px; width: 100%;" mode="indeterminate"
                         *ngIf="isLoading$ | async">
       </mat-progress-bar>
-      <div fxFlex fxLayout="column" virtuan-toast class="virtuan-main-content">
+<!--      <app-footer fxFlexOffset="auto"></app-footer>-->
+      <div fxFlexOffset="auto" virtuan-toast class="virtuan-main-content">
         <router-outlet (activate)="activeComponentChanged($event)"></router-outlet>
       </div>
+      <mat-toolbar fxLayout="row" style="justify-content: center">
+        <div class="footer">
+          <footer class="footer footer-static footer-light">
+            <p class="clearfix text-muted text-sm-center px-2"><span style="font-size: 15px;">Copyright &copy; {{year}} <a href="https://virtuan.io/" target="_blank" class="text-bold-800" style="color:#9B223F">Virtuan </a> All rights reserved. </span></p>
+          </footer>
+        </div>
+      </mat-toolbar>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+
+<!--<mat-toolbar color="primary">-->
+<!--  <mat-toolbar-row></mat-toolbar-row>-->
+<!--</mat-toolbar>-->
+

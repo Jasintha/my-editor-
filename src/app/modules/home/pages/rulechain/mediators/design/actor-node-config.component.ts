@@ -11,6 +11,8 @@ import {
   Inject,
   ViewContainerRef
 } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { filter, map } from 'rxjs/operators';
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators, AbstractControl } from '@angular/forms';
 import {
   IRuleNodeConfigurationComponent,
@@ -28,6 +30,7 @@ import { PageComponent } from '@shared/components/page.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
+import { StoryService } from '@core/projectservices/story-technical-view.service';
 
 @Component({
   selector: 'virtuan-actor-node-config',
@@ -54,11 +57,13 @@ export class ActorNodeConfigComponent implements ControlValueAccessor, OnInit, O
   @Input()
   disabled: boolean;
 
-  @Input()
   allActors: any[];
 
   @Input()
   ruleNodeId: string;
+
+  @Input()
+  projectUid: string;
 
   nodeDefinitionValue: RuleNodeDefinition;
 
@@ -95,6 +100,7 @@ export class ActorNodeConfigComponent implements ControlValueAccessor, OnInit, O
 
   constructor(private translate: TranslateService,
               private ruleChainService: RuleChainService,
+              protected storyService: StoryService,
               private fb: FormBuilder) {
     this.actorNodeConfigFormGroup = this.fb.group({
       createType: "",
@@ -112,6 +118,7 @@ export class ActorNodeConfigComponent implements ControlValueAccessor, OnInit, O
   }
 
   ngOnInit(): void {
+    this.loadActors();
   }
 
   ngOnDestroy(): void {
@@ -121,6 +128,28 @@ export class ActorNodeConfigComponent implements ControlValueAccessor, OnInit, O
   }
 
   ngAfterViewInit(): void {
+  }
+
+  loadActors() {
+    this.storyService
+      .findActorsByProjectId(this.projectUid)
+      .pipe(
+        filter((res: HttpResponse<any[]>) => res.ok),
+        map((res: HttpResponse<any[]>) => res.body)
+      )
+      .subscribe(
+        (res: any[]) => {
+          if (res) {
+            this.allActors = res;
+          } else {
+            this.allActors = [];
+          }
+        },
+        (res: HttpErrorResponse) => this.onError()
+      );
+  }
+
+  protected onError() {
   }
 
   addActor(): void{
@@ -137,7 +166,7 @@ export class ActorNodeConfigComponent implements ControlValueAccessor, OnInit, O
 
     let actor = {
       'actorName': actorName,
-      'actorId': actorId,
+      'actoruuid': actorId,
       'createType': createType,
       'permissionLevel': this.actorNodeConfigFormGroup.get('permissionLevel').value
     };
@@ -227,7 +256,7 @@ export class ActorNodeConfigComponent implements ControlValueAccessor, OnInit, O
 
 export interface Actor {
   actorName: string;
-  actorId: string;
+  actoruuid: string;
   createType: string;
   permissionLevel: string;
 }
