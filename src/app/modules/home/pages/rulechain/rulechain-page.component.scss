@@ -417,6 +417,7 @@
   margin-top: 55px;
   background-color: white;
   z-index: 1;
+  font-weight: bold;
 }
 
 .size-limit{
@@ -427,7 +428,8 @@
 
 .sideways-tabs.right-tabs .nav-link.active {
   border: none;
-  border-top: 8px solid #eeeeff;
+  border-top: 8px solid #1a73e8;
+  font-weight: bold;
 }
 
 .sideways-tabs.right-tabs .nav-link{
