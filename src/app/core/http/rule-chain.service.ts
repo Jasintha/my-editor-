@@ -73,6 +73,9 @@ export class RuleChainService {
   public getRuleChainWithUsernameAndUID(ruleChainId: string, username: string, uid: string, config?: RequestConfig): Observable<RuleChain> {
     return this.http.get<RuleChain>(`/api/ruleChain/${ruleChainId}/${username}/${uid}`, defaultHttpOptionsFromConfig(config));
   }
+  public getStoryRuleChainWithUsernameAndUID(ruleChainId: string, username: string, uid: string, config?: RequestConfig): Observable<RuleChain> {
+    return this.http.get<RuleChain>(`/api/ruleChain/story/${ruleChainId}/${username}/${uid}`, defaultHttpOptionsFromConfig(config));
+  }
 
   public getConnectionPropertyTemplates(config?: RequestConfig): Observable<ConnectionPropertyTemplate[]> {
     return this.http.get<ConnectionPropertyTemplate[]>(`/api/ruleChain/connection-property-templates`, defaultHttpOptionsFromConfig(config));
@@ -97,8 +100,18 @@ export class RuleChainService {
     return this.http.get<RuleChainMetaData>(`/api/ruleChain/${ruleChainId}/${username}/${uid}/metadata`, defaultHttpOptionsFromConfig(config));
   }
 
+  public getStoryRuleChainMetadata(ruleChainId: string, username: string, uid: string, config?: RequestConfig): Observable<RuleChainMetaData> {
+    return this.http.get<RuleChainMetaData>(`/api/ruleChain/story/${ruleChainId}/${username}/${uid}/metadata`, defaultHttpOptionsFromConfig(config));
+  }
+
   public getResolvedRuleChainMetadata(ruleChainId: string,username: string, uid: string, config?: RequestConfig): Observable<ResolvedRuleChainMetaData> {
     return this.getRuleChainMetadata(ruleChainId, username, uid, config).pipe(
+      mergeMap((ruleChainMetaData) => this.resolveRuleChainMetadata(ruleChainMetaData))
+    );
+  }
+
+  public getResolvedStoryRuleChainMetadata(ruleChainId: string,username: string, uid: string, config?: RequestConfig): Observable<ResolvedRuleChainMetaData> {
+    return this.getStoryRuleChainMetadata(ruleChainId, username, uid, config).pipe(
       mergeMap((ruleChainMetaData) => this.resolveRuleChainMetadata(ruleChainMetaData))
     );
   }

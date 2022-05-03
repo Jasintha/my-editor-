@@ -272,11 +272,11 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     this.storyserviceUuid = story.serviceUUID;
     this.storyuuid = story.uuid;
 
-        this.ruleChainService.getRuleChainWithUsernameAndUID(story.ruleid, this.username, this.desprojectUid).subscribe((ruleChain) => {
+        this.ruleChainService.getStoryRuleChainWithUsernameAndUID(story.ruleid, this.username, this.desprojectUid).subscribe((ruleChain) => {
             this.ruleChainLoaded = true;
             this.ruleChain = ruleChain;
         });
-        this.ruleChainService.getResolvedRuleChainMetadata(story.ruleid, this.username, this.desprojectUid).subscribe((ruleChainMetaData) => {
+        this.ruleChainService.getResolvedStoryRuleChainMetadata(story.ruleid, this.username, this.desprojectUid).subscribe((ruleChainMetaData) => {
             this.ruleChainMetaDataLoaded = true;
             this.ruleChainMetaData = ruleChainMetaData;
         });
