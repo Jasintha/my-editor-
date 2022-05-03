@@ -16,6 +16,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {LoginComponent} from '@modules/login/pages/login/login.component';
 // import {LoginComponent} from './pages/login/login.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {LoginComponent} from '@modules/login/pages/login/login.component';
     MatRadioModule,
     FormsModule,
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgxSpinnerModule
   ],
   exports:[
      LoginComponent
