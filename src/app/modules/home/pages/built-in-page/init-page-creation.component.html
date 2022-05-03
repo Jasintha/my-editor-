@@ -15,7 +15,7 @@
                 <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
             </div>
 
-            <div class="page-type" *ngIf="pageCreationStatus === 'typeSelection'">
+            <div  *ngIf="pageCreationStatus === 'typeSelection'">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-3 init-page-card">
@@ -71,7 +71,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-md-3 init-page-card">
@@ -130,7 +129,7 @@
                 </div>
             </div>
 
-            <div class="grid-type" *ngIf="pageTemplateType == 'blank' && pageCreationStatus === 'gridSelection'">
+            <div style="padding-top: 50px" *ngIf="pageTemplateType == 'blank' && pageCreationStatus === 'gridSelection'">
                 <button [disabled]="false" type="button" style="float: right; margin-top: -65px;" mat-raised-button color="primary"
                         (click)="createCustomGrid()">
                     <mat-icon>add</mat-icon>
