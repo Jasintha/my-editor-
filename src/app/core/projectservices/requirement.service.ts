@@ -67,7 +67,7 @@ export class RequirementService {
   }
 
   findEpicsForReqByProjectId(id: string, uuid: string): Observable<HttpResponse<any[]>> {
-    return this.http.get<any[]>(`${this.epicresourceUrl}/project/req//${uuid}/${id}`, { observe: 'response' });
+    return this.http.get<any[]>(`${this.epicresourceUrl}/project/req/${uuid}/${id}`, { observe: 'response' });
   }
 
   findRequirementTreeData(id: string, uuid: string): Observable<HttpResponse<any[]>> {
