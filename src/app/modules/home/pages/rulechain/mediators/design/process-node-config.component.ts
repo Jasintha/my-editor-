@@ -68,6 +68,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     { label: 'DELETE', value: 'DELETE' },
     { label: 'FIND', value: 'FIND' },
     { label: 'EMPTY', value: 'EMPTY' },
+    { label: 'FINDALL', value: 'FINDALL' },
   ];
 
   apiMethod: any[] = [

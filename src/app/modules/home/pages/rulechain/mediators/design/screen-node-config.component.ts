@@ -157,16 +157,21 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.actionItems.push( { label: 'On Load', value: 'on-load' });
     } else if(screenTemplate === 'form-page') {
       this.actionItems.push({ label: 'On Create', value: 'on-create' });
-      this.actionItems.push({ label: 'On Update', value: 'on-update' },);
-      this.actionItems.push({ label: 'On Delete', value: 'on-delete' });
     } else if(screenTemplate === 'aio-table') {
       this.actionItems.push({ label: 'On Load', value: 'on-load' });
       this.actionItems.push({ label: 'On Create', value: 'on-create' });
       this.actionItems.push({ label: 'On Update', value: 'on-update' },);
       this.actionItems.push({ label: 'On Delete', value: 'on-delete' },
       );
-    } else if(screenTemplate === 'login-page') {
-      this.actionItems.push( { label: 'On Load', value: 'on-load' });
+    } else if(screenTemplate === 'aio-grid') {
+      this.actionItems.push({ label: 'On Load', value: 'on-load' });
+      this.actionItems.push({ label: 'On Create', value: 'on-create' });
+      this.actionItems.push({ label: 'On Update', value: 'on-update' },);
+      this.actionItems.push({ label: 'On Delete', value: 'on-delete' },
+      );
+    }else if(screenTemplate === 'login-page') {
+      this.actionItems.push({ label: 'On Create', value: 'on-create' });
+    }else if(screenTemplate === 'form-wizard-page') {
       this.actionItems.push({ label: 'On Create', value: 'on-create' });
     } else {
       this.actionItems.push( { label: 'On Load', value: 'on-load' });
