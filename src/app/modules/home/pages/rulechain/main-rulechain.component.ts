@@ -126,6 +126,7 @@ export class MainRuleChainComponent implements OnInit {
     activeNode: any;
     loadPageEditor : boolean;
     isGenerating: boolean;
+    reload: boolean;
     theme: string = 'vs-dark';
     editorOptions: any = { language: 'json', readOnly: true, renderLineHighlight: 'none' };
     code: string = '';
@@ -281,8 +282,14 @@ export class MainRuleChainComponent implements OnInit {
         this.loadDesignRequirement = false;
         this.requirementUid = item.uuid;
         this.desprojectUid = item.projectuuid;
-        this.loadDesignRequirement = true;
         this.loadPageEditor = false;
+        if (this.reload) {
+            this.reload = false;
+        } else {
+            this.reload = true;
+        }
+        this.loadDesignRequirement = true;
+
     }
 
     viewRule(item) {
