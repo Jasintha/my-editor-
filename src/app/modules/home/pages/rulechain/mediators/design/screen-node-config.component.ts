@@ -150,10 +150,10 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
     this.getPageTemplates();
   }
 
-  onScreenTypeChanged(event) {
+  onScreenTypeChanged() {
     this.actionItems = [];
     const screenTemplate = this.screenNodeConfigFormGroup.get(['screenTemplate']).value;
-    if(screenTemplate.value === 'table-page') {
+    if(screenTemplate === 'table-page') {
       this.actionItems.push('on-load');
     } else if(screenTemplate === 'form-page') {
       this.actionItems.push('on-create');
@@ -164,9 +164,11 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.actionItems.push('on-delete');
     } else if(screenTemplate === 'login-page') {
       this.actionItems.push('on-create');
-    }else if(screenTemplate.value === 'form-wizard-page') {
+    }else if(screenTemplate === 'form-wizard-page') {
       this.actionItems.push('on-create');
-    } else {
+    }else if(screenTemplate === 'register-page') {
+      this.actionItems.push('on-create');
+    }  else {
       this.actionItems.push('on-load');
     }
     this.screenNodeConfigFormGroup.patchValue({
@@ -226,6 +228,7 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
         screenTemplate: this.configuration.screenTemplate,
         screeActions: this.configuration.screeActions,
       });
+      this.onScreenTypeChanged();
     }
     this.changeSubscription = this.screenNodeConfigFormGroup.get('screenName').valueChanges.subscribe(
         (configuration: any) => {
@@ -237,6 +240,7 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
         (configuration: any) => {
           this.configuration.screenTemplate = configuration;
           this.updateModel(this.configuration);
+          this.onScreenTypeChanged();
         }
     );
     this.changeSubscription = this.screenNodeConfigFormGroup.get('screeActions').valueChanges.subscribe(
