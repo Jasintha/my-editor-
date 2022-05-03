@@ -36,10 +36,10 @@ export class MainMenuDeleteDialogComponent {
       //   content: 'Deleted an mainmenu'
       // });
       this.eventManager.dispatch(
-        new AppEvent(EventTypes.MainMEnuListModified, {
-          name: 'mainmenuListModification',
-          content: 'Deleted an mainmenu',
-        })
+          new AppEvent(EventTypes.editorUITreeListModification, {
+            name: 'editorUITreeListModification',
+            content: 'Deleted an mainmenu',
+          })
       );
       this.dialogRef.close(null);
     });

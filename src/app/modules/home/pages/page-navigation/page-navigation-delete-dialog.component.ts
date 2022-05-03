@@ -26,7 +26,7 @@ export class PageNavigationDeleteDialogComponent {
   ) {}
 
   cancel() {
-    this.dialogRef.close(null);
+    this.dialogRef.close();
   }
 
   confirmDelete(id: string, uuid: string) {
@@ -36,12 +36,12 @@ export class PageNavigationDeleteDialogComponent {
       //   content: 'Deleted an pageNavigation'
       // });
       this.eventManager.dispatch(
-          new AppEvent(EventTypes.MainMEnuListModified, {
-            name: 'mainmenuListModification',
+          new AppEvent(EventTypes.editorUITreeListModification, {
+            name: 'editorUITreeListModification',
             content: 'Deleted an page navigation',
           })
       );
-      this.dialogRef.close(null);
+      this.dialogRef.close();
     });
   }
 }
