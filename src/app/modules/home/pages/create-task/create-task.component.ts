@@ -21,6 +21,7 @@ import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
 import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
 import {IApi} from '@shared/models/model/microservice-api.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 interface Item {
   value: any;
   label: string;
@@ -98,6 +99,7 @@ export class CreateTaskComponent implements OnInit {
   filetargetItems: Item[];
   editForm: FormGroup;
   projectUid: string;
+  typeSelected: string;
 
   displayedColumns: string[] = ['name', 'datatype', 'recordtype', 'actions'];
   ELEMENT_DATA: APIInput[] = [];
@@ -270,9 +272,13 @@ export class CreateTaskComponent implements OnInit {
       public dialogRef: MatDialogRef<CreateTaskComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
       protected eventManager: EventManagerService,
-  ) {}
+      private spinnerService: NgxSpinnerService,
+  ) {
+    this.typeSelected = 'square-jelly-box';
+  }
 
   ngOnInit(): void {
+    this.spinnerService.hide();
     this.getTaskData();
   }
 
@@ -816,7 +822,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   save() {
-    // this.spinnerService.show();
+    this.spinnerService.show();
     this.isSaving = true;
 
     const task = this.createFromForm();
@@ -923,6 +929,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
+    this.spinnerService.hide();
     this.eventManager.dispatch(
             new AppEvent(EventTypes.editorTreeListModification, {
               name: 'editorTreeListModification',
@@ -934,6 +941,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   protected onSaveError() {
+    this.spinnerService.hide();
     // this.spinnerService.hide();
     this.isSaving = false;
   }

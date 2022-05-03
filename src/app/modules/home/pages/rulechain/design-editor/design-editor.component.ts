@@ -90,6 +90,9 @@ export class DesignEditorComponent implements OnInit, OnChanges {
   @Input()
   username: string;
 
+  @Input()
+  reload: boolean;
+
   currentReq: IRequirement;
 
   existingEpics: any[];

@@ -18,6 +18,7 @@ import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
 import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
 import {IApi} from '@shared/models/model/microservice-api.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 interface Item {
   value: any;
   label: string;
@@ -39,6 +40,7 @@ export class CreateLamdafunctionComponent implements OnInit {
   aggregates: IAggregate[];
   viewmodels: IViewmodel[];
   projectUid: string;
+  typeSelected: string;
 
   displayedColumns: string[] = ['name', 'datatype', 'recordtype', 'actions'];
   ELEMENT_DATA: APIInput[] = [];
@@ -81,10 +83,14 @@ export class CreateLamdafunctionComponent implements OnInit {
       protected eventManager: EventManagerService,
       public dialogRef: MatDialogRef<CreateLamdafunctionComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
-  ) {}
+      private spinnerService: NgxSpinnerService,
+  ) {
+    this.typeSelected = 'square-jelly-box';
+  }
 
 
   ngOnInit(): void {
+    this.spinnerService.hide();
     this.getFunctionData();
   }
 
@@ -383,7 +389,7 @@ export class CreateLamdafunctionComponent implements OnInit {
   }
 
   save() {
-    // this.spinnerService.show();
+    this.spinnerService.show();
     this.isSaving = true;
     const lamdafunction = this.createFromForm();
     if (lamdafunction.uuid) {
@@ -417,6 +423,7 @@ export class CreateLamdafunctionComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
+    this.spinnerService.hide();
     this.isSaving = false;
     this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
@@ -428,6 +435,7 @@ export class CreateLamdafunctionComponent implements OnInit {
   }
 
   protected onSaveError() {
+    this.spinnerService.hide();
     this.isSaving = false;
   }
   protected onError(errorMessage: string) {

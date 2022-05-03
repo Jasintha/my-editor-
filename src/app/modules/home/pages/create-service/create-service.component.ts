@@ -19,6 +19,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
+import {NgxSpinnerService} from 'ngx-spinner';
 interface Item {
   value: any;
   label: string;
@@ -73,6 +74,7 @@ export class CreateServiceComponent implements OnInit {
   cqrs: boolean;
   statefull: boolean;
   publicTypeAvailability = true;
+  typeSelected: string;
 
   buildForm() {
     this.editForm = this.fb.group({
@@ -131,9 +133,13 @@ export class CreateServiceComponent implements OnInit {
       public dialogRef: MatDialogRef<CreateServiceComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
       protected eventManager: EventManagerService,
-  ) {}
+      private spinnerService: NgxSpinnerService,
+  ) {
+    this.typeSelected = 'square-jelly-box';
+  }
 
   ngOnInit() {
+    this.spinnerService.hide();
     this.buildForm();
     this.apptype = 'microservice';
     // this.setProjectScopeValidators();
@@ -257,6 +263,7 @@ export class CreateServiceComponent implements OnInit {
   }
 
   save() {
+    this.spinnerService.show();
     this.isSaving = true;
     const project = this.createFromForm();
     if (this.editForm.valid) {
@@ -382,7 +389,7 @@ export class CreateServiceComponent implements OnInit {
   }
 
   protected onSaveSuccess(res, type) {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
     this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
@@ -400,6 +407,7 @@ export class CreateServiceComponent implements OnInit {
   }
 
   protected onSaveError() {
+    this.spinnerService.hide();
     // this.spinnerService.hide();
     this.isSaving = false;
   }

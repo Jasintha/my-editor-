@@ -33,6 +33,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
+import {NgxSpinnerService} from 'ngx-spinner';
 interface Item {
   value: any;
   label: string;
@@ -89,6 +90,7 @@ export class CreateApiComponent implements OnInit {
 
   WORKFLOW_MAP: WorkflowMapping[] = [];
   workFlowSource = new MatTableDataSource(this.WORKFLOW_MAP);
+  typeSelected: string;
 
   grpcMethodItems: Item[] = [
     { label: 'Unary', value: 'unary' },
@@ -282,6 +284,7 @@ export class CreateApiComponent implements OnInit {
       protected apiService: ApiService,
       protected activatedRoute: ActivatedRoute,
       private fb: FormBuilder,
+      private spinnerService: NgxSpinnerService,
       protected queryService: QueryService,
       protected commandService: CommandService,
       protected projectService: ProjectService,
@@ -289,9 +292,11 @@ export class CreateApiComponent implements OnInit {
       public dialogRef: MatDialogRef<CreateApiComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {
+    this.typeSelected = 'square-jelly-box';
   }
 
   ngOnInit() {
+    this.spinnerService.hide();
     this.getApiData();
   }
 
@@ -962,6 +967,7 @@ export class CreateApiComponent implements OnInit {
   save() {
     // this.spinnerService.show();
     this.isSaving = true;
+    this.spinnerService.show();
 
     const apiStyleType = this.form.get(['apiStyleType']).value;
     const apiType = this.form.get(['apitype']).value;
@@ -1249,7 +1255,7 @@ export class CreateApiComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
     this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
@@ -1262,7 +1268,7 @@ export class CreateApiComponent implements OnInit {
   }
 
   protected onSaveError() {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
   }
   protected onError(errorMessage: string) {

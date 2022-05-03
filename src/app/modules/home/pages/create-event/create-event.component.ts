@@ -14,6 +14,7 @@ import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IApi} from '@shared/models/model/microservice-api.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 interface Item {
   value: any;
   label: string;
@@ -36,6 +37,7 @@ export class CreateEventComponent implements OnInit {
   ];
   editForm: FormGroup;
   projectUid: string;
+  typeSelected: string;
 
   buildEventForm() {
     this.editForm = this.fb.group({
@@ -68,10 +70,14 @@ export class CreateEventComponent implements OnInit {
       protected eventManager: EventManagerService,
       public dialogRef: MatDialogRef<CreateEventComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
-  ) {}
+      private spinnerService: NgxSpinnerService,
+  ) {
+    this.typeSelected = 'square-jelly-box';
+  }
 
 
   ngOnInit(): void {
+    this.spinnerService.hide();
     this.getEventData();
   }
 
@@ -180,7 +186,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   save() {
-    // this.spinnerService.show();
+    this.spinnerService.show();
     this.isSaving = true;
 
     const event = this.createFromForm();
@@ -216,7 +222,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
     this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
@@ -229,7 +235,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   protected onSaveError() {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
   }
   protected onError(errorMessage: string) {

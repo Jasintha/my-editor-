@@ -9,6 +9,7 @@ import {StateStorageService} from '@core/auth/state-storage.service';
 import {AccountService} from '@core/auth/account.service';
 import {Subscription} from 'rxjs';
 import { Account } from '@shared/models/user/account.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 @Component({
   selector: 'virtuan-login',
   templateUrl: './login.component.html',
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
   // sortOptions: SelectItem[];
 
   sortOrder: number;
+  typeSelected: string;
 
   sortField: string;
   showCookieConsent: boolean;
@@ -53,11 +55,13 @@ export class LoginComponent implements OnInit {
 
        private loginService: LoginService,
        private stateStorageService: StateStorageService,
+       private spinnerService: NgxSpinnerService
      //  private messageService: MessageService,
       // private apptypesService: ApptypesService,
       // private cookieService: CookieService,
       // private config: NgbCarouselConfig
   ) {
+    this.typeSelected = 'square-jelly-box';
   //  this.homeTrackerService.setIsHomePage('yes');
   //  config.showNavigationArrows = true;
  //   config.showNavigationIndicators = true;
@@ -70,6 +74,7 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit() {
     this.isLogin = false;
+    this.spinnerService.hide();
 
     // this.accountService.identity().then((account: Account) => {
     //   this.account = account;
@@ -87,6 +92,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.spinnerService.show();
     this.isLogin = true;
     this.loginService
         .login({
@@ -102,8 +108,10 @@ export class LoginComponent implements OnInit {
           });
 
           if (this.router.url === '/register' || /^\/activate\//.test(this.router.url) || /^\/reset\//.test(this.router.url)) {
+            this.spinnerService.hide();
             this.router.navigate(['']);
           }
+
 
           this.eventManager.dispatch(
               new AppEvent(EventTypes.authenticationSuccess, {

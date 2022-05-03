@@ -22,6 +22,7 @@ import {LamdafunctionEditorComponent} from '@home/pages/create-lamdafunction/fun
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 @NgModule({
     declarations:[
@@ -52,7 +53,8 @@ import {FlexModule} from '@angular/flex-layout';
         MonacoEditorModule,
         MatToolbarModule,
         FlexModule,
-        MatToolbarModule
+        MatToolbarModule,
+        NgxSpinnerModule
     ],
     exports:[
         CreateLamdafunctionComponent,

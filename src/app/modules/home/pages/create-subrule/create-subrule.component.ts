@@ -21,6 +21,7 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
 import {IApi} from '@shared/models/model/microservice-api.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 interface Item {
   value: any;
   label: string;
@@ -44,6 +45,8 @@ export class CreateSubruleComponent implements OnInit {
   datamodels: IDatamodel[] = [];
   customObjects: ICustomObject[];
   allReturnItems: IAPIInput[];
+
+  typeSelected: string;
 
   paramRecorditems: Item[] = [
     { label: 'Single', value: 's' },
@@ -81,10 +84,13 @@ export class CreateSubruleComponent implements OnInit {
       @Inject(MAT_DIALOG_DATA)  public data: any,
       private _snackBar: MatSnackBar,
       protected eventManager: EventManagerService,
+      private spinnerService: NgxSpinnerService,
   ) {
+    this.typeSelected = 'square-jelly-box';
   }
 
   ngOnInit(): void {
+    this.spinnerService.hide();
     this.getSubRuleData();
   }
 
@@ -437,7 +443,7 @@ export class CreateSubruleComponent implements OnInit {
   }
 
   save() {
-    // this.spinnerService.show();
+    this.spinnerService.show();
     this.isSaving = true;
     const subrule = this.createFromForm();
     if (subrule.uuid) {
@@ -468,7 +474,7 @@ export class CreateSubruleComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
     this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
@@ -482,7 +488,7 @@ export class CreateSubruleComponent implements OnInit {
   }
 
   protected onSaveError() {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
     this._snackBar.open('Error occurred while saving!', 'Close');
   }
