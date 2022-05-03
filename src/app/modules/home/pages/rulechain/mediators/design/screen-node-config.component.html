@@ -1,24 +1,24 @@
 <div [formGroup]="screenNodeConfigFormGroup">
  <p-carousel [value]="pageTemplateItems" [numVisible]="2" [numScroll]="2" [circular]="false">
-  <ng-template let-product pTemplate="item">
+  <ng-template let-template pTemplate="item">
    <div class="product-item">
     <div class="product-item-content">
      <div class="mb-2" align="center">
-      <img *ngIf="product.value == 'login-page'" class="product-image" width="300px"
+      <img *ngIf="template == 'login-page'" class="product-image" width="300px"
            src="/assets/images/pages/login.jpg"
            alt="Template">
       <img width="300px"
-              *ngIf="product.value == 'table-page' || product.template == 'aio-table'"
+              *ngIf="template == 'table-page' || template == 'aio-table'"
               class="product-image" src="/assets/images/pages/allinone.jpg"
               alt="Template">
       <img width="300px"
-              *ngIf="product.value == 'form-page' || product.template == 'file-upload-page' || product.value == 'form-wizard-page'"
+              *ngIf="template == 'form-page' || template == 'file-upload-page' || template == 'form-wizard-page'"
               class="product-image" src="/assets/images/pages/form.jpg"
               alt="Template">
-      <img *ngIf="product.value == 'register-page'" width="300px"
+      <img *ngIf="template == 'register-page'" width="300px"
            class="product-image" src="/assets/images/pages/register.jpg"
            alt="Template">
-      <img *ngIf="product.value == 'aio-grid'" width="300px"
+      <img *ngIf="template == 'aio-grid'" width="300px"
            class="product-image" src="/assets/images/pages/grid.jpg"
            alt="Template">
       <!--<img src="/content/images/theme/{{product.themestyle}}.png" [alt]="product.name" class="product-image" />-->
@@ -27,7 +27,7 @@
       <!--<h4 class="mb-1">{{product.name}}</h4>-->
       <div style="margin-top: 15px;" align="center">
        <p-radioButton name="screenselection"
-                      [value]="product" label="{{product.label}}" formControlName="screenTemplate"  (onClick)="onScreenTypeChanged($event)"></p-radioButton>
+                      [value]="template" label="{{template}}" formControlName="screenTemplate"  (onClick)="onScreenTypeChanged($event)"></p-radioButton>
 
       </div>
      </div>
@@ -41,16 +41,7 @@
 
  <mat-label>Available actions</mat-label>
  <div *ngFor="let option of actionItems">
-  <h6 style="padding-left: 15px">{{option.label}}</h6>
+  <h6 style="padding-left: 15px">{{option}}</h6>
  </div>
-
-<!-- <mat-form-field fxFlex class="mat-block">-->
-<!--  <mat-label>Available actions</mat-label>-->
-<!--  <mat-select formControlName="screenActions">-->
-<!--   <mat-option *ngFor="let option of actionItems" [value]="option.value">-->
-<!--    {{option.label}}-->
-<!--   </mat-option>-->
-<!--  </mat-select>-->
-<!-- </mat-form-field>-->
 </div>
 

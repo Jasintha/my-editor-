@@ -2,8 +2,8 @@
  <mat-form-field fxFlex class="mat-block">
   <mat-label>Template </mat-label>
   <mat-select formControlName="apiTemplate">
-   <mat-option *ngFor="let option of crudItems" [value]="option.value">
-    {{option.label}}
+   <mat-option *ngFor="let option of crudItems" [value]="option">
+    {{option}}
    </mat-option>
   </mat-select>
  </mat-form-field>
@@ -11,8 +11,8 @@
  <mat-form-field *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'" class="mat-block">
   <mat-label>Method</mat-label>
   <mat-select formControlName="apiMethod">
-   <mat-option *ngFor="let option of apiMethod" [value]="option.value">
-    {{option.label}}
+   <mat-option *ngFor="let option of apiMethod" [value]="option">
+    {{option}}
    </mat-option>
   </mat-select>
  </mat-form-field>
@@ -20,8 +20,8 @@
  <mat-form-field fxFlex class="mat-block">
   <mat-label>Return Record</mat-label>
   <mat-select formControlName="returnRecord">
-   <mat-option *ngFor="let option of returnRecord" [value]="option.value">
-    {{option.label}}
+   <mat-option *ngFor="let option of returnRecord" [value]="option">
+    {{option}}
    </mat-option>
   </mat-select>
  </mat-form-field>
@@ -29,8 +29,8 @@
  <mat-form-field fxFlex class="mat-block">
   <mat-label>Return Value</mat-label>
   <mat-select formControlName="returnObject">
-   <mat-option *ngFor="let option of returnObject" [value]="option.value">
-    {{option.label}}
+   <mat-option *ngFor="let option of returnObject" [value]="option">
+    {{option}}
    </mat-option>
   </mat-select>
  </mat-form-field>

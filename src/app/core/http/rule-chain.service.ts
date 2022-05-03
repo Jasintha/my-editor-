@@ -212,6 +212,24 @@ export class RuleChainService {
           value: switchlabel
         };
       }
+      return switchlinkLabels;
+    } else if (component.clazz == 'xiScreenNode' && component.configurationDescriptor.nodeDefinition.relationTypes.length == 1){
+
+      let switchrelationTypes: string[] = [];
+
+      for (let j = 0; j < sourceNode.configuration.screeActions.length; j++) {
+        switchrelationTypes.push(sourceNode.configuration.screeActions[j]);
+      }
+
+      const switchlinkLabels: {[label: string]: LinkLabel} = {};
+
+      for (let a=0; a < switchrelationTypes.length; a++) {
+        let switchlabel = switchrelationTypes[a];
+        switchlinkLabels[switchlabel] = {
+          name: switchlabel,
+          value: switchlabel
+        };
+      }
 
       return switchlinkLabels;
     }

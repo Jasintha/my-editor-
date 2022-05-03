@@ -62,34 +62,13 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   nodeDefinitionValue: RuleNodeDefinition;
 
-  crudItems: any[] = [
-    { label: 'CREATE', value: 'CREATE' },
-    { label: 'UPDATE', value: 'UPDATE' },
-    { label: 'DELETE', value: 'DELETE' },
-    { label: 'FIND', value: 'FIND' },
-    { label: 'EMPTY', value: 'EMPTY' },
-    { label: 'FINDALL', value: 'FINDALL' },
-  ];
+  crudItems: any[] = ['CREATE','UPDATE','DELETE','FIND','FINDALL', 'EMPTY'];
 
-  apiMethod: any[] = [
-    { label: 'POST', value: 'POST' },
-    { label: 'GET', value: 'GET' },
-    { label: 'PUT', value: 'PUT' },
-    { label: 'DELETE', value: 'DELETE' },
-  ];
+  apiMethod: any[] = ['POST','GET','PUT','DELETE'];
 
-  returnRecord: any[] = [
-    { label: 'MULTIPLE', value: 'MULTIPLE' },
-    { label: 'SINGLE', value: 'SINGLE' },
-  ];
+  returnRecord: any[] = ['MULTIPLE', 'SINGLE'];
 
-  returnObject: any[] = [
-    { label: 'TEXT', value: 'TEXT' },
-    { label: 'NUMBER', value: 'NUMBER' },
-    { label: 'FLOAT', value: 'FLOAT' },
-    { label: 'TRUE_OR_FALSE', value: 'TRUE_OR_FALSE' },
-    { label: 'DATE', value: 'DATE' },
-  ];
+  returnObject: any[] = ['TEXT','NUMBER','FLOAT','TRUE_OR_FALSE','DATE'];
 
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
@@ -162,39 +141,48 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   writeValue(value: RuleNodeConfiguration): void {
-
     this.configuration = deepClone(value);
-//
-//     if(this.configuration.actors === null || this.configuration.actors === undefined){
-//         this.configuration.actors = [];
-//     }
-//      this.datasource = new MatTableDataSource(this.configuration.actors);
-
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
       this.changeSubscription = null;
     }
     if (this.definedConfigComponent) {
-
-
       this.definedConfigComponent.configuration = this.configuration;
       this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
         this.updateModel(configuration);
       });
     } else {
-      // this.processNodeConfigFormGroup.get('payload').patchValue(this.configuration.payload, {emitEvent: false});
-      /*
-      this.changeSubscription = this.processNodeConfigFormGroup.get('payload').valueChanges.subscribe(
-        (configuration: RuleNodeConfiguration) => {
-
-
-
-          this.configuration.payload = configuration;
+      this.processNodeConfigFormGroup.patchValue({
+        apiTemplate: this.configuration.apiTemplate,
+        apiMethod: this.configuration.apiMethod,
+        returnObject: this.configuration.returnObject,
+        returnRecord: this.configuration.returnRecord
+      });
+    }
+    this.changeSubscription = this.processNodeConfigFormGroup.get('apiTemplate').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.apiTemplate = configuration;
           this.updateModel(this.configuration);
         }
-      );
-      */
-    }
+    );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('apiMethod').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.apiMethod = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('returnObject').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.returnObject = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('returnRecord').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.returnRecord = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
   }
 
   titleCaseWord(word: string) {

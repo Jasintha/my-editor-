@@ -154,28 +154,24 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
     this.actionItems = [];
     const screenTemplate = this.screenNodeConfigFormGroup.get(['screenTemplate']).value;
     if(screenTemplate.value === 'table-page') {
-      this.actionItems.push( { label: 'On Load', value: 'on-load' });
-    } else if(screenTemplate.value === 'form-page') {
-      this.actionItems.push({ label: 'On Create', value: 'on-create' });
-    } else if(screenTemplate.value === 'aio-table') {
-      this.actionItems.push({ label: 'On Load', value: 'on-load' });
-      this.actionItems.push({ label: 'On Create', value: 'on-create' });
-      this.actionItems.push({ label: 'On Update', value: 'on-update' },);
-      this.actionItems.push({ label: 'On Delete', value: 'on-delete' },
-      );
-    } else if(screenTemplate.value === 'aio-grid') {
-      this.actionItems.push({ label: 'On Load', value: 'on-load' });
-      this.actionItems.push({ label: 'On Create', value: 'on-create' });
-      this.actionItems.push({ label: 'On Update', value: 'on-update' },);
-      this.actionItems.push({ label: 'On Delete', value: 'on-delete' },
-      );
-    }else if(screenTemplate.value === 'login-page') {
-      this.actionItems.push({ label: 'On Create', value: 'on-create' });
+      this.actionItems.push('on-load');
+    } else if(screenTemplate === 'form-page') {
+      this.actionItems.push('on-create');
+    } else if(screenTemplate === 'aio-table' || screenTemplate.value === 'aio-grid') {
+      this.actionItems.push('on-load');
+      this.actionItems.push('on-create');
+      this.actionItems.push('on-update');
+      this.actionItems.push('on-delete');
+    } else if(screenTemplate === 'login-page') {
+      this.actionItems.push('on-create');
     }else if(screenTemplate.value === 'form-wizard-page') {
-      this.actionItems.push({ label: 'On Create', value: 'on-create' });
+      this.actionItems.push('on-create');
     } else {
-      this.actionItems.push( { label: 'On Load', value: 'on-load' });
+      this.actionItems.push('on-load');
     }
+    this.screenNodeConfigFormGroup.patchValue({
+      screeActions: this.actionItems,
+    });
   }
 
   ngOnDestroy(): void {
@@ -193,14 +189,12 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
   getPageTemplates() {
     this.pageTemplateItems = [];
-    this.pageTemplateItems.push({ label: 'Login Page', value: 'login-page' });
-    this.pageTemplateItems.push({ label: 'Register Page', value: 'register-page' });
-    this.pageTemplateItems.push({ label: 'Table View', value: 'table-page' });
-    this.pageTemplateItems.push({ label: 'Form View', value: 'form-page' });
-    this.pageTemplateItems.push({ label: 'Form Wizard View', value: 'form-wizard-page' });
-    this.pageTemplateItems.push({ label: 'Grid View', value: 'aio-grid' });
-    // this.pageTemplateItems.push({ label: 'All-in-One Table View', value: 'aio-table' });
-    // this.pageTemplateItems.push({ label: 'File Upload View', value: 'file-upload-page' });
+    this.pageTemplateItems.push('login-page' );
+    this.pageTemplateItems.push('register-page');
+    this.pageTemplateItems.push('table-page');
+    this.pageTemplateItems.push('form-page');
+    this.pageTemplateItems.push('form-wizard-page');
+    this.pageTemplateItems.push('aio-grid');
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -213,7 +207,6 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
   }
 
   writeValue(value: RuleNodeConfiguration): void {
-
     this.configuration = deepClone(value);
 
 
@@ -222,15 +215,35 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.changeSubscription = null;
     }
     if (this.definedConfigComponent) {
-
-
       this.definedConfigComponent.configuration = this.configuration;
       this.changeSubscription = this.definedConfigComponent.configurationChanged.subscribe((configuration) => {
         this.updateModel(configuration);
       });
     } else {
-
+      this.screenNodeConfigFormGroup.patchValue({
+        screenName: this.configuration.screenName,
+        screenTemplate: this.configuration.screenTemplate,
+        screeActions: this.configuration.screeActions,
+      });
     }
+    this.changeSubscription = this.screenNodeConfigFormGroup.get('screenName').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.screenName = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.screenNodeConfigFormGroup.get('screenTemplate').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.screenTemplate = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.screenNodeConfigFormGroup.get('screeActions').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.screeActions = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
   }
 
   titleCaseWord(word: string) {
