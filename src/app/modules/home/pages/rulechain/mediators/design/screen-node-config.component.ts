@@ -23,11 +23,15 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { TranslateService } from '@ngx-translate/core';
 import { JsonObjectEditComponent } from '@shared/components/json-object-edit.component';
 import { deepClone } from '@core/utils';
+import { SelectItem } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { PageComponent } from '@shared/components/page.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {StoryService} from '@core/projectservices/story-technical-view.service';
+import {filter, map} from 'rxjs/operators';
 
 @Component({
   selector: 'virtuan-screen-node-config',
@@ -62,7 +66,16 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
   nodeDefinitionValue: RuleNodeDefinition;
 
-  datasource: MatTableDataSource<Actor>;
+  isSaving: boolean;
+  data: any;
+  projectUid: string;
+  createType: string;
+  pageTemplateItems: any[];
+  existingPortals: any[];
+  selectedPortal: any;
+  selectedScreen: any;
+
+  actionItems: any[] = [];
 
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
@@ -95,12 +108,12 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
   constructor(private translate: TranslateService,
               private ruleChainService: RuleChainService,
+              protected storyService: StoryService,
               private fb: FormBuilder) {
     this.screenNodeConfigFormGroup = this.fb.group({
-//       createType: "",
-//       actorName: "",
-//       actor: null,
-//       permissionLevel: ""
+      screenName: '',
+      screenTemplate: '',
+      screeActions: []
     });
   }
 
@@ -111,7 +124,53 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
   registerOnTouched(fn: any): void {
   }
 
+  loadPortals() {
+    this.storyService
+        .findPortalsByProjectId(this.projectUid)
+        .pipe(
+            filter((res: HttpResponse<any[]>) => res.ok),
+            map((res: HttpResponse<any[]>) => res.body)
+        )
+        .subscribe(
+            (res: any[]) => {
+              if (res) {
+                this.existingPortals = res;
+              } else {
+                this.existingPortals = [];
+              }
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+  }
+
   ngOnInit(): void {
+    this.existingPortals = [];
+    this.loadPortals();
+    this.isSaving = false;
+    this.getPageTemplates();
+  }
+
+  onScreenTypeChanged(event) {
+    this.actionItems = [];
+    const screenTemplate = this.screenNodeConfigFormGroup.get(['screenTemplate']).value;
+    if(screenTemplate === 'table-page') {
+      this.actionItems.push( { label: 'On Load', value: 'on-load' });
+    } else if(screenTemplate === 'form-page') {
+      this.actionItems.push({ label: 'On Create', value: 'on-create' });
+      this.actionItems.push({ label: 'On Update', value: 'on-update' },);
+      this.actionItems.push({ label: 'On Delete', value: 'on-delete' });
+    } else if(screenTemplate === 'aio-table') {
+      this.actionItems.push({ label: 'On Load', value: 'on-load' });
+      this.actionItems.push({ label: 'On Create', value: 'on-create' });
+      this.actionItems.push({ label: 'On Update', value: 'on-update' },);
+      this.actionItems.push({ label: 'On Delete', value: 'on-delete' },
+      );
+    } else if(screenTemplate === 'login-page') {
+      this.actionItems.push( { label: 'On Load', value: 'on-load' });
+      this.actionItems.push({ label: 'On Create', value: 'on-create' });
+    } else {
+      this.actionItems.push( { label: 'On Load', value: 'on-load' });
+    }
   }
 
   ngOnDestroy(): void {
@@ -123,40 +182,21 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
   ngAfterViewInit(): void {
   }
 
-//   addActor(): void{
-//     let createType : string = this.screenNodeConfigFormGroup.get('createType').value;
-//     let actorName = "";
-//     let actorId = "";
-//
-//     if (createType == 'New') {
-//       actorName = this.screenNodeConfigFormGroup.get('actorName').value;
-//     } else {
-//       actorName = this.screenNodeConfigFormGroup.get('actor').value.name;
-//       actorId = this.screenNodeConfigFormGroup.get('actor').value.uuid;
-//     }
-//
-//     let actor = {
-//       'actorName': actorName,
-//       'actorId': actorId,
-//       'createType': createType,
-//       'permissionLevel': this.screenNodeConfigFormGroup.get('permissionLevel').value
-//     };
-//     this.configuration.actors.push(actor);
-//     this.updateModel(this.configuration);
-//     this.datasource = new MatTableDataSource(this.configuration.actors);
-//     this.screenNodeConfigFormGroup.patchValue({
-//         createType: "",
-//         actorName: "",
-//         actor: null,
-//         permissionLevel: ""
-//     });
-//   }
+  protected onError(errorMessage: string) {
+  //  this.logger.error(errorMessage);
+  }
 
-//   deleteRow(index: number): void{
-//     this.configuration.actors.splice(index, 1);
-//     this.datasource = new MatTableDataSource(this.configuration.actors);
-//     this.updateModel(this.configuration);
-//   }
+  getPageTemplates() {
+    this.pageTemplateItems = [];
+    this.pageTemplateItems.push({ label: 'Login Page', value: 'login-page' });
+    this.pageTemplateItems.push({ label: 'Register Page', value: 'register-page' });
+    this.pageTemplateItems.push({ label: 'Table View', value: 'table-page' });
+    this.pageTemplateItems.push({ label: 'Form View', value: 'form-page' });
+    this.pageTemplateItems.push({ label: 'Form Wizard View', value: 'form-wizard-page' });
+    this.pageTemplateItems.push({ label: 'Grid View', value: 'aio-grid' });
+    // this.pageTemplateItems.push({ label: 'All-in-One Table View', value: 'aio-table' });
+    // this.pageTemplateItems.push({ label: 'File Upload View', value: 'file-upload-page' });
+  }
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
@@ -170,11 +210,7 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
   writeValue(value: RuleNodeConfiguration): void {
 
     this.configuration = deepClone(value);
-//
-//     if(this.configuration.actors === null || this.configuration.actors === undefined){
-//         this.configuration.actors = [];
-//     }
-//      this.datasource = new MatTableDataSource(this.configuration.actors);
+
 
     if (this.changeSubscription) {
       this.changeSubscription.unsubscribe();
@@ -188,18 +224,7 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
         this.updateModel(configuration);
       });
     } else {
-      //this.screenNodeConfigFormGroup.get('payload').patchValue(this.configuration.payload, {emitEvent: false});
-      /*
-      this.changeSubscription = this.screenNodeConfigFormGroup.get('payload').valueChanges.subscribe(
-        (configuration: RuleNodeConfiguration) => {
 
-
-
-          this.configuration.payload = configuration;
-          this.updateModel(this.configuration);
-        }
-      );
-      */
     }
   }
 
@@ -223,11 +248,4 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
     }
   }
 
-}
-
-export interface Actor {
-  actorName: string;
-  actorId: string;
-  createType: string;
-  permissionLevel: string;
 }

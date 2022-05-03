@@ -102,8 +102,31 @@ import {ModelNodeConfigComponent} from "@home/pages/rulechain/mediators/design/m
 import {ProcessNodeConfigComponent} from "@home/pages/rulechain/mediators/design/process-node-config.component";
 import {ScreenNodeConfigComponent} from "@home/pages/rulechain/mediators/design/screen-node-config.component";
 
-import {TreeModule} from "primeng/tree";
+import {TreeModule} from 'primeng/tree';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
+import { DataViewModule } from 'primeng/dataview';
+import { PanelModule } from 'primeng/panel';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from 'primeng/tooltip';
+import { SidebarModule } from 'primeng/sidebar';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { AngularSplitModule } from 'angular-split';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextModule } from 'primeng/inputtext';
+import { CheckboxModule } from 'primeng/checkbox';
+import { FieldsetModule } from 'primeng/fieldset';
+import { StepsModule } from 'primeng/steps';
+import { CarouselModule } from 'primeng/carousel';
+import { EditorModule } from 'primeng/editor';
+import { MenubarModule } from 'primeng/menubar';
+import { TabViewModule } from 'primeng/tabview';
+
 
 @NgModule({
   declarations: [
@@ -184,7 +207,25 @@ import { ContextMenuModule } from 'primeng/contextmenu';
     MatTableModule,
     MatTreeModule,
     TreeModule,
-    ContextMenuModule
+    ContextMenuModule,
+    TableModule,
+    CheckboxModule,
+    TabViewModule,
+    ContextMenuModule,
+    RadioButtonModule,
+    CarouselModule,
+    StepsModule,
+    MenubarModule,
+    ToastModule,
+    DataViewModule,
+    FieldsetModule,
+    MultiSelectModule,
+    InputTextModule,
+    InputTextareaModule,
+    AngularSplitModule,
+    DropdownModule,
+    TooltipModule,
+    SidebarModule,
   ],
   exports: [
     MediatorNodeConfigComponent,

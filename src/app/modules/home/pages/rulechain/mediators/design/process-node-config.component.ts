@@ -62,14 +62,40 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   nodeDefinitionValue: RuleNodeDefinition;
 
-  datasource: MatTableDataSource<Actor>;
+  crudItems: any[] = [
+    { label: 'CREATE', value: 'CREATE' },
+    { label: 'UPDATE', value: 'UPDATE' },
+    { label: 'DELETE', value: 'DELETE' },
+    { label: 'FIND', value: 'FIND' },
+    { label: 'EMPTY', value: 'EMPTY' },
+  ];
+
+  apiMethod: any[] = [
+    { label: 'POST', value: 'POST' },
+    { label: 'GET', value: 'GET' },
+    { label: 'PUT', value: 'PUT' },
+    { label: 'DELETE', value: 'DELETE' },
+  ];
+
+  returnRecord: any[] = [
+    { label: 'MULTIPLE', value: 'MULTIPLE' },
+    { label: 'SINGLE', value: 'SINGLE' },
+  ];
+
+  returnObject: any[] = [
+    { label: 'TEXT', value: 'TEXT' },
+    { label: 'NUMBER', value: 'NUMBER' },
+    { label: 'FLOAT', value: 'FLOAT' },
+    { label: 'TRUE_OR_FALSE', value: 'TRUE_OR_FALSE' },
+    { label: 'DATE', value: 'DATE' },
+  ];
 
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
     if (this.nodeDefinitionValue !== nodeDefinition) {
       this.nodeDefinitionValue = nodeDefinition;
       if (this.nodeDefinitionValue) {
-       // this.validateDefinedDirective();
+        // this.validateDefinedDirective();
       }
     }
   }
@@ -97,10 +123,11 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.processNodeConfigFormGroup = this.fb.group({
-//       createType: "",
-//       actorName: "",
-//       actor: null,
-//       permissionLevel: ""
+      apiTemplate: '',
+      apiMethod: '',
+      returnObject: '',
+      returnRecord: ''
+
     });
   }
 
@@ -123,40 +150,6 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
   ngAfterViewInit(): void {
   }
 
-//   addActor(): void{
-//     let createType : string = this.processNodeConfigFormGroup.get('createType').value;
-//     let actorName = "";
-//     let actorId = "";
-//
-//     if (createType == 'New') {
-//       actorName = this.processNodeConfigFormGroup.get('actorName').value;
-//     } else {
-//       actorName = this.processNodeConfigFormGroup.get('actor').value.name;
-//       actorId = this.processNodeConfigFormGroup.get('actor').value.uuid;
-//     }
-//
-//     let actor = {
-//       'actorName': actorName,
-//       'actorId': actorId,
-//       'createType': createType,
-//       'permissionLevel': this.processNodeConfigFormGroup.get('permissionLevel').value
-//     };
-//     this.configuration.actors.push(actor);
-//     this.updateModel(this.configuration);
-//     this.datasource = new MatTableDataSource(this.configuration.actors);
-//     this.processNodeConfigFormGroup.patchValue({
-//         createType: "",
-//         actorName: "",
-//         actor: null,
-//         permissionLevel: ""
-//     });
-//   }
-
-//   deleteRow(index: number): void{
-//     this.configuration.actors.splice(index, 1);
-//     this.datasource = new MatTableDataSource(this.configuration.actors);
-//     this.updateModel(this.configuration);
-//   }
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
@@ -188,7 +181,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
         this.updateModel(configuration);
       });
     } else {
-      //this.processNodeConfigFormGroup.get('payload').patchValue(this.configuration.payload, {emitEvent: false});
+      // this.processNodeConfigFormGroup.get('payload').patchValue(this.configuration.payload, {emitEvent: false});
       /*
       this.changeSubscription = this.processNodeConfigFormGroup.get('payload').valueChanges.subscribe(
         (configuration: RuleNodeConfiguration) => {
@@ -223,11 +216,4 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     }
   }
 
-}
-
-export interface Actor {
-  actorName: string;
-  actorId: string;
-  createType: string;
-  permissionLevel: string;
 }
