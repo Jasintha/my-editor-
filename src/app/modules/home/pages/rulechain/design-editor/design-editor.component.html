@@ -1,0 +1,193 @@
+<div *ngIf="!viewEditor" class="container vertical">
+    <div id="requirements" class="row section border">
+        <div class="col-3">
+            <div class="wrap" style="border-style: dashed;">
+                <h3>{{currentReq?.name}}</h3>
+                <a href="" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <div class="inner-wrap">
+                    <input type="text" placeholder="Title">
+                    <textarea name="descripton" cols="" rows=""></textarea>
+                    <button>Submit</button>
+                </div>
+                <a href="" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            </div>
+
+        </div>
+
+        <div class="col-3">
+            <a class="new" (click)="assignRequirementToEpic()">
+                <div class="wrap add">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <!--<fa-icon [icon]="faPlus"></fa-icon>-->
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div id="epics" class="row section border">
+        <ng-container *ngFor="let epic of existingEpics; let j = index">
+            <div class="col-3" (click)="filterEpic(epic, j)">
+                <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''">
+                    <h3>{{epic?.name}}</h3>
+                    <a href="" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <div class="inner-wrap">
+                        <input type="text" placeholder="Title">
+                        <textarea name="descripton" cols="" rows=""></textarea>
+                        <button>Submit</button>
+                    </div>
+                    <a href="" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                </div>
+
+            </div>
+        </ng-container>
+
+
+        <div class="col-3" *ngIf="selectedEpicId">
+            <a class="new" (click)="addStory(selectedEpic)">
+                <div class="wrap add">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div id="stories" class="row section border" *ngIf="showStoryBoard">
+        <ng-container *ngFor="let story of filteredStories">
+            <div class="col-3" (click)="loadStoryDesignEditor(story)">
+                <div class="wrap selected">
+                    <h3>{{story.name}}</h3>
+                    <a href="" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <div class="inner-wrap">
+                        <input type="text" placeholder="Title">
+                        <textarea name="descripton"  cols="" rows=""></textarea>
+                        <select name="" >
+                            <option value="" selected>Epic 1</option>
+                            <option value="">Epic 2</option>
+                            <option value="">Epic 3</option>
+                        </select>
+                        <button>Submit</button>
+                    </div>
+                    <a href="" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </ng-container>
+
+
+        <!--<div class="col-3">
+            <a href="" class="new">
+                <div class="wrap add">
+                    <fa-icon [icon]="faPlus"></fa-icon>
+                </div>
+            </a>
+        </div>-->
+    </div>
+
+
+
+    <!--<div id="story-details" class="row section border" >
+        <div class="col-12">
+            <div class="row">
+                <div class="col-3 sub-sec">
+                    <div class="wrap icon-wrap">
+                        <fa-icon [icon]="faPerson"></fa-icon>
+                    </div>
+                </div>
+                <div class="col-3 sub-sec">
+                    <div class="wrap icon-wrap">
+                        <fa-icon [icon]="faMobileScreen"></fa-icon>
+                    </div>
+                </div>
+                <div class="col-3 sub-sec">
+                    <div class="wrap icon-wrap">
+                        <fa-icon [icon]="faGear"></fa-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-3 sub-sec">
+                    <div class="wrap">
+                        <h3>Actor1</h3>
+                        <a href="" class="edit"><fa-icon [icon]="faPencilSquare"></fa-icon></a>
+                        <div class="inner-wrap">
+                            <input type="text" placeholder="Actor">
+                            <textarea name="descripton" id="" cols="" rows=""></textarea>
+                            <button>Submit</button>
+                        </div>
+                        <a href="" class="delete"><fa-icon [icon]="faWindowClose"></fa-icon></a>
+                    </div>
+                </div>
+                <div class="col-6 sub-sec">
+                    <div class="row border">
+                        <div class="col-6">
+                            <div class="wrap screen">
+                                <h3>Screen1</h3>
+                                <a href="" class="edit"><fa-icon [icon]="faPencilSquare"></fa-icon></a>
+                                <div class="inner-wrap">
+                                    <input type="text" placeholder="Screen">
+                                    <textarea name="descripton" id="" cols="" rows=""></textarea>
+                                    <button>Submit</button>
+                                </div>
+                                <a href="" class="delete"><fa-icon [icon]="faWindowClose"></fa-icon></a>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="wrap process">
+                                <h3>Process1</h3>
+                                <a href="" class="edit"><fa-icon [icon]="faPencilSquare"></fa-icon></a>
+                                <div class="inner-wrap">
+                                    <input type="text" placeholder="Process">
+                                    <textarea name="descripton" id="" cols="" rows=""></textarea>
+                                    <button>Submit</button>
+                                </div>
+                                <a href="" class="delete"><fa-icon [icon]="faWindowClose"></fa-icon></a>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="wrap screen">
+                                <h3>Screen1</h3>
+                                <a href="" class="edit"><fa-icon [icon]="faPencilSquare"></fa-icon></a>
+                                <div class="inner-wrap">
+                                    <input type="text" placeholder="Screen">
+                                    <textarea name="descripton" id="" cols="" rows=""></textarea>
+                                    <button>Submit</button>
+                                </div>
+                                <a href="" class="delete"><fa-icon [icon]="faWindowClose"></fa-icon></a>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="wrap process">
+                                <h3>Process1</h3>
+                                <a href="" class="edit"><fa-icon [icon]="faPencilSquare"></fa-icon></a>
+                                <div class="inner-wrap">
+                                    <input type="text" placeholder="Process">
+                                    <textarea name="descripton" id="" cols="" rows=""></textarea>
+                                    <button>Submit</button>
+                                </div>
+                                <a href="" class="delete"><fa-icon [icon]="faWindowClose"></fa-icon></a>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a href="" class="new">
+                                <div class="wrap add">
+                                    <fa-icon [icon]="faPlus"></fa-icon>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+</div>
+
+<virtuan-story-design-page  *ngIf="viewEditor && ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded" [ruleChain]="ruleChain"
+                            [ruleChainMetaData]="ruleChainMetaData"
+                            [connectionPropertyTemplates]="connectionPropertyTemplates"
+                            [username]="username"
+                            [uid]="projectUid"
+                            [ruleNodeComponents]="ruleNodeComponents"
+                            [serviceUuid]="storyserviceUuid"
+                            [projectUid]="desprojectUid"
+                            [storyuuid]="storyuuid"></virtuan-story-design-page>

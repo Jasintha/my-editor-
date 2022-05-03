@@ -26,6 +26,7 @@ import {IApi} from '@shared/models/model/microservice-api.model';
 import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -76,6 +77,18 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   stepFieldArr: any[] = [];
   stepHeadersList: SelectItem[] = [];
   stepIndexId = 1;
+
+  displayedStepHeaderColumns: string[] = ['field', 'stepheader', 'actions'];
+  ELEMENT_DATA = [];
+  dataSourceWizard = new MatTableDataSource(this.ELEMENT_DATA);
+
+  displayedLoginParamColumns: string[] = ['input', 'param', 'actions'];
+  LOGIN_DATA = [];
+  dataSourceLogin = new MatTableDataSource(this.LOGIN_DATA);
+
+  displayedAioParamColumns: string[] = ['operation', 'path', 'actions'];
+  PARAM_DATA = [];
+  dataSourceAIOParam = new MatTableDataSource(this.PARAM_DATA);
 
   panelTypeItems: SelectItem[] = [
     { label: 'Graph', value: 'graph' },
@@ -373,11 +386,17 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       };
       if (this.loginParams.indexOf(param) === -1) {
         this.loginParams.push(param);
+        this.LOGIN_DATA.push(param);
+        this.dataSourceLogin = new MatTableDataSource(this.LOGIN_DATA);
       }
     }
   }
 
   deleteParamMapping(param) {
+    const indexnum = this.LOGIN_DATA.indexOf(param);
+    this.LOGIN_DATA.splice(indexnum, 1);
+    this.dataSourceLogin = new MatTableDataSource(this.LOGIN_DATA);
+
     const index = this.loginParams.indexOf(param);
     this.loginParams.splice(index, 1);
   }
@@ -399,6 +418,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       };
 
       this.apiResourceDetails.push(resource);
+      this.PARAM_DATA.push(resource);
+      this.dataSourceAIOParam = new MatTableDataSource(this.PARAM_DATA);
     }
   }
 
@@ -420,6 +441,10 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   deleteaddAIOTableRow(apiDetail) {
+    const indexnum = this.PARAM_DATA.indexOf(apiDetail);
+    this.PARAM_DATA.splice(indexnum, 1);
+    this.dataSourceAIOParam = new MatTableDataSource(this.PARAM_DATA);
+
     const index = this.apiResourceDetails.indexOf(apiDetail);
     this.apiResourceDetails.splice(index, 1);
   }
@@ -836,6 +861,14 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   protected onSaveSuccess() {
     this.isSaving = false;
+    if (this.editForm.get(['pagetitle']).value !== this.currentPage.pagetitle){
+      this.eventManager.dispatch(
+          new AppEvent(EventTypes.editorUITreeListModification, {
+            name: 'editorUITreeListModification',
+            content: 'Deleted an built in page',
+          })
+      );
+    }
     this.pageTitle = this.editForm.get(['pagetitle']).value;
     // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Form saved' });
     this.enableToEdit();
@@ -1013,6 +1046,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       };
       if (this.stepFieldArr.indexOf(stepField) === -1) {
         this.stepFieldArr.push(stepField);
+        this.ELEMENT_DATA.push(stepField);
+        this.dataSourceWizard = new MatTableDataSource(this.ELEMENT_DATA);
       }
     }
   }
@@ -1032,6 +1067,10 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   deleteFieldSteps(param) {
+    const indexnum = this.ELEMENT_DATA.indexOf(param);
+    this.ELEMENT_DATA.splice(indexnum, 1);
+    this.dataSourceAIOParam = new MatTableDataSource(this.ELEMENT_DATA);
+
     const index = this.stepFieldArr.indexOf(param);
     this.stepFieldArr.splice(index, 1);
   }

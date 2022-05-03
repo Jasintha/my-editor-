@@ -18,7 +18,7 @@
 
             <mat-form-field class="flex-auto">
                 <mat-label>From Page</mat-label>
-                <mat-select formControlName="fromPage" (selectionChange)="onPageChange($event)">
+                <mat-select formControlName="fromPage">
                     <mat-option *ngFor="let option of pages" [value]="option.value">
                         {{option.label}}
                     </mat-option>
@@ -28,7 +28,7 @@
             <mat-form-field class="flex-auto">
                 <mat-label>Event</mat-label>
                 <mat-select formControlName="event" >
-                    <mat-option *ngFor="let option of eventItems" [value]="option.value">
+                    <mat-option *ngFor="let option of eventType" [value]="option.value">
                         {{option.label}}
                     </mat-option>
                 </mat-select>

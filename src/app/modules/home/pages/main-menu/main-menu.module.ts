@@ -20,11 +20,13 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import {SharedModule} from '@shared/shared.module';
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
+import {MainMenuDeleteDialogComponent} from '@home/pages/main-menu/main-menu-delete-dialog.component';
 
 
 @NgModule({
     declarations:[
-        MainMenuComponent
+        MainMenuComponent,
+        MainMenuDeleteDialogComponent
     ],
     imports: [
         CommonModule,
@@ -50,7 +52,8 @@ import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
         SharedModule
     ],
     exports:[
-        MainMenuComponent
+        MainMenuComponent,
+        MainMenuDeleteDialogComponent
     ]
 })
 export class MainMenuModule {

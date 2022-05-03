@@ -1,6 +1,5 @@
-<div class="row justify-content-center" style="margin-top: 100px; overflow-x: hidden" >
-    <div class="col-10">
-        <div class="justify-content-center">
+<div class="justify-content-center" style="margin-top: 100px; overflow-x: auto; padding: 0 50px 0 50px" >
+
             <form name="editForm" role="form" novalidate (ngSubmit)="checkPageNameExist()" [formGroup]="editForm">
 
 
@@ -42,7 +41,7 @@
 
 
                     </div>
-                <div class="scroll-bar-page">
+                <div>
                     <div class="row">
                         <div class="col-4 temp-image">
                             <div class="ui-panel-content ui-widget-content justify-content-center" style="padding-top: 5px">
@@ -101,6 +100,37 @@
                                 <h6 id="page-config-heading">
                                     <span>Page Configurations</span>
                                 </h6>
+<!--                                <table mat-table matSort  [dataSource]="dataSourceLogin" class="mat-elevation-z8 demo-table">-->
+<!--                                    &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--                                    <ng-container matColumnDef="property">-->
+<!--                                        <th mat-header-cell *matHeaderCellDef>Property</th>-->
+<!--                                        <td mat-cell *matCellDef="let element">{{element.property}}</td>-->
+<!--                                    </ng-container>-->
+
+<!--                                    &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--                                    <ng-container matColumnDef="value">-->
+<!--                                        <th mat-header-cell *matHeaderCellDef>Value</th>-->
+<!--                                        <td mat-cell *matCellDef="let element">{{element.property_value}}</td>-->
+<!--                                    </ng-container>-->
+
+<!--                                    <ng-container matColumnDef="actions">-->
+<!--                                        <th *matHeaderCellDef mat-header-cell mat-sort-header >Action</th>-->
+<!--                                        <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>-->
+<!--                                            <button (click)="deleteParamMapping(row)"-->
+<!--                                                    mat-icon-button-->
+<!--                                                    type="button" [disabled]="formDisable">-->
+<!--                                                <mat-icon>delete</mat-icon>-->
+<!--                                            </button>-->
+
+<!--                                            -->
+<!--                                        </td>-->
+<!--                                    </ng-container>-->
+
+<!--                                    <tr mat-header-row *matHeaderRowDef="displayedLoginParamColumns"></tr>-->
+<!--                                    <tr mat-row *matRowDef="let row; columns: displayedLoginParamColumns;"></tr>-->
+<!--                                </table>-->
+
+
                                 <p-table [value]="pageConfigs" dataKey="property" editMode="row">
                                     <ng-template pTemplate="header">
                                         <tr>
@@ -211,7 +241,7 @@
                                     </div>
                                     <mat-form-field  [style]="{'width':'100%'}">
                                         <mat-label>Resource Path</mat-label>
-                                        <input type="text" formControlName="resourcePath" matInput name="resourcepath" id="field_resourcepath"  [disabled]="formDisable">
+                                        <input type="text" formControlName="resourcePath" matInput name="resourcepath" id="field_resourcepath" [readonly]="formDisable">
                                         <mat-error *ngIf="editForm.controls.resourcePath.hasError('required')">This field is required</mat-error>
                                     </mat-form-field>
 
@@ -223,7 +253,7 @@
                                     <div class="form-group" *ngIf="editForm.value.isSecurePage">
                                         <mat-form-field  [style]="{'width':'100%'}" >
                                             <mat-label>Add authorized role</mat-label>
-                                            <input  type="text" formControlName="authority" [disabled]="formDisable" matInput name="resourcepath" id="field_authority">
+                                            <input  type="text" formControlName="authority" [readonly]="formDisable" matInput name="resourcepath" id="field_authority">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -236,7 +266,7 @@
                                         </div>
                                         <div class="col-md-5" style='text-align: right'>
                                             <button type="button" style="float: right;" mat-raised-button color="primary"
-                                                    (click)="insertWizardDetailsGroup('')">
+                                                    (click)="insertWizardDetailsGroup('')" [disabled]="formDisable">
                                                 <mat-icon>add</mat-icon>
                                                 Add More
                                             </button>
@@ -248,14 +278,14 @@
                                             <label class="form-control-label" for="field_pagetitle">Step Header</label>
                                             <div class="row">
                                                 <div class="col-md-10">
-                                                    <mat-form-field  [style]="{'width':'100%'}">
+                                                    <mat-form-field  [style]="{'width':'100%'}" >
 <!--                                                        <mat-label>Add authorized role</mat-label>-->
-                                                        <input type="text" formControlName="stepHeading" matInput  name="stepHeading">
+                                                        <input type="text" [readonly]="formDisable" formControlName="stepHeading" matInput  name="stepHeading">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-2">
                                             <span class="flex-auto">
-                                                <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="removeWizardDetailsGroup(i)">
+                                                <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="removeWizardDetailsGroup(i)" [disabled]="formDisable">
                                                     <mat-icon>delete</mat-icon>
                                                 </button>
                                             </span>
@@ -271,54 +301,70 @@
                                         <div class="card">
                                             <div class="card-body row">
                                                 <div class="col-md-3" style="margin-right: 20px">
-                                                    <p-dropdown placeholder="Choose Model Property" name="fieldName"
-                                                                [options]="modelPropertyList"
-                                                                formControlName="fieldName" filter="true"
-                                                                [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                                                    <mat-form-field  [style]="{'width':'100%'}">
+                                                        <mat-label>Choose Model Property</mat-label>
+                                                        <mat-select formControlName="fieldName"
+                                                                    [disabled]="formDisable">
+                                                            <mat-option *ngFor="let option of modelPropertyList" [value]="option.value">
+                                                                {{option.label}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <p-dropdown placeholder="Choose the Step" name="stepHeader"
-                                                                [options]="stepHeadersList"
-                                                                formControlName="stepHeader"
-                                                                [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                                                    <mat-form-field  [style]="{'width':'100%'}">
+                                                        <mat-label>Choose the Step</mat-label>
+                                                        <mat-select formControlName="stepHeader"
+                                                                    [disabled]="formDisable">
+                                                            <mat-option *ngFor="let option of stepHeadersList" [value]="option.value">
+                                                                {{option.label}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3" style='text-align: left'>
-                                                    <button type="button" class="btn btn-info"
-                                                            (click)="getAllWizardSteps()">
-                                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                    <button type="button" color="primary" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="getAllWizardSteps()" [disabled]="formDisable">
+                                                        <mat-icon>refresh</mat-icon>
                                                     </button>
-
                                                 </div>
                                                 <div class="col-md-2" style='text-align: right'>
-                                                    <button type="button" class="btn btn-info" (click)="addFieldsToSteps()">
-                                                        <i class="fas fa-plus"></i>&nbsp;<span>Add</span>
+                                                    <button type="button" style="float: right;" mat-raised-button color="primary"
+                                                            (click)="addFieldsToSteps()" [disabled]="formDisable">
+                                                        <mat-icon>add</mat-icon>
+                                                        Add
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div style="padding-top:20px;padding-bottom:20px;">
-                                            <p-table [value]="stepFieldArr">
-                                                <ng-template pTemplate="header">
-                                                    <tr>
-                                                        <th>Field</th>
-                                                        <th>Step in wizard</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </ng-template>
-                                                <ng-template pTemplate="body" let-param>
-                                                    <tr>
-                                                        <td>{{param.field}}</td>
-                                                        <td>{{param.stepHeader}}</td>
-                                                        <td>
-                                                            <button pButton type="button" (click)="deleteFieldSteps(param)"
-                                                                    class="ui-button-danger ui-button-raised"
-                                                                    icon="fa fa-trash-o">
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </ng-template>
-                                            </p-table>
+                                            <table mat-table matSort  [dataSource]="dataSourceWizard" class="mat-elevation-z8 demo-table">
+                                                <!-- Name Column -->
+                                                <ng-container matColumnDef="field">
+                                                    <th mat-header-cell *matHeaderCellDef>Field</th>
+                                                    <td mat-cell *matCellDef="let element">{{element.field}}</td>
+                                                </ng-container>
+
+                                                <!-- Weight Column -->
+                                                <ng-container matColumnDef="stepheader">
+                                                    <th mat-header-cell *matHeaderCellDef>Step in wizard</th>
+                                                    <td mat-cell *matCellDef="let element">{{element.stepHeader}}</td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="actions">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header >Action</th>
+                                                    <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                                        <button (click)="deleteFieldSteps(row)"
+                                                                mat-icon-button
+                                                                type="button" [disabled]="formDisable">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="displayedStepHeaderColumns"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedStepHeaderColumns;"></tr>
+                                            </table>
 
                                         </div>
                                     </div>
@@ -328,48 +374,64 @@
                                     <div class="card">
                                         <div class="card-body row">
                                             <div class="col-md-3">
-                                                <p-dropdown placeholder="Choose Param Type" name="paramType"
-                                                            [options]="loginInputs"
-                                                            formControlName="inputValType"
-                                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" [disabled]="formDisable"></p-dropdown>
+                                                <mat-form-field  [style]="{'width':'100%'}">
+                                                    <mat-label>Choose Param Type</mat-label>
+                                                    <mat-select formControlName="inputValType"
+                                                                [disabled]="formDisable">
+                                                        <mat-option *ngFor="let option of loginInputs" [value]="option.value">
+                                                            {{option.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
                                             </div>
                                             <div class="col-md-3">
-                                                <p-dropdown placeholder="Choose Model Property" name="property"
-                                                            [options]="modelPropertyList"
-                                                            formControlName="matchedProperty" filter="true"
-                                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" [disabled]="formDisable"></p-dropdown>
+                                                <mat-form-field  [style]="{'width':'100%'}">
+                                                    <mat-label>Choose Model Property</mat-label>
+                                                    <mat-select formControlName="matchedProperty"
+                                                                [disabled]="formDisable">
+                                                        <mat-option *ngFor="let option of modelPropertyList" [value]="option.value">
+                                                            {{option.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
                                             </div>
                                             <div class="col-md-3">
-                                                <button type="button" id="add-param" class="btn btn-info"
-                                                        (click)="addParamMapping()">
-                                                    <i class="fas fa-plus"></i>&nbsp;<span>Add</span>
+                                                <button type="button" style="float: right;" mat-raised-button color="primary"
+                                                        (click)="addParamMapping()" [disabled]="formDisable">
+                                                    <mat-icon>add</mat-icon>
+                                                    Add
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                     <div style="padding-top:20px;padding-bottom:20px;">
-                                        <p-table [value]="loginParams">
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th>Input</th>
-                                                    <th>Param</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </ng-template>
-                                            <ng-template pTemplate="body" let-param>
-                                                <tr>
-                                                    <td>{{param.inputType}}</td>
-                                                    <td>{{param.paramName}}</td>
-                                                    <td>
-                                                        <button pButton type="button"
-                                                                (click)="deleteParamMapping(param)"
-                                                                class="ui-button-danger ui-button-raised"
-                                                                icon="fa fa-trash-o">
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
+                                        <table mat-table matSort  [dataSource]="dataSourceLogin" class="mat-elevation-z8 demo-table">
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="input">
+                                                <th mat-header-cell *matHeaderCellDef>Input</th>
+                                                <td mat-cell *matCellDef="let element">{{element.inputType}}</td>
+                                            </ng-container>
+
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="param">
+                                                <th mat-header-cell *matHeaderCellDef>Param</th>
+                                                <td mat-cell *matCellDef="let element">{{element.paramName}}</td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="actions">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header >Action</th>
+                                                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                                    <button (click)="deleteParamMapping(row)"
+                                                            mat-icon-button
+                                                            type="button" [disabled]="formDisable">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedLoginParamColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedLoginParamColumns;"></tr>
+                                        </table>
 
                                     </div>
                                 </div>
@@ -443,50 +505,60 @@
                                                 <div class="row col-md-12">
                                                     <div *ngIf="project?.apptypesID === 'task.ui'"
                                                          style=" padding-top: 5px; ">
-                                                        <p-checkbox formControlName="aiosearch"
-                                                                    binary="true" [disabled]="formDisable"></p-checkbox>
-                                                        <label class="form-control-label" style="margin-left: 5px;">Search API from
-                                                            Microservices</label>
+                                                        <mat-checkbox [disabled]="formDisable"  formControlName="aiosearch" >Search API from
+                                                            Microservices</mat-checkbox>
                                                     </div>
                                                 </div>
                                                     <div class="row">
-                                                    <div
-                                                        *ngIf="project?.apptypesID === 'task.ui' && editForm.value.aiosearch"
+                                                    <div *ngIf="project?.apptypesID === 'task.ui' && editForm.value.aiosearch"
                                                         class="form-group col-md-6">
-                                                        <label class="form-control-label">Microservice</label>
-                                                        <p-dropdown placeholder="Choose"
-                                                                    [options]="microserviceProjectItems"
-                                                                    formControlName="aiomicroservice" filter="true"
-                                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"
-                                                                    (onChange)="onChangeAioTableMicroserviceProject()" [disabled]="formDisable"></p-dropdown>
+                                                        <mat-form-field  [style]="{'width':'100%'}">
+                                                            <mat-label>Microservice</mat-label>
+                                                            <mat-select formControlName="aiomicroservice" (selectionChange)="onChangeAioTableMicroserviceProject()"
+                                                                        [disabled]="formDisable">
+                                                                <mat-option *ngFor="let option of microserviceProjectItems" [value]="option.value">
+                                                                    {{option.label}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
                                                     </div>
-                                                    <div
-                                                        *ngIf="project?.apptypesID === 'task.ui' && editForm.value.aiosearch"
+                                                    <div *ngIf="project?.apptypesID === 'task.ui' && editForm.value.aiosearch"
                                                         class="form-group col-md-6">
-                                                        <label class="form-control-label">API</label>
-                                                        <p-dropdown placeholder="Choose" [options]="apiItems"
-                                                                    formControlName="aioapi"
-                                                                    filter="true"
-                                                                    (onChange)="onChangeAioTableMicroserviceAPI()"
-                                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" [disabled]="formDisable" ></p-dropdown>
+
+                                                        <mat-form-field  [style]="{'width':'100%'}">
+                                                            <mat-label>API</mat-label>
+                                                            <mat-select formControlName="aiomicroservice" (selectionChange)="onChangeAioTableMicroserviceAPI()"
+                                                                        [disabled]="formDisable">
+                                                                <mat-option *ngFor="let option of apiItems" [value]="option.value">
+                                                                    {{option.label}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
                                                     </div>
                                                     </div>
                                                 <div class="row col-md-12">
                                                     <div class="col-md-4">
-                                                        <p-dropdown placeholder="Choose Operation" name="apiOperation"
-                                                                    [options]="crudItems"
-                                                                    formControlName="apiOperation"
-                                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" [disabled]="formDisable"></p-dropdown>
+                                                        <mat-form-field  [style]="{'width':'100%'}">
+                                                            <mat-label>Choose Operation</mat-label>
+                                                            <mat-select formControlName="apiOperation"
+                                                                        [disabled]="formDisable">
+                                                                <mat-option *ngFor="let option of crudItems" [value]="option.value">
+                                                                    {{option.label}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <input type="text" class="form-control" name="name"
-                                                               id="field_apiResourcePath" placeholder="Resource Path" [disabled]="formDisable"
-                                                               formControlName="apiResourcePath"/>
+                                                        <mat-form-field  [style]="{'width':'100%'}" >
+                                                            <mat-label>Resource Path</mat-label>
+                                                            <input type="text" [readonly]="formDisable" formControlName="apiResourcePath" matInput  name="name" >
+                                                        </mat-form-field>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <button type="button" id="add-api-row" class="btn btn-info"
-                                                                (click)="addAIOTableRow()" style="float: right;">
-                                                            <i class="fas fa-plus"></i>&nbsp;<span>Add</span>
+                                                        <button type="button" style="float: right;" mat-raised-button color="primary"
+                                                                (click)="addAIOTableRow()" [disabled]="formDisable">
+                                                            <mat-icon>add</mat-icon>
+                                                            Add
                                                         </button>
                                                     </div>
                                                 </div>
@@ -496,29 +568,33 @@
                                     </div>
 
                                     <div style="padding-top:20px;padding-bottom:20px;">
-                                        <p-table [value]="apiResourceDetails">
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th>Operation</th>
-                                                    <th>Resource Path</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </ng-template>
-                                            <ng-template pTemplate="body" let-apiDetail>
-                                                <tr>
-                                                    <td>{{apiDetail.apiOperation}}</td>
-                                                    <td>{{apiDetail.apiResourcePath}}</td>
-                                                    <td>
-                                                        <button pButton type="button"
-                                                                (click)="deleteaddAIOTableRow(apiDetail)"
-                                                                class="ui-button-danger ui-button-raised"
-                                                                icon="fa fa-trash-o">
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
+                                        <table mat-table matSort  [dataSource]="dataSourceAIOParam" class="mat-elevation-z8 demo-table">
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="operation">
+                                                <th mat-header-cell *matHeaderCellDef>Operation</th>
+                                                <td mat-cell *matCellDef="let element">{{element.apiOperation}}</td>
+                                            </ng-container>
 
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="path">
+                                                <th mat-header-cell *matHeaderCellDef>Resource Path</th>
+                                                <td mat-cell *matCellDef="let element">{{element.apiResourcePath}}</td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="actions">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header >Action</th>
+                                                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                                    <button (click)="deleteaddAIOTableRow(row)"
+                                                            mat-icon-button
+                                                            type="button" [disabled]="formDisable">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedAioParamColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedAioParamColumns;"></tr>
+                                        </table>
                                     </div>
                                 </ng-container>
 
@@ -562,7 +638,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-button-footer">
+                <div class="form-button-footer" style="padding-top: 25px; float: right">
 <!--                    <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()" style="margin-right: 8px">-->
 <!--                        <i class="fa fa-chevron-circle-left"></i>&nbsp;<span>Back</span>-->
 <!--                    </button>-->
@@ -572,8 +648,7 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </div>
+
 </div>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
     <p style="color: white">Please wait... </p>

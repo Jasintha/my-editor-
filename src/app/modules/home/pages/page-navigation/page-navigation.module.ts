@@ -21,11 +21,13 @@ import {FlexModule} from '@angular/flex-layout';
 import {SharedModule} from '@shared/shared.module';
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
+import {PageNavigationDeleteDialogComponent} from '@home/pages/page-navigation/page-navigation-delete-dialog.component';
 
 
 @NgModule({
     declarations:[
-        PageNavigationComponent
+        PageNavigationComponent,
+        PageNavigationDeleteDialogComponent
     ],
     imports: [
         CommonModule,
@@ -51,7 +53,8 @@ import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigati
         SharedModule
     ],
     exports:[
-        PageNavigationComponent
+        PageNavigationComponent,
+        PageNavigationDeleteDialogComponent
     ]
 })
 export class PageNavigationModule {
