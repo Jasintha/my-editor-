@@ -36,6 +36,10 @@ export class PageNavigationComponent implements OnInit {
   project: IProject;
   pageParams: PageParam[];
   projectUid: string;
+  eventType: SelectItem[] = [
+    { label: 'On load', value: 'e0' },
+    { label: 'Click on Item', value: 'e1' },
+  ];
 
   displayedColumns: string[] = ['name', 'property' ,'actions'];
   ELEMENT_DATA: PageParam[] = [];
