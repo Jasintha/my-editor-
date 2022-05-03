@@ -64,15 +64,15 @@
             </as-split-area>
             <as-split-area [size]="20">
                 <div>
-                    <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist" style="position: fixed; background-color: lightgrey; margin-top: 0; padding-top: 55px">
+                    <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist" style="position: fixed; background-color: whitesmoke; margin-top: 0; padding-top: 55px">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" (click)="currentTab = 'design'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"  aria-selected="false">Design</button>
+                            <button style="background-color: transparent;" class="nav-link" (click)="currentTab = 'design'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"  aria-selected="false">Design</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" (click)="currentTab = 'service'"  data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab" aria-selected="true">Service</button>
+                            <button style="background-color: transparent;"class="nav-link" (click)="currentTab = 'service'"  data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab" aria-selected="true">Service</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" (click)="currentTab = 'portal'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"  aria-selected="false">UI</button>
+                            <button style="background-color: transparent;"class="nav-link" (click)="currentTab = 'portal'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"  aria-selected="false">UI</button>
                         </li>
                     </ul>
                     <div class="tab-content">
