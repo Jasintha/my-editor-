@@ -133,12 +133,14 @@ export class LoginComponent implements OnInit {
         .catch(() => {
           console.log('login failed');
           this.authenticationError = true;
+          this.spinnerService.hide();
           // this.messageService.add({
           //   severity: 'error',
           //   summary: 'Failed to sign in! Please check your credentials and try again.',
           // });
         })
         .finally(() => {
+          this.spinnerService.hide();
           this.isLogin = false;
         });
   }
