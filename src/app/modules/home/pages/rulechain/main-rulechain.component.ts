@@ -127,7 +127,7 @@ export class MainRuleChainComponent implements OnInit {
     loadPageEditor : boolean;
     isGenerating: boolean;
     theme: string = 'vs-dark';
-    editorOptions: any = { language: 'json', readOnly: true };
+    editorOptions: any = { language: 'json', readOnly: true, renderLineHighlight: 'none' };
     code: string = '';
     generatorList: { [key: number]: string } = {};
     generatorChain: IGenerator[];
