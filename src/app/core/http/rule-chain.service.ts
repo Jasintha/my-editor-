@@ -226,7 +226,7 @@ export class RuleChainService {
         };
       }
       return switchlinkLabels;
-    } else if (component.clazz == 'xiScreenNode' && component.configurationDescriptor.nodeDefinition.relationTypes.length == 1){
+    } else if (component.clazz == 'xiScreenNode' && component.configurationDescriptor.nodeDefinition.relationTypes.length == 0){
 
       let switchrelationTypes: string[] = [];
 

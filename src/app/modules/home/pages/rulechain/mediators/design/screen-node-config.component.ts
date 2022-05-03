@@ -157,7 +157,7 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
       this.actionItems.push('on-load');
     } else if(screenTemplate === 'form-page') {
       this.actionItems.push('on-create');
-    } else if(screenTemplate === 'aio-table' || screenTemplate.value === 'aio-grid') {
+    } else if(screenTemplate === 'aio-table' || screenTemplate === 'aio-grid') {
       this.actionItems.push('on-load');
       this.actionItems.push('on-create');
       this.actionItems.push('on-update');
@@ -193,6 +193,7 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
     this.pageTemplateItems.push('register-page');
     this.pageTemplateItems.push('table-page');
     this.pageTemplateItems.push('form-page');
+    this.pageTemplateItems.push('aio-table');
     this.pageTemplateItems.push('form-wizard-page');
     this.pageTemplateItems.push('aio-grid');
   }
