@@ -19,6 +19,7 @@ import {TaskDeleteDialogComponent} from '@home/pages/create-task/task-delete-dia
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import {SharedModule} from '@shared/shared.module';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import {SharedModule} from '@shared/shared.module';
         MatSnackBarModule,
         MatToolbarModule,
         FlexModule,
-        SharedModule
+        SharedModule,
+        NgxSpinnerModule
     ],
     exports:[
         CreateTaskComponent,

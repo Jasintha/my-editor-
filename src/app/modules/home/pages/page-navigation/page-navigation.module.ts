@@ -22,6 +22,7 @@ import {SharedModule} from '@shared/shared.module';
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 import {PageNavigationDeleteDialogComponent} from '@home/pages/page-navigation/page-navigation-delete-dialog.component';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {PageNavigationDeleteDialogComponent} from '@home/pages/page-navigation/p
         MatSnackBarModule,
         MatToolbarModule,
         FlexModule,
-        SharedModule
+        SharedModule,
+        NgxSpinnerModule
     ],
     exports:[
         PageNavigationComponent,

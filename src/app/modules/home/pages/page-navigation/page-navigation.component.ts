@@ -20,6 +20,7 @@ import {IProperty} from '@shared/models/model/property.model';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IMainMenu} from '@shared/models/model/main-menu.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'virtuan-page-navigation',
@@ -45,6 +46,7 @@ export class PageNavigationComponent implements OnInit {
   displayedColumns: string[] = ['name', 'property' ,'actions'];
   ELEMENT_DATA: PageParam[] = [];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  typeSelected: string;
 
   editForm = this.fb.group({
     id: [],
@@ -64,10 +66,13 @@ export class PageNavigationComponent implements OnInit {
       public dialogRef: MatDialogRef<PageNavigationComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
       protected eventManager: EventManagerService,
+      private spinnerService: NgxSpinnerService,
   ) {
+    this.typeSelected = 'square-jelly-box';
   }
 
   ngOnInit(): void {
+    this.spinnerService.hide();
     this.getPageNavigationData();
   }
 
@@ -159,6 +164,7 @@ export class PageNavigationComponent implements OnInit {
   }
 
   save() {
+    this.spinnerService.show();
     // this.spinnerService.show();
     this.isSaving = true;
     const pageNavigation = this.createFromForm();
@@ -251,6 +257,7 @@ export class PageNavigationComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
+    this.spinnerService.hide();
     // this.spinnerService.hide();
     this.isSaving = false;
     this.eventManager.dispatch(
@@ -263,6 +270,7 @@ export class PageNavigationComponent implements OnInit {
   }
 
   protected onSaveError() {
+    this.spinnerService.hide();
     // this.spinnerService.hide();
     this.isSaving = false;
   }

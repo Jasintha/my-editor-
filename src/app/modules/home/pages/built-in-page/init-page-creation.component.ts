@@ -20,6 +20,7 @@ import {EventManagerService} from '@shared/events/event.type';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 interface Item {
   value: any;
@@ -116,6 +117,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   stepHeadersList: Item[] = [];
   editForm: FormGroup;
   stepIndexId = 1;
+  typeSelected: string;
   buildNewForm() {
     this.editForm = this.fb.group({
       id: [],
@@ -171,8 +173,11 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     protected eventManager: EventManagerService,
     public dialogRef: MatDialogRef<InitPageCreationComponent>,
     @Inject(MAT_DIALOG_DATA)  public data: any,
+    private spinnerService: NgxSpinnerService,
     // private spinnerService: NgxSpinnerService,
-  ) {}
+  ) {
+    this.typeSelected = 'square-jelly-box';
+  }
 
   // ngOnInit() {
   //   this.getBuiltInPageData();
@@ -222,6 +227,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.spinnerService.hide();
     this.buildNewForm();
     this.getGridArray();
     this.datamodels = [];
@@ -302,6 +308,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   }
 
   save(pageViewType, pageTitle, pageTemplate) {
+    this.spinnerService.show();
     // this.spinnerService.show();
     this.isSaving = true;
     const builtInPage = this.createFromForm(pageViewType, pageTitle, pageTemplate);
@@ -349,6 +356,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   }
 
   protected onSaveSuccess() {
+    this.spinnerService.hide();
     // this.spinnerService.hide();
     this.isSaving = false;
     this.eventManager.dispatch(
@@ -362,6 +370,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   }
 
   protected onSaveError() {
+    this.spinnerService.hide();
     // this.spinnerService.hide();
     this.isSaving = false;
   }

@@ -21,6 +21,7 @@ import {FlexModule} from '@angular/flex-layout';
 import {SharedModule} from '@shared/shared.module';
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {MainMenuDeleteDialogComponent} from '@home/pages/main-menu/main-menu-delete-dialog.component';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {MainMenuDeleteDialogComponent} from '@home/pages/main-menu/main-menu-del
         MatSnackBarModule,
         MatToolbarModule,
         FlexModule,
-        SharedModule
+        SharedModule,
+        NgxSpinnerModule
     ],
     exports:[
         MainMenuComponent,

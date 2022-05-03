@@ -23,6 +23,7 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IEvent} from '@shared/models/model/microservice-event.model';
 import {IApi} from '@shared/models/model/microservice-api.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 interface Item {
   value: any;
   label: string;
@@ -63,6 +64,7 @@ export class CreateHybridfunctionComponent implements OnInit {
   displayedColumns: string[] = ['name', 'datatype', 'recordtype', 'actions'];
   ELEMENT_DATA: APIInput[] = [];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  typeSelected: string;
 
   editForm = this.fb.group({
     id: [],
@@ -89,9 +91,13 @@ export class CreateHybridfunctionComponent implements OnInit {
       protected eventManager: EventManagerService,
       @Inject(MAT_DIALOG_DATA)  public data: any,
       public dialogRef: MatDialogRef<CreateHybridfunctionComponent>,
-  ) {}
+      private spinnerService: NgxSpinnerService,
+  ) {
+    this.typeSelected = 'square-jelly-box';
+  }
 
   ngOnInit(): void {
+    this.spinnerService.hide();
     this.getHybridFunctionData();
   }
 
@@ -424,7 +430,7 @@ export class CreateHybridfunctionComponent implements OnInit {
   }
 
   save() {
-    // this.spinnerService.show();
+    this.spinnerService.show();
     this.isSaving = true;
     const hybridfunction = this.createFromForm();
     if (hybridfunction.uuid) {
@@ -455,7 +461,7 @@ export class CreateHybridfunctionComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
     this.eventManager.dispatch(
         new AppEvent(EventTypes.editorTreeListModification, {
@@ -467,7 +473,7 @@ export class CreateHybridfunctionComponent implements OnInit {
   }
 
   protected onSaveError() {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
   }
   protected onError(errorMessage: string) {

@@ -19,6 +19,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'virtuan-main-menu',
@@ -49,6 +50,7 @@ export class MainMenuComponent implements OnInit {
     { label: 'Contacts', value: 'icContacts' },
   ];
   editForm: FormGroup;
+  typeSelected: string;
 
   buildMenuForm() {
     this.editForm = this.fb.group({
@@ -83,9 +85,13 @@ export class MainMenuComponent implements OnInit {
       public dialogRef: MatDialogRef<MainMenuComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
       protected eventManager: EventManagerService,
-  ) {}
+      private spinnerService: NgxSpinnerService,
+  ) {
+    this.typeSelected = 'square-jelly-box';
+  }
 
   ngOnInit(): void {
+    this.spinnerService.hide();
     this.getMainMenuData();
   }
 
@@ -163,7 +169,7 @@ export class MainMenuComponent implements OnInit {
   }
 
   save() {
-    // this.spinnerService.show();
+    this.spinnerService.show();
     this.isSaving = true;
     const mainmenu = this.createFromForm();
     if (mainmenu.uuid) {
@@ -207,7 +213,7 @@ export class MainMenuComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
     this.eventManager.dispatch(
         new AppEvent(EventTypes.editorUITreeListModification, {
@@ -219,6 +225,7 @@ export class MainMenuComponent implements OnInit {
   }
 
   protected onSaveError() {
+    this.spinnerService.hide();
     // this.spinnerService.hide();
     this.isSaving = false;
   }

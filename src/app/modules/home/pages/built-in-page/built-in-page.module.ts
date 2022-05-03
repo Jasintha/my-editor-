@@ -33,6 +33,7 @@ import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import {SinglePageViewComponent} from '@home/pages/built-in-page/single-page.component';
 import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-in-page-delete-dialog.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
     declarations:[
@@ -73,6 +74,7 @@ import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-
         CheckboxModule,
         DropdownModule,
         CommonModule,
+        NgxSpinnerModule
     ],
     exports:[
         BuiltInPageComponent,

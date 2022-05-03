@@ -19,6 +19,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import { SharedModule } from '@shared/shared.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
     declarations:[
@@ -46,7 +47,8 @@ import { SharedModule } from '@shared/shared.module';
         MatSnackBarModule,
         MatToolbarModule,
         FlexModule,
-        SharedModule
+        SharedModule,
+        NgxSpinnerModule
     ],
     exports:[
         CreateApiComponent,

@@ -18,6 +18,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import { SharedModule } from '@shared/shared.module';
 import {CreateServiceComponent} from '@home/pages/create-service/create-service.component';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {CreateServiceComponent} from '@home/pages/create-service/create-service.
         MatSnackBarModule,
         MatToolbarModule,
         FlexModule,
-        SharedModule
+        SharedModule,
+        NgxSpinnerModule
     ],
     exports:[
         CreateServiceComponent

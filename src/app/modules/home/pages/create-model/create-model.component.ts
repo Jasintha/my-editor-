@@ -14,6 +14,7 @@ import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
 import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
 import {IApi} from '@shared/models/model/microservice-api.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 interface Item {
   value: any;
   label: string;
@@ -32,6 +33,7 @@ export class CreateModelComponent implements OnInit {
   currentAggregate: IAggregate;
   aggregateModelKey: string[];
   aggregateModelKeyItems: Item[];
+  typeSelected: string;
 
   typeItems: Item[] = [
     { label: 'MODEL', value: 'MODEL' },
@@ -89,9 +91,13 @@ export class CreateModelComponent implements OnInit {
       public dialogRef: MatDialogRef<CreateModelComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
       protected eventManager: EventManagerService,
-  ) {}
+      private spinnerService: NgxSpinnerService,
+  ) {
+    this.typeSelected = 'square-jelly-box';
+  }
 
   ngOnInit(): void {
+    this.spinnerService.hide();
     this.getAggregateData();
   }
 
@@ -180,6 +186,7 @@ export class CreateModelComponent implements OnInit {
 
   save(aggregate: IAggregate) {
     this.isSaving = true;
+    this.spinnerService.show();
 
     if (aggregate.uuid) {
       aggregate.status = this.currentAggregate.status;
@@ -218,6 +225,7 @@ export class CreateModelComponent implements OnInit {
   }
 
   protected onSaveSuccess(res) {
+    this.spinnerService.hide();
     const createdAggregate: IAggregate = res.body;
     this.isSaving = false;
     this.eventManager.dispatch(
@@ -241,7 +249,7 @@ export class CreateModelComponent implements OnInit {
   }
 
   protected onSaveError() {
-    // this.spinnerService.hide();
+    this.spinnerService.hide();
     this.isSaving = false;
   }
   protected onError(errorMessage: string) {
