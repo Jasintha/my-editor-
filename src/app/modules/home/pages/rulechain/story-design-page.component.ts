@@ -1659,7 +1659,7 @@ export class StoryDesignPageComponent extends PageComponent
 
 
 
-      this.ruleChainService.saveAndGetResolvedRuleChainMetadata(ruleChainMetaData, this.username, this.uid).subscribe((savedRuleChainMetaData) => {
+      this.ruleChainService.saveAndGetResolvedStoryRuleChainMetadata(ruleChainMetaData, this.username, this.projectUid, this.storyuuid).subscribe((savedRuleChainMetaData) => {
         this.ruleChainMetaData = savedRuleChainMetaData;
         this.ruleType = this.ruleChainMetaData.name;
         this.ruleInputs = this.ruleChainMetaData.ruleInputs;

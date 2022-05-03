@@ -125,10 +125,26 @@ export class RuleChainService {
     return this.http.post<RuleChainMetaData>(url, ruleChainMetaData, defaultHttpOptionsFromConfig(config));
   }
 
+  public saveStoryRuleChainMetadata(ruleChainMetaData: RuleChainMetaData, username: string, uid: string, storyuid: string,config?: RequestConfig): Observable<RuleChainMetaData> {
+   console.log("-----------------------------------");
+        console.log(username);
+        console.log( uid);
+
+        let url: string = '/api/ruleChain/metadata/story/' + username + '/'+ uid + '/' + storyuid;
+    return this.http.post<RuleChainMetaData>(url, ruleChainMetaData, defaultHttpOptionsFromConfig(config));
+  }
+
   public saveAndGetResolvedRuleChainMetadata(ruleChainMetaData: RuleChainMetaData, username: string, uid: string,
                                              config?: RequestConfig): Observable<ResolvedRuleChainMetaData> {
 
     return this.saveRuleChainMetadata(ruleChainMetaData, username, uid, config).pipe(
+      mergeMap((savedRuleChainMetaData) => this.resolveRuleChainMetadata(savedRuleChainMetaData))
+    );
+  }
+  public saveAndGetResolvedStoryRuleChainMetadata(ruleChainMetaData: RuleChainMetaData, username: string, uid: string, storyuid: string,
+                                             config?: RequestConfig): Observable<ResolvedRuleChainMetaData> {
+
+    return this.saveStoryRuleChainMetadata(ruleChainMetaData, username, uid, storyuid, config).pipe(
       mergeMap((savedRuleChainMetaData) => this.resolveRuleChainMetadata(savedRuleChainMetaData))
     );
   }
