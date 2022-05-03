@@ -156,6 +156,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       inputValType: [],
       matchedProperty: [],
       pageconfig: [],
+      fieldName: [],
+      stepHeader:[],
       wizardDetailsGroup: this.fb.array([
         new FormGroup({
           stepHeading: this.fb.control('Step 1'),
@@ -1058,12 +1060,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   getAllWizardSteps() {
     this.stepHeadersList = [];
     const allStepControllers = this.wizardDetailsGroup.controls;
-    // for (let i = 0; i < allStepControllers.length; i++) {
-    //   this.stepHeadersList.push({
-    //     label: allStepControllers[i].controls.stepHeading.value,
-    //     value: allStepControllers[i].controls.stepId.value + '-' + allStepControllers[i].controls.stepHeading.value,
-    //   });
-    // }
+    for (let i = 0; i < allStepControllers.length; i++) {
+      this.stepHeadersList.push({
+        label: allStepControllers[i].value.stepHeading,
+        value: allStepControllers[i].value.stepId + '-' + allStepControllers[i].value.stepHeading,
+      });
+    }
   }
 
   deleteFieldSteps(param) {
