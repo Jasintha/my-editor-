@@ -63,6 +63,8 @@ export class AddOperationService {
             this.createLambdaFunction(item, projectUid , status);
         } else if (item.type === 'TASK'){
             this.createTask(item,projectUid , status);
+        } else if (item.type === 'UI_NAVIGATION'){
+            this.createNavigation(item,projectUid , status);
         }
     }
 

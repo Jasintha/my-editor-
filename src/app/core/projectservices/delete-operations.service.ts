@@ -9,6 +9,7 @@ import {EventDeleteDialogComponent} from '@home/pages/create-event/event-delete-
 import {ApiDeleteDialogComponent} from '@home/pages/create-api/api-delete-dialog.component';
 import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-in-page-delete-dialog.component';
 import {MainMenuDeleteDialogComponent} from '@home/pages/main-menu/main-menu-delete-dialog.component';
+import {PageNavigationDeleteDialogComponent} from '@home/pages/page-navigation/page-navigation-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class DeleteOperationService {
@@ -34,6 +35,8 @@ export class DeleteOperationService {
             this.deleteUIPages(item, projectUid);
         } else if (item.type === 'UI_MAIN_MENU'){
             this.deleteMainMenu(item, projectUid);
+        } else if (item.type === 'UI_NAVIGATION'){
+            this.deletePageNavigation(item, projectUid);
         }
     }
 
@@ -55,6 +58,22 @@ export class DeleteOperationService {
 
     deleteMainMenu(item, projectUid) {
         const dialogRef = this.dialog.open(MainMenuDeleteDialogComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUid,
+                uuid: item.uuid,
+                name: item.name
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+//         return false;
+    }
+
+    deletePageNavigation(item, projectUid) {
+        const dialogRef = this.dialog.open(PageNavigationDeleteDialogComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: projectUid,

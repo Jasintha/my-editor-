@@ -19,6 +19,7 @@ import {filter, map} from 'rxjs/operators';
 import {IProperty} from '@shared/models/model/property.model';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
+import {IMainMenu} from '@shared/models/model/main-menu.model';
 
 @Component({
   selector: 'virtuan-page-navigation',
@@ -91,7 +92,7 @@ export class PageNavigationComponent implements OnInit {
               (res: IPage[]) => {
                 this.allpages = res;
                 this.loadPages();
-                if (this.data.createStatus === 'update') {
+                if (this.data.createStatus === 'Update') {
                   this.loadUpdateForm();
                 }
               },
@@ -108,6 +109,17 @@ export class PageNavigationComponent implements OnInit {
   }
 
   loadUpdateForm() {
+    this.pageNavigationService
+        .find(this.data.uuid ,this.projectUid)
+        .pipe(
+            filter((mayBeOk: HttpResponse<IMainMenu>) => mayBeOk.ok),
+            map((response: HttpResponse<IMainMenu>) => response.body)
+        )
+        .subscribe(
+            (res: IMainMenu) => {
+              this.updateForm(res);
+            }
+        );
     //const obj = JSON.parse(this.rowData);
     //this.updateForm(obj);
   }
