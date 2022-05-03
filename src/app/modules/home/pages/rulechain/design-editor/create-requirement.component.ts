@@ -136,12 +136,12 @@ export class CreateRequirementComponent implements OnInit {
   protected onSaveSuccess() {
     // this.spinnerService.hide();
     this.isSaving = false;
-//     this.eventManager.dispatch(
-//         new AppEvent(EventTypes.editorTreeListModification, {
-//           name: 'editorTreeListModification',
-//           content: 'Add an Event',
-//         })
-//     );
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorDesignTreeListModification, {
+          name: 'editorDesignTreeListModification',
+          content: 'Add an requirement',
+        })
+    );
     this.dialogRef.close();
     // this.previousState();
   }

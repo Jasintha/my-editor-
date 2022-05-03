@@ -193,6 +193,12 @@ export class MainRuleChainComponent implements OnInit {
             .subscribe(event => this.loadUITreeData());
     }
 
+    registerChangeDesignEditor() {
+        this.eventSubscriberUi = this.eventManager
+            .on(EventTypes.editorDesignTreeListModification)
+            .subscribe(event => this.loadDesignTreeData());
+    }
+
     delete(item){
       this.projectUid = item.projectuuid;
       this.deleteOperationService.delete(item, this.projectUid);
@@ -355,6 +361,7 @@ export class MainRuleChainComponent implements OnInit {
         this.loadUITreeData();
         this.registerChangeEditorTree();
         this.registerChangeUIEditor();
+        this.registerChangeDesignEditor();
 //         this.appTypeService.getDevChainByAppType(this.projectUid)
 //           .pipe(
 //             filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),

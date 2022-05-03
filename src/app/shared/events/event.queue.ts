@@ -61,5 +61,6 @@ export enum EventTypes {
   storyListModification = 'storyListModification',
   requirementUpdateFetch = 'requirementUpdateFetch',
   storyUpdateFetch = 'storyUpdateFetch',
-  editorUITreeListModification = 'editorUITreeListModification'
+  editorUITreeListModification = 'editorUITreeListModification',
+  editorDesignTreeListModification = 'editorDesignTreeListModification'
 }
