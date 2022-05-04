@@ -23,12 +23,24 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { TranslateService } from '@ngx-translate/core';
 import { JsonObjectEditComponent } from '@shared/components/json-object-edit.component';
 import { deepClone } from '@core/utils';
-import { Observable } from 'rxjs';
-import { PageComponent } from '@shared/components/page.component';
-import { Store } from '@ngrx/store';
-import { AppState } from '@core/core.state';
-import {MatTableDataSource} from '@angular/material/table';
-
+import {APIInput, APIInputType, APIParamType, IAPIInput, IWorkflowMapping} from '@shared/models/model/api-input.model';
+import {IProject} from '@shared/models/model/project.model';
+import {IApi} from '@shared/models/model/microservice-api.model';
+import {IDatamodel} from '@shared/models/model/datamodel.model';
+import {ICustomObject} from '@shared/models/model/custom-object.model';
+import {IAggregate} from '@shared/models/model/aggregate.model';
+import {IEvent} from '@shared/models/model/microservice-event.model';
+import {IViewmodel} from '@shared/models/model/viewmodel.model';
+import {ISubrule} from '@shared/models/model/subrule.model';
+import {filter, map} from 'rxjs/operators';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {ICommand} from '@shared/models/model/command.model';
+import {IQuery} from '@shared/models/model/query.model';
+import {ProjectService} from '@core/projectservices/project.service';
+interface Item {
+  value: any;
+  label: string;
+}
 @Component({
   selector: 'virtuan-process-node-config',
   templateUrl: './process-node-config.component.html',
@@ -58,6 +70,9 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
   allActors: any[];
 
   @Input()
+  serviceUuid: string;
+
+  @Input()
   ruleNodeId: string;
 
   nodeDefinitionValue: RuleNodeDefinition;
@@ -68,8 +83,33 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   returnRecord: any[] = ['MULTIPLE', 'SINGLE'];
 
-  returnObject: any[] = ['TEXT','NUMBER','FLOAT','TRUE_OR_FALSE','DATE'];
+  returnObject: Item[] = [
+    { label: 'TEXT', value: 'TEXT' },
+    { label: 'NUMBER', value: 'NUMBER' },
+    { label: 'FLOAT', value: 'FLOAT' },
+    { label: 'TRUE_OR_FALSE', value: 'TRUE_OR_FALSE' },
+    { label: 'DATE', value: 'DATE' },
+  ];
 
+  isSaving: boolean;
+  project: IProject;
+  currentApi: IApi;
+  items: Item[];
+  // returnItems: Item[];
+  datamodels: IDatamodel[] = [];
+  customObjects: ICustomObject[];
+  aggregates: IAggregate[];
+  apiParams: APIInput[];
+  aggregateItems: Item[];
+  events: IEvent[];
+  eventItems: Item[];
+  editType: string;
+  apiStyle: string;
+  viewmodels: IViewmodel[];
+  allSubRules: ISubrule[];
+  workflowInputItems: Item[];
+  mappedApiInputItems: Item[];
+  worlflowMappings: IWorkflowMapping[];
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
     if (this.nodeDefinitionValue !== nodeDefinition) {
@@ -101,6 +141,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   constructor(private translate: TranslateService,
               private ruleChainService: RuleChainService,
+              protected projectService: ProjectService,
               private fb: FormBuilder) {
     this.processNodeConfigFormGroup = this.fb.group({
       apiTemplate: '',
@@ -111,6 +152,50 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     });
   }
 
+  protected onError(errorMessage: string) {
+    // this.logger.error(errorMessage);
+  }
+
+  loadAggregates() {
+    for (let i = 0; i < this.aggregates.length; i++) {
+      if (this.aggregates[i].status === 'ENABLED' && this.aggregates[i].type === 'MODEL') {
+        const dropdownLabel = this.aggregates[i].name + ' : Model';
+        this.aggregateItems.push({ label: dropdownLabel, value: this.aggregates[i] });
+        const input = {
+          id: this.aggregates[i].uuid,
+          paramType: APIParamType.BODY,
+          inputType: APIInputType.MODEL,
+          inputName: this.aggregates[i].name,
+        };
+        const returnObj = {
+          id: this.aggregates[i].uuid,
+          paramType: APIParamType.RETURN,
+          inputType: APIInputType.MODEL,
+          inputName: this.aggregates[i].name,
+        };
+        this.items.push({ label: dropdownLabel, value: input });
+        this.returnObject.push({ label: dropdownLabel, value: returnObj });
+      } else if (this.aggregates[i].status === 'ENABLED' && this.aggregates[i].type === 'DTO') {
+        const dropdownLabel = this.aggregates[i].name + ' : DTO';
+        this.aggregateItems.push({ label: dropdownLabel, value: this.aggregates[i] });
+        const input = {
+          id: this.aggregates[i].uuid,
+          paramType: APIParamType.BODY,
+          inputType: APIInputType.DTO,
+          inputName: this.aggregates[i].name,
+        };
+        const returnObj = {
+          id: this.aggregates[i].uuid,
+          paramType: APIParamType.RETURN,
+          inputType: APIInputType.DTO,
+          inputName: this.aggregates[i].name,
+        };
+        this.items.push({ label: dropdownLabel, value: input });
+        this.returnObject.push({ label: dropdownLabel, value: returnObj });
+      }
+    }
+  }
+
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
   }
@@ -119,6 +204,53 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   ngOnInit(): void {
+    this.isSaving = false;
+    this.items = [];
+    this.returnObject = [];
+    this.apiParams = [];
+    this.eventItems = [];
+    // this.subruleItems = [];
+    this.workflowInputItems = [];
+    this.mappedApiInputItems = [];
+    this.worlflowMappings = [];
+    // this.viewmodelItems = [];
+    this.aggregateItems = [];
+
+    if (this.serviceUuid) {
+      this.projectService
+          .findWithModelEventsAndSubrules(this.serviceUuid)
+          .pipe(
+              filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
+              map((response: HttpResponse<IProject>) => response.body)
+          )
+          .subscribe(
+              (res: IProject) => {
+                this.project = res;
+                this.datamodels = this.project.datamodels;
+                this.customObjects = this.project.customObjects;
+                this.aggregates = this.project.aggregates;
+                this.events = this.project.events;
+                this.viewmodels = this.project.viewmodels;
+                this.allSubRules = this.project.subRulevms;
+                if (this.aggregates) {
+                  this.loadAggregates();
+                }
+                // if (this.viewmodels) {
+                //   this.loadViewmodels();
+                // }
+                // if (this.events) {
+                //   this.loadEvents();
+                // }
+                //
+                // if (this.allSubRules) {
+                //   this.loadSubrules();
+                // }
+                // this.loadEntities();
+                // this.loadCustomObjects();
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );
+    }
   }
 
   ngOnDestroy(): void {
