@@ -22,7 +22,7 @@
                     <textarea name="descripton" cols="" rows=""></textarea>
                     <button>Submit</button>
                 </div>
-                <a class="delete" (click)="deleteDesign()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a class="delete" (click)="deleteDesign('requirement')"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </div>
             <div class="add-icon">
                 <mat-icon class="material-icons" style="color: black; font-size: 50px;"  (click)="assignRequirementToEpic()">arrow_drop_down</mat-icon>
@@ -37,7 +37,7 @@
 <!--                </div>-->
 <!--            </a>-->
             <div style="margin-left: 25px; margin-bottom: 50px">
-                <mat-icon class="material-icons" style="color: black; font-size: 50px">keyboard_arrow_right</mat-icon>
+                <mat-icon class="material-icons" (click)="nextReq()" style="color: black; font-size: 50px">keyboard_arrow_right</mat-icon>
             </div>
         </div>
     </div>
@@ -47,13 +47,13 @@
             <div class="col-2" (click)="filterEpic(epic, j)">
                 <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''">
                     <h3>{{epic?.name}}</h3>
-                    <a href="" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     <div class="inner-wrap">
                         <input type="text" placeholder="Title">
                         <textarea name="descripton" cols="" rows=""></textarea>
                         <button>Submit</button>
                     </div>
-                    <a class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a class="delete" (click)="deleteDesign('epic')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 </div>
                 <div  *ngIf="selectedEpicId" class="add-icon">
                     <mat-icon class="material-icons" style="color: black; font-size: 50px;"  (click)="addStory(selectedEpic)">arrow_drop_down</mat-icon>
@@ -76,18 +76,18 @@
             <div class="col-2" (click)="loadStoryDesignEditor(story)">
                 <div class="wrap selected">
                     <h3>{{story.name}}</h3>
-                    <a href="" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     <div class="inner-wrap">
                         <input type="text" placeholder="Title">
                         <textarea name="descripton"  cols="" rows=""></textarea>
-                        <select name="" >
-                            <option value="" selected>Epic 1</option>
-                            <option value="">Epic 2</option>
-                            <option value="">Epic 3</option>
-                        </select>
+<!--                        <select name="" >-->
+<!--                            <option value="" selected>Epic 1</option>-->
+<!--                            <option value="">Epic 2</option>-->
+<!--                            <option value="">Epic 3</option>-->
+<!--                        </select>-->
                         <button>Submit</button>
                     </div>
-                    <a href="" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a class="delete" (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 </div>
             </div>
         </ng-container>

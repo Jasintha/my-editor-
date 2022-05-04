@@ -259,10 +259,30 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
     }
 
-    deleteDesign(){
+    deleteRequirement(){
         const dialogRef = this.dialog.open(DeleteDesignComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
+                projectUid: this.desprojectUid,
+                type: 'requirement'
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    nextReq() {
+
+    }
+
+    deleteDesign(type){
+        const dialogRef = this.dialog.open(DeleteDesignComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: this.desprojectUid,
+                type,
             }
         });
         dialogRef.afterClosed(
@@ -275,7 +295,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     this.resetRuleEditorValues();
     this.existingEpics = [];
     this.filteredStories = [];
-    this.selectedEpicId = "";
+    this.selectedEpicId = '';
     this.selectedEpic = null;
     this.showStoryBoard = false;
 
@@ -291,15 +311,15 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     this.connectionPropertyTemplates = [];
     this.ruleNodeComponentsLoaded = false;
     this.ruleNodeComponents = null;
-    this.storyserviceUuid = "";
-    this.storyuuid = "";
+    this.storyserviceUuid = '';
+    this.storyuuid = '';
   }
 
     loadStoryDesignEditor(story){
         this.currentLevel = 'story';
         this.existingEpics = [];
         this.filteredStories = [];
-        this.selectedEpicId = "";
+        this.selectedEpicId = '';
         this.selectedEpic = null;
         this.showStoryBoard = false;
         this.storyserviceUuid = story.serviceUUID;

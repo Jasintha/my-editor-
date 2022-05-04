@@ -17,6 +17,7 @@ import {EventTypes} from '@shared/events/event.queue';
 export class DeleteDesignComponent {
   pageNavigation: IPageNavigation;
   projectUid: string;
+  type: string;
 
   constructor(
     protected pageNavigationService: PageNavigationService,
