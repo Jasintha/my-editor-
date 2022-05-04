@@ -172,8 +172,12 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         }
       );
   }
+    clickReq() {
+        this.currentLevel = 'requirement';
+    }
 
   filterEpic(epic, index){
+    this.currentLevel = 'epic';
     this.selectedEpicId = epic.uuid;
     this.selectedEpic = epic;
     this.showStoryBoard = false;
@@ -291,14 +295,15 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     this.storyuuid = "";
   }
 
-  loadStoryDesignEditor(story){
-    this.existingEpics = [];
-    this.filteredStories = [];
-    this.selectedEpicId = "";
-    this.selectedEpic = null;
-    this.showStoryBoard = false;
-    this.storyserviceUuid = story.serviceUUID;
-    this.storyuuid = story.uuid;
+    loadStoryDesignEditor(story){
+        this.currentLevel = 'story';
+        this.existingEpics = [];
+        this.filteredStories = [];
+        this.selectedEpicId = "";
+        this.selectedEpic = null;
+        this.showStoryBoard = false;
+        this.storyserviceUuid = story.serviceUUID;
+        this.storyuuid = story.uuid;
 
         this.ruleChainService.getStoryRuleChainWithUsernameAndUID(story.ruleid, this.username, this.desprojectUid).subscribe((ruleChain) => {
             this.ruleChainLoaded = true;

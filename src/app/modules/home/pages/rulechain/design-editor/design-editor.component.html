@@ -1,19 +1,19 @@
 <div *ngIf="!viewEditor" class="container vertical">
     <div class="wrapper option-1 option-1-1">
         <ol class="c-stepper">
-            <li class="c-stepper__item_selected"  >
+            <li [ngClass]="currentLevel === 'requirement' ? 'c-stepper__item_selected': 'c-stepper__item'" >
                 <h3 class="c-stepper__title">Requirement</h3>
             </li>
-            <li class="c-stepper__item"  >
+            <li  [ngClass]="currentLevel === 'epic' ? 'c-stepper__item_selected': 'c-stepper__item'">
                 <h3 class="c-stepper__title">Epic</h3>
             </li>
-            <li class="c-stepper__item"  >
+            <li  [ngClass]="currentLevel === 'story' ? 'c-stepper__item_selected': 'c-stepper__item'" >
                 <h3 class="c-stepper__title">Story</h3>
             </li>
         </ol>
     </div>
     <div id="requirements" class="row section border">
-        <div class="col-2">
+        <div class="col-2" (click)="clickReq()">
             <div class="wrap" style="border-style: dashed;">
                 <h3>{{currentReq?.name}}</h3>
                 <a  class="edit" (click)="editDialog()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
