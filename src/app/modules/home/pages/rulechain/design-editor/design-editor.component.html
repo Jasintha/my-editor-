@@ -14,7 +14,7 @@
 
 <div *ngIf="!viewEditor" class="container vertical">
     <div id="requirements" class="row section border">
-        <div class="col-3">
+        <div class="col-2">
             <div class="wrap" style="border-style: dashed;">
                 <h3>{{currentReq?.name}}</h3>
                 <a href="" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -25,22 +25,24 @@
                 </div>
                 <a href="" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </div>
-
+            <div class="add-icon">
+                <mat-icon class="material-icons" style="color: black; font-size: 50px;"  (click)="assignRequirementToEpic()">arrow_drop_down</mat-icon>
+            </div>
         </div>
 
-        <div class="col-3">
-            <a class="new" (click)="assignRequirementToEpic()">
-                <div class="wrap add">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                    <!--<fa-icon [icon]="faPlus"></fa-icon>-->
-                </div>
-            </a>
-        </div>
+<!--        <div class="col-2">-->
+<!--            <a class="new" (click)="assignRequirementToEpic()">-->
+<!--                <div class="wrap add">-->
+<!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
+<!--                    &lt;!&ndash;<fa-icon [icon]="faPlus"></fa-icon>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
     </div>
 
     <div id="epics" class="row section border">
         <ng-container *ngFor="let epic of existingEpics; let j = index">
-            <div class="col-3" (click)="filterEpic(epic, j)">
+            <div class="col-2" (click)="filterEpic(epic, j)">
                 <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''">
                     <h3>{{epic?.name}}</h3>
                     <a href="" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -51,23 +53,25 @@
                     </div>
                     <a href="" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 </div>
-
+                <div  *ngIf="selectedEpicId" class="add-icon">
+                    <mat-icon class="material-icons" style="color: black; font-size: 50px;"  (click)="addStory(selectedEpic)">arrow_drop_down</mat-icon>
+                </div>
             </div>
         </ng-container>
 
 
-        <div class="col-3" *ngIf="selectedEpicId">
-            <a class="new" (click)="addStory(selectedEpic)">
-                <div class="wrap add">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                </div>
-            </a>
-        </div>
+<!--        <div class="col-2" *ngIf="selectedEpicId">-->
+<!--            <a class="new" (click)="addStory(selectedEpic)">-->
+<!--                <div class="wrap add">-->
+<!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
     </div>
 
     <div id="stories" class="row section border" *ngIf="showStoryBoard">
         <ng-container *ngFor="let story of filteredStories">
-            <div class="col-3" (click)="loadStoryDesignEditor(story)">
+            <div class="col-2" (click)="loadStoryDesignEditor(story)">
                 <div class="wrap selected">
                     <h3>{{story.name}}</h3>
                     <a href="" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
