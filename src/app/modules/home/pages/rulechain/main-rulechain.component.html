@@ -122,7 +122,7 @@
                         </div>
                         <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'service'}" role="tabpanel"
                              aria-labelledby="profile-tab">
-                            <button mat-icon-button  class="top-node" style="float: right" (click)="add('PARENT_SERVICE')"><mat-icon >add</mat-icon></button>
+                            <button mat-icon-button  class="top-node" style="float: right; margin-right: 20px" (click)="add('PARENT_SERVICE')"><mat-icon >add</mat-icon></button>
                             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" style="margin-top: 25px;">
                                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
                                     <button mat-icon-button disabled></button>
