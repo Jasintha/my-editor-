@@ -52,6 +52,8 @@ import * as AngularCore from '@angular/core';
 import * as RxJs from 'rxjs';
 import * as RxJsOperators from 'rxjs/operators';
 import {EditStoryComponent} from '@home/pages/rulechain/design-editor/edit-story/edit-story.component';
+import {ApiDeleteDialogComponent} from '@home/pages/create-api/api-delete-dialog.component';
+import {DeleteDesignComponent} from '@home/pages/rulechain/design-editor/delete-design.component';
 
 declare const SystemJS;
 
@@ -250,6 +252,18 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
         dialogRef.afterClosed(
         ).subscribe(result => {
+        });
+    }
+
+    deleteDesign(){
+        const dialogRef = this.dialog.open(DeleteDesignComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
         });
     }
 

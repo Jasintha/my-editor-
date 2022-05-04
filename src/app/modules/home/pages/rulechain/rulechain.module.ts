@@ -82,6 +82,7 @@ import {
   StoryDesignPageComponent
 } from './story-design-page.component';
 import {EditStoryComponent} from '@home/pages/rulechain/design-editor/edit-story/edit-story.component';
+import {DeleteDesignComponent} from '@home/pages/rulechain/design-editor/delete-design.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import {EditStoryComponent} from '@home/pages/rulechain/design-editor/edit-story
     CreateRequirementComponent,
     RequirementAddEpicDialogComponent,
     CreateStoryComponent,
-      EditStoryComponent
+      EditStoryComponent,
+    DeleteDesignComponent
   ],
   providers: [
     {
