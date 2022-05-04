@@ -18,12 +18,12 @@
                     color: white;
                 }
             }
-            &::before{
-                content: "";
-                height: 60%;
-                border-top: 5px solid mediumseagreen;
-                border-left: 5px solid mediumseagreen;
-            }
+            //&::before{
+            //    content: "";
+            //    height: 60%;
+            //    border-top: 5px solid mediumseagreen;
+            //    border-left: 5px solid mediumseagreen;
+            //}
         }
         #epics{
             .wrap{
@@ -42,18 +42,18 @@
                     color: white;
                 }
             }
-            &::before{
-                content: "";
-                height: 60%;
-                border-top: 5px solid slateblue;
-                border-left: 5px solid slateblue;
-            }
-            &::after{
-                content: "";
-                height: 60%;
-                border-left: 5px solid mediumseagreen;
-                border-bottom: 5px solid mediumseagreen;
-            }
+            //&::before{
+            //    content: "";
+            //    height: 60%;
+            //    border-top: 5px solid slateblue;
+            //    border-left: 5px solid slateblue;
+            //}
+            //&::after{
+            //    content: "";
+            //    height: 60%;
+            //    border-left: 5px solid mediumseagreen;
+            //    border-bottom: 5px solid mediumseagreen;
+            //}
         }
         #stories{
             padding-right: 0;
@@ -77,18 +77,18 @@
                     color: white;
                 }
             }
-            &::before{
-                content: "";
-                height: 60%;
-                border-top: 5px solid  orange;
-                border-left: 5px solid orange;
-            }
-            &::after{
-                content: "";
-                height: 60%;
-                border-left: 5px solid slateblue;
-                border-bottom: 5px solid slateblue;
-            }
+            //&::before{
+            //    content: "";
+            //    height: 60%;
+            //    border-top: 5px solid  orange;
+            //    border-left: 5px solid orange;
+            //}
+            //&::after{
+            //    content: "";
+            //    height: 60%;
+            //    border-left: 5px solid slateblue;
+            //    border-bottom: 5px solid slateblue;
+            //}
         }
         #story-details, #story2-details{
             .sub-sec{
