@@ -206,7 +206,6 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
   ngOnInit(): void {
     this.isSaving = false;
     this.items = [];
-    this.returnObject = [];
     this.apiParams = [];
     this.eventItems = [];
     // this.subruleItems = [];
