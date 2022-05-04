@@ -112,6 +112,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     connectionPropertyTemplatesLoaded: boolean;
     storyserviceUuid: string;
     storyuuid: string;
+    currentLevel = 'requirement'
 
   constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
     private ruleChainService: RuleChainService) { }
