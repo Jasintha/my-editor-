@@ -64,6 +64,9 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
   @Input()
   ruleNodeId: string;
 
+  @Input()
+  serviceUuid: string;
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   isSaving: boolean;
@@ -126,7 +129,7 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
   loadPortals() {
     this.storyService
-        .findPortalsByProjectId(this.projectUid)
+        .findPortalsByProjectId(this.serviceUuid)
         .pipe(
             filter((res: HttpResponse<any[]>) => res.ok),
             map((res: HttpResponse<any[]>) => res.body)
