@@ -16,7 +16,7 @@
         <div class="col-2">
             <div class="wrap" style="border-style: dashed;">
                 <h3>{{currentReq?.name}}</h3>
-                <a href="" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <a  class="edit" (click)="editDialog()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <div class="inner-wrap">
                     <input type="text" placeholder="Title">
                     <textarea name="descripton" cols="" rows=""></textarea>
@@ -37,7 +37,7 @@
 <!--                </div>-->
 <!--            </a>-->
             <div style="margin-left: 25px; margin-bottom: 50px">
-                <mat-icon class="material-icons" style="color: black; font-size: 50px"  (click)="assignRequirementToEpic()">send</mat-icon>
+                <mat-icon class="material-icons" style="color: black; font-size: 50px">keyboard_arrow_right</mat-icon>
             </div>
         </div>
     </div>

@@ -81,6 +81,7 @@ import {
   AddDesignRuleNodeLinkDialogComponent,
   StoryDesignPageComponent
 } from './story-design-page.component';
+import {EditStoryComponent} from '@home/pages/rulechain/design-editor/edit-story/edit-story.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import {
     DesignEditorComponent,
     CreateRequirementComponent,
     RequirementAddEpicDialogComponent,
-    CreateStoryComponent
+    CreateStoryComponent,
+      EditStoryComponent
   ],
   providers: [
     {

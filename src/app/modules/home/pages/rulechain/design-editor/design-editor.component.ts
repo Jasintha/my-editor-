@@ -51,6 +51,7 @@ import * as AngularRouter from '@angular/router';
 import * as AngularCore from '@angular/core';
 import * as RxJs from 'rxjs';
 import * as RxJsOperators from 'rxjs/operators';
+import {EditStoryComponent} from '@home/pages/rulechain/design-editor/edit-story/edit-story.component';
 
 declare const SystemJS;
 
@@ -239,6 +240,18 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             this.loadStoriesForEpic(selectedEpic.uuid);
         });
   }
+
+    editDialog(){
+        const dialogRef = this.dialog.open(EditStoryComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: this.desprojectUid,
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+        });
+    }
 
   ngOnInit(): void {
     this.resetRuleEditorValues();
