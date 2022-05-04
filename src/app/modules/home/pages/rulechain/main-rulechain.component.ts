@@ -434,9 +434,9 @@ export class MainRuleChainComponent implements OnInit {
             const projectUUID: string = this.projectUid;
             let project: Project = new Project();
             if (projectUUID) {
-                let breakpoint = this.breakpointService.getBreakpoint();
-                let defaultTheme = this.themeService.getDefaultTheme();
-                this.projectService.generateFromProjectId(projectUUID, breakpoint, defaultTheme, genType, project, projectUUID).subscribe(
+//                 let breakpoint = this.breakpointService.getBreakpoint();
+//                 let defaultTheme = this.themeService.getDefaultTheme();
+                this.projectService.generateFromProjectId(projectUUID, -1, 1, genType, project, projectUUID).subscribe(
                     (res: any) => {
                         let project: IProject = res.body;
                         this.socket.send('generator');

@@ -9,12 +9,12 @@ import { TreeNode, MenuItem } from 'primeng/api';
 import { AggregateService } from '@core/projectservices/microservice-aggregate.service';
 import { IProject } from '@app/shared/models/model/project.model';
 
-import {MatDialog} from "@angular/material/dialog";
-import {MicroserviceAddModelDialogComponent} from "@home/pages/aggregate/microservice-add-model-dialog.component";
+import {MatDialog} from '@angular/material/dialog';
+import {MicroserviceAddModelDialogComponent} from '@home/pages/aggregate/microservice-add-model-dialog.component';
 import {
   MicroserviceAddModelConstraintsDialogComponent
-} from "@home/pages/aggregate/microservice-add-model-constraints-dialog.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
+} from '@home/pages/aggregate/microservice-add-model-constraints-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -92,7 +92,7 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
         nodes.splice(i, 1);
         break;
       } else {
-        if (nodes[i].children != undefined) {
+        if (nodes[i].children !== undefined) {
           this.removeNode(nodes[i].children);
         }
       }
@@ -115,9 +115,9 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.aggregateId = params['id'];
+      //this.aggregateId = params['id'];
       //this.projectId = params['projId'];
-      this.projectUid = params['projectUid'];
+      //this.projectUid = params['projectUid'];
       this.getProjectType();
       // this.toolbarTrackerService.setProjectUUID(this.projectUid);
     });
