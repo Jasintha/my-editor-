@@ -1,4 +1,10 @@
 <div [formGroup]="screenNodeConfigFormGroup">
+ <mat-form-field style="width: 100%">
+  <mat-label>Screen Name</mat-label>
+  <input type="text" formControlName="screenName" matInput name="screenName" id="screen_name">
+  <mat-error *ngIf="screenNodeConfigFormGroup.controls.screenName.hasError('required')">This field is required</mat-error>
+ </mat-form-field>
+
  <p-carousel [value]="pageTemplateItems" [numVisible]="2" [numScroll]="2" [circular]="false">
   <ng-template let-template pTemplate="item">
    <div class="product-item">

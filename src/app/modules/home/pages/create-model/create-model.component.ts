@@ -229,6 +229,12 @@ export class CreateModelComponent implements OnInit {
     const createdAggregate: IAggregate = res.body;
     this.isSaving = false;
     this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorTreeListModification, {
+          name: 'editorTreeListModification',
+          content: 'Add an Model',
+        })
+    );
+    this.eventManager.dispatch(
         new AppEvent(EventTypes.editorUITreeListModification, {
           name: 'editorUITreeListModification',
           content: 'Add an Model',
