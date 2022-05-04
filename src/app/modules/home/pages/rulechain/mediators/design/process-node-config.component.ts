@@ -144,6 +144,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
               protected projectService: ProjectService,
               private fb: FormBuilder) {
     this.processNodeConfigFormGroup = this.fb.group({
+      processName, ['', Validators.required],
       apiTemplate: '',
       apiMethod: '',
       returnObject: '',
@@ -284,6 +285,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
       });
     } else {
       this.processNodeConfigFormGroup.patchValue({
+        processName: this.configuration.processName,
         apiTemplate: this.configuration.apiTemplate,
         apiMethod: this.configuration.apiMethod,
         returnObject: this.configuration.returnObject,
@@ -293,6 +295,12 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     this.changeSubscription = this.processNodeConfigFormGroup.get('apiTemplate').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.apiTemplate = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('processName').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.processName = configuration;
           this.updateModel(this.configuration);
         }
     );

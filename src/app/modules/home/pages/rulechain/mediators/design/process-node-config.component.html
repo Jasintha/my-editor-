@@ -1,4 +1,10 @@
 <div [formGroup]="processNodeConfigFormGroup">
+ <mat-form-field style="width: 100%">
+  <mat-label>Process Name</mat-label>
+  <input type="text" formControlName="processName" matInput name="processName" id="screen_name">
+  <mat-error *ngIf="processNodeConfigFormGroup.controls.processName.hasError('required')">This field is required</mat-error>
+ </mat-form-field>
+ 
  <mat-form-field fxFlex class="mat-block">
   <mat-label>Template </mat-label>
   <mat-select formControlName="apiTemplate">
