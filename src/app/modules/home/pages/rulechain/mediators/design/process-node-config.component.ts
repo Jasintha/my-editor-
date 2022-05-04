@@ -144,7 +144,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
               protected projectService: ProjectService,
               private fb: FormBuilder) {
     this.processNodeConfigFormGroup = this.fb.group({
-      processName, ['', Validators.required],
+      processName: ['', Validators.required],
       apiTemplate: '',
       apiMethod: '',
       returnObject: '',
