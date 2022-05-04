@@ -22,21 +22,24 @@
                     <textarea name="descripton" cols="" rows=""></textarea>
                     <button>Submit</button>
                 </div>
-                <a href="" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </div>
             <div class="add-icon">
                 <mat-icon class="material-icons" style="color: black; font-size: 50px;"  (click)="assignRequirementToEpic()">arrow_drop_down</mat-icon>
             </div>
         </div>
 
-<!--        <div class="col-2">-->
+        <div class="col-2">
 <!--            <a class="new" (click)="assignRequirementToEpic()">-->
 <!--                <div class="wrap add">-->
 <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
 <!--                    &lt;!&ndash;<fa-icon [icon]="faPlus"></fa-icon>&ndash;&gt;-->
 <!--                </div>-->
 <!--            </a>-->
-<!--        </div>-->
+            <div style="margin-left: 25px; margin-bottom: 50px">
+                <mat-icon class="material-icons" style="color: black; font-size: 50px"  (click)="assignRequirementToEpic()">send</mat-icon>
+            </div>
+        </div>
     </div>
 
     <div id="epics" class="row section border">
@@ -50,7 +53,7 @@
                         <textarea name="descripton" cols="" rows=""></textarea>
                         <button>Submit</button>
                     </div>
-                    <a href="" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 </div>
                 <div  *ngIf="selectedEpicId" class="add-icon">
                     <mat-icon class="material-icons" style="color: black; font-size: 50px;"  (click)="addStory(selectedEpic)">arrow_drop_down</mat-icon>
