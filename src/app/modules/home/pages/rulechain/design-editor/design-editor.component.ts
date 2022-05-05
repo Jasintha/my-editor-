@@ -107,6 +107,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     reqArray: any;
 
     currentReq: IRequirement;
+    toolTipPosition = 'above'
 
     existingEpics: any[];
     filteredStories: any[];

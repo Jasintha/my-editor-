@@ -83,6 +83,7 @@ import {
 } from './story-design-page.component';
 import {EditStoryComponent} from '@home/pages/rulechain/design-editor/edit-story/edit-story.component';
 import {DeleteDesignComponent} from '@home/pages/rulechain/design-editor/delete-design.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -156,7 +157,8 @@ import {DeleteDesignComponent} from '@home/pages/rulechain/design-editor/delete-
         FlexModule,
         EditorModule,
         NgbModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+    MatTooltipModule
   ]
 })
 export class RuleChainModule { }

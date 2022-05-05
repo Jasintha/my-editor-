@@ -14,8 +14,9 @@
     </div>
     <div id="requirements" class="row section border">
         <div class="col-2" (click)="clickReq()">
-            <div class="wrap" style="border-style: dashed;">
-                <h3>{{currentReq?.name}}</h3>
+            <div class="wrap" style="border-style: dashed;" matTooltip="{{currentReq?.name}}"
+                 [matTooltipPosition]="toolTipPosition">
+                <h3 class="txt-overflow">{{currentReq?.name}}</h3>
 <!--                <a  class="edit" (click)="editDialog()"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
                 <div class="inner-wrap">
                     <input type="text" placeholder="Title">
@@ -45,8 +46,9 @@
     <div id="epics" class="row section border">
         <ng-container *ngFor="let epic of existingEpics; let j = index">
             <div class="col-2" (click)="filterEpic(epic, j)">
-                <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''">
-                    <h3>{{epic?.name}}</h3>
+                <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''" matTooltip="{{epic?.name}}"
+                     [matTooltipPosition]="toolTipPosition">
+                    <h3 class="txt-overflow">{{epic?.name}}</h3>
 <!--                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
                     <div class="inner-wrap">
                         <input type="text" placeholder="Title">
@@ -74,8 +76,9 @@
     <div id="stories" class="row section border" *ngIf="showStoryBoard">
         <ng-container *ngFor="let story of filteredStories">
             <div class="col-2" (click)="loadStoryDesignEditor(story)">
-                <div class="wrap selected">
-                    <h3>{{story.name}}</h3>
+                <div class="wrap selected" matTooltip="{{story?.name}}"
+                     [matTooltipPosition]="toolTipPosition">
+                    <h3 class="txt-overflow">{{story.name}}</h3>
 <!--                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
                     <div class="inner-wrap">
                         <input type="text" placeholder="Title">
