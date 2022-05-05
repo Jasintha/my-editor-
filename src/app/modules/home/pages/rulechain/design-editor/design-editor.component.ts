@@ -78,32 +78,41 @@ const ruleNodeConfigResourcesModulesMap = {
 };
 
 @Component({
-  selector: 'virtuan-design-editor-new',
-  templateUrl: './design-editor.component.html',
-  styleUrls: ['./design-editor.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'virtuan-design-editor-new',
+    templateUrl: './design-editor.component.html',
+    styleUrls: ['./design-editor.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class DesignEditorComponent implements OnInit, OnChanges {
-  @Input()
-  requirementUid: string;
+    @Input()
+    requirementUid: string;
 
-  @Input()
-  desprojectUid: string;
+    @Input()
+    requirementCount: number;
 
-  @Input()
-  username: string;
+    @Input()
+    desprojectUid: string;
 
-  @Input()
-  reload: boolean;
+    @Input()
+    username: string;
 
-  currentReq: IRequirement;
+    @Input()
+    reload: boolean;
 
-  existingEpics: any[];
-  filteredStories: any[];
-  showStoryBoard: boolean;
-  selectedEpicId: string;
-  selectedEpic: any;
+    @Input()
+    movetoNextReq: any;
 
+    @Input()
+    reqArray: any;
+
+    currentReq: IRequirement;
+
+    existingEpics: any[];
+    filteredStories: any[];
+    showStoryBoard: boolean;
+    selectedEpicId: string;
+    selectedEpic: any;
+    currentIndex = 0;
     ruleChain: RuleChain;
     ruleChainMetaData: ResolvedRuleChainMetaData;
     connectionPropertyTemplates: ConnectionPropertyTemplate[];
@@ -117,107 +126,110 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     storyuuid: string;
     currentLevel = 'requirement'
 
-  constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
-    private ruleChainService: RuleChainService) { }
+    constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
+                 private ruleChainService: RuleChainService) { }
 
-  ngOnChanges(changes: SimpleChanges) {
-  console.log("logggggggggggggg");
-    this.resetRuleEditorValues();
-    this.existingEpics = [];
-    this.filteredStories = [];
-    this.showStoryBoard = false;
-    this.selectedEpicId = "";
-    this.selectedEpic = null;
-    this.loadReq();
-    this.loadEpics();
-  }
+    ngOnChanges(changes: SimpleChanges) {
+        this.reloadView();
+    }
 
-  loadReq(){
-    this.requirementService
-        .find(this.requirementUid ,this.desprojectUid)
-        .pipe(
-            filter((mayBeOk: HttpResponse<IRequirement>) => mayBeOk.ok),
-            map((response: HttpResponse<IRequirement>) => response.body)
-        )
-        .subscribe(
-            (res: IRequirement) => {
-              this.currentReq = res;
-            }
-        );
-  }
+    reloadView() {
+        this.resetRuleEditorValues();
+        this.existingEpics = [];
+        this.filteredStories = [];
+        this.showStoryBoard = false;
+        this.selectedEpicId = "";
+        this.selectedEpic = null;
+        this.loadReq();
+        this.loadEpics();
+    }
 
-  loadEpics() {
-    this.showStoryBoard = false;
-    this.filteredStories = [];
-    this.selectedEpicId = "";
-    this.selectedEpic = null;
-    this.resetRuleEditorValues();
-    this.requirementService
-      .findEpicsForReqByProjectId(this.requirementUid, this.desprojectUid)
-      .pipe(
-        filter((res: HttpResponse<any[]>) => res.ok),
-        map((res: HttpResponse<any[]>) => res.body)
-      )
-      .subscribe(
-        (res: any[]) => {
-          if (res) {
-            this.existingEpics = res;
+    loadReq(){
+        this.requirementService
+            .find(this.requirementUid ,this.desprojectUid)
+            .pipe(
+                filter((mayBeOk: HttpResponse<IRequirement>) => mayBeOk.ok),
+                map((response: HttpResponse<IRequirement>) => response.body)
+            )
+            .subscribe(
+                (res: IRequirement) => {
+                    this.currentReq = res;
+                }
+            );
+    }
+
+    loadEpics() {
+        this.showStoryBoard = false;
+        this.filteredStories = [];
+        this.selectedEpicId = "";
+        this.selectedEpic = null;
+        this.resetRuleEditorValues();
+        this.requirementService
+            .findEpicsForReqByProjectId(this.requirementUid, this.desprojectUid)
+            .pipe(
+                filter((res: HttpResponse<any[]>) => res.ok),
+                map((res: HttpResponse<any[]>) => res.body)
+            )
+            .subscribe(
+                (res: any[]) => {
+                    if (res) {
+                        this.existingEpics = res;
 //             for (let i = 0; i < this.existingEpics.length; i++) {
 //               let epicitem = { label: this.existingEpics[i].name, value: this.existingEpics[i] };
 //               this.epicitems.push(epicitem);
 //             }
-          } else {
-            this.existingEpics = [];
-          }
-        }
-      );
-  }
+                    } else {
+                        this.existingEpics = [];
+                    }
+                }
+            );
+    }
     clickReq() {
         this.currentLevel = 'requirement';
     }
 
-  filterEpic(epic, index){
-    this.currentLevel = 'epic';
-    this.selectedEpicId = epic.uuid;
-    this.selectedEpic = epic;
-    this.showStoryBoard = false;
-    this.filteredStories = [];
-    this.resetRuleEditorValues();
-    for (let i = 0; i < this.existingEpics.length; i++) {
-      if(i === index){
-        this.existingEpics[i].selected = true;
-      } else {
-        this.existingEpics[i].selected = false;
-      }
+    filterEpic(epic, index){
+        this.currentLevel = 'epic';
+        this.selectedEpicId = epic.uuid;
+        this.selectedEpic = epic;
+        this.showStoryBoard = false;
+        this.filteredStories = [];
+        this.resetRuleEditorValues();
+        for (let i = 0; i < this.existingEpics.length; i++) {
+            if(i === index){
+                this.existingEpics[i].selected = true;
+            } else {
+                this.existingEpics[i].selected = false;
+            }
+        }
+        this.loadStoriesForEpic(epic.uuid);
+        this.showStoryBoard = true;
+
     }
-    this.loadStoriesForEpic(epic.uuid);
-    this.showStoryBoard = true;
 
-  }
-
-  loadStoriesForEpic(epicuuid) {
-    this.storyService
-      .findStorieByEpic(this.desprojectUid, epicuuid)
-      .pipe(
-        filter((res: HttpResponse<any[]>) => res.ok),
-        map((res: HttpResponse<any[]>) => res.body)
-      )
-      .subscribe(
-        (res: any[]) => {
-          if (res) {
-            this.filteredStories = res;
+    loadStoriesForEpic(epicuuid) {
+        this.storyService
+            .findStorieByEpic(this.desprojectUid, epicuuid)
+            .pipe(
+                filter((res: HttpResponse<any[]>) => res.ok),
+                map((res: HttpResponse<any[]>) => res.body)
+            )
+            .subscribe(
+                (res: any[]) => {
+                    if (res) {
+                        this.filteredStories = res;
 //             for (let i = 0; i < this.existingEpics.length; i++) {
 //               let epicitem = { label: this.existingEpics[i].name, value: this.existingEpics[i] };
 //               this.epicitems.push(epicitem);
 //             }
-          } else {
-            this.filteredStories = [];
-          }
-        }
-      );
-  }
+                    } else {
+                        this.filteredStories = [];
+                    }
+                }
+            );
+    }
 
-  assignRequirementToEpic() {
+    assignRequirementToEpic() {
         const dialogRef = this.dialog.open(RequirementAddEpicDialogComponent, {
             width: '800px',
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
@@ -233,7 +245,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
     }
 
-  addStory(selectedEpic){
+    addStory(selectedEpic){
         const dialogRef = this.dialog.open(CreateStoryComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
@@ -245,7 +257,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         ).subscribe(result => {
             this.loadStoriesForEpic(selectedEpic.uuid);
         });
-  }
+    }
 
     editDialog(){
         const dialogRef = this.dialog.open(EditStoryComponent, {
@@ -274,7 +286,14 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     nextReq() {
-
+        if(this.reqArray.length > this.currentIndex) {
+            this.currentIndex++;
+        } else {
+            this.currentIndex = 0;
+        }
+        this.requirementUid = this.reqArray[this.currentIndex];
+       this.reloadView();
+        this.movetoNextReq(this.requirementUid);
     }
 
     deleteDesign(type){
@@ -291,29 +310,29 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
     }
 
-  ngOnInit(): void {
-    this.resetRuleEditorValues();
-    this.existingEpics = [];
-    this.filteredStories = [];
-    this.selectedEpicId = '';
-    this.selectedEpic = null;
-    this.showStoryBoard = false;
+    ngOnInit(): void {
+        this.resetRuleEditorValues();
+        this.existingEpics = [];
+        this.filteredStories = [];
+        this.selectedEpicId = '';
+        this.selectedEpic = null;
+        this.showStoryBoard = false;
 
-  }
+    }
 
-  resetRuleEditorValues(){
-    this.viewEditor = false;
-    this.ruleChainLoaded = false;
-    this.ruleChain = null;
-    this.ruleChainMetaDataLoaded = false;
-    this.ruleChainMetaData = null;
-    this.connectionPropertyTemplatesLoaded = false;
-    this.connectionPropertyTemplates = [];
-    this.ruleNodeComponentsLoaded = false;
-    this.ruleNodeComponents = null;
-    this.storyserviceUuid = '';
-    this.storyuuid = '';
-  }
+    resetRuleEditorValues(){
+        this.viewEditor = false;
+        this.ruleChainLoaded = false;
+        this.ruleChain = null;
+        this.ruleChainMetaDataLoaded = false;
+        this.ruleChainMetaData = null;
+        this.connectionPropertyTemplatesLoaded = false;
+        this.connectionPropertyTemplates = [];
+        this.ruleNodeComponentsLoaded = false;
+        this.ruleNodeComponents = null;
+        this.storyserviceUuid = '';
+        this.storyuuid = '';
+    }
 
     loadStoryDesignEditor(story){
         this.currentLevel = 'story';
@@ -344,6 +363,6 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
         this.viewEditor = true;
 
-  }
+    }
 
 }

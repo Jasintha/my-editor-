@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import { filter, map } from 'rxjs/operators';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
@@ -98,7 +98,7 @@ const ruleNodeConfigResourcesModulesMap = {
     styleUrls: ['./rulechain-page.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class MainRuleChainComponent implements OnInit {
+export class MainRuleChainComponent implements OnInit, OnChanges {
 
 
     ruleChain: RuleChain;
@@ -117,6 +117,9 @@ export class MainRuleChainComponent implements OnInit {
     loadModelView: boolean;
     projectUid: string;
     requirementUid: string;
+    requirementCount: number;
+    requirementArray: any[];
+    currentReqIndex: number;
     desprojectUid: string;
     lambdauid: string;
     modelUid: string;
@@ -166,6 +169,17 @@ export class MainRuleChainComponent implements OnInit {
     protected appTypeService: ApptypesService) {
 
     }
+
+    ngOnChanges(changes: SimpleChanges) {
+        // this.requirementUid =
+        //     this.requirementCount =
+    }
+
+
+    movetoNextReq(nextUUID) {
+    this.requirementUid = nextUUID;
+    }
+
 
     selectActiveNode(node) {
         this.activeNode = node;
@@ -352,6 +366,8 @@ export class MainRuleChainComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.requirementArray = [];
+        this.currentReqIndex = 0;
         this.currentTab = 'design'
         this.route.params.subscribe(params => {
             this.projectUid = params['projectUid'];
@@ -395,9 +411,19 @@ export class MainRuleChainComponent implements OnInit {
           )
           .subscribe(
               (res: any[]) => {
+                  this.requirementCount = res[0].children.length;
+                  if(this.requirementCount > 0) {
+                      this.populateReqIDArray( res[0].children)
+                  }
                 this.designdataSource.data = res;
               }
           );
+    }
+
+    populateReqIDArray(requirements) {
+        for (const req of requirements) {
+            this.requirementArray.push(req.uuid);
+        }
     }
 
     loadUITreeData(){

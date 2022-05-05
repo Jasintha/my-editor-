@@ -24,7 +24,7 @@
                     <as-split-area [size]="65" style="overflow: auto">
 
                         <!-- <router-outlet></router-outlet>-->
-                        <virtuan-design-editor-new *ngIf="loadDesignRequirement" [requirementUid]="requirementUid" [reload]="reload" [desprojectUid]="desprojectUid"></virtuan-design-editor-new>
+                        <virtuan-design-editor-new *ngIf="loadDesignRequirement" [requirementUid]="requirementUid" [requirementCount] = "requirementCount" [movetoNextReq] = "movetoNextReq"  [reqArray]="requirementArray" [reload]="reload" [desprojectUid]="desprojectUid"></virtuan-design-editor-new>
                         <virtuan-microservice-model *ngIf="loadModelView" [projectUid]="projectUid" [modelUid]="modelUid"></virtuan-microservice-model>
                         <virtuan-lamdafunction-editor *ngIf="loadFunctionEditor" [projectUid]="projectUid" [lamdafunctionUuid]="lambdauid"></virtuan-lamdafunction-editor>
                         <virtuan-rulechain-page  *ngIf="ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded" [ruleChain]="ruleChain"
