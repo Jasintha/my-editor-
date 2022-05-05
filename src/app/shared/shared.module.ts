@@ -128,6 +128,7 @@ import { VirtuanHotkeysDirective } from '@shared/components/hotkeys.directive';
 import { NavTreeComponent } from '@shared/components/nav-tree.component';
 import { LedLightComponent } from '@shared/components/led-light.component';
 import { VirtuanJsonToStringDirective } from '@shared/components/directives/virtuan-json-to-string.directive';
+import { ClickStopPropagationDirective } from '@shared/components/directives/stop-propagation.directive';
 import { JsonObjectEditDialogComponent } from '@shared/components/dialog/json-object-edit-dialog.component';
 import { HistorySelectorComponent } from './components/time/history-selector/history-selector.component';
 import { EntityGatewaySelectComponent } from '@shared/components/entity/entity-gateway-select.component';
@@ -214,6 +215,7 @@ import { QueueTypeListComponent } from '@shared/components/queue/queue-type-list
     VirtuanJsonPipe,
     KeyboardShortcutPipe,
     VirtuanJsonToStringDirective,
+    ClickStopPropagationDirective,
     JsonObjectEditDialogComponent,
     HistorySelectorComponent,
     EntityGatewaySelectComponent
@@ -376,7 +378,8 @@ import { QueueTypeListComponent } from '@shared/components/queue/queue-type-list
     TranslateModule,
     JsonObjectEditDialogComponent,
     HistorySelectorComponent,
-    EntityGatewaySelectComponent
+    EntityGatewaySelectComponent,
+    ClickStopPropagationDirective
   ]
 })
 export class SharedModule { }
