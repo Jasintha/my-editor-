@@ -244,7 +244,15 @@
                        [userCallbacks]="editCallbacks">
             </fc-canvas>
           </div>
+          <button [disabled]="isLoading$ | async" style="margin: 5px"
+                  mat-fab color="accent" class="virtuan-btn-footer"
+                  (click)="backToDesign()"
+                  matTooltip="back"
+                  matTooltipPosition="above">
+            <mat-icon>reply</mat-icon>
+          </button>
           <section fxLayout="row" class="layout-wrap virtuan-footer-buttons" fxLayoutAlign="start end">
+            <span fxFlex></span>
             <button [disabled]="isLoading$ | async"
                     mat-fab color="accent" class="virtuan-btn-footer"
                     [ngClass]="{'virtuan-hide': !objectsSelected()}"

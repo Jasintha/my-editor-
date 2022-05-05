@@ -351,7 +351,8 @@ export class StoryDesignPageComponent extends PageComponent
               private itembuffer: ItemBufferService,
               public dialog: MatDialog,
               public dialogService: DialogService,
-              public fb: FormBuilder) {
+              public fb: FormBuilder,
+              public  designEditor : DesignEditorComponent) {
     super(store);
     this.route.params.subscribe(params => {
       this.routerType = params['routerType'];
@@ -407,6 +408,10 @@ export class StoryDesignPageComponent extends PageComponent
   lowerCaseWord(word: string) {
     if (!word) return word;
     return word[0].toLowerCase() + word.substr(1);
+  }
+
+  backToDesign(){
+    this.designEditor.backDesignEditor();
   }
 
   onSearchTextUpdated(searchText: string) {
@@ -2043,6 +2048,7 @@ export interface AddRuleNodeDialogData {
 import { StoryService } from '@core/projectservices/story-technical-view.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
+import {DesignEditorComponent} from '@home/pages/rulechain/design-editor/design-editor.component';
 
 @Component({
   selector: 'virtuan-add-rule-node-dialog',
