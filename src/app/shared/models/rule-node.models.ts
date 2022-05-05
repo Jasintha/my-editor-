@@ -185,6 +185,7 @@ export enum RuleNodeType {
   RULE_CHAIN = 'RULE_CHAIN',
   UNKNOWN = 'UNKNOWN',
   INPUT = 'INPUT',
+  SERVICE = 'SERVICE',
   DATABASE_OPERATIONS = 'DATABASE_OPERATIONS',
   CONNECTOR = 'CONNECTOR',
   ROOTING = 'ROOTING',
@@ -376,6 +377,17 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         details: 'rulenode.type-input-details',
         nodeClass: 'virtuan-input-type',
         icon: 'input',
+        special: true
+      }
+    ],
+    [
+      RuleNodeType.SERVICE,
+      {
+        value: RuleNodeType.SERVICE,
+        name: 'rulenode.type-service',
+        details: 'rulenode.type-service-details',
+        nodeClass: 'virtuan-input-type',
+        icon: 'settings_ethernet',
         special: true
       }
     ],

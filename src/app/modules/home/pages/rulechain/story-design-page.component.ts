@@ -662,7 +662,7 @@ export class StoryDesignPageComponent extends PageComponent
     this.ruleChainModel.nodes = [];
     this.ruleChainModel.edges = [];
 
-//     this.inputConnectorId = this.nextConnectorID++;
+    this.inputConnectorId = this.nextConnectorID++;
 //     this.ruleChainModel.nodes.push(
 //       {
 //         id: 'rule-chain-node-' + this.nextNodeID++,

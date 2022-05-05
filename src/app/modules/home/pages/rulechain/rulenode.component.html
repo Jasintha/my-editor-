@@ -85,7 +85,7 @@
     <div class="fc-nodeedit" (click)="userNodeCallbacks.nodeEdit($event, node)">
       <i class="fa fa-pencil" aria-hidden="true"></i>
     </div>
-    <div class="fc-nodedelete" (click)="modelservice.nodes.delete(node)">
+    <div *ngIf="node?.component?.type !== 'SERVICE'" class="fc-nodedelete" (click)="modelservice.nodes.delete(node)">
       &times;
     </div>
   </section>

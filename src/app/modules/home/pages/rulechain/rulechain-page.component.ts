@@ -42,6 +42,7 @@ import { DialogService } from '@core/services/dialog.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   inputNodeComponent,
+  serviceNodeComponent,
   NodeConnectionInfo,
   ResolvedRuleChainMetaData,
   RuleChain,
@@ -149,6 +150,9 @@ export class RuleChainPageComponent extends PageComponent
 
   @Input()
   ruleChain: RuleChain;
+
+  @Input()
+  editorType: string;
 
   @Input()
   ruleChainMetaData: ResolvedRuleChainMetaData;
@@ -350,6 +354,8 @@ export class RuleChainPageComponent extends PageComponent
       this.routerType = params['routerType'];
       this.username = params['username'];
       this.uid = params['uid'];
+      this.editorType = params['editorType'];
+
     });
       this.isImport = false;
       this.route.data.subscribe(({ ruleNodeComponents }) => {
@@ -648,28 +654,38 @@ export class RuleChainPageComponent extends PageComponent
     this.ruleChainModel.edges = [];
 
     this.inputConnectorId = this.nextConnectorID++;
-    this.ruleChainModel.nodes.push(
-      {
-        id: 'rule-chain-node-' + this.nextNodeID++,
-        component: inputNodeComponent,
-        name: '',
-        nodeClass: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).nodeClass,
-        icon: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).icon,
-        readonly: true,
-        x: 50,
-        y: 150,
-        connectors: [
-          {
-            type: FlowchartConstants.rightConnectorType,
-            id: this.inputConnectorId + ''
-          },
-        ]
+    if(this.editorType === 'servicefile'){
 
-      }
-    );
+    } else {
+        this.ruleChainModel.nodes.push(
+          {
+            id: 'rule-chain-node-' + this.nextNodeID++,
+            component: inputNodeComponent,
+            name: '',
+            nodeClass: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).nodeClass,
+            icon: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).icon,
+            readonly: true,
+            x: 50,
+            y: 150,
+            connectors: [
+              {
+                type: FlowchartConstants.rightConnectorType,
+                id: this.inputConnectorId + ''
+              },
+            ]
+
+          }
+        );
+    }
     const nodes: FcRuleNode[] = [];
     this.ruleChainMetaData.nodes.forEach((ruleNode) => {
-      const component = this.ruleChainService.getRuleNodeComponentByClazz(ruleNode.type);
+      let component;
+      if(ruleNode.type === 'xiServiceNode'){
+        component = serviceNodeComponent;
+      } else {
+         component = this.ruleChainService.getRuleNodeComponentByClazz(ruleNode.type);
+      }
+
       const descriptor = ruleNodeTypeDescriptors.get(component.type);
       let icon = descriptor.icon;
       let iconUrl = null;
@@ -1121,9 +1137,13 @@ export class RuleChainPageComponent extends PageComponent
         }
       });
 
-      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], [], [], []);
+      let indexForCheck = editIndex-1;
+      if (this.editorType == 'servicefile') {
+        indexForCheck = editIndex;
+      }
 
-      let apiFoundObj= this.checkForApiConnection(editIndex-1, allConnections, nodes, false, []);
+      let branchFoundObj = this.checkForBranchConnection(indexForCheck, allConnections, nodes, [],[], [], [], [], []);
+      let apiFoundObj= this.checkForApiConnection(indexForCheck, allConnections, nodes, false, []);
 
       let golbalProperties = this.allGlobalProperties;
 
