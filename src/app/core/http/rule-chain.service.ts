@@ -28,6 +28,7 @@ import {
   RuleChainMetaData,
   ruleChainNodeComponent,
   ruleNodeTypeComponentTypes,
+  ruleNodeDesignComponent,
   unknownNodeComponent
 } from '@shared/models/rule-chain.models';
 import { ComponentDescriptorService } from './component-descriptor.service';
@@ -160,9 +161,9 @@ export class RuleChainService {
 
   public getRuleNodeComponents(ruleNodeConfigResourcesModulesMap: {[key: string]: any}, uid : string, editorType: string, config?: RequestConfig):
     Observable<Array<RuleNodeComponentDescriptor>> {
-     if (this.ruleNodeComponents) {
-       return of(this.ruleNodeComponents);
-     } else {
+     // if (this.ruleNodeComponents) {
+     //   return of(this.ruleNodeComponents);
+     // } else {
       return this.loadRuleNodeComponents(uid, editorType, config).pipe(
         mergeMap((components) => {
           return this.resolveRuleNodeComponentsUiResources(components, ruleNodeConfigResourcesModulesMap).pipe(
@@ -183,7 +184,7 @@ export class RuleChainService {
           );
         })
       );
-    }
+    // }
   }
 
   public getRuleNodeConfigFactory(directive: string): ComponentFactory<IRuleNodeConfigurationComponent> {
@@ -330,15 +331,27 @@ export class RuleChainService {
   }
 
   private loadRuleNodeComponents(uid : string, editorType : string, config?: RequestConfig): Observable<Array<RuleNodeComponentDescriptor>> {
-    return this.componentDescriptorService.getComponentDescriptorsByTypes(ruleNodeTypeComponentTypes, uid, editorType, config).pipe(
-      map((components) => {
-        const ruleNodeComponents: RuleNodeComponentDescriptor[] = [];
-        components.forEach((component) => {
-          ruleNodeComponents.push(component as RuleNodeComponentDescriptor);
-        });
-        return ruleNodeComponents;
-      })
-    );
+    if(editorType === 'design') {
+      return this.componentDescriptorService.getComponentDescriptorsByTypes(ruleNodeDesignComponent, uid, editorType, config).pipe(
+          map((components) => {
+            const ruleNodeComponents: RuleNodeComponentDescriptor[] = [];
+            components.forEach((component) => {
+              ruleNodeComponents.push(component as RuleNodeComponentDescriptor);
+            });
+            return ruleNodeComponents;
+          })
+      );
+    } else {
+      return this.componentDescriptorService.getComponentDescriptorsByTypes(ruleNodeTypeComponentTypes, uid, editorType, config).pipe(
+          map((components) => {
+            const ruleNodeComponents: RuleNodeComponentDescriptor[] = [];
+            components.forEach((component) => {
+              ruleNodeComponents.push(component as RuleNodeComponentDescriptor);
+            });
+            return ruleNodeComponents;
+          })
+      );
+    }
   }
 
   private resolveRuleNodeComponentsUiResources(components: Array<RuleNodeComponentDescriptor>,

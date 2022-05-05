@@ -126,6 +126,10 @@ export const ruleNodeTypeComponentTypes: ComponentType[] =
     ComponentType.MIDDLEWARE
   ];
 
+export const ruleNodeDesignComponent: ComponentType[] =
+    [
+      ComponentType.DESIGN
+    ];
 export const ruleChainNodeComponent: RuleNodeComponentDescriptor = {
   type: RuleNodeType.RULE_CHAIN,
   name: 'rule chain',
