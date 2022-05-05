@@ -358,3 +358,10 @@
     padding-bottom: 25px;
     cursor: pointer;
 }
+
+.txt-overflow{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 150px;
+    overflow: hidden;
+}
