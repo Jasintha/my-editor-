@@ -63,7 +63,8 @@ import {
   RuleNodeComponentDescriptor,
   RuleNodeType,
   ruleNodeTypeDescriptors,
-  ruleNodeTypesLibrary
+  ruleNodeTypesLibrary,
+  serviceruleNodeTypesLibrary
 } from '@shared/models/rule-node.models';
 import { QuestionBase,ValueProperty } from '@shared/models/question-base.models';
 import { FcRuleNodeModel, FcRuleNodeTypeModel, RuleChainMenuContextInfo } from './rulechain-page.models';
@@ -117,7 +118,8 @@ export class RuleChainPageComponent extends PageComponent
   contextMenuEvent: MouseEvent;
 
   ruleNodeTypeDescriptorsMap = ruleNodeTypeDescriptors;
-  ruleNodeTypesLibraryArray = ruleNodeTypesLibrary;
+//   ruleNodeTypesLibraryArray = ruleNodeTypesLibrary;
+  ruleNodeTypesLibraryArray : any[];
 
   isImport: boolean;
   isDirtyValue: boolean;
@@ -410,6 +412,13 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   private init() {
+
+    if(this.editorType === "servicefile"){
+        this.ruleNodeTypesLibraryArray= serviceruleNodeTypesLibrary;
+    } else {
+        this.ruleNodeTypesLibraryArray= ruleNodeTypesLibrary;
+    }
+
     this.initHotKeys();
 //     const routerType = this.route.snapshot.params.routerType;
     this.serviceUuid = this.uid;
@@ -477,17 +486,32 @@ export class RuleChainPageComponent extends PageComponent
     this.allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
     }
 
-    for (const type of ruleNodeTypesLibrary) {
-      const desc = ruleNodeTypeDescriptors.get(type);
-      if (!desc.special) {
-        this.ruleNodeTypesModel[type] = {
-          model: {
-            nodes: [],
-            edges: []
-          },
-          selectedObjects: []
-        };
-      }
+    if(this.editorType === "servicefile"){
+        for (const type of serviceruleNodeTypesLibrary) {
+          const desc = ruleNodeTypeDescriptors.get(type);
+          if (!desc.special) {
+            this.ruleNodeTypesModel[type] = {
+              model: {
+                nodes: [],
+                edges: []
+              },
+              selectedObjects: []
+            };
+          }
+        }
+    } else {
+        for (const type of ruleNodeTypesLibrary) {
+          const desc = ruleNodeTypeDescriptors.get(type);
+          if (!desc.special) {
+            this.ruleNodeTypesModel[type] = {
+              model: {
+                nodes: [],
+                edges: []
+              },
+              selectedObjects: []
+            };
+          }
+        }
     }
     this.updateRuleChainLibrary();
     this.createRuleChainModel();
@@ -629,19 +653,35 @@ export class RuleChainPageComponent extends PageComponent
       model.nodes.push(node);
     });
     if (this.expansionPanels) {
-      for (let i = 0; i < ruleNodeTypesLibrary.length; i++) {
-        const panel = this.expansionPanels.find((item, index) => {
-          return index === i;
-        });
-        if (panel) {
-          const type = ruleNodeTypesLibrary[i];
-          if (!this.ruleNodeTypesModel[type].model.nodes.length) {
-            panel.close();
-          } else {
-            panel.open();
+        if(this.editorType === "servicefile"){
+          for (let i = 0; i < serviceruleNodeTypesLibrary.length; i++) {
+            const panel = this.expansionPanels.find((item, index) => {
+              return index === i;
+            });
+            if (panel) {
+              const type = serviceruleNodeTypesLibrary[i];
+              if (!this.ruleNodeTypesModel[type].model.nodes.length) {
+                panel.close();
+              } else {
+                panel.open();
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < ruleNodeTypesLibrary.length; i++) {
+            const panel = this.expansionPanels.find((item, index) => {
+              return index === i;
+            });
+            if (panel) {
+              const type = ruleNodeTypesLibrary[i];
+              if (!this.ruleNodeTypesModel[type].model.nodes.length) {
+                panel.close();
+              } else {
+                panel.open();
+              }
+            }
           }
         }
-      }
     }
   }
 
@@ -1290,10 +1330,11 @@ export class RuleChainPageComponent extends PageComponent
             let obj = {'apiNodeFound': apiNodeFound, 'nodeRuleInputs': nodeRuleInputs};
             return obj;
         } else {
-            if(nodes[foundNode.fromIndex].component.clazz === 'xiApiNode'){
+            if(nodes[foundNode.fromIndex].component.clazz === 'xiPostNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGetNode' ||
+                nodes[foundNode.fromIndex].component.clazz === 'xiPutNode' || nodes[foundNode.fromIndex].component.clazz === 'xiDeleteNode'){
                 apiNodeFound = true;
                 let configuration = nodes[foundNode.fromIndex].configuration;
-                if (configuration.apiStyleType === 'GRPC' || (configuration.apiStyleType === 'REST' && configuration.apiType === 'API' && (configuration.operation === 'CREATE' || configuration.operation === 'UPDATE'))){
+                if (nodes[foundNode.fromIndex].component.clazz === 'xiPostNode' || nodes[foundNode.fromIndex].component.clazz === 'xiPutNode'){
                     let inputname = configuration.selectedAPIInputs.inputName.replace(/\s/g, "");
                     inputname = inputname.toLowerCase();
                     inputname = this.titleCaseWord(inputname);
@@ -1309,13 +1350,14 @@ export class RuleChainPageComponent extends PageComponent
                         //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
                         nodeRuleInputs.push(ruleInput);
                     }
-                } else if (configuration.apiStyleType === 'REST' && configuration.apiType === 'FILE_UPLOAD'){
+                }
+                /* else if (configuration.apiStyleType === 'REST' && configuration.apiType === 'FILE_UPLOAD'){
                     let ruleInput = { inputName: 'file', inputType: 'file', record: 's'  };
                     //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
                     nodeRuleInputs.push(ruleInput);
-                }
+                } */
 
-                if (configuration.apiStyleType === 'REST' && configuration.apiParams){
+                if (configuration.apiParams){
                     configuration.apiParams.forEach((param) => {
                         let propertyString = param.inputName.replace(/\s/g, "");
                         propertyString = propertyString.toLowerCase();

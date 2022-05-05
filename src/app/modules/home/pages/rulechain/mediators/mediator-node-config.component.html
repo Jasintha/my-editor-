@@ -1150,4 +1150,36 @@
                                      [nodeDefinition]="nodeDefinitionValue">
         </virtuan-api-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiGetNode'">
+        <virtuan-get-node-config #cactorNodeConfigComponent
+                                     formControlName="configuration"
+                                     [ruleNodeId]="ruleNodeId"
+                                     [serviceUuid]="serviceUuid"
+                                     [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-get-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiDeleteNode'">
+        <virtuan-delete-node-config #cactorNodeConfigComponent
+                                     formControlName="configuration"
+                                     [ruleNodeId]="ruleNodeId"
+                                     [serviceUuid]="serviceUuid"
+                                     [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-delete-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiPostNode'">
+        <virtuan-post-node-config #cactorNodeConfigComponent
+                                     formControlName="configuration"
+                                     [ruleNodeId]="ruleNodeId"
+                                     [serviceUuid]="serviceUuid"
+                                     [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-post-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiPutNode'">
+        <virtuan-put-node-config #cactorNodeConfigComponent
+                                     formControlName="configuration"
+                                     [ruleNodeId]="ruleNodeId"
+                                     [serviceUuid]="serviceUuid"
+                                     [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-put-node-config>
+    </ng-container>
 </div>

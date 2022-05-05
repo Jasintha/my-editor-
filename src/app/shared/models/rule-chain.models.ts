@@ -123,7 +123,8 @@ export const ruleNodeTypeComponentTypes: ComponentType[] =
     ComponentType.CORE,
     ComponentType.CQRS,
     ComponentType.MESSAGING,
-    ComponentType.MIDDLEWARE
+    ComponentType.MIDDLEWARE,
+    ComponentType.OPERATION,
   ];
 
 export const ruleNodeDesignComponent: ComponentType[] =

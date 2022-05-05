@@ -1,0 +1,109 @@
+<div [formGroup]="deleteNodeConfigFormGroup">
+
+    <mat-form-field class="mat-block">
+        <mat-label>Resource Path</mat-label>
+        <input type="text" formControlName="resourcePath" matInput>
+    </mat-form-field>
+
+    <mat-form-field class="mat-block">
+        <mat-label>Return Object</mat-label>
+        <mat-select formControlName="returnObj">
+            <mat-option *ngFor="let option of returnItems" [value]="option">
+                <span *ngIf="option.inputType === 'MODEL' || option.inputType === 'DTO'">{{option.inputName}} : {{option.inputType}}</span>
+                <span *ngIf="option.inputType !== 'MODEL' && option.inputType !== 'DTO'">{{option.inputType}}</span>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div class="pt-3 pb-5">
+        <label id="example-radio-group-label">Return Object Record</label>
+        <mat-radio-group aria-labelledby="example-radio-group-label"
+                         class="ps-5" aria-label="Select an option" formControlName="returnRecordType">
+            <mat-radio-button class="pe-3" value="s">Single</mat-radio-button>
+            <mat-radio-button value="m">Multiple</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div class="mat-block">
+        <mat-checkbox formControlName="enableSecurity">Enable Security</mat-checkbox>
+    </div>
+
+    <div class="form-group">
+        <label class="form-control-label">Add Params</label>
+        <div class="card">
+            <div class="card-body row">
+                <div class="col-md-3">
+                    <mat-form-field class="mat-block">
+                        <mat-label>Name</mat-label>
+                        <input type="text" formControlName="paramName" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="mat-block">
+                        <mat-label>Choose Type</mat-label>
+                        <mat-select formControlName="paramDataType">
+                            <mat-option *ngFor="let option of paramDataTypeItems" [value]="option.value">
+                                {{option.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-form-field class="mat-block">
+                        <mat-label>Choose Param Type</mat-label>
+                        <mat-select formControlName="paramType">
+                            <mat-option *ngFor="let option of paramitems" [value]="option.value">
+                                {{option.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3" style='text-align: center'>
+                    <button type="button" mat-raised-button (click)="addRow()">
+                        <mat-icon>add</mat-icon>
+                        ADD
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div style="padding-top:20px;padding-bottom:20px;">
+        <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element">{{element.inputName}}</td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="datatype">
+                <th mat-header-cell *matHeaderCellDef>Data Type</th>
+                <td mat-cell *matCellDef="let element">{{element.inputType}}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="param">
+                <th mat-header-cell *matHeaderCellDef>Param</th>
+                <td mat-cell *matCellDef="let element">{{element.paramType}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Action</th>
+                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                    <button (click)="deleteRow(row)"
+                            mat-icon-button
+                            type="button">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+</div>
+
