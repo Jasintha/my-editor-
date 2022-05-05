@@ -240,6 +240,11 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
         this.allValueObjectProperties= this.branchAvailability.valueObjectProperties;
         this.allConnectionProperties = this.branchAvailability.connectionProperties;
     }
+
+    if(this.branchAvailability.apiFoundObj && this.branchAvailability.apiFoundObj.apiNodeFound){
+      this.allRuleInputs = this.branchAvailability.apiFoundObj.nodeRuleInputs;
+    }
+
     this.allReferenceProperties = this.branchAvailability.referenceProperties;
   }
 

@@ -102,6 +102,8 @@ import {ModelNodeConfigComponent} from "@home/pages/rulechain/mediators/design/m
 import {ProcessNodeConfigComponent} from "@home/pages/rulechain/mediators/design/process-node-config.component";
 import {ScreenNodeConfigComponent} from "@home/pages/rulechain/mediators/design/screen-node-config.component";
 
+import {ApiNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/api-node-config.component";
+
 import {TreeModule} from 'primeng/tree';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -199,7 +201,8 @@ import { TabViewModule } from 'primeng/tabview';
     ActorNodeConfigComponent,
     ModelNodeConfigComponent,
     ProcessNodeConfigComponent,
-    ScreenNodeConfigComponent
+    ScreenNodeConfigComponent,
+    ApiNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -297,7 +300,8 @@ import { TabViewModule } from 'primeng/tabview';
     ActorNodeConfigComponent,
     ModelNodeConfigComponent,
     ProcessNodeConfigComponent,
-    ScreenNodeConfigComponent
+    ScreenNodeConfigComponent,
+    ApiNodeConfigComponent
   ],
   providers: []
 })

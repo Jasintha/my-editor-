@@ -201,6 +201,8 @@ export class RuleChainPageComponent extends PageComponent
   @Input()
   uid: string;
 
+  serviceUuid: string;
+
   branchAvailability: any;
 
   ruleChainModel: FcRuleNodeModel = {
@@ -365,20 +367,16 @@ export class RuleChainPageComponent extends PageComponent
       });
 //     const routerType = this.route.snapshot.params.routerType;
     if (this.routerType == "R") {
-        console.log("called");
         this.init();
     }
 
   }
 
   ngOnInit() {
-  console.log("called 2");
 //     const routerType = this.route.snapshot.params.routerType;
     if (this.routerType != "R") {
         this.init();
     }
-//      console.log("kkkkkk");
-//      console.log(this.ruleChainMetaData);
 //      this.init();
   }
 
@@ -408,6 +406,7 @@ export class RuleChainPageComponent extends PageComponent
   private init() {
     this.initHotKeys();
 //     const routerType = this.route.snapshot.params.routerType;
+    this.serviceUuid = this.uid;
     if (this.routerType == "R") {
 
     } else {
@@ -814,7 +813,6 @@ export class RuleChainPageComponent extends PageComponent
       });
     }
     if (this.ruleChainCanvas) {
-    console.log(this.ruleChainCanvas);
       this.ruleChainCanvas.adjustCanvasSize(true);
     }
     this.isDirtyValue = false;
@@ -1123,7 +1121,9 @@ export class RuleChainPageComponent extends PageComponent
         }
       });
 
-      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], [], []);
+      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], [], [], []);
+
+      let apiFoundObj= this.checkForApiConnection(editIndex-1, allConnections, nodes, false, []);
 
       let golbalProperties = this.allGlobalProperties;
 
@@ -1192,10 +1192,10 @@ export class RuleChainPageComponent extends PageComponent
               valueProperty.valueType = "primitive";
               valueObjectPropertyArray.push(valueProperty)
             }
-            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties};
+            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties, 'apiFoundObj': apiFoundObj};
             return obj;
         } else {
-            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties};
+            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties, 'apiFoundObj': apiFoundObj};
             return obj;
         }
 
@@ -1216,17 +1216,17 @@ export class RuleChainPageComponent extends PageComponent
           }
         }
 
-            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties};
+            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties, 'apiFoundObj': apiFoundObj};
             return obj;
       }
 
   }
 
-  checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray){
+  checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray, nodeRuleInputs){
     let foundNode = allConnections.find(x => x.toIndex === index);
     if(foundNode){
         if(foundNode.type.startsWith("BRANCH_") || foundNode.type.startsWith("ERROR_BRANCH_")){
-            let obj = {'branchIndex': foundNode.fromIndex, 'branchFound': true, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray};
+            let obj = {'branchIndex': foundNode.fromIndex, 'branchFound': true, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray, 'nodeRuleInputs': nodeRuleInputs};
             return obj;
         } else {
             if(nodes[foundNode.fromIndex].configuration.nodevariable !== undefined && nodes[foundNode.fromIndex].configuration.nodevariable !== null){
@@ -1254,13 +1254,97 @@ export class RuleChainPageComponent extends PageComponent
                 }
             }
 
-            let branchCheckVal = this.checkForBranchConnection(foundNode.fromIndex, allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray);
+            let branchCheckVal = this.checkForBranchConnection(foundNode.fromIndex, allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray, nodeRuleInputs);
             return branchCheckVal;
         }
     } else {
-        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray};
+        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray, 'nodeRuleInputs': nodeRuleInputs};
         return obj;
     }
+  }
+
+  checkForApiConnection( index ,allConnections, nodes, apiNodeFound, nodeRuleInputs){
+    let foundNode = allConnections.find(x => x.toIndex === index);
+    if(foundNode){
+        if(foundNode.type.startsWith("BRANCH_") || foundNode.type.startsWith("ERROR_BRANCH_")){
+            let obj = {'apiNodeFound': apiNodeFound, 'nodeRuleInputs': nodeRuleInputs};
+            return obj;
+        } else {
+            if(nodes[foundNode.fromIndex].component.clazz === 'xiApiNode'){
+                apiNodeFound = true;
+                let configuration = nodes[foundNode.fromIndex].configuration;
+                if (configuration.apiStyleType === 'GRPC' || (configuration.apiStyleType === 'REST' && configuration.apiType === 'API' && (configuration.operation === 'CREATE' || configuration.operation === 'UPDATE'))){
+                    let inputname = configuration.selectedAPIInputs.inputName.replace(/\s/g, "");
+                    inputname = inputname.toLowerCase();
+                    inputname = this.titleCaseWord(inputname);
+
+                    let inputTypeLower =configuration.selectedAPIInputs.inputType.toLowerCase();
+
+                    if (inputTypeLower == "model") {
+                        let ruleInput = { inputName: inputname, inputType: 'model', record: 's'  };
+                        //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                        nodeRuleInputs.push(ruleInput);
+                    } else if (inputTypeLower == "dto") {
+                        let ruleInput = { inputName: inputname, inputType: 'dto', record: 's'  };
+                        //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                        nodeRuleInputs.push(ruleInput);
+                    }
+                } else if (configuration.apiStyleType === 'REST' && configuration.apiType === 'FILE_UPLOAD'){
+                    let ruleInput = { inputName: 'file', inputType: 'file', record: 's'  };
+                    //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                    nodeRuleInputs.push(ruleInput);
+                }
+
+                if (configuration.apiStyleType === 'REST' && configuration.apiParams){
+                    configuration.apiParams.forEach((param) => {
+                        let propertyString = param.inputName.replace(/\s/g, "");
+                        propertyString = propertyString.toLowerCase();
+
+                        if (param.inputType == "TEXT") {
+                            let ruleInput = { inputName: propertyString, inputType: 'string', record: 's'  };
+                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                            nodeRuleInputs.push(ruleInput);
+                        } else if ( param.inputType ==  "NUMBER") {
+                            let ruleInput = { inputName: propertyString, inputType: 'int', record: 's'  };
+                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                            nodeRuleInputs.push(ruleInput);
+                        } else if ( param.inputType ==  "FLOAT") {
+                            let ruleInput = { inputName: propertyString, inputType: 'float64', record: 's'  };
+                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                            nodeRuleInputs.push(ruleInput);
+                        } else if ( param.inputType ==  "TRUE_OR_FALSE") {
+                            let ruleInput = { inputName: propertyString, inputType: 'bool', record: 's'  };
+                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                            nodeRuleInputs.push(ruleInput);
+                        } else if ( param.inputType ==  "FILE") {
+                            let ruleInput = { inputName: propertyString, inputType: 'File', record: 's'  };
+                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                            nodeRuleInputs.push(ruleInput);
+                        } else if ( param.inputType ==  "IMAGE") {
+                            let ruleInput = { inputName: propertyString, inputType: 'Image', record: 's'  };
+                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                            nodeRuleInputs.push(ruleInput);
+                        } else if ( param.inputType ==  "DATE") {
+                            let ruleInput = { inputName: propertyString, inputType: 'time.Time', record: 's'  };
+                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                            nodeRuleInputs.push(ruleInput);
+                        }
+                    });
+                }
+            }
+
+            let apiCheckVal = this.checkForApiConnection(foundNode.fromIndex, allConnections, nodes, apiNodeFound, nodeRuleInputs);
+            return apiCheckVal;
+        }
+    } else {
+        let obj = {'apiNodeFound': apiNodeFound, 'nodeRuleInputs': nodeRuleInputs};
+        return obj;
+    }
+  }
+
+  titleCaseWord(word: string) {
+    if (!word) return word;
+    return word[0].toUpperCase() + word.substr(1);
   }
 
   openLinkDetails(edge: FcRuleEdge) {

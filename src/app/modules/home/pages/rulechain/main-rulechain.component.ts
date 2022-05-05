@@ -116,6 +116,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     connectionPropertyTemplatesLoaded: boolean;
     loadModelView: boolean;
     projectUid: string;
+    ruleprojectUid: string;
     requirementUid: string;
     requirementCount: number;
     requirementArray: any[];
@@ -323,16 +324,18 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadDesignRequirement = false;
         this.requirementUid = "";
         this.loadPageEditor = false;
+        this.ruleprojectUid = "";
+        this.ruleprojectUid = item.projectuuid;
 
         this.username = item.username;
 //         this.uid = this.projectUid;
-        this.ruleChainService.getRuleChainWithUsernameAndUID(item.ruleid, item.username, this.projectUid).subscribe((ruleChain) => {
+        this.ruleChainService.getRuleChainWithUsernameAndUID(item.ruleid, item.username, this.ruleprojectUid).subscribe((ruleChain) => {
             console.log('ruleChain');
             console.log(ruleChain);
             this.ruleChainLoaded = true;
             this.ruleChain = ruleChain;
         });
-        this.ruleChainService.getResolvedRuleChainMetadata(item.ruleid, item.username, this.projectUid).subscribe((ruleChainMetaData) => {
+        this.ruleChainService.getResolvedRuleChainMetadata(item.ruleid, item.username, this.ruleprojectUid).subscribe((ruleChainMetaData) => {
             this.ruleChainMetaDataLoaded = true;
             this.ruleChainMetaData = ruleChainMetaData;
         });
@@ -341,7 +344,12 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             this.connectionPropertyTemplatesLoaded = true;
             this.connectionPropertyTemplates = connectionPropertyTemplates;
         });
-        this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap, this.projectUid, 'default').subscribe((ruleNodeComponents) => {
+
+        let editorType = "default";
+        if(item.type === "SERVICEFILE"){
+            editorType = "servicefile"
+        }
+        this.ruleChainService.getRuleNodeComponents(ruleNodeConfigResourcesModulesMap, this.ruleprojectUid, editorType).subscribe((ruleNodeComponents) => {
             this.ruleNodeComponentsLoaded = true;
             this.ruleNodeComponents = ruleNodeComponents;
         });
@@ -372,6 +380,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.route.params.subscribe(params => {
             this.projectUid = params['projectUid'];
         });
+        this.ruleprojectUid = "";
         this.loadTreeData();
         this.loadDesignTreeData();
         this.loadUITreeData();

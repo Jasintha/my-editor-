@@ -1142,4 +1142,12 @@
                                      [nodeDefinition]="nodeDefinitionValue">
         </virtuan-screen-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiApiNode'">
+        <virtuan-api-node-config #cactorNodeConfigComponent
+                                     formControlName="configuration"
+                                     [ruleNodeId]="ruleNodeId"
+                                     [serviceUuid]="serviceUuid"
+                                     [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-api-node-config>
+    </ng-container>
 </div>

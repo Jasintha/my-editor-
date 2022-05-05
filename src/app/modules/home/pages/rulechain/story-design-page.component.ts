@@ -275,7 +275,7 @@ export class StoryDesignPageComponent extends PageComponent
             this.enableHotKeys = true;
             return of(rootLink);
           } else if(sourceNode.component.clazz == 'xiValidatorNode' || sourceNode.component.clazz == 'xiIteratorNode' || sourceNode.component.clazz == 'xiFilterNode' ||
-            sourceNode.component.clazz == 'xiSwitchNode'){
+            sourceNode.component.clazz == 'xiSwitchNode' || sourceNode.component.clazz == 'xiScreenNode'){
 
             return this.addRuleNodeLink(edge, labels, allowCustomLabels).pipe(
               tap(() => {

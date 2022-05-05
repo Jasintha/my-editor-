@@ -67,18 +67,18 @@
     </div>
   </div>
   <div class="application-resource-tree__node-menu">
-    <div class="gen-dropdown">
+ <!--   <div class="gen-dropdown">
       <div class="gen-dropdown__anchor">
         <button (click)="displayMenu(i+ 1);$event.stopPropagation();"
-                class="gen-button gen-button--light gen-button--lg gen-button--short">
+                class="gen-button gen-button&#45;&#45;light gen-button&#45;&#45;lg gen-button&#45;&#45;short">
           <i class="fa fa-ellipsis-v"></i></button>
       </div>
-    </div>
-    <div class="controller-menu">
+    </div>-->
+    <!--<div class="controller-menu">
       <div [className]="selectedId ===  i+ 1? 'visible' : 'hide'">
         <p-menu [model]="items"></p-menu>
       </div>
-    </div>
+    </div>-->
   </div>
 
   <section *ngIf="modelservice.isEditable() && !node.readonly">
