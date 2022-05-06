@@ -28,7 +28,7 @@ import {
   RuleChainMetaData,
   ruleChainNodeComponent,
   ruleNodeTypeComponentTypes,
-  ruleNodeDesignComponent,
+  // ruleNodeDesignComponent,
   unknownNodeComponent
 } from '@shared/models/rule-chain.models';
 import { ComponentDescriptorService } from './component-descriptor.service';
@@ -46,6 +46,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { EntityType } from '@shared/models/entity-type.models';
 import { deepClone, snakeCase } from '@core/utils';
 import { DebugRuleNodeEventBody } from '@app/shared/models/event.models';
+import {ComponentType} from '@shared/models/component-descriptor.models';
 
 @Injectable({
   providedIn: 'root'
@@ -331,7 +332,9 @@ export class RuleChainService {
   }
 
   private loadRuleNodeComponents(uid : string, editorType : string, config?: RequestConfig): Observable<Array<RuleNodeComponentDescriptor>> {
+
     if(editorType === 'design') {
+      const ruleNodeDesignComponent: ComponentType[] = [ComponentType.DESIGN];
       return this.componentDescriptorService.getComponentDescriptorsByTypes(ruleNodeDesignComponent, uid, editorType, config).pipe(
           map((components) => {
             const ruleNodeComponents: RuleNodeComponentDescriptor[] = [];
