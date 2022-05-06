@@ -411,7 +411,7 @@ export class StoryDesignPageComponent extends PageComponent
   }
 
   backToDesign(){
-    this.saveRuleChain();
+   // this.saveRuleChain();
     this.designEditor.backDesignEditor();
   }
 

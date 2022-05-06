@@ -632,8 +632,7 @@ export class RuleChainPageComponent extends PageComponent
         iconUrl,
         x: 30,
         y: 10 + 50 * model.nodes.length,
-        connectors: [],
-        editorType: 'service',
+        connectors: []
       };
       if (ruleNodeComponent.configurationDescriptor.nodeDefinition.inEnabled) {
         node.connectors.push(
