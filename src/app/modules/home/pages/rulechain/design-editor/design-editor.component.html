@@ -2,13 +2,13 @@
     <div class="wrapper option-1 option-1-1">
         <ol class="c-stepper">
             <li [ngClass]="currentLevel === 'requirement' ? 'c-stepper__item_selected': 'c-stepper__item'" >
-                <h3 class="c-stepper__title">Requirement</h3>
+                <h6 class="c-stepper__title">Requirement</h6>
             </li>
             <li  [ngClass]="currentLevel === 'epic' ? 'c-stepper__item_selected': 'c-stepper__item'">
-                <h3 class="c-stepper__title">Epic</h3>
+                <h6 class="c-stepper__title">Epic</h6>
             </li>
             <li  [ngClass]="currentLevel === 'story' ? 'c-stepper__item_selected': 'c-stepper__item'" >
-                <h3 class="c-stepper__title">Story</h3>
+                <h6 class="c-stepper__title">Story</h6>
             </li>
         </ol>
     </div>
@@ -16,7 +16,7 @@
         <div class="col-2" (click)="clickReq()">
             <div class="wrap" style="border-style: dashed;" matTooltip="{{currentReq?.name}}"
                  [matTooltipPosition]="toolTipPosition">
-                <h3 class="txt-overflow">{{currentReq?.name}}</h3>
+                <h5 class="txt-overflow">{{currentReq?.name}}</h5>
                 <a  class="edit" (click)="editDialog(currentReq?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <div class="inner-wrap">
                     <input type="text" placeholder="Title">
@@ -48,7 +48,7 @@
             <div class="col-2" (click)="filterEpic(epic, j)">
                 <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''" matTooltip="{{epic?.name}}"
                      [matTooltipPosition]="toolTipPosition">
-                    <h3 class="txt-overflow">{{epic?.name}}</h3>
+                    <h5 class="txt-overflow">{{epic?.name}}</h5>
 <!--                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
                     <div class="inner-wrap">
                         <input type="text" placeholder="Title">
