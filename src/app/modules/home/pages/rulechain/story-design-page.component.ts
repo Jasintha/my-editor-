@@ -1708,22 +1708,23 @@ export class StoryDesignPageComponent extends PageComponent
         } else {
           this.createRuleChainModel();
         }
+        this.eventManager.dispatch(
+            new AppEvent(EventTypes.editorTreeListModification, {
+              name: 'editorTreeListModification',
+              content: 'save rule',
+            })
+        );
+
+        this.eventManager.dispatch(
+            new AppEvent(EventTypes.editorUITreeListModification, {
+              name: 'editorUITreeListModification',
+              content: 'save rule',
+            })
+        );
       });
     });
 
-    this.eventManager.dispatch(
-        new AppEvent(EventTypes.editorTreeListModification, {
-          name: 'editorTreeListModification',
-          content: 'save rule',
-        })
-    );
 
-    this.eventManager.dispatch(
-        new AppEvent(EventTypes.editorUITreeListModification, {
-          name: 'editorUITreeListModification',
-          content: 'save rule',
-        })
-    );
   }
 
   revertRuleChain() {
