@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div id="epics" class="row section border row-color">
+    <div id="epics" class="row section border row-color" *ngIf="existingEpics.length != 0">
         <ng-container *ngFor="let epic of existingEpics; let j = index">
             <div class="col-2" (click)="filterEpic(epic, j)">
                 <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''" matTooltip="{{epic?.name}}"
@@ -82,7 +82,7 @@
 <!--        </div>-->
     </div>
 
-    <div id="stories" class="row section border row-color" *ngIf="showStoryBoard">
+    <div id="stories" class="row section border row-color" *ngIf="filteredStories.length != 0">
         <ng-container *ngFor="let story of filteredStories">
             <div class="col-2" (click)="loadStoryDesignEditor(story)">
                 <div class="wrap selected" matTooltip="{{story?.name}}"

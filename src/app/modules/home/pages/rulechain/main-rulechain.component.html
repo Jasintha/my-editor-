@@ -39,23 +39,38 @@
 
                     </as-split-area>
                     <as-split-area [size]="18">
-                        <mat-tab-group dynamicHeight>
+                        <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
+                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button>
+                        </div>
+                        <mat-tab-group dynamicHeight (selectedTabChange)="tabChanged($event)">
                             <mat-tab label="Console">
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">next_week</mat-icon>
+                                    Console
+                                </ng-template>
                                 <ng-template matTabContent>
                                     <div style="min-height: 200px; height:100% !important; width: 100%;">
-                                        <div style="min-height: 40px;margin: 5px;">
-                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>
+<!--                                        <div style="min-height: 40px;margin: 5px;">-->
+<!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
 
                                         <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
                                     </div>
                                 </ng-template>
                             </mat-tab>
-                            <mat-tab label="Git">
+                            <mat-tab label="Debugger">
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">bug_report</mat-icon>
+                                    Debugger
+                                </ng-template>
                                 <ng-template matTabContent>
                                     Debugger
                                 </ng-template>
                             </mat-tab>
                             <mat-tab label="Run">
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">developer_mode</mat-icon>
+                                    Run
+                                </ng-template>
                                 <ng-template matTabContent>
                                     Run
                                 </ng-template>

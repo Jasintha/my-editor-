@@ -69,6 +69,7 @@ import {CreateHybridfunctionComponent} from '@home/pages/create-hybridfunction/c
 import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';
 import {CreateTaskComponent} from '@home/pages/create-task/create-task.component';
 import {AddOperationService} from '@core/projectservices/add-operations.service';
+import {MatTabChangeEvent} from '@angular/material/tabs';
 
 declare const SystemJS;
 
@@ -137,6 +138,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     code: string = '';
     generatorList: { [key: number]: string } = {};
     generatorChain: IGenerator[];
+    selectedTab = 0;
 
     private _transformer = (node: any, level: number) => {
         return {
@@ -228,6 +230,10 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     edit(item){
         this.projectUid = item.projectuuid;
         this.addOperationService.editPopups(item, this.projectUid, 'Update');
+    }
+
+    public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+        this.selectedTab = tabChangeEvent.index;
     }
 
     viewComponent(item){
