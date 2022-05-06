@@ -352,7 +352,8 @@ export class StoryDesignPageComponent extends PageComponent
               public dialog: MatDialog,
               public dialogService: DialogService,
               public fb: FormBuilder,
-              public  designEditor : DesignEditorComponent) {
+              public  designEditor : DesignEditorComponent,
+              protected eventManager: EventManagerService,) {
     super(store);
     this.route.params.subscribe(params => {
       this.routerType = params['routerType'];
@@ -1709,6 +1710,20 @@ export class StoryDesignPageComponent extends PageComponent
         }
       });
     });
+
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorTreeListModification, {
+          name: 'editorTreeListModification',
+          content: 'save rule',
+        })
+    );
+
+    this.eventManager.dispatch(
+        new AppEvent(EventTypes.editorUITreeListModification, {
+          name: 'editorUITreeListModification',
+          content: 'save rule',
+        })
+    );
   }
 
   revertRuleChain() {
@@ -2051,6 +2066,9 @@ import { StoryService } from '@core/projectservices/story-technical-view.service
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
 import {DesignEditorComponent} from '@home/pages/rulechain/design-editor/design-editor.component';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
+import {EventManagerService} from '@shared/events/event.type';
 
 @Component({
   selector: 'virtuan-add-rule-node-dialog',
