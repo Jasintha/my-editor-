@@ -55,6 +55,9 @@ import {EditStoryComponent} from '@home/pages/rulechain/design-editor/edit-story
 import {ApiDeleteDialogComponent} from '@home/pages/create-api/api-delete-dialog.component';
 import {DeleteDesignComponent} from '@home/pages/rulechain/design-editor/delete-design.component';
 import {CreateRequirementComponent} from '@home/pages/rulechain/design-editor/create-requirement.component';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
+import {EventManagerService} from '@shared/events/event.type';
 
 declare const SystemJS;
 
@@ -132,7 +135,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     storyLevel : boolean;
 
     constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
-                 private ruleChainService: RuleChainService) { }
+                 private ruleChainService: RuleChainService,protected eventManager: EventManagerService,) { }
 
     ngOnChanges(changes: SimpleChanges) {
         this.reloadView();
@@ -250,6 +253,12 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         dialogRef.afterClosed(
         ).subscribe(result => {
             this.loadEpics();
+            this.eventManager.dispatch(
+                new AppEvent(EventTypes.editorDesignTreeListModification, {
+                    name: 'editorDesignTreeListModification',
+                    content: 'Assign Epic',
+                })
+            );
         });
     }
 
