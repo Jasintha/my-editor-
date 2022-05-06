@@ -383,8 +383,10 @@
 .txt-overflow{
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 150px;
+    width: 170px;
     overflow: hidden;
+    text-align: center;
+    padding-left: 10px;
 }
 .watermark {
     z-index: 99;
