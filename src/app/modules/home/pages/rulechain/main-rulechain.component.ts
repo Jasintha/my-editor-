@@ -285,7 +285,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadPageEditor = false;
     }
 
-    viewReqEditor(item){
+    viewReqEditor(item?){
         console.log(item);
         this.ruleChainLoaded = false;
         this.ruleChainMetaDataLoaded = false;
@@ -425,6 +425,11 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
                       this.populateReqIDArray( res[0].children)
                   }
                 this.designdataSource.data = res;
+                  if(res && res[0] && res[0].children.length > 0) {
+                      this.viewReqEditor(res[0].children[0]);
+                  } else {
+                      this.viewReqEditor();
+                  }
               }
           );
     }

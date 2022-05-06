@@ -29,6 +29,8 @@ export class CreateRequirementComponent implements OnInit {
   project: IProject;
   editForm: FormGroup;
   projectUid: string;
+  uuid: string
+  createStatus: string
   currentReq : IRequirement;
 
   buildEventForm() {

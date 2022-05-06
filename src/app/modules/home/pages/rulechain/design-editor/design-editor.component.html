@@ -17,7 +17,7 @@
             <div class="wrap" style="border-style: dashed;" matTooltip="{{currentReq?.name}}"
                  [matTooltipPosition]="toolTipPosition">
                 <h3 class="txt-overflow">{{currentReq?.name}}</h3>
-<!--                <a  class="edit" (click)="editDialog()"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
+                <a  class="edit" (click)="editDialog(currentReq?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <div class="inner-wrap">
                     <input type="text" placeholder="Title">
                     <textarea name="descripton" cols="" rows=""></textarea>
