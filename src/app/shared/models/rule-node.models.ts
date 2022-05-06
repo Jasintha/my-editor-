@@ -185,6 +185,7 @@ export enum RuleNodeType {
   RULE_CHAIN = 'RULE_CHAIN',
   UNKNOWN = 'UNKNOWN',
   INPUT = 'INPUT',
+  SERVICE = 'SERVICE',
   DATABASE_OPERATIONS = 'DATABASE_OPERATIONS',
   CONNECTOR = 'CONNECTOR',
   ROOTING = 'ROOTING',
@@ -192,11 +193,25 @@ export enum RuleNodeType {
   CQRS = 'CQRS',
   MESSAGING = 'MESSAGING',
   MIDDLEWARE = 'MIDDLEWARE',
-  DESIGN = 'DESIGN'
+  DESIGN = 'DESIGN',
+  OPERATION = 'OPERATION'
 }
 
 export const ruleNodeTypesLibrary = [
   RuleNodeType.ROOTING,
+  RuleNodeType.CORE,
+  RuleNodeType.MIDDLEWARE,
+  RuleNodeType.ACTION,
+  RuleNodeType.FILTER,
+  RuleNodeType.DATABASE_OPERATIONS,
+  RuleNodeType.CQRS,
+  RuleNodeType.MESSAGING,
+  RuleNodeType.CONNECTOR
+];
+
+export const serviceruleNodeTypesLibrary = [
+  RuleNodeType.ROOTING,
+  RuleNodeType.OPERATION,
   RuleNodeType.CORE,
   RuleNodeType.MIDDLEWARE,
   RuleNodeType.ACTION,
@@ -275,6 +290,16 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         name: 'rulenode.type-action',
         details: 'rulenode.type-action-details',
         nodeClass: 'virtuan-action-type',
+        icon: 'flash_on'
+      }
+    ],
+    [
+      RuleNodeType.OPERATION,
+      {
+        value: RuleNodeType.OPERATION,
+        name: 'rulenode.type-operation',
+        details: 'rulenode.type-operation-details',
+        nodeClass: 'virtuan-operation-type',
         icon: 'flash_on'
       }
     ],
@@ -376,6 +401,17 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         details: 'rulenode.type-input-details',
         nodeClass: 'virtuan-input-type',
         icon: 'input',
+        special: true
+      }
+    ],
+    [
+      RuleNodeType.SERVICE,
+      {
+        value: RuleNodeType.SERVICE,
+        name: 'rulenode.type-service',
+        details: 'rulenode.type-service-details',
+        nodeClass: 'virtuan-input-type',
+        icon: 'settings_ethernet',
         special: true
       }
     ],

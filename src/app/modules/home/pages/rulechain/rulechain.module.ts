@@ -66,6 +66,7 @@ import {CreateApiModule} from '@home/pages/create-api/create-api.module';
 import {CreateSubruleModule} from '@home/pages/create-subrule/create-subrule.module';
 import {CreateModelModule} from '@home/pages/create-model/create-model.module';
 import {CreateEventModule} from '@home/pages/create-event/create-event.module';
+import {ServicefileModule} from '@home/pages/servicefile/servicefile.module';
 import {CreateHybridfunctionModule} from '@home/pages/create-hybridfunction/create-hybridfunction.module';
 import {CreateLamdafunctionModule} from '@home/pages/create-lamdafunction/create-lamdafunction.module';
 import {CreateTaskModule} from '@home/pages/create-task/create-task.module';
@@ -141,6 +142,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     CreateServiceModule,
     CreateServiceModule,
     BuiltInPageModule,
+    ServicefileModule,
       MainMenuModule,
       PageNavigationModule,
         RouterModule,

@@ -123,7 +123,8 @@ export const ruleNodeTypeComponentTypes: ComponentType[] =
     ComponentType.CORE,
     ComponentType.CQRS,
     ComponentType.MESSAGING,
-    ComponentType.MIDDLEWARE
+    ComponentType.MIDDLEWARE,
+    ComponentType.OPERATION,
   ];
 
 export const ruleNodeDesignComponent: ComponentType[] =
@@ -169,3 +170,22 @@ export const inputNodeComponent: RuleNodeComponentDescriptor = {
   name: 'Rooting',
   clazz: 'virtuan.internal.Input'
 };
+
+export const serviceNodeComponent: RuleNodeComponentDescriptor = {
+  type: RuleNodeType.SERVICE,
+  name: 'Service',
+  clazz: 'xiServiceNode',
+  configurationDescriptor: {
+    nodeDefinition: {
+      description: '',
+      details: '',
+      inEnabled: false,
+      outEnabled: true,
+      relationTypes: ['Next'],
+      customRelations: false,
+      defaultConfiguration: {},
+      icon: "settings_ethernet",
+    }
+  }
+};
+

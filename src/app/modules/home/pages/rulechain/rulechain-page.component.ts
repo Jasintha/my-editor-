@@ -42,6 +42,7 @@ import { DialogService } from '@core/services/dialog.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   inputNodeComponent,
+  serviceNodeComponent,
   NodeConnectionInfo,
   ResolvedRuleChainMetaData,
   RuleChain,
@@ -62,7 +63,8 @@ import {
   RuleNodeComponentDescriptor,
   RuleNodeType,
   ruleNodeTypeDescriptors,
-  ruleNodeTypesLibrary
+  ruleNodeTypesLibrary,
+  serviceruleNodeTypesLibrary
 } from '@shared/models/rule-node.models';
 import { QuestionBase,ValueProperty } from '@shared/models/question-base.models';
 import { FcRuleNodeModel, FcRuleNodeTypeModel, RuleChainMenuContextInfo } from './rulechain-page.models';
@@ -116,7 +118,8 @@ export class RuleChainPageComponent extends PageComponent
   contextMenuEvent: MouseEvent;
 
   ruleNodeTypeDescriptorsMap = ruleNodeTypeDescriptors;
-  ruleNodeTypesLibraryArray = ruleNodeTypesLibrary;
+//   ruleNodeTypesLibraryArray = ruleNodeTypesLibrary;
+  ruleNodeTypesLibraryArray : any[];
 
   isImport: boolean;
   isDirtyValue: boolean;
@@ -149,6 +152,9 @@ export class RuleChainPageComponent extends PageComponent
 
   @Input()
   ruleChain: RuleChain;
+
+  @Input()
+  editorType: string;
 
   @Input()
   ruleChainMetaData: ResolvedRuleChainMetaData;
@@ -350,6 +356,8 @@ export class RuleChainPageComponent extends PageComponent
       this.routerType = params['routerType'];
       this.username = params['username'];
       this.uid = params['uid'];
+      this.editorType = params['editorType'];
+
     });
       this.isImport = false;
       this.route.data.subscribe(({ ruleNodeComponents }) => {
@@ -404,6 +412,13 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   private init() {
+
+    if(this.editorType === "servicefile"){
+        this.ruleNodeTypesLibraryArray= serviceruleNodeTypesLibrary;
+    } else {
+        this.ruleNodeTypesLibraryArray= ruleNodeTypesLibrary;
+    }
+
     this.initHotKeys();
 //     const routerType = this.route.snapshot.params.routerType;
     this.serviceUuid = this.uid;
@@ -471,17 +486,32 @@ export class RuleChainPageComponent extends PageComponent
     this.allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
     }
 
-    for (const type of ruleNodeTypesLibrary) {
-      const desc = ruleNodeTypeDescriptors.get(type);
-      if (!desc.special) {
-        this.ruleNodeTypesModel[type] = {
-          model: {
-            nodes: [],
-            edges: []
-          },
-          selectedObjects: []
-        };
-      }
+    if(this.editorType === "servicefile"){
+        for (const type of serviceruleNodeTypesLibrary) {
+          const desc = ruleNodeTypeDescriptors.get(type);
+          if (!desc.special) {
+            this.ruleNodeTypesModel[type] = {
+              model: {
+                nodes: [],
+                edges: []
+              },
+              selectedObjects: []
+            };
+          }
+        }
+    } else {
+        for (const type of ruleNodeTypesLibrary) {
+          const desc = ruleNodeTypeDescriptors.get(type);
+          if (!desc.special) {
+            this.ruleNodeTypesModel[type] = {
+              model: {
+                nodes: [],
+                edges: []
+              },
+              selectedObjects: []
+            };
+          }
+        }
     }
     this.updateRuleChainLibrary();
     this.createRuleChainModel();
@@ -624,19 +654,35 @@ export class RuleChainPageComponent extends PageComponent
       model.nodes.push(node);
     });
     if (this.expansionPanels) {
-      for (let i = 0; i < ruleNodeTypesLibrary.length; i++) {
-        const panel = this.expansionPanels.find((item, index) => {
-          return index === i;
-        });
-        if (panel) {
-          const type = ruleNodeTypesLibrary[i];
-          if (!this.ruleNodeTypesModel[type].model.nodes.length) {
-            panel.close();
-          } else {
-            panel.open();
+        if(this.editorType === "servicefile"){
+          for (let i = 0; i < serviceruleNodeTypesLibrary.length; i++) {
+            const panel = this.expansionPanels.find((item, index) => {
+              return index === i;
+            });
+            if (panel) {
+              const type = serviceruleNodeTypesLibrary[i];
+              if (!this.ruleNodeTypesModel[type].model.nodes.length) {
+                panel.close();
+              } else {
+                panel.open();
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < ruleNodeTypesLibrary.length; i++) {
+            const panel = this.expansionPanels.find((item, index) => {
+              return index === i;
+            });
+            if (panel) {
+              const type = ruleNodeTypesLibrary[i];
+              if (!this.ruleNodeTypesModel[type].model.nodes.length) {
+                panel.close();
+              } else {
+                panel.open();
+              }
+            }
           }
         }
-      }
     }
   }
 
@@ -649,28 +695,38 @@ export class RuleChainPageComponent extends PageComponent
     this.ruleChainModel.edges = [];
 
     this.inputConnectorId = this.nextConnectorID++;
-    this.ruleChainModel.nodes.push(
-      {
-        id: 'rule-chain-node-' + this.nextNodeID++,
-        component: inputNodeComponent,
-        name: '',
-        nodeClass: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).nodeClass,
-        icon: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).icon,
-        readonly: true,
-        x: 50,
-        y: 150,
-        connectors: [
-          {
-            type: FlowchartConstants.rightConnectorType,
-            id: this.inputConnectorId + ''
-          },
-        ]
+    if(this.editorType === 'servicefile'){
 
-      }
-    );
+    } else {
+        this.ruleChainModel.nodes.push(
+          {
+            id: 'rule-chain-node-' + this.nextNodeID++,
+            component: inputNodeComponent,
+            name: '',
+            nodeClass: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).nodeClass,
+            icon: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).icon,
+            readonly: true,
+            x: 50,
+            y: 150,
+            connectors: [
+              {
+                type: FlowchartConstants.rightConnectorType,
+                id: this.inputConnectorId + ''
+              },
+            ]
+
+          }
+        );
+    }
     const nodes: FcRuleNode[] = [];
     this.ruleChainMetaData.nodes.forEach((ruleNode) => {
-      const component = this.ruleChainService.getRuleNodeComponentByClazz(ruleNode.type);
+      let component;
+      if(ruleNode.type === 'xiServiceNode'){
+        component = serviceNodeComponent;
+      } else {
+         component = this.ruleChainService.getRuleNodeComponentByClazz(ruleNode.type);
+      }
+
       const descriptor = ruleNodeTypeDescriptors.get(component.type);
       let icon = descriptor.icon;
       let iconUrl = null;
@@ -1122,9 +1178,13 @@ export class RuleChainPageComponent extends PageComponent
         }
       });
 
-      let branchFoundObj = this.checkForBranchConnection(editIndex-1, allConnections, nodes, [],[], [], [], [], []);
+      let indexForCheck = editIndex-1;
+      if (this.editorType == 'servicefile') {
+        indexForCheck = editIndex;
+      }
 
-      let apiFoundObj= this.checkForApiConnection(editIndex-1, allConnections, nodes, false, []);
+      let branchFoundObj = this.checkForBranchConnection(indexForCheck, allConnections, nodes, [],[], [], [], [], []);
+      let apiFoundObj= this.checkForApiConnection(indexForCheck, allConnections, nodes, false, []);
 
       let golbalProperties = this.allGlobalProperties;
 
@@ -1271,10 +1331,11 @@ export class RuleChainPageComponent extends PageComponent
             let obj = {'apiNodeFound': apiNodeFound, 'nodeRuleInputs': nodeRuleInputs};
             return obj;
         } else {
-            if(nodes[foundNode.fromIndex].component.clazz === 'xiApiNode'){
+            if(nodes[foundNode.fromIndex].component.clazz === 'xiPostNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGetNode' ||
+                nodes[foundNode.fromIndex].component.clazz === 'xiPutNode' || nodes[foundNode.fromIndex].component.clazz === 'xiDeleteNode'){
                 apiNodeFound = true;
                 let configuration = nodes[foundNode.fromIndex].configuration;
-                if (configuration.apiStyleType === 'GRPC' || (configuration.apiStyleType === 'REST' && configuration.apiType === 'API' && (configuration.operation === 'CREATE' || configuration.operation === 'UPDATE'))){
+                if (nodes[foundNode.fromIndex].component.clazz === 'xiPostNode' || nodes[foundNode.fromIndex].component.clazz === 'xiPutNode'){
                     let inputname = configuration.selectedAPIInputs.inputName.replace(/\s/g, "");
                     inputname = inputname.toLowerCase();
                     inputname = this.titleCaseWord(inputname);
@@ -1290,13 +1351,14 @@ export class RuleChainPageComponent extends PageComponent
                         //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
                         nodeRuleInputs.push(ruleInput);
                     }
-                } else if (configuration.apiStyleType === 'REST' && configuration.apiType === 'FILE_UPLOAD'){
+                }
+                /* else if (configuration.apiStyleType === 'REST' && configuration.apiType === 'FILE_UPLOAD'){
                     let ruleInput = { inputName: 'file', inputType: 'file', record: 's'  };
                     //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
                     nodeRuleInputs.push(ruleInput);
-                }
+                } */
 
-                if (configuration.apiStyleType === 'REST' && configuration.apiParams){
+                if (configuration.apiParams){
                     configuration.apiParams.forEach((param) => {
                         let propertyString = param.inputName.replace(/\s/g, "");
                         propertyString = propertyString.toLowerCase();

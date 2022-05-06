@@ -103,6 +103,10 @@ import {ProcessNodeConfigComponent} from "@home/pages/rulechain/mediators/design
 import {ScreenNodeConfigComponent} from "@home/pages/rulechain/mediators/design/screen-node-config.component";
 
 import {ApiNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/api-node-config.component";
+import {DeleteNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/delete-node-config.component";
+import {GetNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/get-node-config.component";
+import {PostNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/post-node-config.component";
+import {PutNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/put-node-config.component";
 
 import {TreeModule} from 'primeng/tree';
 import { ContextMenuModule } from 'primeng/contextmenu';
@@ -202,7 +206,11 @@ import { TabViewModule } from 'primeng/tabview';
     ModelNodeConfigComponent,
     ProcessNodeConfigComponent,
     ScreenNodeConfigComponent,
-    ApiNodeConfigComponent
+    ApiNodeConfigComponent,
+    DeleteNodeConfigComponent,
+    GetNodeConfigComponent,
+    PostNodeConfigComponent,
+    PutNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -301,7 +309,11 @@ import { TabViewModule } from 'primeng/tabview';
     ModelNodeConfigComponent,
     ProcessNodeConfigComponent,
     ScreenNodeConfigComponent,
-    ApiNodeConfigComponent
+    ApiNodeConfigComponent,
+    DeleteNodeConfigComponent,
+    GetNodeConfigComponent,
+    PostNodeConfigComponent,
+    PutNodeConfigComponent
   ],
   providers: []
 })

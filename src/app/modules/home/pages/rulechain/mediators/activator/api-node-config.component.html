@@ -1,13 +1,6 @@
 <div [formGroup]="apiNodeConfigFormGroup">
 
-
-  <!--<mat-form-field fxFlex class="mat-block">
-    <mat-label>Name</mat-label>
-    <input type="text" formControlName="name" matInput>
-    <mat-error *ngIf="form.controls.name.hasError('required')">This field is required</mat-error>
-  </mat-form-field>-->
-
-  <mat-form-field fxFlex class="mat-block">
+  <mat-form-field class="mat-block">
     <mat-label>Type</mat-label>
     <mat-select formControlName="apiStyleType">
       <mat-option value="REST">REST</mat-option>
@@ -18,7 +11,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.apiStyleType === 'GRPC'">
+  <mat-form-field class="mat-block" *ngIf="configuration.apiStyleType === 'GRPC'">
     <mat-label>GRPC Method</mat-label>
     <mat-select formControlName="grpcMethod">
       <mat-option value="unary">Unary</mat-option>
@@ -31,7 +24,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.apiStyleType !== 'GRPC'">
+  <mat-form-field class="mat-block" *ngIf="configuration.apiStyleType !== 'GRPC'">
     <mat-label>Template</mat-label>
     <!--<mat-select formControlName="apiType">
       <mat-option *ngFor="let option of apiTypeItems" [value]="option.value">
@@ -53,17 +46,17 @@
     
   </mat-form-field>
 
-  <div fxFlex class="mat-block">
+  <div class="mat-block">
     <mat-checkbox  formControlName="enableSecurity" >Enable Security</mat-checkbox>
   </div>
 
 
-  <mat-form-field fxFlex class="mat-block">
+  <mat-form-field class="mat-block">
     <mat-label>Resource Path</mat-label>
     <input type="text" formControlName="resourcePath" matInput>
   </mat-form-field>
 
-  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.apiStyleType === 'REST' && configuration.apiType === 'API'">
+  <mat-form-field class="mat-block" *ngIf="configuration.apiStyleType === 'REST' && configuration.apiType === 'API'">
     <mat-label>Operation</mat-label>
     <mat-select formControlName="operation">
       <mat-option value="CREATE">CREATE</mat-option>
@@ -77,7 +70,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.apiStyleType === 'GRPC' || (configuration.apiType === 'API' && (configuration.operation === 'CREATE' || configuration.operation === 'UPDATE'))">
+  <mat-form-field class="mat-block" *ngIf="configuration.apiStyleType === 'GRPC' || (configuration.apiType === 'API' && (configuration.operation === 'CREATE' || configuration.operation === 'UPDATE'))">
     <mat-label>Target Input</mat-label>
     <mat-select formControlName="selectedAPIInputs">
       <mat-option *ngFor="let option of items" [value]="option">
@@ -86,7 +79,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.apiStyleType === 'GRPC' || (configuration.apiType === 'API' || configuration.apiType === 'FILE_UPLOAD')">
+  <mat-form-field class="mat-block" *ngIf="configuration.apiStyleType === 'GRPC' || (configuration.apiType === 'API' || configuration.apiType === 'FILE_UPLOAD')">
     <mat-label>Return Object</mat-label>
     <mat-select formControlName="returnObj" (selectionChange)="onReturnObjChange()">
       <mat-option *ngFor="let option of returnItems" [value]="option">
@@ -96,7 +89,7 @@
     </mat-select>
   </mat-form-field>
 
-  <ng-container fxFlex class="mat-block" *ngIf="configuration.apiStyleType === 'GRPC' || configuration.apiType === 'API' || configuration.apiType === 'FILE_UPLOAD' || configuration.apiType === 'FILE_DOWNLOAD'">
+  <ng-container class="mat-block" *ngIf="configuration.apiStyleType === 'GRPC' || configuration.apiType === 'API' || configuration.apiType === 'FILE_UPLOAD' || configuration.apiType === 'FILE_DOWNLOAD'">
 
 
     <div class="pt-3 pb-5" *ngIf="configuration.apiStyleType === 'GRPC' || (configuration.apiType === 'API' && configuration.returnObj) || (configuration.apiType === 'FILE_UPLOAD' && configuration.returnObj)">
@@ -114,13 +107,13 @@
       <div class="card">
         <div class="card-body row">
           <div class="col-md-3">
-            <mat-form-field fxFlex class="mat-block" >
+            <mat-form-field class="mat-block" >
               <mat-label>Name</mat-label>
               <input type="text" formControlName="paramName" matInput>
             </mat-form-field>
           </div>
           <div class="col-md-3">
-            <mat-form-field fxFlex class="mat-block" >
+            <mat-form-field class="mat-block" >
               <mat-label>Choose Type</mat-label>
               <mat-select formControlName="paramDataType">
                 <mat-option *ngFor="let option of paramDataTypeItems" [value]="option.value">
@@ -131,7 +124,7 @@
           </div>
 
           <div class="col-md-3">
-            <mat-form-field fxFlex class="mat-block" >
+            <mat-form-field class="mat-block" >
               <mat-label>Choose Param Type</mat-label>
               <mat-select formControlName="paramType">
                 <mat-option *ngFor="let option of paramitems" [value]="option.value">
