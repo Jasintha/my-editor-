@@ -23,7 +23,7 @@
                     <textarea name="descripton" cols="" rows=""></textarea>
                     <button>Submit</button>
                 </div>
-                <a class="delete" (click)="deleteDesign('requirement')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a class="delete" (click)="deleteDesign(currentReq?.uuid,'requirement')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 <a class="assign" (click)="assignRequirementToEpic()"><i class="fa fa-link" aria-hidden="true"></i></a>
             </div>
             <div class="add-icon">
@@ -59,7 +59,7 @@
                         <textarea name="descripton" cols="" rows=""></textarea>
                         <button>Submit</button>
                     </div>
-                    <a class="delete" (click)="deleteDesign('epic')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                     <a class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>
                 </div>
                 <div  *ngIf="epic.selected" class="add-icon">

@@ -306,11 +306,12 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.movetoNextReq(this.requirementUid);
     }
 
-    deleteDesign(type){
+    deleteDesign(reqId, type){
         const dialogRef = this.dialog.open(DeleteDesignComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.desprojectUid,
+                uuid: reqId,
                 type,
             }
         });

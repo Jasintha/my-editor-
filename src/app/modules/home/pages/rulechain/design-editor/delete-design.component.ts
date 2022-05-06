@@ -9,6 +9,7 @@ import {PageNavigationService} from '@core/projectservices/page-navigation.servi
 import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
+import {RequirementService} from '@core/projectservices/requirement.service';
 
 @Component({
   selector: 'virtuan-delete-design-dialog',
@@ -20,7 +21,7 @@ export class DeleteDesignComponent {
   type: string;
 
   constructor(
-    protected pageNavigationService: PageNavigationService,
+      private requirementService: RequirementService,
     protected eventManager: EventManagerService,
     public dialogRef: MatDialogRef<DeleteDesignComponent>,
     @Inject(MAT_DIALOG_DATA)  public data: any
@@ -31,7 +32,7 @@ export class DeleteDesignComponent {
   }
 
   confirmDelete(id: string, uuid: string) {
-    this.pageNavigationService.delete(id, uuid).subscribe(response => {
+    this.requirementService.delete(id, uuid).subscribe(response => {
       // this.eventManager.broadcast({
       //   name: 'pageNavigationListModification',
       //   content: 'Deleted an pageNavigation'
