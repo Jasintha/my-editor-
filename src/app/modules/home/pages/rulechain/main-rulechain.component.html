@@ -19,9 +19,9 @@
 
         <as-split direction="horizontal">
             <!--<as-split-area [size]="15">TOP</as-split-area>-->
-            <as-split-area [size]="81">
+            <as-split-area [size]="83">
                 <as-split direction="vertical">
-                    <as-split-area [size]="82" style="overflow: auto">
+                    <as-split-area [size]="84" style="overflow: auto">
 
                         <!-- <router-outlet></router-outlet>-->
                         <virtuan-design-editor-new *ngIf="loadDesignRequirement" [requirementUid]="requirementUid" [requirementCount] = "requirementCount" [movetoNextReq] = "movetoNextReq"  [reqArray]="requirementArray" [reload]="reload" [desprojectUid]="desprojectUid"></virtuan-design-editor-new>
@@ -38,7 +38,7 @@
                         <virtuan-single-page-view *ngIf="loadPageEditor" [projectUid]="projectUid" [pageId]="pageId" ></virtuan-single-page-view>
 
                     </as-split-area>
-                    <as-split-area [size]="18">
+                    <as-split-area [size]="16">
                         <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
                             <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button>
                         </div>
@@ -80,7 +80,7 @@
                     </as-split-area>
                 </as-split>
             </as-split-area>
-            <as-split-area [size]="19">
+            <as-split-area [size]="17">
                 <div>
                     <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist" style="position: fixed; background-color: lightgrey; margin-top: 0; padding-top: 55px">
                         <li class="nav-item" role="presentation">
