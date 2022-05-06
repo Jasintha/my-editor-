@@ -254,8 +254,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         ).subscribe(result => {
             this.loadEpics();
             this.eventManager.dispatch(
-                new AppEvent(EventTypes.editorDesignTreeListModification, {
-                    name: 'editorDesignTreeListModification',
+                new AppEvent(EventTypes.editorTreeListModification, {
+                    name: 'editorTreeListModification',
                     content: 'Assign Epic',
                 })
             );
