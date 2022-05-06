@@ -107,7 +107,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     reqArray: any;
 
     currentReq: IRequirement;
-    toolTipPosition = 'above'
+    toolTipPosition = 'left'
 
     existingEpics: any[];
     filteredStories: any[];
@@ -127,6 +127,9 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     storyserviceUuid: string;
     storyuuid: string;
     currentLevel = 'requirement'
+    requirementLevel : boolean;
+    epicLevel : boolean;
+    storyLevel : boolean;
 
     constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
                  private ruleChainService: RuleChainService) { }
@@ -188,10 +191,13 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
     clickReq() {
         this.currentLevel = 'requirement';
+        this.epicLevel = false;
+        this.storyLevel = false;
     }
 
     filterEpic(epic, index){
         this.currentLevel = 'epic';
+        this.requirementLevel = true
         this.selectedEpicId = epic.uuid;
         this.selectedEpic = epic;
         this.showStoryBoard = false;
@@ -352,6 +358,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     loadStoryDesignEditor(story){
+        this.epicLevel = true;
         this.currentLevel = 'story';
         this.existingEpics = [];
         this.filteredStories = [];
