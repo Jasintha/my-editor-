@@ -35,7 +35,7 @@ export class RequirementAddEpicDialogComponent implements OnInit {
   buildEventForm() {
     this.editForm = this.fb.group({
         epicCreateType: ['new', [Validators.required]],
-        name: '',
+        name: ['', [Validators.required]],
         description: '',
         reqdescription: '',
         epicselection: null
@@ -49,6 +49,23 @@ export class RequirementAddEpicDialogComponent implements OnInit {
       @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {}
 
+  setApiCategoryValidators() {
+    this.editForm.get(['epicCreateType']).valueChanges.subscribe(type => {
+      if (type === 'existing') {
+        this.editForm.get('name').clearValidators();
+        this.editForm.get('name').updateValueAndValidity();
+
+        this.editForm.get('epicselection').setValidators([Validators.required]);
+        this.editForm.get('epicselection').updateValueAndValidity();
+      } else if (type === 'new'){
+        this.editForm.get('epicselection').clearValidators();
+        this.editForm.get('epicselection').updateValueAndValidity();
+
+        this.editForm.get('name').setValidators([Validators.required]);
+        this.editForm.get('name').updateValueAndValidity();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.buildEventForm();
@@ -134,6 +151,7 @@ export class RequirementAddEpicDialogComponent implements OnInit {
   }
 
   handleEpicCreateTypeChange() {
+    this.setApiCategoryValidators();
     let epicCreateType = this.editForm.get(['epicCreateType']).value;
     if (epicCreateType === 'new') {
       this.editForm.patchValue({
