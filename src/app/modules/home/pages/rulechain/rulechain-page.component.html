@@ -86,6 +86,7 @@
                          [userCallbacks]="nodeLibCallbacks"
                          [nodeWidth]="170"
                          [nodeHeight]="50"
+                         [verticaledgeenabled]="editorType === 'servicefile'"
                          [dropTargetId]="'virtuan-rulchain-canvas'">
               </fc-canvas>
             </mat-expansion-panel>
@@ -234,6 +235,8 @@
                        (modelChanged)="onModelChanged()"
                        [selectedObjects]="selectedObjects"
                        [edgeStyle]="flowchartConstants.curvedStyle"
+                       [edgeStyle]="editorType === 'servicefile' ? flowchartConstants.lineStyle : flowchartConstants.curvedStyle "
+                       [verticaledgeenabled]="editorType === 'servicefile'"
                        [automaticResize]="true"
                        fitModelSizeByDefault="false"
                        [nodeWidth]="170"

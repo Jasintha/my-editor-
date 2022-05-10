@@ -158,6 +158,118 @@
       background-color: #000;
     }
   }
+  .virtuan-servicefile-rule-node {
+    //box-sizing: content-box;
+    display: flex;
+    flex-direction: row;
+    width: 165px;
+    //max-width: 182px;
+    //min-width: 182px;
+    height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #333;
+    pointer-events: none;
+    background-color: #dee6eb;
+    //background-color: #f15b26;
+    //border: solid 1px #777;
+    //border-radius: 5px;
+
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-shadow: 1px 1px 1px #d5d5d5;
+    box-sizing: content-box;
+
+    @include rule-node-colors();
+
+    &.virtuan-rule-node-highlighted:not(.virtuan-rule-node-invalid) {
+      box-shadow: 0 0 10px 6px #51cbee;
+
+      .virtuan-node-title {
+        font-weight: 700;
+        text-decoration: underline;
+      }
+    }
+
+    &.virtuan-rule-node-invalid {
+      box-shadow: 0 0 10px 6px #ff5c50;
+    }
+
+    &.virtuan-input-type {
+      user-select: none;
+      background-color: #a3eaa9;
+    }
+
+    mat-icon, img {
+      margin: auto;
+      width: 20px;
+      min-width: 20px;
+      height: 20px;
+      min-height: 20px;
+      padding-right: 4px;
+      font-size: 20px;
+    }
+
+    .virtuan-node-title {
+      font-weight: 500;
+    }
+
+    .virtuan-node-type,
+    .virtuan-node-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .fc-leftConnectors,
+    .fc-rightConnectors {
+      position: absolute;
+      top: 0;
+
+      z-index: 1;
+
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      .fc-magnet {
+        align-items: center;
+      }
+    }
+
+    .fc-leftConnectors {
+      left: 76px;
+      top: -25px;
+    }
+
+    .fc-rightConnectors {
+      right: 76px;
+      top: 25px;
+    }
+
+    .fc-magnet {
+      display: flex;
+      flex-grow: 1;
+      justify-content: center;
+      height: 60px;
+    }
+
+    .fc-connector {
+      width: 14px;
+      height: 14px;
+      margin: 10px;
+      pointer-events: all;
+      background-color: #ccc;
+      border: 1px solid #333;
+      border-radius: 5px;
+    }
+
+    .fc-connector.fc-hover {
+      background-color: #000;
+    }
+  }
 }
 
 .application-resource-tree__node {
@@ -290,3 +402,4 @@
 .virtuan-rooting-type {
   color: #000000;
 }
+
