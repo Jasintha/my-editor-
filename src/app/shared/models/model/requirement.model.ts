@@ -42,6 +42,7 @@ export interface IEpic {
   description?: string;
   requirements?: any[];
   status?: string;
+  referenceName?: string;
 }
 
 export class Epic implements IEpic {
@@ -51,7 +52,8 @@ export class Epic implements IEpic {
     public projectUuid?: string,
     public description?: string,
     public requirements?: any[],
-    public status?: string
+    public status?: string,
+    public referenceName ?: string
   ) {}
 }
 
@@ -67,6 +69,7 @@ export interface IStory {
   screen?: string;
   action?: string;
   screentype?: string;
+  storyTemplate?: string;
 }
 
 export class Story implements IStory {
@@ -81,7 +84,8 @@ export class Story implements IStory {
     public screen?: string,
     public action?: string,
     public screentype?: string,
-    public status?: string
+    public status?: string,
+    public storyTemplate?: string
   ) {}
 }
 

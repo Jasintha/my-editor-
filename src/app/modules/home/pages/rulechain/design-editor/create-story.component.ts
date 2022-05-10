@@ -32,12 +32,15 @@ export class CreateStoryComponent implements OnInit {
   projectUid: string;
   epic: any;
   currentStory: any;
+  existingTemplates: any;
 
   buildEventForm() {
     this.editForm = this.fb.group({
       id: [],
       name: ['', [Validators.required]],
-      description:  ['', [Validators.required]]
+      description:  ['', [Validators.required]],
+      storyCreateType: 'new',
+      storyTemplate: []
     });
   }
 
@@ -50,6 +53,29 @@ export class CreateStoryComponent implements OnInit {
       @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {}
 
+  setStoryValidators() {
+    this.editForm.get(['storyCreateType']).valueChanges.subscribe(type => {
+      if (type === 'existing') {
+        this.editForm.get('name').clearValidators();
+        this.editForm.get('name').updateValueAndValidity();
+
+        this.editForm.get('description').clearValidators();
+        this.editForm.get('description').updateValueAndValidity();
+
+        this.editForm.get('storyTemplate').setValidators([Validators.required]);
+        this.editForm.get('storyTemplate').updateValueAndValidity();
+      } else if (type === 'new'){
+        this.editForm.get('storyTemplate').clearValidators();
+        this.editForm.get('storyTemplate').updateValueAndValidity();
+
+        this.editForm.get('name').setValidators([Validators.required]);
+        this.editForm.get('name').updateValueAndValidity();
+
+        this.editForm.get('description').setValidators([Validators.required]);
+        this.editForm.get('description').updateValueAndValidity();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.getStoryData();
@@ -119,6 +145,10 @@ export class CreateStoryComponent implements OnInit {
   }
 
   private createFromForm(): any {
+    let templates = [];
+    if (this.editForm.get(['storyCreateType']).value === 'existing'){
+       templates = this.editForm.get(['storyTemplate']).value
+    }
     return {
       uuid: this.editForm.get(['id']).value,
       name: this.editForm.get(['name']).value,
@@ -126,7 +156,8 @@ export class CreateStoryComponent implements OnInit {
       projectUuid: this.projectUid,
       serviceUUID: this.epic.serviceUUID,
       serviceMasterUUID:  this.epic.serviceMasterUUID,
-      epicUUID:  this.epic.uuid
+      epicUUID:  this.epic.uuid,
+      storyTemplate: templates,
     };
   }
 
@@ -156,6 +187,10 @@ export class CreateStoryComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     // this.logger.error(errorMessage);
+  }
+
+  handleStoryCreateTypeChange(){
+    this.setStoryValidators();
   }
 
 }

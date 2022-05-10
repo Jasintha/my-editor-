@@ -31,6 +31,7 @@ export class RequirementAddEpicDialogComponent implements OnInit {
   reqdesc: string;
   existingEpics: any[];
   editForm: FormGroup;
+  disable = true;
 
   buildEventForm() {
     this.editForm = this.fb.group({
@@ -38,7 +39,8 @@ export class RequirementAddEpicDialogComponent implements OnInit {
         name: ['', [Validators.required]],
         description: '',
         reqdescription: '',
-        epicselection: null
+        epicselection: null,
+        referencename: ''
     });
   }
 
@@ -48,6 +50,10 @@ export class RequirementAddEpicDialogComponent implements OnInit {
       public dialogRef: MatDialogRef<RequirementAddEpicDialogComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {}
+
+  enableEdit(){
+    this.disable = !this.disable;
+  }
 
   setApiCategoryValidators() {
     this.editForm.get(['epicCreateType']).valueChanges.subscribe(type => {
@@ -111,9 +117,11 @@ export class RequirementAddEpicDialogComponent implements OnInit {
     let description = '';
     let epicuuid = '';
     let epicRequirements = [];
+    let refname = '';
 
     if (epicCreateType === 'new') {
       epicname = this.editForm.get(['name']).value;
+      refname = this.editForm.get(['referencename']).value;
       description = this.editForm.get(['description']).value;
     } else {
       let epicselection = this.editForm.get(['epicselection']).value;
@@ -134,6 +142,7 @@ export class RequirementAddEpicDialogComponent implements OnInit {
       description: description,
       status: 'NEW',
       epicuuid: epicuuid,
+      referenceName : refname
     };
     this.requirementService
       .addEpicToReq(epicReq, this.projectUid)

@@ -28,10 +28,10 @@
                 <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
             </mat-form-field>
 
-<!--            <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="mat-block">-->
-<!--                <mat-label>Description</mat-label>-->
-<!--                <textarea matInput formControlName="description"></textarea>-->
-<!--            </mat-form-field>-->
+            <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="mat-block">
+                <mat-label>Reference name</mat-label>
+                <input type="text" formControlName="referencename" matInput>
+            </mat-form-field>
 
             <mat-form-field *ngIf="editForm.value.epicCreateType === 'existing'" fxFlex class="mat-block">
                 <mat-label>Epic</mat-label>
@@ -45,9 +45,21 @@
             </mat-form-field>
 
             <div class="flex-auto">
-                <mat-label>Requirement</mat-label>
+                <div class="row">
+                    <div class="col-2">
+                        <mat-label>Requirement</mat-label>
+                    </div>
+                    <div class="col-2">
+                        <mat-icon class="material-icons" (click)="enableEdit()" style="color: #545454; cursor: pointer">edit</mat-icon>
+
+                    </div>
+
+
+                </div>
+
+
                 <p-editor name="reqdescription" id="field_reqdescription"
-                          formControlName="reqdescription" [style]="{'height':'200px'}">
+                          formControlName="reqdescription" [style]="{'height':'200px'}" [readonly]="disable">
                     <!--<p-header>
                     <span class="ql-formats">
                         <button class="ql-bold" aria-label="Bold"></button>
