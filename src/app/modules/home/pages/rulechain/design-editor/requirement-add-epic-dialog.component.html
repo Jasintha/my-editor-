@@ -23,15 +23,15 @@
             </div>
 
             <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="flex-auto">
-                <mat-label>Epic Name</mat-label>
+                <mat-label>Title</mat-label>
                 <input type="text" formControlName="name" matInput>
                 <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
             </mat-form-field>
 
-            <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="mat-block">
-                <mat-label>Description</mat-label>
-                <textarea matInput formControlName="description"></textarea>
-            </mat-form-field>
+<!--            <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="mat-block">-->
+<!--                <mat-label>Description</mat-label>-->
+<!--                <textarea matInput formControlName="description"></textarea>-->
+<!--            </mat-form-field>-->
 
             <mat-form-field *ngIf="editForm.value.epicCreateType === 'existing'" fxFlex class="mat-block">
                 <mat-label>Epic</mat-label>

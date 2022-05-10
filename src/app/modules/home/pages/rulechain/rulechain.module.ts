@@ -82,7 +82,7 @@ import {
   AddDesignRuleNodeLinkDialogComponent,
   StoryDesignPageComponent
 } from './story-design-page.component';
-import {EditStoryComponent} from '@home/pages/rulechain/design-editor/edit-story/edit-story.component';
+import {EditEpicComponent} from '@home/pages/rulechain/design-editor/edit-epic/edit-epic.component';
 import {DeleteDesignComponent} from '@home/pages/rulechain/design-editor/delete-design.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
@@ -106,7 +106,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     CreateRequirementComponent,
     RequirementAddEpicDialogComponent,
     CreateStoryComponent,
-      EditStoryComponent,
+      EditEpicComponent,
     DeleteDesignComponent
   ],
   providers: [

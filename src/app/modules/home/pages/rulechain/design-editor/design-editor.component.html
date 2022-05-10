@@ -1,14 +1,14 @@
 <div *ngIf="!viewEditor" class="container vertical">
     <div class="wrapper option-1 option-1-1">
         <ol class="c-stepper">
-            <li [ngClass]="currentLevel === 'requirement' || requirementLevel ? 'c-stepper__item_selected': 'c-stepper__item'" >
-                <h6 class="c-stepper__title">Requirement</h6>
+            <li [ngClass]="currentLevel === 'requirement' || requirementLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
+                <h6 class="c-stepper__title">Requirements</h6>
             </li>
-            <li  [ngClass]="currentLevel === 'epic' || epicLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
-                <h6 class="c-stepper__title">Epic</h6>
+            <li [ngClass]="currentLevel === 'epic' || epicLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
+                <h6 class="c-stepper__title">Epics</h6>
             </li>
-            <li  [ngClass]="currentLevel === 'story' || storyLevel ? 'c-stepper__item_selected': 'c-stepper__item'" >
-                <h6 class="c-stepper__title">Story</h6>
+            <li [ngClass]="currentLevel === 'story' || storyLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
+                <h6 class="c-stepper__title">Storys</h6>
             </li>
         </ol>
     </div>
@@ -17,53 +17,71 @@
             <div class="wrap" style="border-style: dashed;" matTooltip="{{currentReq?.name}}"
                  [matTooltipPosition]="toolTipPosition">
                 <h5 class="txt-overflow">{{currentReq?.name}}</h5>
-                <a  class="edit" (click)="editDialog(currentReq?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <a class="edit" (click)="editDialog(currentReq?.uuid)"><i class="fa fa-pencil"
+                                                                          aria-hidden="true"></i></a>
                 <div class="inner-wrap">
                     <input type="text" placeholder="Title">
                     <textarea name="descripton" cols="" rows=""></textarea>
                     <button>Submit</button>
                 </div>
-                <a class="delete" (click)="deleteDesign(currentReq?.uuid,'requirement')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a class="delete" (click)="deleteDesign(currentReq?.uuid,'requirement')"><i class="fa fa-trash"
+                                                                                            aria-hidden="true"></i></a>
                 <a class="assign" (click)="assignRequirementToEpic()"><i class="fa fa-link" aria-hidden="true"></i></a>
             </div>
             <div class="add-icon">
-                <mat-icon class="material-icons" style="color: #8bc34a; font-size: 50px;transform: rotate(180deg);" (click)="assignRequirementToEpic()">publish</mat-icon>
+                <mat-icon class="material-icons"
+                          style="color: mediumseagreen; font-size: 50px;transform: rotate(180deg);"
+                          (click)="assignRequirementToEpic()">publish
+                </mat-icon>
             </div>
         </div>
 
         <div class="col-2">
-<!--            <a class="new" (click)="createRequirement()">-->
+            <a class="new" (click)="createRequirement()">
 <!--                <div class="wrap add">-->
 <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
 <!--                    &lt;!&ndash;<fa-icon [icon]="faPlus"></fa-icon>&ndash;&gt;-->
 <!--                </div>-->
-<!--            </a>-->
-            <div style="margin-left: 25px; margin-bottom: 50px; cursor: pointer">
-                <mat-icon class="material-icons" (click)="nextReq()" style="color: #6c6c6c; font-size: 30px">last_page </mat-icon>
-            </div>
+                <div class="wrap add" style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">
+                    <mat-icon class="material-icons" (click)="nextReq()" style="color: white; font-size: 30px">add
+                    </mat-icon>
+                </div>
+            </a>
         </div>
-        <div class="col-8" style="justify-content: end; display: flex;padding-bottom: 26px;">
-            <h1 style="color: #CDCDCD;">Requirements</h1>
+        <div class="col-2">
+            <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">
+                <mat-icon class="material-icons" (click)="nextReq()" style="color: #6c6c6c; font-size: 30px">last_page
+                </mat-icon>
+            </div>
+
+        </div>
+        <div class="col-6" style="justify-content: end; display: flex;padding-bottom: 26px;">
+            <h1 style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
         </div>
     </div>
 
     <div id="epics" class="row section border row-color" *ngIf="existingEpics.length != 0">
         <ng-container *ngFor="let epic of existingEpics; let j = index">
             <div class="col-2" (click)="filterEpic(epic, j)">
-                <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''" matTooltip="{{epic?.name}}"
+                <div class="wrap" style="border-style: dashed;" [ngClass]="epic.selected ? 'selected' : ''"
+                     matTooltip="{{epic?.name}}"
                      [matTooltipPosition]="toolTipPosition">
                     <h5 class="txt-overflow">{{epic?.name}}</h5>
-<!--                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
+                    <!--                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
                     <div class="inner-wrap">
                         <input type="text" placeholder="Title">
                         <textarea name="descripton" cols="" rows=""></textarea>
                         <button>Submit</button>
                     </div>
-                    <a class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash"
+                                                                                    aria-hidden="true"></i></a>
                     <a class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>
                 </div>
-                <div  *ngIf="epic.selected" class="add-icon">
-                    <mat-icon class="material-icons" style="color: slateblue; font-size: 50px;transform: rotate(180deg);"  (click)="addStory(selectedEpic)">publish</mat-icon>
+                <div *ngIf="epic.selected" class="add-icon">
+                    <mat-icon class="material-icons"
+                              style="color: slateblue; font-size: 50px;transform: rotate(180deg);"
+                              (click)="addStory(selectedEpic)">publish
+                    </mat-icon>
                 </div>
             </div>
         </ng-container>
@@ -73,13 +91,13 @@
         </div>
 
 
-<!--        <div class="col-1" *ngIf="selectedEpicId">-->
-<!--            <a class="new" (click)="addStory(selectedEpic)">-->
-<!--                <div class="wrap add">-->
-<!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--        </div>-->
+        <!--        <div class="col-1" *ngIf="selectedEpicId">-->
+        <!--            <a class="new" (click)="addStory(selectedEpic)">-->
+        <!--                <div class="wrap add">-->
+        <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
+        <!--                </div>-->
+        <!--            </a>-->
+        <!--        </div>-->
     </div>
 
     <div id="stories" class="row section border row-color" *ngIf="filteredStories.length != 0">
@@ -88,22 +106,25 @@
                 <div class="wrap selected" matTooltip="{{story?.name}}"
                      [matTooltipPosition]="toolTipPosition">
                     <h5 class="txt-overflow">{{story.name}}</h5>
-<!--                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
+                    <a class="edit" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil"
+                                                                             aria-hidden="true"></i></a>
+                    <!--                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
                     <div class="inner-wrap">
                         <input type="text" placeholder="Title">
-                        <textarea name="descripton"  cols="" rows=""></textarea>
-<!--                        <select name="" >-->
-<!--                            <option value="" selected>Epic 1</option>-->
-<!--                            <option value="">Epic 2</option>-->
-<!--                            <option value="">Epic 3</option>-->
-<!--                        </select>-->
+                        <textarea name="descripton" cols="" rows=""></textarea>
+                        <!--                        <select name="" >-->
+                        <!--                            <option value="" selected>Epic 1</option>-->
+                        <!--                            <option value="">Epic 2</option>-->
+                        <!--                            <option value="">Epic 3</option>-->
+                        <!--                        </select>-->
                         <button>Submit</button>
                     </div>
-                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i
+                            class="fa fa-trash" aria-hidden="true"></i></a>
                 </div>
             </div>
         </ng-container>
-        <div class="watermark" style="left: 85%;">
+        <div class="watermark" style="left: 88%;">
             Stories
         </div>
 
@@ -116,7 +137,6 @@
             </a>
         </div>-->
     </div>
-
 
 
     <!--<div id="story-details" class="row section border" >
@@ -217,12 +237,14 @@
     </div>-->
 </div>
 
-<virtuan-story-design-page  *ngIf="viewEditor && ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded" [ruleChain]="ruleChain"
-                            [ruleChainMetaData]="ruleChainMetaData"
-                            [connectionPropertyTemplates]="connectionPropertyTemplates"
-                            [username]="username"
-                            [uid]="desprojectUid"
-                            [ruleNodeComponents]="ruleNodeComponents"
-                            [serviceUuid]="storyserviceUuid"
-                            [projectUid]="desprojectUid"
-                            [storyuuid]="storyuuid"></virtuan-story-design-page>
+<virtuan-story-design-page
+        *ngIf="viewEditor && ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded"
+        [ruleChain]="ruleChain"
+        [ruleChainMetaData]="ruleChainMetaData"
+        [connectionPropertyTemplates]="connectionPropertyTemplates"
+        [username]="username"
+        [uid]="desprojectUid"
+        [ruleNodeComponents]="ruleNodeComponents"
+        [serviceUuid]="storyserviceUuid"
+        [projectUid]="desprojectUid"
+        [storyuuid]="storyuuid"></virtuan-story-design-page>

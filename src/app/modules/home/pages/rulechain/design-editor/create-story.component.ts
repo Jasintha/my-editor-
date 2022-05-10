@@ -83,7 +83,7 @@ export class CreateStoryComponent implements OnInit {
             map((response: HttpResponse<any>) => response.body)
         )
         .subscribe(
-            (res: IRequirement) => {
+            (res: IStory) => {
               this.currentStory = res;
               this.updateForm(res);
             }

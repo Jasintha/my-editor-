@@ -51,7 +51,7 @@ import * as AngularRouter from '@angular/router';
 import * as AngularCore from '@angular/core';
 import * as RxJs from 'rxjs';
 import * as RxJsOperators from 'rxjs/operators';
-import {EditStoryComponent} from '@home/pages/rulechain/design-editor/edit-story/edit-story.component';
+import {EditEpicComponent} from '@home/pages/rulechain/design-editor/edit-epic/edit-epic.component';
 import {ApiDeleteDialogComponent} from '@home/pages/create-api/api-delete-dialog.component';
 import {DeleteDesignComponent} from '@home/pages/rulechain/design-editor/delete-design.component';
 import {CreateRequirementComponent} from '@home/pages/rulechain/design-editor/create-requirement.component';
@@ -278,6 +278,20 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     editDialog(reqId){
         const dialogRef = this.dialog.open(CreateRequirementComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: this.desprojectUid,
+                uuid: reqId,
+                createStatus: 'Update',
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+        });
+    }
+
+    editStory(reqId){
+        const dialogRef = this.dialog.open(CreateStoryComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.desprojectUid,
