@@ -1,0 +1,79 @@
+<form class="mat-form-dialog">
+    <mat-toolbar color="primary"  >
+        <h2 mat-dialog-title>Select Environment</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-dialog-content>
+        <div class="row">
+
+            <div *ngIf="environments?.length > 0">
+                <p-dataView #dv [value]="environments" [paginator]="true" paginatorPosition="top" [rows]="8"
+                            [sortField]="sortField" [sortOrder]="sortOrder" filterBy="name" layout="grid">
+                    <p-header>
+                        <div class="ui-helper-clearfix">
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-8">
+                                    <p-dropdown [options]="sortOptions" placeholder="Sort By"
+                                                (onChange)="onSortChange($event)"
+                                                [style]="{'min-width':'140px'}"></p-dropdown>
+                                </div>
+                                <div class="ui-g-6 ui-md-2" style="text-align:center;">
+                                    <div style="position:relative; margin-left: 60px;">
+                                        <input class="ui-inputtext ui-corner-all ui-state-default ui-widget" type="search"
+                                               pInputText placeholder="Search by name"
+                                               (input)="dv.filter($event.target.value)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-header>
+                    <ng-template let-env pTemplate="gridItem">
+                        <div style="padding:.5em" class="ui-g-12 ui-md-4">
+                            <p-panel>
+                                <div (click)="navigateToSelectEnv(env)" class="card" id="inner-box"
+                                     style="width:95%;margin:10px;border-radius: 4px; cursor: pointer; box-shadow: 3px 4px 5px lightgray; background-color: #dee6eb; border-radius: 0%;">
+                                    <div class="argo-table-list__row
+                    applications-list__entry applications-list__entry--comparison-Synced
+                    applications-list__entry--health-Healthy" style='background-color: white'>
+                                        <div class="row col-md-12">
+                                            <div class="applications-list__info">
+                                                <div class="applications-list__external-link"></div>
+                                                <div class="row col-md-12">
+                                                    <!-- <i class="icon argo-icon-git"></i>-->
+                                                    <span class="applications-list__title text-truncate"
+                                                          title="{{env.name}}">{{env.name}}</span>
+                                                </div>
+                                                <div class="row col-md-12" style="margin-left: 3px">
+                                                    <div class="col-md-12 text-truncate" title="Description: {{env.type}}"
+                                                         style="max-width: 180px">Type: {{env.type}}</div>
+                                                    <div class="col-md-12 text-truncate" title="Namespace: {{env.scope}}"
+                                                         style="max-width: 180px">Scope: {{env.scope}}</div>
+                                                    <div class="col-md-12 text-truncate" title="Git Repo: {{env.status}}"
+                                                         style="max-width: 180px">Status: {{env.status}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-panel>
+                        </div>
+                    </ng-template>
+                </p-dataView>
+            </div>
+            <div *ngIf="!environments || environments.length === 0" style="min-height: 200px">
+                <div style="margin-left: 330px;margin-top:100px" class="loader"></div>
+            </div>
+        </div>
+    </mat-dialog-content>
+<!--    <mat-dialog-actions align="end">-->
+<!--        <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>-->
+<!--        <button mat-button color="primary" mat-dialog-close>Cancel</button>-->
+<!--    </mat-dialog-actions>-->
+</form>
+

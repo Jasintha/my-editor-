@@ -70,6 +70,7 @@ import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/cre
 import {CreateTaskComponent} from '@home/pages/create-task/create-task.component';
 import {AddOperationService} from '@core/projectservices/add-operations.service';
 import {MatTabChangeEvent} from '@angular/material/tabs';
+import {EnvSelectComponent} from '@home/pages/rulechain/env-select.component';
 
 declare const SystemJS;
 
@@ -457,44 +458,56 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     generateProject() {
-        if(this.projectUid){
-            this.loadChatbox(this.projectUid);
-            this.appTypeService.getDevChainByAppType(this.projectUid)
-                .pipe(
-                    filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
-                    map((response: HttpResponse<IGenerator[]>) => response.body)
-                )
-                .subscribe(
-                    (res: IGenerator[]) => {
-                        this.generatorChain = res;
-                        if (this.generatorChain.length !== 0) {
-                            this.generatorChain.forEach(c => {
-                                this.generatorList[c.position] = c.generator.name;
+        const dialogRef = this.dialog.open(EnvSelectComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: this.projectUid,
+                createStatus: status,
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            if (result){
+                if(this.projectUid){
+                    this.loadChatbox(this.projectUid);
+                    this.appTypeService.getDevChainByAppType(this.projectUid)
+                        .pipe(
+                            filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
+                            map((response: HttpResponse<IGenerator[]>) => response.body)
+                        )
+                        .subscribe(
+                            (res: IGenerator[]) => {
+                                this.generatorChain = res;
+                                if (this.generatorChain.length !== 0) {
+                                    this.generatorChain.forEach(c => {
+                                        this.generatorList[c.position] = c.generator.name;
+                                    });
+                                }
                             });
-                        }
-                    });
-            this.code = '';
-            this.isGenerating = true;
-            setTimeout(() => {
-                this.isGenerating = false;
-            }, 16000);
-            //console.log(this.socket.socket);
-            this.socket.logSocket();
-            let genType = 'Dev';
-            const projectUUID: string = this.projectUid;
-            let project: Project = new Project();
-            if (projectUUID) {
+                    this.code = '';
+                    this.isGenerating = true;
+                    setTimeout(() => {
+                        this.isGenerating = false;
+                    }, 16000);
+                    //console.log(this.socket.socket);
+                    this.socket.logSocket();
+                    let genType = 'Dev';
+                    const projectUUID: string = this.projectUid;
+                    let project: Project = new Project();
+                    if (projectUUID) {
 //                 let breakpoint = this.breakpointService.getBreakpoint();
 //                 let defaultTheme = this.themeService.getDefaultTheme();
-                this.projectService.generateFromProjectId(projectUUID, -1, 1, genType, project, projectUUID).subscribe(
-                    (res: any) => {
-                        let project: IProject = res.body;
-                        this.socket.send('generator');
-                        this.onSaveSuccess();
-                    },
-                    (res: HttpErrorResponse) => this.onSaveError());
+                        this.projectService.generateFromProjectId(projectUUID, -1, 1, genType, project, projectUUID).subscribe(
+                            (res: any) => {
+                                let project: IProject = res.body;
+                                this.socket.send('generator');
+                                this.onSaveSuccess();
+                            },
+                            (res: HttpErrorResponse) => this.onSaveError());
+                    }
+                }
             }
-        }
+        });
     }
 
   protected onSaveSuccess() {

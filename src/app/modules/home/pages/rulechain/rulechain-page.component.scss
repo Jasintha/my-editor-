@@ -470,3 +470,256 @@ body, button, html, input, select, textarea, td, th {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 14px;
 }
+.mat-form-dialog {
+  width: 900px  !important;
+  height: auto  !important;
+}
+
+.loader {
+  border: 10px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 10px solid #1a73e8;
+  border-bottom: 10px solid #1a73e8;
+  width: 80px;
+  height: 80px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.applications-tiles {
+  .argo-table-list__row {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  &__selected {
+    box-shadow: 0 0 0 1px #e9eaec;
+  }
+}
+.applications-list {
+  padding: 1em;
+  &__title {
+    font-weight: bold;
+    font-size: 15px;
+    color: #495763;
+    padding-top: 0.25em;
+    padding-bottom: 0.5em;
+    margin-left: 1em;
+  }
+
+  &__info {
+    line-height: 24px;
+    margin: 1em 0;
+  }
+
+  &__icons {
+    line-height: 24px;
+  }
+
+  &__empty-state {
+    text-align: center;
+  }
+
+  &__entry {
+    border-left: 5px solid #ccd6dd;
+    color: #495763;
+
+    // healthy statuses
+
+    &--comparison-Synced {
+      border-left-color: #18be94;
+    }
+
+    &--health-Healthy {
+      border-left-color: #18be94;
+    }
+
+    // having this higher up ensures that progressing takes precedence
+    &--comparison-OutOfSync {
+      border-left-color: #f4c030;
+    }
+
+    // intermediate statuses
+
+    &--health-Progressing {
+      border-left-color: #0dadea;
+    }
+
+    // failed statuses
+
+    &--health-Degraded {
+      border-left-color: #e96d76;
+    }
+
+    &--comparison-Error {
+      border-left-color: #e96d76;
+    }
+
+    &--actions {
+      padding-top: 1em;
+    }
+  }
+
+  &__filters {
+    display: flex;
+    &__title {
+      margin-bottom: 1em;
+      font-size: 13px;
+      color: #6d7f8b;
+      display: flex;
+      align-items: center;
+    }
+
+    .filter {
+      margin-right: 15px;
+      height: max-content;
+      min-width: 200px;
+      max-width: 200px;
+    }
+
+    &__text-filters {
+      align-self: start;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  //@include breakpoint(xxlarge up) {
+  //  .filter {
+  //    width: 100%;
+  //    margin-right: 0;
+  //  }
+  //
+  //  &__filters {
+  //    flex-wrap: wrap;
+  //    padding-bottom: 6em;
+  //
+  //    &__title .action-button {
+  //      display: none;
+  //    }
+  //
+  //    &__text-filters {
+  //      width: 100%;
+  //    }
+  //  }
+  //}
+
+  &__view-type {
+    white-space: nowrap;
+    i {
+      cursor: pointer;
+      color: #ccd6dd;
+      margin-right: 1em;
+      &::before {
+        font-size: 1.5em;
+      }
+    }
+    i.selected {
+      cursor: default;
+      color: #1fbdd0;
+    }
+  }
+
+  &__table-icon {
+    display: inline-block;
+    margin-right: 10px;
+    width: 80px;
+  }
+
+  &__table-row {
+    & > .columns:first-child {
+      padding-left: 15px;
+    }
+    margin-left: -30px !important;
+  }
+
+  &__search-wrapper {
+    margin-left: 15px;
+    //@include breakpoint(medium down) {
+    //  flex-basis: 100%;
+    //  margin-left: 0;
+    //}
+    line-height: normal;
+  }
+
+  &__search {
+    border: 1px solid #ccd6dd;
+    background-color: #eff3f5;
+    border-radius: 7px;
+    position: relative;
+    padding: 0 10px;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    transition: width 200ms;
+    //@include breakpoint(large up) {
+    //  flex-shrink: 1;
+    //  width: 300px;
+    //}
+    i {
+      font-size: 12px;
+      color: #6d7f8b;
+    }
+    .keyboard-hint {
+      border: 1px solid #8fa4b1;
+      color: #495763;
+      border-radius: 3px;
+      padding: 0 7px;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .select {
+      width: 100%;
+      border-radius: 15px;
+    }
+    &:focus-within {
+      border: 1px solid #1fbdd0;
+      //@include breakpoint(large up) {
+      //  width: 500px;
+      //}
+      i {
+        color: #495763;
+      }
+      .keyboard-hint {
+        display: none;
+      }
+    }
+    .argo-field {
+      border: none;
+      font-weight: 500;
+      &::placeholder {
+        color: #6d7f8b;
+      }
+    }
+  }
+
+  &__external-link {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+  }
+
+  &__external-links-icon-container {
+    position: relative;
+    display: inline-block;
+    width: 28px;
+  }
+}

@@ -86,6 +86,8 @@ import {EditEpicComponent} from '@home/pages/rulechain/design-editor/edit-epic/e
 import {DeleteDesignComponent} from '@home/pages/rulechain/design-editor/delete-design.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CarouselModule} from 'primeng/carousel';
+import {EnvSelectComponent} from '@home/pages/rulechain/env-select.component';
+import {DataViewModule} from 'primeng/dataview';
 
 @NgModule({
   declarations: [
@@ -108,7 +110,8 @@ import {CarouselModule} from 'primeng/carousel';
     RequirementAddEpicDialogComponent,
     CreateStoryComponent,
       EditEpicComponent,
-    DeleteDesignComponent
+    DeleteDesignComponent,
+      EnvSelectComponent
   ],
   providers: [
     {
@@ -162,7 +165,8 @@ import {CarouselModule} from 'primeng/carousel';
     NgbModule,
     FontAwesomeModule,
     MatTooltipModule,
-    CarouselModule
+    CarouselModule,
+    DataViewModule
   ]
 })
 export class RuleChainModule { }
