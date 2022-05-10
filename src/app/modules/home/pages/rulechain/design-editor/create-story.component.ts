@@ -33,14 +33,15 @@ export class CreateStoryComponent implements OnInit {
   epic: any;
   currentStory: any;
   existingTemplates: any;
+  stories: any[];
+  selectedLabel = '';
 
   buildEventForm() {
     this.editForm = this.fb.group({
       id: [],
       name: ['', [Validators.required]],
       description:  ['', [Validators.required]],
-      storyCreateType: 'new',
-      storyTemplate: []
+      storyTemplate: ''
     });
   }
 
@@ -53,30 +54,6 @@ export class CreateStoryComponent implements OnInit {
       @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {}
 
-  setStoryValidators() {
-    this.editForm.get(['storyCreateType']).valueChanges.subscribe(type => {
-      if (type === 'existing') {
-        this.editForm.get('name').clearValidators();
-        this.editForm.get('name').updateValueAndValidity();
-
-        this.editForm.get('description').clearValidators();
-        this.editForm.get('description').updateValueAndValidity();
-
-        this.editForm.get('storyTemplate').setValidators([Validators.required]);
-        this.editForm.get('storyTemplate').updateValueAndValidity();
-      } else if (type === 'new'){
-        this.editForm.get('storyTemplate').clearValidators();
-        this.editForm.get('storyTemplate').updateValueAndValidity();
-
-        this.editForm.get('name').setValidators([Validators.required]);
-        this.editForm.get('name').updateValueAndValidity();
-
-        this.editForm.get('description').setValidators([Validators.required]);
-        this.editForm.get('description').updateValueAndValidity();
-      }
-    });
-  }
-
   ngOnInit(): void {
     this.getStoryData();
   }
@@ -87,12 +64,20 @@ export class CreateStoryComponent implements OnInit {
   //   }
   // }
 
+  storyTemplates(){
+    this.stories = [];
+    this.stories.push('custom-story');
+    this.stories.push('login');
+    this.stories.push('email');
+  }
+
   getStoryData() {
     this.projectUid = this.data.projectUid;
     this.epic = this.data.epic;
     this.buildEventForm();
     // this.setEventCategoryValidators();
     this.isSaving = false;
+    this.storyTemplates();
 
 
       if (this.data.createStatus === 'Update') {
@@ -145,20 +130,29 @@ export class CreateStoryComponent implements OnInit {
   }
 
   private createFromForm(): any {
-    let templates = [];
-    if (this.editForm.get(['storyCreateType']).value === 'existing'){
-       templates = this.editForm.get(['storyTemplate']).value
+    if (this.selectedLabel === 'custom'){
+      return {
+        uuid: this.editForm.get(['id']).value,
+        name: this.editForm.get(['name']).value,
+        description: this.editForm.get(['description']).value,
+        projectUuid: this.projectUid,
+        serviceUUID: this.epic.serviceUUID,
+        serviceMasterUUID:  this.epic.serviceMasterUUID,
+        epicUUID:  this.epic.uuid,
+        storyTemplate: this.selectedLabel,
+      };
+    }else {
+      return {
+        uuid: this.editForm.get(['id']).value,
+        name: this.selectedLabel,
+        description: this.editForm.get(['description']).value,
+        projectUuid: this.projectUid,
+        serviceUUID: this.epic.serviceUUID,
+        serviceMasterUUID:  this.epic.serviceMasterUUID,
+        epicUUID:  this.epic.uuid,
+        storyTemplate: this.selectedLabel,
+      };
     }
-    return {
-      uuid: this.editForm.get(['id']).value,
-      name: this.editForm.get(['name']).value,
-      description: this.editForm.get(['description']).value,
-      projectUuid: this.projectUid,
-      serviceUUID: this.epic.serviceUUID,
-      serviceMasterUUID:  this.epic.serviceMasterUUID,
-      epicUUID:  this.epic.uuid,
-      storyTemplate: templates,
-    };
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IRequirement>>) {
@@ -189,8 +183,11 @@ export class CreateStoryComponent implements OnInit {
     // this.logger.error(errorMessage);
   }
 
-  handleStoryCreateTypeChange(){
-    this.setStoryValidators();
+  createStory(val){
+    this.selectedLabel = val
+    if (this.selectedLabel !== 'custom'){
+      this.save();
+    }
   }
 
 }

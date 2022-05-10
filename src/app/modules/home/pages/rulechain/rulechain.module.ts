@@ -85,6 +85,7 @@ import {
 import {EditEpicComponent} from '@home/pages/rulechain/design-editor/edit-epic/edit-epic.component';
 import {DeleteDesignComponent} from '@home/pages/rulechain/design-editor/delete-design.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {CarouselModule} from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -143,24 +144,25 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     CreateServiceModule,
     BuiltInPageModule,
     ServicefileModule,
-      MainMenuModule,
-      PageNavigationModule,
-        RouterModule,
-        MatFormFieldModule,
-        MatIconModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatCheckboxModule,
-        MatSelectModule,
-        MatRadioModule,
-        FormsModule,
-        MatTableModule,
-        MatSnackBarModule,
-        FlexModule,
-        EditorModule,
-        NgbModule,
-        FontAwesomeModule,
-    MatTooltipModule
+    MainMenuModule,
+    PageNavigationModule,
+    RouterModule,
+    MatFormFieldModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatRadioModule,
+    FormsModule,
+    MatTableModule,
+    MatSnackBarModule,
+    FlexModule,
+    EditorModule,
+    NgbModule,
+    FontAwesomeModule,
+    MatTooltipModule,
+    CarouselModule
   ]
 })
 export class RuleChainModule { }

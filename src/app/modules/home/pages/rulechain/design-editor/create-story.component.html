@@ -12,53 +12,65 @@
     <mat-dialog-content>
         <div class="row">
 
-            <div class="pb-3">
-                <mat-radio-group formControlName="storyCreateType">
-                    <mat-radio-button class="pe-5" value="new" color="primary" (change)="handleStoryCreateTypeChange()" >
-                        <span>Create New Epic</span>
-                    </mat-radio-button>
-                    <mat-radio-button value="existing" color="primary" (change)="handleStoryCreateTypeChange()">
-                        <span>Select Template</span>
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
+            <p-carousel [value]="stories" [numVisible]="2" [numScroll]="2" [circular]="false" *ngIf="selectedLabel !== 'custom'">
+                <ng-template let-story pTemplate="item">
+                    <div class="product-item">
+                        <div class="product-item-content">
+                            <div class="mb-2" align="center">
+                                <div class="card story-card" *ngIf="story === 'custom-story'" (click)="createStory('custom')">
+                                    <h4>Custom</h4>
+                                    <div class="story-icon">
+                                        <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px;">extension</mat-icon>
+                                    </div>
+                                </div>
+                                <div class="card story-card" *ngIf="story === 'login'"  (click)="createStory('login')">
+                                    <h4>Login</h4>
+                                    <div class="story-icon">
+                                        <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px">account_circle</mat-icon>
+                                    </div>
+                                </div>
+                                <div class="card story-card" *ngIf="story === 'email'"  (click)="createStory('email')">
+                                    <h4>Email</h4>
+                                    <div class="story-icon">
+                                        <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px">email</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+
 
             <div class="form-group" [hidden]="!editForm.get('id').value">
                 <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
             </div>
 
-            <mat-form-field fxFlex class="mat-block" *ngIf="editForm.value.storyCreateType === 'existing'">
-                <mat-label>Story Template</mat-label>
-                <mat-select formControlName="storyTemplate">
-                    <ng-container *ngFor="let property of existingTemplates">
-                        <mat-option [value]="property">
-                            {{property.name}}
-                        </mat-option>
-                    </ng-container>
-                </mat-select>
-            </mat-form-field>
+            <div *ngIf="selectedLabel === 'custom'">
 
-            <mat-form-field class="flex-auto" *ngIf="editForm.value.storyCreateType === 'new'">
-                <mat-label>Title</mat-label>
-                <input type="text" formControlName="name" matInput>
-                <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
-            </mat-form-field>
+                <mat-form-field class="flex-auto" style="width: 100%;">
+                    <mat-label>Title</mat-label>
+                    <input type="text" formControlName="name" matInput>
+                    <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
+                </mat-form-field>
 
-           <!-- <mat-form-field class="flex-auto">
-                <mat-label>Description</mat-label>
-                <input type="text" formControlName="description" matInput>
-            </mat-form-field>-->
+                <!-- <mat-form-field class="flex-auto">
+                     <mat-label>Description</mat-label>
+                     <input type="text" formControlName="description" matInput>
+                 </mat-form-field>-->
 
-<!--            <mat-form-field class="flex-auto">-->
-            <div class="flex-auto" *ngIf="editForm.value.storyCreateType === 'new'">
-            <mat-label>Description</mat-label>
-                <p-editor name="description" id="field_desc"
-                          formControlName="description" [style]="{'height':'320px'}"></p-editor>
+                <!--            <mat-form-field class="flex-auto">-->
+                <div class="flex-auto" >
+                    <mat-label>Description</mat-label>
+                    <p-editor name="description" id="field_desc"
+                              formControlName="description" [style]="{'height':'320px'}"></p-editor>
+                </div>
+
+
+                <!--                <input type="text" formControlName="description" matInput>-->
+                <!--            </mat-form-field>-->
+
             </div>
-
-
-<!--                <input type="text" formControlName="description" matInput>-->
-<!--            </mat-form-field>-->
 
 
 
