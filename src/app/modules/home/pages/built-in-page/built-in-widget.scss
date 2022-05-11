@@ -1,0 +1,319 @@
+.ui-button {
+  background-color: #dee6eb;
+  color: #6d7f8b;
+  border: none;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+  background: none;
+  opacity: 1;
+}
+
+.savebtn {
+  background-color: #1a73e8;
+  //padding-right: 45%;
+  ////padding-left: 50%;
+  width: 100%;
+  color: white;
+}
+.pageTmpImg {
+  height: 80px;
+  cursor: pointer;
+  width: 80%;
+}
+.pageTmpImgInPage {
+  height: 180px;
+  cursor: pointer;
+}
+
+.tile {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin: inherit;
+  padding: 2%;
+  margin-bottom: 1%;
+}
+
+.tile:hover {
+  background: #dedede;
+  transform: scale(1.02);
+}
+.modal-title-color {
+  color: white;
+}
+.box-two {
+  transition: all 0.01s ease-in;
+  -webkit-transition: all 0.01s ease-in;
+  -moz-transition: all 0.01s ease-in;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  border-radius: 2px;
+  //border-radius: 16px;
+  //background: #ffffff;
+  //box-shadow:  5px 5px 7px #9e9e9e,-5px -5px 7px #ffffff;
+  width: 78%;
+  text-align: center;
+  margin-left: 8%;
+}
+.box-two:hover {
+  background: #ececec;
+  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
+  //color: #fffceb;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.detail {
+  float: left;
+  display: inline-block;
+  position: relative;
+  text-align: left;
+}
+
+.scroll-choices {
+  overflow: scroll;
+  min-height: 50px;
+  max-height: 250px;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: #257bff;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #002386;
+}
+.temp-image {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  margin-right: 8%;
+}
+.title-temp {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  margin-bottom: 25px;
+  padding: 2%;
+}
+.model-type {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  padding: 2%;
+}
+
+.tab {
+  float: left;
+  border: 1px solid #ccc;
+  background-color: #1a202e;
+  width: 100%;
+  height: 100%;
+}
+
+.head {
+  font-size: 17px;
+  text-align: center;
+  color: white;
+  width: 100%;
+  height: 100px;
+}
+
+.tab button {
+  display: block;
+  background-color: inherit;
+  color: white;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+.tab button:hover {
+  background-color: white;
+  color: black;
+  border: none;
+}
+.tab button.active {
+  background-color: white;
+  color: black;
+  border: none;
+}
+
+.tabcontent {
+  float: left;
+  padding: 0px 12px;
+  border: 1px solid #ccc;
+  width: 70%;
+  border-left: none;
+  height: 300px;
+}
+
+.color-card {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  margin-right: 4%;
+  border: 1px solid #0f6ab4;
+  margin-top: 2%;
+}
+
+.form-box {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+.box-ctrl {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.title {
+  //background: linear-gradient(to left, #a4bafd, #10458b);
+  background: #497bbf;
+  height: 100px;
+  text-align: center;
+  margin-bottom: 1px;
+}
+
+.back-save {
+  padding-top: 20px;
+  float: left;
+}
+.add-more {
+  margin-top: 5px;
+  border: none;
+}
+
+.wiz-step {
+  padding: 3%;
+  border-radius: 2px;
+  background: linear-gradient(145deg, #f5f5f5, #ffffff);
+  box-shadow: 5px 5px 10px #f0f0f0, -5px -5px 10px #ffffff;
+  margin-bottom: 10px;
+}
+
+.card {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.page-type {
+  margin-top: 20%;
+  text-align: center;
+}
+
+.page-type-card1 {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  margin: 0 15% 3% 15%;
+  cursor: pointer;
+  padding: 5%;
+  font-size: 30px;
+}
+.page-type-card2 {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  margin: 0 15% 3% 15%;
+  cursor: pointer;
+  padding: 5%;
+  font-size: 30px;
+}
+
+.page-type-card1:hover,
+.page-type-card2:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.grid-type {
+  margin-top: 20%;
+  text-align: center;
+}
+.grid-card {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  margin-bottom: 5%;
+}
+
+.grid-card:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  cursor: pointer;
+}
+.grid-col {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.grid-col:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.aggregate-design-compact-btn {
+}
+.init-page-card {
+  margin-bottom: 25px;
+  width: 200px;
+}
+.init-page-image {
+  margin-bottom: 20px;
+}
+.box-heading {
+  text-align: center;
+  max-height: 42px;
+  font-size: 18px;
+  padding-left: 20px;
+  padding-top: 10px;
+  cursor: text;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.tab {
+  float: left;
+  border: 1px solid #e8e8e8;
+  border-top: none;
+  background-color: #e8e8e8;
+  width: 100%;
+  height: 100%;
+}
+
+.head {
+  font-size: 17px;
+  text-align: center;
+  color: white;
+  width: 100%;
+  height: 100px;
+}
+
+.tab button {
+  display: block;
+  background-color: inherit;
+  color: rgb(66, 66, 66);
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+.tab button:hover {
+  background-color: white;
+  color: black;
+  border: none;
+}
+.tab button.active {
+  background-color: white;
+  color: black;
+  border: none;
+}
+
+.tab-content {
+  float: left;
+  padding: 0 12px;
+  width: 100%;
+  border-left: none;
+  height: 300px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #257bff;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #002386;
+}

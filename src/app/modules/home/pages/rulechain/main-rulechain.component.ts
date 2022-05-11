@@ -108,6 +108,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     connectionPropertyTemplates: ConnectionPropertyTemplate[];
     username: string;
     pageId: string;
+    widgetId: string;
 //     uid: string;
     ruleNodeComponents: Array<RuleNodeComponentDescriptor>;
     ruleChainLoaded: boolean;
@@ -132,6 +133,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     currentTab: string;
     activeNode: any;
     loadPageEditor : boolean;
+    loadWidgetEditor : boolean;
+    loadGridPageEditor : boolean;
     isGenerating: boolean;
     reload: boolean;
     theme: string = 'vs-dark';
@@ -218,6 +221,16 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             .subscribe(event => this.loadDesignTreeData());
     }
 
+    onEditMultiWidgetPage() {
+        this.eventSubscriber = this.eventManager
+            .on(EventTypes.editMultiWidgetPage)
+            .subscribe(event => this.showWidgetEditor(event));
+    }
+
+    showWidgetEditor(event) {
+        this.viewSingleWidget(event.payload);
+    }
+
     delete(item){
       this.projectUid = item.projectuuid;
       this.deleteOperationService.delete(item, this.projectUid);
@@ -259,7 +272,13 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     viewPageEditor(item){
-        this.loadPageEditor = true;
+        if(item.subtype === 'multiWidget') {
+            this.loadGridPageEditor = true;
+            this.loadPageEditor = false;
+        }  else {
+            this.loadPageEditor = true;
+            this.loadGridPageEditor = false;
+        }
         this.ruleChainLoaded = false;
         this.ruleChainMetaDataLoaded = false;
         this.connectionPropertyTemplatesLoaded = false;
@@ -275,6 +294,29 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadModelView = false;
         this.projectUid = item.projectuuid;
         this.pageId = item.uuid
+        this.loadWidgetEditor = false;
+    }
+
+    viewSingleWidget(item){
+        this.loadWidgetEditor = true;
+        this.ruleChainLoaded = false;
+        this.ruleChainMetaDataLoaded = false;
+        this.connectionPropertyTemplatesLoaded = false;
+        this.ruleNodeComponentsLoaded = false;
+        this.ruleChain = null;
+        this.ruleChainMetaData = null;
+        this.connectionPropertyTemplates = null;
+        this.ruleNodeComponents = null;
+        this.loadDesignRequirement = false;
+        this.requirementUid = "";
+        this.lambdauid = "";
+        this.lambdauid = "";
+        this.loadFunctionEditor = false;
+        this.loadModelView = false;
+        this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
+        this.pageId =item.pageUUID;
+        this.widgetId = item.widgetUUID;
     }
 
     viewFuncEditor(item){
@@ -293,6 +335,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadFunctionEditor = true;
         this.loadModelView = false;
         this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
+        this.loadWidgetEditor = false;
     }
 
     viewReqEditor(item?){
@@ -314,6 +358,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.requirementUid = item.uuid;
         this.desprojectUid = item.projectuuid;
         this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
+        this.loadWidgetEditor = false;
         if (this.reload) {
             this.reload = false;
         } else {
@@ -334,9 +380,11 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadDesignRequirement = false;
         this.requirementUid = "";
         this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
         this.ruleprojectUid = "";
         this.editorType = "";
         this.ruleprojectUid = item.projectuuid;
+        this.loadWidgetEditor = false;
         if(item.type === "SERVICEFILE"){
             this.editorType = "servicefile"
         } else {
@@ -397,6 +445,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadUITreeData();
         this.registerChangeEditorTree();
         this.registerChangeUIEditor();
+        this.onEditMultiWidgetPage();
         this.registerChangeDesignEditor();
 //         this.appTypeService.getDevChainByAppType(this.projectUid)
 //           .pipe(
@@ -438,6 +487,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
                 this.designdataSource.data = res;
                   if(res && res[0] && res[0].children.length > 0) {
                       this.viewReqEditor(res[0].children[0]);
+                      this.treeControl.expand(this.treeControl.dataNodes[0]);
                   } else {
                       this.viewReqEditor();
                   }
@@ -454,6 +504,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     loadUITreeData(){
         this.projectService.findAllUIComponents().subscribe((comps) => {
             this.uiTreeDaSource.data = comps;
+            this.treeControl.expand(this.treeControl.dataNodes[0]);
+            this.treeControl.expand(this.treeControl.dataNodes[1]);
         });
     }
 

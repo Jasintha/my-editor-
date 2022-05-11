@@ -1,0 +1,84 @@
+<form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()" >
+    <mat-toolbar color="primary" >
+        <h2 mat-dialog-title *ngIf="data.createStatus === 'Update'">Update Requirement</h2>
+        <h2 mat-dialog-title *ngIf="data.createStatus !== 'Update'">Create Requirement</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-dialog-content>
+        <div class="row">
+            <div class="row justify-content-center" style="height: 90%">
+                <div class="col-12" style="height: 100%">
+                    <div class="justify-content-center form-tmp">
+                        <div class="title-top-bar">
+                            <h4 class="top-bar-text" >Select widgets</h4>
+                            <!--                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="previousState()">&times;</button>-->
+                        </div>
+
+                        <div class="row" style="height: 100%">
+                            <div class="col-md-2 pr-0" style="height: 100%">
+                                <p-menu [model]="items" [style]="{height:'100%'}"></p-menu>
+                            </div>
+                            <div class="col-md-10 pl-0 scroll-bar">
+                                    <div style="margin: 2%">
+                                        <div class="row">
+                                            <div class="col-md-4 init-page-card">
+                                                <div class="card m-auto box-card cyan" (click)="setWidgetType('form-widget')">
+                                                    <div class=" card-body" >
+                                                        <div class="box-heading">
+                                                            <h5>Simple Form widget</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class=" d-flex justify-content-center init-page-image">
+                                                        <img class="pageTmpImg" src="../assets/images/pages/form.jpg" alt="Template">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!--                            <div style="min-height: 200px">-->
+                                    <!--                                <div style="margin-left: 50%;margin-top:30%"  class="loader"></div>-->
+                                    <!--                            </div>-->
+                                </div>
+                                    <div style="margin: 2%">
+                                        <div class="row">
+                                            <div class="col-md-4 init-page-card">
+                                                <div class="card m-auto box-card cyan" (click)="setWidgetType('table-widget')">
+                                                    <div class=" card-body" >
+
+                                                        <div class="box-heading">
+                                                            <h5>Table widget</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class=" d-flex justify-content-center init-page-image">
+                                                        <img class="pageTmpImg" src="../assets/images/pages/allinone.jpg" alt="Template">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </mat-dialog-content>
+    <div mat-dialog-actions fxLayoutAlign="end center">
+<!--        <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving"-->
+<!--                type="submit" cdkFocusInitial>-->
+<!--            Save-->
+<!--        </button>-->
+        <button mat-button color="primary"
+                type="button"
+                mat-dialog-close >
+            Cancel
+        </button>
+    </div>
+</form>

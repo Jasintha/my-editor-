@@ -356,9 +356,9 @@ export class StoryDesignPageComponent extends PageComponent
               protected eventManager: EventManagerService,) {
     super(store);
     this.route.params.subscribe(params => {
-      this.routerType = params['routerType'];
-      this.username = params['username'];
-      this.uid = params['uid'];
+      // this.routerType = params['routerType'];
+      // this.username = params['username'];
+      // this.uid = params['uid'];
     });
       this.isImport = false;
       this.route.data.subscribe(({ ruleNodeComponents }) => {
@@ -383,6 +383,7 @@ export class StoryDesignPageComponent extends PageComponent
   }
 
   ngOnInit() {
+    this.username = 'user3@gmail.com'
   console.log("called 2");
 //     const routerType = this.route.snapshot.params.routerType;
     if (this.routerType != "R") {

@@ -34,6 +34,8 @@ import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import {SinglePageViewComponent} from '@home/pages/built-in-page/single-page.component';
 import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-in-page-delete-dialog.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {PageGridHandlerComponent} from '@home/pages/built-in-page/page-grid-handler.component';
+import {WidgetSelectDialogComponent} from '@home/pages/built-in-page/widget-select-dialog.component';
 
 @NgModule({
     declarations:[
@@ -42,7 +44,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         AddFormControllersComponent,
         SingleWidgetComponent,
         SinglePageViewComponent,
-        BuiltInPageDeleteDialogComponent
+        BuiltInPageDeleteDialogComponent,
+        PageGridHandlerComponent,
+        WidgetSelectDialogComponent
     ],
     imports: [
         CommonModule,
@@ -82,7 +86,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         AddFormControllersComponent,
         SingleWidgetComponent,
         SinglePageViewComponent,
-        BuiltInPageDeleteDialogComponent
+        BuiltInPageDeleteDialogComponent,
+        PageGridHandlerComponent,
+        WidgetSelectDialogComponent
     ],
     providers: [ ]
 })

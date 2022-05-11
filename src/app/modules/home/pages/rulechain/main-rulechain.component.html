@@ -36,7 +36,8 @@
                                                  [ruleNodeComponents]="ruleNodeComponents"></virtuan-rulechain-page>
 
                         <virtuan-single-page-view *ngIf="loadPageEditor" [projectUid]="projectUid" [pageId]="pageId" ></virtuan-single-page-view>
-
+                        <virtuan-single-widget-view *ngIf="loadWidgetEditor" [projectUid]="projectUid" [pageId]="pageId" [widgetId]="widgetId" ></virtuan-single-widget-view>
+                        <virtuan-page-grid-handler *ngIf="loadGridPageEditor" [projectUid]="projectUid" [pageId]="pageId" widgetId > </virtuan-page-grid-handler>
                     </as-split-area>
                     <as-split-area [size]="16">
                         <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">

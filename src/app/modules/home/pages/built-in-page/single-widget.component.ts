@@ -34,6 +34,8 @@ interface Item {
 })
 export class SingleWidgetComponent implements OnInit, OnDestroy {
   @Input() projectUid: string;
+  @Input() pageId: string;
+  @Input() widgetId: string;
   isSaving: boolean;
   // projectId: number;
   project: IProject;
@@ -62,8 +64,6 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
   widgetTitle: string;
   pageConfigs: IConfig[];
   clonedCars: { [s: string]: Config } = {};
-  pageId: string;
-  widgetId: string;
   isSidebarVisible = false;
   rowValues = '';
   isSelected = false;
@@ -308,8 +308,8 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
     });
     this.activatedRoute.params.subscribe(params => {
       // this.projectId = params['projId'];
-      this.pageId = params.pageId;
-      this.widgetId = params.widgetId;
+     // this.pageId = params.pageId;
+     // this.widgetId = params.widgetId;
       // this.toolbarTrackerService.setWidgetID(this.widgetId);
       this.loadUpdateForm();
     });
