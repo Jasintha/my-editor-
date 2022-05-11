@@ -12,7 +12,19 @@
             </li>
         </ol>
     </div>
-    <div id="requirements" class="row section border row-color">
+    <div id="requirements" class="row section border ">
+        <div class="col-2">
+            <a class="new" (click)="createRequirement()">
+                <!--                <div class="wrap add">-->
+                <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
+                <!--                    &lt;!&ndash;<fa-icon [icon]="faPlus"></fa-icon>&ndash;&gt;-->
+                <!--                </div>-->
+                <div class="wrap add" style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">
+                    <mat-icon class="material-icons" (click)="nextReq()" style="color: white; font-size: 30px">add
+                    </mat-icon>
+                </div>
+            </a>
+        </div>
         <div class="col-2" (click)="clickReq()">
             <div class="wrap" style="border-style: dashed;" matTooltip="{{currentReq?.name}}"
                  [matTooltipPosition]="toolTipPosition">
@@ -36,18 +48,7 @@
             </div>
         </div>
 
-        <div class="col-2">
-            <a class="new" (click)="createRequirement()">
-<!--                <div class="wrap add">-->
-<!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
-<!--                    &lt;!&ndash;<fa-icon [icon]="faPlus"></fa-icon>&ndash;&gt;-->
-<!--                </div>-->
-                <div class="wrap add" style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">
-                    <mat-icon class="material-icons" (click)="nextReq()" style="color: white; font-size: 30px">add
-                    </mat-icon>
-                </div>
-            </a>
-        </div>
+
         <div class="col-2">
             <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">
                 <mat-icon class="material-icons" (click)="nextReq()" style="color: #6c6c6c; font-size: 30px">last_page
@@ -60,7 +61,7 @@
         </div>
     </div>
 
-    <div id="epics" class="row section border row-color" *ngIf="existingEpics.length != 0">
+    <div id="epics" class="row section border " *ngIf="existingEpics.length != 0">
         <ng-container *ngFor="let epic of existingEpics; let j = index">
             <div class="col-2" (click)="filterEpic(epic, j)">
                 <div class="wrap" style="border-style: dashed;" [ngClass]="epic.selected ? 'selected' : ''"
@@ -100,11 +101,20 @@
         <!--        </div>-->
     </div>
 
-    <div id="stories" class="row section border row-color" *ngIf="filteredStories.length != 0">
-        <ng-container *ngFor="let story of filteredStories">
-            <div class="col-2" (click)="loadStoryDesignEditor(story)">
-                <div class="wrap selected" matTooltip="{{story?.name}}"
-                     [matTooltipPosition]="toolTipPosition">
+    <div class="row section border row-color"  style="margin-left: 120px; cursor: pointer" *ngIf="filteredStories.length != 0">
+        <div style="text-align: center;">
+            <mat-icon class="material-icons"
+                      style="color: slateblue; font-size: 50px;transform: rotate(180deg);"
+                      (click)="addStory(selectedEpic)">add
+            </mat-icon>
+        </div>
+    </div>
+
+    <div *ngIf="filteredStories.length != 0">
+        <ng-container *ngFor="let story of filteredStories" >
+            <div  id="stories"  class="row section border row-color"  style="margin-left: 120px">
+                <div class="col-2 wrap" matTooltip="{{story?.name}}" style="margin-right: 50px"
+                     [matTooltipPosition]="toolTipPosition" (click)="loadStoryDesignEditor(story)">
                     <h5 class="txt-overflow">{{story.name}}</h5>
                     <a class="edit" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil"
                                                                              aria-hidden="true"></i></a>
@@ -122,11 +132,24 @@
                     <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i
                             class="fa fa-trash" aria-hidden="true"></i></a>
                 </div>
+                <div class="col-4 justify-content-center" style="margin-right: 50px">
+                    <mat-form-field class="flex-auto" style="width: 100%">
+                        <mat-label>Progress</mat-label>
+                        <mat-select (selectionChange)="handleProgress($event.value)">
+                            <mat-option value="1">SA</mat-option>
+                            <mat-option value="2">Design in progress</mat-option>
+                            <mat-option value="3">Development in progress</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-4 justify-content-center">
+                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}'></mat-progress-bar>
+                </div>
             </div>
         </ng-container>
-        <div class="watermark" style="left: 88%;">
-            Stories
-        </div>
+<!--        <div class="watermark" style="left: 88%;">-->
+<!--            Stories-->
+<!--        </div>-->
 
 
         <!--<div class="col-3">

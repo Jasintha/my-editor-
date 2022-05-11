@@ -133,6 +133,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     requirementLevel : boolean;
     epicLevel : boolean;
     storyLevel : boolean;
+    progressValue: number;
 
     constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
                  private ruleChainService: RuleChainService,protected eventManager: EventManagerService,) { }
@@ -432,6 +433,16 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.loadReq();
         this.loadEpics();
 
+    }
+
+    handleProgress(val){
+        if (val === '1'){
+            this.progressValue = 30;
+        }else if (val === '2'){
+            this.progressValue = 60;
+        } else if (val === '3'){
+            this.progressValue = 100;
+        }
     }
 
 }
