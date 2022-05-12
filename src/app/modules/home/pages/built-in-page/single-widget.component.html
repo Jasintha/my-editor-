@@ -464,17 +464,6 @@
                         <div class="col-12 model-type">
                             <div class="form-group"
                                  *ngIf="editForm.value.pagetemplate !== 'file-upload-widget' && editForm.value.pagetemplate !== 'dashboard-page'">
-                                <div class="row" style="padding-bottom: 20px">
-                                    <div class="col-6">
-                                        <label class="form-control-label">Model</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <button type="button"  class="btn btn-info" style="float: right"
-                                                (click)="newSideBarVisible()">
-                                            <i class="fas fa-plus"></i>&nbsp;<span>Add new model</span>
-                                        </button>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p-dropdown placeholder="Choose" [options]="aggregateItems"
