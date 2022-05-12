@@ -112,6 +112,11 @@
     <div *ngIf="filteredStories.length != 0">
         <ng-container *ngFor="let story of filteredStories" >
             <div  id="stories"  class="row section border row-color"  style="margin-left: 120px">
+                <div class="col-2" style="right: 20px">
+                    <button mat-mini-fab (click)="generateStory(story)" aria-label="Example icon button with a delete icon" style="color: #00a74e;background-color: #ffffff ; left: -25px; top: -35px; ">
+                        <mat-icon style="font-size: 25px">play_arrow</mat-icon>
+                    </button>
+                </div>
                 <div class="col-2 wrap" matTooltip="{{story?.name}}" style="margin-right: 50px"
                      [matTooltipPosition]="toolTipPosition" (click)="loadStoryDesignEditor(story)">
                     <h5 class="txt-overflow">{{story.name}}</h5>
@@ -145,11 +150,6 @@
                     <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}'></mat-progress-bar>
                 </div>
 
-                <div class="col-2 justify-content-center">
-                    <button (click)="generateStory(story)" mat-fab color="warn" aria-label="Example icon button with a delete icon">
-                        <mat-icon>visibility</mat-icon>
-                    </button>
-                </div>
             </div>
         </ng-container>
 <!--        <div class="watermark" style="left: 88%;">-->
