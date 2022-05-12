@@ -9,7 +9,8 @@ import {IReleaseConfigReq} from '@shared/models/model/release-config.model';
 import {ICreateFolderStatus, IMMPJobStatusResponse} from '@shared/models/model/mmpstatus.model';
 import {createRequestOption} from '@shared/util/request-util';
 import {defaultHttpOptions} from '@core/http/http-utils';
-
+import {IStoryGen} from '@shared/models/model/story-gen.model';
+type StoryGenResponseType = HttpResponse<IStoryGen>;
 type EntityResponseType = HttpResponse<IProject>;
 type ReleaseConfigResponseType = HttpResponse<IReleaseConfigReq>;
 type EntityArrayResponseType = HttpResponse<IProject[]>;
@@ -18,6 +19,7 @@ type commonResponseType = HttpResponse<any>;
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
+  public genResourceUrl = '/api/editor';
   public resourceUrl = '/api/editor/projects';
   public upresourceUrl = '/api/editor/up/projects';
   public workspaceresourceUrl = '/api/editor/projects/workspace';
@@ -204,5 +206,12 @@ export class ProjectService {
 
   findAllDashboardProjects(): Observable<EntityArrayResponseType> {
     return this.http.get<IProject[]>(`${this.resourceUrl}/dashboards`, { observe: 'response' });
+  }
+
+  generateStoryUI(uuid: string, story: IStoryGen): Observable<StoryGenResponseType> {
+    console.log('Generating story from story id');
+    return this.http.put<IStoryGen>(`${this.genResourceUrl}/stories/preview/gen/${uuid}`, story, {
+      observe: 'response',
+    });
   }
 }

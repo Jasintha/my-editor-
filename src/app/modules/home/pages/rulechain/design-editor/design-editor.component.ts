@@ -58,6 +58,8 @@ import {CreateRequirementComponent} from '@home/pages/rulechain/design-editor/cr
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
+import {ProjectService} from '@core/projectservices/project.service';
+import {IStoryGen, StoryGen} from '@shared/models/model/story-gen.model';
 
 declare const SystemJS;
 
@@ -136,7 +138,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     progressValue: number;
 
     constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
-                 private ruleChainService: RuleChainService,protected eventManager: EventManagerService,) { }
+                 private ruleChainService: RuleChainService,protected eventManager: EventManagerService, private projectService: ProjectService,) { }
 
     ngOnChanges(changes: SimpleChanges) {
         this.reloadView();
@@ -412,6 +414,15 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
         this.viewEditor = true;
 
+    }
+
+    generateStory(story: any) {
+        const storyGen: IStoryGen = {
+            storyUuid: story.uuid,
+            projectUuid: story.projectUuid,
+        };
+        this.projectService.generateStoryUI(story.projectUuid, storyGen).subscribe((storyGenResult) => {
+        });
     }
 
     backDesignEditor(){
