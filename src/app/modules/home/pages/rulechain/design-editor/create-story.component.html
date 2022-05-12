@@ -12,30 +12,35 @@
     <mat-dialog-content>
         <div class="row">
 
-            <p-carousel [value]="stories" [numVisible]="2" [numScroll]="2" [circular]="false" *ngIf="selectedLabel !== 'custom'">
+            <p-carousel [value]="stories" [numVisible]="3" [numScroll]="3" [circular]="false" *ngIf="selectedLabel !== 'custom'">
                 <ng-template let-story pTemplate="item">
                     <div class="product-item">
                         <div class="product-item-content">
                             <div class="mb-2" align="center">
-                                <div class="card story-card" *ngIf="story === 'custom-story'" (click)="createStory('custom')">
+                                <div class="card story-card" *ngIf="story === 'custom'" >
                                     <h4>Custom</h4>
                                     <div class="story-icon">
                                         <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px;">extension</mat-icon>
                                     </div>
                                 </div>
-                                <div class="card story-card" *ngIf="story === 'login'"  (click)="createStory('login')">
+                                <div class="card story-card" *ngIf="story === 'login'"  >
                                     <h4>Login</h4>
                                     <div class="story-icon">
                                         <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px">account_circle</mat-icon>
                                     </div>
                                 </div>
-                                <div class="card story-card" *ngIf="story === 'email'"  (click)="createStory('email')">
+                                <div class="card story-card" *ngIf="story === 'email'"  >
                                     <h4>Email</h4>
                                     <div class="story-icon">
                                         <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px">email</mat-icon>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div style="margin-top: 15px;" align="center">
+                            <p-radioButton name="screenselection"
+                                           [value]="story" label="{{story}}" formControlName="storyTemplate"  ></p-radioButton>
+
                         </div>
                     </div>
                 </ng-template>
@@ -46,7 +51,7 @@
                 <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
             </div>
 
-            <div *ngIf="selectedLabel === 'custom'">
+            <div>
 
                 <mat-form-field class="flex-auto" style="width: 100%;">
                     <mat-label>Title</mat-label>
@@ -60,11 +65,11 @@
                  </mat-form-field>-->
 
                 <!--            <mat-form-field class="flex-auto">-->
-                <div class="flex-auto" >
-                    <mat-label>Description</mat-label>
-                    <p-editor name="description" id="field_desc"
-                              formControlName="description" [style]="{'height':'320px'}"></p-editor>
-                </div>
+<!--                <div class="flex-auto" >-->
+<!--                    <mat-label>Description</mat-label>-->
+<!--                    <p-editor name="description" id="field_desc"-->
+<!--                              formControlName="description" [style]="{'height':'320px'}"></p-editor>-->
+<!--                </div>-->
 
 
                 <!--                <input type="text" formControlName="description" matInput>-->
@@ -76,7 +81,7 @@
 
         </div>
     </mat-dialog-content>
-    <div mat-dialog-actions fxLayoutAlign="end center">
+    <div mat-dialog-actions fxLayoutAlign="end center" >
         <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving"
                 type="submit" cdkFocusInitial>
             Save

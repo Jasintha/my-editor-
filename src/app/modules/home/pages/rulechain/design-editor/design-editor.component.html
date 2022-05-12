@@ -132,7 +132,7 @@
                     <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i
                             class="fa fa-trash" aria-hidden="true"></i></a>
                 </div>
-                <div class="col-4 justify-content-center" style="margin-right: 50px">
+                <div class="col-3 justify-content-center" style="margin-right: 30px">
                     <mat-form-field class="flex-auto" style="width: 100%">
                         <mat-label>Progress</mat-label>
                         <mat-select (selectionChange)="handleProgress($event.value)">
@@ -142,8 +142,14 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-4 justify-content-center">
+                <div class="col-4 justify-content-center" style="margin-right: 10px">
                     <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}'></mat-progress-bar>
+                </div>
+
+                <div class="col-2 justify-content-center">
+                    <button mat-fab color="warn" aria-label="Example icon button with a delete icon">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
                 </div>
             </div>
         </ng-container>

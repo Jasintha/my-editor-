@@ -42,12 +42,12 @@
                     //color: white;
                 }
             }
-            &::before{
-                content: "";
-                height: 60%;
-                border-top: 5px solid slateblue;
-                border-left: 5px solid slateblue;
-            }
+            //&::before{
+            //    content: "";
+            //    height: 60%;
+            //    border-top: 5px solid slateblue;
+            //    border-left: 5px solid slateblue;
+            //}
             //&::after{
             //    content: "";
             //    height: 60%;
@@ -85,7 +85,7 @@
             }
             &::after{
                 content: "";
-                height: 60%;
+                height: 125%;
                 border-left: 5px solid orange;
                 border-bottom: 5px solid orange;
             }
@@ -404,15 +404,15 @@
 }
 
 .story-card{
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     text-align: center;
     cursor: pointer;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .story-icon{
-    margin: 50px 60px 0 0;
+    margin: 30px 60px 0 0;
 }
 
 

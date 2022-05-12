@@ -19,9 +19,9 @@
 
         <as-split direction="horizontal">
             <!--<as-split-area [size]="15">TOP</as-split-area>-->
-            <as-split-area [size]="83">
+            <as-split-area [size]="splitPartOneSize">
                 <as-split direction="vertical">
-                    <as-split-area [size]="84" style="overflow: auto">
+                    <as-split-area [size]="splitPartOneSize" style="overflow: auto">
 
                         <!-- <router-outlet></router-outlet>-->
                         <virtuan-design-editor-new *ngIf="loadDesignRequirement" [requirementUid]="requirementUid" [requirementCount] = "requirementCount" [movetoNextReq] = "movetoNextReq"  [reqArray]="requirementArray" [reload]="reload" [desprojectUid]="desprojectUid"></virtuan-design-editor-new>
@@ -39,7 +39,7 @@
                         <virtuan-single-widget-view *ngIf="loadWidgetEditor" [projectUid]="projectUid" [pageId]="pageId" [widgetId]="widgetId" ></virtuan-single-widget-view>
                         <virtuan-page-grid-handler *ngIf="loadGridPageEditor" [projectUid]="projectUid" [pageId]="pageId" widgetId > </virtuan-page-grid-handler>
                     </as-split-area>
-                    <as-split-area [size]="16">
+                    <as-split-area [size]="splitPartTwoSize">
                         <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
                             <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button>
                         </div>
@@ -81,17 +81,17 @@
                     </as-split-area>
                 </as-split>
             </as-split-area>
-            <as-split-area [size]="17">
+            <as-split-area [size]="splitPartTwoSize">
                 <div>
                     <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist" style="position: fixed; background-color: lightgrey; margin-top: 0; padding-top: 55px">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="currentTab = 'design'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"  aria-selected="false">Design</button>
+                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('design')" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"  aria-selected="false">Design</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="currentTab = 'service'"  data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab" aria-selected="true">Service</button>
+                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('service')"  data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab" aria-selected="true">Service</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="currentTab = 'portal'" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"  aria-selected="false">UI</button>
+                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('portal')" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"  aria-selected="false">UI</button>
                         </li>
                     </ul>
                     <div class="tab-content">

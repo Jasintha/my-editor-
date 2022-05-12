@@ -40,8 +40,8 @@ export class CreateStoryComponent implements OnInit {
     this.editForm = this.fb.group({
       id: [],
       name: ['', [Validators.required]],
-      description:  ['', [Validators.required]],
-      storyTemplate: ''
+      description:  '',
+      storyTemplate: ['', [Validators.required]],
     });
   }
 
@@ -66,7 +66,7 @@ export class CreateStoryComponent implements OnInit {
 
   storyTemplates(){
     this.stories = [];
-    this.stories.push('custom-story');
+    this.stories.push('custom');
     this.stories.push('login');
     this.stories.push('email');
   }
@@ -130,7 +130,6 @@ export class CreateStoryComponent implements OnInit {
   }
 
   private createFromForm(): any {
-    if (this.selectedLabel === 'custom'){
       return {
         uuid: this.editForm.get(['id']).value,
         name: this.editForm.get(['name']).value,
@@ -139,20 +138,8 @@ export class CreateStoryComponent implements OnInit {
         serviceUUID: this.epic.serviceUUID,
         serviceMasterUUID:  this.epic.serviceMasterUUID,
         epicUUID:  this.epic.uuid,
-        storyTemplate: this.selectedLabel,
+        storyTemplate: this.editForm.get(['storyTemplate']).value,
       };
-    }else {
-      return {
-        uuid: this.editForm.get(['id']).value,
-        name: this.selectedLabel,
-        description: this.editForm.get(['description']).value,
-        projectUuid: this.projectUid,
-        serviceUUID: this.epic.serviceUUID,
-        serviceMasterUUID:  this.epic.serviceMasterUUID,
-        epicUUID:  this.epic.uuid,
-        storyTemplate: this.selectedLabel,
-      };
-    }
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IRequirement>>) {

@@ -89,6 +89,7 @@ import {CarouselModule} from 'primeng/carousel';
 import {EnvSelectComponent} from '@home/pages/rulechain/env-select.component';
 import {DataViewModule} from 'primeng/dataview';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -168,7 +169,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatTooltipModule,
     CarouselModule,
     DataViewModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    RadioButtonModule
   ]
 })
 export class RuleChainModule { }
