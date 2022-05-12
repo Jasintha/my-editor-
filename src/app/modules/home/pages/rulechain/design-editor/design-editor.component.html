@@ -101,11 +101,10 @@
         <!--        </div>-->
     </div>
 
-    <div class="row section border row-color"  style="margin-left: 120px; cursor: pointer" *ngIf="filteredStories.length != 0">
+    <div class="row section border row-color"  style="margin-left: 120px; cursor: pointer" *ngIf="filteredStories.length != 0" (click)="addStory(selectedEpic)">
         <div style="text-align: center;">
             <mat-icon class="material-icons"
-                      style="color: slateblue; font-size: 50px;transform: rotate(180deg);"
-                      (click)="addStory(selectedEpic)">add
+                      style="color: slateblue; font-size: 50px;transform: rotate(180deg);">add
             </mat-icon>
         </div>
     </div>
