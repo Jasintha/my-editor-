@@ -56,6 +56,7 @@ export class CreateStoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStoryData();
+    this.epic = this.data.epic
   }
 
   // ngOnChanges(changes: SimpleChanges) {

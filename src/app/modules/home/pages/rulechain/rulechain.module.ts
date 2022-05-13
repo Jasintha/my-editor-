@@ -90,7 +90,7 @@ import {EnvSelectComponent} from '@home/pages/rulechain/env-select.component';
 import {DataViewModule} from 'primeng/dataview';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {RadioButtonModule} from 'primeng/radiobutton';
-
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
 
@@ -170,7 +170,8 @@ import {RadioButtonModule} from 'primeng/radiobutton';
     CarouselModule,
     DataViewModule,
     MatProgressBarModule,
-    RadioButtonModule
+    RadioButtonModule,
+    ChartsModule
   ]
 })
 export class RuleChainModule { }

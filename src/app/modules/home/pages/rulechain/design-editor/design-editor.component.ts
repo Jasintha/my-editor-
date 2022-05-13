@@ -60,6 +60,8 @@ import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
 import {ProjectService} from '@core/projectservices/project.service';
 import {IStoryGen, StoryGen} from '@shared/models/model/story-gen.model';
+import {ChartOptions, ChartType} from 'chart.js';
+import {Label, SingleDataSet} from 'ng2-charts';
 
 declare const SystemJS;
 
@@ -131,6 +133,15 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     storyLevel : boolean;
     progressValue: number;
 
+    public pieChartOptions: ChartOptions = {
+        responsive: true,
+    };
+    public pieChartLabels: Label[] = [['CompletedEpic'], ['NewEpic']];
+    public pieChartData: SingleDataSet = [];
+    public pieChartType: ChartType = 'pie';
+    public pieChartLegend = true;
+    public pieChartPlugins = [];
+
     constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
                  private ruleChainService: RuleChainService,protected eventManager: EventManagerService, private projectService: ProjectService,) { }
 
@@ -179,6 +190,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 (res: any[]) => {
                     if (res) {
                         this.existingEpics = res;
+                        this.filterChart(res);
 //             for (let i = 0; i < this.existingEpics.length; i++) {
 //               let epicitem = { label: this.existingEpics[i].name, value: this.existingEpics[i] };
 //               this.epicitems.push(epicitem);
@@ -440,6 +452,20 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         } else if (val === '3'){
             this.progressValue = 100;
         }
+    }
+
+    filterChart(res){
+        this.pieChartData = []
+        let newCount = 0
+        let completeCount = 0
+        res.filter((item) => {
+            if (item.status === 'NEW'){
+                newCount ++;
+            }else if (item.status === 'Completed'){
+                completeCount ++;
+            }
+        })
+        this.pieChartData.push(completeCount , newCount)
     }
 
 }
