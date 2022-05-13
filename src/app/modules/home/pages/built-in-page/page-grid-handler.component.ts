@@ -347,7 +347,9 @@ export class PageGridHandlerComponent implements OnChanges, OnDestroy {
     });
     dialogRef.afterClosed(
     ).subscribe(result => {
-      this.setWidgetType(result);
+      if (result){
+        this.setWidgetType(result);
+      }
     });
 //         return false;
   }
