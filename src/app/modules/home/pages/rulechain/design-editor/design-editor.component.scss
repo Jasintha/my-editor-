@@ -440,8 +440,8 @@
 }
 #pr_id_1 .ui-carousel-item {
     flex: 1 0 25%;
-    overflow: hidden;
-    padding: 10px;
+    overflow: hidden !important;
+    padding: 10px !important;
 }
 
 .ui-carousel-dots-container{
@@ -450,4 +450,10 @@
 
 .currentReq {
     background-color: #007bff;
+}
+
+.ui-carousel-items-container .ui-carousel-item {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
