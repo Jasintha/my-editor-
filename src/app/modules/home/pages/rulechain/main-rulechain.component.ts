@@ -144,8 +144,10 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     generatorList: { [key: number]: string } = {};
     generatorChain: IGenerator[];
     selectedTab = 0;
-    splitPartOneSize = 100;
-    splitPartTwoSize = 0;
+    splitPartOneSize = 90;
+    splitPartTwoSize = 10;
+    splitConsoleSizeOne = 90;
+    splitConsoleSizeTwo = 10;
 
     private _transformer = (node: any, level: number) => {
         return {
@@ -436,8 +438,10 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.splitPartOneSize = 100;
-        this.splitPartTwoSize = 0;
+        this.splitPartOneSize = 98;
+        this.splitPartTwoSize = 2;
+        this.splitConsoleSizeOne = 85;
+        this.splitConsoleSizeTwo = 15;
         this.requirementArray = [];
         this.currentReqIndex = 0;
         this.currentTab = 'design'
@@ -483,8 +487,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             this.splitPartOneSize = 84;
             this.splitPartTwoSize = 16;
         } else if (val === 'design'){
-            this.splitPartOneSize = 100;
-            this.splitPartTwoSize = 0;
+            this.splitPartOneSize = 98;
+            this.splitPartTwoSize = 2;
             this.loadDesignTreeData();
         }
     }

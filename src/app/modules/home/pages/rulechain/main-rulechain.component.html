@@ -21,7 +21,7 @@
             <!--<as-split-area [size]="15">TOP</as-split-area>-->
             <as-split-area [size]="splitPartOneSize">
                 <as-split direction="vertical">
-                    <as-split-area [size]="splitPartOneSize" style="overflow: auto">
+                    <as-split-area [size]="splitConsoleSizeOne" style="overflow: auto">
 
                         <!-- <router-outlet></router-outlet>-->
                         <virtuan-design-editor-new *ngIf="loadDesignRequirement" [requirementUid]="requirementUid" [reqArray]="requirementArray" [reload]="reload" [desprojectUid]="desprojectUid"></virtuan-design-editor-new>
@@ -39,9 +39,11 @@
                         <virtuan-single-widget-view *ngIf="loadWidgetEditor" [projectUid]="projectUid" [pageId]="pageId" [widgetId]="widgetId" ></virtuan-single-widget-view>
                         <virtuan-page-grid-handler *ngIf="loadGridPageEditor" [projectUid]="projectUid" [pageId]="pageId" widgetId > </virtuan-page-grid-handler>
                     </as-split-area>
-                    <as-split-area [size]="splitPartTwoSize">
+                    <as-split-area [size]="splitConsoleSizeTwo">
                         <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
-                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button>
+                            <button mat-raised-button type="button" style=" background-color: #a8554f; color: white; margin-left: 5px;" (click)="clearLog()" cdkFocusInitial>Clear</button>
+                            <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button>
+
                         </div>
                         <mat-tab-group dynamicHeight (selectedTabChange)="tabChanged($event)">
                             <mat-tab label="Console">
