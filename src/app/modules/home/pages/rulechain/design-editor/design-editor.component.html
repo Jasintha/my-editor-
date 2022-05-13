@@ -30,8 +30,11 @@
             <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="4" [circular]="true">
             <ng-template let-req pTemplate="item">
 
-                    <div class="wrap" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" style="border-style: dashed;" matTooltip="{{req?.name}}" (click)="clickReq(req)">
+                    <div class="wrap" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" style="border-style: dashed; height: 100px" matTooltip="{{req?.name}}" (click)="clickReq(req)">
                         <h5 class="txt-overflow">{{req?.name}}</h5>
+                        <div *ngFor="let tag of req?.tags">
+                            <p>{{tag}}</p>
+                        </div>
                         <a class="edit" (click)="editDialog(req?.uuid)"><i class="fa fa-pencil"
                                                                            aria-hidden="true"></i></a>
                         <div class="inner-wrap">

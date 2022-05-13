@@ -167,16 +167,21 @@ export class CreateRequirementComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
+    if (this.tags.length < 4){
+      const input = event.input;
+      const value = event.value;
 
-    // Add our fruit
-    if ((value || '').trim()) {
-      this.tags.push(value.trim());
-    }
+      // Add our fruit
+      if ((value || '').trim()) {
+        this.tags.push(value.trim());
+      }
 
-    // Reset the input value
-    if (input) {
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
+    }else {
+      const input = event.input;
       input.value = '';
     }
   }
