@@ -63,5 +63,6 @@ export enum EventTypes {
   storyUpdateFetch = 'storyUpdateFetch',
   editorUITreeListModification = 'editorUITreeListModification',
   editorDesignTreeListModification = 'editorDesignTreeListModification',
-  editMultiWidgetPage = 'editMultiWidgetPage'
+  editMultiWidgetPage = 'editMultiWidgetPage',
+  consoleLogsUpdated = 'consoleLogsUpdated'
 }

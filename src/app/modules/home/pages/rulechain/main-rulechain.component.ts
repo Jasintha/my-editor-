@@ -71,6 +71,7 @@ import {CreateTaskComponent} from '@home/pages/create-task/create-task.component
 import {AddOperationService} from '@core/projectservices/add-operations.service';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {EnvSelectComponent} from '@home/pages/rulechain/env-select.component';
+import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 
 declare const SystemJS;
 
@@ -176,7 +177,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService, private requirementService: RequirementService,
     private projectService: ProjectService,private deleteOperationService: DeleteOperationService,private addOperationService:AddOperationService, public dialog: MatDialog,
     private eventManager: EventManagerService, private socket: WebsocketService, private breakpointService: BreakpointTrackerService, private themeService: ThemeTrackerService,
-    protected appTypeService: ApptypesService) {
+    protected appTypeService: ApptypesService,
+                private consoleLogService: ConsoleLogService) {
 
     }
 
@@ -444,6 +446,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         });
         this.ruleprojectUid = "";
         this.editorType = "";
+        this.listenConsoleLogChange();
         this.loadTreeData();
         this.loadDesignTreeData();
         this.loadUITreeData();
@@ -606,6 +609,20 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     this.code = this.code + '{"status": "Error", "detail": "Generation request failed"}';
     this.isGenerating = false;
   }
+
+    listenConsoleLogChange() {
+        this.eventSubscriber = this.eventManager
+            .on(EventTypes.consoleLogsUpdated)
+            .subscribe(event => this.updateLog());
+    }
+
+    updateLog() {
+        this.code =  this.consoleLogService.readConsoleLog();
+    }
+
+    clearLog() {
+        this.consoleLogService.clearConsoleLog();
+    }
 
 
   loadChatbox(uuid) {

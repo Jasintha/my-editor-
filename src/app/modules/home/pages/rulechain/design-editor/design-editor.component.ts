@@ -62,6 +62,7 @@ import {ProjectService} from '@core/projectservices/project.service';
 import {IStoryGen, StoryGen} from '@shared/models/model/story-gen.model';
 import {ChartOptions, ChartType} from 'chart.js';
 import {Label, SingleDataSet} from 'ng2-charts';
+import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 
 declare const SystemJS;
 
@@ -143,7 +144,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     public pieChartPlugins = [];
 
     constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
-                 private ruleChainService: RuleChainService,protected eventManager: EventManagerService, private projectService: ProjectService,) { }
+                 private ruleChainService: RuleChainService,protected eventManager: EventManagerService, private projectService: ProjectService,
+                 private consoleLogService: ConsoleLogService) { }
 
     ngOnChanges(changes: SimpleChanges) {
         //   this.reloadView();
@@ -416,6 +418,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     generateStory(story: any) {
+        this.consoleLogService.writeConsoleLog('story generated');
         const storyGen: IStoryGen = {
             storyUuid: story.uuid,
             projectUuid: story.projectUuid,
