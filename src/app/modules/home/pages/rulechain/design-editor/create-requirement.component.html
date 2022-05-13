@@ -23,6 +23,21 @@
                 <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
             </mat-form-field>
 
+            <mat-form-field class="example-chip-list">
+                <mat-chip-list #chipList>
+                    <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                              [removable]="removable" (removed)="remove(tag)">
+                        {{tag}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Tags..."
+                           [matChipInputFor]="chipList"
+                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                           [matChipInputAddOnBlur]="addOnBlur"
+                           (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+            </mat-form-field>
+
            <!-- <mat-form-field class="flex-auto">
                 <mat-label>Description</mat-label>
                 <input type="text" formControlName="description" matInput>

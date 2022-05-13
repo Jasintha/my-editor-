@@ -91,6 +91,9 @@ import {DataViewModule} from 'primeng/dataview';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { ChartsModule } from 'ng2-charts';
+import {MatChipsModule} from '@angular/material/chips';
+
+
 @NgModule({
   declarations: [
 
@@ -171,7 +174,8 @@ import { ChartsModule } from 'ng2-charts';
     DataViewModule,
     MatProgressBarModule,
     RadioButtonModule,
-    ChartsModule
+    ChartsModule,
+    MatChipsModule
   ]
 })
 export class RuleChainModule { }

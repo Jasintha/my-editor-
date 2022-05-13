@@ -14,6 +14,8 @@ import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IApi} from '@shared/models/model/microservice-api.model';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
 interface Item {
   value: any;
   label: string;
@@ -32,6 +34,13 @@ export class CreateRequirementComponent implements OnInit {
   uuid: string
   createStatus: string
   currentReq : IRequirement;
+
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  tags: string[] = [];
+  visible = true;
+  selectable = true;
+  removable = true;
 
   buildEventForm() {
     this.editForm = this.fb.group({
@@ -125,6 +134,7 @@ export class CreateRequirementComponent implements OnInit {
       name: this.editForm.get(['name']).value,
       description: this.editForm.get(['description']).value,
       projectUuid: this.projectUid,
+      tags: this.tags
     };
   }
 
@@ -154,6 +164,29 @@ export class CreateRequirementComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     // this.logger.error(errorMessage);
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.tags.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(tags): void {
+    const index = this.tags.indexOf(tags);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
   }
 
 }
