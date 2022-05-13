@@ -133,6 +133,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     epicLevel : boolean;
     storyLevel : boolean;
     progressValue: number;
+    reqCount = 0;
 
     public pieChartOptions: ChartOptions = {
         responsive: true,
@@ -355,6 +356,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.selectedEpic = null;
         this.showStoryBoard = false;
         this.currentReq = this.reqArray[0];
+        this.reqCount = this.reqArray.length
 
     }
 

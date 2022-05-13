@@ -13,59 +13,68 @@
         </ol>
     </div>
     <div id="requirements" class="row section border ">
-        <div class="col-1">
-            <a class="new" (click)="createRequirement()">
-                <!--                <div class="wrap add">-->
-                <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
-                <!--                    &lt;!&ndash;<fa-icon [icon]="faPlus"></fa-icon>&ndash;&gt;-->
-                <!--                </div>-->
-                <div style="margin-left: 25px; margin-bottom: 56px;">
-                    <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00a74e; color: white; bottom: -20px; cursor: pointer ">
-                        <mat-icon style="font-size: 25px">add</mat-icon>
-                    </button>
-                </div>
-            </a>
+        <div class="col-12">
+            <h1 class="d-flex justify-content-end" style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
         </div>
-        <div class="col-9">
-            <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="4" [circular]="true">
-            <ng-template let-req pTemplate="item">
-
-                    <div class="wrap" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" style="border-style: dashed; height: 100px" matTooltip="{{req?.name}}" (click)="clickReq(req)">
-                        <h5 class="txt-overflow">{{req?.name}}</h5>
-                        <div *ngFor="let tag of req?.tags">
-                            <p>{{tag}}</p>
+        <div class="col-10">
+            <div class="row" style="padding-bottom: 30px;">
+                <div class="col-1 d-flex justify-content-center align-content-center">
+                    <div class="new" (click)="createRequirement()" style="display: flex; justify-content: center; align-items: center;">
+                        <!--                <div class="wrap add">-->
+                        <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
+                        <!--                    &lt;!&ndash;<fa-icon [icon]="faPlus"></fa-icon>&ndash;&gt;-->
+                        <!--                </div>-->
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">
+                                <mat-icon style="font-size: 25px">add</mat-icon>
+                            </button>
                         </div>
-                        <a class="edit" (click)="editDialog(req?.uuid)"><i class="fa fa-pencil"
-                                                                           aria-hidden="true"></i></a>
-                        <div class="inner-wrap">
-                            <input type="text" placeholder="Title">
-                            <textarea name="descripton" cols="" rows=""></textarea>
-                            <button>Submit</button>
-                        </div>
-                        <a class="delete" (click)="deleteDesign(req?.uuid,'requirement')"><i class="fa fa-trash"
-                                                                                             aria-hidden="true"></i></a>
-                        <a class="assign" (click)="assignRequirementToEpic(req)"><i class="fa fa-link" aria-hidden="true"></i></a>
                     </div>
-<!--                    <div class="add-icon">-->
-<!--                        <mat-icon class="material-icons"-->
-<!--                                  style="color: mediumseagreen; font-size: 50px;transform: rotate(180deg);"-->
-<!--                                  (click)="assignRequirementToEpic(req)">publish-->
-<!--                        </mat-icon>-->
-<!--                    </div>-->
-              </ng-template>
-        </p-carousel>
+                </div>
+                <div class="col-11">
+                    <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="4" [circular]="true">
+                        <ng-template let-req pTemplate="item">
+                            <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" style="border-style: dashed; height: 100px" matTooltip="{{req?.name}}" (click)="clickReq(req)">
+                                <h5 class="txt-overflow">{{req?.name}}</h5>
+                                <a class="edit" (click)="editDialog(req?.uuid)"><i class="fa fa-pencil"
+                                                                                   aria-hidden="true"></i></a>
+                                <div class="inner-wrap">
+                                    <input type="text" placeholder="Title">
+                                    <textarea name="descripton" cols="" rows=""></textarea>
+                                    <button>Submit</button>
+                                </div>
+                                <a class="delete" (click)="deleteDesign(req?.uuid,'requirement')"><i class="fa fa-trash"
+                                                                                                     aria-hidden="true"></i></a>
+                                <a class="assign" (click)="assignRequirementToEpic(req)"><i class="fa fa-link" aria-hidden="true"></i></a>
+                            </div>
+                            <!--                    <div class="add-icon">-->
+                            <!--                        <mat-icon class="material-icons"-->
+                            <!--                                  style="color: mediumseagreen; font-size: 50px;transform: rotate(180deg);"-->
+                            <!--                                  (click)="assignRequirementToEpic(req)">publish-->
+                            <!--                        </mat-icon>-->
+                            <!--                    </div>-->
+                        </ng-template>
+                    </p-carousel>
+                </div>
+            </div>
+            <!--        <div class="col-1">-->
+            <!--            <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">-->
+            <!--                <mat-icon class="material-icons" (click)="nextReq()" style="color: #6C6C6C; font-size: 30px">last_page-->
+            <!--                </mat-icon>-->
+            <!--            </div>-->
+            <!--        </div>-->
         </div>
-
-
-<!--        <div class="col-1">-->
-<!--            <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">-->
-<!--                <mat-icon class="material-icons" (click)="nextReq()" style="color: #6c6c6c; font-size: 30px">last_page-->
-<!--                </mat-icon>-->
-<!--            </div>-->
-
-<!--        </div>-->
-        <div class="col-2" style="justify-content: end; display: flex;padding-bottom: 26px;">
-            <h1 style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
+        <div class="col-2" style="justify-content: center; display: flex;padding-bottom: 26px;">
+            <div class="row">
+                <!-- <div class="col-12">
+                    <h1 style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
+                </div> -->
+                <div class="col-12" style="display: flex; justify-content: center;">
+                    <div reqCounter class="counter-container content-center">
+                        <p id="reqCounter" class="h2 text-secondary mb-0">{{reqCount}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -103,15 +112,20 @@
         </div>
         <div> -->
         <div class="col-4">
-            <div class="chart-wrapper">
-                <canvas baseChart
-                        [data]="pieChartData"
-                        [labels]="pieChartLabels"
-                        [chartType]="pieChartType"
-                        [options]="pieChartOptions"
-                        [plugins]="pieChartPlugins"
-                        [legend]="pieChartLegend">
-                </canvas>
+            <div class="col-12">
+                <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem">Epics</h1>
+            </div>
+            <div class="col-12 d-flex justify-content-center" style="padding-bottom: 20px">
+                <div class="chart-wrapper" style="height: 150px; width: 300px; padding-bottom: 20px;">
+                    <canvas baseChart
+                            [data]="pieChartData"
+                            [labels]="pieChartLabels"
+                            [chartType]="pieChartType"
+                            [options]="pieChartOptions"
+                            [plugins]="pieChartPlugins"
+                            [legend]="pieChartLegend">
+                    </canvas>
+                </div>
             </div>
         </div>
         <!--        <div class="col-1" *ngIf="selectedEpicId">-->
