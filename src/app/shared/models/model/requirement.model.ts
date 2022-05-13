@@ -8,7 +8,7 @@ export interface IRequirement {
   category?: string;
   type?: string;
   priority?: string;
-  tags?: string;
+  tags?: string[];
   eta?: any;
   projectUuid?: string;
   description?: string;
@@ -25,7 +25,7 @@ export class Requirement implements IRequirement {
     public category?: string,
     public type?: string,
     public priority?: string,
-    public tags?: string,
+    public tags?: string[],
     public reqdate?: any,
     public eta?: any,
     public projectUuid?: string,

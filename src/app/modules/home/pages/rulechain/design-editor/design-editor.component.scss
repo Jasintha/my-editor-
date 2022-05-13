@@ -507,10 +507,14 @@
 
 .currentReq {
     background-color: #007bff;
+    color: white;
 }
 
 .ui-carousel-items-container .ui-carousel-item {
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
+}
+.example-chip-list {
+    width: 100%;
 }
