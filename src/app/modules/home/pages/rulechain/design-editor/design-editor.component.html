@@ -19,14 +19,15 @@
                 <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
                 <!--                    &lt;!&ndash;<fa-icon [icon]="faPlus"></fa-icon>&ndash;&gt;-->
                 <!--                </div>-->
-                <div class="wrap add" style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">
-                    <mat-icon class="material-icons" style="color: white; font-size: 30px">add
-                    </mat-icon>
+                <div style="margin-left: 25px; margin-bottom: 56px;">
+                    <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00a74e; color: white; bottom: -20px; cursor: pointer ">
+                        <mat-icon style="font-size: 25px">add</mat-icon>
+                    </button>
                 </div>
             </a>
         </div>
         <div class="col-9">
-            <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="2" [circular]="true">
+            <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="4" [circular]="true">
             <ng-template let-req pTemplate="item">
 
                     <div class="wrap" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" style="border-style: dashed;" matTooltip="{{req?.name}}" (click)="clickReq(req)">
@@ -116,7 +117,7 @@
     <div *ngIf="filteredStories.length != 0">
         <ng-container *ngFor="let story of filteredStories" >
             <div  id="stories"  class="row section border row-color"  style="margin-left: 120px">
-                <div class="col-2" style="right: 20px">
+                <div class="col-1" style="right: 20px">
                     <button mat-mini-fab (click)="generateStory(story)" aria-label="Example icon button with a delete icon" style="color: #00a74e;background-color: #ffffff ; left: -25px; top: -35px; ">
                         <mat-icon style="font-size: 25px">play_arrow</mat-icon>
                     </button>
