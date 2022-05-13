@@ -94,9 +94,6 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     requirementUid: string;
 
     @Input()
-    requirementCount: number;
-
-    @Input()
     desprojectUid: string;
 
     @Input()
@@ -106,10 +103,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     reload: boolean;
 
     @Input()
-    movetoNextReq: any;
-
-    @Input()
-    reqArray: any;
+    reqArray: IRequirement[];
 
     currentReq: IRequirement;
     toolTipPosition = 'left'
@@ -141,23 +135,23 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                  private ruleChainService: RuleChainService,protected eventManager: EventManagerService, private projectService: ProjectService,) { }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.reloadView();
+        //   this.reloadView();
+        //   this.currentReq = this.reqArray[0];
     }
 
     reloadView() {
-        this.resetRuleEditorValues();
+        //  this.resetRuleEditorValues();
         this.existingEpics = [];
         this.filteredStories = [];
         this.showStoryBoard = false;
         this.selectedEpicId = "";
         this.selectedEpic = null;
-        this.loadReq();
         this.loadEpics();
     }
 
     loadReq(){
         this.requirementService
-            .find(this.requirementUid ,this.desprojectUid)
+            .find(this.currentReq.uuid ,this.desprojectUid)
             .pipe(
                 filter((mayBeOk: HttpResponse<IRequirement>) => mayBeOk.ok),
                 map((response: HttpResponse<IRequirement>) => response.body)
@@ -176,7 +170,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.selectedEpic = null;
         this.resetRuleEditorValues();
         this.requirementService
-            .findEpicsForReqByProjectId(this.requirementUid, this.desprojectUid)
+            .findEpicsForReqByProjectId(this.currentReq.uuid, this.desprojectUid)
             .pipe(
                 filter((res: HttpResponse<any[]>) => res.ok),
                 map((res: HttpResponse<any[]>) => res.body)
@@ -195,10 +189,12 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 }
             );
     }
-    clickReq() {
+    clickReq(req) {
         this.currentLevel = 'requirement';
         this.epicLevel = false;
         this.storyLevel = false;
+        this.currentReq = req;
+        this.reloadView();
     }
 
     filterEpic(epic, index){
@@ -243,14 +239,14 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             );
     }
 
-    assignRequirementToEpic() {
+    assignRequirementToEpic(req: IRequirement) {
         const dialogRef = this.dialog.open(RequirementAddEpicDialogComponent, {
             width: '800px',
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.desprojectUid,
-                reqdesc: this.currentReq.description,
-                requuid: this.currentReq.uuid
+                reqdesc: req.description,
+                requuid: req.uuid
             }
         });
         dialogRef.afterClosed(
@@ -321,16 +317,6 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
     }
 
-    nextReq() {
-        if(this.reqArray.length > this.currentIndex) {
-            this.currentIndex++;
-        } else {
-            this.currentIndex = 0;
-        }
-        this.requirementUid = this.reqArray[this.currentIndex];
-       this.reloadView();
-        this.movetoNextReq(this.requirementUid);
-    }
 
     deleteDesign(reqId, type){
         const dialogRef = this.dialog.open(DeleteDesignComponent, {
@@ -354,8 +340,9 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.selectedEpicId = '';
         this.selectedEpic = null;
         this.showStoryBoard = false;
+        this.currentReq = this.reqArray[0];
 
-  }
+    }
 
     createRequirement() {
         const dialogRef = this.dialog.open(CreateRequirementComponent, {
@@ -441,7 +428,6 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.ruleNodeComponentsLoaded = false;
         this.viewEditor = false;
 
-        this.loadReq();
         this.loadEpics();
 
     }

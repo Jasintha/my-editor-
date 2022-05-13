@@ -482,6 +482,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         } else if (val === 'design'){
             this.splitPartOneSize = 100;
             this.splitPartTwoSize = 0;
+            this.loadDesignTreeData();
         }
     }
 
@@ -512,7 +513,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 
     populateReqIDArray(requirements) {
         for (const req of requirements) {
-            this.requirementArray.push(req.uuid);
+            this.requirementArray.push(req);
         }
     }
 

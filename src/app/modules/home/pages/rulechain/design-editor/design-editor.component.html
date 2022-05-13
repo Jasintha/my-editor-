@@ -13,50 +13,54 @@
         </ol>
     </div>
     <div id="requirements" class="row section border ">
-        <div class="col-2">
+        <div class="col-1">
             <a class="new" (click)="createRequirement()">
                 <!--                <div class="wrap add">-->
                 <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
                 <!--                    &lt;!&ndash;<fa-icon [icon]="faPlus"></fa-icon>&ndash;&gt;-->
                 <!--                </div>-->
                 <div class="wrap add" style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">
-                    <mat-icon class="material-icons" (click)="nextReq()" style="color: white; font-size: 30px">add
+                    <mat-icon class="material-icons" style="color: white; font-size: 30px">add
                     </mat-icon>
                 </div>
             </a>
         </div>
-        <div class="col-2" (click)="clickReq()">
-            <div class="wrap" style="border-style: dashed;" matTooltip="{{currentReq?.name}}"
-                 [matTooltipPosition]="toolTipPosition">
-                <h5 class="txt-overflow">{{currentReq?.name}}</h5>
-                <a class="edit" (click)="editDialog(currentReq?.uuid)"><i class="fa fa-pencil"
-                                                                          aria-hidden="true"></i></a>
-                <div class="inner-wrap">
-                    <input type="text" placeholder="Title">
-                    <textarea name="descripton" cols="" rows=""></textarea>
-                    <button>Submit</button>
-                </div>
-                <a class="delete" (click)="deleteDesign(currentReq?.uuid,'requirement')"><i class="fa fa-trash"
-                                                                                            aria-hidden="true"></i></a>
-                <a class="assign" (click)="assignRequirementToEpic()"><i class="fa fa-link" aria-hidden="true"></i></a>
-            </div>
-            <div class="add-icon">
-                <mat-icon class="material-icons"
-                          style="color: mediumseagreen; font-size: 50px;transform: rotate(180deg);"
-                          (click)="assignRequirementToEpic()">publish
-                </mat-icon>
-            </div>
+        <div class="col-8">
+            <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="2" [circular]="true">
+            <ng-template let-req pTemplate="item">
+
+                    <div class="wrap" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" style="border-style: dashed;" matTooltip="{{req?.name}}" (click)="clickReq(req)">
+                        <h5 class="txt-overflow">{{req?.name}}</h5>
+                        <a class="edit" (click)="editDialog(req?.uuid)"><i class="fa fa-pencil"
+                                                                           aria-hidden="true"></i></a>
+                        <div class="inner-wrap">
+                            <input type="text" placeholder="Title">
+                            <textarea name="descripton" cols="" rows=""></textarea>
+                            <button>Submit</button>
+                        </div>
+                        <a class="delete" (click)="deleteDesign(req?.uuid,'requirement')"><i class="fa fa-trash"
+                                                                                             aria-hidden="true"></i></a>
+                        <a class="assign" (click)="assignRequirementToEpic(req)"><i class="fa fa-link" aria-hidden="true"></i></a>
+                    </div>
+<!--                    <div class="add-icon">-->
+<!--                        <mat-icon class="material-icons"-->
+<!--                                  style="color: mediumseagreen; font-size: 50px;transform: rotate(180deg);"-->
+<!--                                  (click)="assignRequirementToEpic(req)">publish-->
+<!--                        </mat-icon>-->
+<!--                    </div>-->
+              </ng-template>
+        </p-carousel>
         </div>
 
 
-        <div class="col-2">
-            <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">
-                <mat-icon class="material-icons" (click)="nextReq()" style="color: #6c6c6c; font-size: 30px">last_page
-                </mat-icon>
-            </div>
+<!--        <div class="col-1">-->
+<!--            <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">-->
+<!--                <mat-icon class="material-icons" (click)="nextReq()" style="color: #6c6c6c; font-size: 30px">last_page-->
+<!--                </mat-icon>-->
+<!--            </div>-->
 
-        </div>
-        <div class="col-6" style="justify-content: end; display: flex;padding-bottom: 26px;">
+<!--        </div>-->
+        <div class="col-2" style="justify-content: end; display: flex;padding-bottom: 26px;">
             <h1 style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
         </div>
     </div>
