@@ -519,9 +519,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     populateReqIDArray(requirements) {
-        for (const req of requirements) {
-            this.requirementArray.push(req);
-        }
+        this.requirementArray = requirements;
     }
 
     loadUITreeData(){

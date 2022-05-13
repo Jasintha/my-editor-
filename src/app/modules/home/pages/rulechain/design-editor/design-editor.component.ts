@@ -149,8 +149,9 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                  private consoleLogService: ConsoleLogService) { }
 
     ngOnChanges(changes: SimpleChanges) {
-        //   this.reloadView();
-        //   this.currentReq = this.reqArray[0];
+        this.currentReq = this.reqArray[0];
+        this.reqCount = this.reqArray.length;
+        this.reloadView();
     }
 
     reloadView() {
