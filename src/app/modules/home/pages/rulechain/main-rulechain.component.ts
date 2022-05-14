@@ -531,56 +531,57 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     generateProject() {
-        const dialogRef = this.dialog.open(EnvSelectComponent, {
-            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-            data: {
-                projectUid: this.projectUid,
-                createStatus: status,
-            }
-        });
-        dialogRef.afterClosed(
-        ).subscribe(result => {
-            if (result){
-                if(this.projectUid){
-                    this.loadChatbox(this.projectUid);
-                    this.appTypeService.getDevChainByAppType(this.projectUid)
-                        .pipe(
-                            filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
-                            map((response: HttpResponse<IGenerator[]>) => response.body)
-                        )
-                        .subscribe(
-                            (res: IGenerator[]) => {
-                                this.generatorChain = res;
-                                if (this.generatorChain.length !== 0) {
-                                    this.generatorChain.forEach(c => {
-                                        this.generatorList[c.position] = c.generator.name;
-                                    });
-                                }
+        if(this.projectUid){
+            this.loadChatbox(this.projectUid);
+            this.appTypeService.getDevChainByAppType(this.projectUid)
+                .pipe(
+                    filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
+                    map((response: HttpResponse<IGenerator[]>) => response.body)
+                )
+                .subscribe(
+                    (res: IGenerator[]) => {
+                        this.generatorChain = res;
+                        if (this.generatorChain.length !== 0) {
+                            this.generatorChain.forEach(c => {
+                                this.generatorList[c.position] = c.generator.name;
                             });
-                    this.code = '';
-                    this.isGenerating = true;
-                    setTimeout(() => {
-                        this.isGenerating = false;
-                    }, 16000);
-                    //console.log(this.socket.socket);
-                    this.socket.logSocket();
-                    let genType = 'Dev';
-                    const projectUUID: string = this.projectUid;
-                    let project: Project = new Project();
-                    if (projectUUID) {
+                        }
+                    });
+            this.code = '';
+            this.isGenerating = true;
+            setTimeout(() => {
+                this.isGenerating = false;
+            }, 16000);
+            //console.log(this.socket.socket);
+            this.socket.logSocket();
+            let genType = 'Dev';
+            const projectUUID: string = this.projectUid;
+            let project: Project = new Project();
+            if (projectUUID) {
 //                 let breakpoint = this.breakpointService.getBreakpoint();
 //                 let defaultTheme = this.themeService.getDefaultTheme();
-                        this.projectService.generateFromProjectId(projectUUID, -1, 1, genType, project, projectUUID).subscribe(
-                            (res: any) => {
-                                let project: IProject = res.body;
-                                this.socket.send('generator');
-                                this.onSaveSuccess();
-                            },
-                            (res: HttpErrorResponse) => this.onSaveError());
-                    }
-                }
+                this.projectService.generateFromProjectId(projectUUID, -1, 1, genType, project, projectUUID).subscribe(
+                    (res: any) => {
+                        let project: IProject = res.body;
+                        this.socket.send('generator');
+                        this.onSaveSuccess();
+                    },
+                    (res: HttpErrorResponse) => this.onSaveError());
             }
-        });
+        }
+        // const dialogRef = this.dialog.open(EnvSelectComponent, {
+        //     panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+        //     data: {
+        //         projectUid: this.projectUid,
+        //         createStatus: status,
+        //     }
+        // });
+        // dialogRef.afterClosed(
+        // ).subscribe(result => {
+        //     if (result){
+        //
+        //     }
+        // });
     }
 
   protected onSaveSuccess() {
