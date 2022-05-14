@@ -10,19 +10,21 @@
 
 
                     <div class="row justify-content-center title-temp" >
-                        <!--                        <div class="col-md-12">-->
-                        <h3 *ngIf="formDisable">{{widgetTitle}}</h3>
-                        <div *ngIf="!formDisable" class="form-group">
-                            <mat-form-field class="flex-auto">
-                                <input type="text"   name="pagetitle" id="field_pagetitle"
-                                       formControlName="pagetitle" matInput>
-                                <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">Widget title is required.</mat-error>
+                        <div  class="col-md-8">
+                            <h3 *ngIf="formDisable">{{widgetTitle}}</h3>
+                            <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
+                                <mat-label>Page Title</mat-label>
+                                <input type="text" formControlName="pagetitle" matInput name="pagetitle" id="field_pagetitle">
+                                <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required</mat-error>
                             </mat-form-field>
+
                         </div>
 
-                        <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="enableToEdit()">
-                            <mat-icon>edit</mat-icon>
-                        </button>
+                        <div class="col-md-4">
+                            <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="enableToEdit()">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </div>
 
                         <!--                            <div class="form-group" style="padding: 4%">-->
                         <!--                                <label class="form-control-label" for="field_pagetitle">Page Title</label><span>{{widgetTitle}}</span>-->
