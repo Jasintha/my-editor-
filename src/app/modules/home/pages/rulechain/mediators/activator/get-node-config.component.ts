@@ -194,7 +194,15 @@ export class GetNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                     this.loadViewmodels();
                   }
 
-                  this.updateForm();
+                  //this.updateForm();
+                  let returnObj = this.configuration.returnObj;
+                  if(returnObj && this.returnItems){
+                    returnObj = this.returnItems.find(x => (x.paramType === this.configuration.returnObj.paramType) && (x.inputType === this.configuration.returnObj.inputType));
+                  }
+                  this.getNodeConfigFormGroup.patchValue({
+                      returnObj: returnObj,
+                  });
+
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -202,19 +210,14 @@ export class GetNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
 
   }
 
-  updateForm(){
-      let returnObj = this.configuration.returnObj;
-      if(returnObj && this.returnItems){
-        returnObj = this.returnItems.find(x => (x.paramType === this.configuration.returnObj.paramType) && (x.inputType === this.configuration.returnObj.inputType));
-      }
-
-      this.getNodeConfigFormGroup.patchValue({
-          returnRecordType: this.configuration.returnRecordType,
-          returnObj: returnObj,
-          enableSecurity: this.configuration.enableSecurity,
-          resourcePath: this.configuration.resourcePath
-      });
-
+  onReturnObjChange(){
+    this.configuration.returnObj = this.getNodeConfigFormGroup.get(['returnObj']).value;
+    const returnRecordType = this.configuration.returnRecordType;
+    if (this.configuration.returnObj && returnRecordType !== 's' && returnRecordType !== 'm') {
+      this.getNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: false });
+      this.configuration.returnRecordType = 's';
+    }
+    this.updateModel(this.configuration);
   }
 
   ngOnDestroy(): void {
@@ -408,7 +411,13 @@ export class GetNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         this.updateModel(configuration);
       });
     } else {
-      this.loadServiceAndUpdateForm();
+
+      this.getNodeConfigFormGroup.patchValue({
+          returnRecordType: this.configuration.returnRecordType,
+//           returnObj: returnObj,
+          enableSecurity: this.configuration.enableSecurity,
+          resourcePath: this.configuration.resourcePath
+      });
 
     this.changeSubscription = this.getNodeConfigFormGroup.get('returnRecordType').valueChanges.subscribe(
         (configuration: any) => {
@@ -417,19 +426,19 @@ export class GetNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         }
     );
 
-    this.changeSubscription = this.getNodeConfigFormGroup.get('returnObj').valueChanges.subscribe(
-        (configuration: any) => {
-
-          this.configuration.returnObj = configuration;
-          const returnRecordType = this.configuration.returnRecordType;
-          if (configuration && returnRecordType !== 's' && returnRecordType !== 'm') {
-            this.getNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: false });
-            this.configuration.returnRecordType = 's';
-          }
-          this.updateModel(this.configuration);
-
-        }
-    );
+//     this.changeSubscription = this.getNodeConfigFormGroup.get('returnObj').valueChanges.subscribe(
+//         (configuration: any) => {
+//
+//           this.configuration.returnObj = configuration;
+//           const returnRecordType = this.configuration.returnRecordType;
+//           if (configuration && returnRecordType !== 's' && returnRecordType !== 'm') {
+//             this.getNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: false });
+//             this.configuration.returnRecordType = 's';
+//           }
+//           this.updateModel(this.configuration);
+//
+//         }
+//     );
 
     this.changeSubscription = this.getNodeConfigFormGroup.get('enableSecurity').valueChanges.subscribe(
         (configuration: any) => {
@@ -444,6 +453,8 @@ export class GetNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
           this.updateModel(this.configuration);
         }
     );
+
+    this.loadServiceAndUpdateForm();
 
     }
   }

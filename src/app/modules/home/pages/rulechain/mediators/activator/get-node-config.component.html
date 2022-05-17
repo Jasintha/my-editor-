@@ -7,7 +7,7 @@
 
     <mat-form-field class="mat-block">
         <mat-label>Return Object</mat-label>
-        <mat-select formControlName="returnObj">
+        <mat-select formControlName="returnObj" (selectionChange)="onReturnObjChange()">
             <mat-option *ngFor="let option of returnItems" [value]="option">
                 <span *ngIf="option.inputType === 'MODEL' || option.inputType === 'DTO'">{{option.inputName}} : {{option.inputType}}</span>
                 <span *ngIf="option.inputType !== 'MODEL' && option.inputType !== 'DTO'">{{option.inputType}}</span>
