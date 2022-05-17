@@ -429,11 +429,12 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
         (configuration: any) => {
 
           this.configuration.returnObj = configuration;
-          this.updateModel(this.configuration);
-          const returnObjType = configuration;
-          if (returnObjType !== 's' && returnObjType !== 'm') {
-            this.postNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: true });
+          const returnRecordType = this.configuration.returnRecordType;
+          if (configuration && returnRecordType !== 's' && returnRecordType !== 'm') {
+            this.postNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: false });
+            this.configuration.returnRecordType = 's';
           }
+          this.updateModel(this.configuration);
         }
     );
 

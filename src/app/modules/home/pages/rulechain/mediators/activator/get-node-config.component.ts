@@ -421,12 +421,13 @@ export class GetNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         (configuration: any) => {
 
           this.configuration.returnObj = configuration;
+          const returnRecordType = this.configuration.returnRecordType;
+          if (configuration && returnRecordType !== 's' && returnRecordType !== 'm') {
+            this.getNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: false });
+            this.configuration.returnRecordType = 's';
+          }
           this.updateModel(this.configuration);
 
-          const returnObjType = configuration;
-          if (returnObjType !== 's' && returnObjType !== 'm') {
-            this.getNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: true });
-          }
         }
     );
 

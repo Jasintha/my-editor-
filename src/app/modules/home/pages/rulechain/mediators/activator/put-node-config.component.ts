@@ -429,11 +429,12 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         (configuration: any) => {
 
           this.configuration.returnObj = configuration;
-          this.updateModel(this.configuration);
-          const returnObjType = configuration;
-          if (returnObjType !== 's' && returnObjType !== 'm') {
-            this.putNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: true });
+          const returnRecordType = this.configuration.returnRecordType;
+          if (configuration && returnRecordType !== 's' && returnRecordType !== 'm') {
+            this.putNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: false });
+            this.configuration.returnRecordType = 's';
           }
+          this.updateModel(this.configuration);
         }
     );
 
