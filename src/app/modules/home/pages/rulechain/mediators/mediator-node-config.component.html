@@ -1190,4 +1190,28 @@
                                      [nodeDefinition]="nodeDefinitionValue">
         </virtuan-general-task-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiMsgSubTaskNode'">
+        <virtuan-message-sub-task-node-config #msgSubTaskNodeConfigComponent
+                                     formControlName="configuration"
+                                     [ruleNodeId]="ruleNodeId"
+                                     [serviceUuid]="serviceUuid"
+                                     [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-message-sub-task-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiFileReaderTaskNode'">
+        <virtuan-file-reader-task-node-config #fileReaderTaskNodeConfigComponent
+                                     formControlName="configuration"
+                                     [ruleNodeId]="ruleNodeId"
+                                     [serviceUuid]="serviceUuid"
+                                     [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-file-reader-task-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiServiceCallNode'">
+        <virtuan-service-call-task-node-config #serviceCallTaskNodeConfigComponent
+                                     formControlName="configuration"
+                                     [ruleNodeId]="ruleNodeId"
+                                     [serviceUuid]="serviceUuid"
+                                     [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-service-call-task-node-config>
+    </ng-container>
 </div>

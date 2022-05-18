@@ -109,6 +109,9 @@ import {GetNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/
 import {PostNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/post-node-config.component";
 import {PutNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/put-node-config.component";
 import {GeneralTaskNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/general-task-node-config.component";
+import {MessageSubscriberTaskNodeComponent} from "@home/pages/rulechain/mediators/activator/message-sub-task-node-config.component";
+import {FileReaderTaskNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/file-reader-task-node-config.component";
+import {ServiceCallTaskNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/service-call-task-node-config.component";
 
 import {TreeModule} from 'primeng/tree';
 import { ContextMenuModule } from 'primeng/contextmenu';
@@ -213,7 +216,10 @@ import { TabViewModule } from 'primeng/tabview';
     GetNodeConfigComponent,
     PostNodeConfigComponent,
     PutNodeConfigComponent,
-    GeneralTaskNodeConfigComponent
+    GeneralTaskNodeConfigComponent,
+    MessageSubscriberTaskNodeComponent,
+    FileReaderTaskNodeConfigComponent,
+    ServiceCallTaskNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -317,7 +323,10 @@ import { TabViewModule } from 'primeng/tabview';
     GetNodeConfigComponent,
     PostNodeConfigComponent,
     PutNodeConfigComponent,
-    GeneralTaskNodeConfigComponent
+    GeneralTaskNodeConfigComponent,
+    MessageSubscriberTaskNodeComponent,
+    FileReaderTaskNodeConfigComponent,
+    ServiceCallTaskNodeConfigComponent
   ],
   providers: []
 })

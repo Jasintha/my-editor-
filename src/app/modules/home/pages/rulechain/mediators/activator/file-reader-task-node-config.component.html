@@ -1,0 +1,54 @@
+<div [formGroup]="fileReaderTaskNodeConfigFormGroup">
+
+    <mat-form-field class="mat-block">
+        <mat-label>Frequency</mat-label>
+        <mat-select formControlName="frequency" required>
+            <mat-option *ngFor="let option of frequencyItems" [value]="option.value">
+                {{option.label}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngIf="configuration?.frequency === 'MULTIPLE'">
+
+        <mat-form-field class="mat-block">
+            <mat-label>Unit of Time</mat-label>
+            <mat-select formControlName="timeUnit" >
+                <mat-option *ngFor="let option of timeUnitItems" [value]="option.value">
+                    {{option.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="mat-block">
+            <mat-label>Interval</mat-label>
+            <input type="number" formControlName="time" matInput name="time" id="field_time">
+        </mat-form-field>
+
+    </ng-container>
+    <mat-form-field class="mat-block">
+        <mat-label>File Location</mat-label>
+        <input type="text" formControlName="fileLocation" matInput name="fileLocation" id="field_fileLocation" required>
+    </mat-form-field>
+
+    <mat-form-field class="mat-block">
+        <mat-label>File Reader Model Type</mat-label>
+        <mat-select formControlName="fileInputModel" (selectionChange)="onFileReaderModelChange()" required>
+            <mat-option *ngFor="let option of items" [value]="option">
+                <span *ngIf="option.inputType === 'MODEL' || option.inputType === 'DTO'">{{option.inputName}} : {{option.inputType}}</span>
+                <span *ngIf="option.inputType !== 'MODEL' && option.inputType !== 'DTO'">{{option.inputType}}</span>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div class="pt-3 pb-4">
+        <label id="example-radio-group-label">File Reader Record</label>
+        <mat-radio-group aria-labelledby="example-radio-group-label"
+                         class="ps-5" aria-label="Select an option" formControlName="fileReaderRecordType">
+            <mat-radio-button class="pe-3" value="s">Single</mat-radio-button>
+            <mat-radio-button value="m">Multiple</mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+</div>
+
