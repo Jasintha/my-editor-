@@ -45,9 +45,15 @@
   <span>No screens found</span>
  </div>
 
- <mat-label>Available actions</mat-label>
- <div *ngFor="let option of actionItems">
-  <h6 style="padding-left: 15px">{{option}}</h6>
+ <div class="actions-bar" style="text-align: center">
+  <mat-label>Available actions</mat-label>
+  <div class="row">
+   <div class="col-3" *ngFor="let option of actionItems">
+     <h6 style="padding-left: 15px">{{option}}</h6>
+   </div>
+  </div>
+
  </div>
+
 </div>
 
