@@ -28,6 +28,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     selector: 'virtuan-view-model-config',
     templateUrl: './view-model-config.component.html',
     providers: [MessageService],
+    styleUrls: ['./built-in-page.component.scss'],
     styles: [
         `
       :host ::ng-deep .ui-toast {
