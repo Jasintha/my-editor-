@@ -90,7 +90,7 @@ export class CreateServiceComponent implements OnInit {
       template: '',
       // internalAcc: '',
       projecttype: '',
-      multiTenancy: '',
+      multiTenancy: false,
       // externalAcc: '',
       // templateKey: [],
       // eventSource: [],
