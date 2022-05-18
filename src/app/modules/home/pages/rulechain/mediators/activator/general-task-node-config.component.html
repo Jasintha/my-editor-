@@ -1,0 +1,33 @@
+<div [formGroup]="generalTaskNodeConfigFormGroup">
+    
+    <mat-form-field class="mat-block">
+        <mat-label>Frequency</mat-label>
+        <mat-select formControlName="frequency" >
+            <mat-option *ngFor="let option of frequencyItems" [value]="option.value">
+                {{option.label}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
+    <ng-container *ngIf="configuration?.frequency === 'MULTIPLE'">
+
+        <mat-form-field class="mat-block">
+            <mat-label>Unit of Time</mat-label>
+            <mat-select formControlName="timeUnit" >
+                <mat-option *ngFor="let option of timeUnitItems" [value]="option.value">
+                    {{option.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="mat-block">
+            <mat-label>Interval</mat-label>
+            <input type="number" formControlName="time" matInput name="time" id="field_time">
+        </mat-form-field>
+
+    </ng-container>
+
+</div>
+

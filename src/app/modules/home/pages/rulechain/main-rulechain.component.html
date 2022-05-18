@@ -41,8 +41,8 @@
                     </as-split-area>
                     <as-split-area [size]="splitConsoleSizeTwo">
                         <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
-                            <button mat-raised-button type="button" style=" background-color: #a8554f; color: white; margin-left: 5px;" (click)="clearLog()" cdkFocusInitial>Clear</button>
-                            <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button>
+                            <button mat-raised-button type="button" style=" background-color: #a8554f; color: white; margin-left: 5px;" (click)="clearLog()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">not_interested</mat-icon></button>
+                            <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">play_circle_outline</mat-icon></button>
 
                         </div>
                         <mat-tab-group dynamicHeight (selectedTabChange)="tabChanged($event)">
@@ -101,14 +101,14 @@
                              aria-labelledby="home-tab">
                             <mat-tree [dataSource]="designdataSource" [treeControl]="treeControl" style="margin-top: 25px;">
                                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding style="cursor: pointer" (click)="viewComponent(node.data)" >
-                                    <button mat-icon-button disabled></button>
-                                    <mat-icon class="mat-icon-rtl-mirror" color="primary">
+<!--                                    <button mat-icon-button disabled></button>-->
+                                    <mat-icon class="mat-icon-rtl-mirror" color="primary" style="margin-left: 28px">
                                         {{node.data.isParent ? 'folder' : 'description'}}
                                     </mat-icon>
                                     <!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
                                     <!--                                                description-->
                                     <!--                                            </mat-icon>-->
-                                    <div style="margin-left: 15px">
+                                    <div style="margin-left: 3px">
                                         {{node.name}}
                                     </div>
 
@@ -121,7 +121,7 @@
                                     </button>-->
                                     <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type == 'PARENT_REQUIREMENT'"  (click)="add(node.data)" ><mat-icon>add</mat-icon></button>
                                 </mat-tree-node>
-                                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding >
+                                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
                                     <button mat-icon-button
                                             [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
                                         <mat-icon class="mat-icon-rtl-mirror">
@@ -144,14 +144,14 @@
                             <button mat-icon-button  class="top-node" style="float: right; margin-right: 20px" (click)="add('PARENT_SERVICE')"><mat-icon >add</mat-icon></button>
                             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" style="margin-top: 25px;">
                                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
-                                    <button mat-icon-button disabled></button>
-                                    <mat-icon class="mat-icon-rtl-mirror" color="primary" [ngClass]="{ 'background-highlight': activeNode === node }">
+<!--                                    <button mat-icon-button disabled></button>-->
+                                    <mat-icon class="mat-icon-rtl-mirror" color="primary" style="margin-left: 28px" [ngClass]="{ 'background-highlight': activeNode === node }">
                                         {{node.data.isParent ? 'folder' : 'description'}}
                                     </mat-icon>
                                     <!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
                                     <!--                                                description-->
                                     <!--                                            </mat-icon>-->
-                                    <div style="margin-left: 15px">
+                                    <div style="margin-left: 3px">
                                         {{node.name}}
                                     </div>
 
@@ -164,7 +164,7 @@
                                     </button>
                                     <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
                                 </mat-tree-node>
-                                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding >
+                                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
                                     <button mat-icon-button
                                             [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
                                         <mat-icon class="mat-icon-rtl-mirror">
@@ -191,14 +191,14 @@
                              aria-labelledby="contact-tab">
                             <mat-tree [dataSource]="uiTreeDaSource" [treeControl]="treeControl" style="margin-top: 25px;">
                                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
-                                    <button mat-icon-button disabled></button>
-                                    <mat-icon class="mat-icon-rtl-mirror" color="primary" [ngClass]="{ 'background-highlight': activeNode === node }">
+<!--                                    <button mat-icon-button disabled></button>-->
+                                    <mat-icon class="mat-icon-rtl-mirror" style="margin-left: 28px" color="primary" [ngClass]="{ 'background-highlight': activeNode === node }">
                                         {{node.data.isParent ? 'folder' : 'description'}}
                                     </mat-icon>
                                     <!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
                                     <!--                                                description-->
                                     <!--                                            </mat-icon>-->
-                                    <div style="margin-left: 15px">
+                                    <div style="margin-left: 3px">
                                         {{node.name}}
                                     </div>
 
@@ -211,7 +211,7 @@
                                     </button>
                                     <button mat-icon-button  class="top-node" *ngIf="node.data.isParent"  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
                                 </mat-tree-node>
-                                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding >
+                                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
                                     <button mat-icon-button
                                             [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
                                         <mat-icon class="mat-icon-rtl-mirror">
@@ -247,7 +247,7 @@
                 <!--<mat-icon [icIcon]="icEdit"></mat-icon>-->
                 <span>View</span>
             </button>
-            <button *ngIf="item.type !== 'MAIN_TASK'" (click)="edit(item)" mat-menu-item>
+            <button *ngIf="item.type !== 'MAIN_TASK' && item.type !== 'UI_PAGE' && item.type !== 'UI_MAIN_MENU' " (click)="edit(item)" mat-menu-item>
                 <!--<mat-icon [icIcon]="icDelete"></mat-icon>-->
                 <span>Edit</span>
             </button>

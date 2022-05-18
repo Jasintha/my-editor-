@@ -1105,7 +1105,7 @@
         </virtuan-http-header-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiActorNode'">
-        <virtuan-actor-node-config #cactorNodeConfigComponent
+        <virtuan-actor-node-config #actorNodeConfigComponent
                                       formControlName="configuration"
                                       [ruleNodeId]="ruleNodeId"
                                       [projectUid]="projectUid"
@@ -1113,7 +1113,7 @@
         </virtuan-actor-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiStoryModelNode'">
-        <virtuan-story-model-node-config #cactorNodeConfigComponent
+        <virtuan-story-model-node-config #storyModelNodeConfigComponent
                                       formControlName="configuration"
                                       [ruleNodeId]="ruleNodeId"
                                       [isNodeEdit]="isNodeEdit"
@@ -1124,7 +1124,7 @@
         </virtuan-story-model-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiProcessNode'">
-        <virtuan-process-node-config #cactorNodeConfigComponent
+        <virtuan-process-node-config #processNodeConfigComponent
                                       formControlName="configuration"
                                       [ruleNodeId]="ruleNodeId"
                                       [projectUid]="projectUid"
@@ -1133,7 +1133,7 @@
         </virtuan-process-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiScreenNode'">
-        <virtuan-screen-node-config #cactorNodeConfigComponent
+        <virtuan-screen-node-config #screenNodeConfigComponent
                                      formControlName="configuration"
                                      [ruleNodeId]="ruleNodeId"
                                      [projectUid]="projectUid"
@@ -1143,7 +1143,7 @@
         </virtuan-screen-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiApiNode'">
-        <virtuan-api-node-config #cactorNodeConfigComponent
+        <virtuan-api-node-config #apiNodeConfigComponent
                                      formControlName="configuration"
                                      [ruleNodeId]="ruleNodeId"
                                      [serviceUuid]="serviceUuid"
@@ -1151,7 +1151,7 @@
         </virtuan-api-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiGetNode'">
-        <virtuan-get-node-config #cactorNodeConfigComponent
+        <virtuan-get-node-config #getNodeConfigComponent
                                      formControlName="configuration"
                                      [ruleNodeId]="ruleNodeId"
                                      [serviceUuid]="serviceUuid"
@@ -1159,7 +1159,7 @@
         </virtuan-get-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiDeleteNode'">
-        <virtuan-delete-node-config #cactorNodeConfigComponent
+        <virtuan-delete-node-config #deleteNodeConfigComponent
                                      formControlName="configuration"
                                      [ruleNodeId]="ruleNodeId"
                                      [serviceUuid]="serviceUuid"
@@ -1167,7 +1167,7 @@
         </virtuan-delete-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiPostNode'">
-        <virtuan-post-node-config #cactorNodeConfigComponent
+        <virtuan-post-node-config #postNodeConfigComponent
                                      formControlName="configuration"
                                      [ruleNodeId]="ruleNodeId"
                                      [serviceUuid]="serviceUuid"
@@ -1175,11 +1175,19 @@
         </virtuan-post-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiPutNode'">
-        <virtuan-put-node-config #cactorNodeConfigComponent
+        <virtuan-put-node-config #putNodeConfigComponent
                                      formControlName="configuration"
                                      [ruleNodeId]="ruleNodeId"
                                      [serviceUuid]="serviceUuid"
                                      [nodeDefinition]="nodeDefinitionValue">
         </virtuan-put-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiGeneralTaskNode'">
+        <virtuan-general-task-node-config #generalTaskNodeConfigComponent
+                                     formControlName="configuration"
+                                     [ruleNodeId]="ruleNodeId"
+                                     [serviceUuid]="serviceUuid"
+                                     [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-general-task-node-config>
     </ng-container>
 </div>
