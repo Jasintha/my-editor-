@@ -14,27 +14,25 @@
     </div>
     <div id="requirements" class="row section border ">
         <div class="col-12">
-            <h1 class="d-flex justify-content-end" style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
-        </div>
-        <div class="col-10">
-            <div class="row" style="padding-bottom: 30px;">
-                <div class="col-1 d-flex justify-content-center align-content-center">
-                    <div class="new" (click)="createRequirement()" style="display: flex; justify-content: center; align-items: center;">
-                        <!--                <div class="wrap add">-->
-                        <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
-                        <!--                    &lt;!&ndash;<fa-icon [icon]="faPlus"></fa-icon>&ndash;&gt;-->
-                        <!--                </div>-->
-                        <div style="display: flex; justify-content: center; align-items: center;">
-                            <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">
-                                <mat-icon style="font-size: 25px">add</mat-icon>
-                            </button>
-                        </div>
+            <div class="row">
+                <div class="col-9 d-flex">
+                    <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;">
+                        <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">
+                            <mat-icon style="font-size: 25px">add</mat-icon>
+                        </button>
                     </div>
                 </div>
-                <div class="col-11">
+                <div class="col-3 d-flex justify-content-center">
+                    <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+<!--            <div class="row" style="padding-bottom: 30px;">-->
+<!--                <div class="col-11">-->
                     <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="4" [circular]="true">
                         <ng-template let-req pTemplate="item">
-                            <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" style="border-style: dashed; height: 100px" matTooltip="{{req?.name}}" (click)="clickReq(req)">
+                            <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 100px" matTooltip="{{req?.name}}" (click)="clickReq(req)">
                                 <h5 class="txt-overflow">{{req?.name}}</h5>
                                 <a class="edit" (click)="editDialog(req?.uuid)"><i class="fa fa-pencil"
                                                                                    aria-hidden="true"></i></a>
@@ -50,6 +48,9 @@
                                                                                                      aria-hidden="true"></i></a>
                                 <a class="assign" (click)="assignRequirementToEpic(req)"><i class="fa fa-link" aria-hidden="true"></i></a>
                             </div>
+                            <div class="d-flex justify-content-center py-1" *ngIf="req.uuid === currentReq.uuid">
+                                <img src="/assets/images/curved-up-arrow-green.png" style="width: 25px; height: 25px;" >
+                            </div>
                             <!--                    <div class="add-icon">-->
                             <!--                        <mat-icon class="material-icons"-->
                             <!--                                  style="color: mediumseagreen; font-size: 50px;transform: rotate(180deg);"-->
@@ -58,8 +59,8 @@
                             <!--                    </div>-->
                         </ng-template>
                     </p-carousel>
-                </div>
-            </div>
+<!--                </div>-->
+<!--            </div>-->
             <!--        <div class="col-1">-->
             <!--            <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">-->
             <!--                <mat-icon class="material-icons" (click)="nextReq()" style="color: #6C6C6C; font-size: 30px">last_page-->
@@ -67,7 +68,7 @@
             <!--            </div>-->
             <!--        </div>-->
         </div>
-        <div class="col-2" style="justify-content: center; display: flex;padding-bottom: 26px;">
+        <div class="col-3" style="justify-content: center; display: flex;padding-bottom: 26px;">
             <div class="row">
                 <!-- <div class="col-12">
                     <h1 style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
@@ -79,14 +80,36 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 d-flex justify-content-start">
+<!--            <div class="pb-1">-->
+<!--                <img src="/assets/images/curved-up-arrow-green.png" style="width: 25px; height: 25px; margin-left: 95px;" >-->
+<!--            </div>-->
+        </div>
     </div>
 
-    <div id="epics" class="row section border row-color" *ngIf="existingEpics.length != 0">
-        <div class="col-8">
+    <div class="row section border" *ngIf="existingEpics.length === 0">
+        <div style="text-align: center;">
+            <mat-icon class="material-icons"
+                      style="color: slateblue; font-size: 50px;transform: rotate(180deg);">add
+            </mat-icon>
+        </div>
+    </div>
+
+    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-9"></div>
+                <div class="col-3 d-flex justify-content-center">
+                    <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem;">Epics</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-9">
             <div class="row">
                 <ng-container *ngFor="let epic of existingEpics; let j = index">
                     <div class="col-4" (click)="filterEpic(epic, j)">
-                        <div class="wrap" style="border-style: dashed;" [ngClass]="epic.selected ? 'selected' : ''"
+                        <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }"
                              matTooltip="{{epic?.name}}"
                              [matTooltipPosition]="toolTipPosition">
                             <h5 class="txt-overflow">{{epic?.name}}</h5>
@@ -114,12 +137,12 @@
             Epics
         </div>
         <div> -->
-        <div class="col-4">
-            <div class="col-12">
-                <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem">Epics</h1>
-            </div>
+        <div class="col-3">
+<!--            <div class="col-12">-->
+<!--                <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem">Epics</h1>-->
+<!--            </div>-->
             <div class="col-12 d-flex justify-content-center" style="padding-bottom: 20px">
-                <div class="chart-wrapper" style="height: 150px; width: 300px; padding-bottom: 20px;">
+                <div class="chart-wrapper" style="height: 150px; width: 300px; padding-bottom: 20px; ">
                     <canvas baseChart
                             [data]="pieChartData"
                             [labels]="pieChartLabels"
@@ -131,6 +154,7 @@
                 </div>
             </div>
         </div>
+
         <!--        <div class="col-1" *ngIf="selectedEpicId">-->
         <!--            <a class="new" (click)="addStory(selectedEpic)">-->
         <!--                <div class="wrap add">-->
@@ -140,7 +164,7 @@
         <!--        </div>-->
     </div>
 
-    <div class="row section border row-color"  style="margin-left: 120px; cursor: pointer" *ngIf="filteredStories.length != 0" (click)="addStory(selectedEpic)">
+    <div class="row section border"  style="margin-left: 120px; cursor: pointer" *ngIf="filteredStories.length != 0" (click)="addStory(selectedEpic)">
         <div style="text-align: center;">
             <mat-icon class="material-icons"
                       style="color: slateblue; font-size: 50px;transform: rotate(180deg);">add
@@ -151,31 +175,48 @@
     <div *ngIf="filteredStories.length != 0">
         <ng-container *ngFor="let story of filteredStories" >
             <div  id="stories"  class="row section border row-color"  style="margin-left: 120px">
-                <div class="col-1" style="right: 20px">
-                    <button mat-mini-fab (click)="generateStory(story)" aria-label="Example icon button with a delete icon" style="color: #00a74e;background-color: #ffffff ; left: -22px; top: -35px; ">
-                        <mat-icon style="font-size: 25px">play_arrow</mat-icon>
-                    </button>
-                </div>
-                <div class="col-2 wrap" matTooltip="{{story?.name}}" style="margin-right: 50px"
-                     [matTooltipPosition]="toolTipPosition" (click)="loadStoryDesignEditor(story)">
-                    <h5 class="txt-overflow">{{story.name}}</h5>
-                    <a class="edit" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil"
-                                                                             aria-hidden="true"></i></a>
-                    <!--                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
-                    <div class="inner-wrap">
-                        <input type="text" placeholder="Title">
-                        <textarea name="descripton" cols="" rows=""></textarea>
-                        <!--                        <select name="" >-->
-                        <!--                            <option value="" selected>Epic 1</option>-->
-                        <!--                            <option value="">Epic 2</option>-->
-                        <!--                            <option value="">Epic 3</option>-->
-                        <!--                        </select>-->
-                        <button>Submit</button>
+                <div class="col-12">
+                    <div class="row pb-1 " style="border-bottom: 2px solid #dee2e6!important;">
+                        <div class="col-4">
+                            <div (click)="generateStory(story)" [ngClass]="spinnerButton ? 'spinner spinner-load' : 'spinner'">
+                                <i class="fa fa-play" aria-hidden="true" style="color: #009579;"></i>
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex justify-content-center align-item-center">
+                            <div  matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition" (click)="loadStoryDesignEditor(story)">
+                                <h5 class="txt-overflow">{{story.name}}</h5>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                <a class="edit-icon" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            </div>
+                            <div>
+                                <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
                     </div>
-                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i
-                            class="fa fa-trash" aria-hidden="true"></i></a>
                 </div>
-                <div class="col-3 justify-content-center" style="margin-right: 30px">
+<!--                <div class="col-2 wrap" matTooltip="{{story?.name}}" style="margin-right: 50px"-->
+<!--                     >-->
+<!--                    <h5 class="txt-overflow">{{story.name}}</h5>-->
+<!--                    <a class="edit" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil"-->
+<!--                                                                             aria-hidden="true"></i></a>-->
+<!--                    &lt;!&ndash;                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>&ndash;&gt;-->
+<!--                    <div class="inner-wrap">-->
+<!--                        <input type="text" placeholder="Title">-->
+<!--                        <textarea name="descripton" cols="" rows=""></textarea>-->
+<!--                        &lt;!&ndash;                        <select name="" >&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            <option value="" selected>Epic 1</option>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            <option value="">Epic 2</option>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            <option value="">Epic 3</option>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                        </select>&ndash;&gt;-->
+<!--                        <button>Submit</button>-->
+<!--                    </div>-->
+<!--                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i-->
+<!--                            class="fa fa-trash" aria-hidden="true"></i></a>-->
+<!--                </div>-->
+                <div class="col-6 justify-content-center">
                     <mat-form-field class="flex-auto" style="width: 100%">
                         <mat-label>Progress</mat-label>
                         <mat-select (selectionChange)="handleProgress($event.value)">
@@ -185,7 +226,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-4 justify-content-center" style="margin-right: 10px">
+                <div class="col-6 justify-content-center">
                     <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}'></mat-progress-bar>
                 </div>
 
