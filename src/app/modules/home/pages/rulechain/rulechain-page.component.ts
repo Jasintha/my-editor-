@@ -28,6 +28,9 @@ import {
   ViewChildren,
   ViewEncapsulation
 } from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {filter, map} from 'rxjs/operators';
+
 import { PageComponent } from '@shared/components/page.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
@@ -83,6 +86,7 @@ import { EntityType } from '@shared/models/entity-type.models';
 import { DebugEventType, EventType } from '@shared/models/event.models';
 import Timeout = NodeJS.Timeout;
 import {ConOperationBase} from "@shared/models/ConnectorOperation.models";
+import {EventService} from '@core/projectservices/microservice-event.service';
 
 @Component({
   selector: 'virtuan-rulechain-page',
@@ -350,6 +354,7 @@ export class RuleChainPageComponent extends PageComponent
               private itembuffer: ItemBufferService,
               public dialog: MatDialog,
               public dialogService: DialogService,
+              protected eventService: EventService,
               public fb: FormBuilder) {
     super(store);
     this.route.params.subscribe(params => {
@@ -1183,7 +1188,7 @@ export class RuleChainPageComponent extends PageComponent
       }
 
       let branchFoundObj = this.checkForBranchConnection(indexForCheck, allConnections, nodes, [],[], [], [], [], []);
-      let apiFoundObj= this.checkForApiConnection(indexForCheck, allConnections, nodes, false, []);
+      let apiFoundObj= this.checkForActivatorConnection(indexForCheck, allConnections, nodes, false, []);
 
       let golbalProperties = this.allGlobalProperties;
 
@@ -1323,7 +1328,7 @@ export class RuleChainPageComponent extends PageComponent
     }
   }
 
-  checkForApiConnection( index ,allConnections, nodes, apiNodeFound, nodeRuleInputs){
+  checkForActivatorConnection( index ,allConnections, nodes, apiNodeFound, nodeRuleInputs){
     let foundNode = allConnections.find(x => x.toIndex === index);
     if(foundNode){
         if(foundNode.type.startsWith("BRANCH_") || foundNode.type.startsWith("ERROR_BRANCH_")){
@@ -1393,9 +1398,74 @@ export class RuleChainPageComponent extends PageComponent
                         }
                     });
                 }
+              } else if (nodes[foundNode.fromIndex].component.clazz === 'xiGeneralTaskNode' || nodes[foundNode.fromIndex].component.clazz === 'xiMsgSubTaskNode' ||
+                nodes[foundNode.fromIndex].component.clazz === 'xiFileReaderTaskNode' || nodes[foundNode.fromIndex].component.clazz === 'xiServiceCallNode') {
+                apiNodeFound = true;
+                let configuration = nodes[foundNode.fromIndex].configuration;
+                if (nodes[foundNode.fromIndex].component.clazz === 'xiFileReaderTaskNode') {
+                  let inputname = configuration.fileInputModel.inputName.replace(/\s/g, "");
+                  inputname = inputname.toLowerCase();
+                  inputname = this.titleCaseWord(inputname);
+      
+                  let inputTypeLower = configuration.fileInputModel.inputType.toLowerCase();
+      
+                  if (inputTypeLower == "model") {
+                    let ruleInput = { inputName: inputname, inputType: 'model', record: configuration.fileReaderRecordType };
+                    //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                    nodeRuleInputs.push(ruleInput);
+                  } else if (inputTypeLower == "dto") {
+                    let ruleInput = { inputName: inputname, inputType: 'dto', record: configuration.fileReaderRecordType };
+                    //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                    nodeRuleInputs.push(ruleInput);
+                  }
+                } else if (nodes[foundNode.fromIndex].component.clazz === 'xiServiceCallNode') {
+                  let inputname = configuration.returnObj.inputName.replace(/\s/g, "");
+                  inputname = inputname.toLowerCase();
+                  inputname = this.titleCaseWord(inputname);
+      
+                  let inputTypeLower = configuration.returnObj.inputType.toLowerCase();
+      
+                  if (inputTypeLower == "model") {
+                    let ruleInput = { inputName: inputname, inputType: 'model', record: configuration.returnRecordType };
+                    //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                    nodeRuleInputs.push(ruleInput);
+                  } else if (inputTypeLower == "dto") {
+                    let ruleInput = { inputName: inputname, inputType: 'dto', record: configuration.returnRecordType };
+                    //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                    nodeRuleInputs.push(ruleInput);
+                  }
+                } else if (nodes[foundNode.fromIndex].component.clazz === 'xiMsgSubTaskNode') {
+      
+                  //findEventModel
+                  this.eventService
+                    .find(configuration.eventId, this.serviceUuid)
+                    .pipe(
+                      filter((mayBeOk: HttpResponse<any>) => mayBeOk.ok),
+                      map((response: HttpResponse<any>) => response.body)
+                    )
+                    .subscribe(
+                      (res: any) => {
+                        let eventData = res;
+                        if (eventData.aggregate) {
+                          let inputname = eventData.aggregate.name.replace(/\s/g, "");
+                          inputname = inputname.toLowerCase();
+                          inputname = this.titleCaseWord(inputname);
+                          let inputTypeLower = eventData.aggregate.type.toLowerCase();
+                          if (inputTypeLower == "model") {
+                            let ruleInput = { inputName: inputname, inputType: 'model', record: 's' };
+                            nodeRuleInputs.push(ruleInput);
+                          } else if (inputTypeLower == "dto") {
+                            let ruleInput = { inputName: inputname, inputType: 'dto', record: 's' };
+                            nodeRuleInputs.push(ruleInput);
+                          }
+                        }
+                      }
+                    );
+                }
+    
             }
 
-            let apiCheckVal = this.checkForApiConnection(foundNode.fromIndex, allConnections, nodes, apiNodeFound, nodeRuleInputs);
+            let apiCheckVal = this.checkForActivatorConnection(foundNode.fromIndex, allConnections, nodes, apiNodeFound, nodeRuleInputs);
             return apiCheckVal;
         }
     } else {
