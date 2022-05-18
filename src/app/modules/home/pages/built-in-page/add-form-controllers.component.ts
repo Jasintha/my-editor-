@@ -76,6 +76,7 @@ export class AddFormControllersComponent implements OnInit {
     protected builtInPageService: BuiltInPageService,
     protected projectService: ProjectService,
     @Inject(MAT_DIALOG_DATA)  public data: any,
+    public dialogRef: MatDialogRef<AddFormControllersComponent>,
   ) {}
 
   clear() {
@@ -298,6 +299,7 @@ export class AddFormControllersComponent implements OnInit {
     this.eventManager.dispatch(
       new AppEvent(EventTypes.envAppListModification, { name: 'envAppListModification', content: 'List modified' })
     );
+    this.dialogRef.close();
   }
 
   protected onSaveError() {

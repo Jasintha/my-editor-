@@ -84,7 +84,7 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
         protected pageService: BuiltInPageService,
         protected builtInWidgetService: BuiltInWidgetService,
         @Inject(MAT_DIALOG_DATA)  public data: any,
-
+        public dialogRef: MatDialogRef<ViewModelConfigComponent>,
         private router: Router,
         private location: Location
     ) {
@@ -275,6 +275,7 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 (res: any) => {
+                    this.dialogRef.close();
                     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved Form Order' });
                 },
                 (res: HttpErrorResponse) => this.onSaveError()
@@ -290,6 +291,7 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 (res: any) => {
+                    this.dialogRef.close();
                     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved Form Order' });
                 },
                 (res: HttpErrorResponse) => this.onSaveError()
@@ -355,6 +357,7 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
     }
 
     protected onSaveSuccess() {
+        this.dialogRef.close();
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Config is updated' });
     }
 
