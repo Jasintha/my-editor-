@@ -171,7 +171,7 @@
 
 <form  *ngIf="pageCreationStatus === 'customGrid'" class="mat-form-dialog" (ngSubmit)="saveCustomGrid()" [formGroup]="form" >
     <mat-toolbar color="primary" >
-        <h2 mat-dialog-title>Create Page</h2>
+        <h2 mat-dialog-title>Create custom grid page</h2>
         <span fxFlex></span>
         <button mat-icon-button
                 mat-dialog-close
@@ -190,7 +190,7 @@
                             Add Row
                         </button>
                     <br>
-                    <div style="padding-top: 20px"
+                    <div style="padding-top: 50px"
                          *ngFor="let choice of formFieldsGroup['controls']; let k = index">
                         <div [formGroup]="choice">
 

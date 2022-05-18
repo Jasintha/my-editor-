@@ -31,6 +31,7 @@ import {AddFormControllersComponent} from '@home/pages/built-in-page/add-form-co
 import {ViewModelConfigComponent} from '@home/pages/built-in-page/view-model-config.component';
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
+import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -280,7 +281,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     protected eventManager: EventManagerService,
     private router: Router,
     protected pageConfigService: PageConfigService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private consoleLogService: ConsoleLogService
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -968,24 +970,22 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   checkPageNameExist() {
     const page = this.createFromForm();
     this.builtInPageService
-      .findPageNameAvailability(page.pagetitle, this.currentPage.uuid, this.projectUid)
-      .pipe(
-        filter((res: HttpResponse<any>) => res.ok),
-        map((res: HttpResponse<any>) => res.body)
-      )
-      .subscribe(
-        (res: any) => {
-          if (res.IsNameExist) {
-            // this.messageService.add({
-            //   severity: 'error',
-            //   summary: 'Name exists!',
-            //   detail: 'Entered page name is already exist. please use another',
-            // });
-          } else {
-            this.save(page);
-          }
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
+        .findPageNameAvailability(page.pagetitle, this.currentPage.uuid, this.projectUid)
+        .pipe(
+            filter((res: HttpResponse<any>) => res.ok),
+            map((res: HttpResponse<any>) => res.body)
+        )
+        .subscribe(
+            (res: any) => {
+              if (res.IsNameExist) {
+                this.consoleLogService.writeConsoleLog('Page updated successfully');
+                this.save(page);
+              } else {
+                this.consoleLogService.writeConsoleLog('Page saved successfully');
+              }
+              this.save(page);
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
       );
   }
 
