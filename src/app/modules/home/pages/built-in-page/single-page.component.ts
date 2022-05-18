@@ -29,6 +29,8 @@ import {CreateModelComponent} from '@home/pages/create-model/create-model.compon
 import {MatTableDataSource} from '@angular/material/table';
 import {AddFormControllersComponent} from '@home/pages/built-in-page/add-form-controllers.component';
 import {ViewModelConfigComponent} from '@home/pages/built-in-page/view-model-config.component';
+import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
+import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -1150,5 +1152,35 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   onRowEditCancel(car: Config, index: number) {
     this.pageConfigs[index] = this.clonedCars[car.property];
     delete this.clonedCars[car.property];
+  }
+
+  createMainMenu(){
+    const dialogRef = this.dialog.open(MainMenuComponent, {
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+      data: {
+        projectUid: this.projectUid,
+        createStatus: status,
+        uuid: this.currentPage.uuid,
+      }
+    });
+    dialogRef.afterClosed(
+    ).subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  createPageNavigation(){
+    const dialogRef = this.dialog.open(PageNavigationComponent, {
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+      data: {
+        projectUid: this.projectUid,
+        createStatus: status,
+        uuid: this.currentPage.uuid,
+      }
+    });
+    dialogRef.afterClosed(
+    ).subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
