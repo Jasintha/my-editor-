@@ -36,6 +36,10 @@ import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {PageGridHandlerComponent} from '@home/pages/built-in-page/page-grid-handler.component';
 import {WidgetSelectDialogComponent} from '@home/pages/built-in-page/widget-select-dialog.component';
+import {ViewModelConfigComponent} from '@home/pages/built-in-page/view-model-config.component';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { PickListModule } from 'primeng/picklist';
 
 @NgModule({
     declarations:[
@@ -46,7 +50,8 @@ import {WidgetSelectDialogComponent} from '@home/pages/built-in-page/widget-sele
         SinglePageViewComponent,
         BuiltInPageDeleteDialogComponent,
         PageGridHandlerComponent,
-        WidgetSelectDialogComponent
+        WidgetSelectDialogComponent,
+        ViewModelConfigComponent
     ],
     imports: [
         CommonModule,
@@ -78,7 +83,10 @@ import {WidgetSelectDialogComponent} from '@home/pages/built-in-page/widget-sele
         CheckboxModule,
         DropdownModule,
         CommonModule,
-        NgxSpinnerModule
+        NgxSpinnerModule,
+        TableModule,
+        InputTextModule,
+        PickListModule
     ],
     exports:[
         BuiltInPageComponent,
@@ -88,7 +96,8 @@ import {WidgetSelectDialogComponent} from '@home/pages/built-in-page/widget-sele
         SinglePageViewComponent,
         BuiltInPageDeleteDialogComponent,
         PageGridHandlerComponent,
-        WidgetSelectDialogComponent
+        WidgetSelectDialogComponent,
+        ViewModelConfigComponent
     ],
     providers: [ ]
 })

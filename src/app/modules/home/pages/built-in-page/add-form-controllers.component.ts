@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MessageService, SelectItem } from 'primeng/api';
@@ -17,6 +17,7 @@ import {Observable} from 'rxjs';
 import {FormControllers, IFormControllers} from '@shared/models/model/form-controllers.model';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 
 interface ControllerItem {
@@ -73,7 +74,8 @@ export class AddFormControllersComponent implements OnInit {
     protected eventManager: EventManagerService,
     protected pageService: BuiltInPageService,
     protected builtInPageService: BuiltInPageService,
-    protected projectService: ProjectService
+    protected projectService: ProjectService,
+    @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {}
 
   clear() {
@@ -86,7 +88,7 @@ export class AddFormControllersComponent implements OnInit {
     this.microserviceProjects = [];
     this.apiItems = [];
     this.createForm();
-    this.loadAllSourceTargetFormFieldsForPage(this.pageId, this.projectUid);
+    this.loadAllSourceTargetFormFieldsForPage(this.data.pageId, this.data.projectUid);
     this.isSaving = false;
     this.keyValPairs = [];
     this.cols = [
@@ -320,7 +322,7 @@ export class AddFormControllersComponent implements OnInit {
     // this.spinnerService.show();
     this.isSaving = true;
     const formData = this.createFromForm();
-    this.subscribeToSaveResponse(this.builtInPageService.savePageFormOrder(formData.fieldList, this.pageId, this.projectUid));
+    this.subscribeToSaveResponse(this.builtInPageService.savePageFormOrder(formData.fieldList, this.data.pageId, this.data.projectUid));
   }
 
   deleteKeyVal(param) {

@@ -1,12 +1,14 @@
 <form name="addSecretForm" [formGroup]="form" (ngSubmit)="addFormControllers()">
-    <div class="modal-header dialog-tit-bar">
-        <h4 class="modal-title modal-title-color">Select Form Controllers</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;
+    <mat-toolbar color="primary">
+        <h2 mat-dialog-title>Select Form Controllers</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
         </button>
-    </div>
-
-    <div class="modal-body">
+    </mat-toolbar>
+    <mat-dialog-content>
         <div formArrayName="formFieldsGroup">
             <div *ngFor="let emp of formFieldsGroup.controls; let i = index">
                 <div class="row-g-12" [formGroup]="emp">
@@ -362,8 +364,6 @@
         <div class="d-grid gap-2" style="text-align: center; margin-top: 2%">
             <button type="submit" *ngIf="!isFieldSelected" value="Save" class="btn savebtn">Save</button>
         </div>
-
-    </div>
-
+    </mat-dialog-content>
 
 </form>

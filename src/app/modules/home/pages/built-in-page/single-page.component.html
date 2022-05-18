@@ -619,7 +619,7 @@
 <!--                                    </div>-->
 <!--                                </div>-->
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <mat-form-field  [style]="{'width':'100%'}">
                                             <mat-label>Model</mat-label>
                                             <mat-select formControlName="selectedAggregate" (selectionChange)="onChangePageModel($event,false)"
@@ -629,6 +629,12 @@
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openPageControllerConfig()" cdkFocusInitial>Edit Form Controllers</button>
                                     </div>
                                 </div>
 

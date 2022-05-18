@@ -27,6 +27,8 @@ import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-cre
 import {MatDialog} from '@angular/material/dialog';
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
 import {MatTableDataSource} from '@angular/material/table';
+import {AddFormControllersComponent} from '@home/pages/built-in-page/add-form-controllers.component';
+import {ViewModelConfigComponent} from '@home/pages/built-in-page/view-model-config.component';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -440,6 +442,34 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       }
       this.notifyModelChange(currentDatamodel);
     }
+  }
+
+  openPageControllerConfig()  {
+    const dialogRef = this.dialog.open(AddFormControllersComponent, {
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+      data: {
+        projectUid: this.projectUid,
+        pageId: this.pageId,
+      }
+    });
+    dialogRef.afterClosed(
+    ).subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openViewModelChangeDialog()  {
+    const dialogRef = this.dialog.open(ViewModelConfigComponent, {
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+      data: {
+        projectUid: this.projectUid,
+        pageId: this.pageId,
+      }
+    });
+    dialogRef.afterClosed(
+    ).subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   deleteaddAIOTableRow(apiDetail) {
@@ -931,8 +961,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   aggregate($event) {
-    this.aggregateId = $event;
-  }
+   }
 
   checkPageNameExist() {
     const page = this.createFromForm();
