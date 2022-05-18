@@ -1,0 +1,8 @@
+::ng-deep .ui-carousel-content {
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow: auto;
+  padding: 0 0.5em;
+}

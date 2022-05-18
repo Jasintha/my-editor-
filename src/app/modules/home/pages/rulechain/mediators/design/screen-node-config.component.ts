@@ -40,7 +40,9 @@ import {filter, map} from 'rxjs/operators';
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => ScreenNodeConfigComponent),
     multi: true
-  }]
+  }],
+  styleUrls: ['./design.components.scss']
+
 })
 export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
 
