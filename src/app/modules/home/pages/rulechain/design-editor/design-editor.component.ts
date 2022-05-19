@@ -66,6 +66,7 @@ import {Label, SingleDataSet} from 'ng2-charts';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 import { WebsocketService } from '@core/tracker/websocket.service';
 import {ApptypesService} from '@core/projectservices/apptypes.service';
+import { CreateTextComponent } from '@home/pages/rulechain/design-editor/create-text.component';
 
 declare const SystemJS;
 
@@ -325,6 +326,21 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
     }
 
+    addText(selectedEpic: any) {
+        const dialogRef = this.dialog.open(CreateTextComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: this.desprojectUid,
+                epic: selectedEpic
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            this.loadStoriesForEpic(selectedEpic.uuid);
+        });
+
+    }
+
     editDialog(reqId){
         const dialogRef = this.dialog.open(CreateRequirementComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
@@ -456,7 +472,12 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     generateStory(story: any) {
         this.spinnerButton = true
-        this.consoleLogService.writeConsoleLog('story generation started');
+
+        setTimeout(()=>{
+            this.spinnerButton = false
+        }, 2000);
+
+        this.consoleLogService.writeConsoleLog('story generated');
         const storyGen: IStoryGen = {
             storyUuid: story.uuid,
             projectUuid: story.projectUuid,
