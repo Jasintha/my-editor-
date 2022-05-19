@@ -461,13 +461,13 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             storyUuid: story.uuid,
             projectUuid: story.projectUuid,
         };
-        this.loadChatbox(story.serviceUUID, "ui");
-        this.loadChatbox(story.portalUUID, "be");
+        this.loadUIChatbox(story.portalUUID, "ui");
+        this.loadBEChatbox(story.serviceUUID, "be");
         this.projectService.generateStoryUI(story.projectUuid, storyGen).subscribe((storyGenResult) => {
         });
     }
 
-    loadChatbox(uuid, apptype) {
+    loadUIChatbox(uuid, apptype) {
         console.log("chat box load");
         console.log("uuid");
         console.log(uuid);
@@ -520,42 +520,93 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                             console.log("inside socket apptype");
                             console.log(apptype);
                             if (status.trim() === 'didnot') {
-                                //                   if(this.code != '') {
-                                //                     this.code = this.code + ",\n";
-                                //                   }
-                                if (apptype === 'ui') {
-                                    let code = '{"status": "Error", "detail": "Generation failed at ' + this.uiGeneratorList[position] + '"}';
-                                    this.consoleLogService.writeConsoleLog(code);
-                                } else if (apptype === 'be') {
-                                    let code = '{"status": "Error", "detail": "Generation failed at ' + this.backendGeneratorList[position] + '"}';
-                                    this.consoleLogService.writeConsoleLog(code);
-                                }
+                                let code = '{"status": "Error", "detail": "Generation failed at ' + this.uiGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+
                             } else if (status.trim() === 'done') {
-                                //                   if(this.code != '') {
-                                //                     this.code = this.code + ",\n";
-                                //                   }
                                 console.log("position");
                                 console.log(position);
-                                if (apptype === 'ui') {
-                                    console.log(this.uiGeneratorList[position]);
-                                    let code = '{"status": "Success", "detail": "Generation successful at ' + this.uiGeneratorList[position] + '"}';
-                                    this.consoleLogService.writeConsoleLog(code);
-                                } else if (apptype === 'be') {
-                                    console.log(this.backendGeneratorList[position]);
-                                    let code = '{"status": "Success", "detail": "Generation successful at ' + this.backendGeneratorList[position] + '"}';
-                                    this.consoleLogService.writeConsoleLog(code);
-                                }
+                                console.log(this.uiGeneratorList[position]);
+                                let code = '{"status": "Success", "detail": "Generation successful at ' + this.uiGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+
                             } else if (status.trim() === 'done') {
-                                //                   if(this.code != '') {
-                                //                     this.code = this.code + ",\n";
-                                //                   }
-                                if (apptype === 'ui') {
-                                    let code = '{"status": "In progress", "detail": "Generation started at ' + this.uiGeneratorList[position] + '"}';
-                                    this.consoleLogService.writeConsoleLog(code);
-                                } else if (apptype === 'be') {
-                                    let code = '{"status": "In progress", "detail": "Generation started at ' + this.backendGeneratorList[position] + '"}';
-                                    this.consoleLogService.writeConsoleLog(code);
+                                let code = '{"status": "In progress", "detail": "Generation started at ' + this.uiGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    loadBEChatbox(uuid, apptype) {
+        console.log("chat box load");
+        console.log("uuid");
+        console.log(uuid);
+        console.log("apptype");
+        console.log(apptype);
+        this.socket.getEventListener().subscribe(event => {
+            if (event.type === 'message') {
+                let topic = event.data.topic;
+                if (topic === 'generator') {
+                    let data = event.data.content;
+
+                    let projectUUID = '';
+                    let status = '';
+                    let time = '';
+                    let position = -1;
+
+                    let allKeyValuePairs = data.split(',');
+                    if (allKeyValuePairs) {
+                        allKeyValuePairs.forEach(keyval => {
+                            let keyAndValArr = keyval.split('=', 2);
+                            let key = '';
+                            let val = '';
+
+                            if (keyAndValArr) {
+                                for (let i = 0; i < keyAndValArr.length; i++) {
+                                    if (i === 0) {
+                                        key = keyAndValArr[i];
+                                    } else {
+                                        val = keyAndValArr[i];
+                                    }
                                 }
+                            }
+
+                            if (key === 'projectuuid') {
+                                projectUUID = val;
+                            } else if (key === 'status') {
+                                status = val;
+                            } else if (key === 'time') {
+                                time = val;
+                            } else if (key === 'position') {
+                                position = +val;
+                            }
+                        });
+                    }
+                    console.log("gen msg projectUUID");
+                    console.log(projectUUID);
+
+                    if (uuid === projectUUID) {
+                        if (status) {
+                            console.log("inside socket apptype");
+                            console.log(apptype);
+                            if (status.trim() === 'didnot') {
+                                let code = '{"status": "Error", "detail": "Generation failed at ' + this.backendGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+                            } else if (status.trim() === 'done') {
+                                console.log("position");
+                                console.log(position);
+                                console.log(this.backendGeneratorList[position]);
+                                let code = '{"status": "Success", "detail": "Generation successful at ' + this.backendGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+
+                            } else if (status.trim() === 'done') {
+                                let code = '{"status": "In progress", "detail": "Generation started at ' + this.backendGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+
                             }
                         }
                     }
