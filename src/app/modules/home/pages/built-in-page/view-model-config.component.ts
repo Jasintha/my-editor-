@@ -31,21 +31,21 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     styleUrls: ['./built-in-page.component.scss'],
     styles: [
         `
-      :host ::ng-deep .ui-toast {
-        top: 80px;
-      }
-      :host ::ng-deep .news-active .ui-toast {
-        top: 150px;
-      }
-      @media screen and (max-width: 64em) {
-        :host ::ng-deep .ui-toast {
-          top: 110px;
-        }
-        :host ::ng-deep .news-active .ui-toast {
-          top: 180px;
-        }
-      }
-    `,
+            :host ::ng-deep .ui-toast {
+                top: 80px;
+            }
+            :host ::ng-deep .news-active .ui-toast {
+                top: 150px;
+            }
+            @media screen and (max-width: 64em) {
+                :host ::ng-deep .ui-toast {
+                    top: 110px;
+                }
+                :host ::ng-deep .news-active .ui-toast {
+                    top: 180px;
+                }
+            }
+        `,
         '.scroll-bar{overflow: scroll;max-height: 150px;width: 100%;overflow-x: auto;}',
         '::-webkit-scrollbar {width: 5px;}',
         '::-webkit-scrollbar-thumb {background: #257bff;border-radius: 5px;}',
@@ -75,7 +75,7 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
 
     constructor(
         private messageService: MessageService,
-      //  protected pageActionService: PageActionService,
+        //  protected pageActionService: PageActionService,
         protected pageConfigService: PageConfigService,
         protected eventManager: EventManagerService,
         protected accountService: AccountService,
@@ -206,16 +206,17 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
         // this.loadAll();
         this.pageId = this.data.pageId;
         this.projectUid = this.data.projectUid;
+        this.widgetId = this.data.widgetUid;
         this.activatedRoute.params.subscribe(params => {
             // this.projectId = params['projId'];
-           // this.projectUid = params['projectUid'];
-          //  this.toolbarTrackerService.setProjectUUID(this.projectUid);
+            // this.projectUid = params['projectUid'];
+            //  this.toolbarTrackerService.setProjectUUID(this.projectUid);
         });
         this.activatedRoute.queryParams.subscribe(params => {
-          //  this.pageId = params['pageId'];
+            //  this.pageId = params['pageId'];
         });
-       // this.pageId = this.toolbarTrackerService.getPageID();
-      //  this.widgetId = this.toolbarTrackerService.getWidgetID();
+        // this.pageId = this.toolbarTrackerService.getPageID();
+        //  this.widgetId = this.toolbarTrackerService.getWidgetID();
         if (this.widgetId) {
             this.isWidgetView = true;
             this.loadPageConfigsByPageId(this.widgetId, this.projectUid);
@@ -384,7 +385,7 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
 
     protected onError(errorMessage: string) {
         this.spinnerService.hide();
-      //  this.logger.error(errorMessage);
+        //  this.logger.error(errorMessage);
     }
     previousState() {
         this.location.back();

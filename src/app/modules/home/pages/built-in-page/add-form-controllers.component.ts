@@ -18,6 +18,7 @@ import {FormControllers, IFormControllers} from '@shared/models/model/form-contr
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {BuiltInWidgetService} from '@core/projectservices/built-in-widget.service';
 
 
 interface ControllerItem {
@@ -37,6 +38,7 @@ export class AddFormControllersComponent implements OnInit {
   isSaving: boolean;
   cols: any[];
   form: FormGroup;
+  widgetId: string;
   sourceTargetFieldsRequest: ISourceTargetFieldsRequest;
   datamodel: IDatamodel;
   microserviceProjectItems: SelectItem[];
@@ -70,12 +72,12 @@ export class AddFormControllersComponent implements OnInit {
   @Input() public envuuid;
 
   constructor(
-    private fb: FormBuilder,
-    protected eventManager: EventManagerService,
-    protected pageService: BuiltInPageService,
-    protected builtInPageService: BuiltInPageService,
-    protected projectService: ProjectService,
-    @Inject(MAT_DIALOG_DATA)  public data: any,
+      private fb: FormBuilder,
+      protected eventManager: EventManagerService,
+      protected builtInPageService: BuiltInPageService,
+      protected builtInWidgetService: BuiltInWidgetService,
+      protected projectService: ProjectService,
+      @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {}
 
   clear() {
@@ -83,12 +85,18 @@ export class AddFormControllersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.widgetId = '';
     this.isSaving = false;
     this.microserviceProjectItems = [];
     this.microserviceProjects = [];
     this.apiItems = [];
     this.createForm();
-    this.loadAllSourceTargetFormFieldsForPage(this.data.pageId, this.data.projectUid);
+    if(this.data.widgetUid) {
+      this.loadAllSourceTargetFormFieldsForWidget(this.data.widgetUid, this.data.projectUid);
+    } else {
+      this.loadAllSourceTargetFormFieldsForPage(this.data.pageId, this.data.projectUid);
+    }
+
     this.isSaving = false;
     this.keyValPairs = [];
     this.cols = [
@@ -100,29 +108,29 @@ export class AddFormControllersComponent implements OnInit {
 
   loadMicroserviceProjects() {
     this.projectService
-      .findAllMicroserviceProjects()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IProject[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IProject[]>) => response.body)
-      )
-      .subscribe(
-        (res: IProject[]) => {
-          this.microserviceProjects = res;
-          this.loadMicroserviceProjectDropdownItems();
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+        .findAllMicroserviceProjects()
+        .pipe(
+            filter((mayBeOk: HttpResponse<IProject[]>) => mayBeOk.ok),
+            map((response: HttpResponse<IProject[]>) => response.body)
+        )
+        .subscribe(
+            (res: IProject[]) => {
+              this.microserviceProjects = res;
+              this.loadMicroserviceProjectDropdownItems();
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
   }
   onChangeMicroserviceAPIInChild() {
     const microservice = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
-      'controls'
-    ].microservice.value;
+        'controls'
+        ].microservice.value;
     const api = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex]['controls']
-      .api.value;
+        .api.value;
     const suggestedPath = this.getAPIPath(microservice, api);
     this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
-      'controls'
-    ].choiceUrl.patchValue(suggestedPath, { emitEvent: true });
+        'controls'
+        ].choiceUrl.patchValue(suggestedPath, { emitEvent: true });
   }
   onChangeMicroserviceAPI() {
     const microservice = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].microservice.value;
@@ -157,14 +165,14 @@ export class AddFormControllersComponent implements OnInit {
 
   onChangeMicroserviceProjectInChild() {
     const microservice = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
-      'controls'
-    ].microservice.value;
+        'controls'
+        ].microservice.value;
     this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
-      'controls'
-    ].choiceUrl.patchValue('', { emitEvent: true });
+        'controls'
+        ].choiceUrl.patchValue('', { emitEvent: true });
     this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
-      'controls'
-    ].api.patchValue([], { emitEvent: true });
+        'controls'
+        ].api.patchValue([], { emitEvent: true });
     this.loadAPISforMS(microservice);
   }
 
@@ -233,14 +241,34 @@ export class AddFormControllersComponent implements OnInit {
   backToChildFields() {
     this.isChildFieldSelected = false;
     if (
-      this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex]['controls']
-        .choiceType.value == 'Manually'
+        this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex]['controls']
+            .choiceType.value == 'Manually'
     ) {
       this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
-        'controls'
-      ].choiceUrl.reset();
+          'controls'
+          ].choiceUrl.reset();
     } else {
       this.childChoiceFormGroup.clear();
+    }
+  }
+
+  loadAllSourceTargetFormFieldsForWidget(widgetId: string, uuid: string) {
+    if (!widgetId) {
+      // this.loadAll();
+    } else {
+      // this.spinnerService.show();
+      this.builtInWidgetService
+          .findAllSourceTargetFormFieldsForWidget(widgetId, uuid)
+          .pipe(
+              filter((res: HttpResponse<ISourceTargetFieldsRequest>) => res.ok),
+              map((res: HttpResponse<ISourceTargetFieldsRequest>) => res.body)
+          )
+          .subscribe(
+              (res: ISourceTargetFieldsRequest) => {
+                this.processFormControllerData(res);
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );
     }
   }
 
@@ -249,33 +277,36 @@ export class AddFormControllersComponent implements OnInit {
       // this.loadAll();
     } else {
       // this.spinnerService.show();
-      this.pageService
-        .findAllSourceTargetFormFieldsForPage(pageId, uuid)
-        .pipe(
-          filter((res: HttpResponse<ISourceTargetFieldsRequest>) => res.ok),
-          map((res: HttpResponse<ISourceTargetFieldsRequest>) => res.body)
-        )
-        .subscribe(
-          (res: ISourceTargetFieldsRequest) => {
-            this.sourceTargetFieldsRequest = res;
-            this.sourceProperties = this.sourceTargetFieldsRequest.sourceFormFields;
-            this.targetProperties = this.sourceTargetFieldsRequest.targetFormFields;
-            if (this.targetProperties) {
-              for (let i = 0; i < this.targetProperties.length; i++) {
-                const hasChild = this.targetProperties[i].children && this.targetProperties[i].children.length > 0;
-                this.insertFormControllersGroup(this.targetProperties[i], hasChild);
-                if (hasChild) {
-                  this.selectedFieldIndex = i;
-                  for (let j = 0; j < this.targetProperties[i].children.length; j++) {
-                    this.insertChildFormControllersGroup(i, this.targetProperties[i].children[j]);
-                  }
-                }
-              }
-            }
-            // this.spinnerService.hide();
-          },
-          (res: HttpErrorResponse) => this.onError(res.message)
-        );
+      this.builtInPageService
+          .findAllSourceTargetFormFieldsForPage(pageId, uuid)
+          .pipe(
+              filter((res: HttpResponse<ISourceTargetFieldsRequest>) => res.ok),
+              map((res: HttpResponse<ISourceTargetFieldsRequest>) => res.body)
+          )
+          .subscribe(
+              (res: ISourceTargetFieldsRequest) => {
+                this.processFormControllerData(res);
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );
+    }
+  }
+
+  processFormControllerData(res: ISourceTargetFieldsRequest) {
+    this.sourceTargetFieldsRequest = res;
+    this.sourceProperties = this.sourceTargetFieldsRequest.sourceFormFields;
+    this.targetProperties = this.sourceTargetFieldsRequest.targetFormFields;
+    if (this.targetProperties) {
+      for (let i = 0; i < this.targetProperties.length; i++) {
+        const hasChild = this.targetProperties[i].children && this.targetProperties[i].children.length > 0;
+        this.insertFormControllersGroup(this.targetProperties[i], hasChild);
+        if (hasChild) {
+          this.selectedFieldIndex = i;
+          for (let j = 0; j < this.targetProperties[i].children.length; j++) {
+            this.insertChildFormControllersGroup(i, this.targetProperties[i].children[j]);
+          }
+        }
+      }
     }
   }
 
@@ -286,8 +317,8 @@ export class AddFormControllersComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IFormControllers>>) {
     result.subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
+        () => this.onSaveSuccess(),
+        () => this.onSaveError()
     );
   }
 
@@ -296,7 +327,7 @@ export class AddFormControllersComponent implements OnInit {
     this.isSaving = false;
     this.clear();
     this.eventManager.dispatch(
-      new AppEvent(EventTypes.envAppListModification, { name: 'envAppListModification', content: 'List modified' })
+        new AppEvent(EventTypes.envAppListModification, { name: 'envAppListModification', content: 'List modified' })
     );
   }
 
@@ -322,7 +353,12 @@ export class AddFormControllersComponent implements OnInit {
     // this.spinnerService.show();
     this.isSaving = true;
     const formData = this.createFromForm();
-    this.subscribeToSaveResponse(this.builtInPageService.savePageFormOrder(formData.fieldList, this.data.pageId, this.data.projectUid));
+    if(this.data.widgetId) {
+      this.subscribeToSaveResponse(this.builtInWidgetService.saveWidgetFormOrder(formData.fieldList, this.data.pageId, this.data.projectUid));
+    } else {
+      this.subscribeToSaveResponse(this.builtInPageService.savePageFormOrder(formData.fieldList, this.data.pageId, this.data.projectUid));
+    }
+
   }
 
   deleteKeyVal(param) {
@@ -410,12 +446,12 @@ export class AddFormControllersComponent implements OnInit {
 
   get childChoiceFormGroup() {
     if (
-      this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children &&
-      this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'] &&
-      this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex]
+        this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children &&
+        this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'] &&
+        this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex]
     ) {
       return this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex]['controls']
-        .fieldValueChoices as FormArray;
+          .fieldValueChoices as FormArray;
     }
   }
 

@@ -4,42 +4,42 @@
             <form name="editForm" role="form" novalidate (ngSubmit)="checkWidgetNameExist()" [formGroup]="editForm">
                 <!--                <h2 id="page-heading" style="margin-bottom: 50px">Create or edit a Data Page</h2>-->
 
-                    <div class="form-group" [hidden]="!editForm.get('id').value">
-                        <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
-                    </div>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
+                </div>
 
 
-                    <div class="row justify-content-center title-temp" >
-                        <div  class="col-md-8">
-                            <h3 *ngIf="formDisable">{{widgetTitle}}</h3>
-                            <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
-                                <mat-label>Page Title</mat-label>
-                                <input type="text" formControlName="pagetitle" matInput name="pagetitle" id="field_pagetitle">
-                                <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required</mat-error>
-                            </mat-form-field>
-
-                        </div>
-
-                        <div class="col-md-4">
-                            <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="enableToEdit()">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                        </div>
-
-                        <!--                            <div class="form-group" style="padding: 4%">-->
-                        <!--                                <label class="form-control-label" for="field_pagetitle">Page Title</label><span>{{widgetTitle}}</span>-->
-                        <!--                                <input type="text" class="form-control" name="pagetitle" id="field_pagetitle"-->
-                        <!--                                       formControlName="pagetitle"/>-->
-                        <!--                                <div *ngIf="editForm.get('pagetitle').invalid && (editForm.get('pagetitle').dirty || editForm.get('pagetitle').touched)">-->
-                        <!--                                    <small class="form-text text-danger" >-->
-                        <!--                                        Page Title is required.-->
-                        <!--                                    </small>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-
+                <div class="row justify-content-center title-temp" >
+                    <div  class="col-md-8">
+                        <h3 *ngIf="formDisable">{{widgetTitle}}</h3>
+                        <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
+                            <mat-label>Page Title</mat-label>
+                            <input type="text" formControlName="pagetitle" matInput name="pagetitle" id="field_pagetitle">
+                            <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required</mat-error>
+                        </mat-form-field>
 
                     </div>
+
+                    <div class="col-md-4">
+                        <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="enableToEdit()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </div>
+
+                    <!--                            <div class="form-group" style="padding: 4%">-->
+                    <!--                                <label class="form-control-label" for="field_pagetitle">Page Title</label><span>{{widgetTitle}}</span>-->
+                    <!--                                <input type="text" class="form-control" name="pagetitle" id="field_pagetitle"-->
+                    <!--                                       formControlName="pagetitle"/>-->
+                    <!--                                <div *ngIf="editForm.get('pagetitle').invalid && (editForm.get('pagetitle').dirty || editForm.get('pagetitle').touched)">-->
+                    <!--                                    <small class="form-text text-danger" >-->
+                    <!--                                        Page Title is required.-->
+                    <!--                                    </small>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+
+
+                </div>
                 <div class="scroll-bar-page">
                     <div class="row">
                         <div class="col-4 temp-image">
@@ -162,7 +162,7 @@
                                     <input type="text" class="form-control" name="resourcepath" id="field_resourcepath"
                                            formControlName="resourcePath"/>
                                     <div
-                                        *ngIf="editForm.get('resourcePath').invalid && (editForm.get('resourcePath').dirty || editForm.get('resourcePath').touched)">
+                                            *ngIf="editForm.get('resourcePath').invalid && (editForm.get('resourcePath').dirty || editForm.get('resourcePath').touched)">
                                         <small class="form-text text-danger">
                                             ResourcePath is required.
                                         </small>
@@ -373,7 +373,7 @@
                                 <!--                            </div>-->
                                 <!--                        </ng-container>-->
                                 <ng-container
-                                    *ngIf="editForm.value.pagetemplate === 'aio-table' || editForm.value.pagetemplate === 'aio-grid'">
+                                        *ngIf="editForm.value.pagetemplate === 'aio-table' || editForm.value.pagetemplate === 'aio-grid'">
                                     <div class="form-group">
                                         <label class="form-control-label">Add API Details</label>
                                         <div class="card">
@@ -388,8 +388,8 @@
                                                             Microservices</label>
                                                     </div>
                                                     <div
-                                                        *ngIf="project?.apptypesID === 'task.ui' && editForm.value.aiosearch"
-                                                        class="form-group col-md-4">
+                                                            *ngIf="project?.apptypesID === 'task.ui' && editForm.value.aiosearch"
+                                                            class="form-group col-md-4">
                                                         <label class="form-control-label">Microservice</label>
                                                         <p-dropdown placeholder="Choose"
                                                                     [options]="microserviceProjectItems"
@@ -398,8 +398,8 @@
                                                                     (onChange)="onChangeAioTableMicroserviceProject()" [disabled]="formDisable"></p-dropdown>
                                                     </div>
                                                     <div
-                                                        *ngIf="project?.apptypesID === 'task.ui' && editForm.value.aiosearch"
-                                                        class="form-group col-md-4">
+                                                            *ngIf="project?.apptypesID === 'task.ui' && editForm.value.aiosearch"
+                                                            class="form-group col-md-4">
                                                         <label class="form-control-label">API</label>
                                                         <p-dropdown placeholder="Choose" [options]="apiItems"
                                                                     formControlName="aioapi"
@@ -467,17 +467,22 @@
                             <div class="form-group"
                                  *ngIf="editForm.value.pagetemplate !== 'file-upload-widget' && editForm.value.pagetemplate !== 'dashboard-page'">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <p-dropdown placeholder="Choose" [options]="aggregateItems"
-                                                    formControlName="selectedAggregate" filter="true"
-                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"
-                                                    (onChange)="onChangePageModel($event,false)" [disabled]="formDisable"></p-dropdown>
-                                        <div
-                                            *ngIf="editForm.get('selectedAggregate').invalid && (editForm.get('selectedAggregate').dirty || editForm.get('selectedAggregate').touched)">
-                                            <small class="form-text text-danger">
-                                                Model is required.
-                                            </small>
-                                        </div>
+                                    <div class="col-md-8">
+                                        <mat-form-field  [style]="{'width':'100%'}">
+                                            <mat-label>Model</mat-label>
+                                            <mat-select formControlName="selectedAggregate" (selectionChange)="onChangePageModel($event,false)"
+                                                        [disabled]="formDisable">
+                                                <mat-option *ngFor="let option of aggregateItems" [value]="option.value">
+                                                    {{option.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openPageControllerConfig()" cdkFocusInitial>Edit Form Controllers</button>
                                     </div>
                                 </div>
 
