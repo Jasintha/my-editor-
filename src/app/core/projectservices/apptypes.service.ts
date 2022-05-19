@@ -34,6 +34,10 @@ export class ApptypesService {
     return this.http.get<IGenerator[]>(`${this.resourceGeneratorDevUrl}/${projectId}`, { observe: 'response' });
   }
 
+  getPreviewChainByAppType(apptype: string): Observable<GeneratorChainArrayResponseType> {
+    return this.http.get<IGenerator[]>(`${this.resourceUrl}/project/preview/gen/dev/${apptype}`, { observe: 'response' });
+  }
+
   getProdChainByAppType(projectId: string): Observable<GeneratorChainArrayResponseType> {
     return this.http.get<IGenerator[]>(`${this.resourceGeneratorProdUrl}/${projectId}`, { observe: 'response' });
   }

@@ -5,6 +5,7 @@ import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import { IRequirement, Requirement, IEpic, IStory } from '@shared/models/model/requirement.model';
+import { IGenerator } from '@shared/models/model/generator-chain.model';
 import {RequirementAddEpicDialogComponent} from '@home/pages/rulechain/design-editor/requirement-add-epic-dialog.component';
 import {CreateStoryComponent} from '@home/pages/rulechain/design-editor/create-story.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -63,6 +64,8 @@ import {IStoryGen, StoryGen} from '@shared/models/model/story-gen.model';
 import {ChartOptions, ChartType} from 'chart.js';
 import {Label, SingleDataSet} from 'ng2-charts';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
+import { WebsocketService } from '@core/tracker/websocket.service';
+import {ApptypesService} from '@core/projectservices/apptypes.service';
 
 declare const SystemJS;
 
@@ -134,6 +137,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     storyLevel : boolean;
     progressValue: number;
     reqCount = 0;
+    backendGeneratorList: { [key: number]: string } = {};
+    uiGeneratorList: { [key: number]: string } = {};
     spinnerButton : boolean = false;
 
     public pieChartOptions: ChartOptions = {
@@ -147,7 +152,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
                  private ruleChainService: RuleChainService,protected eventManager: EventManagerService, private projectService: ProjectService,
-                 private consoleLogService: ConsoleLogService) { }
+                 private consoleLogService: ConsoleLogService, private socket: WebsocketService, protected appTypeService: ApptypesService) { }
 
     ngOnChanges(changes: SimpleChanges) {
         this.currentReq = this.reqArray[0];
@@ -163,6 +168,34 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.selectedEpicId = "";
         this.selectedEpic = null;
         this.loadEpics();
+        this.appTypeService.getPreviewChainByAppType("ui")
+            .pipe(
+                filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IGenerator[]>) => response.body)
+            )
+            .subscribe(
+                (res: IGenerator[]) => {
+                    if (res && res.length !== 0) {
+                        res.forEach(c => {
+                            this.uiGeneratorList[c.position] = c.generator.name;
+                        });
+                        console.log(this.uiGeneratorList);
+                    }
+                });
+        this.appTypeService.getPreviewChainByAppType("be")
+            .pipe(
+                filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IGenerator[]>) => response.body)
+            )
+            .subscribe(
+                (res: IGenerator[]) => {
+                    if (res && res.length !== 0) {
+                        res.forEach(c => {
+                            this.backendGeneratorList[c.position] = c.generator.name;
+                        });
+                        console.log(this.backendGeneratorList);
+                    }
+                });
     }
 
     loadReq(){
@@ -423,12 +456,163 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     generateStory(story: any) {
         this.spinnerButton = true
+        this.consoleLogService.writeConsoleLog('story generation started');
         const storyGen: IStoryGen = {
             storyUuid: story.uuid,
             projectUuid: story.projectUuid,
         };
+        this.loadUIChatbox(story.portalUUID, "ui");
+        this.loadBEChatbox(story.serviceUUID, "be");
         this.projectService.generateStoryUI(story.projectUuid, storyGen).subscribe((storyGenResult) => {
             this.consoleLogService.writeConsoleLog('story generated');
+        });
+    }
+
+    loadUIChatbox(uuid, apptype) {
+        console.log("chat box load");
+        console.log("uuid");
+        console.log(uuid);
+        console.log("apptype");
+        console.log(apptype);
+        this.socket.getEventListener().subscribe(event => {
+            if (event.type === 'message') {
+                let topic = event.data.topic;
+                if (topic === 'generator') {
+                    let data = event.data.content;
+
+                    let projectUUID = '';
+                    let status = '';
+                    let time = '';
+                    let position = -1;
+
+                    let allKeyValuePairs = data.split(',');
+                    if (allKeyValuePairs) {
+                        allKeyValuePairs.forEach(keyval => {
+                            let keyAndValArr = keyval.split('=', 2);
+                            let key = '';
+                            let val = '';
+
+                            if (keyAndValArr) {
+                                for (let i = 0; i < keyAndValArr.length; i++) {
+                                    if (i === 0) {
+                                        key = keyAndValArr[i];
+                                    } else {
+                                        val = keyAndValArr[i];
+                                    }
+                                }
+                            }
+
+                            if (key === 'projectuuid') {
+                                projectUUID = val;
+                            } else if (key === 'status') {
+                                status = val;
+                            } else if (key === 'time') {
+                                time = val;
+                            } else if (key === 'position') {
+                                position = +val;
+                            }
+                        });
+                    }
+                    console.log("gen msg projectUUID");
+                    console.log(projectUUID);
+
+                    if (uuid === projectUUID) {
+                        if (status) {
+                            console.log("inside socket apptype");
+                            console.log(apptype);
+                            if (status.trim() === 'didnot') {
+                                let code = '{"status": "Error", "detail": "Generation failed at ' + this.uiGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+
+                            } else if (status.trim() === 'done') {
+                                console.log("position");
+                                console.log(position);
+                                console.log(this.uiGeneratorList[position]);
+                                let code = '{"status": "Success", "detail": "Generation successful at ' + this.uiGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+
+                            } else if (status.trim() === 'done') {
+                                let code = '{"status": "In progress", "detail": "Generation started at ' + this.uiGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    loadBEChatbox(uuid, apptype) {
+        console.log("chat box load");
+        console.log("uuid");
+        console.log(uuid);
+        console.log("apptype");
+        console.log(apptype);
+        this.socket.getEventListener().subscribe(event => {
+            if (event.type === 'message') {
+                let topic = event.data.topic;
+                if (topic === 'generator') {
+                    let data = event.data.content;
+
+                    let projectUUID = '';
+                    let status = '';
+                    let time = '';
+                    let position = -1;
+
+                    let allKeyValuePairs = data.split(',');
+                    if (allKeyValuePairs) {
+                        allKeyValuePairs.forEach(keyval => {
+                            let keyAndValArr = keyval.split('=', 2);
+                            let key = '';
+                            let val = '';
+
+                            if (keyAndValArr) {
+                                for (let i = 0; i < keyAndValArr.length; i++) {
+                                    if (i === 0) {
+                                        key = keyAndValArr[i];
+                                    } else {
+                                        val = keyAndValArr[i];
+                                    }
+                                }
+                            }
+
+                            if (key === 'projectuuid') {
+                                projectUUID = val;
+                            } else if (key === 'status') {
+                                status = val;
+                            } else if (key === 'time') {
+                                time = val;
+                            } else if (key === 'position') {
+                                position = +val;
+                            }
+                        });
+                    }
+                    console.log("gen msg projectUUID");
+                    console.log(projectUUID);
+
+                    if (uuid === projectUUID) {
+                        if (status) {
+                            console.log("inside socket apptype");
+                            console.log(apptype);
+                            if (status.trim() === 'didnot') {
+                                let code = '{"status": "Error", "detail": "Generation failed at ' + this.backendGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+                            } else if (status.trim() === 'done') {
+                                console.log("position");
+                                console.log(position);
+                                console.log(this.backendGeneratorList[position]);
+                                let code = '{"status": "Success", "detail": "Generation successful at ' + this.backendGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+
+                            } else if (status.trim() === 'done') {
+                                let code = '{"status": "In progress", "detail": "Generation started at ' + this.backendGeneratorList[position] + '"}';
+                                this.consoleLogService.writeConsoleLog(code);
+
+                            }
+                        }
+                    }
+                }
+            }
         });
     }
 
