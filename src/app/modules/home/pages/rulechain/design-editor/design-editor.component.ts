@@ -423,12 +423,12 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     generateStory(story: any) {
         this.spinnerButton = true
-        this.consoleLogService.writeConsoleLog('story generated');
         const storyGen: IStoryGen = {
             storyUuid: story.uuid,
             projectUuid: story.projectUuid,
         };
         this.projectService.generateStoryUI(story.projectUuid, storyGen).subscribe((storyGenResult) => {
+            this.consoleLogService.writeConsoleLog('story generated');
         });
     }
 

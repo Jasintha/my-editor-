@@ -129,6 +129,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     desprojectUid: string;
     lambdauid: string;
     modelUid: string;
+    consoleEventSubscriber: Subscription;
     eventSubscriber: Subscription;
     eventSubscriberUi: Subscription;
     currentTab: string;
@@ -614,7 +615,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
   }
 
     listenConsoleLogChange() {
-        this.eventSubscriber = this.eventManager
+        this.consoleEventSubscriber = this.eventManager
             .on(EventTypes.consoleLogsUpdated)
             .subscribe(event => this.updateLog());
     }
@@ -625,6 +626,10 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 
     clearLog() {
         this.consoleLogService.clearConsoleLog();
+    }
+
+    ngOnDestroy() {
+        this.consoleEventSubscriber.unsubscribe();
     }
 
 
