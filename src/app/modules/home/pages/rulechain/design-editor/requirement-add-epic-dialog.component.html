@@ -10,79 +10,148 @@
     </mat-toolbar>
 
     <mat-dialog-content>
-        <div class="row">
-            <div class="pb-3">
-                <mat-radio-group formControlName="epicCreateType">
-                    <mat-radio-button class="pe-5" value="new" color="primary" (change)="handleEpicCreateTypeChange()">
-                        <span>Create New Epic</span>
-                    </mat-radio-button>
-                    <mat-radio-button value="existing" color="primary" (change)="handleEpicCreateTypeChange()">
-                        <span>Select Existing</span>
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
 
-            <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="flex-auto">
-                <mat-label>Title</mat-label>
-                <input type="text" formControlName="name" matInput>
-                <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
-            </mat-form-field>
+        <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
 
-            <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="mat-block">
-                <mat-label>Reference name</mat-label>
-                <input type="text" formControlName="referencename" matInput>
-            </mat-form-field>
+<!--            <ng-template matStepperIcon="edit">-->
+<!--                <mat-icon [icIcon]="icDoneAll"></mat-icon>-->
+<!--            </ng-template>-->
 
-            <mat-form-field *ngIf="editForm.value.epicCreateType === 'existing'" fxFlex class="mat-block">
-                <mat-label>Epic</mat-label>
-                <mat-select formControlName="epicselection">
-                    <ng-container *ngFor="let property of existingEpics">
-                        <mat-option [value]="property">
-                            {{property.name}}
-                        </mat-option>
-                    </ng-container>
-                </mat-select>
-            </mat-form-field>
+<!--            <ng-template matStepperIcon="done">-->
+<!--                <mat-icon [icIcon]="icDoneAll"></mat-icon>-->
+<!--            </ng-template>-->
 
-            <div class="flex-auto">
+            <mat-step>
+                <ng-template matStepLabel>Step 1</ng-template>
                 <div class="row">
-                    <div class="col-2">
-                        <mat-label>Requirement</mat-label>
+                    <div class="pb-3">
+                        <mat-radio-group formControlName="epicCreateType">
+                            <mat-radio-button class="pe-5" value="new" color="primary" (change)="handleEpicCreateTypeChange()">
+                                <span>Create New Epic</span>
+                            </mat-radio-button>
+                            <mat-radio-button value="existing" color="primary" (change)="handleEpicCreateTypeChange()">
+                                <span>Select Existing</span>
+                            </mat-radio-button>
+                        </mat-radio-group>
                     </div>
-                    <div class="col-2">
-                        <mat-icon class="material-icons" (click)="enableEdit()" style="color: #545454; cursor: pointer">edit</mat-icon>
 
+                    <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="flex-auto">
+                        <mat-label>Title</mat-label>
+                        <input type="text" formControlName="name" matInput>
+                        <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="mat-block">
+                        <mat-label>Reference name</mat-label>
+                        <input type="text" formControlName="referencename" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="editForm.value.epicCreateType === 'existing'" fxFlex class="mat-block">
+                        <mat-label>Epic</mat-label>
+                        <mat-select formControlName="epicselection">
+                            <ng-container *ngFor="let property of existingEpics">
+                                <mat-option [value]="property">
+                                    {{property.name}}
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="flex-auto">
+                        <div class="row">
+                            <div class="col-2">
+                                <mat-label>Requirement</mat-label>
+                            </div>
+                            <div class="col-2">
+                                <mat-icon class="material-icons" (click)="enableEdit()" style="color: #545454; cursor: pointer">edit</mat-icon>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <p-editor name="reqdescription" id="field_reqdescription"
+                                  formControlName="reqdescription" [style]="{'height':'200px'}" [readonly]="disable">
+                            <!--<p-header>
+                            <span class="ql-formats">
+                                <button class="ql-bold" aria-label="Bold"></button>
+                                <button class="ql-italic" aria-label="Italic"></button>
+                                <button class="ql-underline" aria-label="Underline"></button>
+                                <button class="ql-list" value="ordered" aria-label="Ordered List"></button>
+                                <button class="ql-list" value="bullet" aria-label="Unordered List"></button>
+                            </span>
+                            </p-header>-->
+                        </p-editor>
                     </div>
-
 
                 </div>
 
 
-                <p-editor name="reqdescription" id="field_reqdescription"
-                          formControlName="reqdescription" [style]="{'height':'200px'}" [readonly]="disable">
-                    <!--<p-header>
-                    <span class="ql-formats">
-                        <button class="ql-bold" aria-label="Bold"></button>
-                        <button class="ql-italic" aria-label="Italic"></button>
-                        <button class="ql-underline" aria-label="Underline"></button>
-                        <button class="ql-list" value="ordered" aria-label="Ordered List"></button>
-                        <button class="ql-list" value="bullet" aria-label="Unordered List"></button>
-                    </span>
-                    </p-header>-->
-                </p-editor>
-            </div>
+                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px" style="margin-top: 10px">
 
-        </div>
+                    <button color="primary" mat-raised-button matStepperNext type="button">NEXT</button>
+                </div>
+            </mat-step>
+
+
+            <mat-step>
+                <ng-template matStepLabel>Step 2</ng-template>
+                <div class="row">
+                    <p-editor name="reqdescription" id="field_reqdescriptions"
+                               [style]="{'height':'200px'}" >
+                    </p-editor>
+                </div>
+
+
+
+
+
+
+                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px" style="margin-top: 10px">
+                    <button color="primary" mat-raised-button matStepperNext type="button">NEXT</button>
+                </div>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Step 3</ng-template>
+                <p-pickList [source]="sourceProperties" [target]="targetProperties" sourceHeader="Available" targetHeader="Selected" [responsive]="true" filterBy="propertyName"
+                            dragdrop="true" sourceFilterPlaceholder="Search by brand" targetFilterPlaceholder="Search by Name" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
+                    <ng-template let-property pTemplate="item">
+                        <div class="ui-helper-clearfix">
+                            <div style="font-size:14px;float:left;margin:15px 5px 0 0">{{property.propertyName}}
+                                <span *ngIf="property.isLinkedProperty"> : {{property.selectType}}</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-pickList>
+
+
+
+
+
+
+                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px" style="margin-top: 10px">
+                    <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
+                    <button color="primary" mat-button matStepperPrevious type="submit" mat-raised-button [disabled]="editForm.invalid || isSaving">SAVE
+                    </button>
+                </div>
+            </mat-step>
+
+        </mat-horizontal-stepper>
+
+
+
     </mat-dialog-content>
     <div mat-dialog-actions fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving"
-                type="submit" cdkFocusInitial>
-            Save
-        </button>
-        <button mat-button color="primary"
-                type="button"
-                mat-dialog-close>
-            Cancel
-        </button>
+<!--        <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving"-->
+<!--                type="submit" cdkFocusInitial>-->
+<!--            Save-->
+<!--        </button>-->
+<!--        <button mat-button color="primary"-->
+<!--                type="button"-->
+<!--                mat-dialog-close>-->
+<!--            Cancel-->
+<!--        </button>-->
     </div>
 </form>

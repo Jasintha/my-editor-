@@ -92,6 +92,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { ChartsModule } from 'ng2-charts';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatStepperModule} from '@angular/material/stepper';
+import { PickListModule } from 'primeng/picklist';
 
 
 @NgModule({
@@ -175,7 +177,9 @@ import {MatChipsModule} from '@angular/material/chips';
     MatProgressBarModule,
     RadioButtonModule,
     ChartsModule,
-    MatChipsModule
+    MatChipsModule,
+    MatStepperModule,
+    PickListModule
   ]
 })
 export class RuleChainModule { }
