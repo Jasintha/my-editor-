@@ -179,6 +179,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                         res.forEach(c => {
                             this.uiGeneratorList[c.position] = c.generator.name;
                         });
+                        console.log(this.uiGeneratorList);
                     }
                 });
         this.appTypeService.getPreviewChainByAppType("be")
@@ -192,6 +193,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                         res.forEach(c => {
                             this.backendGeneratorList[c.position] = c.generator.name;
                         });
+                        console.log(this.backendGeneratorList);
                     }
                 });
     }
@@ -466,6 +468,11 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     loadChatbox(uuid, apptype) {
+        console.log("chat box load");
+        console.log("uuid");
+        console.log(uuid);
+        console.log("apptype");
+        console.log(apptype);
         this.socket.getEventListener().subscribe(event => {
             if (event.type === 'message') {
                 let topic = event.data.topic;
@@ -505,9 +512,13 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                             }
                         });
                     }
+                    console.log("gen msg projectUUID");
+                    console.log(projectUUID);
 
                     if (uuid === projectUUID) {
                         if (status) {
+                            console.log("inside socket apptype");
+                            console.log(apptype);
                             if (status.trim() === 'didnot') {
                                 //                   if(this.code != '') {
                                 //                     this.code = this.code + ",\n";
@@ -523,10 +534,14 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                                 //                   if(this.code != '') {
                                 //                     this.code = this.code + ",\n";
                                 //                   }
+                                console.log("position");
+                                console.log(position);
                                 if (apptype === 'ui') {
+                                    console.log(this.uiGeneratorList[position]);
                                     let code = '{"status": "Success", "detail": "Generation successful at ' + this.uiGeneratorList[position] + '"}';
                                     this.consoleLogService.writeConsoleLog(code);
                                 } else if (apptype === 'be') {
+                                    console.log(this.backendGeneratorList[position]);
                                     let code = '{"status": "Success", "detail": "Generation successful at ' + this.backendGeneratorList[position] + '"}';
                                     this.consoleLogService.writeConsoleLog(code);
                                 }
