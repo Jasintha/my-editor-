@@ -134,11 +134,12 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     storyLevel : boolean;
     progressValue: number;
     reqCount = 0;
+    spinnerButton : boolean = false;
 
     public pieChartOptions: ChartOptions = {
         responsive: true,
     };
-    public pieChartLabels: Label[] = [['CompletedEpic'], ['NewEpic']];
+    public pieChartLabels: Label[] = [['Completed epic'], ['New epic']];
     public pieChartData: SingleDataSet = [];
     public pieChartType: ChartType = 'pie';
     public pieChartLegend = true;
@@ -421,6 +422,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     generateStory(story: any) {
+        this.spinnerButton = true
         this.consoleLogService.writeConsoleLog('story generated');
         const storyGen: IStoryGen = {
             storyUuid: story.uuid,

@@ -5,27 +5,27 @@
   <mat-error *ngIf="screenNodeConfigFormGroup.controls.screenName.hasError('required')">This field is required</mat-error>
  </mat-form-field>
 
- <p-carousel [value]="pageTemplateItems" [numVisible]="2" [numScroll]="2" [circular]="false">
+ <p-carousel [value]="pageTemplateItems" [numVisible]="3" [numScroll]="3" [circular]="false">
   <ng-template let-template pTemplate="item">
-   <div class="product-item">
-    <div class="product-item-content">
-     <div class="mb-2" align="center">
-      <img *ngIf="template == 'login-page'" class="product-image" width="300px"
+   <div class="product-item" >
+    <div class="product-item-content" >
+     <div class="mb-2" align="center" >
+      <img *ngIf="template == 'login-page'" class="product-image theme-page" width="200px"
            src="/assets/images/pages/login.jpg"
            alt="Template">
-      <img width="300px"
+      <img width="200px"
               *ngIf="template == 'table-page' || template == 'aio-table'"
-              class="product-image" src="/assets/images/pages/allinone.jpg"
+              class="product-image theme-page" src="/assets/images/new_pages/table_page.png"
               alt="Template">
-      <img width="300px"
+      <img width="200px"
               *ngIf="template == 'form-page' || template == 'file-upload-page' || template == 'form-wizard-page'"
-              class="product-image" src="/assets/images/pages/form.jpg"
+              class="product-image theme-page" src="/assets/images/new_pages/form_page.png"
               alt="Template">
-      <img *ngIf="template == 'register-page'" width="300px"
-           class="product-image" src="/assets/images/pages/register.jpg"
+      <img *ngIf="template == 'register-page'" width="200px"
+           class="product-image theme-page" src="/assets/images/pages/register.jpg"
            alt="Template">
-      <img *ngIf="template == 'aio-grid'" width="300px"
-           class="product-image" src="/assets/images/pages/grid.jpg"
+      <img *ngIf="template == 'aio-grid'" width="200px"
+           class="product-image theme-page" src="/assets/images/new_pages/grid_page.png"
            alt="Template">
       <!--<img src="/content/images/theme/{{product.themestyle}}.png" [alt]="product.name" class="product-image" />-->
      </div>
@@ -45,9 +45,15 @@
   <span>No screens found</span>
  </div>
 
- <mat-label>Available actions</mat-label>
- <div *ngFor="let option of actionItems">
-  <h6 style="padding-left: 15px">{{option}}</h6>
+ <div class="actions-bar" style="text-align: center">
+  <mat-label>Available actions</mat-label>
+  <div class="row">
+   <div class="col-3" *ngFor="let option of actionItems">
+     <h6 style="padding-left: 15px">{{option}}</h6>
+   </div>
+  </div>
+
  </div>
+
 </div>
 

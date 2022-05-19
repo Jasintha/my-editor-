@@ -92,6 +92,17 @@ export class FileReaderTaskNodeConfigComponent implements ControlValueAccessor, 
   aggregates: IAggregate[];
   items: any[];
   viewmodels: IViewmodel[];
+
+  frequencyItems: any[] = [
+    { label: 'Single', value: 'SINGLE' },
+    { label: 'Multiple', value: 'MULTIPLE' },
+  ];
+
+  timeUnitItems: any[] = [
+    { label: 'Seconds', value: 's' },
+    { label: 'Minutes', value: 'min' },
+    { label: 'Hours', value: 'h' },
+  ];
   
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {

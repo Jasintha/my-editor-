@@ -98,6 +98,17 @@ export class ServiceCallTaskNodeConfigComponent implements ControlValueAccessor,
   @Input()
   serviceUuid: string;
 
+  frequencyItems: any[] = [
+    { label: 'Single', value: 'SINGLE' },
+    { label: 'Multiple', value: 'MULTIPLE' },
+  ];
+
+  timeUnitItems: any[] = [
+    { label: 'Seconds', value: 's' },
+    { label: 'Minutes', value: 'min' },
+    { label: 'Hours', value: 'h' },
+  ];
+
   displayedColumns: string[] = ['name', 'datatype', 'param', 'actions'];
   displayedColumnsWorkflow: string[] = ['workflowinput', 'apiinput', 'actions'];
 //   ELEMENT_DATA: APIInput[] = [];
