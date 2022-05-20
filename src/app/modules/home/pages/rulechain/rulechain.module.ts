@@ -76,6 +76,7 @@ import {BuiltInPageModule} from '@home/pages/built-in-page/built-in-page.module'
 import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
 import { MainMenuModule } from '../main-menu/main-menu.module';
 import {PageNavigationModule} from '@home/pages/page-navigation/page-navigation.module';
+import {CreateTextComponent} from '@home/pages/rulechain/design-editor/create-text.component';
 
 import {
   AddDesignRuleNodeDialogComponent,
@@ -96,7 +97,6 @@ import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
-
     RuleChainPageComponent,
     MainRuleChainComponent,
     RuleNodeComponent,
@@ -112,11 +112,12 @@ import {MatChipsModule} from '@angular/material/chips';
     StoryDesignPageComponent,
     DesignEditorComponent,
     CreateRequirementComponent,
+    CreateTextComponent,
     RequirementAddEpicDialogComponent,
     CreateStoryComponent,
       EditEpicComponent,
     DeleteDesignComponent,
-      EnvSelectComponent
+      EnvSelectComponent,
   ],
   providers: [
     {
