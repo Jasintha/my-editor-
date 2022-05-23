@@ -1,4 +1,4 @@
-<div *ngIf="!viewEditor" class="container vertical">
+<div *ngIf="!viewEditor" class="container vertical" style="width: 990px">
     <div class="wrapper option-1 option-1-1">
         <ol class="c-stepper">
             <li [ngClass]="currentLevel === 'requirement' || requirementLevel ? 'c-stepper__item_before_requirment': 'c-stepper__item_selected_requirment'">
@@ -12,8 +12,8 @@
             </li>
         </ol>
     </div>
-    <div id="requirements" class="row section border ">
-        <div class="col-12">
+    <div id="requirements" class="row section border row-height">
+        <div class="col-12 p-0">
             <div class="row">
                 <div class="col-9 d-flex">
                     <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;">
@@ -32,7 +32,7 @@
             <!--                <div class="col-11">-->
             <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="4" [circular]="true">
                 <ng-template let-req pTemplate="item">
-                    <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 100px" matTooltip="{{req?.name}}" (click)="clickReq(req)">
+                    <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 75px" matTooltip="{{req?.name}}" (click)="clickReq(req)">
                         <h5 class="txt-overflow">{{req?.name}}</h5>
                         <a class="edit" (click)="editDialog(req?.uuid)"><i class="fa fa-pencil"
                                                                            aria-hidden="true"></i></a>
@@ -95,7 +95,7 @@
         </div>
     </div>
 
-    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0">
+    <div id="epics" class="row section border p-0" *ngIf="existingEpics.length != 0">
         <div class="col-12">
             <div class="row">
                 <div class="col-9"></div>
@@ -111,7 +111,7 @@
                     <div class="col-4" (click)="filterEpic(epic, j)">
                         <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }"
                              matTooltip="{{epic?.name}}"
-                             [matTooltipPosition]="toolTipPosition">
+                             [matTooltipPosition]="toolTipPosition" style="height: 50px">
                             <h5 class="txt-overflow">{{epic?.name}}</h5>
                             <!--                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
                             <div class="inner-wrap">
@@ -178,7 +178,7 @@
 
     <div *ngIf="filteredStories.length != 0">
         <ng-container *ngFor="let story of filteredStories" >
-            <div  id="stories"  class="row section border row-color wrap-story"  style="margin-left: 120px" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
+            <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
                 <div class="col-12">
                     <div class="row pb-1">
                         <div class="col-4">
