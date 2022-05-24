@@ -62,8 +62,7 @@ export class CreateSubruleComponent implements OnInit {
 
 
   displayedColumns: string[] = ['name', 'datatype', 'recordtype', 'actions'];
-  ELEMENT_DATA: APIInput[] = [];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  dataSource: MatTableDataSource<APIInput>;
 
   editForm = this.fb.group({
     id: [],
@@ -107,6 +106,7 @@ export class CreateSubruleComponent implements OnInit {
     this.allReturnItems = [];
     this.items = [];
     this.subruleParams = [];
+    this.dataSource = new MatTableDataSource(this.subruleParams);
     this.addPrimitivesForReturnSelect();
     this.addPrimitivesForParamSelect();
     if (this.projectUid) {
@@ -382,19 +382,14 @@ export class CreateSubruleComponent implements OnInit {
       };
 
       this.subruleParams.push(param);
-
-      this.ELEMENT_DATA.push(param);
-      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource(this.subruleParams);
     }
   }
 
   deleteRow(param) {
     const index = this.subruleParams.indexOf(param);
     this.subruleParams.splice(index, 1);
-
-    const indexnum = this.ELEMENT_DATA.indexOf(param);
-    this.ELEMENT_DATA.splice(indexnum, 1);
-    this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+    this.dataSource = new MatTableDataSource(this.subruleParams);
   }
 
   loadUpdateForm() {
@@ -416,9 +411,7 @@ export class CreateSubruleComponent implements OnInit {
   updateForm(subrule: ISubrule) {
     if (this.currentSubrule.params) {
       this.subruleParams = this.currentSubrule.params;
-
-      this.ELEMENT_DATA = this.currentSubrule.params;
-      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource(this.subruleParams);
     }
     let returnObj: APIInput;
 
