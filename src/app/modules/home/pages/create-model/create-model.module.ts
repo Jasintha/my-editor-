@@ -14,8 +14,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { FileUploadModule } from 'primeng/fileupload';
+
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
 import {MicroserviceModelDeleteDialogComponent} from '@home/pages/create-model/microservice-model-delete-dialog.component';
+import {ImportModelComponent} from '@home/pages/create-model/import-model.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import { SharedModule } from '@shared/shared.module';
@@ -25,7 +28,8 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 @NgModule({
     declarations:[
         CreateModelComponent,
-        MicroserviceModelDeleteDialogComponent
+        MicroserviceModelDeleteDialogComponent,
+        ImportModelComponent
     ],
     imports: [
         CommonModule,
@@ -49,11 +53,13 @@ import {NgxSpinnerModule} from 'ngx-spinner';
         MatToolbarModule,
         FlexModule,
         SharedModule,
-        NgxSpinnerModule
+        NgxSpinnerModule,
+        FileUploadModule
     ],
     exports:[
         CreateModelComponent,
-        MicroserviceModelDeleteDialogComponent
+        MicroserviceModelDeleteDialogComponent,
+        ImportModelComponent
     ]
 })
 export class CreateModelModule {
