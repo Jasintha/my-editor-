@@ -313,17 +313,19 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     addStory(selectedEpic){
-        const dialogRef = this.dialog.open(CreateStoryComponent, {
-            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-            data: {
-                projectUid: this.desprojectUid,
-                epic: selectedEpic
-            }
-        });
-        dialogRef.afterClosed(
-        ).subscribe(result => {
-            this.loadStoriesForEpic(selectedEpic.uuid);
-        });
+        if (selectedEpic){
+            const dialogRef = this.dialog.open(CreateStoryComponent, {
+                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+                data: {
+                    projectUid: this.desprojectUid,
+                    epic: selectedEpic
+                }
+            });
+            dialogRef.afterClosed(
+            ).subscribe(result => {
+                this.loadStoriesForEpic(selectedEpic.uuid);
+            });
+        }
     }
 
     addText(selectedEpic: any) {
