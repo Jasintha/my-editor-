@@ -140,7 +140,7 @@
             }
         }
         .section{
-            padding: 30px 20px 0 20px;
+            padding: 0 20px 0 20px;
             margin-top: 20px;
             margin-bottom: 20px;
             position: relative;
@@ -472,7 +472,7 @@
 .txt-overflow{
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 170px;
+    width: 110px;
     overflow: hidden;
     text-align: center;
     padding-left: 10px;
@@ -507,7 +507,7 @@
 
 .audio-progress-bar {
     &.mat-progress-bar {
-        height: 14px;
+        height: 3px;
         border-radius: 20px;
     }
 

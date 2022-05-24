@@ -15,16 +15,16 @@
     <div id="requirements" class="row section border row-height">
         <div class="col-12 p-0">
             <div class="row">
-                <div class="col-9 d-flex">
-                    <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;">
-                        <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">
-                            <mat-icon style="font-size: 25px">add</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-3 d-flex justify-content-center">
-                    <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
-                </div>
+<!--                <div class="col-9 d-flex">-->
+<!--                    <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;">-->
+<!--                        <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">-->
+<!--                            <mat-icon style="font-size: 25px">add</mat-icon>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-3 d-flex justify-content-center">-->
+<!--                    <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem">Requirements</h1>-->
+<!--                </div>-->
             </div>
         </div>
         <div class="col-9">
@@ -61,14 +61,27 @@
             </p-carousel>
             <!--                </div>-->
             <!--            </div>-->
-            <!--        <div class="col-1">-->
-            <!--            <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">-->
-            <!--                <mat-icon class="material-icons" (click)="nextReq()" style="color: #6C6C6C; font-size: 30px">last_page-->
-            <!--                </mat-icon>-->
-            <!--            </div>-->
-            <!--        </div>-->
+<!--                    <div class="col-1">-->
+<!--&lt;!&ndash;                        <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <mat-icon class="material-icons" (click)="nextReq()" style="color: #6C6C6C; font-size: 30px">last_page&ndash;&gt;-->
+<!--&lt;!&ndash;                            </mat-icon>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                                            <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;">-->
+<!--                                                <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">-->
+<!--                                                    <mat-icon style="font-size: 25px">add</mat-icon>-->
+<!--                                                </button>-->
+<!--                                            </div>-->
+<!--                    </div>-->
         </div>
-        <div class="col-3" style="justify-content: center; display: flex;padding-bottom: 26px;">
+        <div class="col-1">
+
+        <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;padding-bottom: 26px;">
+            <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">
+                <mat-icon style="font-size: 20px">add</mat-icon>
+            </button>
+        </div>
+    </div>
+        <div class="col-2" style="justify-content: center; display: flex;padding-bottom: 26px;">
             <div class="row">
                 <!-- <div class="col-12">
                     <h1 style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
@@ -87,13 +100,18 @@
         </div>
     </div>
 
-    <div class="row section border" *ngIf="existingEpics.length === 0">
-        <div style="text-align: center;" (click)="createRequirement()">
-            <mat-icon class="material-icons"
-                      style="color: slateblue; font-size: 50px;transform: rotate(180deg);">add
-            </mat-icon>
+    <div  *ngIf="existingEpics.length === 0">
+        <hr>
+
+        <div style="text-align: center;" >
+            <!--        <mat-icon class="material-icons"-->
+            <!--                  style="color: slateblue; font-size: 50px;transform: rotate(180deg);">add-->
+            <!--        </mat-icon>-->
+            <button mat-raised-button style="top: -32px" (click)="assignRequirementToEpic()"><mat-icon>add</mat-icon>Epic</button>
         </div>
+
     </div>
+
 
     <div id="epics" class="row section border p-0" *ngIf="existingEpics.length != 0">
         <div class="col-12">
@@ -164,15 +182,13 @@
         <!--        </div>-->
     </div>
 
-    <div class="row section border wrap-story-add"  style="margin-left: 120px;  height: 85px; cursor: pointer" *ngIf="filteredStories.length != 0">
-        <div style="text-align: center;">
-            <mat-icon class="material-icons"
-                      style="color: slateblue; font-size: 50px;transform: rotate(180deg);">add
-            </mat-icon>
-        </div>
+    <div *ngIf="existingEpics.length != 0">
+        <hr>
         <div class="col-12 d-flex justify-content-center">
-            <a class="add-req" virtuan-click-stop-propagation (click)="addStory(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>add story</a>
-            <a class="add-text" virtuan-click-stop-propagation (click)="addText(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>add text</a>
+            <button mat-raised-button style="top: -32px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
+            <button mat-raised-button style="top: -32px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>
+<!--            <a class="add-req" virtuan-click-stop-propagation (click)="addStory(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Story</a>-->
+<!--            <a class="add-text" virtuan-click-stop-propagation (click)="addText(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Text</a>-->
         </div>
     </div>
 
@@ -224,13 +240,13 @@
                 <!--                </div>-->
                 <div class="col-2 d-flex justify-content-center">
                     <div class="new" (click)="loadStoryDesignEditor(story)"  style="display: flex; justify-content: center;">
-                        <button  mat-fab disabled aria-label="Example icon button with a heart icon"  style="background-color: #FF6D00; color: white; cursor: pointer ">
+                        <button  mat-mini-fab disabled aria-label="Example icon button with a heart icon"  style="background-color: #FF6D00; color: white; cursor: pointer ">
                             <!--                            <i class="material-icons">edit_note</i>-->
-                            <mat-icon style="font-size: 22px">edit</mat-icon>
+                            <mat-icon  style="font-size: 20px">edit</mat-icon>
                         </button>
                     </div>
                 </div>
-                <div class="col-5 justify-content-center">
+                <div class="col-3 justify-content-center">
                     <mat-form-field class="flex-auto" style="width: 100%">
                         <mat-label>Progress</mat-label>
                         <mat-select (selectionChange)="handleProgress($event.value)">
@@ -240,7 +256,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-5 justify-content-center">
+                <div class="col-4 justify-content-center">
                     <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}'></mat-progress-bar>
                 </div>
 
