@@ -12,7 +12,7 @@
             </li>
         </ol>
     </div>
-    <div id="requirements" class="row section border row-height" style="height: 100px">
+    <div id="requirements" class="row section border row-height" style="height: 108px">
         <div class="col-12 p-0">
             <div class="row">
 <!--                <div class="col-9 d-flex">-->
@@ -198,9 +198,9 @@
                 <div class="col-12 d-flex justify-content-center" style="height: 20px;">
 <!--                    <div class="row pb-1">-->
 <!--                        <div class="col-6 d-flex justify-content-center align-item-center">-->
-                            <div  matTooltip="{{story.storyTemplate}}" [matTooltipPosition]="toolTipPosition">
-                                <h5 class="txt-overflow p-0">{{story.name}}</h5>
-                            </div>
+<!--                            <div  matTooltip="{{story.storyTemplate}}" [matTooltipPosition]="toolTipPosition">-->
+<!--                                <h5 class="txt-overflow p-0">{{story.name}}</h5>-->
+<!--                            </div>-->
                             <div>
                                 <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </div>
@@ -242,13 +242,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-2 d-flex justify-content-center">
+                <div class="col-2 d-flex justify-content-center" style="margin-right: 10px">
                     <div class="new" (click)="loadStoryDesignEditor(story)"  style="display: flex; justify-content: center;">
-                        <button  mat-mini-fab disabled aria-label="Example icon button with a heart icon"  style="background-color: #FF6D00; color: white; cursor: pointer ">
+                        <button  mat-mini-fab disabled aria-label="Example icon button with a heart icon"  style="background-color: #40a2dc; color: white; cursor: pointer; top: -14px; ">
                             <!--                            <i class="material-icons">edit_note</i>-->
-                            <mat-icon  style="font-size: 20px">edit</mat-icon>
+                            <mat-icon  style="font-size: 18px">border_color</mat-icon>
                         </button>
                     </div>
+                </div>
+                <div  class="col-3 justify-content-center"  matTooltip="{{story.storyTemplate}}" [matTooltipPosition]="toolTipPosition">
+                    <h5 style="bottom: 20px" class="txt-overflow">{{story.name}}</h5>
                 </div>
                 <div class="col-3 justify-content-center">
                     <mat-form-field class="flex-auto" style="width: 100%">
@@ -260,7 +263,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-4 justify-content-center">
+                <div class="col-2 justify-content-center">
                     <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}'></mat-progress-bar>
                 </div>
 
