@@ -43,8 +43,7 @@ export class CreateLamdafunctionComponent implements OnInit {
   typeSelected: string;
 
   displayedColumns: string[] = ['name', 'datatype', 'recordtype', 'actions'];
-  ELEMENT_DATA: APIInput[] = [];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  dataSource: MatTableDataSource<APIInput>;
 
   languageItems: Item[] = [
     { label: 'Golang', value: 'go' },
@@ -107,6 +106,7 @@ export class CreateLamdafunctionComponent implements OnInit {
     this.allReturnItems = [];
     this.items = [];
     this.lamdafunctionParams = [];
+    this.dataSource = new MatTableDataSource(this.lamdafunctionParams);
     this.addPrimitivesForReturnSelect();
     // this.addPrimitivesForParamSelect();
     if (this.projectUid) {
@@ -326,18 +326,14 @@ export class CreateLamdafunctionComponent implements OnInit {
       };
 
       this.lamdafunctionParams.push(param);
-      this.ELEMENT_DATA.push(param);
-      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource(this.lamdafunctionParams);
     }
   }
 
   deleteRow(param) {
     const index = this.lamdafunctionParams.indexOf(param);
     this.lamdafunctionParams.splice(index, 1);
-
-    const indexnum = this.ELEMENT_DATA.indexOf(param);
-    this.ELEMENT_DATA.splice(indexnum, 1);
-    this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+    this.dataSource = new MatTableDataSource(this.lamdafunctionParams);
   }
 
   loadUpdateForm() {
@@ -359,9 +355,7 @@ export class CreateLamdafunctionComponent implements OnInit {
   updateForm(lamdafunction: ILamdafunction) {
     if (this.currentLamdafunction.params) {
       this.lamdafunctionParams = this.currentLamdafunction.params;
-
-      this.ELEMENT_DATA = this.currentLamdafunction.params;
-      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource(this.lamdafunctionParams);
     }
 
     let returnObj: APIInput;
