@@ -82,15 +82,13 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   apiMethod: any[] = ['POST','GET','PUT','DELETE'];
 
-  returnRecord: any[] = ['MULTIPLE', 'SINGLE'];
+//   returnRecord: any[] = ['MULTIPLE', 'SINGLE'];
 
-  returnObject: Item[] = [
-    { label: 'TEXT', value: 'TEXT' },
-    { label: 'NUMBER', value: 'NUMBER' },
-    { label: 'FLOAT', value: 'FLOAT' },
-    { label: 'TRUE_OR_FALSE', value: 'TRUE_OR_FALSE' },
-    { label: 'DATE', value: 'DATE' },
+  returnRecord: Item[] = [
+    { label: 'Single', value: 's' },
+    { label: 'Multiple', value: 'm' }
   ];
+  returnObject: any[];
 
   isSaving: boolean;
   project: IProject;
@@ -202,6 +200,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     this.items = [];
     this.apiParams = [];
     this.aggregateItems = [];
+    this.addPrimitivesForReturnSelect();
 
     if (this.serviceUuid) {
       this.aggregateService
@@ -220,6 +219,55 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
               (res: HttpErrorResponse) => this.onError(res.message)
           );
     }
+  }
+
+  addPrimitivesForReturnSelect() {
+    const dropdownLabelText = 'TEXT';
+    const stringReturnObj: APIInput = {
+      id: '',
+      paramType: APIParamType.RETURN,
+      inputType: APIInputType.TEXT,
+      inputName: '_s',
+    };
+    const dropdownLabelNumber = 'NUMBER';
+    const intReturnObj: APIInput = {
+      id: '',
+      paramType: APIParamType.RETURN,
+      inputType: APIInputType.NUMBER,
+      inputName: '_i',
+    };
+    const dropdownLabelFloat = 'FLOAT';
+    const floatReturnObj: APIInput = {
+      id: '',
+      paramType: APIParamType.RETURN,
+      inputType: APIInputType.FLOAT,
+      inputName: '_f',
+    };
+    const dropdownLabelBoolean = 'TRUE_OR_FALSE';
+    const boolReturnObj: APIInput = {
+      id: '',
+      paramType: APIParamType.RETURN,
+      inputType: APIInputType.TRUE_OR_FALSE,
+      inputName: '_b',
+    };
+    const dropdownLabelDate = 'DATE';
+    const dateReturnObj: APIInput = {
+      id: '',
+      paramType: APIParamType.RETURN,
+      inputType: APIInputType.DATE,
+      inputName: '_t',
+    };
+    this.returnObject.push({ label: dropdownLabelText, value: stringReturnObj });
+    this.returnObject.push({ label: dropdownLabelNumber, value: intReturnObj });
+    this.returnObject.push({ label: dropdownLabelFloat, value: floatReturnObj });
+    this.returnObject.push({ label: dropdownLabelBoolean, value: boolReturnObj });
+    this.returnObject.push({ label: dropdownLabelDate, value: dateReturnObj });
+//
+//     this.returnItems.push(stringReturnObj );
+//     this.returnItems.push( intReturnObj );
+//     this.returnItems.push(floatReturnObj);
+//     this.returnItems.push( boolReturnObj );
+//     this.returnItems.push(dateReturnObj );
   }
 
   ngOnDestroy(): void {
