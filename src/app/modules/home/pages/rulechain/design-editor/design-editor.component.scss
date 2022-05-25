@@ -631,6 +631,12 @@
     display: none !important;
 }
 
+.carousel-next-hide {
+    .ui-carousel-next  {
+        display: none !important;
+    }
+}
+
 .wrap-story-add{
     .add-req{
         align-items: center;
@@ -727,7 +733,12 @@
 
 }
 
-.row-height{
+.row-height {
     height: 230px;
 }
 
+.epics-arrow {
+    width: 35px;
+    height: 25px;
+    margin-top: 19px;
+}

@@ -141,6 +141,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     backendGeneratorList: { [key: number]: string } = {};
     uiGeneratorList: { [key: number]: string } = {};
     spinnerButton : boolean = false;
+    hideCarouselNext = false;
 
     public pieChartOptions: ChartOptions = {
         responsive: true,
@@ -158,6 +159,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         this.currentReq = this.reqArray[0];
         this.reqCount = this.reqArray.length;
+        this.hideCarouselNext = this.reqCount < 5;
         this.reloadView();
     }
 

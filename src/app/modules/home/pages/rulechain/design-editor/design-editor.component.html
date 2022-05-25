@@ -30,7 +30,7 @@
         <div class="col-9">
             <!--            <div class="row" style="padding-bottom: 30px;">-->
             <!--                <div class="col-11">-->
-            <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="4" [circular]="true">
+            <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="4" [circular]="true"    [ngClass]="{'carousel-next-hide': hideCarouselNext}" class="">
                 <ng-template let-req pTemplate="item">
                     <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 75px" matTooltip="{{req?.name}}" (click)="clickReq(req)">
                         <h5 class="txt-overflow">{{req?.name}}</h5>
@@ -49,7 +49,7 @@
                         <a virtuan-click-stop-propagation class="assign" (click)="assignRequirementToEpic(req)"><i class="fa fa-link" aria-hidden="true"></i></a>
                     </div>
                     <div class="d-flex justify-content-center py-1" *ngIf="req.uuid === currentReq.uuid">
-                        <img src="/assets/images/arrow-up-black.png" style="width: 17px; height: 22px;" >
+                        <img src="/assets/images/arrow-up-black.png" class="epics-arrow">
                     </div>
                     <!--                    <div class="add-icon">-->
                     <!--                        <mat-icon class="material-icons"-->

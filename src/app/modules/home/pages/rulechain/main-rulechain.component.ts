@@ -150,7 +150,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     splitPartOneSize = 90;
     splitPartTwoSize = 10;
     splitConsoleSizeOne = 90;
-    splitConsoleSizeTwo = 10;
+    splitConsoleSizeTwo = 5;
 
     private _transformer = (node: any, level: number) => {
         return {
