@@ -297,6 +297,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       } else {
         suggestedPath = '/' + api.resourcePath;
       }
+      this.configuration.apiId= api.uuid;
       this.configuration.apiresourcepath= suggestedPath;
       this.updateModel(this.configuration);
     }
@@ -656,6 +657,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       let microserviceApi;
       let microserviceName = this.configuration.microservice;
       let microserviceResourcePath = this.configuration.apiresourcepath;
+      let microserviceId = this.configuration.apiId;
       if (this.configuration.isInternal && microserviceName && this.allMicroservices){
         microservice = this.allMicroservices.find(x => x.name === microserviceName );
 
@@ -689,9 +691,11 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
           }
         }
 
-        let searchedmicroserviceApi = this.apiItems.find(x => x.api.resourcePath === microserviceResourcePath);
-        if(searchedmicroserviceApi){
-            microserviceApi = searchedmicroserviceApi.api;
+        if (microserviceId){
+            let searchedmicroserviceApi = this.apiItems.find(x => x.api.uuid === microserviceId);
+            if(searchedmicroserviceApi){
+                microserviceApi = searchedmicroserviceApi.api;
+            }
         }
 
       }
