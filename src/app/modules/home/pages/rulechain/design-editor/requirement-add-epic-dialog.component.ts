@@ -14,6 +14,7 @@ import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IApi} from '@shared/models/model/microservice-api.model';
+import {IFormField} from '@shared/models/model/form-field.model';
 interface Item {
   value: any;
   label: string;
@@ -32,6 +33,8 @@ export class RequirementAddEpicDialogComponent implements OnInit {
   existingEpics: any[];
   editForm: FormGroup;
   disable = true;
+  sourceProperties: [];
+  targetProperties: [];
 
   buildEventForm() {
     this.editForm = this.fb.group({
