@@ -211,7 +211,7 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
       }
       let returnObj = this.configuration.returnObj;
       if(returnObj && this.returnItems){
-        this.returnItems.find(x => (x.paramType === this.configuration.returnObj.id) && (x.inputType === this.configuration.returnObj.inputType) && (x.inputName === this.configuration.returnObj.inputName));
+        returnObj = this.returnItems.find(x => (x.id === this.configuration.returnObj.id) && (x.inputType === this.configuration.returnObj.inputType) && (x.inputName === this.configuration.returnObj.inputName));
       }
 
       this.postNodeConfigFormGroup.patchValue({

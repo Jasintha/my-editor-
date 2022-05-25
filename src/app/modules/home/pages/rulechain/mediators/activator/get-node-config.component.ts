@@ -197,7 +197,7 @@ export class GetNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                   //this.updateForm();
                   let returnObj = this.configuration.returnObj;
                   if(returnObj && this.returnItems){
-                    this.returnItems.find(x => (x.paramType === this.configuration.returnObj.id) && (x.inputType === this.configuration.returnObj.inputType) && (x.inputName === this.configuration.returnObj.inputName));
+                    returnObj = this.returnItems.find(x => (x.id === this.configuration.returnObj.id) && (x.inputType === this.configuration.returnObj.inputType) && (x.inputName === this.configuration.returnObj.inputName));
                   }
                   this.getNodeConfigFormGroup.patchValue({
                       returnObj: returnObj,
