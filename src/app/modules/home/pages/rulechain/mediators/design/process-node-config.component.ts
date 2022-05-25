@@ -36,6 +36,7 @@ import {filter, map} from 'rxjs/operators';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {ICommand} from '@shared/models/model/command.model';
 import {IQuery} from '@shared/models/model/query.model';
+import { AggregateService } from '@core/projectservices/microservice-aggregate.service';
 import {ProjectService} from '@core/projectservices/project.service';
 interface Item {
   value: any;
@@ -96,20 +97,12 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
   currentApi: IApi;
   items: Item[];
   // returnItems: Item[];
-  datamodels: IDatamodel[] = [];
-  customObjects: ICustomObject[];
   aggregates: IAggregate[];
   apiParams: APIInput[];
   aggregateItems: Item[];
-  events: IEvent[];
-  eventItems: Item[];
   editType: string;
   apiStyle: string;
-  viewmodels: IViewmodel[];
-  allSubRules: ISubrule[];
-  workflowInputItems: Item[];
-  mappedApiInputItems: Item[];
-  worlflowMappings: IWorkflowMapping[];
+
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
     if (this.nodeDefinitionValue !== nodeDefinition) {
@@ -141,7 +134,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   constructor(private translate: TranslateService,
               private ruleChainService: RuleChainService,
-              protected projectService: ProjectService,
+              protected aggregateService: AggregateService,
               private fb: FormBuilder) {
     this.processNodeConfigFormGroup = this.fb.group({
       processName: ['', Validators.required],
@@ -208,45 +201,21 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     this.isSaving = false;
     this.items = [];
     this.apiParams = [];
-    this.eventItems = [];
-    // this.subruleItems = [];
-    this.workflowInputItems = [];
-    this.mappedApiInputItems = [];
-    this.worlflowMappings = [];
-    // this.viewmodelItems = [];
     this.aggregateItems = [];
 
     if (this.serviceUuid) {
-      this.projectService
-          .findWithModelEventsAndSubrules(this.serviceUuid)
+      this.aggregateService
+          .findByProjectUUId(this.serviceUuid, this.serviceUuid)
           .pipe(
-              filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
-              map((response: HttpResponse<IProject>) => response.body)
+              filter((mayBeOk: HttpResponse<any[]>) => mayBeOk.ok),
+              map((response: HttpResponse<any[]>) => response.body)
           )
           .subscribe(
-              (res: IProject) => {
-                this.project = res;
-                this.datamodels = this.project.datamodels;
-                this.customObjects = this.project.customObjects;
-                this.aggregates = this.project.aggregates;
-                this.events = this.project.events;
-                this.viewmodels = this.project.viewmodels;
-                this.allSubRules = this.project.subRulevms;
+              (res: any[]) => {
+                this.aggregates = res;
                 if (this.aggregates) {
                   this.loadAggregates();
                 }
-                // if (this.viewmodels) {
-                //   this.loadViewmodels();
-                // }
-                // if (this.events) {
-                //   this.loadEvents();
-                // }
-                //
-                // if (this.allSubRules) {
-                //   this.loadSubrules();
-                // }
-                // this.loadEntities();
-                // this.loadCustomObjects();
               },
               (res: HttpErrorResponse) => this.onError(res.message)
           );

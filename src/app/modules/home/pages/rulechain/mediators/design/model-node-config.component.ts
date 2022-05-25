@@ -125,7 +125,8 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
     this.modelNodeConfigFormGroup = this.fb.group({
       createType: "",
       modelName: "",
-      modelselection: null
+      modelselection: null,
+      isDto: false
     });
   }
 
@@ -192,6 +193,7 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
             this.configuration.modeluuid = model.uuid;
             this.configuration.modelName = "";
             this.configuration.createType = "";
+            this.configuration.isDto = false;
             this.updateModel(this.configuration);
         }
       );
@@ -202,6 +204,7 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
             this.configuration.modeluuid = "";
           } else if (configuration === 'Existing') {
             this.configuration.modelName = "";
+            this.configuration.isDto = false;
           }
           this.configuration.createType = configuration;
           this.updateModel(this.configuration);
@@ -215,6 +218,12 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
         }
       );
 
+      this.changeSubscription = this.modelNodeConfigFormGroup.get('isDto').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.isDto = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
     }
   }

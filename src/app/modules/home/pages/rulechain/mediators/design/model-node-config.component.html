@@ -10,6 +10,9 @@
         <mat-label>Model Name</mat-label>
         <input matInput formControlName="modelName"/>
     </mat-form-field>
+    <mat-checkbox *ngIf="!isNodeEdit && modelNodeConfigFormGroup.value.createType === 'New'" formControlName="isDto">
+        Create as Data Transfer Object(DTO)
+    </mat-checkbox>
 
     <mat-form-field *ngIf="isNodeEdit || modelNodeConfigFormGroup.value.createType === 'Existing'" fxFlex class="mat-block">
         <mat-label>Model</mat-label>
