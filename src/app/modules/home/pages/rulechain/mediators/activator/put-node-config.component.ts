@@ -216,10 +216,7 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
 
       this.putNodeConfigFormGroup.patchValue({
           selectedAPIInputs: selectedAPIInputs,
-          returnRecordType: this.configuration.returnRecordType,
-          returnObj: returnObj,
-          enableSecurity: this.configuration.enableSecurity,
-          resourcePath: this.configuration.resourcePath
+          returnObj: returnObj
       });
 
   }
@@ -232,7 +229,21 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
 
   ngAfterViewInit(): void {
   }
-
+  
+  onReturnObjChange(){
+    this.configuration.returnObj = this.putNodeConfigFormGroup.get(['returnObj']).value;
+    const returnRecordType = this.configuration.returnRecordType;
+    if (this.configuration.returnObj && returnRecordType !== 's' && returnRecordType !== 'm') {
+      this.putNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: false });
+      this.configuration.returnRecordType = 's';
+    }
+    this.updateModel(this.configuration);
+  }  
+  
+  onInputObjChange(){
+    this.configuration.selectedAPIInputs = this.putNodeConfigFormGroup.get(['selectedAPIInputs']).value;
+    this.updateModel(this.configuration);
+  }
 
   addPrimitivesForReturnSelect() {
     const dropdownLabelText = 'TEXT';
@@ -416,7 +427,14 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         this.updateModel(configuration);
       });
     } else {
-      this.loadServiceAndUpdateForm();
+      
+      this.putNodeConfigFormGroup.patchValue({
+//           selectedAPIInputs: selectedAPIInputs,
+          returnRecordType: this.configuration.returnRecordType,
+//           returnObj: returnObj,
+          enableSecurity: this.configuration.enableSecurity,
+          resourcePath: this.configuration.resourcePath
+      });
 
     this.changeSubscription = this.putNodeConfigFormGroup.get('returnRecordType').valueChanges.subscribe(
         (configuration: any) => {
@@ -425,7 +443,7 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         }
     );
 
-    this.changeSubscription = this.putNodeConfigFormGroup.get('returnObj').valueChanges.subscribe(
+    /* this.changeSubscription = this.putNodeConfigFormGroup.get('returnObj').valueChanges.subscribe(
         (configuration: any) => {
 
           this.configuration.returnObj = configuration;
@@ -436,7 +454,7 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
           }
           this.updateModel(this.configuration);
         }
-    );
+    ); */
 
     this.changeSubscription = this.putNodeConfigFormGroup.get('enableSecurity').valueChanges.subscribe(
         (configuration: any) => {
@@ -452,12 +470,14 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         }
     );
 
-    this.changeSubscription = this.putNodeConfigFormGroup.get('selectedAPIInputs').valueChanges.subscribe(
+    /* this.changeSubscription = this.putNodeConfigFormGroup.get('selectedAPIInputs').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.selectedAPIInputs = configuration;
           this.updateModel(this.configuration);
         }
-    );
+    ); */
+    
+      this.loadServiceAndUpdateForm();
 
     }
   }

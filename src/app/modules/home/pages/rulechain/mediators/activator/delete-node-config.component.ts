@@ -209,13 +209,20 @@ export class DeleteNodeConfigComponent implements ControlValueAccessor, OnInit, 
       }
 
       this.deleteNodeConfigFormGroup.patchValue({
-          returnRecordType: this.configuration.returnRecordType,
-          returnObj: returnObj,
-          enableSecurity: this.configuration.enableSecurity,
-          resourcePath: this.configuration.resourcePath
+          returnObj: returnObj
       });
 
   }
+  
+  onReturnObjChange(){
+    this.configuration.returnObj = this.deleteNodeConfigFormGroup.get(['returnObj']).value;
+    const returnRecordType = this.configuration.returnRecordType;
+    if (this.configuration.returnObj && returnRecordType !== 's' && returnRecordType !== 'm') {
+      this.deleteNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: false });
+      this.configuration.returnRecordType = 's';
+    }
+    this.updateModel(this.configuration);
+  }  
 
   ngOnDestroy(): void {
     if (this.definedConfigComponentRef) {
@@ -408,7 +415,12 @@ export class DeleteNodeConfigComponent implements ControlValueAccessor, OnInit, 
         this.updateModel(configuration);
       });
     } else {
-      this.loadServiceAndUpdateForm();
+    
+      this.deleteNodeConfigFormGroup.patchValue({
+          returnRecordType: this.configuration.returnRecordType,
+          enableSecurity: this.configuration.enableSecurity,
+          resourcePath: this.configuration.resourcePath
+      });
 
     this.changeSubscription = this.deleteNodeConfigFormGroup.get('returnRecordType').valueChanges.subscribe(
         (configuration: any) => {
@@ -417,7 +429,7 @@ export class DeleteNodeConfigComponent implements ControlValueAccessor, OnInit, 
         }
     );
 
-    this.changeSubscription = this.deleteNodeConfigFormGroup.get('returnObj').valueChanges.subscribe(
+    /* this.changeSubscription = this.deleteNodeConfigFormGroup.get('returnObj').valueChanges.subscribe(
         (configuration: any) => {
 
           this.configuration.returnObj = configuration;
@@ -428,7 +440,7 @@ export class DeleteNodeConfigComponent implements ControlValueAccessor, OnInit, 
           }
           this.updateModel(this.configuration);
         }
-    );
+    ); */
 
     this.changeSubscription = this.deleteNodeConfigFormGroup.get('enableSecurity').valueChanges.subscribe(
         (configuration: any) => {
@@ -443,6 +455,8 @@ export class DeleteNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
     );
+    
+      this.loadServiceAndUpdateForm();
 
     }
   }
