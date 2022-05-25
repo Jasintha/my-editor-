@@ -1,0 +1,49 @@
+<form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()" >
+    <mat-toolbar color="primary"  >
+        <h2 mat-dialog-title>Import Model</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-dialog-content>
+        <div class="row">
+
+            <div class="pt-3 pb-3">
+                <label id="example-radio-group-label">Type</label>
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="ps-5" aria-label="Select an option" formControlName="type">
+                    <div class="row col-md-12 mt-1">
+                        <div class="mt-1">
+                            <mat-radio-button class="pe-3" value="MODEL">Data persistent object (Model)</mat-radio-button>
+                        </div>
+                    </div>
+                    <div   class="row col-md-12 mt-1">
+                        <div class="mt-1">
+                            <mat-radio-button value="DTO">Data transfer object (DTO)</mat-radio-button>
+                        </div>
+                    </div>
+                </mat-radio-group>
+            </div>
+
+            <mat-checkbox formControlName="isCreateDefaultFields">
+                Create Default Model Fields (Objectuuid, Created At, Updated At, Deleted At)
+            </mat-checkbox>
+
+            <div class="pt-3 pb-3">
+                <label class="form-control-label">File</label><span style="font-size: smaller"> &nbsp; (Upload JSON or Excel file)</span>
+                <p-fileUpload #fileInput name="file" [showUploadButton]="false" [showCancelButton]="false"
+                              maxFileSize="10000000"  accept="application/json , application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" styleClass="theme-fileupload">
+                </p-fileUpload>
+            </div>
+
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>IMPORT</button>
+        <button mat-button color="primary" mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+</form>
+<ngx-spinner size="medium" [type]="typeSelected"></ngx-spinner>

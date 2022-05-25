@@ -383,7 +383,6 @@ export class StoryDesignPageComponent extends PageComponent
   }
 
   ngOnInit() {
-    this.username = 'user3@gmail.com'
   console.log("called 2");
 //     const routerType = this.route.snapshot.params.routerType;
     if (this.routerType != "R") {

@@ -68,10 +68,12 @@ import {CreateEventComponent} from '@home/pages/create-event/create-event.compon
 import {CreateHybridfunctionComponent} from '@home/pages/create-hybridfunction/create-hybridfunction.component';
 import {CreateLamdafunctionComponent} from '@home/pages/create-lamdafunction/create-lamdafunction.component';
 import {CreateTaskComponent} from '@home/pages/create-task/create-task.component';
+import {ImportModelComponent} from '@home/pages/create-model/import-model.component';
 import {AddOperationService} from '@core/projectservices/add-operations.service';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {EnvSelectComponent} from '@home/pages/rulechain/env-select.component';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
+import {AggregateService} from '@core/projectservices/microservice-aggregate.service';
 
 declare const SystemJS;
 
@@ -148,7 +150,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     splitPartOneSize = 90;
     splitPartTwoSize = 10;
     splitConsoleSizeOne = 90;
-    splitConsoleSizeTwo = 10;
+    splitConsoleSizeTwo = 5;
 
     private _transformer = (node: any, level: number) => {
         return {
@@ -180,8 +182,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService, private requirementService: RequirementService,
     private projectService: ProjectService,private deleteOperationService: DeleteOperationService,private addOperationService:AddOperationService, public dialog: MatDialog,
     private eventManager: EventManagerService, private socket: WebsocketService, private breakpointService: BreakpointTrackerService, private themeService: ThemeTrackerService,
-    protected appTypeService: ApptypesService,
-                private consoleLogService: ConsoleLogService) {
+    protected appTypeService: ApptypesService, protected aggregateService: AggregateService, private consoleLogService: ConsoleLogService) {
 
     }
 
@@ -244,8 +245,19 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     add(node){
-        console.log(node);
         this.addOperationService.createPopups(node, node.projectuuid, 'Create');
+    }
+
+    importModel(node){
+        const dialogRef = this.dialog.open(ImportModelComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: node.projectuuid,
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
     }
 
     edit(item){
@@ -439,7 +451,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.splitPartOneSize = 98;
+        this.splitPartOneSize = 90;
         this.splitPartTwoSize = 2;
         this.splitConsoleSizeOne = 85;
         this.splitConsoleSizeTwo = 15;
@@ -721,6 +733,35 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         }
       }
     });
+  }
+
+  exportAggregateFile(node) {
+    this.aggregateService.getModelDownloader(node.uuid, node.projectuuid).subscribe(data => this.downloadFile(data)),
+      error => this.onError('Error got while exporting'),
+      () => {
+        console.log('OK');
+      };
+  }
+
+  downloadFile(data: any) {
+    const blob = new Blob([data.body], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    //window.open(url);
+
+    let filename = this.getFileNameFromHttpResponse(data);
+    var anchor = document.createElement('a');
+    anchor.download = filename;
+    anchor.href = url;
+    anchor.click();
+  }
+
+  protected onError(errorMessage: string) {
+  }
+
+  getFileNameFromHttpResponse(data) {
+    var contentDispositionHeader = data.headers.get('content-disposition');
+    var result = contentDispositionHeader.split(';')[1].trim().split('=')[1];
+    return result.replace(/"/g, '');
   }
 
 }

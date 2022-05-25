@@ -290,6 +290,18 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
 
   deleteModelNode(event) {
     this.removeNode(this.modeldata);
+        let selectedAg = this.modelNodeConfigFormGroup.get(['modelselection']).value;
+        const aggregateData = { aggregateId: selectedAg.uuid, data: this.modeldata };
+        this.aggregateService
+          .saveModelDesign(aggregateData, this.serviceUuid)
+          .pipe(
+            filter((res: HttpResponse<any>) => res.ok),
+            map((res: HttpResponse<any>) => res.body)
+          )
+          .subscribe(
+            (res: any) => {},
+            (res: HttpErrorResponse) => this.onError()
+          );
   }
 
   editModelNode(node) {

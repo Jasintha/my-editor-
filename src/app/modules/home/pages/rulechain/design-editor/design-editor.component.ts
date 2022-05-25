@@ -66,6 +66,7 @@ import {Label, SingleDataSet} from 'ng2-charts';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 import { WebsocketService } from '@core/tracker/websocket.service';
 import {ApptypesService} from '@core/projectservices/apptypes.service';
+import { CreateTextComponent } from '@home/pages/rulechain/design-editor/create-text.component';
 
 declare const SystemJS;
 
@@ -140,6 +141,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     backendGeneratorList: { [key: number]: string } = {};
     uiGeneratorList: { [key: number]: string } = {};
     spinnerButton : boolean = false;
+    hideCarouselNext = false;
 
     public pieChartOptions: ChartOptions = {
         responsive: true,
@@ -157,6 +159,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         this.currentReq = this.reqArray[0];
         this.reqCount = this.reqArray.length;
+        this.hideCarouselNext = this.reqCount < 5;
         this.reloadView();
     }
 
@@ -312,7 +315,23 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     addStory(selectedEpic){
-        const dialogRef = this.dialog.open(CreateStoryComponent, {
+        if (selectedEpic){
+            const dialogRef = this.dialog.open(CreateStoryComponent, {
+                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+                data: {
+                    projectUid: this.desprojectUid,
+                    epic: selectedEpic
+                }
+            });
+            dialogRef.afterClosed(
+            ).subscribe(result => {
+                this.loadStoriesForEpic(selectedEpic.uuid);
+            });
+        }
+    }
+
+    addText(selectedEpic: any) {
+        const dialogRef = this.dialog.open(CreateTextComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.desprojectUid,
@@ -323,6 +342,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         ).subscribe(result => {
             this.loadStoriesForEpic(selectedEpic.uuid);
         });
+
     }
 
     editDialog(reqId){
@@ -456,7 +476,10 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     generateStory(story: any) {
         this.spinnerButton = true
-        this.consoleLogService.writeConsoleLog('story generation started');
+
+        setTimeout(()=>{
+            this.spinnerButton = false
+        }, 2000);
         const storyGen: IStoryGen = {
             storyUuid: story.uuid,
             projectUuid: story.projectUuid,

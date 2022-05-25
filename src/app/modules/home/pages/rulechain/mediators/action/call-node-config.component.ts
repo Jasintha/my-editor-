@@ -145,7 +145,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
               private ruleChainService: RuleChainService,
               private fb: FormBuilder) {
     this.callNodeConfigFormGroup = this.fb.group({
-      url: "",
+//       url: "",
       callAction: "",
       targetParameterType: "",
       targetQueryType: "",
@@ -184,9 +184,14 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       valueparam: [],
       valuebranchparam: [],
       isInternal: false,
-      microservice:[],
-      microserviceApi:[],
-      isReturn: false
+      microservice:null,
+      microserviceApi:null,
+      isReturn: false,
+      inputType: "",
+      param: null,
+      constant: null,
+      property: null,
+      branchparam: null,
     });
   }
 
@@ -198,6 +203,48 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
   }
 
   ngOnInit(): void {
+
+  }
+  
+
+  refreshInputTypes(){
+
+    let inputType: string = this.callNodeConfigFormGroup.get('inputType').value;
+    this.configuration.inputType = inputType;
+    if (inputType === 'CONSTANT'){
+
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.configuration.branchparam= {};
+      this.callNodeConfigFormGroup.get('param').patchValue(null, {emitEvent: false});
+      this.callNodeConfigFormGroup.get('branchparam').patchValue(null, {emitEvent: false});
+      this.callNodeConfigFormGroup.get('property').patchValue(null, {emitEvent: false});
+    } else if (inputType === 'RULE_INPUT'){
+      this.configuration.constant= {};
+      this.configuration.property= {};
+      this.configuration.branchparam= {};
+      this.callNodeConfigFormGroup.get('branchparam').patchValue(null, {emitEvent: false});
+      this.callNodeConfigFormGroup.get('constant').patchValue(null, {emitEvent: false});
+      this.callNodeConfigFormGroup.get('property').patchValue(null, {emitEvent: false});
+    } else if (inputType === 'PROPERTY'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.branchparam= {};
+      this.callNodeConfigFormGroup.get('branchparam').patchValue(null, {emitEvent: false});
+      this.callNodeConfigFormGroup.get('constant').patchValue(null, {emitEvent: false});
+      this.callNodeConfigFormGroup.get('param').patchValue(null, {emitEvent: false});
+    } else if (inputType === 'BRANCH_PARAM'){
+      this.configuration.constant= {};
+      this.configuration.param= {};
+      this.configuration.property= {};
+      this.callNodeConfigFormGroup.get('constant').patchValue(null, {emitEvent: false});
+      this.callNodeConfigFormGroup.get('param').patchValue(null, {emitEvent: false});
+      this.callNodeConfigFormGroup.get('property').patchValue(null, {emitEvent: false});
+    }
+
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
 
   }
 
@@ -250,6 +297,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       } else {
         suggestedPath = '/' + api.resourcePath;
       }
+      this.configuration.apiId= api.uuid;
       this.configuration.apiresourcepath= suggestedPath;
       this.updateModel(this.configuration);
     }
@@ -609,6 +657,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       let microserviceApi;
       let microserviceName = this.configuration.microservice;
       let microserviceResourcePath = this.configuration.apiresourcepath;
+      let microserviceId = this.configuration.apiId;
       if (this.configuration.isInternal && microserviceName && this.allMicroservices){
         microservice = this.allMicroservices.find(x => x.name === microserviceName );
 
@@ -642,9 +691,11 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
           }
         }
 
-        let searchedmicroserviceApi = this.apiItems.find(x => x.api.resourcePath === microserviceResourcePath);
-        if(searchedmicroserviceApi){
-            microserviceApi = searchedmicroserviceApi.api;
+        if (microserviceId){
+            let searchedmicroserviceApi = this.apiItems.find(x => x.api.uuid === microserviceId);
+            if(searchedmicroserviceApi){
+                microserviceApi = searchedmicroserviceApi.api;
+            }
         }
 
       }
@@ -664,8 +715,28 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         assignedReference = this.allReferenceProperties.find(x => x.name === this.configuration.assignedReference.name );
       }
 
+      let p = this.configuration.param;
+      if(this.configuration.inputType === 'RULE_INPUT' && this.allRuleInputs){
+        p = this.allRuleInputs.find(x => x.inputName === this.configuration.param.inputName );
+      }
+
+      let c = this.configuration.constant;
+      if(this.configuration.inputType === 'CONSTANT' && this.allConstants){
+        c = this.allConstants.find(x => x.constantName === this.configuration.constant.constantName );
+      }
+
+      let property = this.configuration.property;
+      if(this.configuration.inputType === 'PROPERTY' && this.allModelProperties){
+        property = this.allModelProperties.find(x => x.name === this.configuration.property.name );
+      }
+
+      let branchparam = this.configuration.branchparam;
+      if(this.configuration.inputType === 'BRANCH_PARAM' && this.branchAvailability.branchParams){
+        branchparam = this.branchAvailability.branchParams.find(x => x.name === this.configuration.branchparam.name );
+      }
+
       this.callNodeConfigFormGroup.patchValue({
-        url: this.configuration.url,
+//         url: this.configuration.url,
         callAction: this.configuration.callAction,
         targetParameterType: this.configuration.targetParameterType,
         targetQueryType: this.configuration.targetQueryType,
@@ -706,7 +777,12 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         isInternal: this.configuration.isInternal,
         microservice: microservice,
         microserviceApi: microserviceApi,
-        isReturn: this.configuration.isReturn
+        isReturn: this.configuration.isReturn,
+        inputType: this.configuration.inputType,
+        param: p,
+        constant: c,
+        property: property,
+        branchparam: branchparam
       });
 
       this.changeSubscription = this.callNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
@@ -720,10 +796,22 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         (configuration: any) => {
           this.configuration.isInternal = configuration;
           if(configuration){
-            this.configuration.url = '';
+//             this.configuration.url = '';
+            this.configuration.param= {};
+            this.configuration.property= {};
+            this.configuration.branchparam= {};
+            this.configuration.constant= {};
+            this.configuration.inputType= '';
+            this.callNodeConfigFormGroup.get('constant').patchValue(null, {emitEvent: false});
+            this.callNodeConfigFormGroup.get('param').patchValue(null, {emitEvent: false});
+            this.callNodeConfigFormGroup.get('property').patchValue(null, {emitEvent: false});
+            this.callNodeConfigFormGroup.get('branchparam').patchValue(null, {emitEvent: false});
+            this.callNodeConfigFormGroup.get('inputType').patchValue('', {emitEvent: false});
           } else {
             this.configuration.microservice= '';
             this.configuration.apiresourcepath= '';
+            this.callNodeConfigFormGroup.get('microservice').patchValue(null, {emitEvent: false});
+            this.callNodeConfigFormGroup.get('microserviceApi').patchValue(null, {emitEvent: false});
           }
           this.updateModel(this.configuration);
         }
@@ -794,12 +882,12 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
           }
       );
 
-      this.changeSubscription = this.callNodeConfigFormGroup.get('url').valueChanges.subscribe(
+      /* this.changeSubscription = this.callNodeConfigFormGroup.get('url').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.url = configuration;
           this.updateModel(this.configuration);
         }
-      );
+      ); */
 
       this.changeSubscription = this.callNodeConfigFormGroup.get('callAction').valueChanges.subscribe(
         (configuration: any) => {
@@ -992,6 +1080,38 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
             this.configuration.valuebranchparam = configuration;
             this.updateModel(this.configuration);
           }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('param').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.param = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('branchparam').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.branchparam = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('constant').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.constant = configuration;
+
+
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('property').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.property = configuration;
+
+
+          this.updateModel(this.configuration);
+        }
       );
 
     }

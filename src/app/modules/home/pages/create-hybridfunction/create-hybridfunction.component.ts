@@ -62,8 +62,7 @@ export class CreateHybridfunctionComponent implements OnInit {
   ];
 
   displayedColumns: string[] = ['name', 'datatype', 'recordtype', 'actions'];
-  ELEMENT_DATA: APIInput[] = [];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  dataSource: MatTableDataSource<APIInput>;
   typeSelected: string;
 
   editForm = this.fb.group({
@@ -113,6 +112,7 @@ export class CreateHybridfunctionComponent implements OnInit {
     this.returnItems = [];
     this.items = [];
     this.hybridfunctionParams = [];
+    this.dataSource = new MatTableDataSource(this.hybridfunctionParams);
     this.addPrimitivesForReturnSelect();
     this.addPrimitivesForParamSelect();
     if (this.projectUid) {
@@ -378,18 +378,14 @@ export class CreateHybridfunctionComponent implements OnInit {
       };
 
       this.hybridfunctionParams.push(param);
-      this.ELEMENT_DATA.push(param);
-      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource(this.hybridfunctionParams);
     }
   }
 
   deleteRow(param) {
     const index = this.hybridfunctionParams.indexOf(param);
     this.hybridfunctionParams.splice(index, 1);
-
-    const indexnum = this.ELEMENT_DATA.indexOf(param);
-    this.ELEMENT_DATA.splice(indexnum, 1);
-    this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+    this.dataSource = new MatTableDataSource(this.hybridfunctionParams);
   }
 
   loadUpdateForm() {
@@ -411,9 +407,7 @@ export class CreateHybridfunctionComponent implements OnInit {
   updateForm(hybridfunction: IHybridfunction) {
     if (this.currentHybridfunction.params) {
       this.hybridfunctionParams = this.currentHybridfunction.params;
-
-      this.ELEMENT_DATA = this.currentHybridfunction.params;
-      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource(this.hybridfunctionParams);
     }
 
     this.editForm.patchValue({
