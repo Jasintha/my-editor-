@@ -451,7 +451,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.splitPartOneSize = 98;
+        this.splitPartOneSize = 90;
         this.splitPartTwoSize = 2;
         this.splitConsoleSizeOne = 85;
         this.splitConsoleSizeTwo = 15;

@@ -27,6 +27,14 @@
 <!--                </div>-->
             </div>
         </div>
+        <div class="col-1">
+
+            <div class="wrap add-button add-req-block" (click)="createRequirement()">
+                <mat-icon class="material-icons add-icons"
+                          style="color: seagreen;margin-top: 18px">add
+                </mat-icon>
+            </div>
+        </div>
         <div class="col-9">
             <!--            <div class="row" style="padding-bottom: 30px;">-->
             <!--                <div class="col-11">-->
@@ -73,14 +81,6 @@
 <!--                                            </div>-->
 <!--                    </div>-->
         </div>
-        <div class="col-1">
-
-        <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;padding-bottom: 26px;">
-            <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">
-                <mat-icon style="font-size: 20px">add</mat-icon>
-            </button>
-        </div>
-    </div>
         <div class="col-2" style="justify-content: center; display: flex;padding-bottom: 26px;">
             <div class="row">
                 <!-- <div class="col-12">
@@ -114,14 +114,14 @@
 
 
     <div id="epics" class="row section border p-0" *ngIf="existingEpics.length != 0">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-9"></div>
-                <div class="col-3 d-flex justify-content-center">
-                    <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem;">Epics</h1>
-                </div>
-            </div>
-        </div>
+<!--        <div class="col-12">-->
+<!--            <div class="row">-->
+<!--                <div class="col-9"></div>-->
+<!--                <div class="col-3 d-flex justify-content-center">-->
+<!--                    <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem;">Epics</h1>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div class="col-9">
             <div class="row">
@@ -182,7 +182,7 @@
         <!--        </div>-->
     </div>
 
-    <div *ngIf="existingEpics.length != 0">
+    <div *ngIf="existingEpics.length != 0 && filteredStories.length == 0">
         <hr>
         <div class="col-12 d-flex justify-content-center">
             <button mat-raised-button style="top: -32px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
@@ -194,7 +194,15 @@
 
     <div *ngIf="filteredStories.length != 0">
         <ng-container *ngFor="let story of filteredStories" >
-            <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
+            <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px; margin-top: 34px" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
+                <div class="top-req">
+                    <div class="col-12 d-flex justify-content-center add-req-top">
+                        <button mat-raised-button style="top: -15px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
+                        <button mat-raised-button style="top: -15px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>
+                        <!--            <a class="add-req" virtuan-click-stop-propagation (click)="addStory(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Story</a>-->
+                        <!--            <a class="add-text" virtuan-click-stop-propagation (click)="addText(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Text</a>-->
+                    </div>
+                </div>
                 <div class="col-12 d-flex justify-content-center" style="height: 20px;">
 <!--                    <div class="row pb-1">-->
 <!--                        <div class="col-6 d-flex justify-content-center align-item-center">-->
@@ -266,7 +274,12 @@
                 <div class="col-2 justify-content-center">
                     <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}'></mat-progress-bar>
                 </div>
-
+                <div class="bottom-req" >
+                    <div class="col-12 d-flex justify-content-center add-req-bottom">
+                        <button mat-raised-button style="top: -1px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
+                        <button mat-raised-button style="top: -1px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>
+                 </div>
+                </div>
             </div>
             <div id="stories" class="row section border row-color"  style="margin-left: 120px" *ngIf="story.storyTemplate === 'CREATE-TEXT' ">
                 <div class="col-12 d-flex justify-content-center">
