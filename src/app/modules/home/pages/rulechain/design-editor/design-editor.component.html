@@ -113,7 +113,7 @@
     </div>
 
 
-    <div id="epics" class="row section border p-0" *ngIf="existingEpics.length != 0">
+    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0">
 <!--        <div class="col-12">-->
 <!--            <div class="row">-->
 <!--                <div class="col-9"></div>-->
@@ -123,33 +123,50 @@
 <!--            </div>-->
 <!--        </div>-->
 
-        <div class="col-9">
-            <div class="row">
-                <ng-container *ngFor="let epic of existingEpics; let j = index">
-                    <div class="col-4" (click)="filterEpic(epic, j)">
-                        <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }"
-                             matTooltip="{{epic?.name}}"
-                             [matTooltipPosition]="toolTipPosition" style="height: 50px">
-                            <h5 class="txt-overflow">{{epic?.name}}</h5>
-                            <!--                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
-                            <div class="inner-wrap">
-                                <input type="text" placeholder="Title">
-                                <textarea name="descripton" cols="" rows=""></textarea>
-                                <button>Submit</button>
-                            </div>
-                            <a class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash"
-                                                                                            aria-hidden="true"></i></a>
-                            <a class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>
+        <div class="col-9 pt-4">
+            <p-carousel orientation="vertical" [value]="existingEpics" [numVisible]="4" [numScroll]="4" [circular]="true"    [ngClass]="{'carousel-next-hide': hideCarouselNext}" class="">
+                <ng-template let-epic pTemplate="body" let-index="rowIndex" >
+                    <div class="wrap-epic"  (click)="filterEpic(epic, index)" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }" style="height: 55px" matTooltip="{{epic?.name}}">
+                        <h5 class="txt-overflow">{{epic?.name}}</h5>
+                        <a class="edit" (click)="editDialog(epic?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <div class="inner-wrap">
+                            <input type="text" placeholder="Title">
+                            <textarea name="descripton" cols="" rows=""></textarea>
+                            <button>Submit</button>
                         </div>
-                        <!-- <div *ngIf="epic.selected" class="add-icon">
-                            <mat-icon class="material-icons"
-                                    style="color: slateblue; font-size: 50px;transform: rotate(180deg);"
-                                    (click)="addStory(selectedEpic)">publish
-                            </mat-icon>
-                        </div> -->
+                        <a virtuan-click-stop-propagation class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a virtuan-click-stop-propagation class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>
+<!--                        <a class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
+<!--                        <a class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>-->
                     </div>
-                </ng-container>
-            </div>
+                </ng-template>
+            </p-carousel>
+<!--            <div class="row">-->
+<!--                <ng-container *ngFor="let epic of existingEpics; let j = index">-->
+<!--                    <div class="col-4" (click)="filterEpic(epic, j)">-->
+<!--                        <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }"-->
+<!--                             matTooltip="{{epic?.name}}"-->
+<!--                             [matTooltipPosition]="toolTipPosition" style="height: 50px">-->
+<!--                            <h5 class="txt-overflow">{{epic?.name}}</h5>-->
+<!--                            &lt;!&ndash;                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>&ndash;&gt;-->
+<!--                            <div class="inner-wrap">-->
+<!--                                <input type="text" placeholder="Title">-->
+<!--                                <textarea name="descripton" cols="" rows=""></textarea>-->
+<!--                                <button>Submit</button>-->
+<!--                            </div>-->
+<!--                            <a class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash"-->
+<!--                                                                                            aria-hidden="true"></i></a>-->
+<!--                            <a class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; <div *ngIf="epic.selected" class="add-icon">-->
+<!--                            <mat-icon class="material-icons"-->
+<!--                                    style="color: slateblue; font-size: 50px;transform: rotate(180deg);"-->
+<!--                                    (click)="addStory(selectedEpic)">publish-->
+<!--                            </mat-icon>-->
+<!--                        </div> &ndash;&gt;-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+<!--            </div>-->
         </div>
         <!-- <div class="watermark" style="left: 88%;">
             Epics
@@ -252,7 +269,7 @@
                 </div>
                 <div class="col-2 d-flex justify-content-center" style="margin-right: 10px">
                     <div class="new" (click)="loadStoryDesignEditor(story)"  style="display: flex; justify-content: center;">
-                        <button  mat-mini-fab disabled aria-label="Example icon button with a heart icon"  style="background-color: #40a2dc; color: white; cursor: pointer; top: -14px; ">
+                        <button  mat-mini-fab disabled aria-label="Example icon button with a heart icon"  style="background-color: #40a2dc; color: white; cursor: pointer;">
                             <!--                            <i class="material-icons">edit_note</i>-->
                             <mat-icon  style="font-size: 18px">border_color</mat-icon>
                         </button>
@@ -283,9 +300,7 @@
             </div>
             <div id="stories" class="row section border row-color"  style="margin-left: 120px" *ngIf="story.storyTemplate === 'CREATE-TEXT' ">
                 <div class="col-12 d-flex justify-content-center">
-                    <div  matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">
-                        <h5 class="txt-overflow">{{story.name}}</h5>
-                    </div>
+                    <div [innerHTML]="story.description"> </div>
                 </div>
             </div>
         </ng-container>
