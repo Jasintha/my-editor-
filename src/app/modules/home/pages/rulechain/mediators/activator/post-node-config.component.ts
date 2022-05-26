@@ -211,15 +211,12 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
       }
       let returnObj = this.configuration.returnObj;
       if(returnObj && this.returnItems){
-        this.returnItems.find(x => (x.paramType === this.configuration.returnObj.id) && (x.inputType === this.configuration.returnObj.inputType) && (x.inputName === this.configuration.returnObj.inputName));
+        returnObj = this.returnItems.find(x => (x.id === this.configuration.returnObj.id) && (x.inputType === this.configuration.returnObj.inputType) && (x.inputName === this.configuration.returnObj.inputName));
       }
 
       this.postNodeConfigFormGroup.patchValue({
           selectedAPIInputs: selectedAPIInputs,
-          returnRecordType: this.configuration.returnRecordType,
-          returnObj: returnObj,
-          enableSecurity: this.configuration.enableSecurity,
-          resourcePath: this.configuration.resourcePath
+          returnObj: returnObj
       });
 
   }
@@ -395,6 +392,21 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
       this.postNodeConfigFormGroup.enable({emitEvent: false});
     }
   }
+  
+  onReturnObjChange(){
+    this.configuration.returnObj = this.postNodeConfigFormGroup.get(['returnObj']).value;
+    const returnRecordType = this.configuration.returnRecordType;
+    if (this.configuration.returnObj && returnRecordType !== 's' && returnRecordType !== 'm') {
+      this.postNodeConfigFormGroup.get('returnRecordType').patchValue('s', { emitEvent: false });
+      this.configuration.returnRecordType = 's';
+    }
+    this.updateModel(this.configuration);
+  }  
+  
+  onInputObjChange(){
+    this.configuration.selectedAPIInputs = this.postNodeConfigFormGroup.get(['selectedAPIInputs']).value;
+    this.updateModel(this.configuration);
+  }
 
   writeValue(value: RuleNodeConfiguration): void {
 
@@ -416,7 +428,14 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
         this.updateModel(configuration);
       });
     } else {
-      this.loadServiceAndUpdateForm();
+            
+      this.postNodeConfigFormGroup.patchValue({
+//           selectedAPIInputs: selectedAPIInputs,
+          returnRecordType: this.configuration.returnRecordType,
+//           returnObj: returnObj,
+          enableSecurity: this.configuration.enableSecurity,
+          resourcePath: this.configuration.resourcePath
+      });
 
     this.changeSubscription = this.postNodeConfigFormGroup.get('returnRecordType').valueChanges.subscribe(
         (configuration: any) => {
@@ -425,7 +444,7 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
         }
     );
 
-    this.changeSubscription = this.postNodeConfigFormGroup.get('returnObj').valueChanges.subscribe(
+    /* this.changeSubscription = this.postNodeConfigFormGroup.get('returnObj').valueChanges.subscribe(
         (configuration: any) => {
 
           this.configuration.returnObj = configuration;
@@ -436,7 +455,7 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
           }
           this.updateModel(this.configuration);
         }
-    );
+    ); */
 
     this.changeSubscription = this.postNodeConfigFormGroup.get('enableSecurity').valueChanges.subscribe(
         (configuration: any) => {
@@ -452,12 +471,14 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
         }
     );
 
-    this.changeSubscription = this.postNodeConfigFormGroup.get('selectedAPIInputs').valueChanges.subscribe(
+    /* this.changeSubscription = this.postNodeConfigFormGroup.get('selectedAPIInputs').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.selectedAPIInputs = configuration;
           this.updateModel(this.configuration);
         }
-    );
+    ); */
+    
+    this.loadServiceAndUpdateForm();
 
     }
   }

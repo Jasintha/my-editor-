@@ -63,6 +63,7 @@ export class ImportModelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.projectUid = this.data.projectUid;
     this.spinnerService.hide();
     this.buildAggreForm('MODEL');
   }
@@ -86,6 +87,13 @@ export class ImportModelComponent implements OnInit {
     } else {
       isCreateDefaultFields = false;
     }
+
+    let mdType = this.editForm.get(['type']).value;
+
+    if(mdType === 'DTO'){
+        isCreateDefaultFields = false;
+    }
+
 
     let modelData: string = '';
 //     if (this.apptype === 'task.ui' || this.apptype === 'dashboard') {

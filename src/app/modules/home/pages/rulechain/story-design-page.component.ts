@@ -2198,9 +2198,16 @@ export class AddDesignRuleNodeDialogComponent extends DialogComponent<AddDesignR
     if(this.ruleNode.component.clazz === 'xiStoryModelNode'){
         let createType = this.ruleNode.configuration.createType;
         if(createType === 'New'){
+            let modelType = '';
+            if (this.ruleNode.configuration.isDto){
+                modelType = 'DTO';
+            } else {
+                modelType = 'MODEL';
+            }
+
             let data = {
               name: this.ruleNode.configuration.modelName,
-              type: 'MODEL',
+              type: modelType,
               pmServiceUUID: this.serviceUuid,
               projectUuid: this.projectUid,
             };
@@ -2218,7 +2225,7 @@ export class AddDesignRuleNodeDialogComponent extends DialogComponent<AddDesignR
                     this.ruleNode.configuration.modeluuid = storyModel.uuid;
                     this.ruleNode.configuration.modelName = "";
                     this.ruleNode.configuration.createType = "";
-
+                    this.ruleNode.configuration.isDto = false;
                   }
                   this.submitted = true;
                   this.dialogRef.close(this.ruleNode);
