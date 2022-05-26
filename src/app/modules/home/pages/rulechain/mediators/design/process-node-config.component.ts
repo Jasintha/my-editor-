@@ -200,6 +200,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     this.items = [];
     this.apiParams = [];
     this.aggregateItems = [];
+    this.returnObject = [];
     this.addPrimitivesForReturnSelect();
 
     if (this.serviceUuid) {
@@ -257,6 +258,9 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
       inputType: APIInputType.DATE,
       inputName: '_t',
     };
+    if(!this.returnObject){
+        this.returnObject = [];
+    }
     this.returnObject.push({ label: dropdownLabelText, value: stringReturnObj });
     this.returnObject.push({ label: dropdownLabelNumber, value: intReturnObj });
     this.returnObject.push({ label: dropdownLabelFloat, value: floatReturnObj });
