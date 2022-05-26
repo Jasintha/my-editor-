@@ -40,6 +40,8 @@ import {ViewModelConfigComponent} from '@home/pages/built-in-page/view-model-con
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { PickListModule } from 'primeng/picklist';
+import {CustomPageViewComponent} from '@home/pages/built-in-page/custom-page.component';
+import {CustomPageApiDialogComponent} from '@home/pages/built-in-page/custom-page-api-dialog.component';
 
 @NgModule({
     declarations:[
@@ -51,7 +53,9 @@ import { PickListModule } from 'primeng/picklist';
         BuiltInPageDeleteDialogComponent,
         PageGridHandlerComponent,
         WidgetSelectDialogComponent,
-        ViewModelConfigComponent
+        ViewModelConfigComponent,
+        CustomPageViewComponent,
+        CustomPageApiDialogComponent
     ],
     imports: [
         CommonModule,
@@ -97,7 +101,9 @@ import { PickListModule } from 'primeng/picklist';
         BuiltInPageDeleteDialogComponent,
         PageGridHandlerComponent,
         WidgetSelectDialogComponent,
-        ViewModelConfigComponent
+        ViewModelConfigComponent,
+        CustomPageViewComponent,
+        CustomPageApiDialogComponent
     ],
     providers: [ ]
 })

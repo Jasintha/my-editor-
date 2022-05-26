@@ -387,17 +387,22 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   }
 
   pageTemplateTypeSelection(template: string) {
+    this.pageTemplateType = template;
     if (template === 'blank') {
       this.pageCreationStatus = 'gridSelection';
-      this.pageTemplateType = template;
-    } else {
-      this.pageTemplateType = template;
+    } else if (template === 'custom'){
+      this.createCustomPage(template);
+    }else {
       this.createTemplatePage(template);
     }
   }
 
   createTemplatePage(template: string) {
     this.save('singleWidget', 'Template Page', template);
+  }
+
+  createCustomPage(template: string) {
+    this.save('customPage', 'Custom Page', template);
   }
 
   createCustomGrid() {

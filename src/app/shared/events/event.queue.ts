@@ -64,5 +64,6 @@ export enum EventTypes {
   editorUITreeListModification = 'editorUITreeListModification',
   editorDesignTreeListModification = 'editorDesignTreeListModification',
   editMultiWidgetPage = 'editMultiWidgetPage',
-  consoleLogsUpdated = 'consoleLogsUpdated'
+  consoleLogsUpdated = 'consoleLogsUpdated',
+  editCustomPage = 'editCustomPage'
 }

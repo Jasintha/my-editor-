@@ -37,6 +37,7 @@
 
                         <virtuan-single-page-view *ngIf="loadPageEditor" [projectUid]="projectUid" [pageId]="pageId" ></virtuan-single-page-view>
                         <virtuan-single-widget-view *ngIf="loadWidgetEditor" [projectUid]="projectUid" [pageId]="pageId" [widgetId]="widgetId" ></virtuan-single-widget-view>
+                        <virtuan-custom-page-view *ngIf="loadCustomPageEditor" [projectUid]="projectUid" [pageId]="pageId" [widgetId]="widgetId" ></virtuan-custom-page-view>
                         <virtuan-page-grid-handler *ngIf="loadGridPageEditor" [projectUid]="projectUid" [pageId]="pageId" widgetId > </virtuan-page-grid-handler>
                     </as-split-area>
                     <as-split-area [size]="splitConsoleSizeTwo">
