@@ -1,0 +1,232 @@
+<form class="mat-form-dialog" [formGroup]="form" (ngSubmit)="save()">
+    <mat-toolbar color="primary" >
+        <h2>Create API</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+    <div mat-dialog-content>
+        <div class="row">
+
+            <div class="form-group" [hidden]="!form.get('id').value">
+                <input type="hidden" class="form-control" id="id" name="id" formControlName="id"/>
+            </div>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Name</mat-label>
+                <input type="text" formControlName="name" matInput>
+                <mat-error *ngIf="form.controls.name.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="apiStyleType" [(ngModel)]="selectedOption">
+                    <mat-option *ngFor="let option of apiStyleTypeItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto" *ngIf="form.value.apiStyleType === 'GRPC'">
+                <mat-label>GRPC Method</mat-label>
+                <mat-select formControlName="grpcMethod">
+                    <mat-option *ngFor="let option of grpcMethodItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto" *ngIf="form.value.apiStyleType !== 'GRPC'">
+                <mat-label>Template</mat-label>
+                <mat-select formControlName="apitype" [(ngModel)]="selectedApiType">
+                    <mat-option *ngFor="let option of apitypeItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class="flex-auto">
+                <mat-checkbox  formControlName="enableSecurity" >Enable Security</mat-checkbox>
+            </div>
+
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Resource Path</mat-label>
+                <input type="text" formControlName="resourcePath" matInput>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto" *ngIf="form.value.apiStyleType === 'REST' && form.value.apitype === 'API'">
+                <mat-label>Operation</mat-label>
+                <mat-select formControlName="operation" (selectionChange)="workflowMapItemsOnOperationChange('operation')">
+                    <mat-option *ngFor="let option of crudItems" [value]="option.value" >
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto" *ngIf="form.value.apiStyleType === 'GRPC' || (form.value.apitype === 'API' && (form.value.operation === 'CREATE' || form.value.operation === 'UPDATE'))">
+                <mat-label>Target Input</mat-label>
+                <mat-select formControlName="selectedAPIInputs">
+                    <mat-option *ngFor="let option of items" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto" *ngIf="form.value.apiStyleType === 'GRPC' || (form.value.apitype === 'API' || form.value.apitype === 'FILE_UPLOAD')">
+                <mat-label>Return Object</mat-label>
+                <mat-select formControlName="returnObj" (selectionChange)="onReturnObjChange()">
+                    <mat-option *ngFor="let option of returnItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field class="flex-auto" *ngIf="form.value.apitype === 'COMMAND' || form.value.apitype === 'QUERY'">
+                <mat-label>Description</mat-label>
+                <input type="text" formControlName="description" matInput>
+            </mat-form-field>
+
+
+            <ng-container class="flex-auto" *ngIf="form.value.apiStyleType !== 'GRPC' && form.value.apitype === 'COMMAND'">
+                <mat-form-field class="flex-auto" >
+                    <mat-label>Operation</mat-label>
+                    <mat-select formControlName="operationType" (selectionChange)="workflowMapItemsOnOperationChange('operationType')">
+                        <mat-option *ngFor="let option of typeItems" [value]="option.value">
+                            {{option.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto" >
+                    <mat-label>Event</mat-label>
+                    <mat-select formControlName="selectedEvent">
+                        <mat-option *ngFor="let option of eventItems" [value]="option.value">
+                            {{option.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+
+            <mat-form-field class="flex-auto"  *ngIf="form.value.apiStyleType !== 'GRPC' && form.value.apitype === 'QUERY'">
+                <mat-label>View Model</mat-label>
+                <mat-select formControlName="selectedViewmodel">
+                    <mat-option *ngFor="let option of viewmodelItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
+            <ng-container class="flex-auto" *ngIf="form.value.apiStyleType === 'GRPC' || form.value.apitype === 'API' || form.value.apitype === 'FILE_UPLOAD' || form.value.apitype === 'FILE_DOWNLOAD' || form.value.apitype === 'QUERY'">
+                <div class="pt-3 pb-5" *ngIf="form.value.apiStyleType === 'GRPC' || (form.value.apitype === 'API' && form.value.returnObj) || (form.value.apitype === 'FILE_UPLOAD' && form.value.returnObj) || form.value.apitype === 'QUERY'">
+                    <label id="example-radio-group-label">Return Object Record</label>
+                    <mat-radio-group aria-labelledby="example-radio-group-label"
+                                     class="ps-5" aria-label="Select an option" formControlName="returnRecordType">
+                        <mat-radio-button class="pe-3" value="s">Single</mat-radio-button>
+                        <mat-radio-button value="m">Multiple</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+
+                <div *ngIf="form.value.apiStyleType !== 'GRPC'" class="form-group">
+                    <label class="form-control-label">Add Params</label>
+                    <div class="card">
+                        <div class="card-body row">
+                            <div class="col-md-3">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Name</mat-label>
+                                    <input type="text" formControlName="paramName" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Choose Type</mat-label>
+                                    <mat-select formControlName="paramDataType">
+                                        <mat-option *ngFor="let option of paramDataTypeItems" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-3">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Choose Param Type</mat-label>
+                                    <mat-select formControlName="paramType">
+                                        <mat-option *ngFor="let option of paramitems" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-3" style='text-align: center'>
+                                <!--                                <button mat-icon-button color="accent" aria-label="Example icon button with a home icon" (click)="addRow()">-->
+                                <!--                                    <mat-icon>add</mat-icon>-->
+                                <!--                                </button>-->
+                                <button type="button"  mat-raised-button (click)="addRow()"><mat-icon>add</mat-icon> ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="form.value.apiStyleType !== 'GRPC'" style="padding-top:20px;padding-bottom:20px;">
+                    <table mat-table matSort  [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef>Name</th>
+                            <td mat-cell *matCellDef="let element">{{element.inputName}}</td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="datatype">
+                            <th mat-header-cell *matHeaderCellDef>Data Type</th>
+                            <td mat-cell *matCellDef="let element">{{element.inputType}}</td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="param">
+                            <th mat-header-cell *matHeaderCellDef>Param</th>
+                            <td mat-cell *matCellDef="let element">{{element.paramType}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header >Action</th>
+                            <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                <button (click)="deleteRow(row)"
+                                        mat-icon-button
+                                        type="button">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div mat-dialog-actions fxLayoutAlign="end center">
+        <button mat-raised-button color="primary" [disabled]="form.invalid || isSaving"
+                type="submit" cdkFocusInitial>
+            Save
+        </button>
+        <button mat-button color="primary"
+                type="button"
+                mat-dialog-close >
+            Cancel
+        </button>
+    </div>
+</form>
+
+<ngx-spinner size="medium" [type]="typeSelected"></ngx-spinner>
