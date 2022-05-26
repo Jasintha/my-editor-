@@ -88,6 +88,13 @@ export class ImportModelComponent implements OnInit {
       isCreateDefaultFields = false;
     }
 
+    let mdType = this.editForm.get(['type']).value;
+
+    if(mdType === 'DTO'){
+        isCreateDefaultFields = false;
+    }
+
+
     let modelData: string = '';
 //     if (this.apptype === 'task.ui' || this.apptype === 'dashboard') {
 //       modelData = 'MODEL';

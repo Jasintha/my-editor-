@@ -28,7 +28,7 @@
                 </mat-radio-group>
             </div>
 
-            <mat-checkbox formControlName="isCreateDefaultFields">
+            <mat-checkbox  *ngIf="editForm.value.type === 'MODEL'" formControlName="isCreateDefaultFields">
                 Create Default Model Fields (Objectuuid, Created At, Updated At, Deleted At)
             </mat-checkbox>
 
