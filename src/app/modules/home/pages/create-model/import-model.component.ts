@@ -63,6 +63,7 @@ export class ImportModelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.projectUid = this.data.projectUid;
     this.spinnerService.hide();
     this.buildAggreForm('MODEL');
   }
