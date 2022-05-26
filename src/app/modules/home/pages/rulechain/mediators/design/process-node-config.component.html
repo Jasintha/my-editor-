@@ -26,8 +26,8 @@
  <mat-form-field fxFlex *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'" class="mat-block">
   <mat-label>Return Record</mat-label>
   <mat-select formControlName="returnRecord">
-   <mat-option *ngFor="let option of returnRecord" [value]="option">
-    {{option}}
+   <mat-option *ngFor="let option of returnRecord" [value]="option.value">
+    {{option.label}}
    </mat-option>
   </mat-select>
  </mat-form-field>
