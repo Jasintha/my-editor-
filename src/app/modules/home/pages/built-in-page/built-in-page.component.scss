@@ -677,3 +677,13 @@ p {
 .float-right {
   float: right;
 }
+
+.example-input-label,
+.example-add-tab-button,
+.example-delete-tab-button {
+  margin: 8px;
+}
+
+.tab-container{
+  margin-top: 30px;
+}

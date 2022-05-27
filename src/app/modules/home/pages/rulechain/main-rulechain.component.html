@@ -39,6 +39,7 @@
                         <virtuan-single-widget-view *ngIf="loadWidgetEditor" [projectUid]="projectUid" [pageId]="pageId" [widgetId]="widgetId" ></virtuan-single-widget-view>
                         <virtuan-custom-page-view *ngIf="loadCustomPageEditor" [projectUid]="projectUid" [pageId]="pageId" [widgetId]="widgetId" ></virtuan-custom-page-view>
                         <virtuan-page-grid-handler *ngIf="loadGridPageEditor" [projectUid]="projectUid" [pageId]="pageId" widgetId > </virtuan-page-grid-handler>
+                        <virtuan-tab-page-view *ngIf="loadTabPageEditor" [projectUid]="projectUid" [pageId]="pageId" widgetId > </virtuan-tab-page-view>
                     </as-split-area>
                     <as-split-area [size]="splitConsoleSizeTwo">
                         <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">

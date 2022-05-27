@@ -390,7 +390,10 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.pageTemplateType = template;
     if (template === 'blank') {
       this.pageCreationStatus = 'gridSelection';
-    } else if (template === 'custom'){
+    } else if (template === 'tab-page'){
+      this.save('tabbed', 'Template Page', template);
+    }
+    else if (template === 'custom'){
       this.createCustomPage(template);
     }else {
       this.createTemplatePage(template);
