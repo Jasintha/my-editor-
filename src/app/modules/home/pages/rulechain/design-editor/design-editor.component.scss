@@ -568,6 +568,16 @@
     text-align: center;
     padding-left: 10px;
 }
+
+.txt-overflow-epic{
+    height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 436px;
+    overflow: hidden;
+    text-align: center;
+    padding-left: 10px;
+}
 .watermark {
     z-index: 99;
     position: absolute;
