@@ -297,9 +297,15 @@
                 </div>
             </div>
             <div id="stories" class="row section border row-color"  style="margin-left: 120px" *ngIf="story.storyTemplate === 'CREATE-TEXT' ">
-                <div class="col-12 d-flex justify-content-center">
-                    <div [innerHTML]="story.description"> </div>
-                </div>
+<!--                <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">-->
+<!--                    <div [innerHTML]="story.description"> </div>-->
+<!--                </div>-->
+                <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.description"
+                          [style]="{'height':'120px', 'margin-top':'10px'}" [readonly]="true">
+                    <p-header hidden>
+                        <span class="ql-formats"></span>
+                    </p-header>
+                </p-editor>
             </div>
         </ng-container>
         <!--        <div class="watermark" style="left: 88%;">-->
