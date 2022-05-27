@@ -259,7 +259,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.filteredStories = [];
         this.resetRuleEditorValues();
         for (let i = 0; i < this.existingEpics.length; i++) {
-            if(i === index){
+            if(this.existingEpics[i].uuid === epic.uuid){
                 this.existingEpics[i].selected = true;
             } else {
                 this.existingEpics[i].selected = false;

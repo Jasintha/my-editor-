@@ -34,7 +34,6 @@ export class CreateTextComponent implements OnInit {
   buildEventForm() {
     this.editForm = this.fb.group({
       id: [],
-      name: ['', [Validators.required]],
       description:  ['', [Validators.required]]
     });
   }
@@ -98,7 +97,7 @@ export class CreateTextComponent implements OnInit {
 
     this.editForm.patchValue({
       id: req.uuid,
-      name: req.name,
+      // name: req.name,
       description: req.description
     });
   }
@@ -123,7 +122,7 @@ export class CreateTextComponent implements OnInit {
   private createFromForm(): any {
     return {
       uuid: this.editForm.get(['id']).value,
-      name: this.editForm.get(['name']).value,
+      // name: this.editForm.get(['name']).value,
       description: this.editForm.get(['description']).value,
       projectUuid: this.projectUid,
       serviceUUID: this.epic.serviceUUID,

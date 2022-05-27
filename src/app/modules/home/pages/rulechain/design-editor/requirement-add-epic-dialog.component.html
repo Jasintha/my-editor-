@@ -88,10 +88,10 @@
                 </div>
 
 
-                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px" style="margin-top: 10px">
+<!--                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px" style="margin-top: 10px">-->
 
-                    <button color="primary" mat-raised-button matStepperNext type="button">NEXT</button>
-                </div>
+<!--                    <button color="primary" mat-raised-button matStepperNext type="button">NEXT</button>-->
+<!--                </div>-->
             </mat-step>
 
 
@@ -108,9 +108,9 @@
 
 
 
-                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px" style="margin-top: 10px">
-                    <button color="primary" mat-raised-button matStepperNext type="button">NEXT</button>
-                </div>
+<!--                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px" style="margin-top: 10px">-->
+<!--                    <button color="primary" mat-raised-button matStepperNext type="button">NEXT</button>-->
+<!--                </div>-->
             </mat-step>
 
             <mat-step>
@@ -126,11 +126,6 @@
                     </ng-template>
                 </p-pickList>
 
-
-
-
-
-
                 <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px" style="margin-top: 10px">
                     <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
                     <button color="primary" mat-button matStepperPrevious type="submit" mat-raised-button [disabled]="editForm.invalid || isSaving">SAVE
@@ -144,14 +139,14 @@
 
     </mat-dialog-content>
     <div mat-dialog-actions fxLayoutAlign="end center">
-<!--        <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving"-->
-<!--                type="submit" cdkFocusInitial>-->
-<!--            Save-->
-<!--        </button>-->
-<!--        <button mat-button color="primary"-->
-<!--                type="button"-->
-<!--                mat-dialog-close>-->
-<!--            Cancel-->
-<!--        </button>-->
+        <button mat-button color="primary" (click)="goBack(stepper)" type="button" [disabled]="stepper.selectedIndex === 0">
+            PREVIOUS
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="goForward(stepper)" *ngIf="stepper.selectedIndex != 2">
+            NEXT
+        </button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || isSaving" (click)="goForward(stepper)" *ngIf="stepper.selectedIndex === 2">
+            SAVE
+        </button>
     </div>
 </form>
