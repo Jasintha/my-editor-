@@ -199,7 +199,7 @@
         <!--        </div>-->
     </div>
 
-    <div *ngIf="existingEpics.length != 0 && filteredStories.length == 0">
+    <div *ngIf="existingEpics.length != 0 && filteredStories.length == 0 && selectedEpic">
         <hr>
         <div class="col-12 d-flex justify-content-center">
             <button mat-raised-button style="top: -32px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
@@ -220,7 +220,8 @@
                         <!--            <a class="add-text" virtuan-click-stop-propagation (click)="addText(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Text</a>-->
                     </div>
                 </div>
-                <div class="col-12 d-flex justify-content-center" style="height: 20px;">
+                <div class="col-12 d-flex justify-content-center" style="height: 20px;" matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">
+                  <h5 style="bottom: 20px" class="txt-overflow">{{story.name}}</h5>
 <!--                    <div class="row pb-1">-->
 <!--                        <div class="col-6 d-flex justify-content-center align-item-center">-->
 <!--                            <div  matTooltip="{{story.storyTemplate}}" [matTooltipPosition]="toolTipPosition">-->
@@ -275,9 +276,6 @@
                         </button>
                     </div>
                 </div>
-                <div  class="col-3 justify-content-center"  matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">
-                    <h5 style="bottom: 20px" class="txt-overflow">{{story.name}}</h5>
-                </div>
                 <div class="col-3 justify-content-center">
                     <mat-form-field class="flex-auto" style="width: 100%">
                         <mat-label>Progress</mat-label>
@@ -288,7 +286,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-2 justify-content-center">
+                <div class="col-5 justify-content-center">
                     <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}'></mat-progress-bar>
                 </div>
                 <div class="bottom-req" >
