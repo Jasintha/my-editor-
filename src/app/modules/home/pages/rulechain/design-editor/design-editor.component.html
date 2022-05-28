@@ -12,7 +12,7 @@
             </li>
         </ol>
     </div>
-    <div id="requirements" class="row section border row-height" style="height: 108px">
+    <div id="requirements" class="row section border row-height" style="height: 120px">
         <div class="col-12 p-0">
             <div class="row">
 <!--                <div class="col-9 d-flex">-->
@@ -40,7 +40,7 @@
             <!--                <div class="col-11">-->
             <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="4" [circular]="true"    [ngClass]="{'carousel-next-hide': hideCarouselNext}" class="">
                 <ng-template let-req pTemplate="item">
-                    <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 75px" matTooltip="{{req?.name}}" (click)="clickReq(req)">
+                    <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="    height: 90px; width: 138px;" matTooltip="{{req?.name}}" (click)="clickReq(req)">
                         <h5 class="txt-overflow">{{req?.name}}</h5>
                         <a class="edit" (click)="editDialog(req?.uuid)"><i class="fa fa-pencil"
                                                                            aria-hidden="true"></i></a>
@@ -298,16 +298,17 @@
                  </div>
                 </div>
             </div>
-            <div id="stories" class="row section border row-color"  style="margin-left: 120px" *ngIf="story.storyTemplate === 'CREATE-TEXT' ">
-<!--                <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">-->
-<!--                    <div [innerHTML]="story.description"> </div>-->
-<!--                </div>-->
+            <div id="stories" class="row section border row-color wrap-text"  style="margin-left: 120px" *ngIf="story.storyTemplate === 'CREATE-TEXT' ">
+                <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
+                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                </div>
                 <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.description"
                           [style]="{'height':'120px', 'margin-top':'10px'}" [readonly]="true">
                     <p-header hidden>
                         <span class="ql-formats"></span>
                     </p-header>
                 </p-editor>
+
             </div>
         </ng-container>
         <!--        <div class="watermark" style="left: 88%;">-->
