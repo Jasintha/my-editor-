@@ -106,7 +106,7 @@ export class RequirementAddEpicDialogComponent implements OnInit {
       this.editForm.patchValue({
         epicCreateType:'new',
         name: epic.name,
-        description: '',
+        description: epic.requirements[0].description,
         reqdescription: '',
         epicselection: '',
         referencename: epic.referenceName
@@ -115,7 +115,7 @@ export class RequirementAddEpicDialogComponent implements OnInit {
       this.editForm.patchValue({
         epicCreateType:'existing',
         name: epic.name,
-        description: '',
+        description: epic.requirements[0].description,
         reqdescription: '',
         epicselection: '',
       })
