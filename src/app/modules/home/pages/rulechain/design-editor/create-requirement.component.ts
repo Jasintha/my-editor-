@@ -108,6 +108,9 @@ export class CreateRequirementComponent implements OnInit {
       name: req.name,
       description: req.description
     });
+    if (req.tags){
+      this.tags = req.tags;
+    }
   }
 
   previousState() {

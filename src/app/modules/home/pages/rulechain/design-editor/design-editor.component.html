@@ -42,7 +42,7 @@
                 <ng-template let-req pTemplate="item">
                     <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="    height: 90px; width: 138px;" matTooltip="{{req?.name}}" (click)="clickReq(req)">
                         <h5 class="txt-overflow">{{req?.name}}</h5>
-                        <a class="edit" (click)="editDialog(req?.uuid)"><i class="fa fa-pencil"
+                        <a class="edit" (click)="editRequirement(req?.uuid)"><i class="fa fa-pencil"
                                                                            aria-hidden="true"></i></a>
                         <div class="inner-wrap">
                             <input type="text" placeholder="Title">

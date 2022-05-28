@@ -359,6 +359,20 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
     }
 
+    editRequirement(requuid){
+        const dialogRef = this.dialog.open(CreateRequirementComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: this.desprojectUid,
+                createStatus: 'Update',
+                uuid: requuid
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+        });
+    }
+
     editStory(reqId){
         const dialogRef = this.dialog.open(CreateStoryComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
