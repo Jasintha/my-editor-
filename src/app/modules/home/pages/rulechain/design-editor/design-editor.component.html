@@ -125,9 +125,9 @@
 
         <div class="col-9 pt-4">
             <p-carousel orientation="vertical" [value]="existingEpics" [numVisible]="4" [numScroll]="4" [circular]="true"    [ngClass]="{'carousel-next-hide': hideCarouselNext}" class="">
-                <ng-template let-epic pTemplate="body" let-index="rowIndex" >
+                <ng-template ngFor  let-epic [ngForOf]="existingEpics" pTemplate="body" let-index="index" >
                     <div class="wrap-epic"  (click)="filterEpic(epic, index)" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }" style="height: 55px" matTooltip="{{epic?.name}}">
-                        <a class="edit" (click)="editDialog(epic?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a class="edit" (click)="editEpics(epic)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                         <div class="d-flex justify-content-center">
                             <h5 class="txt-overflow-epic">{{epic?.name}}</h5>
                         </div>

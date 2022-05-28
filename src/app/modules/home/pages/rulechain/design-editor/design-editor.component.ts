@@ -345,13 +345,13 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     }
 
-    editDialog(reqId){
-        const dialogRef = this.dialog.open(CreateRequirementComponent, {
+    editEpics(epic){
+        const dialogRef = this.dialog.open(RequirementAddEpicDialogComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.desprojectUid,
-                uuid: reqId,
                 createStatus: 'Update',
+                epic
             }
         });
         dialogRef.afterClosed(

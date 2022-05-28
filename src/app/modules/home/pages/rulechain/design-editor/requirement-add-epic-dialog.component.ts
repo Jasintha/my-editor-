@@ -95,6 +95,31 @@ export class RequirementAddEpicDialogComponent implements OnInit {
     this.editForm.patchValue({
       reqdescription: this.reqdesc,
     });
+    if (this.data.createStatus === 'Update'){
+      this.updateEpic();
+    }
+  }
+
+  updateEpic(){
+    const epic = this.data.epic;
+    if (epic.referenceName){
+      this.editForm.patchValue({
+        epicCreateType:'new',
+        name: epic.name,
+        description: '',
+        reqdescription: '',
+        epicselection: '',
+        referencename: epic.referenceName
+      })
+    } else {
+      this.editForm.patchValue({
+        epicCreateType:'existing',
+        name: epic.name,
+        description: '',
+        reqdescription: '',
+        epicselection: '',
+      })
+    }
   }
 
   loadEpics() {
