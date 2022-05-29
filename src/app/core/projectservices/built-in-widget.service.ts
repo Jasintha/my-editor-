@@ -32,7 +32,7 @@ export class BuiltInWidgetService {
   public builtInWidgetEventsResourceUrl = '/api/editor/pages/built-in/page-template/events';
   public builtInWidgetActionTypesResourceUrl = '/api/editor/pages/built-in/page-template/action-types';
   public builtInWidgetNavigationParamsResourceUrl = '/api/editor/pages/built-in/page-navigation-params';
-  public builtInWidgetSourceTargetFormFieldsResourceUrl = '/api/editor/widgets/built-in/widget-source-target-fields';
+  public builtInWidgetSourceTargetFormFieldsResourceUrl = '/api/editor/widgets/built-in/page-source-target-fields';
   public builtInWidgetUpdateFormFieldsResourceUrl = '/api/editor/widgets/built-in/widget-form-configs';
   public builtInWidgetstatusChangeCheckResourceUrl = '/api/editor/pages/built-in/statuschange/check';
   public builtInWidgetDisablestatusChangeConfirmedResourceUrl = '/api/editor/pages/built-in/statusdisabled/confirmed';

@@ -41,6 +41,7 @@ export interface IPage {
   isHomepage?: boolean;
   pageViewType?: string;
   pageGrid?: any;
+  apiDataArray?: any;
 }
 
 export class Page implements IPage {
@@ -78,6 +79,7 @@ export class Page implements IPage {
     public pagestyle?: string,
     public isHomepage?: boolean,
     public pageViewType?: string,
-    public pageGrid?: any
+    public pageGrid?: any,
+    public apiDataArray? : any,
   ) {}
 }

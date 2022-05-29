@@ -80,7 +80,6 @@ export class CustomPageApiDialogComponent implements OnInit {
 
     apiStyleTypeItems: Item[] = [
         { label: 'REST', value: 'REST' },
-        { label: 'GRPC', value: 'GRPC' },
     ];
 
     displayedColumns: string[] = ['name', 'datatype', 'param', 'actions'];
@@ -973,10 +972,6 @@ export class CustomPageApiDialogComponent implements OnInit {
         } else {
             if (apiType === 'API') {
                  api = this.createFromForm();
-            } else if (apiType === 'COMMAND') {
-                api = this.createCommandFromForm();
-            } else if (apiType === 'QUERY') {
-                 api = this.createQueryFromForm();
             } else if (apiType === 'FILE_UPLOAD') {
                  api = this.createFileUploadFromForm();
             } else if (apiType === 'FILE_DOWNLOAD') {
@@ -984,79 +979,6 @@ export class CustomPageApiDialogComponent implements OnInit {
             }
         }
         this.dialogRef.close(api);
-    }
-
-    private createCommandFromForm(): ICommand {
-        // let enableSecurity: boolean = false;
-        // if (this.projectSecurity) {
-        const enableSecurity = this.form.get(['enableSecurity']).value;
-        // } else {
-        // enableSecurity = false;
-        // }
-
-        const apiStyleType = this.form.get(['apiStyleType']).value;
-        let grpcMethod = '';
-
-        if (apiStyleType === 'GRPC') {
-            grpcMethod = this.form.get(['grpcMethod']).value;
-        }
-
-        const apiData = {
-            ...new Command(),
-            uuid: this.form.get(['id']).value,
-            grpcMethod,
-            operationType: this.form.get(['operationType']).value,
-            event: this.form.get(['selectedEvent']).value,
-            name: this.form.get(['name']).value,
-            description: this.form.get(['description']).value,
-            projectUuid: this.projectUid,
-            resourcePath: this.form.get(['resourcePath']).value,
-            apiStyleType: this.form.get(['apiStyleType']).value,
-            enableSecurity,
-            subruleMapping: this.worlflowMappings,
-            createWorkflow: this.form.get(['createWorkflow']).value,
-        };
-        if (!this.form.get(['createWorkflow']).value && this.form.get(['selectedSubrule']).value) {
-            apiData.subruleuuid = this.form.get(['selectedSubrule']).value.uuid;
-        }
-        return apiData;
-    }
-
-    private createQueryFromForm(): IQuery {
-        // let enableSecurity: boolean = false;
-        // if (this.projectSecurity) {
-        const enableSecurity = this.form.get(['enableSecurity']).value;
-        // } else {
-        // enableSecurity = false;
-        // }
-
-        const apiStyleType = this.form.get(['apiStyleType']).value;
-        let grpcMethod = '';
-
-        if (apiStyleType === 'GRPC') {
-            grpcMethod = this.form.get(['grpcMethod']).value;
-        }
-
-        const apiData = {
-            ...new Query(),
-            uuid: this.form.get(['id']).value,
-            grpcMethod,
-            params: this.apiParams,
-            viewmodel: this.form.get(['selectedViewmodel']).value,
-            name: this.form.get(['name']).value,
-            description: this.form.get(['description']).value,
-            projectUuid: this.projectUid,
-            returnRecordType: this.form.get(['returnRecordType']).value,
-            resourcePath: this.form.get(['resourcePath']).value,
-            apiStyleType: this.form.get(['apiStyleType']).value,
-            enableSecurity,
-            subruleMapping: this.worlflowMappings,
-            createWorkflow: this.form.get(['createWorkflow']).value,
-        };
-        if (!this.form.get(['createWorkflow']).value && this.form.get(['selectedSubrule']).value) {
-            apiData.subruleuuid = this.form.get(['selectedSubrule']).value.uuid;
-        }
-        return apiData;
     }
 
     private createFromForm(): IApi {
