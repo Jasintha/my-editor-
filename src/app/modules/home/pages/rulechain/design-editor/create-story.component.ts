@@ -35,6 +35,7 @@ export class CreateStoryComponent implements OnInit {
   existingTemplates: any;
   stories: any[];
   selectedLabel = '';
+  descriptions: string;
 
   buildEventForm() {
     this.editForm = this.fb.group({
@@ -56,7 +57,8 @@ export class CreateStoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStoryData();
-    this.epic = this.data.epic
+    this.epic = this.data.epic;
+    this.descriptions = this.epic.requirements[0].description;
   }
 
   // ngOnChanges(changes: SimpleChanges) {

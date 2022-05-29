@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { createRequestOption } from '@shared/util/request-util';
@@ -115,5 +115,9 @@ export class RequirementService {
     return this.http.put<IRequirement>(`${this.requirementEnablestatusChangeConfirmedResourceUrl}/${uuid}/${id}`, id, {
       observe: 'response',
     });
+  }
+
+  findAIDescription(des): Observable<HttpResponse<any>>{
+    return this.http.post<any>(`http://140.82.12.61/nlpp`, des,  {headers : new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }) , observe: 'response'}  );
   }
 }

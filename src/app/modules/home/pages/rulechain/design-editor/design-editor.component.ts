@@ -161,6 +161,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.reqCount = this.reqArray.length;
         this.hideCarouselNext = this.reqCount < 5;
         this.reloadView();
+        this.loadReq();
     }
 
     reloadView() {
@@ -248,6 +249,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.storyLevel = false;
         this.currentReq = req;
         this.reloadView();
+        this.loadReq();
     }
 
     filterEpic(epic, index){

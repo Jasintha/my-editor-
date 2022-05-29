@@ -913,3 +913,18 @@
         display :none;
     }
 }
+
+.text-des-overflow{
+    overflow-y: auto;
+    white-space: nowrap;
+    width: 820px;
+    text-align: center;
+    padding-left: 10px;
+}
+
+.inner-html-des{
+    height:120px;
+    margin-top: 10px;
+    width: 800px;
+    overflow: auto;
+}

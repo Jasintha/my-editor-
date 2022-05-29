@@ -95,6 +95,7 @@ export class RequirementAddEpicDialogComponent implements OnInit {
     this.editForm.patchValue({
       reqdescription: this.reqdesc,
     });
+    this.loadAIDes();
     if (this.data.createStatus === 'Update'){
       this.updateEpic();
     }
@@ -120,6 +121,22 @@ export class RequirementAddEpicDialogComponent implements OnInit {
         epicselection: '',
       })
     }
+  }
+
+  loadAIDes(){
+    const des = this.data.reqdesc;
+    this.requirementService
+        .findAIDescription(des)
+        .pipe(
+            filter((res: HttpResponse<any[]>) => res.ok),
+            map((res: HttpResponse<any[]>) => res.body)
+        )
+        .subscribe(
+            (res: any[]) => {
+
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
   }
 
   loadEpics() {
