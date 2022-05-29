@@ -22,7 +22,7 @@ import {IPageApi} from '@home/pages/aggregate/microservice-add-model-constraints
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IHybridfunction} from '@shared/models/model/hybridfunction.model';
-import {IApi} from '@shared/models/model/microservice-api.model';
+import {Api, IApi} from '@shared/models/model/microservice-api.model';
 import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateModelComponent} from '@home/pages/create-model/create-model.component';
@@ -563,35 +563,21 @@ export class CustomPageViewComponent implements OnDestroy , OnChanges{
         // });
     }
 
-    onChangeMicroserviceAPI() {
-        const microservice = this.editForm.get(['microservice']).value;
-        const api = this.editForm.get(['api']).value;
-        if (api && api.api) {
-            const apiStart: boolean = api.api.resourcePath.startsWith('/');
-            let suggestedPath = '';
-            if (apiStart) {
-                suggestedPath = '/' + microservice.name + '/api' + api.api.resourcePath;
-            } else {
-                suggestedPath = '/' + microservice.name + '/api/' + api.api.resourcePath;
-            }
 
-            this.editForm.get('resourcePath').patchValue(suggestedPath, { emitEvent: true });
-        }
-    }
 
     onChangeAioTableMicroserviceAPI() {
         const microservice = this.editForm.get(['aiomicroservice']).value;
         const api = this.editForm.get(['aioapi']).value;
-        if (api && api.api) {
-            const apiStart: boolean = api.api.resourcePath.startsWith('/');
+        if (api) {
+            const apiStart: boolean = api.resourcePath.startsWith('/');
             let suggestedPath = '';
             if (apiStart) {
-                suggestedPath = '/' + microservice.name + '/api' + api.api.resourcePath;
+                suggestedPath = '/' + microservice.name + '/api' + api.resourcePath;
             } else {
-                suggestedPath = '/' + microservice.name + '/api/' + api.api.resourcePath;
+                suggestedPath = '/' + microservice.name + '/api/' + api.resourcePath;
             }
-            if (api.api.apiJson && api.api.apiJson.operation) {
-                const op = api.api.apiJson.operation;
+            if (api.operation) {
+                const op = api.operation;
                 if (op === 'CREATE' || op === 'UPDATE' || op === 'FIND' || op === 'DELETE') {
                     this.editForm.get('apiOperation').patchValue(op, { emitEvent: true });
                 }
@@ -605,46 +591,6 @@ export class CustomPageViewComponent implements OnDestroy , OnChanges{
         this.panelItems = [];
     }
 
-    onChangeMicroserviceProject() {
-        this.apiItems = [];
-        const microservice = this.editForm.get(['microservice']).value;
-        this.editForm.get('resourcePath').patchValue('', { emitEvent: true });
-        this.editForm.get('api').patchValue([], { emitEvent: true });
-
-        if (microservice.microserviceApis) {
-            for (let i = 0; i < microservice.microserviceApis.length; i++) {
-                const apiObj: IPageApi = {
-                    apiType: 'API',
-                    api: microservice.microserviceApis[i],
-                };
-                const dropdownLabel = microservice.microserviceApis[i].name;
-                this.apiItems.push({ label: dropdownLabel, value: apiObj });
-            }
-        }
-
-        if (microservice.commands) {
-            for (let i = 0; i < microservice.commands.length; i++) {
-                const commandObj: IPageApi = {
-                    apiType: 'COMMAND',
-                    api: microservice.commands[i],
-                };
-                const dropdownLabel = microservice.commands[i].name;
-                this.apiItems.push({ label: dropdownLabel, value: commandObj });
-            }
-        }
-
-        if (microservice.queries) {
-            for (let i = 0; i < microservice.queries.length; i++) {
-                const queryObj: IPageApi = {
-                    apiType: 'QUERY',
-                    api: microservice.queries[i],
-                };
-                const dropdownLabel = microservice.queries[i].name;
-                this.apiItems.push({ label: dropdownLabel, value: queryObj });
-            }
-        }
-    }
-
     onChangeAioTableMicroserviceProject() {
         this.apiItems = [];
         const microservice = this.editForm.get(['aiomicroservice']).value;
@@ -654,34 +600,21 @@ export class CustomPageViewComponent implements OnDestroy , OnChanges{
 
         if (microservice.microserviceApis) {
             for (let i = 0; i < microservice.microserviceApis.length; i++) {
-                const apiObj: IPageApi = {
-                    apiType: 'API',
-                    api: microservice.microserviceApis[i],
+                const apiData = {
+                    ...new Api(),
+                    uuid: microservice.microserviceApis[i].uuid,
+                    type: 'API',
+                    name: microservice.microserviceApis[i].name,
+                    aPIInputs: microservice.microserviceApis[i].apiJson.aPIInputs,
+                    params: microservice.microserviceApis[i].apiJson.params,
+                    returnRecordType: microservice.microserviceApis[i].apiJson.returnRecordType,
+                    returnObj: microservice.microserviceApis[i].apiJson.returnObj,
+                    operation: microservice.microserviceApis[i].apiJson.operation,
+                    resourcePath: microservice.microserviceApis[i].resourcePath,
+                    apiStyleType: microservice.microserviceApis[i].apiStyleType,
                 };
                 const dropdownLabel = microservice.microserviceApis[i].name;
-                this.apiItems.push({ label: dropdownLabel, value: apiObj });
-            }
-        }
-
-        if (microservice.commands) {
-            for (let i = 0; i < microservice.commands.length; i++) {
-                const commandObj: IPageApi = {
-                    apiType: 'COMMAND',
-                    api: microservice.commands[i],
-                };
-                const dropdownLabel = microservice.commands[i].name;
-                this.apiItems.push({ label: dropdownLabel, value: commandObj });
-            }
-        }
-
-        if (microservice.queries) {
-            for (let i = 0; i < microservice.queries.length; i++) {
-                const queryObj: IPageApi = {
-                    apiType: 'QUERY',
-                    api: microservice.queries[i],
-                };
-                const dropdownLabel = microservice.queries[i].name;
-                this.apiItems.push({ label: dropdownLabel, value: queryObj });
+                this.apiItems.push({ label: dropdownLabel, value: apiData });
             }
         }
     }
@@ -769,14 +702,6 @@ export class CustomPageViewComponent implements OnDestroy , OnChanges{
             });
         }
         if (this.project.apptypesID === 'task.ui') {
-            if (builtInPage.pagetemplate === 'register-page') {
-                this.pageTemplateItems.push({ label: 'Register Page', value: 'register-page' });
-            } else if (builtInPage.pagetemplate === 'login-page') {
-                this.pageTemplateItems.push({ label: 'Login Page', value: 'login-page' });
-                if (builtInPage.loginParams) {
-                    this.loginParams = builtInPage.loginParams;
-                }
-            }
             if (builtInPage.pagetemplate !== 'aio-table' && builtInPage.pagetemplate !== 'aio-grid' && builtInPage.params) {
                 if (builtInPage.params) {
                     this.apiParams = builtInPage.params;
@@ -802,14 +727,8 @@ export class CustomPageViewComponent implements OnDestroy , OnChanges{
                 projectUuid: this.projectUid,
                 isHomepage: builtInPage.isHomepage,
             });
-            if (builtInPage && builtInPage.stepHeaders && builtInPage.stepHeaders.length > 0) {
-                this.wizardDetailsGroup.removeAt(0);
-                for (const steph of builtInPage.stepHeaders) {
-                    this.insertWizardDetailsGroup(steph.stepHeader);
-                }
-            }
-            if (builtInPage && builtInPage.stepMappings && builtInPage.stepMappings.length > 0) {
-                this.stepFieldArr = builtInPage.stepMappings;
+            for(const api of builtInPage.apiDataArray) {
+                this.updateApiTable(api, api.operation, api.resourcePath);
             }
             this.pageTitle = builtInPage.pagetitle;
         }
@@ -877,16 +796,16 @@ export class CustomPageViewComponent implements OnDestroy , OnChanges{
                 pagetype: 'api-page',
                 params: this.apiParams,
                 loginParams: this.loginParams,
-                apiResourceDetails: this.apiResourceDetails,
                 dashboardPanelDetails: this.dashboardPanelDetails,
                 //   operation: this.editForm.get(['operation']).value,
                 resourcePath: this.editForm.get(['resourcePath']).value,
                 status: 'ENABLED',
                 projectUuid: this.projectUid,
                 pagestyle: this.pagestyle,
-                pageViewType: 'singleWidget',
+                pageViewType: 'customPage',
                 authority: this.editForm.get(['authority']).value,
                 isHomepage: this.editForm.get(['isHomepage']).value,
+                apiDataArray: this.apiResourceDetails,
             };
         }
     }
@@ -1059,79 +978,6 @@ export class CustomPageViewComponent implements OnDestroy , OnChanges{
         }
     }
 
-    addFieldsToSteps() {
-        const field = this.editForm.get(['fieldName']).value;
-        let stepHeader = '';
-        let stepId = 0;
-        if (this.editForm.get(['stepHeader']).value) {
-            stepId = parseInt(this.editForm.get(['stepHeader']).value.split('-')[0]);
-            stepHeader = this.editForm.get(['stepHeader']).value.split('-')[1];
-        }
-
-        if (!field || !stepId) {
-            // this.messageService.add({
-            //   severity: 'warn',
-            //   summary: 'Warn',
-            //   detail: 'Please fill all the fields',
-            // });
-        } else {
-            const stepField = {
-                field,
-                stepHeader,
-                stepId,
-            };
-            if (this.stepFieldArr.indexOf(stepField) === -1) {
-                this.stepFieldArr.push(stepField);
-                this.ELEMENT_DATA.push(stepField);
-                this.dataSourceWizard = new MatTableDataSource(this.ELEMENT_DATA);
-            }
-        }
-    }
-    removeWizardDetailsGroup(index: number) {
-        this.wizardDetailsGroup.removeAt(index);
-        this.getAllWizardSteps();
-    }
-    getAllWizardSteps() {
-        this.stepHeadersList = [];
-        const allStepControllers = this.wizardDetailsGroup.controls;
-        for (let i = 0; i < allStepControllers.length; i++) {
-            this.stepHeadersList.push({
-                label: allStepControllers[i].value.stepHeading,
-                value: allStepControllers[i].value.stepId + '-' + allStepControllers[i].value.stepHeading,
-            });
-        }
-    }
-
-    deleteFieldSteps(param) {
-        const indexnum = this.ELEMENT_DATA.indexOf(param);
-        this.ELEMENT_DATA.splice(indexnum, 1);
-        this.dataSourceAIOParam = new MatTableDataSource(this.ELEMENT_DATA);
-
-        const index = this.stepFieldArr.indexOf(param);
-        this.stepFieldArr.splice(index, 1);
-    }
-
-    get wizardDetailsGroup() {
-        return this.editForm.get('wizardDetailsGroup') as FormArray;
-    }
-
-    insertWizardDetailsGroup(stepH) {
-        this.stepIndexId = this.wizardDetailsGroup.length + 1;
-        // this.stepIndexId++;
-        this.wizardDetailsGroup.push(this.addWizardDetailsGroup(stepH));
-        this.getAllWizardSteps();
-    }
-
-    addWizardDetailsGroup(stepH): FormGroup {
-        let stepHeader = 'Step ' + this.stepIndexId;
-        if (stepH) {
-            stepHeader = stepH;
-        }
-        return new FormGroup({
-            stepHeading: new FormControl(stepHeader),
-            stepId: new FormControl(this.stepIndexId), // [TODO] should add validations
-        });
-    }
 
     onRowEditInit(car: Config) {
         this.clonedCars[car.property] = { ...car };
