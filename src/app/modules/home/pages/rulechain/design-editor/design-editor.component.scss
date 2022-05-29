@@ -26,7 +26,7 @@
             //}
         }
         #epics{
-            .wrap{
+            .wrap-epic{
                 border: solid 1px slateblue;
                 &.add{
                     //background-color: slateblue;
@@ -78,14 +78,13 @@
                 }
             }
             &::before{
-                content: "";
                 height: 60%;
                 border-top: 5px solid  orange;
             //    border-left: 5px solid orange;
             }
             &::after{
                 content: "";
-                height: 80%;
+                height: 65%;
                 border-left: 5px solid orange;
                 border-bottom: 5px solid orange;
             }
@@ -187,8 +186,10 @@
             }
             a.delete{
                 position: absolute;
-                top: -10px;
-                right: -10px;
+                top: 58px;
+                right: 6px;
+                width: 25px;
+                height: 22px;
                 font-size: 15px;
                 background: #dc3545;
                 padding: 0 6px;
@@ -200,7 +201,100 @@
             }
             a.assign{
                 position: absolute;
-                top: -10px;
+                top: 3px;
+                right: 6px;
+                width: 25px;
+                height: 22px;
+                font-size: 15px;
+                background: #8bc34a;
+                padding: 0 6px;
+                border-radius: 5px;
+                color: white;
+                visibility: hidden;
+                opacity: 0;
+                transition: visibility 0s, opacity 0.2s linear;
+            }
+            h3{
+                text-align: center;
+                position: relative;
+            }
+            a.edit{
+                position: absolute;
+                top: 31px;
+                right: 6px;
+                width: 25px;
+                height: 22px;
+                font-size: 13px;
+                padding: 2px 5px;
+                background: #007bff;
+                color: white;
+                border-radius: 5px;
+                visibility: hidden;
+                opacity: 0;
+                transition: visibility 0s, opacity 0.2s linear;
+            }
+            .inner-wrap{
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            &.add{
+                border: none;
+                display: flex;
+                flex-direction: column;
+                // height: 100%;
+                justify-content: space-around;
+                // background-color: #deaa0b;
+                align-items: center;
+                padding: 10px;
+            }
+            .inner-wrap{
+                display: none;
+            }
+            &:hover{
+                cursor: pointer;
+                .edit{
+                    visibility: visible;
+                    opacity: 1;
+                }
+                .delete{
+                    visibility: visible;
+                    opacity: 1;
+                }
+                .assign{
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
+        }
+        .wrap-epic{
+            border-radius: 10px;
+            padding: 2px;
+            border: solid 1px #deaa0b;
+            margin-bottom: 20px;
+            position: relative;
+            text-align: center;
+            margin-left: 10px;
+            h3, input, select, textarea{
+                width: 100%;
+            }
+            a.delete{
+                position: absolute;
+                top: 4px;
+                right: 4px;
+                font-size: 15px;
+                background: #dc3545;
+                padding: 0 6px;
+                border-radius: 5px;
+                color: white;
+                visibility: hidden;
+                opacity: 0;
+                transition: visibility 0s, opacity 0.2s linear;
+            }
+            a.assign{
+                position: absolute;
+                top: 4px;
                 right: 70px;
                 font-size: 15px;
                 background: #8bc34a;
@@ -217,8 +311,8 @@
             }
             a.edit{
                 position: absolute;
-                top: -10px;
-                right: 30px;
+                top: 4px;
+                right: 36px;
                 font-size: 13px;
                 padding: 2px 5px;
                 background: #007bff;
@@ -472,9 +566,20 @@
 }
 
 .txt-overflow{
+    height: 20px;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 110px;
+    overflow: hidden;
+    text-align: center;
+    padding-left: 10px;
+}
+
+.txt-overflow-epic{
+    height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 436px;
     overflow: hidden;
     text-align: center;
     padding-left: 10px;
@@ -735,19 +840,45 @@
 
 }
 
+.wrap-text{
+    .delete{
+        top: 22px;
+        z-index: 1;
+        height: 20px;
+        right: 25px;
+        position: absolute;
+        font-size: 15px;
+        background: #dc3545;
+        padding: 0 6px;
+        border-radius: 5px;
+        color: white;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    &:hover{
+        cursor: pointer;
+        .delete{
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+
+}
+
 .row-height {
     height: 230px;
 }
 
 .epics-arrow {
-    width: 35px;
-    height: 25px;
-    margin-top: 19px;
+    width: 16px;
+    height: 21px;
+    margin-top: -7px
 }
 
 .add-req-block {
     height: 75px;
-    margin-bottom: 53px !important;
+    margin-bottom: 24px !important;
 }
 
 .bottom-req{
@@ -774,5 +905,11 @@
             visibility: visible;
             opacity: 1;
         }
+    }
+}
+
+.story-text{
+    .ql-toolbar.ql-snow{
+        display :none;
     }
 }

@@ -5,7 +5,7 @@
   <mat-error *ngIf="screenNodeConfigFormGroup.controls.screenName.hasError('required')">This field is required</mat-error>
  </mat-form-field>
 
- <p-carousel [value]="pageTemplateItems" [numVisible]="3" [numScroll]="3" [circular]="false">
+ <p-carousel [value]="pageTemplateItems" [numVisible]="3" [numScroll]="3" [circular]="true">
   <ng-template let-template pTemplate="item">
    <div class="product-item" >
     <div class="product-item-content" >

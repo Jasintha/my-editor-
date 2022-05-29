@@ -259,7 +259,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.filteredStories = [];
         this.resetRuleEditorValues();
         for (let i = 0; i < this.existingEpics.length; i++) {
-            if(i === index){
+            if(this.existingEpics[i].uuid === epic.uuid){
                 this.existingEpics[i].selected = true;
             } else {
                 this.existingEpics[i].selected = false;
@@ -345,13 +345,27 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     }
 
-    editDialog(reqId){
+    editEpics(epic){
+        const dialogRef = this.dialog.open(RequirementAddEpicDialogComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: this.desprojectUid,
+                createStatus: 'Update',
+                epic
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+        });
+    }
+
+    editRequirement(requuid){
         const dialogRef = this.dialog.open(CreateRequirementComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.desprojectUid,
-                uuid: reqId,
                 createStatus: 'Update',
+                uuid: requuid
             }
         });
         dialogRef.afterClosed(

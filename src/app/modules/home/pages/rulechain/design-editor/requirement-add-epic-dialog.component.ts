@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import {AggregateService} from '@core/projectservices/microservice-aggregate.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
@@ -15,6 +15,8 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IApi} from '@shared/models/model/microservice-api.model';
 import {IFormField} from '@shared/models/model/form-field.model';
+import {MatStepper} from '@angular/material/stepper';
+
 interface Item {
   value: any;
   label: string;
@@ -36,6 +38,9 @@ export class RequirementAddEpicDialogComponent implements OnInit {
   sourceProperties: [];
   targetProperties: [];
 
+  @ViewChild('stepper') private myStepper: MatStepper;
+  totalStepsCount: number;
+
   buildEventForm() {
     this.editForm = this.fb.group({
         epicCreateType: ['new', [Validators.required]],
@@ -53,6 +58,8 @@ export class RequirementAddEpicDialogComponent implements OnInit {
       public dialogRef: MatDialogRef<RequirementAddEpicDialogComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {}
+
+
 
   enableEdit(){
     this.disable = !this.disable;
@@ -88,6 +95,31 @@ export class RequirementAddEpicDialogComponent implements OnInit {
     this.editForm.patchValue({
       reqdescription: this.reqdesc,
     });
+    if (this.data.createStatus === 'Update'){
+      this.updateEpic();
+    }
+  }
+
+  updateEpic(){
+    const epic = this.data.epic;
+    if (epic.referenceName){
+      this.editForm.patchValue({
+        epicCreateType:'new',
+        name: epic.name,
+        description: epic.requirements[0].description,
+        reqdescription: '',
+        epicselection: '',
+        referencename: epic.referenceName
+      })
+    } else {
+      this.editForm.patchValue({
+        epicCreateType:'existing',
+        name: epic.name,
+        description: epic.requirements[0].description,
+        reqdescription: '',
+        epicselection: '',
+      })
+    }
   }
 
   loadEpics() {
@@ -177,6 +209,17 @@ export class RequirementAddEpicDialogComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     // this.logger.error(errorMessage);
+  }
+
+  ngAfterViewInit() {
+    this.totalStepsCount = this.myStepper._steps.length;
+  }
+
+  goBack(stepper: MatStepper) {
+    stepper.previous();
+  }
+  goForward(stepper: MatStepper) {
+    stepper.next();
   }
 
 }

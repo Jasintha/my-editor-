@@ -95,6 +95,7 @@ import { ChartsModule } from 'ng2-charts';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatStepperModule} from '@angular/material/stepper';
 import { PickListModule } from 'primeng/picklist';
+import {TabPageComponent} from '@home/pages/built-in-page/tab-page.component';
 
 
 @NgModule({
@@ -120,6 +121,7 @@ import { PickListModule } from 'primeng/picklist';
       EditEpicComponent,
     DeleteDesignComponent,
       EnvSelectComponent,
+      TabPageComponent
   ],
   providers: [
     {
