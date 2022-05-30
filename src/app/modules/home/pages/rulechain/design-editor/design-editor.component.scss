@@ -585,13 +585,14 @@
 }
 
 .txt-overflow-epic{
-    height: 20px;
+    height: 40px;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 436px;
     overflow: hidden;
     text-align: center;
     padding-left: 10px;
+    padding-top: 13px;
 }
 .watermark {
     z-index: 99;
@@ -745,6 +746,12 @@
     }
 }
 
+.carousel-next-hide-epic {
+    .ui-carousel-next  {
+        display: none !important;
+    }
+}
+
 .wrap-story-add{
     .add-req{
         align-items: center;
@@ -816,7 +823,7 @@
     .delete{
         top: 22px;
         height: 20px;
-        right: 25px;
+        right: 12px;
         position: absolute;
         font-size: 15px;
         background: #dc3545;
@@ -827,6 +834,10 @@
         opacity: 0;
     }
 
+    .swagger-link{
+        visibility: hidden;
+    }
+
     &:hover{
         cursor: pointer;
         .edit-icon{
@@ -834,6 +845,10 @@
             opacity: 1;
         }
         .delete{
+            visibility: visible;
+            opacity: 1;
+        }
+        .swagger-link{
             visibility: visible;
             opacity: 1;
         }

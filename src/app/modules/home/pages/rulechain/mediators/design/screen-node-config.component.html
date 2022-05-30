@@ -10,22 +10,28 @@
    <div class="product-item" >
     <div class="product-item-content" >
      <div class="mb-2" align="center" >
-      <img *ngIf="template == 'login-page'" class="product-image theme-page" width="200px"
+      <img *ngIf="template.value == 'login-page'" class="product-image theme-page" width="200px"
            src="/assets/images/pages/login.jpg"
            alt="Template">
       <img width="200px"
-              *ngIf="template == 'table-page' || template == 'aio-table'"
-              class="product-image theme-page" src="/assets/images/new_pages/table_page.png"
+              *ngIf="template.value == 'table-page' || template.value == 'aio-table'"
+              class="product-image theme-page" src="/assets/images/new_pages/table-page.png"
               alt="Template">
       <img width="200px"
-              *ngIf="template == 'form-page' || template == 'file-upload-page' || template == 'form-wizard-page'"
+              *ngIf="template.value == 'form-page' || template.value == 'file-upload-page' || template.value == 'form-wizard-page'"
               class="product-image theme-page" src="/assets/images/new_pages/form_page.png"
               alt="Template">
-      <img *ngIf="template == 'register-page'" width="200px"
+      <img *ngIf="template.value == 'register-page'" width="200px"
            class="product-image theme-page" src="/assets/images/pages/register.jpg"
            alt="Template">
-      <img *ngIf="template == 'aio-grid'" width="200px"
+      <img *ngIf="template.value == 'aio-grid'" width="200px"
            class="product-image theme-page" src="/assets/images/new_pages/grid_page.png"
+           alt="Template">
+      <img *ngIf="template.value == 'tab-page'" width="200px"
+           class="product-image theme-page" src="/assets/images/new_pages/grid_page.png"
+           alt="Template">
+      <img *ngIf="template.value == 'filter-page'" width="200px"
+           class="product-image theme-page" src="/assets/images/new_pages/filter_page.png"
            alt="Template">
       <!--<img src="/content/images/theme/{{product.themestyle}}.png" [alt]="product.name" class="product-image" />-->
      </div>
@@ -33,7 +39,7 @@
       <!--<h4 class="mb-1">{{product.name}}</h4>-->
       <div style="margin-top: 15px;" align="center">
        <p-radioButton name="screenselection"
-                      [value]="template" label="{{template}}" formControlName="screenTemplate"  (onClick)="onScreenTypeChanged()"></p-radioButton>
+                      [value]="template.value" label="{{template.label}}" formControlName="screenTemplate"  (onClick)="onScreenTypeChanged()"></p-radioButton>
 
       </div>
      </div>
