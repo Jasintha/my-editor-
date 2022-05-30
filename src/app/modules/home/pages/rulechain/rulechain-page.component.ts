@@ -454,7 +454,7 @@ export class RuleChainPageComponent extends PageComponent
     }
 
     if(this.ruleChainMetaData){
-    this.ruleType = this.ruleChainMetaData.name;
+    this.ruleType = this.ruleChainMetaData.ruleType;
     this.ruleInputs = this.ruleChainMetaData.ruleInputs;
     this.ruleReturn = this.ruleChainMetaData.ruleReturn;
     this.name = this.ruleChainMetaData.name;
@@ -1863,7 +1863,7 @@ export class RuleChainPageComponent extends PageComponent
 
       this.ruleChainService.saveAndGetResolvedRuleChainMetadata(ruleChainMetaData, this.username, this.uid).subscribe((savedRuleChainMetaData) => {
         this.ruleChainMetaData = savedRuleChainMetaData;
-        this.ruleType = this.ruleChainMetaData.name;
+        this.ruleType = this.ruleChainMetaData.ruleType;
         this.ruleInputs = this.ruleChainMetaData.ruleInputs;
         this.ruleReturn = this.ruleChainMetaData.ruleReturn;
         this.name = this.ruleChainMetaData.name;
