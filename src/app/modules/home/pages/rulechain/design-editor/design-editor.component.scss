@@ -566,13 +566,22 @@
 }
 
 .txt-overflow{
-    height: 20px;
+    height: 33px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 110px;
+    width: 164px;
     overflow: hidden;
     text-align: center;
     padding-left: 10px;
+}
+
+.txt-description{
+    text-align: justify;
+    display: -webkit-box;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .txt-overflow-epic{
@@ -694,7 +703,7 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    border-top: 4px solid white;
+    border-top: 4px solid #d3d3d3;
     border-right: 4px solid transparent;
     border-bottom: 4px solid transparent;
     border-left: 4px solid transparent;
@@ -702,17 +711,9 @@
     z-index: 9;
     top: -4px;
     left: -4px;
-    animation: rt 10s;
-    animation-duration: 2s;
+    animation: rt 3s;
 }
-.spinner-load:after {
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    border: 4px solid #009579;
-    position:relative;
-    z-index:1;
-}
+
 @keyframes rt{
     from{
         transform:rotate(0deg);
@@ -927,4 +928,9 @@
     margin-top: 10px;
     width: 800px;
     overflow: auto;
+}
+
+.line{
+    border-left: 1px solid black;
+    height: 5px;
 }

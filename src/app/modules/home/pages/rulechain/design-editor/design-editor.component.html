@@ -12,7 +12,7 @@
             </li>
         </ol>
     </div>
-    <div id="requirements" class="row section border row-height" style="height: 120px">
+    <div id="requirements" class="row section border row-height" style="height: 222px">
         <div class="col-12 p-0">
             <div class="row">
 <!--                <div class="col-9 d-flex">-->
@@ -27,38 +27,49 @@
 <!--                </div>-->
             </div>
         </div>
-        <div class="col-1">
+<!--        <div class="col-1">-->
 
-            <div class="wrap add-button add-req-block" (click)="createRequirement()">
-                <mat-icon class="material-icons add-icons"
-                          style="color: seagreen;margin-top: 18px">add
-                </mat-icon>
-            </div>
-        </div>
-        <div class="col-9">
+<!--            <div class="wrap add-button add-req-block" (click)="createRequirement()">-->
+<!--                <mat-icon class="material-icons add-icons"-->
+<!--                          style="color: seagreen;margin-top: 18px">add-->
+<!--                </mat-icon>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="col-7">
             <!--            <div class="row" style="padding-bottom: 30px;">-->
             <!--                <div class="col-11">-->
-            <p-carousel [value]="reqArray" [numVisible]="4" [numScroll]="4" [circular]="true"    [ngClass]="{'carousel-next-hide': hideCarouselNext}" class="">
+            <p-carousel [value]="reqArray" [numVisible]="1" [numScroll]="1" [circular]="true"    [ngClass]="{'carousel-next-hide': hideCarouselNext}" class="">
                 <ng-template let-req pTemplate="item">
-                    <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="    height: 90px; width: 138px;" matTooltip="{{req?.name}}" (click)="clickReq(req)">
-                        <h5 class="txt-overflow">{{req?.name}}</h5>
-                        <a class="edit" (click)="editRequirement(req?.uuid)"><i class="fa fa-pencil"
-                                                                           aria-hidden="true"></i></a>
-                        <div class="inner-wrap">
-                            <input type="text" placeholder="Title">
-                            <!--                                    <ul>-->
-                            <!--                                     <li *ngFor="let tag of req.tags"> {{tag}}</li>-->
-                            <!--                                    </ul>-->
-                            <textarea name="descripton" cols="" rows=""></textarea>
-                            <button>Submit</button>
+                    <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 200px;width: 331px;
+}" matTooltip="{{req?.name}}"  [matTooltipPosition]="'above'" (click)="clickReq(req)">
+                        <div class="row">
+                            <div class="col-4 d-flex justify-content-center align-items-center">
+                                <i class="fa fa-cogs" style="font-size: 25px; color: orange" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-8" style="display: flex; justify-content: start">
+                                <h4 class="txt-overflow" style="font-weight: 600;">{{req?.name}}</h4>
+                                <a class="edit" (click)="editRequirement(req?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <div class="inner-wrap">
+                                    <input type="text" placeholder="Title">
+                                    <textarea name="descripton" cols="" rows=""></textarea>
+                                    <button>Submit</button>
+                                </div>
+                                <a virtuan-click-stop-propagation class="delete" (click)="deleteDesign(req?.uuid,'requirement')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a virtuan-click-stop-propagation class="assign" (click)="assignRequirementToEpic(currentReq)"><i class="fa fa-link" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="col-12" style="display:flex; justify-content: center">
+                                <div style="height: 100px; width: 257px;" [matTooltipPosition]="'below'"  matTooltip="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor">
+                                    <h5 class="txt-description" style="font-weight: 100;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</h5>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h6 style="justify-content: start; display: flex; font-weight: 400; padding-left: 10px;">Mon May 30 2022</h6>
+                            </div>
                         </div>
-                        <a virtuan-click-stop-propagation class="delete" (click)="deleteDesign(req?.uuid,'requirement')"><i class="fa fa-trash"
-                                                                                             aria-hidden="true"></i></a>
-                        <a virtuan-click-stop-propagation class="assign" (click)="assignRequirementToEpic(currentReq)"><i class="fa fa-link" aria-hidden="true"></i></a>
                     </div>
-                    <div class="d-flex justify-content-center py-1" *ngIf="req.uuid === currentReq.uuid">
-                        <img src="/assets/images/arrow-up-black.png" class="epics-arrow">
-                    </div>
+<!--                    <div class="d-flex justify-content-center py-1" *ngIf="req.uuid === currentReq.uuid">-->
+<!--                        <img src="/assets/images/arrow-up-black.png" class="epics-arrow">-->
+<!--                    </div>-->
                     <!--                    <div class="add-icon">-->
                     <!--                        <mat-icon class="material-icons"-->
                     <!--                                  style="color: mediumseagreen; font-size: 50px;transform: rotate(180deg);"-->
@@ -81,23 +92,27 @@
 <!--                                            </div>-->
 <!--                    </div>-->
         </div>
-        <div class="col-2" style="justify-content: center; display: flex;padding-bottom: 26px;">
-            <div class="row">
-                <!-- <div class="col-12">
-                    <h1 style="color: #CDCDCD; font-size: 2rem">Requirements</h1>
-                </div> -->
-                <div class="col-12" style="display: flex; justify-content: center;">
-                    <div reqCounter class="counter-container content-center">
+        <div class="col-5" style="justify-content: end; display: flex;padding-bottom: 26px;">
+            <div class="row" tyle="display: flex; justify-content: end;">
+                 <div class="col-12">
+                     <div class="new" (click)="createRequirement()" style="display: flex; justify-content: end;">
+                         <button mat-flat-button disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer; margin-right: -17px; margin-bottom: 109px; height: 50px; ">
+                             <mat-icon style="font-size: 25px">add</mat-icon>
+                         </button>
+                     </div>
+                </div>
+                <div class="col-12" style="display: flex; justify-content: end;">
+                    <div reqCounter style="    bottom: 15px; right: 17px; position: absolute">
                         <p id="reqCounter" class="h2 text-secondary mb-0">{{reqCount}}</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 d-flex justify-content-start">
-            <!--            <div class="pb-1">-->
-            <!--                <img src="/assets/images/curved-up-arrow-green.png" style="width: 25px; height: 25px; margin-left: 95px;" >-->
-            <!--            </div>-->
-        </div>
+<!--        <div class="col-12 d-flex justify-content-start">-->
+<!--            &lt;!&ndash;            <div class="pb-1">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <img src="/assets/images/curved-up-arrow-green.png" style="width: 25px; height: 25px; margin-left: 95px;" >&ndash;&gt;-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--        </div>-->
     </div>
 
     <div  *ngIf="existingEpics.length === 0">
@@ -264,8 +279,7 @@
                 <!--                </div>-->
                 <div class="col-1">
                     <div id="generate">
-                        <!--                                <div (click)="generateStory(story)" [ngClass]="spinnerButton ? 'spinner spinner-load' : 'spinner'" style="background-color: #e0e0e0">-->
-                        <div class="spinner" (click)="generateStory(story)">
+                        <div [ngClass]="spinnerButton ? 'spinner spinner-load' : 'spinner'"  (click)="generateStory(story)">
                             <i class="fa fa-play" aria-hidden="true" style="color: #009579;"></i>
                         </div>
                     </div>
@@ -289,7 +303,13 @@
                     </mat-form-field>
                 </div>
                 <div class="col-5 justify-content-center">
-                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}'></mat-progress-bar>
+                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}' style="width: 300px; margin-left: 42px;"></mat-progress-bar>
+                    <div class="line" style="margin-left: 47px; margin-top: 5px;"></div>
+                    <h6 class="mt-0" style="position: absolute; right: 354px; font-size: 11px">SA</h6>
+                    <div class="line" style="position: absolute;margin-left: 183px; margin-top: -4px;"></div>
+                    <h6 class="mt-0" style="position: absolute; right: 207px; font-size: 11px">DESIP</h6>
+                    <div class="line" style="position: absolute;margin-left: 325px;margin-top: -4px;"></div>
+                    <h6 class="mt-0" style="position: absolute; right: 66px; font-size: 11px">DEVIP</h6>
                 </div>
                 <div class="bottom-req" >
                     <div class="col-12 d-flex justify-content-center add-req-bottom">
