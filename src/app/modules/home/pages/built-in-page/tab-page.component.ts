@@ -1,5 +1,5 @@
-import {Component, OnInit, OnDestroy, Input, SimpleChanges, OnChanges} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {BuiltInPageService} from '@core/projectservices/built-in-page.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProjectService} from '@core/projectservices/project.service';
@@ -11,22 +11,28 @@ import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 import {filter, map} from 'rxjs/operators';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {IPage} from '@shared/models/model/page.model';
+import {ITabbedPage, TabbedPage, TabPage} from '@shared/models/model/tab.page.model';
+import {ILamdafunction, Lamdafunction} from '@shared/models/model/lamdafunction.model';
+import {Observable} from 'rxjs';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
     selector: 'virtuan-tab-page-view',
     templateUrl: './tab-page.component.html',
     styleUrls: ['./built-in-page.component.scss'],
 })
-export class TabPageComponent implements OnDestroy, OnChanges {
+export class TabPageComponent implements OnDestroy, OnInit {
     @Input() projectUid: string;
     @Input() pageId: string;
-    tabs = ['Tab 1', 'Tab 2', 'Tab 3'];
+    tabPages = [new TabPage('','Tab 1')];
     selected = new FormControl();
     allpages = [];
     pages = [];
     editForm: FormGroup;
-    selectedTabName: string;
     tabName = new FormControl();
+    isSaving: boolean;
 
     buildNewForm() {
         this.editForm = this.fb.group({
@@ -47,13 +53,12 @@ export class TabPageComponent implements OnDestroy, OnChanges {
         private router: Router,
         protected pageConfigService: PageConfigService,
         public dialog: MatDialog,
-        private consoleLogService: ConsoleLogService
+        private consoleLogService: ConsoleLogService,
+        private spinnerService: NgxSpinnerService,
     ) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnInit() {
         this.buildNewForm();
-        const index = this.tabs[0];
-        this.tabName.setValue(index);
         if (this.projectUid) {
             this.pageService
                 .findBuiltInPagesForProjectId(this.projectUid, this.projectUid)
@@ -65,9 +70,6 @@ export class TabPageComponent implements OnDestroy, OnChanges {
                     (res: IPage[]) => {
                         this.allpages = res;
                         this.loadPages();
-                        // if (this.data.createStatus === 'Update') {
-                        //     this.loadUpdateForm();
-                        // }
                     },
                     (res: HttpErrorResponse) => this.onError(res.message)
                 );
@@ -75,12 +77,16 @@ export class TabPageComponent implements OnDestroy, OnChanges {
     }
 
     addTab() {
-        this.tabs.push('Tab '+ (this.tabs.length + 1));
-        this.selected.setValue(this.tabs.length - 1);
+        this.tabPages.push(new TabPage('','Tab '+ (this.tabPages.length + 1)));
+        this.selected.setValue(this.tabPages.length - 1);
+    }
+
+    onTabPageChange(index) {
+        this.tabPages[index].page = this.editForm.get(['page']).value;
     }
 
     removeTab(index: number) {
-        this.tabs.splice(index, 1);
+        this.tabPages.splice(index, 1);
     }
     ngOnDestroy() {
     }
@@ -95,17 +101,48 @@ export class TabPageComponent implements OnDestroy, OnChanges {
         // this.logger.error(errorMessage);
     }
 
-    save(){}
-
-    getSelectedIndex(val){
-        const index = this.tabs[val];
-        this.tabName.setValue(index);
-        this.selectedTabName = index;
+    save() {
+        this.spinnerService.show();
+        this.isSaving = true;
+        const tabbedPage = this.createFromForm();
+        if (tabbedPage.uuid) {
+            this.subscribeToSaveResponse(this.pageService.updateTabPage(tabbedPage, this.projectUid));
+        } else {
+            this.subscribeToSaveResponse(this.pageService.createTabPage(tabbedPage, this.projectUid));
+        }
     }
 
-    saveTabName(val){
-        const name = this.tabName.value;
-        this.tabs[val] = name;
+    protected subscribeToSaveResponse(result: Observable<HttpResponse<ILamdafunction>>) {
+        result.subscribe(
+            () => this.onSaveSuccess(),
+            () => this.onSaveError()
+        );
+    }
+
+    protected onSaveSuccess() {
+        this.spinnerService.hide();
+        this.isSaving = false;
+    }
+
+    protected onSaveError() {
+        this.spinnerService.hide();
+        this.isSaving = false;
+    }
+
+    private createFromForm(): ITabbedPage {
+        return {
+            ...new TabbedPage(),
+            tabPages: this.tabPages,
+        };
+    }
+
+    getSelectedIndex(index) {
+        const tab = this.tabPages[index];
+        this.tabName.setValue(tab.tabName);
+    }
+
+    saveTabName(index){
+        this.tabPages[index].tabName =  this.tabName.value;
     }
 
 }

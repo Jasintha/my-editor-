@@ -52,7 +52,7 @@
                         <img *ngIf="editForm.value.pagetemplate == 'aio-table'|| editForm.value.pagetemplate =='table-page'"
                              class="pageTmpImgInPage" src="../../../../../assets/images/pages/allinone.jpg"
                              alt="Template" style="width: 100%">
-                        <img *ngIf="editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'file-upload-page' || editForm.value.pagetemplate == 'form-wizard-page'"
+                        <img *ngIf="editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'static-page'  || editForm.value.pagetemplate == 'file-upload-page' || editForm.value.pagetemplate == 'form-wizard-page'"
                              class="pageTmpImgInPage" src="../../../../../assets/images/pages/form.jpg"
                              alt="Template" style="width: 100%">
                         <img *ngIf="editForm.value.pagetemplate == 'register-page'"
@@ -212,7 +212,7 @@
                         </div>-->
 
                         <div class="form-group"
-                             *ngIf="editForm.value.pagetemplate === 'table-page' || editForm.value.pagetemplate === 'form-page'|| editForm.value.pagetemplate === 'form-wizard-page' || editForm.value.pagetemplate === 'file-upload-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">
+                             *ngIf="editForm.value.pagetemplate === 'table-page' || editForm.value.pagetemplate === 'form-page' || editForm.value.pagetemplate == 'static-page'|| editForm.value.pagetemplate === 'form-wizard-page' || editForm.value.pagetemplate === 'file-upload-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">
                             <div class="row">
                                 <div class="col-12">
                                     <div *ngIf="project?.apptypesID === 'task.ui'" class="form-group"
@@ -437,7 +437,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="padding-top:20px;padding-bottom:20px;">
+                            <div style=" :20px;padding-bottom:20px;">
                                 <table mat-table matSort [dataSource]="dataSourceLogin"
                                        class="mat-elevation-z8 demo-table">
                                     <!-- Name Column -->
@@ -653,7 +653,7 @@
                                 Create Main Menu
                             </button>
                         </div>
-                        <div class="col-4">
+                        <div  *ngIf="editForm.value.pagetemplate == 'table-page'" class="col-4">
                             <button (click)="createPageNavigation()"
                                     color="primary"
                                     mat-raised-button
@@ -684,7 +684,7 @@
                                     <div class="col-md-2">
                                         <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div *ngIf="editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'form-wizard-page' || editForm.value.pagetemplate == 'register-page'" class="col-md-2">
                                         <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openPageControllerConfig()" cdkFocusInitial>Edit Form Controllers</button>
                                     </div>
                                 </div>

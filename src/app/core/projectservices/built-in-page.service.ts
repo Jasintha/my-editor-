@@ -10,6 +10,7 @@ import {IAggregate} from '@shared/models/model/aggregate.model';
 import {TreeNode} from 'primeng/api';
 import {createRequestOption} from '@shared/util/request-util';
 import {IWidget} from '@shared/models/model/widget.model';
+import {ITabbedPage} from '@shared/models/model/tab.page.model';
 
 
 
@@ -141,7 +142,15 @@ export class BuiltInPageService {
     return this.http.get(`${this.checkEntityNameAvailabilityURL}/${uuid}/${name}`, { observe: 'response' });
   }
 
-  // updatePageStyle(builtInPage: IPageStyle, pageid: string): Observable<EntityResponseType> {
+  createTabPage(tabbedPage: ITabbedPage, uuid: string): Observable<EntityResponseType> {
+    return this.http.post<IPage>(`${this.resourceUrl}/${uuid}`, tabbedPage, { observe: 'response' });
+  }
+
+  updateTabPage(tabbedPage: ITabbedPage, uuid: string): Observable<EntityResponseType> {
+    return this.http.put<IPage>(`${this.resourceUrl}/${uuid}`, tabbedPage, {observe: 'response'});
+  }
+
+    // updatePageStyle(builtInPage: IPageStyle, pageid: string): Observable<EntityResponseType> {
   //   return this.http.put<IPageStyle>(`${this.pageStyleUrl}/${pageid}`, builtInPage, { observe: 'response' });
   // }
   // createPageStyle(builtInPage: IPageStyle, pageid: string): Observable<EntityResponseType> {

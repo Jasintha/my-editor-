@@ -1,19 +1,6 @@
 <div class="container tab-container">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-        <!--    <mat-form-field appearance="fill">-->
-        <!--        <mat-label>Selected tab index</mat-label>-->
-        <!--        <input matInput type="number" [formControl]="selected">-->
-        <!--    </mat-form-field>-->
-
-
         <div class="button-row" style="float:right; margin: 5px" >
-<!--            <div class="example-button-container">-->
-<!--                <mat-form-field appearance="fill">-->
-<!--                    <mat-label>Selected tab index</mat-label>-->
-<!--                    <input matInput type="number" [formControl]="selected">-->
-<!--                </mat-form-field>-->
-<!--            </div>-->
-
             <div class="example-button-container">
                 <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon" (click)="addTab()">
                     <mat-icon>add</mat-icon>
@@ -21,15 +8,14 @@
             </div>
         </div>
 
-        <mat-tab-group [selectedIndex]="selected.value"
-                       (selectedIndexChange)="getSelectedIndex($event)">
-            <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+        <mat-tab-group  (selectedIndexChange)="getSelectedIndex($event)" [selectedIndex]="selected.value">
+            <mat-tab *ngFor="let tab of tabPages; let index = index" [label]="tab.tabName">
                 <!--            Contents for {{tab}} tab-->
                 <div  style="float: right">
                 <div class="col-4">
                     <button mat-raised-button color="warn"
                             class="example-delete-tab-button"
-                            [disabled]="tabs.length === 1"
+                            [disabled]="tabPages.length === 1"
                             (click)="removeTab(index)">
                         <mat-icon>delete</mat-icon>
                         Delete Tab
@@ -63,7 +49,7 @@
                     <div class="col-8">
                         <mat-form-field class="flex-auto" style="width: 100%">
                             <mat-label>Select Page</mat-label>
-                            <mat-select formControlName="page">
+                            <mat-select (selectionChange)="onTabPageChange(index)"  formControlName="page">
                                 <mat-option *ngFor="let option of pages" [value]="option.value">
                                     {{option.label}}
                                 </mat-option>

@@ -727,10 +727,12 @@ export class CustomPageViewComponent implements OnDestroy , OnChanges{
                 projectUuid: this.projectUid,
                 isHomepage: builtInPage.isHomepage,
             });
+            this.pageTitle = builtInPage.pagetitle;
+            if(builtInPage && builtInPage.apiDataArray) {
             for(const api of builtInPage.apiDataArray) {
                 this.updateApiTable(api, api.operation, api.resourcePath);
             }
-            this.pageTitle = builtInPage.pagetitle;
+            }
         }
         this.pagestyle = builtInPage.pagestyle;
     }
