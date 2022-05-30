@@ -7,6 +7,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { TreeNode, MenuItem } from 'primeng/api';
 import { AggregateService } from '@core/projectservices/microservice-aggregate.service';
+import {ProjectService} from '@core/projectservices/project.service';
 import { IProject } from '@app/shared/models/model/project.model';
 
 import {MatDialog} from '@angular/material/dialog';
@@ -46,6 +47,7 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
       // private spinnerService: NgxSpinnerService,
       // private modalService: NgbModal,
       protected aggregateService: AggregateService,
+      protected projectService: ProjectService,
       private snackBar: MatSnackBar
   ) {
     // this.toolbarTrackerService.setIsEntityPage('yes');
@@ -143,8 +145,8 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
   getProjectType() {
     console.log(this.projectUid)
     if (this.projectUid) {
-      this.aggregateService
-          .findp(this.projectUid)
+      this.projectService
+          .find(this.projectUid)
           .pipe(
               filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
               map((response: HttpResponse<IProject>) => response.body)

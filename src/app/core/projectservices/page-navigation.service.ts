@@ -10,8 +10,8 @@ type EntityArrayResponseType = HttpResponse<IPageNavigation[]>;
 
 @Injectable({ providedIn: 'root' })
 export class PageNavigationService {
-  public resourceUrl ='/api/editor/page-navigations';
-  public naviagationsForProjectresourceUrl ='/api/editor/page-navigations/project';
+  public resourceUrl ='/api/editor/proj/page-navigations';
+  public naviagationsForProjectresourceUrl ='/api/editor/proj/page-navigations/project';
 
   constructor(protected http: HttpClient) {}
 

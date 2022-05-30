@@ -11,12 +11,12 @@ type StringArrayResponseType = HttpResponse<string[]>;
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  public resourceUrl =  '/api/editor/tasks';
-  public upresourceUrl =  '/api/editor/uws/tasks';
-  public projectresourceUrl =  '/api/editor/tasks/project';
-  public maintaskprojectresourceUrl =  '/api/editor/tasks/main/project';
-  public taskDisablestatusChangeConfirmedResourceUrl =  '/api/editor/tasks/statuschange/disable';
-  public taskEnablestatusChangeConfirmedResourceUrl =  '/api/editor/tasks/statuschange/enable';
+  public resourceUrl =  '/api/editor/proj/tasks';
+  public upresourceUrl =  '/api/editor/proj/uws/tasks';
+  public projectresourceUrl =  '/api/editor/proj/tasks/project';
+  public maintaskprojectresourceUrl =  '/api/editor/proj/tasks/main/project';
+  public taskDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/tasks/statuschange/disable';
+  public taskEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/tasks/statuschange/enable';
 
   constructor(protected http: HttpClient) {}
 

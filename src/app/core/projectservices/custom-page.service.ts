@@ -11,9 +11,9 @@ type EntityArrayResponseType = HttpResponse<IPage[]>;
 
 @Injectable({ providedIn: 'root' })
 export class CustomPageService {
-  public resourceUrl =  '/api/editor/pages';
-  public customResourceUrl =  '/api/editor/pages/custom';
-  public customPagesForProjectResourceUrl =  '/api/editor/pages/custom/project';
+  public resourceUrl =  '/api/editor/proj/pages';
+  public customResourceUrl =  '/api/editor/proj/pages/custom';
+  public customPagesForProjectResourceUrl =  '/api/editor/proj/pages/custom/project';
 
   constructor(protected http: HttpClient) {}
 

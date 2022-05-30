@@ -11,11 +11,11 @@ type EntityArrayResponseType = HttpResponse<IApi[]>;
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  public resourceUrl =  '/api/editor/microservice-apis';
-  public commandresourceUrl =  '/api/editor/commands';
-  public queryresourceUrl =  '/api/editor/querys';
-  public apisForProjectResourceUrl =  '/api/editor/microservice-apis/project';
-  public allForProjectResourceUrl =  '/api/editor/microservice-apis/project/all';
+  public resourceUrl =  '/api/editor/proj/microservice-apis';
+  public commandresourceUrl =  '/api/editor/proj/commands';
+  public queryresourceUrl =  '/api/editor/proj/querys';
+  public apisForProjectResourceUrl =  '/api/editor/proj/microservice-apis/project';
+  public allForProjectResourceUrl =  '/api/editor/proj/microservice-apis/project/all';
 
   constructor(protected http: HttpClient) {}
 

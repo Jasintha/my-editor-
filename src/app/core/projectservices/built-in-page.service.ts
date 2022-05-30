@@ -24,24 +24,24 @@ type StringArrayResponseType = HttpResponse<string[]>;
 
 @Injectable({ providedIn: 'root' })
 export class BuiltInPageService {
-  public resourceUrl =  '/api/editor/pages';
-  public builtInResourceUrl =  '/api/editor/pages/built-in';
-  public builtInPagesForProjectResourceUrl =  '/api/editor/uws/pages/built-in/project';
-  public builtInPageEventsResourceUrl =  '/api/editor/pages/built-in/page-template/events';
-  public builtInPageActionTypesResourceUrl =  '/api/editor/pages/built-in/page-template/action-types';
-  public builtInPageNavigationParamsResourceUrl =  '/api/editor/pages/built-in/page-navigation-params';
-  public builtInPageSourceTargetFormFieldsResourceUrl =  '/api/editor/pages/built-in/page-source-target-fields';
-  public builtInPageUpdateFormFieldsResourceUrl =  '/api/editor/pages/built-in/page-form-configs';
-  public builtInPagestatusChangeCheckResourceUrl =  '/api/editor/pages/built-in/statuschange/check';
-  public builtInPageDisablestatusChangeConfirmedResourceUrl =  '/api/editor/pages/built-in/statusdisabled/confirmed';
-  public builtInPageEnablestatusChangeConfirmedResourceUrl =  '/api/editor/pages/built-in/statusenabled/confirmed';
-  public checkPageNameAvailabilityURL =  '/api/editor/pages/names';
-  public checkEntityNameAvailabilityURL =  '/api/editor/aggregates/names';
-  public widgetForProjectResourceUrl =  '/api/editor/uws/pages/widget/project';
-  public aggregateModelKeysResourceUrl =  '/api/editor/aggregates/keys';
-  public resourceAgrUrl =  '/api/editor/aggregates';
-  public designresourceUrl =  '/api/editor/aggregates/design';
-  public pageStyleUrl =  '/api/editor/pages/pagestyle';
+  public resourceUrl =  '/api/editor/proj/pages';
+  public builtInResourceUrl =  '/api/editor/proj/pages/built-in';
+  public builtInPagesForProjectResourceUrl =  '/api/editor/proj/uws/pages/built-in/project';
+  public builtInPageEventsResourceUrl =  '/api/editor/proj/pages/built-in/page-template/events';
+  public builtInPageActionTypesResourceUrl =  '/api/editor/proj/pages/built-in/page-template/action-types';
+  public builtInPageNavigationParamsResourceUrl =  '/api/editor/proj/pages/built-in/page-navigation-params';
+  public builtInPageSourceTargetFormFieldsResourceUrl =  '/api/editor/proj/pages/built-in/page-source-target-fields';
+  public builtInPageUpdateFormFieldsResourceUrl =  '/api/editor/proj/pages/built-in/page-form-configs';
+  public builtInPagestatusChangeCheckResourceUrl =  '/api/editor/proj/pages/built-in/statuschange/check';
+  public builtInPageDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/pages/built-in/statusdisabled/confirmed';
+  public builtInPageEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/pages/built-in/statusenabled/confirmed';
+  public checkPageNameAvailabilityURL =  '/api/editor/proj/pages/names';
+  public checkEntityNameAvailabilityURL =  '/api/editor/proj/aggregates/names';
+  public widgetForProjectResourceUrl =  '/api/editor/proj/uws/pages/widget/project';
+  public aggregateModelKeysResourceUrl =  '/api/editor/proj/aggregates/keys';
+  public resourceAgrUrl =  '/api/editor/proj/aggregates';
+  public designresourceUrl =  '/api/editor/proj/aggregates/design';
+  public pageStyleUrl =  '/api/editor/proj/pages/pagestyle';
 
   constructor(protected http: HttpClient) {}
 

@@ -11,11 +11,11 @@ type StringArrayResponseType = HttpResponse<string[]>;
 
 @Injectable({ providedIn: 'root' })
 export class CommandService {
-  public resourceUrl =  '/api/editor/commands';
-  public upresourceUrl =  '/api/editor/uws/commands';
-  public projectresourceUrl =  '/api/editor/commands/project';
-  public commandDisablestatusChangeConfirmedResourceUrl =  '/api/editor/commands/statuschange/disable';
-  public commandEnablestatusChangeConfirmedResourceUrl =  '/api/editor/commands/statuschange/enable';
+  public resourceUrl =  '/api/editor/proj/commands';
+  public upresourceUrl =  '/api/editor/proj/uws/commands';
+  public projectresourceUrl =  '/api/editor/proj/commands/project';
+  public commandDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/commands/statuschange/disable';
+  public commandEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/commands/statuschange/enable';
 
   constructor(protected http: HttpClient) {}
 

@@ -9,7 +9,7 @@ type EntityArrayResponseType = HttpResponse<any[]>;
 
 @Injectable({ providedIn: 'root' })
 export class ServiceFileService {
-  public resourceUrl =  '/api/editor/servicefiles';
+  public resourceUrl =  '/api/editor/proj/servicefiles';
 
   constructor(protected http: HttpClient) {}
 
