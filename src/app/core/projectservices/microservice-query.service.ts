@@ -12,12 +12,12 @@ type StringArrayResponseType = HttpResponse<string[]>;
 
 @Injectable({ providedIn: 'root' })
 export class QueryService {
-  public resourceUrl =  '/api/editor/querys';
-  public upresourceUrl =  '/api/editor/uws/querys';
-  public queryMappingsResourceUrl =  '/api/editor/querys/mappings';
-  public projectresourceUrl =  '/api/editor/querys/project';
-  public queryDisablestatusChangeConfirmedResourceUrl =  '/api/editor/querys/statuschange/disable';
-  public queryEnablestatusChangeConfirmedResourceUrl =  '/api/editor/querys/statuschange/enable';
+  public resourceUrl =  '/api/editor/proj/querys';
+  public upresourceUrl =  '/api/editor/proj/uws/querys';
+  public queryMappingsResourceUrl =  '/api/editor/proj/querys/mappings';
+  public projectresourceUrl =  '/api/editor/proj/querys/project';
+  public queryDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/querys/statuschange/disable';
+  public queryEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/querys/statuschange/enable';
 
   constructor(protected http: HttpClient) {}
 

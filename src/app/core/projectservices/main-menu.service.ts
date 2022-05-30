@@ -12,13 +12,13 @@ type EntityArrayResponseType = HttpResponse<IMainMenu[]>;
 
 @Injectable({ providedIn: 'root' })
 export class MainMenuService {
-  public resourceUrl =  '/api/editor/main-menus';
-  public mainMenuMoveresourceUrl =  '/api/editor/main-menus/move-menu';
-  public mainMenusForProjectResourceUrl =  '/api/editor/main-menus/project';
-  public mainMenusNotBelongsToLinkForProjectResourceUrl =  '/api/editor/main-menus/project/not-belongs-to-link';
-  public mainmenustatusChangeCheckResourceUrl =  '/api/editor/main-menus/statuschange/check';
-  public mainmenuDisablestatusChangeConfirmedResourceUrl =  '/api/editor/main-menus/statusdisabled/confirmed';
-  public mainmenuEnablestatusChangeConfirmedResourceUrl =  '/api/editor/main-menus/statusenabled/confirmed';
+  public resourceUrl =  '/api/editor/proj/main-menus';
+  public mainMenuMoveresourceUrl =  '/api/editor/proj/main-menus/move-menu';
+  public mainMenusForProjectResourceUrl =  '/api/editor/proj/main-menus/project';
+  public mainMenusNotBelongsToLinkForProjectResourceUrl =  '/api/editor/proj/main-menus/project/not-belongs-to-link';
+  public mainmenustatusChangeCheckResourceUrl =  '/api/editor/proj/main-menus/statuschange/check';
+  public mainmenuDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/main-menus/statusdisabled/confirmed';
+  public mainmenuEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/main-menus/statusenabled/confirmed';
 
   constructor(protected http: HttpClient) {}
 

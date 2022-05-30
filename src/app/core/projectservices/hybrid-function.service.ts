@@ -10,10 +10,10 @@ type EntityArrayResponseType = HttpResponse<IHybridfunction[]>;
 
 @Injectable({ providedIn: 'root' })
 export class HybridfunctionService {
-  public resourceUrl =  '/api/editor/hybridfunctions';
-  public hybridfunctionstatusChangeCheckResourceUrl =  '/api/editor/hybridfunctions/statuschange/check';
-  public hybridfunctionDisablestatusChangeConfirmedResourceUrl =  '/api/editor/hybridfunctions/statusdisabled/confirmed';
-  public hybridfunctionEnablestatusChangeConfirmedResourceUrl =  '/api/editor/hybridfunctions/statusenabled/confirmed';
+  public resourceUrl =  '/api/editor/proj/hybridfunctions';
+  public hybridfunctionstatusChangeCheckResourceUrl =  '/api/editor/proj/hybridfunctions/statuschange/check';
+  public hybridfunctionDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/hybridfunctions/statusdisabled/confirmed';
+  public hybridfunctionEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/hybridfunctions/statusenabled/confirmed';
 
   constructor(protected http: HttpClient) {}
 

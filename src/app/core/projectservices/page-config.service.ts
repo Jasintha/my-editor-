@@ -11,10 +11,10 @@ type EntityArrayResponseType = HttpResponse<IPageConfig[]>;
 
 @Injectable({ providedIn: 'root' })
 export class PageConfigService {
-  public resourceUrl =  '/api/editor/page-configs';
-  public pageConfigsForProjectResourceUrl =  '/api/editor/page-configs/project';
-  public pageConfigsForPageResourceUrl =  '/api/editor/page-configs/page';
-  public solutionImageUrl =  '/api/editor/solutions/multipart';
+  public resourceUrl =  '/api/editor/proj/page-configs';
+  public pageConfigsForProjectResourceUrl =  '/api/editor/proj/page-configs/project';
+  public pageConfigsForPageResourceUrl =  '/api/editor/proj/page-configs/page';
+  public solutionImageUrl =  '/api/editor/proj/solutions/multipart';
 
   constructor(protected http: HttpClient) {}
 

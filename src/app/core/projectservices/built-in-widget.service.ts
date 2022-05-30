@@ -22,28 +22,28 @@ type StringArrayResponseType = HttpResponse<string[]>;
 
 @Injectable({ providedIn: 'root' })
 export class BuiltInWidgetService {
-  public resourceUrl = '/api/editor/widget';
+  public resourceUrl = '/api/editor/proj/widget';
 
-  public widgetResourceUrl = '/api/editor/widget';
-  public widgetForProjectResourceUrl = '/api/editor/uws/widget/project';
+  public widgetResourceUrl = '/api/editor/proj/widget';
+  public widgetForProjectResourceUrl = '/api/editor/proj/uws/widget/project';
 
-  public builtInResourceUrl = '/api/editor/pages/built-in';
-  public builtInWidgetsForProjectResourceUrl = '/api/editor/uws/pages/built-in/project';
-  public builtInWidgetEventsResourceUrl = '/api/editor/pages/built-in/page-template/events';
-  public builtInWidgetActionTypesResourceUrl = '/api/editor/pages/built-in/page-template/action-types';
-  public builtInWidgetNavigationParamsResourceUrl = '/api/editor/pages/built-in/page-navigation-params';
-  public builtInWidgetSourceTargetFormFieldsResourceUrl = '/api/editor/widgets/built-in/page-source-target-fields';
-  public builtInWidgetUpdateFormFieldsResourceUrl = '/api/editor/widgets/built-in/widget-form-configs';
-  public builtInWidgetstatusChangeCheckResourceUrl = '/api/editor/pages/built-in/statuschange/check';
-  public builtInWidgetDisablestatusChangeConfirmedResourceUrl = '/api/editor/pages/built-in/statusdisabled/confirmed';
-  public builtInWidgetEnablestatusChangeConfirmedResourceUrl = '/api/editor/pages/built-in/statusenabled/confirmed';
-  public checkEntityNameAvailabilityURL = '/api/editor/aggregates/names';
-  public checkWidgetNameAvailabilityURL = '/api/editor/widgets/names';
-  public aggregateModelKeysResourceUrl = '/api/editor/aggregates/keys';
-  public resourceAgrUrl = '/api/editor/aggregates';
-  public designresourceUrl = '/api/editor/aggregates/design';
-  public pageStyleUrl = '/api/editor/pages/pagestyle';
-  public widgetsInPageResourceURL = '/api/editor/page/widget';
+  public builtInResourceUrl = '/api/editor/proj/pages/built-in';
+  public builtInWidgetsForProjectResourceUrl = '/api/editor/proj/uws/pages/built-in/project';
+  public builtInWidgetEventsResourceUrl = '/api/editor/proj/pages/built-in/page-template/events';
+  public builtInWidgetActionTypesResourceUrl = '/api/editor/proj/pages/built-in/page-template/action-types';
+  public builtInWidgetNavigationParamsResourceUrl = '/api/editor/proj/pages/built-in/page-navigation-params';
+  public builtInWidgetSourceTargetFormFieldsResourceUrl = '/api/editor/proj/widgets/built-in/page-source-target-fields';
+  public builtInWidgetUpdateFormFieldsResourceUrl = '/api/editor/proj/widgets/built-in/widget-form-configs';
+  public builtInWidgetstatusChangeCheckResourceUrl = '/api/editor/proj/pages/built-in/statuschange/check';
+  public builtInWidgetDisablestatusChangeConfirmedResourceUrl = '/api/editor/proj/pages/built-in/statusdisabled/confirmed';
+  public builtInWidgetEnablestatusChangeConfirmedResourceUrl = '/api/editor/proj/pages/built-in/statusenabled/confirmed';
+  public checkEntityNameAvailabilityURL = '/api/editor/proj/aggregates/names';
+  public checkWidgetNameAvailabilityURL = '/api/editor/proj/widgets/names';
+  public aggregateModelKeysResourceUrl = '/api/editor/proj/aggregates/keys';
+  public resourceAgrUrl = '/api/editor/proj/aggregates';
+  public designresourceUrl = '/api/editor/proj/aggregates/design';
+  public pageStyleUrl = '/api/editor/proj/pages/pagestyle';
+  public widgetsInPageResourceURL = '/api/editor/proj/page/widget';
 
   constructor(protected http: HttpClient) {}
 

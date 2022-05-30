@@ -10,10 +10,10 @@ type EntityArrayResponseType = HttpResponse<ILamdafunction[]>;
 
 @Injectable({ providedIn: 'root' })
 export class LamdafunctionService {
-  public resourceUrl =  '/api/editor/lambdafunctions';
-  public lamdafunctionstatusChangeCheckResourceUrl =  '/api/editor/lambdafunctions/statuschange/check';
-  public lamdafunctionDisablestatusChangeConfirmedResourceUrl =  '/api/editor/lambdafunctions/statusdisabled/confirmed';
-  public lamdafunctionEnablestatusChangeConfirmedResourceUrl =  '/api/editor/lambdafunctions/statusenabled/confirmed';
+  public resourceUrl =  '/api/editor/proj/lambdafunctions';
+  public lamdafunctionstatusChangeCheckResourceUrl =  '/api/editor/proj/lambdafunctions/statuschange/check';
+  public lamdafunctionDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/lambdafunctions/statusdisabled/confirmed';
+  public lamdafunctionEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/lambdafunctions/statusenabled/confirmed';
 
   constructor(protected http: HttpClient) {}
 

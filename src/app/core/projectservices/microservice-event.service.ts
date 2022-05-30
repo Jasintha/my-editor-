@@ -11,10 +11,10 @@ type StringArrayResponseType = HttpResponse<string[]>;
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
-  public resourceUrl =  '/api/editor/events';
-  public projectresourceUrl =  '/api/editor/events/project';
-  public eventDisablestatusChangeConfirmedResourceUrl =  '/api/editor/events/statuschange/disable';
-  public eventEnablestatusChangeConfirmedResourceUrl =  '/api/editor/events/statuschange/enable';
+  public resourceUrl =  '/api/editor/proj/events';
+  public projectresourceUrl =  '/api/editor/proj/events/project';
+  public eventDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/events/statuschange/disable';
+  public eventEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/events/statuschange/enable';
 
   constructor(protected http: HttpClient) {}
 

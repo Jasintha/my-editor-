@@ -10,10 +10,10 @@ type EntityArrayResponseType = HttpResponse<ISubrule[]>;
 
 @Injectable({ providedIn: 'root' })
 export class SubruleService {
-  public resourceUrl =  '/api/editor/subrules';
-  public subrulestatusChangeCheckResourceUrl =  '/api/editor/subrules/statuschange/check';
-  public subruleDisablestatusChangeConfirmedResourceUrl =  '/api/editor/subrules/statusdisabled/confirmed';
-  public subruleEnablestatusChangeConfirmedResourceUrl =  '/api/editor/subrules/statusenabled/confirmed';
+  public resourceUrl =  '/api/editor/proj/subrules';
+  public subrulestatusChangeCheckResourceUrl =  '/api/editor/proj/subrules/statuschange/check';
+  public subruleDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/subrules/statusdisabled/confirmed';
+  public subruleEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/subrules/statusenabled/confirmed';
 
   constructor(protected http: HttpClient) {}
 

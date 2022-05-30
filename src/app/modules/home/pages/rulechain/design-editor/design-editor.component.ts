@@ -495,7 +495,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
         setTimeout(()=>{
             this.spinnerButton = false
-        }, 2000);
+        }, 2500);
+
         const storyGen: IStoryGen = {
             storyUuid: story.uuid,
             projectUuid: story.projectUuid,

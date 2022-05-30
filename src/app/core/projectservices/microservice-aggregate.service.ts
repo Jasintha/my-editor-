@@ -15,24 +15,20 @@ type StatusChangeRequestArrayResponseType = HttpResponse<IStatusChangeRequest[]>
 
 @Injectable({ providedIn: 'root' })
 export class AggregateService {
-  public resourceUrl2 =  '/api/editor/projects';
-  public resourceUrl =  '/api/editor/aggregates';
-  public projectresourceUrl =  '/api/editor/aggregates/project';
-  public designresourceUrl =  '/api/editor/aggregates/design';
-  public aggregatestatusChangeResourceUrl =  '/api/editor/aggregates/statuschange';
-  public aggregateDisablestatusChangeConfirmedResourceUrl =  '/api/editor/aggregates/statuschange/disable';
-  public aggregateEnablestatusChangeConfirmedResourceUrl =  '/api/editor/aggregates/statuschange/enable';
-  public domainModelFileUploadResourceUrl =  '/api/editor/aggregates/file-upload';
-  public exportResoucreURL =  '/api/editor/aggregates/export';
-  public aggregateModelKeysResourceUrl =  '/api/editor/aggregates/keys';
-  public checkEntityNameAvailabilityURL =  '/api/editor/aggregates/names';
+  public resourceUrl =  '/api/editor/proj/aggregates';
+  public projectresourceUrl =  '/api/editor/proj/aggregates/project';
+  public designresourceUrl =  '/api/editor/proj/aggregates/design';
+  public aggregatestatusChangeResourceUrl =  '/api/editor/proj/aggregates/statuschange';
+  public aggregateDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/aggregates/statuschange/disable';
+  public aggregateEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/aggregates/statuschange/enable';
+  public domainModelFileUploadResourceUrl =  '/api/editor/proj/aggregates/file-upload';
+  public exportResoucreURL =  '/api/editor/proj/aggregates/export';
+  public aggregateModelKeysResourceUrl =  '/api/editor/proj/aggregates/keys';
+  public checkEntityNameAvailabilityURL =  '/api/editor/proj/aggregates/names';
   constructor(protected http: HttpClient) {}
 
   create(aggregate: IAggregate, uuid: string): Observable<EntityResponseType> {
     return this.http.post<IAggregate>(`${this.resourceUrl}/${uuid}`, aggregate, { observe: 'response' });
-  }
-  findp(id: string): Observable<EntityResponseType> {
-    return this.http.get<IProject>(`${this.resourceUrl2}/${id}`, { observe: 'response' });
   }
 
   findAllMicroserviceProjects(): Observable<EntityArrayResponseType> {
