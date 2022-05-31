@@ -15,10 +15,25 @@ export class TabPage implements ITabPage {
 
 
 export interface ITabbedPage {
+    pagetitle?: string;
+    pageRefId?: string;
+    pagetype?: string;
+    pagetemplate?: string;
+    projectUuid?: string;
+    authority?: string;
     uuid?: string;
     tabPages?: ITabPage[];
 }
 
 export class TabbedPage implements ITabbedPage {
-    constructor( public uuid?: string, public tabPages?: ITabPage[]) {}
+    constructor(
+        public pagetitle?: string,
+        public pageRefId?: string,
+        public pagetype?: string,
+        public pagetemplate?: string,
+        public projectUuid?: string,
+        public authority?: string,
+        public uuid?: string,
+        public tabPages?: ITabPage[]
+    ) {}
 }
