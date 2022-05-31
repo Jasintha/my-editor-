@@ -738,4 +738,9 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         window.open(url, '_blank');
     }
 
+    selectedReq(val){
+        const req = this.reqArray[val.page];
+        this.clickReq(req);
+    }
+
 }

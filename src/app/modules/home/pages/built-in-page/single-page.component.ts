@@ -80,12 +80,19 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   configs: IPageConfig;
   pagestyle: string;
   stepFieldArr: any[] = [];
+  headerFieldArr: any[] = [];
   stepHeadersList: SelectItem[] = [];
+  detailsHeadersList: SelectItem[] = [];
   stepIndexId = 1;
+  headerIndexId = 1;
 
   displayedStepHeaderColumns: string[] = ['field', 'stepheader', 'actions'];
   ELEMENT_DATA = [];
   dataSourceWizard = new MatTableDataSource(this.ELEMENT_DATA);
+
+  displayedDetailHeaderColumns: string[] = ['field', 'detailsHeader', 'actions'];
+  DETAILS_DATA = [];
+  dataSourceDetailsPage = new MatTableDataSource(this.DETAILS_DATA);
 
   displayedLoginParamColumns: string[] = ['input', 'param', 'actions'];
   LOGIN_DATA = [];
@@ -163,10 +170,18 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       pageconfig: [],
       fieldName: [],
       stepHeader:[],
+      detailHeader:[],
+      attributeName:[],
       wizardDetailsGroup: this.fb.array([
         new FormGroup({
           stepHeading: this.fb.control('Step 1'),
           stepId: this.fb.control(this.stepIndexId),
+        }),
+      ]),
+      detailsHeaderGroup: this.fb.array([
+        new FormGroup({
+          detailsHeading: this.fb.control('Header 1'),
+          headerId: this.fb.control(this.headerIndexId),
         }),
       ]),
     });
@@ -1129,6 +1144,80 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       stepId: new FormControl(this.stepIndexId), // [TODO] should add validations
     });
   }
+
+
+  get detailsHeaderGroup() {
+    return this.editForm.get('detailsHeaderGroup') as FormArray;
+  }
+  insertDetailsHeaderGroup(stepH) {
+    this.headerIndexId = this.detailsHeaderGroup.length + 1;
+    // this.stepIndexId++;
+    this.detailsHeaderGroup.push(this.addDetailsHeaderGroup(stepH));
+    this.getAllWizardSteps();
+  }
+  addDetailsHeaderGroup(stepH): FormGroup {
+    let detailHeader = 'Header ' + this.headerIndexId;
+    if (stepH) {
+      detailHeader = stepH;
+    }
+    return new FormGroup({
+      detailsHeading: new FormControl(detailHeader),
+      headerId: new FormControl(this.headerIndexId),
+    });
+  }
+  addFieldsToHeaders() {
+    const field = this.editForm.get(['attributeName']).value;
+    let detailsHeader = '';
+    let detailsId = 0;
+    if (this.editForm.get(['detailHeader']).value) {
+      detailsId = parseInt(this.editForm.get(['detailHeader']).value.split('-')[0]);
+      detailsHeader = this.editForm.get(['detailHeader']).value.split('-')[1];
+    }
+
+    if (!field || !detailsId) {
+      // this.messageService.add({
+      //   severity: 'warn',
+      //   summary: 'Warn',
+      //   detail: 'Please fill all the fields',
+      // });
+    } else {
+      const stepField = {
+        field,
+        detailsHeader,
+        detailsId,
+      };
+      if (this.headerFieldArr.indexOf(stepField) === -1) {
+        this.headerFieldArr.push(stepField);
+        this.DETAILS_DATA.push(stepField);
+        this.dataSourceDetailsPage = new MatTableDataSource(this.DETAILS_DATA);
+      }
+    }
+  }
+  removeDetailsHeaderGroup(index: number) {
+    this.detailsHeaderGroup.removeAt(index);
+    this.getAllDetailsHeaders();
+  }
+  getAllDetailsHeaders() {
+    this.detailsHeadersList = [];
+    const allStepControllers = this.detailsHeaderGroup.controls;
+    for (let i = 0; i < allStepControllers.length; i++) {
+      this.detailsHeadersList.push({
+        label: allStepControllers[i].value.detailsHeading,
+        value: allStepControllers[i].value.headerId + '-' + allStepControllers[i].value.detailsHeading,
+      });
+    }
+  }
+  deleteFieldHeaders(param) {
+    const indexnum = this.ELEMENT_DATA.indexOf(param);
+    this.DETAILS_DATA.splice(indexnum, 1);
+    this.dataSourceDetailsPage = new MatTableDataSource(this.DETAILS_DATA);
+
+    const index = this.headerFieldArr.indexOf(param);
+    this.headerFieldArr.splice(index, 1);
+  }
+
+
+
 
   onRowEditInit(car: Config) {
     this.clonedCars[car.property] = { ...car };
