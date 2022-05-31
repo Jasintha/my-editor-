@@ -8,7 +8,6 @@
         </div>
 
         <div class="row justify-content-center title-temp">
-
             <div class="col-md-8">
                 <h3 *ngIf="formDisable">{{pageTitle}}</h3>
                 <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
@@ -17,7 +16,6 @@
                     <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required
                     </mat-error>
                 </mat-form-field>
-
             </div>
 
             <div class="col-md-4">
@@ -26,21 +24,6 @@
                     <mat-icon>edit</mat-icon>
                 </button>
             </div>
-
-
-            <!--                            <div class="form-group" style="padding: 4%">-->
-            <!--                                <label class="form-control-label" for="field_pagetitle">Page Title</label><span>{{pageTitle}}</span>-->
-            <!--                                <input type="text" class="form-control" name="pagetitle" id="field_pagetitle"-->
-            <!--                                       formControlName="pagetitle"/>-->
-            <!--                                <div *ngIf="editForm.get('pagetitle').invalid && (editForm.get('pagetitle').dirty || editForm.get('pagetitle').touched)">-->
-            <!--                                    <small class="form-text text-danger" >-->
-            <!--                                        Page Title is required.-->
-            <!--                                    </small>-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-
-
         </div>
         <div>
             <div class="row">

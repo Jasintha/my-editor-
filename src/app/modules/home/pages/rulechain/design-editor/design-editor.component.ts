@@ -178,14 +178,18 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     public pieChartPlugins = [];
 
     constructor( private requirementService: RequirementService, private storyService: StoryService, public dialog: MatDialog,
-                 private ruleChainService: RuleChainService,protected eventManager: EventManagerService, private projectService: ProjectService,
-                 private consoleLogService: ConsoleLogService, private socket: WebsocketService, protected appTypeService: ApptypesService) { }
+                 private ruleChainService: RuleChainService,protected eventManager: EventManagerService,
+                 private projectService: ProjectService,
+                 private consoleLogService: ConsoleLogService, private socket: WebsocketService,
+                 protected appTypeService: ApptypesService) { }
 
     ngOnChanges(changes: SimpleChanges) {
         this.currentReq = this.reqArray[0];
         this.reqCount = this.reqArray.length;
         this.hideCarouselNext = this.reqCount < 2;
-        this.hideCarouselEpicNext = this.existingEpics.length < 5;
+        if(this.existingEpics) {
+            this.hideCarouselEpicNext = this.existingEpics.length < 5;
+        }
         this.reloadView();
         this.loadReq();
     }

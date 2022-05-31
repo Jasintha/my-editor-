@@ -1,5 +1,24 @@
 <div class="container tab-container">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+        <div class="row justify-content-center title-temp">
+            <div class="col-md-8">
+                <h3 *ngIf="formDisable">{{pageTitle}}</h3>
+                <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
+                    <mat-label>Page Title</mat-label>
+                    <input type="text" formControlName="pagetitle" matInput name="pagetitle" id="field_pagetitle">
+                    <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon"
+                        (click)="enableToEdit()">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+        </div>
         <div class="button-row" style="float:right; margin: 5px" >
             <div class="example-button-container">
                 <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon" (click)="addTab()">

@@ -33,9 +33,11 @@ export class TabPageComponent implements OnDestroy, OnInit {
     editForm: FormGroup;
     tabName = new FormControl();
     isSaving: boolean;
-
+    formDisable: boolean;
+    pageTitle: string;
     buildNewForm() {
         this.editForm = this.fb.group({
+            pagetitle: '',
             id: [],
             tabName: '',
             page: []
@@ -68,7 +70,14 @@ export class TabPageComponent implements OnDestroy, OnInit {
                 )
                 .subscribe(
                     (res: IPage[]) => {
-                        this.allpages = res;
+                        for(const page of res) {
+                            if (page.uuid === this.pageId) {
+                                this.pageTitle = page.pagetitle;
+                                this.editForm.get('pagetitle').patchValue(page.pagetitle);
+                            } else {
+                                this.allpages.push(page);
+                            }
+                        }
                         this.loadPages();
                     },
                     (res: HttpErrorResponse) => this.onError(res.message)
@@ -117,6 +126,10 @@ export class TabPageComponent implements OnDestroy, OnInit {
             () => this.onSaveSuccess(),
             () => this.onSaveError()
         );
+    }
+
+    enableToEdit() {
+        this.formDisable = !this.formDisable;
     }
 
     protected onSaveSuccess() {
