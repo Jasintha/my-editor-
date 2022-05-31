@@ -48,7 +48,7 @@ export class RequirementAddEpicDialogComponent implements OnInit {
         description: '',
         reqdescription: '',
         epicselection: null,
-        referencename: ''
+        referencename: ['', [Validators.required]],
     });
   }
 

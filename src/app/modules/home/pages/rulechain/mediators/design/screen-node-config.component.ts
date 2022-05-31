@@ -195,14 +195,26 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
   }
 
   getPageTemplates() {
-    this.pageTemplateItems = [];
-    this.pageTemplateItems.push('login-page' );
-    this.pageTemplateItems.push('register-page');
-    this.pageTemplateItems.push('table-page');
-    this.pageTemplateItems.push('form-page');
-    this.pageTemplateItems.push('aio-table');
-    this.pageTemplateItems.push('form-wizard-page');
-    this.pageTemplateItems.push('aio-grid');
+    this.pageTemplateItems = [
+      {label:'Login Page', value:'login-page'},
+      {label:'Register Page', value:'register-page'},
+      {label:'Table Page', value:'table-page'},
+      {label:'Form Page', value:'form-page'},
+      {label:'AIO Table', value:'aio-table'},
+      {label:'Form Wizard Page', value:'form-wizard-page'},
+      {label:'AIO-Grid Page', value:'aio-grid'},
+      {label:'Tab Page', value:'tab-page'},
+      {label:'Filter Page', value:'filter-page'}
+    ];
+    // this.pageTemplateItems.push('login-page' );
+    // this.pageTemplateItems.push('register-page');
+    // this.pageTemplateItems.push('table-page');
+    // this.pageTemplateItems.push('form-page');
+    // this.pageTemplateItems.push('aio-table');
+    // this.pageTemplateItems.push('form-wizard-page');
+    // this.pageTemplateItems.push('aio-grid');
+    // this.pageTemplateItems.push('tab-page');
+    // this.pageTemplateItems.push('filter-page');
   }
 
   setDisabledState(isDisabled: boolean): void {

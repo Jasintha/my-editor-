@@ -67,6 +67,7 @@ import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 import { WebsocketService } from '@core/tracker/websocket.service';
 import {ApptypesService} from '@core/projectservices/apptypes.service';
 import { CreateTextComponent } from '@home/pages/rulechain/design-editor/create-text.component';
+import {trigger, style, animate, transition, state} from '@angular/animations';
 
 declare const SystemJS;
 
@@ -94,7 +95,30 @@ const ruleNodeConfigResourcesModulesMap = {
     selector: 'virtuan-design-editor-new',
     templateUrl: './design-editor.component.html',
     styleUrls: ['./design-editor.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    animations: [
+        trigger(
+            'inOutAnimation',
+            [
+                transition(
+                    ':enter',
+                    [
+                        style({ height: 0, opacity: 0 }),
+                        animate('0.3s ease-out',
+                            style({ height: 300, opacity: 1 }))
+                    ]
+                ),
+                transition(
+                    ':leave',
+                    [
+                        style({ height: 300, opacity: 1 }),
+                        animate('0.3s ease-in',
+                            style({ height: 0, opacity: 0 }))
+                    ]
+                )
+            ]
+        )
+    ]
 })
 export class DesignEditorComponent implements OnInit, OnChanges {
     @Input()
@@ -142,6 +166,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     uiGeneratorList: { [key: number]: string } = {};
     spinnerButton : boolean = false;
     hideCarouselNext = false;
+    hideCarouselEpicNext = false;
 
     public pieChartOptions: ChartOptions = {
         responsive: true,
@@ -159,7 +184,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         this.currentReq = this.reqArray[0];
         this.reqCount = this.reqArray.length;
-        this.hideCarouselNext = this.reqCount < 5;
+        this.hideCarouselNext = this.reqCount < 2;
+        this.hideCarouselEpicNext = this.existingEpics.length < 5;
         this.reloadView();
         this.loadReq();
     }
@@ -698,6 +724,14 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             }
         })
         this.pieChartData.push(completeCount , newCount)
+    }
+
+
+    openNewTab() {
+        const ip = window.location.origin;
+        const endpoint = '/sp/api/swagger/index.html';
+        const url =  ip + '/' +this.selectedEpic.name+'service' + endpoint;
+        window.open(url, '_blank');
     }
 
 }

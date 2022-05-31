@@ -483,10 +483,10 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.splitPartOneSize = 98;
-        this.splitPartTwoSize = 2;
-        this.splitConsoleSizeOne = 85;
-        this.splitConsoleSizeTwo = 15;
+        this.splitPartOneSize = 100;
+        this.splitPartTwoSize = 0;
+        this.splitConsoleSizeOne = 100;
+        this.splitConsoleSizeTwo = 0;
         this.requirementArray = [];
         this.currentReqIndex = 0;
         this.currentTab = 'design'
@@ -532,8 +532,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             this.splitPartOneSize = 84;
             this.splitPartTwoSize = 16;
         } else if (val === 'design'){
-            this.splitPartOneSize = 98;
-            this.splitPartTwoSize = 2;
+            this.splitPartOneSize = 100;
+            this.splitPartTwoSize = 0;
             this.loadDesignTreeData();
         }
     }

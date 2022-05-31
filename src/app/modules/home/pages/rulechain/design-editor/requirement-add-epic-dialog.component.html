@@ -44,6 +44,7 @@
                     <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="mat-block">
                         <mat-label>Reference name</mat-label>
                         <input type="text" formControlName="referencename" matInput>
+                        <mat-error *ngIf="editForm.controls.referencename.hasError('required')">This field is required</mat-error>
                     </mat-form-field>
 
                     <mat-form-field *ngIf="editForm.value.epicCreateType === 'existing'" fxFlex class="mat-block">

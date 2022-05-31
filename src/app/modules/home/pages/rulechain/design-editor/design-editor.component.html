@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-12" style="display:flex; justify-content: center">
                                 <div style="height: 100px; width: 257px;" [matTooltipPosition]="'below'"  matTooltip="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor">
-                                    <h5 class="txt-description" style="font-weight: 100;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</h5>
+                                    <h5 class="txt-description" style="font-weight: 100;"> Tags ...</h5>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -93,7 +93,7 @@
 <!--                    </div>-->
         </div>
         <div class="col-5" style="justify-content: end; display: flex;padding-bottom: 26px;">
-            <div class="row" tyle="display: flex; justify-content: end;">
+            <div class="row" style="display: flex; justify-content: end;">
                  <div class="col-12">
                      <div class="new" (click)="createRequirement()" style="display: flex; justify-content: end;">
                          <button mat-flat-button disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer; margin-right: -17px; margin-bottom: 109px; height: 50px; ">
@@ -115,7 +115,7 @@
 <!--        </div>-->
     </div>
 
-    <div  *ngIf="existingEpics.length === 0">
+    <div  *ngIf="existingEpics.length === 0" @inOutAnimation>
         <hr>
 
         <div style="text-align: center;" >
@@ -128,7 +128,7 @@
     </div>
 
 
-    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0">
+    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0" @inOutAnimation style="margin-left: 35px;">
 <!--        <div class="col-12">-->
 <!--            <div class="row">-->
 <!--                <div class="col-9"></div>-->
@@ -139,9 +139,9 @@
 <!--        </div>-->
 
         <div class="col-9 pt-4">
-            <p-carousel orientation="vertical" [value]="existingEpics" [numVisible]="4" [numScroll]="4" [circular]="true"    [ngClass]="{'carousel-next-hide': hideCarouselNext}" class="">
+            <p-carousel  [value]="existingEpics" [numVisible]="4" [numScroll]="4" [circular]="true"    [ngClass]="{'carousel-next-hide-epic': hideCarouselEpicNext}" class="">
                 <ng-template ngFor  let-epic [ngForOf]="existingEpics" pTemplate="body" let-index="index" >
-                    <div class="wrap-epic"  (click)="filterEpic(epic, index)" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }" style="height: 55px" matTooltip="{{epic?.name}}">
+                    <div class="wrap-epic"  (click)="filterEpic(epic, index)" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }" style="height: 72px" matTooltip="{{epic?.name}}">
                         <a class="edit" (click)="editEpics(epic)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                         <div class="d-flex justify-content-center">
                             <h5 class="txt-overflow-epic">{{epic?.name}}</h5>
@@ -216,7 +216,7 @@
         <!--        </div>-->
     </div>
 
-    <div *ngIf="existingEpics.length != 0 && filteredStories.length == 0 && selectedEpic">
+    <div *ngIf="existingEpics.length != 0 && filteredStories.length == 0 && selectedEpic" @inOutAnimation>
         <hr>
         <div class="col-12 d-flex justify-content-center">
             <button mat-raised-button style="top: -32px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
@@ -226,7 +226,7 @@
         </div>
     </div>
 
-    <div *ngIf="filteredStories.length != 0">
+    <div *ngIf="filteredStories.length != 0" @inOutAnimation>
         <ng-container *ngFor="let story of filteredStories" >
             <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px; margin-top: 34px" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
                 <div class="top-req">
@@ -302,7 +302,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-5 justify-content-center">
+                <div class="col-3 justify-content-center">
                     <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{progressValue}}' style="width: 300px; margin-left: 42px;"></mat-progress-bar>
                     <div class="line" style="margin-left: 47px; margin-top: 5px;"></div>
                     <h6 class="mt-0" style="position: absolute; right: 354px; font-size: 11px">SA</h6>
@@ -311,6 +311,24 @@
                     <div class="line" style="position: absolute;margin-left: 325px;margin-top: -4px;"></div>
                     <h6 class="mt-0" style="position: absolute; right: 66px; font-size: 11px">DEVIP</h6>
                 </div>
+<!--                <div class="col-1 justify-content-end">-->
+<!--                    <button mat-mini-fab disabled aria-label="Example icon button with a heart icon"-->
+<!--                            style="background-color: rgba(108,64,220,0.83); color: white; cursor: pointer; right: -110px; bottom: -20px">-->
+<!--                        <mat-icon class="material-icons"  style="font-size: 18px">link</mat-icon>-->
+<!--                    </button>-->
+
+                    <div class="col-12 d-flex justify-content-end" >
+<!--                        <a class="swagger-link" virtuan-click-stop-propagation><i class="fa fa-trash" aria-hidden="true"></i></a>-->
+                        <mat-icon class="material-icons swagger-link" (click)="openNewTab()" style="font-size: 25px">move_to_inbox</mat-icon>
+                    </div>
+
+
+<!--                    <div style="right: -110px; bottom: -20px">-->
+<!--                        <mat-icon class="material-icons"  style="font-size: 18px">skip_next</mat-icon>-->
+<!--                    </div>-->
+
+
+<!--                </div>-->
                 <div class="bottom-req" >
                     <div class="col-12 d-flex justify-content-center add-req-bottom">
                         <button mat-raised-button style="top: -1px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
