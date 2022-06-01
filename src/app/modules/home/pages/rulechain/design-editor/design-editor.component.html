@@ -1,18 +1,23 @@
-<div *ngIf="!viewEditor" class="container vertical" style="width: 990px">
-    <div class="wrapper option-1 option-1-1">
-        <ol class="c-stepper">
-            <li [ngClass]="currentLevel === 'requirement' || requirementLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
-                <h6 class="c-stepper__title">Step 1</h6>
-            </li>
-            <li [ngClass]="currentLevel === 'epic' || epicLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
-                <h6 class="c-stepper__title">Step 2</h6>
-            </li>
-            <li [ngClass]="currentLevel === 'story' || storyLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
-                <h6 class="c-stepper__title">Step 3</h6>
-            </li>
-        </ol>
+<div *ngIf="!viewEditor" class="fixed-position">
+    <div class="row">
+        <div class="wrapper option-1 option-1-1">
+            <ol class="c-stepper">
+                <li [ngClass]="currentLevel === 'requirement' || requirementLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
+                    <h6 class="c-stepper__title">Step 1</h6>
+                </li>
+                <li [ngClass]="currentLevel === 'epic' || epicLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
+                    <h6 class="c-stepper__title">Step 2</h6>
+                </li>
+                <li [ngClass]="currentLevel === 'story' || storyLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
+                    <h6 class="c-stepper__title">Step 3</h6>
+                </li>
+            </ol>
+        </div>
     </div>
-    <div id="requirements" class="row section border row-height" style="height: 222px">
+</div>
+<div *ngIf="!viewEditor" class="container vertical" style="width: 990px">
+    <div style="position: relative">
+    <div id="requirements" class="row section border row-height create-req" style="height: 222px">
         <div class="col-12 p-0">
             <div class="row">
 <!--                <div class="col-9 d-flex">-->
@@ -38,7 +43,7 @@
         <div class="col-7">
             <!--            <div class="row" style="padding-bottom: 30px;">-->
             <!--                <div class="col-11">-->
-            <p-carousel [value]="reqArray" [numVisible]="1" [numScroll]="1" [circular]="true"  (onPage)="selectedReq($event)"  [ngClass]="{'carousel-next-hide': hideCarouselNext}" class="">
+            <p-carousel class="req-carousel" [value]="reqArray" [numVisible]="1" [numScroll]="1" [circular]="true"  (onPage)="selectedReq($event)"  [ngClass]="{'carousel-next-hide': hideCarouselNext}" >
                 <ng-template let-req pTemplate="item">
                     <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 200px;width: 331px;
 }" matTooltip="{{req?.name}}"  [matTooltipPosition]="'above'" (click)="clickReq(req)">
@@ -98,14 +103,15 @@
         <div class="col-5" style="justify-content: end; display: flex;padding-bottom: 26px;">
             <div class="row" style="display: flex; justify-content: end;">
                  <div class="col-12">
-                     <div class="new" (click)="createRequirement()" style="display: flex; justify-content: end;">
-                         <button mat-flat-button disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer; margin-right: -17px; margin-bottom: 130px; height: 50px; ">
+                     <div class="new button-visible" (click)="createRequirement()" style="display: flex; justify-content: end;">
+                         <button mat-flat-button disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer; margin-right: -17px; margin-bottom: 139px;">
                              <mat-icon style="font-size: 25px">add</mat-icon>
                          </button>
                      </div>
                 </div>
                 <div class="col-12" style="display: flex; justify-content: end;">
-                    <div reqCounter style="    bottom: 15px; right: 17px; position: absolute">
+                    <div reqCounter class="counter-container content-center" style="bottom: 75px;
+    right: 295px; position: absolute">
                         <p id="reqCounter" class="h2 text-secondary mb-0">{{reqCount}}</p>
                     </div>
                 </div>
@@ -392,6 +398,18 @@
                  </div>
                 </div>
             </div>
+            <div id="stories" class="row section border row-color wrap-text"  style="margin-left: 120px" *ngIf="story.storyTemplate === 'CREATE-TEXT' ">
+                <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
+                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                </div>
+                <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.description"
+                          [style]="{'height':'120px', 'margin-top':'10px', 'border' : 0}" [readonly]="true">
+                    <p-header hidden>
+                        <span class="ql-formats"></span>
+                    </p-header>
+                </p-editor>
+
+            </div>
         </ng-container>
         <!--        <div class="watermark" style="left: 88%;">-->
         <!--            Stories-->
@@ -504,6 +522,7 @@
             </div>
         </div>
     </div>-->
+    </div>
 </div>
 
 <virtuan-story-design-page
