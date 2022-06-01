@@ -1018,6 +1018,7 @@
     cursor: pointer;
     height: 180px;
     border: solid 1px #549cf9;
+    border-radius: 8px;
 }
 
 .outer.active {
@@ -1066,10 +1067,13 @@
 }
 
 .description {
+    height: 180px;
     width: 350px;
     display: none;
     padding: 15px;
     text-align: left;
+    border: 1px solid #c0d2ff;
+    border-radius: 8px;
 
     .title {
         font-size: 14;
