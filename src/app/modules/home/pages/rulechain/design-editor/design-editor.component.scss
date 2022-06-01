@@ -728,12 +728,12 @@
 }
 
 .spinner{
+    z-index: 0;
     width:35px;
     height:35px;
     border-radius:50%;
     border: 4px solid transparent;
     position:relative;
-    z-index:1;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     top: -14px;
@@ -1008,6 +1008,43 @@
     border-left: 1px solid black;
     height: 5px;
 }
+
+.scroll{
+    max-height: 99vh;
+    overflow:scroll;
+    overflow-x:hidden;
+}
+
+.fixed-position{
+    background: white;
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.create-req{
+    .button-visible{
+        visibility: hidden;
+        opacity: 0;
+    }
+    &:hover{
+        .button-visible{
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+}
+
+body .ui-editor-container .ui-editor-content .ql-editor {
+    background-color: #f7f7f7;
+}
+
+.ui-carousel-items-content {
+    width: 390px;
+}
+
+
 
 
 .outer {
