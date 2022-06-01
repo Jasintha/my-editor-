@@ -4,7 +4,7 @@ import {StoryService} from '@core/projectservices/story-technical-view.service';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
-import { IRequirement, Requirement, IEpic, IStory } from '@shared/models/model/requirement.model';
+import {IRequirement, Requirement, IEpic, IStory, IStatusChangeRequest} from '@shared/models/model/requirement.model';
 import { IGenerator } from '@shared/models/model/generator-chain.model';
 import {RequirementAddEpicDialogComponent} from '@home/pages/rulechain/design-editor/requirement-add-epic-dialog.component';
 import {CreateStoryComponent} from '@home/pages/rulechain/design-editor/create-story.component';
@@ -168,6 +168,13 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     hideCarouselNext = false;
     hideCarouselEpicNext = false;
 
+    ListData: any = [];
+    isBtnNext = true;
+    isBtnPrevious = false;
+    PageNo = 0;
+    PageSize = 5;
+    reqCreatedAt:string;
+
     public pieChartOptions: ChartOptions = {
         responsive: true,
     };
@@ -192,6 +199,9 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         }
         this.reloadView();
         this.loadReq();
+        const date = this.currentReq.createdAt.split(' ')[0];
+        const time = this.currentReq.createdAt.split(' ')[1].split('.')[0];
+        this.reqCreatedAt = date + '   '+'  '+time
     }
 
     reloadView() {
@@ -263,6 +273,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                     if (res) {
                         this.existingEpics = res;
                         this.filterChart(res);
+                        this.PageNo = 0;
+                        this.getData();
 //             for (let i = 0; i < this.existingEpics.length; i++) {
 //               let epicitem = { label: this.existingEpics[i].name, value: this.existingEpics[i] };
 //               this.epicitems.push(epicitem);
@@ -362,12 +374,13 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         }
     }
 
-    addText(selectedEpic: any) {
+    addText(selectedEpic: any, storyuuid) {
         const dialogRef = this.dialog.open(CreateTextComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.desprojectUid,
-                epic: selectedEpic
+                epic: selectedEpic,
+                uuid: storyuuid
             }
         });
         dialogRef.afterClosed(
@@ -706,14 +719,24 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     }
 
-    handleProgress(val){
-        if (val === '1'){
-            this.progressValue = 30;
-        }else if (val === '2'){
-            this.progressValue = 60;
-        } else if (val === '3'){
-            this.progressValue = 100;
+    handleProgress(val , id){
+        const status = {
+            uuid: id,
+            status: val
         }
+        this.storyService
+            .changeprogressStatus(status, this.desprojectUid)
+            .pipe(
+                filter((res: HttpResponse<IStatusChangeRequest>) => res.ok),
+                map((res: HttpResponse<IStatusChangeRequest>) => res.body)
+            )
+            .subscribe(
+                (res: IStatusChangeRequest) => {
+                    if (res){
+                        this.loadStoriesForEpic(this.selectedEpic.uuid);
+                    }
+                }
+            );
     }
 
     filterChart(res){
@@ -741,6 +764,50 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     selectedReq(val){
         const req = this.reqArray[val.page];
         this.clickReq(req);
+        const date = req.createdAt.split(' ')[0];
+        const time = req.createdAt.split(' ')[1].split('.')[0];
+        this.reqCreatedAt = date + '   '+'  '+ time
+    }
+
+    getData(isNext = true) {
+        if (isNext)
+            this.PageNo = this.PageNo + 1;
+        else
+            this.PageNo = this.PageNo - 1;
+
+        if (this.PageNo > 0) {
+            var offset = (this.PageNo - 1) * this.PageSize;
+            var data = this.existingEpics.slice(offset).slice(0, this.PageSize);
+            if (data && data.length > 0) {
+                this.ListData = data;
+                this.isBtnNext = true;
+                this.isBtnPrevious = true;
+            }
+            else {
+                if (isNext) {
+                    this.isBtnNext = false;
+                    this.isBtnPrevious = true;
+                }
+                else {
+                    this.isBtnNext = true;
+                    this.isBtnPrevious = false;
+                }
+            }
+        }
+        else {
+            this.isBtnNext = true;
+            this.isBtnPrevious = false;
+        }
+
+
+    }
+
+    setState(item: any) {
+        this.ListData = this.ListData.map((p: any) => {
+            p.isActive = item.uuid === p.uuid ? true : false;
+            return p;
+        })
+        this.filterEpic(item,1)
     }
 
 }

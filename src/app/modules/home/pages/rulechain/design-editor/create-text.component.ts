@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import { IRequirement, Requirement, IEpic, IStory } from '@shared/models/model/requirement.model';
+import {IRequirement, Requirement, IEpic, IStory, IStoryUpdateReq} from '@shared/models/model/requirement.model';
 
 import {IProject} from '@shared/models/model/project.model';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
@@ -112,23 +112,18 @@ export class CreateTextComponent implements OnInit {
 
     const req = this.createFromForm();
     if (req.uuid) {
-      req.status = this.currentStory.status;
-      this.subscribeToSaveResponse(this.storyService.update(req, this.projectUid));
+      // req.status = this.currentStory.status;
+      this.subscribeToSaveResponse(this.storyService.storyTextUpdateReq(req, this.projectUid));
     } else {
-      this.subscribeToSaveResponse(this.storyService.create(req, this.projectUid));
+      this.subscribeToSaveResponse(this.storyService.storyTextUpdateReq(req, this.projectUid));
     }
   }
 
-  private createFromForm(): any {
+  private createFromForm(): IStoryUpdateReq {
     return {
-      uuid: this.editForm.get(['id']).value,
-      // name: this.editForm.get(['name']).value,
-      description: this.editForm.get(['description']).value,
-      projectUuid: this.projectUid,
-      serviceUUID: this.epic.serviceUUID,
-      serviceMasterUUID:  this.epic.serviceMasterUUID,
-      epicUUID:  this.epic.uuid,
-      storyTemplate: "CREATE-TEXT",
+      uuid: this.data.uuid,
+      storyText: this.editForm.get(['description']).value,
+      projectUuid: this.projectUid
     };
   }
 

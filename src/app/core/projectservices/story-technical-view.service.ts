@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import {createRequestOption} from '@shared/util/request-util';
-import { IStory, IWorkflow } from '@shared/models/model/requirement.model';
+import {IStatusChangeRequest, IStory, IStoryUpdateReq, IWorkflow, StoryUpdateReq} from '@shared/models/model/requirement.model';
 import { TreeNode } from 'primeng/api';
 
 type EntityResponseType = HttpResponse<IStory>;
@@ -18,6 +18,8 @@ export class StoryService {
   public storystatusChangeCheckResourceUrl = '/api/editor/stories/statuschange/check';
   public storyDisablestatusChangeConfirmedResourceUrl = '/api/editor/stories/statusdisabled/confirmed';
   public storyEnablestatusChangeConfirmedResourceUrl = '/api/editor/stories/statusenabled/confirmed';
+  public storyStatusChange = '/api/editor/stories/status';
+  public storyTextReq = '/api/editor/stories/text';
 
   constructor(protected http: HttpClient) {}
 
@@ -146,5 +148,13 @@ export class StoryService {
     return this.http.put<IStory>(`${this.storyEnablestatusChangeConfirmedResourceUrl}/${uuid}/${id}`, id, {
       observe: 'response',
     });
+  }
+
+  changeprogressStatus(changeStatus: IStatusChangeRequest, uuid):Observable<HttpResponse<IStatusChangeRequest>> {
+    return this.http.put<IStatusChangeRequest>(`${this.storyStatusChange}/${uuid}`, changeStatus, { observe: 'response' });
+  }
+
+  storyTextUpdateReq(textReq: IStoryUpdateReq, uuid):Observable<HttpResponse<IStoryUpdateReq>> {
+    return this.http.put<IStoryUpdateReq>(`${this.storyTextReq}/${uuid}`, textReq, { observe: 'response' });
   }
 }

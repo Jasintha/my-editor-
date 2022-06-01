@@ -14,6 +14,7 @@ export interface IRequirement {
   description?: string;
   status?: string;
   epicUuid?: string;
+  createdAt?: string;
 }
 
 export class Requirement implements IRequirement {
@@ -31,7 +32,8 @@ export class Requirement implements IRequirement {
     public projectUuid?: string,
     public description?: string,
     public epicUuid?: string,
-    public status?: string
+    public status?: string,
+    public createdAt?: string,
   ) {}
 }
 
@@ -214,4 +216,24 @@ export interface IRole {
 
 export class Role implements IRole {
   constructor(public name?: string, public id?: string) {}
+}
+
+export interface IStatusChangeRequest {
+  uuid?: string;
+  status?: string;
+}
+
+export class StatusChangeRequest implements IStatusChangeRequest {
+  constructor(public uuid?: string, public status?: string) {}
+}
+
+
+export interface IStoryUpdateReq {
+  uuid?: string;
+  storyText?: string;
+  projectUuid?: string;
+}
+
+export class StoryUpdateReq implements IStoryUpdateReq {
+  constructor(public uuid?: string, public storyText?: string , public projectUuid?: string) {}
 }
