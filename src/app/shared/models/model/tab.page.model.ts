@@ -23,6 +23,8 @@ export interface ITabbedPage {
     authority?: string;
     uuid?: string;
     tabPages?: ITabPage[];
+    pageViewType?: string;
+    status?: string;
 }
 
 export class TabbedPage implements ITabbedPage {
@@ -34,6 +36,8 @@ export class TabbedPage implements ITabbedPage {
         public projectUuid?: string,
         public authority?: string,
         public uuid?: string,
-        public tabPages?: ITabPage[]
+        public tabPages?: ITabPage[],
+        public pageViewType?:  string,
+        public status?: string
     ) {}
 }

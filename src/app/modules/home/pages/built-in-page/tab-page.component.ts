@@ -35,6 +35,7 @@ export class TabPageComponent implements OnDestroy, OnInit {
     isSaving: boolean;
     formDisable: boolean;
     pageTitle: string;
+    currentPage: IPage;
     buildNewForm() {
         this.editForm = this.fb.group({
             pagetitle: '',
@@ -61,6 +62,8 @@ export class TabPageComponent implements OnDestroy, OnInit {
 
     ngOnInit() {
         this.buildNewForm();
+        this.loadUpdateForm();
+        this.formDisable = true;
         if (this.projectUid) {
             this.pageService
                 .findBuiltInPagesForProjectId(this.projectUid, this.projectUid)
@@ -71,11 +74,9 @@ export class TabPageComponent implements OnDestroy, OnInit {
                 .subscribe(
                     (res: IPage[]) => {
                         for(const page of res) {
-                            if (page.uuid === this.pageId) {
-                                this.pageTitle = page.pagetitle;
-                                this.editForm.get('pagetitle').patchValue(page.pagetitle);
-                            } else {
+                            if (page.uuid !== this.pageId) {
                                 this.allpages.push(page);
+                                this.getSelectedIndex(0);
                             }
                         }
                         this.loadPages();
@@ -83,6 +84,27 @@ export class TabPageComponent implements OnDestroy, OnInit {
                     (res: HttpErrorResponse) => this.onError(res.message)
                 );
         }
+    }
+
+    loadUpdateForm() {
+        this.builtInPageService
+            .find(this.pageId ,this.projectUid)
+            .pipe(
+                filter((mayBeOk: HttpResponse<IPage>) => mayBeOk.ok),
+                map((response: HttpResponse<IPage>) => response.body)
+            )
+            .subscribe(
+                (res: IPage) => {
+                    this.currentPage = res;
+                    this.pageTitle = res.pagetitle;
+                    this.editForm.get('pagetitle').patchValue(res.pagetitle);
+                    this.updatePage(res);
+                }
+            );
+    }
+
+    updatePage(page: ITabbedPage) {
+        this.tabPages = page.tabPages
     }
 
     addTab() {
@@ -146,6 +168,12 @@ export class TabPageComponent implements OnDestroy, OnInit {
         return {
             ...new TabbedPage(),
             tabPages: this.tabPages,
+            pagetitle: this.editForm.get('pagetitle').value,
+            uuid: this.currentPage.uuid,
+            projectUuid: this.currentPage.projectUuid,
+            pagetemplate: this.currentPage.pagetemplate,
+            pageViewType: this.currentPage.pageViewType,
+            status: 'ENABLED'
         };
     }
 

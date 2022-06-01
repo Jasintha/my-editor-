@@ -993,12 +993,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         .subscribe(
             (res: any) => {
               if (res.IsNameExist) {
-                this.consoleLogService.writeConsoleLog('Page updated successfully');
-                this.save(page);
+                this.consoleLogService.writeConsoleLog('Page name exists');
               } else {
                 this.consoleLogService.writeConsoleLog('Page saved successfully');
+                this.save(page);
               }
-              this.save(page);
             },
             (res: HttpErrorResponse) => this.onError(res.message)
       );

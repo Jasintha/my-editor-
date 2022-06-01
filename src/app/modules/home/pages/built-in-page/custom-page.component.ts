@@ -311,6 +311,7 @@ export class CustomPageViewComponent implements OnDestroy , OnChanges{
         this.panelItems = [];
         this.aggregateItems = [];
         this.apiParams = [];
+        this.PARAM_DATA = [];
         this.apiResourceDetails = [];
         this.dashboardPanelDetails = [];
         this.activatedRoute.params.subscribe(params => {
@@ -902,12 +903,11 @@ export class CustomPageViewComponent implements OnDestroy , OnChanges{
             .subscribe(
                 (res: any) => {
                     if (res.IsNameExist) {
-                        this.consoleLogService.writeConsoleLog('Page updated successfully');
-                        this.save(page);
+                        this.consoleLogService.writeConsoleLog('PAge name already exists');
                     } else {
                         this.consoleLogService.writeConsoleLog('Page saved successfully');
+                        this.save(page);
                     }
-                    this.save(page);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
