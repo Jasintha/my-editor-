@@ -88,8 +88,11 @@ export class MessageSubscriberTaskNodeComponent implements ControlValueAccessor,
   @Input()
   serviceUuid: string;
 
-  events: any[];
-  eventItems: any[];
+  items: any[];
+  aggregates: IAggregate[];
+  aggregateItems: Item[];
+  viewmodelItems: Item[];
+  viewmodels: IViewmodel[];
   project: IProject;
 
   @Input()
@@ -124,8 +127,9 @@ export class MessageSubscriberTaskNodeComponent implements ControlValueAccessor,
               protected projectService: ProjectService,
               private fb: FormBuilder) {
     this.msgSubTaskNodeConfigFormGroup = this.fb.group({
+      eventModel: [null, Validators.required],
       subject: ["", Validators.required],
-      selectedEvent:  [null, Validators.required],
+//       selectedEvent:  [null, Validators.required],
     });
   }
 
@@ -158,13 +162,13 @@ export class MessageSubscriberTaskNodeComponent implements ControlValueAccessor,
     }
   }
 
-  onEventObjChange(){
-    let selectedEvent = this.msgSubTaskNodeConfigFormGroup.get(['selectedEvent']).value;
-    this.configuration.evenId = selectedEvent.uuid;
+  onInputObjChange(){
+    this.configuration.eventModel = this.msgSubTaskNodeConfigFormGroup.get(['eventModel']).value;
     this.updateModel(this.configuration);
   }
 
   loadServiceAndUpdateForm(){
+     this.items = [];
      if (this.serviceUuid) {
         this.projectService
             .findWithModelEventsAndSubrules(this.serviceUuid)
@@ -175,18 +179,21 @@ export class MessageSubscriberTaskNodeComponent implements ControlValueAccessor,
             .subscribe(
                 (res: IProject) => {
                   this.project = res;
-                  this.events = this.project.events;
-                  if (this.events) {
-                    this.loadEvents();
+                  this.aggregates = this.project.aggregates;
+                  this.viewmodels = this.project.viewmodels;
+                  if (this.aggregates) {
+                    this.loadAggregates();
                   }
-                  //this.updateForm();
-                  let evenObj = null;
-                  let evenId = this.configuration.evenId;
-                  if(evenId && this.eventItems){
-                    evenObj = this.eventItems.find(x => x.uuid === evenId);
+                  if (this.viewmodels) {
+                    this.loadViewmodels();
+                  }
+
+                  let eventModel = this.configuration.eventModel;
+                  if(eventModel && this.items){
+                    eventModel = this.items.find(x => (x.id === this.configuration.eventModel.id) && (x.inputName === this.configuration.eventModel.inputName));
                   }
                   this.msgSubTaskNodeConfigFormGroup.patchValue({
-                      selectedEvent: evenObj
+                      eventModel: eventModel
                   });
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
@@ -195,12 +202,64 @@ export class MessageSubscriberTaskNodeComponent implements ControlValueAccessor,
 
   }
 
-  loadEvents() {
-    this.eventItems = [];
-    for (let i = 0; i < this.events.length; i++) {
-      if (this.events[i].status === 'ENABLED') {
-        const dropdownLabel = this.events[i].name;
-        this.eventItems.push({ label: dropdownLabel, value: this.events[i] });
+  loadAggregates() {
+    for (let i = 0; i < this.aggregates.length; i++) {
+      if (this.aggregates[i].status === 'ENABLED' && this.aggregates[i].type === 'MODEL') {
+        const dropdownLabel = this.aggregates[i].name + ' : Model';
+        this.aggregateItems.push({ label: dropdownLabel, value: this.aggregates[i] });
+        const input = {
+          id: this.aggregates[i].uuid,
+          paramType: APIParamType.BODY,
+          inputType: APIInputType.MODEL,
+          inputName: this.aggregates[i].name,
+        };
+        const returnObj = {
+          id: this.aggregates[i].uuid,
+          paramType: APIParamType.RETURN,
+          inputType: APIInputType.MODEL,
+          inputName: this.aggregates[i].name,
+        };
+        this.items.push(input);
+      } else if (this.aggregates[i].status === 'ENABLED' && this.aggregates[i].type === 'DTO') {
+        const dropdownLabel = this.aggregates[i].name + ' : DTO';
+        this.aggregateItems.push({ label: dropdownLabel, value: this.aggregates[i] });
+        const input = {
+          id: this.aggregates[i].uuid,
+          paramType: APIParamType.BODY,
+          inputType: APIInputType.DTO,
+          inputName: this.aggregates[i].name,
+        };
+        const returnObj = {
+          id: this.aggregates[i].uuid,
+          paramType: APIParamType.RETURN,
+          inputType: APIInputType.DTO,
+          inputName: this.aggregates[i].name,
+        };
+        this.items.push(input);
+      }
+    }
+  }
+
+  loadViewmodels() {
+    for (let i = 0; i < this.viewmodels.length; i++) {
+      if (this.viewmodels[i].status === 'ENABLED') {
+        const dropdownLabel = this.viewmodels[i].name;
+        this.viewmodelItems.push({ label: dropdownLabel, value: this.viewmodels[i] });
+        const dtodropdownLabel = this.viewmodels[i].name + ' : DTO';
+        this.aggregateItems.push({ label: dtodropdownLabel, value: this.viewmodels[i] });
+        const input = {
+          id: this.viewmodels[i].uuid,
+          paramType: APIParamType.BODY,
+          inputType: APIInputType.DTO,
+          inputName: this.viewmodels[i].name,
+        };
+        const returnObj = {
+          id: this.viewmodels[i].uuid,
+          paramType: APIParamType.RETURN,
+          inputType: APIInputType.DTO,
+          inputName: this.viewmodels[i].name,
+        };
+        this.items.push(input);
       }
     }
   }
@@ -261,4 +320,9 @@ export class MessageSubscriberTaskNodeComponent implements ControlValueAccessor,
     }
   }
 
+}
+
+export interface Item {
+  value: any;
+  label: string;
 }

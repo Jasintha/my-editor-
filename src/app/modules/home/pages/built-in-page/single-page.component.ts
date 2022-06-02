@@ -238,66 +238,66 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       // this.projectId = params['projId'];
       if (this.projectUid) {
         this.projectService
-          .find(this.projectUid)
-          .pipe(
-            filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
-            map((response: HttpResponse<IProject>) => response.body)
-          )
-          .subscribe((res: IProject) => {
-            this.project = res;
-            if (this.project.apptypesID === 'task.ui') {
-              this.editForm.get('pagetemplate').valueChanges.subscribe(pagetemplate => {
-                if (
-                  pagetemplate === 'table-page' ||
-                  pagetemplate === 'form-page' ||
-                  pagetemplate === 'form-wizard-page' ||
-                  pagetemplate === 'file-upload-page'
-                ) {
-                  this.editForm.get('resourcePath').setValidators([Validators.required]);
-                  this.editForm.get('resourcePath').updateValueAndValidity();
-                }
-                if (pagetemplate === 'aio-table' || pagetemplate === 'aio-grid' || pagetemplate === 'dashboard-page') {
-                  this.editForm.get('resourcePath').clearValidators();
-                  this.editForm.get('resourcePath').updateValueAndValidity();
-                }
-                if (pagetemplate === 'file-upload-page' || pagetemplate === 'dashboard-page') {
-                  this.editForm.get('selectedAggregate').clearValidators();
-                  this.editForm.get('selectedAggregate').updateValueAndValidity();
-                } else {
-                  this.editForm.get('selectedAggregate').setValidators([Validators.required]);
-                  this.editForm.get('selectedAggregate').updateValueAndValidity();
-                }
-              });
+            .find(this.projectUid)
+            .pipe(
+                filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
+                map((response: HttpResponse<IProject>) => response.body)
+            )
+            .subscribe((res: IProject) => {
+              this.project = res;
+              if (this.project.apptypesID === 'task.ui') {
+                this.editForm.get('pagetemplate').valueChanges.subscribe(pagetemplate => {
+                  if (
+                      pagetemplate === 'table-page' ||
+                      pagetemplate === 'form-page' ||
+                      pagetemplate === 'form-wizard-page' ||
+                      pagetemplate === 'file-upload-page'
+                  ) {
+                    this.editForm.get('resourcePath').setValidators([Validators.required]);
+                    this.editForm.get('resourcePath').updateValueAndValidity();
+                  }
+                  if (pagetemplate === 'aio-table' || pagetemplate === 'aio-grid' || pagetemplate === 'dashboard-page') {
+                    this.editForm.get('resourcePath').clearValidators();
+                    this.editForm.get('resourcePath').updateValueAndValidity();
+                  }
+                  if (pagetemplate === 'file-upload-page' || pagetemplate === 'dashboard-page') {
+                    this.editForm.get('selectedAggregate').clearValidators();
+                    this.editForm.get('selectedAggregate').updateValueAndValidity();
+                  } else {
+                    this.editForm.get('selectedAggregate').setValidators([Validators.required]);
+                    this.editForm.get('selectedAggregate').updateValueAndValidity();
+                  }
+                });
 
-              this.editForm.get('selectedDatamodel').clearValidators();
-              this.editForm.get('selectedDatamodel').updateValueAndValidity();
-            }
-            if (this.project.apptypesID === 'virtuan.webapp-v2') {
-              this.editForm.get('selectedDatamodel').setValidators([Validators.required]);
-              this.editForm.get('selectedDatamodel').updateValueAndValidity();
+                this.editForm.get('selectedDatamodel').clearValidators();
+                this.editForm.get('selectedDatamodel').updateValueAndValidity();
+              }
+              if (this.project.apptypesID === 'virtuan.webapp-v2') {
+                this.editForm.get('selectedDatamodel').setValidators([Validators.required]);
+                this.editForm.get('selectedDatamodel').updateValueAndValidity();
 
-              this.editForm.get('selectedAggregate').clearValidators();
-              this.editForm.get('selectedAggregate').updateValueAndValidity();
+                this.editForm.get('selectedAggregate').clearValidators();
+                this.editForm.get('selectedAggregate').updateValueAndValidity();
 
-              this.editForm.get('resourcePath').clearValidators();
-              this.editForm.get('resourcePath').updateValueAndValidity();
-            }
-          });
+                this.editForm.get('resourcePath').clearValidators();
+                this.editForm.get('resourcePath').updateValueAndValidity();
+              }
+            });
       }
     });
   }
 
   constructor(
-    protected builtInPageService: BuiltInPageService,
-    protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder,
-    protected projectService: ProjectService,
-    protected microserviceService: MicroserviceInstallerService,
-    protected eventManager: EventManagerService,
-    private router: Router,
-    protected pageConfigService: PageConfigService,
-    public dialog: MatDialog,
-    private consoleLogService: ConsoleLogService
+      protected builtInPageService: BuiltInPageService,
+      protected activatedRoute: ActivatedRoute,
+      private fb: FormBuilder,
+      protected projectService: ProjectService,
+      protected microserviceService: MicroserviceInstallerService,
+      protected eventManager: EventManagerService,
+      private router: Router,
+      protected pageConfigService: PageConfigService,
+      public dialog: MatDialog,
+      private consoleLogService: ConsoleLogService
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -542,18 +542,18 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   loadMicroservices() {
     this.microserviceService
-      .findByProjectId(this.projectUid, this.projectUid)
-      .pipe(
-        filter((mayBeOk: HttpResponse<IProject[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IProject[]>) => response.body)
-      )
-      .subscribe(
-        (res: IProject[]) => {
-          this.microservices = res;
-          this.loadMicroserviceDropdownItems();
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+        .findByProjectId(this.projectUid, this.projectUid)
+        .pipe(
+            filter((mayBeOk: HttpResponse<IProject[]>) => mayBeOk.ok),
+            map((response: HttpResponse<IProject[]>) => response.body)
+        )
+        .subscribe(
+            (res: IProject[]) => {
+              this.microservices = res;
+              this.loadMicroserviceDropdownItems();
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
   }
 
   loadUpdateForm() {
@@ -700,49 +700,49 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   loadMicroserviceProjects() {
     this.projectService
-      .findAllMicroserviceProjects()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IProject[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IProject[]>) => response.body)
-      )
-      .subscribe(
-        (res: IProject[]) => {
-          this.microserviceProjects = res;
-          this.loadMicroserviceProjectDropdownItems();
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+        .findAllMicroserviceProjects()
+        .pipe(
+            filter((mayBeOk: HttpResponse<IProject[]>) => mayBeOk.ok),
+            map((response: HttpResponse<IProject[]>) => response.body)
+        )
+        .subscribe(
+            (res: IProject[]) => {
+              this.microserviceProjects = res;
+              this.loadMicroserviceProjectDropdownItems();
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
   }
 
   onChangeMicroservice() {
     this.apiItems = [];
     const microservice = this.editForm.get(['microservice']).value;
     this.microserviceService
-      .findApis(microservice.uuid, this.projectUid)
-      .pipe(
-        filter((mayBeOk: HttpResponse<string[]>) => mayBeOk.ok),
-        map((response: HttpResponse<string[]>) => response.body)
-      )
-      .subscribe(
-        (res: string[]) => {
-          if (res) {
-            for (let i = 0; i < res.length; i++) {
-              const dropdownLabel = res[i];
-              this.apiItems.push({ label: dropdownLabel, value: res[i] });
-            }
-          }
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+        .findApis(microservice.uuid, this.projectUid)
+        .pipe(
+            filter((mayBeOk: HttpResponse<string[]>) => mayBeOk.ok),
+            map((response: HttpResponse<string[]>) => response.body)
+        )
+        .subscribe(
+            (res: string[]) => {
+              if (res) {
+                for (let i = 0; i < res.length; i++) {
+                  const dropdownLabel = res[i];
+                  this.apiItems.push({ label: dropdownLabel, value: res[i] });
+                }
+              }
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
   }
 
   notifyModelChange(currentDatamodel: IAggregate) {
     const selectedModel: IAggregate = this.editForm.get(['selectedAggregate']).value;
     this.eventManager.dispatch(
-      new AppEvent(EventTypes.newViewModelCreation, {
-        name: 'newViewModelCreation',
-        content: currentDatamodel.uuid,
-      })
+        new AppEvent(EventTypes.newViewModelCreation, {
+          name: 'newViewModelCreation',
+          content: currentDatamodel.uuid,
+        })
     );
   }
 
@@ -822,6 +822,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       }
       if (builtInPage && builtInPage.stepMappings && builtInPage.stepMappings.length > 0) {
         this.stepFieldArr = builtInPage.stepMappings;
+        this.dataSourceWizard = new MatTableDataSource(this.stepFieldArr);
       }
       this.pageTitle = builtInPage.pagetitle;
     }
@@ -897,6 +898,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         projectUuid: this.projectUid,
         pagestyle: this.pagestyle,
         pageViewType: 'singleWidget',
+        stepHeaders: this.getAllWizardSteps(),
+        stepMappings: this.stepFieldArr,
         authority: this.editForm.get(['authority']).value,
         isHomepage: this.editForm.get(['isHomepage']).value,
       };
@@ -905,8 +908,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPage>>) {
     result.subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
+        () => this.onSaveSuccess(),
+        () => this.onSaveError()
     );
   }
 
@@ -980,7 +983,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   aggregate($event) {
-   }
+  }
 
   checkPageNameExist() {
     const page = this.createFromForm();
@@ -1000,52 +1003,52 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
               }
             },
             (res: HttpErrorResponse) => this.onError(res.message)
-      );
+        );
   }
 
   sidenavClosed() {
     this.sidebar = false;
     this.activatedRoute.params.subscribe(params => {
       this.projectService
-        .findWithModels(this.projectUid)
-        .pipe(
-          filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
-          map((response: HttpResponse<IProject>) => response.body)
-        )
-        .subscribe(
-          (res: IProject) => {
-            this.project = res;
-            this.getPageTemplates();
-            if (this.project.apptypesID === 'task.ui') {
-              this.aggregates = this.project.aggregates;
-              if (this.aggregates) {
-                this.aggregateItems = [];
-                this.loadAggregates();
-              }
-            } else {
-              this.datamodels = this.project.datamodels;
-              this.datamodelItems = [];
-              this.loadEntities();
-            }
-          },
-          (res: HttpErrorResponse) => this.onError(res.message)
-        );
+          .findWithModels(this.projectUid)
+          .pipe(
+              filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
+              map((response: HttpResponse<IProject>) => response.body)
+          )
+          .subscribe(
+              (res: IProject) => {
+                this.project = res;
+                this.getPageTemplates();
+                if (this.project.apptypesID === 'task.ui') {
+                  this.aggregates = this.project.aggregates;
+                  if (this.aggregates) {
+                    this.aggregateItems = [];
+                    this.loadAggregates();
+                  }
+                } else {
+                  this.datamodels = this.project.datamodels;
+                  this.datamodelItems = [];
+                  this.loadEntities();
+                }
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );
     });
   }
 
   loadAllPageConfig() {
     this.pageConfigService
-      .query(null, this.projectUid)
-      .pipe(
-        filter((res: HttpResponse<IPageConfig[]>) => res.ok),
-        map((res: HttpResponse<IPageConfig[]>) => res.body)
-      )
-      .subscribe(
-        (res: IPageConfig[]) => {
-          // this.configs = res;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+        .query(null, this.projectUid)
+        .pipe(
+            filter((res: HttpResponse<IPageConfig[]>) => res.ok),
+            map((res: HttpResponse<IPageConfig[]>) => res.body)
+        )
+        .subscribe(
+            (res: IPageConfig[]) => {
+              // this.configs = res;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
   }
 
   loadPageConfigsByPageId(pageId: string, uuid: string) {
@@ -1054,19 +1057,19 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     } else {
       // this.spinnerService.show();
       this.pageConfigService
-        .findPageConfigsForPageId(pageId, uuid)
-        .pipe(
-          filter((res: HttpResponse<IPageConfig>) => res.ok),
-          map((res: HttpResponse<IPageConfig>) => res.body)
-        )
-        .subscribe(
-          (res: IPageConfig) => {
-            this.configs = res;
-            this.pageConfigs = this.configs.pageConfigs;
-            // this.spinnerService.hide();
-          },
-          (res: HttpErrorResponse) => this.onError(res.message)
-        );
+          .findPageConfigsForPageId(pageId, uuid)
+          .pipe(
+              filter((res: HttpResponse<IPageConfig>) => res.ok),
+              map((res: HttpResponse<IPageConfig>) => res.body)
+          )
+          .subscribe(
+              (res: IPageConfig) => {
+                this.configs = res;
+                this.pageConfigs = this.configs.pageConfigs;
+                // this.spinnerService.hide();
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );
     }
   }
 
@@ -1093,16 +1096,17 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       };
       if (this.stepFieldArr.indexOf(stepField) === -1) {
         this.stepFieldArr.push(stepField);
-        this.ELEMENT_DATA.push(stepField);
-        this.dataSourceWizard = new MatTableDataSource(this.ELEMENT_DATA);
+      //  this.ELEMENT_DATA.push(stepField);
+        this.dataSourceWizard = new MatTableDataSource(this.stepFieldArr);
       }
     }
   }
   removeWizardDetailsGroup(index: number) {
     this.wizardDetailsGroup.removeAt(index);
-    this.getAllWizardSteps();
+    this.saveAllWizardSteps();
   }
-  getAllWizardSteps() {
+
+  saveAllWizardSteps() {
     this.stepHeadersList = [];
     const allStepControllers = this.wizardDetailsGroup.controls;
     for (let i = 0; i < allStepControllers.length; i++) {
@@ -1111,6 +1115,19 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         value: allStepControllers[i].value.stepId + '-' + allStepControllers[i].value.stepHeading,
       });
     }
+  }
+
+  getAllWizardSteps() {
+    const wizardStepObjArray = [];
+    const allStepControllers = this.wizardDetailsGroup.controls;
+    for (let i = 0; i < allStepControllers.length; i++) {
+      const wizardStepObj = {
+        StepHeader: allStepControllers[i]['controls'].stepHeading.value,
+        StepId: allStepControllers[i]['controls'].stepId.value,
+      };
+      wizardStepObjArray.push(wizardStepObj);
+    }
+    return wizardStepObjArray;
   }
 
   deleteFieldSteps(param) {
@@ -1130,7 +1147,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.stepIndexId = this.wizardDetailsGroup.length + 1;
     // this.stepIndexId++;
     this.wizardDetailsGroup.push(this.addWizardDetailsGroup(stepH));
-    this.getAllWizardSteps();
+    this.saveAllWizardSteps();
   }
 
   addWizardDetailsGroup(stepH): FormGroup {
@@ -1152,7 +1169,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.headerIndexId = this.detailsHeaderGroup.length + 1;
     // this.stepIndexId++;
     this.detailsHeaderGroup.push(this.addDetailsHeaderGroup(stepH));
-    this.getAllWizardSteps();
+    this.saveAllWizardSteps();
   }
   addDetailsHeaderGroup(stepH): FormGroup {
     let detailHeader = 'Header ' + this.headerIndexId;
