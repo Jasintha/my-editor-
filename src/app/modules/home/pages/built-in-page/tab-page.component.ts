@@ -98,7 +98,9 @@ export class TabPageComponent implements OnDestroy, OnInit {
                     this.currentPage = res;
                     this.pageTitle = res.pagetitle;
                     this.editForm.get('pagetitle').patchValue(res.pagetitle);
-                    this.updatePage(res);
+                    if(res.status === 'ENABLED') {
+                        this.updatePage(res);
+                    }
                 }
             );
     }
@@ -178,8 +180,11 @@ export class TabPageComponent implements OnDestroy, OnInit {
     }
 
     getSelectedIndex(index) {
-        const tab = this.tabPages[index];
-        this.tabName.setValue(tab.tabName);
+        if(this.tabPages && index !== -1) {
+            index = index === -1 ? 0: index;
+            const tab = this.tabPages[index];
+            this.tabName.setValue(tab.tabName);
+        }
     }
 
     saveTabName(index){
