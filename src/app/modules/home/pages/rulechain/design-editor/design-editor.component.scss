@@ -1000,6 +1000,13 @@
     }
 }
 
+.assign-epic-des{
+    border: 0;
+    .ql-toolbar.ql-snow{
+        display :none;
+    }
+}
+
 .text-des-overflow{
     overflow-y: auto;
     white-space: nowrap;

@@ -278,7 +278,7 @@
 
     <div *ngIf="filteredStories.length != 0" @inOutAnimation>
         <ng-container *ngFor="let story of filteredStories" >
-            <div id="storiesText" class="row section border wrap-text"  style="margin-left: 120px; margin-bottom: -8px" *ngIf="story.storyText">
+            <div id="storiesText" class="row section border row-color wrap-text"  style="margin-left: 120px; margin-bottom: -8px" *ngIf="story.storyText">
                 <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
 <!--                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
                     <a class="edit-icon-text" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -382,7 +382,7 @@
 
                     <div class="col-12 d-flex justify-content-end" >
 <!--                        <a class="swagger-link" virtuan-click-stop-propagation><i class="fa fa-trash" aria-hidden="true"></i></a>-->
-                        <mat-icon class="material-icons swagger-link" (click)="openNewTab()" style="font-size: 25px">move_to_inbox</mat-icon>
+                        <mat-icon class="material-icons swagger-link" (click)="openNewTab()" style="font-size: 25px">link</mat-icon>
                     </div>
 
 
