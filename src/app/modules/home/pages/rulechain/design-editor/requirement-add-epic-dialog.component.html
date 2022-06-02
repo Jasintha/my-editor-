@@ -72,8 +72,8 @@
                         </div>
 
 
-                        <p-editor name="reqdescription" id="field_reqdescription"
-                                  formControlName="reqdescription" [style]="{'height':'200px'}" [readonly]="disable">
+                        <p-editor name="reqdescription" id="field_reqdescription" [(ngModel)]="aiDes"
+                                   [style]="{'height':'200px'}" >
                             <!--<p-header>
                             <span class="ql-formats">
                                 <button class="ql-bold" aria-label="Bold"></button>
@@ -99,9 +99,10 @@
             <mat-step>
                 <ng-template matStepLabel>Step 2</ng-template>
                 <div class="row">
-                    <p-editor name="reqdescription" id="field_reqdescriptions"
-                               [style]="{'height':'200px'}" >
-                    </p-editor>
+<!--                    <p-editor name="reqdescription" id="field_reqdescriptions" [ngModel]="aiDes"-->
+<!--                               [style]="{'height':'200px'}" >-->
+<!--                    </p-editor>-->
+                    <div [innerHTML]="aiDes"></div>
                 </div>
 
 

@@ -118,6 +118,6 @@ export class RequirementService {
   }
 
   findAIDescription(des): Observable<HttpResponse<any>>{
-    return this.http.post<any>(`http://140.82.12.61/nlpp`, des,  {headers : new HttpHeaders({ 'Content-Type': 'text/html' }) , observe: 'response'}  );
+    return this.http.post<any>(`http://140.82.12.61/nlpp/`, des,  { observe: 'response'}  );
   }
 }
