@@ -174,6 +174,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     PageNo = 0;
     PageSize = 5;
     reqCreatedAt:string;
+    existingEpicOne: IEpic;
 
     public pieChartOptions: ChartOptions = {
         responsive: true,
@@ -458,7 +459,11 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
         dialogRef.afterClosed(
         ).subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            if (result.type === 'epic'){
+                this.reloadView();
+            }else if (result.type === 'story'){
+                this.loadStoriesForEpic(this.existingEpicOne.uuid);
+            }
         });
     }
 
@@ -769,6 +774,48 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.reqCreatedAt = date + '   '+'  '+ time
     }
 
+    // getData(isNext = true) {
+    //     if (isNext)
+    //         this.PageNo = this.PageNo + 1;
+    //     else
+    //         this.PageNo = this.PageNo - 1;
+    //
+    //     if (this.PageNo > 0) {
+    //         var offset = (this.PageNo - 1) * this.PageSize;
+    //         var data = this.existingEpics.slice(offset).slice(0, this.PageSize);
+    //         if (data && data.length > 0) {
+    //             this.ListData = data;
+    //             this.isBtnNext = true;
+    //             this.isBtnPrevious = true;
+    //         }
+    //         else {
+    //             if (isNext) {
+    //                 this.isBtnNext = false;
+    //                 this.isBtnPrevious = true;
+    //             }
+    //             else {
+    //                 this.isBtnNext = true;
+    //                 this.isBtnPrevious = false;
+    //             }
+    //         }
+    //     }
+    //     else {
+    //         this.isBtnNext = true;
+    //         this.isBtnPrevious = false;
+    //     }
+    //
+    //
+    // }
+
+    // setState(item: any) {
+    //     this.ListData = this.ListData.map((p: any) => {
+    //         p.isActive = item.uuid === p.uuid ? true : false;
+    //         return p;
+    //     })
+    //     this.existingEpicOne = item;
+    //     this.filterEpic(item,1)
+    // }
+
     getData(isNext = true) {
         if (isNext)
             this.PageNo = this.PageNo + 1;
@@ -799,15 +846,55 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             this.isBtnPrevious = false;
         }
 
-
     }
 
     setState(item: any) {
-        this.ListData = this.ListData.map((p: any) => {
-            p.isActive = item.uuid === p.uuid ? true : false;
-            return p;
-        })
-        this.filterEpic(item,1)
+
+        if (!item.isActive) {
+            var $this = this;
+            this.ListData = this.ListData.map((p: any) => {
+                if (item.uuid === p.uuid) {
+                    $this.open(p);
+                }
+                else {
+                    $this.close(p);
+                }
+                return p;
+            })
+            this.existingEpicOne = item;
+            this.filterEpic(item,1)
+        }
+    }
+
+    open(p: any) {
+        var width = 0;
+        var div: any = document.getElementById('flexParent' + p.uuid);
+        var interval = setInterval(function () {
+            width = width + 5;
+            div.style.width = width + '%';
+            if (width === 60) {
+                clearInterval(interval);
+                p.isActive = true;
+            }
+        }, 30);
+    }
+    close(p: any) {
+        if (p.isActive) {
+            p.isActive = false;
+            var div: any = document.getElementById('flexParent' + p.uuid);
+            var width = Number(div.style.width.split('%')[0]);
+            var interval = setInterval(function () {
+                width = width - 5;
+                div.style.width = width === 0 ? 'auto' : width + '%';
+                if (width === 0) {
+                    clearInterval(interval);
+                }
+            }, 30);
+        }
+        else {
+            p.isActive = false;
+        }
+
     }
 
 }

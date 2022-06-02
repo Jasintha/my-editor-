@@ -10,28 +10,32 @@
    <div class="product-item" >
     <div class="product-item-content" >
      <div class="mb-2" align="center" >
-      <img *ngIf="template.value == 'login-page'" class="product-image theme-page" width="200px"
-           src="/assets/images/pages/login.jpg"
+      <img *ngIf="template.value == 'login-page'" class="product-image theme-page" width="200px" height="150px"
+           src="/assets/images/new_pages/page_wireframes/Login.jpg"
            alt="Template">
-      <img width="200px"
-              *ngIf="template.value == 'table-page' || template.value == 'aio-table'"
-              class="product-image theme-page" src="/assets/images/new_pages/table-page.png"
-              alt="Template">
-      <img width="200px"
-              *ngIf="template.value == 'form-page' || template.value == 'file-upload-page' || template.value == 'form-wizard-page'"
-              class="product-image theme-page" src="/assets/images/new_pages/form_page.png"
-              alt="Template">
-      <img *ngIf="template.value == 'register-page'" width="200px"
-           class="product-image theme-page" src="/assets/images/pages/register.jpg"
+      <img width="200px" height="150px"
+           *ngIf="template.value == 'table-page' || template.value == 'aio-table'"
+           class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/table.jpg"
            alt="Template">
-      <img *ngIf="template.value == 'aio-grid'" width="200px"
-           class="product-image theme-page" src="/assets/images/new_pages/grid_page.png"
+      <img width="200px" height="150px"
+           *ngIf="template.value == 'form-page' || template.value == 'file-upload-page'"
+           class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/form.jpg"
            alt="Template">
-      <img *ngIf="template.value == 'tab-page'" width="200px"
-           class="product-image theme-page" src="/assets/images/new_pages/grid_page.png"
+      <img width="200px" height="150px"
+           *ngIf="template.value == 'form-wizard-page'"
+           class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/wizardpage.jpg"
            alt="Template">
-      <img *ngIf="template.value == 'filter-page'" width="200px"
-           class="product-image theme-page" src="/assets/images/new_pages/filter_page.png"
+      <img *ngIf="template.value == 'register-page'" width="200px" height="150px"
+           class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/register.jpg"
+           alt="Template">
+      <img *ngIf="template.value == 'aio-grid'" width="200px" height="150px"
+           class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/Gridpage.jpg"
+           alt="Template">
+      <img *ngIf="template.value == 'tab-page'" width="200px" height="150px"
+           class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/tabpage.jpg"
+           alt="Template">
+      <img *ngIf="template.value == 'filter-page'" width="200px" height="150px"
+           class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/filterpage.jpg"
            alt="Template">
       <!--<img src="/content/images/theme/{{product.themestyle}}.png" [alt]="product.name" class="product-image" />-->
      </div>
@@ -55,7 +59,7 @@
   <mat-label>Available actions</mat-label>
   <div class="row">
    <div class="col-3" *ngFor="let option of actionItems">
-     <h6 style="padding-left: 15px">{{option}}</h6>
+    <h6 style="padding-left: 15px">{{option}}</h6>
    </div>
   </div>
 

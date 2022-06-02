@@ -687,3 +687,14 @@ p {
 .tab-container{
   margin-top: 30px;
 }
+.box-shadow{
+  //image-rendering: auto;
+  image-rendering: crisp-edges;
+  //image-rendering: pixelated;
+
+  /* Safari seems to support, but seems deprecated and does the same thing as the others. */
+  //image-rendering: -webkit-optimize-contrast;
+  height: 130px;
+  width: 158px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}

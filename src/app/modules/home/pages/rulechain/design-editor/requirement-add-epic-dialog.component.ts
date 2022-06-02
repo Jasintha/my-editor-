@@ -37,6 +37,7 @@ export class RequirementAddEpicDialogComponent implements OnInit {
   disable = true;
   sourceProperties: [];
   targetProperties: [];
+  aiDes: string;
 
   @ViewChild('stepper') private myStepper: MatStepper;
   totalStepsCount: number;
@@ -124,16 +125,21 @@ export class RequirementAddEpicDialogComponent implements OnInit {
   }
 
   loadAIDes(){
-    const des = this.data.reqdesc;
+    const des = this.data.reqdesc.replace(/<[^>]*>/g, '');
+    const formData = new FormData();
+    formData.append('requirment', des )
+    formData.append('domain', 'other' )
+    formData.append('region', 'other' )
+
     this.requirementService
-        .findAIDescription(des)
+        .findAIDescription(formData)
         .pipe(
-            filter((res: HttpResponse<any[]>) => res.ok),
-            map((res: HttpResponse<any[]>) => res.body)
+            filter((res: HttpResponse<any>) => res.ok),
+            map((res: HttpResponse<any>) => res.body)
         )
         .subscribe(
-            (res: any[]) => {
-
+            (res: any) => {
+              this.aiDes = res.htext;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );

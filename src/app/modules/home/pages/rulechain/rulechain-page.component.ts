@@ -1435,32 +1435,18 @@ export class RuleChainPageComponent extends PageComponent
                     nodeRuleInputs.push(ruleInput);
                   }
                 } else if (nodes[foundNode.fromIndex].component.clazz === 'xiMsgSubTaskNode') {
-      
-                  //findEventModel
-                  this.eventService
-                    .find(configuration.eventId, this.serviceUuid)
-                    .pipe(
-                      filter((mayBeOk: HttpResponse<any>) => mayBeOk.ok),
-                      map((response: HttpResponse<any>) => response.body)
-                    )
-                    .subscribe(
-                      (res: any) => {
-                        let eventData = res;
-                        if (eventData.aggregate) {
-                          let inputname = eventData.aggregate.name.replace(/\s/g, "");
-                          inputname = inputname.toLowerCase();
-                          inputname = this.titleCaseWord(inputname);
-                          let inputTypeLower = eventData.aggregate.type.toLowerCase();
-                          if (inputTypeLower == "model") {
-                            let ruleInput = { inputName: inputname, inputType: 'model', record: 's' };
-                            nodeRuleInputs.push(ruleInput);
-                          } else if (inputTypeLower == "dto") {
-                            let ruleInput = { inputName: inputname, inputType: 'dto', record: 's' };
-                            nodeRuleInputs.push(ruleInput);
-                          }
-                        }
-                      }
-                    );
+                  if(configuration.eventModel){
+                    let inputname = configuration.eventModel.inputName.replace(/\s/g, "");
+                    inputname = inputname.toLowerCase();
+                    let inputTypeLower = configuration.eventModel.inputType.toLowerCase();
+                    if (inputTypeLower == "model") {
+                      let ruleInput = { inputName: inputname, inputType: 'model', record: 's' };
+                      nodeRuleInputs.push(ruleInput);
+                    } else {
+                      let ruleInput = { inputName: inputname, inputType: 'dto', record: 's' };
+                      nodeRuleInputs.push(ruleInput);
+                    }
+                  }
                 }
     
             }

@@ -131,6 +131,10 @@ export class StoryService {
     return this.http.delete<any>(`${this.resourceUrl}/${uuid}/${id}`, { observe: 'response' });
   }
 
+  deleteEpic(id: string, uuid: string): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`${this.epicresourceUrl}/${uuid}/${id}`, { observe: 'response' });
+  }
+
   checkStatusChange(id: string, uuid: string): Observable<HttpResponse<boolean>> {
     return this.http.get<boolean>(`${this.storystatusChangeCheckResourceUrl}/${uuid}/${id}`, { observe: 'response' });
   }
