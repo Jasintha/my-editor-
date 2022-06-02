@@ -174,6 +174,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     PageNo = 0;
     PageSize = 5;
     reqCreatedAt:string;
+    existingEpicOne: IEpic;
 
     public pieChartOptions: ChartOptions = {
         responsive: true,
@@ -458,7 +459,11 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
         dialogRef.afterClosed(
         ).subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            if (result.type === 'epic'){
+                this.reloadView();
+            }else if (result.type === 'story'){
+                this.loadStoriesForEpic(this.existingEpicOne.uuid);
+            }
         });
     }
 
@@ -807,6 +812,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             p.isActive = item.uuid === p.uuid ? true : false;
             return p;
         })
+        this.existingEpicOne = item;
         this.filterEpic(item,1)
     }
 

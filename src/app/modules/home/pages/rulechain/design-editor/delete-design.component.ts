@@ -10,6 +10,7 @@ import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {RequirementService} from '@core/projectservices/requirement.service';
+import {StoryService} from '@core/projectservices/story-technical-view.service';
 
 @Component({
   selector: 'virtuan-delete-design-dialog',
@@ -24,7 +25,8 @@ export class DeleteDesignComponent {
       private requirementService: RequirementService,
     protected eventManager: EventManagerService,
     public dialogRef: MatDialogRef<DeleteDesignComponent>,
-    @Inject(MAT_DIALOG_DATA)  public data: any
+    @Inject(MAT_DIALOG_DATA)  public data: any,
+      private storyService: StoryService,
   ) {}
 
   cancel() {
@@ -32,18 +34,29 @@ export class DeleteDesignComponent {
   }
 
   confirmDelete(id: string, uuid: string) {
-    this.requirementService.delete(id, uuid).subscribe(response => {
-      // this.eventManager.broadcast({
-      //   name: 'pageNavigationListModification',
-      //   content: 'Deleted an pageNavigation'
-      // });
-      this.eventManager.dispatch(
-          new AppEvent(EventTypes.editorUITreeListModification, {
-            name: 'editorUITreeListModification',
-            content: 'Deleted an page navigation',
-          })
-      );
-      this.dialogRef.close();
-    });
+    if (this.data.type === 'requirement'){
+      this.requirementService.delete(id, uuid).subscribe(response => {
+          this.eventManager.dispatch(
+              new AppEvent(EventTypes.editorDesignTreeListModification, {
+                  name: 'editorDesignTreeListModification',
+                  content: 'Add an requirement',
+              })
+          );
+        this.dialogRef.close();
+      });
+    } else if (this.data.type === 'story'){
+      this.storyService.delete(id, uuid).subscribe(response => {
+          const res = {
+              uuid: id,
+              type: this.data.type
+          }
+        this.dialogRef.close(res);
+      });
+    }else if (this.data.type === 'epic'){
+      this.storyService.deleteEpic(id, uuid).subscribe(response => {
+        this.dialogRef.close(this.data.type);
+      });
+    }
+
   }
 }

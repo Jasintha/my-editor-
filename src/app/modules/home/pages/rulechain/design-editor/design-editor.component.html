@@ -269,7 +269,7 @@
         <hr>
         <div class="col-12 d-flex justify-content-center">
             <button mat-raised-button style="top: -32px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
-            <button mat-raised-button style="top: -32px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>
+<!--            <button mat-raised-button style="top: -32px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>-->
 <!--            <a class="add-req" virtuan-click-stop-propagation (click)="addStory(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Story</a>-->
 <!--            <a class="add-text" virtuan-click-stop-propagation (click)="addText(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Text</a>-->
         </div>
@@ -279,7 +279,7 @@
         <ng-container *ngFor="let story of filteredStories" >
             <div id="storiesText" class="row section border row-color wrap-text"  style="margin-left: 120px; margin-bottom: -20px" *ngIf="story.storyText">
                 <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
-                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+<!--                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
                     <a class="edit-icon-text" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.storyText"
@@ -307,7 +307,7 @@
 <!--                                <h5 class="txt-overflow p-0">{{story.name}}</h5>-->
 <!--                            </div>-->
                             <div>
-                                <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign(story.uuid,'story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </div>
 <!--                        </div>-->
 <!--                        <div class="col-6">-->
