@@ -71,7 +71,8 @@ export class CreateTextComponent implements OnInit {
 
 
     if (this.data.createStatus === 'Update') {
-      this.loadUpdateForm();
+      // this.loadUpdateForm();
+      this.updateForm(this.data.story);
     }
 
   }
@@ -98,7 +99,7 @@ export class CreateTextComponent implements OnInit {
     this.editForm.patchValue({
       id: req.uuid,
       // name: req.name,
-      description: req.description
+      description: req.storyText
     });
   }
 
@@ -120,8 +121,14 @@ export class CreateTextComponent implements OnInit {
   }
 
   private createFromForm(): IStoryUpdateReq {
+    let uuid = '';
+    if (this.data.createStatus === 'Update'){
+      uuid = this.data.story.uuid;
+    }else {
+      uuid = this.data.uuid
+    }
     return {
-      uuid: this.data.uuid,
+      uuid,
       storyText: this.editForm.get(['description']).value,
       projectUuid: this.projectUid
     };
@@ -143,7 +150,7 @@ export class CreateTextComponent implements OnInit {
 //           content: 'Add an Event',
 //         })
 //     );
-    this.dialogRef.close();
+    this.dialogRef.close(true);
     // this.previousState();
   }
 

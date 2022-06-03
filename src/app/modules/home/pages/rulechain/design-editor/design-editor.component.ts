@@ -419,17 +419,38 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
     }
 
-    editStory(reqId){
+    editStory(story){
         const dialogRef = this.dialog.open(CreateStoryComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.desprojectUid,
-                uuid: reqId,
+                story,
                 createStatus: 'Update',
+                epic: this.existingEpicOne
             }
         });
         dialogRef.afterClosed(
         ).subscribe(result => {
+            this.loadStoriesForEpic(this.existingEpicOne.uuid);
+        });
+    }
+
+    editStoryText(story){
+        const dialogRef = this.dialog.open(CreateTextComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: this.desprojectUid,
+                story,
+                createStatus: 'Update',
+                epic: this.existingEpicOne
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            if (result){
+                this.loadStoriesForEpic(this.existingEpicOne.uuid);
+            }
+
         });
     }
 
@@ -462,6 +483,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             if (result.type === 'epic'){
                 this.reloadView();
             }else if (result.type === 'story'){
+                this.loadStoriesForEpic(this.existingEpicOne.uuid);
+            }else if (result === 'story-text'){
                 this.loadStoriesForEpic(this.existingEpicOne.uuid);
             }
         });

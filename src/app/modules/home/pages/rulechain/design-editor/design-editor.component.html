@@ -290,8 +290,8 @@
         <ng-container *ngFor="let story of filteredStories" >
             <div id="storiesText" class="row section border row-color wrap-text"  style="margin-left: 120px; margin-bottom: -8px" *ngIf="story.storyText">
                 <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
-<!--                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
-                    <a class="edit-icon-text" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign(story,'story-text')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a class="edit-icon-text" virtuan-click-stop-propagation (click)="editStoryText(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.storyText"
                           [style]="{'height':'100px', 'margin-top':'10px'}" [readonly]="true">
@@ -318,9 +318,10 @@
 <!--                                <h5 class="txt-overflow p-0">{{story.name}}</h5>-->
 <!--                            </div>-->
                             <div>
-                                <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign(story.uuid,'story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                <a class="swagger-link" virtuan-click-stop-propagation (click)="openNewTab()"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                <a class="open-ui" virtuan-click-stop-propagation (click)="OpenUI()"><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+                                <a class="delete" virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" (click)="deleteDesign(story.uuid,'story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a class="swagger-link" virtuan-click-stop-propagation matTooltip="Swagger link" [matTooltipPosition]="toolTipPosition" (click)="openNewTab()"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                <a class="open-ui" virtuan-click-stop-propagation matTooltip="Open UI" [matTooltipPosition]="toolTipPosition" (click)="OpenUI()"><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+                                <a class="edit-icon" virtuan-click-stop-propagation matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editStory(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                             </div>
 <!--                        </div>-->
 <!--                        <div class="col-6">-->

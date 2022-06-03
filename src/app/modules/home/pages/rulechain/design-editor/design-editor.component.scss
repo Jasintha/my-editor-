@@ -856,20 +856,6 @@
 }
 
 .wrap-story{
-    .edit-icon{
-        right: 55px;
-        top: 43px;
-        height: 20px;
-        position: absolute;
-        font-size: 13px;
-        padding: 2px 5px;
-        background: #007bff;
-        color: white;
-        border-radius: 5px;
-        visibility: hidden;
-        opacity: 0;
-    }
-
 
     .delete{
         top: 15px;
@@ -886,13 +872,13 @@
     }
 
     .swagger-link{
-        right: 12px;
-        top: 40px;
+        right: 42px;
+        top: 15px;
         height: 20px;
         position: absolute;
         font-size: 13px;
         padding: 2px 5px;
-        background: #007bff;
+        background: #a28b39;
         color: white;
         border-radius: 5px;
         visibility: hidden;
@@ -900,13 +886,27 @@
     }
 
     .open-ui{
-        right: 12px;
-        top: 65px;
+        right: 72px;
+        top: 15px;
         height: 20px;
         position: absolute;
         font-size: 13px;
         padding: 2px 5px;
         background: #2a8f30;
+        color: white;
+        border-radius: 5px;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .edit-icon{
+        right: 102px;
+        top: 15px;
+        height: 20px;
+        position: absolute;
+        font-size: 13px;
+        padding: 2px 5px;
+        background: #007bff;
         color: white;
         border-radius: 5px;
         visibility: hidden;
@@ -941,7 +941,7 @@
 
 .wrap-text{
     .delete{
-        top: 22px;
+        top: 10px;
         z-index: 1;
         height: 20px;
         right: 25px;
@@ -956,15 +956,16 @@
     }
 
     .edit-icon-text{
-        right: 55px;
-        top: 43px;
+        top: 10px;
+        z-index: 1;
         height: 20px;
+        right: 60px;
         position: absolute;
-        font-size: 13px;
-        padding: 2px 5px;
+        font-size: 15px;
         background: #007bff;
-        color: white;
+        padding: 0 6px;
         border-radius: 5px;
+        color: white;
         visibility: hidden;
         opacity: 0;
     }
@@ -975,7 +976,7 @@
             visibility: visible;
             opacity: 1;
         }
-        .edit-icon{
+        .edit-icon-text{
             visibility: visible;
             opacity: 1;
         }

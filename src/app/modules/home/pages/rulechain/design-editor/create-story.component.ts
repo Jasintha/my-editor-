@@ -36,6 +36,7 @@ export class CreateStoryComponent implements OnInit {
   stories: any[];
   selectedLabel = '';
   descriptions: string;
+  existingStory: IStory;
 
   buildEventForm() {
     this.editForm = this.fb.group({
@@ -56,6 +57,7 @@ export class CreateStoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.existingStory = this.data.story;
     this.getStoryData();
     this.epic = this.data.epic;
     this.descriptions = this.epic.requirements[0].description;
@@ -84,7 +86,8 @@ export class CreateStoryComponent implements OnInit {
 
 
       if (this.data.createStatus === 'Update') {
-        this.loadUpdateForm();
+        // this.loadUpdateForm();
+        this.updateForm(this.existingStory);
       }
 
   }
@@ -111,7 +114,8 @@ export class CreateStoryComponent implements OnInit {
     this.editForm.patchValue({
       id: req.uuid,
       name: req.name,
-      description: req.description
+      description: req.description,
+      storyTemplate: req.storyTemplate
     });
   }
 
@@ -125,7 +129,7 @@ export class CreateStoryComponent implements OnInit {
 
     const req = this.createFromForm();
     if (req.uuid) {
-      req.status = this.currentStory.status;
+      // req.status = this.currentStory.status;
       this.subscribeToSaveResponse(this.storyService.update(req, this.projectUid));
     } else {
       this.subscribeToSaveResponse(this.storyService.create(req, this.projectUid));
