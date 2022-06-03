@@ -172,6 +172,7 @@ export class TabPageComponent implements OnDestroy, OnInit {
             tabPages: this.tabPages,
             pagetitle: this.editForm.get('pagetitle').value,
             uuid: this.currentPage.uuid,
+            pagetype: 'tab-page',
             projectUuid: this.currentPage.projectUuid,
             pagetemplate: this.currentPage.pagetemplate,
             pageViewType: this.currentPage.pageViewType,
