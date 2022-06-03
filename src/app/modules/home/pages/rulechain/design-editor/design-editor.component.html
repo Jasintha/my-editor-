@@ -15,9 +15,10 @@
         </div>
     </div>
 </div>
+
 <div *ngIf="!viewEditor" class="container vertical" style="width: 990px">
     <div style="position: relative">
-    <div id="requirements" class="row section border row-height create-req" style="height: 222px">
+        <div id="requirements" class="row section border row-height create-req" style="height: 222px">
         <div class="col-12 p-0">
             <div class="row">
 <!--                <div class="col-9 d-flex">-->
@@ -134,7 +135,15 @@
 <!--            &lt;!&ndash;            </div>&ndash;&gt;-->
 <!--        </div>-->
     </div>
+    </div>
+</div>
 
+<div  style="position: relative">
+    <h1 class="d-flex justify-content-center watermark">Requirements</h1>
+    <mat-divider class="divider-padding"></mat-divider>
+</div>
+
+<div *ngIf="!viewEditor" class="container vertical" style="width: 990px">
     <div  *ngIf="existingEpics.length === 0" @inOutAnimation>
         <hr>
 
@@ -285,7 +294,14 @@
 <!--            <a class="add-text" virtuan-click-stop-propagation (click)="addText(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Text</a>-->
         </div>
     </div>
+</div>
 
+<div *ngIf="existingEpics.length != 0" style="position: relative">
+    <h1 class="d-flex justify-content-center watermark">Epics</h1>
+    <mat-divider class="divider-padding"></mat-divider>
+</div>
+
+<div *ngIf="!viewEditor" class="container vertical" style="width: 990px">
     <div *ngIf="filteredStories.length != 0" @inOutAnimation>
         <ng-container *ngFor="let story of filteredStories" >
             <div id="storiesText" class="row section border row-color wrap-text"  style="margin-left: 120px; margin-bottom: -8px" *ngIf="story.storyText">
@@ -535,7 +551,7 @@
             </div>
         </div>
     </div>-->
-    </div>
+<!--    </div>-->
 </div>
 
 <virtuan-story-design-page

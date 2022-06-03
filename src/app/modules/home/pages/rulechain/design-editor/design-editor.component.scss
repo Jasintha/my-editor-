@@ -645,15 +645,15 @@
     padding-left: 10px;
     padding-top: 13px;
 }
-.watermark {
-    z-index: 99;
-    position: absolute;
-    top: auto;
-    padding-bottom: 26px;
-    color: #CDCDCD;
-    font-size: 2rem;
-    width: 130px;
-}
+//.watermark {
+//    z-index: 99;
+//    position: absolute;
+//    top: auto;
+//    padding-bottom: 26px;
+//    color: #CDCDCD;
+//    font-size: 2rem;
+//    width: 130px;
+//}
 
 .row-color{
     background-color: #f7f7f7;
@@ -1257,4 +1257,17 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     overflow: hidden;
     text-align: center;
     padding-left: 10px;
+}
+
+.divider-padding{
+    margin-right: 50px;
+    margin-left: 30px;
+}
+
+.watermark{
+    color: #CDCDCD;
+    font-size: 2rem;
+    position: absolute;
+    bottom: -19px;
+    left: 12px;
 }
