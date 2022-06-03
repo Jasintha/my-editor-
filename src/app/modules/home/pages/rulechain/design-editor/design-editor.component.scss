@@ -1249,3 +1249,12 @@ body .ui-editor-container .ui-editor-content .ql-editor {
   white-space: nowrap;
 }
 
+.tags-overflow{
+    height: 33px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 50px;
+    overflow: hidden;
+    text-align: center;
+    padding-left: 10px;
+}
