@@ -661,15 +661,15 @@
 }
 
 .story-card{
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     text-align: center;
     cursor: pointer;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    //box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .story-icon{
-    margin: 30px 60px 0 0;
+    margin: -6px 18px 0 0;
 }
 
 
@@ -872,7 +872,7 @@
 
 
     .delete{
-        top: 22px;
+        top: 18px;
         height: 20px;
         right: 12px;
         position: absolute;
@@ -886,8 +886,36 @@
     }
 
     .swagger-link{
+        right: 12px;
+        top: 40px;
+        height: 20px;
+        position: absolute;
+        font-size: 13px;
+        padding: 2px 5px;
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
         visibility: hidden;
+        opacity: 0;
     }
+
+    .open-ui{
+        right: 12px;
+        top: 62px;
+        height: 20px;
+        position: absolute;
+        font-size: 13px;
+        padding: 2px 5px;
+        background: #2a8f30;
+        color: white;
+        border-radius: 5px;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    //.swagger-link{
+    //    visibility: hidden;
+    //}
 
     &:hover{
         cursor: pointer;
@@ -900,6 +928,10 @@
             opacity: 1;
         }
         .swagger-link{
+            visibility: visible;
+            opacity: 1;
+        }
+        .open-ui{
             visibility: visible;
             opacity: 1;
         }
@@ -1064,7 +1096,12 @@ body .ui-editor-container .ui-editor-content .ql-editor {
         width: 370px;
     }
 }
-
+//.story-temp-carousel{
+//    .ui-carousel-items-content {
+//        height: 70px;
+//        width: 200px;
+//    }
+//}
 
 
 
@@ -1201,3 +1238,14 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     width: 150px;
     text-align: left;
 }
+
+
+.tags-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  list-style: none;
+  padding: 0;
+  white-space: nowrap;
+}
+

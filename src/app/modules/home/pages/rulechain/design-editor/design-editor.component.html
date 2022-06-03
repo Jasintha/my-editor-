@@ -64,10 +64,10 @@
                             </div>
                             <div class="col-12" style="display:flex; justify-content: center">
                                 <div style="height: 100px; width: 257px;" >
-                                    <div *ngFor="let tag of req.tags"  >
-                                        <l1 class="txt-description" [matTooltipPosition]="'below'"  matTooltip="{{tag}}">{{tag}}</l1>
+                                    <ul class="tags-view" *ngFor="let tag of req.tags"  >
+                                        <li [matTooltipPosition]="'below'"  matTooltip="{{tag}}">{{tag}}</li>
 <!--                                        <h5 class="txt-description" style="font-weight: 100;">{{tag}}</h5>-->
-                                    </div>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -309,6 +309,8 @@
 <!--                            </div>-->
                             <div>
                                 <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign(story.uuid,'story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a class="swagger-link" virtuan-click-stop-propagation (click)="openNewTab()"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                <a class="open-ui" virtuan-click-stop-propagation (click)="OpenUI()"><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
                             </div>
 <!--                        </div>-->
 <!--                        <div class="col-6">-->
@@ -380,10 +382,10 @@
 <!--                        <mat-icon class="material-icons"  style="font-size: 18px">link</mat-icon>-->
 <!--                    </button>-->
 
-                    <div class="col-12 d-flex justify-content-end" >
-<!--                        <a class="swagger-link" virtuan-click-stop-propagation><i class="fa fa-trash" aria-hidden="true"></i></a>-->
-                        <mat-icon class="material-icons swagger-link" (click)="openNewTab()" style="font-size: 25px">link</mat-icon>
-                    </div>
+<!--                    <div class="col-12 d-flex justify-content-end" >-->
+<!--&lt;!&ndash;                        <a class="swagger-link" virtuan-click-stop-propagation><i class="fa fa-trash" aria-hidden="true"></i></a>&ndash;&gt;-->
+<!--                        <mat-icon class="material-icons swagger-link" (click)="openNewTab()" style="font-size: 25px">link</mat-icon>-->
+<!--                    </div>-->
 
 
 <!--                    <div style="right: -110px; bottom: -20px">-->
@@ -399,18 +401,18 @@
                  </div>
                 </div>
             </div>
-            <div id="stories" class="row section border row-color wrap-text"  style="margin-left: 120px" *ngIf="story.storyTemplate === 'CREATE-TEXT' ">
-                <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
-                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                </div>
-                <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.description"
-                          [style]="{'height':'120px', 'margin-top':'10px', 'border' : 0}" [readonly]="true">
-                    <p-header hidden>
-                        <span class="ql-formats"></span>
-                    </p-header>
-                </p-editor>
+<!--            <div id="stories" class="row section border row-color wrap-text"  style="margin-left: 120px" *ngIf="story.storyTemplate === 'CREATE-TEXT' ">-->
+<!--                <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">-->
+<!--                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
+<!--                </div>-->
+<!--                <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.description"-->
+<!--                          [style]="{'height':'120px', 'margin-top':'10px', 'border' : 0}" [readonly]="true">-->
+<!--                    <p-header hidden>-->
+<!--                        <span class="ql-formats"></span>-->
+<!--                    </p-header>-->
+<!--                </p-editor>-->
 
-            </div>
+<!--            </div>-->
         </ng-container>
         <!--        <div class="watermark" style="left: 88%;">-->
         <!--            Stories-->

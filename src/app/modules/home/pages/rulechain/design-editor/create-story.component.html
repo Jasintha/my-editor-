@@ -11,9 +11,9 @@
 
     <mat-dialog-content>
         <div class="row">
+            <h5>Requirement</h5>
             <div class="col-12" style="text-align: center;">
-                <div class="card" class="box-shadow"
-                     style="margin-bottom: 25px; box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
+                <div >
                     <div class="card-body">
                         <h5 class="card-title">{{epic.name}}</h5>
                         <div *ngIf="descriptions" class="inner-html-des" [innerHTML]="descriptions"> </div>
@@ -21,46 +21,53 @@
                 </div>
             </div>
 
-            <p-carousel [value]="stories" [numVisible]="3" [numScroll]="3" [circular]="false"
-                        *ngIf="selectedLabel !== 'custom'">
-                <ng-template let-story pTemplate="item">
-                    <div class="product-item">
-                        <div class="product-item-content">
-                            <div class="mb-2" align="center">
-                                <div class="card story-card" *ngIf="story === 'custom'">
-                                    <h4>Custom</h4>
-                                    <div class="story-icon">
-                                        <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px;">
-                                            extension
-                                        </mat-icon>
+            <h5 style="margin-top: 5px">Select Story Template</h5>
+            <div class="row">
+                <div class="col-6">
+                    <p-carousel class="story-temp-carousel" verticalViewPortHeight="160px" orientation="vertical" [value]="stories" [numVisible]="1" [numScroll]="1" [circular]="true"
+                                *ngIf="selectedLabel !== 'custom'">
+                        <ng-template let-story pTemplate="item">
+                            <div class="product-item">
+                                <div class="product-item-content">
+                                    <div class="mb-2" align="center">
+                                        <div class="card story-card" *ngIf="story === 'custom'">
+                                            <h6>Custom</h6>
+                                            <div class="story-icon">
+                                                <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 40px;">
+                                                    extension
+                                                </mat-icon>
+                                            </div>
+                                        </div>
+                                        <div class="card story-card" *ngIf="story === 'login'">
+                                            <h6>Login</h6>
+                                            <div class="story-icon">
+                                                <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 40px">
+                                                    account_circle
+                                                </mat-icon>
+                                            </div>
+                                        </div>
+                                        <div class="card story-card" *ngIf="story === 'email'">
+                                            <h6>Email</h6>
+                                            <div class="story-icon">
+                                                <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 40px">email
+                                                </mat-icon>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="card story-card" *ngIf="story === 'login'">
-                                    <h4>Login</h4>
-                                    <div class="story-icon">
-                                        <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px">
-                                            account_circle
-                                        </mat-icon>
-                                    </div>
-                                </div>
-                                <div class="card story-card" *ngIf="story === 'email'">
-                                    <h4>Email</h4>
-                                    <div class="story-icon">
-                                        <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px">email
-                                        </mat-icon>
-                                    </div>
+                                <div style="margin-top: 15px;" align="center">
+                                    <p-radioButton name="screenselection"
+                                                   [value]="story" label="{{story}}"
+                                                   formControlName="storyTemplate"></p-radioButton>
+
                                 </div>
                             </div>
-                        </div>
-                        <div style="margin-top: 15px;" align="center">
-                            <p-radioButton name="screenselection"
-                                           [value]="story" label="{{story}}"
-                                           formControlName="storyTemplate"></p-radioButton>
+                        </ng-template>
+                    </p-carousel>
+                </div>
+                <div class="col-6"></div>
+            </div>
 
-                        </div>
-                    </div>
-                </ng-template>
-            </p-carousel>
 
 
             <div class="form-group" [hidden]="!editForm.get('id').value">

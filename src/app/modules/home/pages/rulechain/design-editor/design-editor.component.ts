@@ -762,8 +762,14 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     openNewTab() {
         const ip = window.location.origin;
         const endpoint = '/sp/api/swagger/index.html';
-        const url =  ip + '/' +this.selectedEpic.name+'service' + endpoint;
-        window.open(url, '_blank');
+        const url =  ip +  endpoint;
+        window.open(url);
+    }
+    OpenUI(){
+        const ip = window.location.origin;
+        const endpoint = '/uip/#/';
+        const url =  ip +  endpoint;
+        window.open(url);
     }
 
     selectedReq(val){

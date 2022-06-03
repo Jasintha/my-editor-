@@ -15,6 +15,7 @@ export interface IRequirement {
   status?: string;
   epicUuid?: string;
   createdAt?: string;
+  summary?: string;
 }
 
 export class Requirement implements IRequirement {
@@ -34,6 +35,7 @@ export class Requirement implements IRequirement {
     public epicUuid?: string,
     public status?: string,
     public createdAt?: string,
+    public summary?: string
   ) {}
 }
 

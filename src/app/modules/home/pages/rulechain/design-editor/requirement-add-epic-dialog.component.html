@@ -72,18 +72,20 @@
                         </div>
 
 
-                        <p-editor name="reqdescription" id="field_reqdescription" [(ngModel)]="aiDes"
-                                   [style]="{'height':'200px'}" >
-                            <!--<p-header>
-                            <span class="ql-formats">
-                                <button class="ql-bold" aria-label="Bold"></button>
-                                <button class="ql-italic" aria-label="Italic"></button>
-                                <button class="ql-underline" aria-label="Underline"></button>
-                                <button class="ql-list" value="ordered" aria-label="Ordered List"></button>
-                                <button class="ql-list" value="bullet" aria-label="Unordered List"></button>
-                            </span>
-                            </p-header>-->
-                        </p-editor>
+                        <div *ngIf="disable === true">
+                            <p-editor class="assign-epic-des" name="reqdescription" id="field_reqdescription"
+                                      formControlName="reqdescription"   [style]="{'height':'200px'}" [readonly]="disable"></p-editor>
+                        </div>
+
+                        <div *ngIf="disable === false">
+                            <p-editor name="reqdescription" id="field_reqdescription_edit" [(ngModel)]="aiDes"
+                                      formControlName="reqdescription"   [style]="{'height':'200px'}" >
+
+                            </p-editor>
+                        </div>
+
+
+
                     </div>
 
                 </div>
