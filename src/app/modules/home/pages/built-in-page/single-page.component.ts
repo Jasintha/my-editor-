@@ -180,8 +180,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       ]),
       detailsHeaderGroup: this.fb.array([
         new FormGroup({
-          detailsHeading: this.fb.control('Header 1'),
-          headerId: this.fb.control(this.headerIndexId),
+          stepHeading: this.fb.control('Header 1'),
+          stepId: this.fb.control(this.headerIndexId),
         }),
       ]),
     });
@@ -816,13 +816,23 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       });
       if (builtInPage && builtInPage.stepHeaders && builtInPage.stepHeaders.length > 0) {
         this.wizardDetailsGroup.removeAt(0);
+        this.detailsHeaderGroup.removeAt(0);
         for (const steph of builtInPage.stepHeaders) {
-          this.insertWizardDetailsGroup(steph.stepHeader);
+          if(builtInPage.pagetemplate === 'form-wizard-page') {
+            this.insertWizardDetailsGroup(steph.stepHeader);
+          } else if (builtInPage.pagetemplate === 'static-page') {
+            this. insertDetailsHeaderGroup(steph.stepHeader);
+          }
         }
       }
       if (builtInPage && builtInPage.stepMappings && builtInPage.stepMappings.length > 0) {
-        this.stepFieldArr = builtInPage.stepMappings;
-        this.dataSourceWizard = new MatTableDataSource(this.stepFieldArr);
+        if(builtInPage.pagetemplate === 'form-wizard-page') {
+          this.stepFieldArr = builtInPage.stepMappings;
+          this.dataSourceWizard = new MatTableDataSource(this.stepFieldArr);
+        } else if (builtInPage.pagetemplate === 'static-page') {
+          this.headerFieldArr = builtInPage.stepMappings;
+          this.dataSourceDetailsPage = new MatTableDataSource( this.headerFieldArr);
+        }
       }
       this.pageTitle = builtInPage.pagetitle;
     }
@@ -873,6 +883,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   private createFromForm(): IPage {
+    let headersArray = [];
+    let fieldMappingArray = [];
     if (this.project.apptypesID === 'task.ui') {
       if (this.editForm.get(['pagetemplate']).value === 'aio-table') {
         this.dashboardPanelDetails = [];
@@ -880,7 +892,13 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         this.apiResourceDetails = [];
         this.apiParams = [];
       }
-
+      if(this.currentPage.pagetemplate === 'static-page') {
+        headersArray = this.getAllWizardSteps('static');
+        fieldMappingArray = this.headerFieldArr;
+      } else {
+        headersArray = this.getAllWizardSteps('wizard');
+        fieldMappingArray = this.stepFieldArr;
+      }
       return {
         ...new Page(),
         uuid: this.editForm.get(['id']).value,
@@ -898,8 +916,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         projectUuid: this.projectUid,
         pagestyle: this.pagestyle,
         pageViewType: 'singleWidget',
-        stepHeaders: this.getAllWizardSteps(),
-        stepMappings: this.stepFieldArr,
+        stepHeaders: headersArray,
+        stepMappings: fieldMappingArray,
         authority: this.editForm.get(['authority']).value,
         isHomepage: this.editForm.get(['isHomepage']).value,
       };
@@ -1117,9 +1135,14 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
-  getAllWizardSteps() {
+  getAllWizardSteps(group) {
     const wizardStepObjArray = [];
-    const allStepControllers = this.wizardDetailsGroup.controls;
+    let allStepControllers = []
+    if (group === 'wizard') {
+       allStepControllers = this.wizardDetailsGroup.controls;
+    } else {
+       allStepControllers = this.detailsHeaderGroup.controls;
+    }
     for (let i = 0; i < allStepControllers.length; i++) {
       const wizardStepObj = {
         StepHeader: allStepControllers[i]['controls'].stepHeading.value,
@@ -1177,8 +1200,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       detailHeader = stepH;
     }
     return new FormGroup({
-      detailsHeading: new FormControl(detailHeader),
-      headerId: new FormControl(this.headerIndexId),
+      stepHeading: new FormControl(detailHeader),
+      stepId: new FormControl(this.headerIndexId),
     });
   }
   addFieldsToHeaders() {
@@ -1204,8 +1227,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       };
       if (this.headerFieldArr.indexOf(stepField) === -1) {
         this.headerFieldArr.push(stepField);
-        this.DETAILS_DATA.push(stepField);
-        this.dataSourceDetailsPage = new MatTableDataSource(this.DETAILS_DATA);
+      //  this.DETAILS_DATA.push(stepField);
+        this.dataSourceDetailsPage = new MatTableDataSource( this.headerFieldArr);
       }
     }
   }
@@ -1218,8 +1241,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     const allStepControllers = this.detailsHeaderGroup.controls;
     for (let i = 0; i < allStepControllers.length; i++) {
       this.detailsHeadersList.push({
-        label: allStepControllers[i].value.detailsHeading,
-        value: allStepControllers[i].value.headerId + '-' + allStepControllers[i].value.detailsHeading,
+        label: allStepControllers[i].value.stepHeading,
+        value: allStepControllers[i].value.stepId + '-' + allStepControllers[i].value.stepHeading,
       });
     }
   }
