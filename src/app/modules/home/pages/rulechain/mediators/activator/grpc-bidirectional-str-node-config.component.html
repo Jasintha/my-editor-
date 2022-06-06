@@ -1,0 +1,36 @@
+<div [formGroup]="postNodeConfigFormGroup">
+
+    <mat-form-field class="mat-block">
+        <mat-label>Input Object</mat-label>
+        <mat-select formControlName="selectedAPIInputs" (selectionChange)="onInputObjChange()">
+            <mat-option *ngFor="let option of items" [value]="option">
+                {{option.inputName}} : {{option.inputType}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="mat-block">
+        <mat-label>Return Object</mat-label>
+        <mat-select formControlName="returnObj" (selectionChange)="onReturnObjChange()">
+            <mat-option *ngFor="let option of returnItems" [value]="option">
+                <span *ngIf="option.inputType === 'MODEL' || option.inputType === 'DTO'">{{option.inputName}} : {{option.inputType}}</span>
+                <span *ngIf="option.inputType !== 'MODEL' && option.inputType !== 'DTO'">{{option.inputType}}</span>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="pt-3 pb-4">
+        <label id="example-radio-group-label">Return Object Record</label>
+        <mat-radio-group aria-labelledby="example-radio-group-label"
+                         class="ps-5" aria-label="Select an option" formControlName="returnRecordType">
+            <mat-radio-button class="pe-3" value="s">Single</mat-radio-button>
+            <mat-radio-button value="m">Multiple</mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+    <div class="mat-block pb-4">
+        <mat-checkbox formControlName="enableSecurity">Enable Security</mat-checkbox>
+    </div>
+
+</div>
+
