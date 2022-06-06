@@ -1214,4 +1214,36 @@
                                      [nodeDefinition]="nodeDefinitionValue">
         </virtuan-service-call-task-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiGrpcUnaryNode'">
+        <virtuan-grpc-unary-node-config #unaryNodeConfigComponent
+                                  formControlName="configuration"
+                                  [ruleNodeId]="ruleNodeId"
+                                  [serviceUuid]="serviceUuid"
+                                  [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-grpc-unary-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiGrpcServersideStrNode'">
+        <virtuan-grpc-serverside-str-node-config #serversideStrNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [serviceUuid]="serviceUuid"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-grpc-serverside-str-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiGrpcClientsideStrNode'">
+        <virtuan-grpc-clientside-str-node-config #clientsideStrNodeConfigComponent
+                                                 formControlName="configuration"
+                                                 [ruleNodeId]="ruleNodeId"
+                                                 [serviceUuid]="serviceUuid"
+                                                 [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-grpc-clientside-str-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiGrpcBidirectionalStrNode'">
+        <virtuan-grpc-bidirectional-str-node-config #bidirectionalStrNodeConfigComponent
+                                                 formControlName="configuration"
+                                                 [ruleNodeId]="ruleNodeId"
+                                                 [serviceUuid]="serviceUuid"
+                                                 [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-grpc-bidirectional-str-node-config>
+    </ng-container>
 </div>

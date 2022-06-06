@@ -1336,10 +1336,14 @@ export class RuleChainPageComponent extends PageComponent
             return obj;
         } else {
             if(nodes[foundNode.fromIndex].component.clazz === 'xiPostNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGetNode' ||
-                nodes[foundNode.fromIndex].component.clazz === 'xiPutNode' || nodes[foundNode.fromIndex].component.clazz === 'xiDeleteNode'){
+                nodes[foundNode.fromIndex].component.clazz === 'xiPutNode' || nodes[foundNode.fromIndex].component.clazz === 'xiDeleteNode' ||
+                nodes[foundNode.fromIndex].component.clazz === 'xiGrpcUnaryNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGrpcServersideStrNode' ||
+                nodes[foundNode.fromIndex].component.clazz === 'xiGrpcClientsideStrNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGrpcBidirectionalStrNode'){
                 apiNodeFound = true;
                 let configuration = nodes[foundNode.fromIndex].configuration;
-                if (nodes[foundNode.fromIndex].component.clazz === 'xiPostNode' || nodes[foundNode.fromIndex].component.clazz === 'xiPutNode'){
+                if (nodes[foundNode.fromIndex].component.clazz === 'xiPostNode' || nodes[foundNode.fromIndex].component.clazz === 'xiPutNode' ||
+                    nodes[foundNode.fromIndex].component.clazz === 'xiGrpcUnaryNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGrpcServersideStrNode' ||
+                    nodes[foundNode.fromIndex].component.clazz === 'xiGrpcClientsideStrNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGrpcBidirectionalStrNode'){
                     let inputname = configuration.selectedAPIInputs.inputName.replace(/\s/g, "");
                     inputname = inputname.toLowerCase();
                     inputname = this.titleCaseWord(inputname);
