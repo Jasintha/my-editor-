@@ -24,16 +24,19 @@
             <mat-step>
                 <ng-template matStepLabel>Step 1</ng-template>
                 <div class="row">
-                    <div class="pb-3">
-                        <mat-radio-group formControlName="epicCreateType">
-                            <mat-radio-button class="pe-5" value="new" color="primary" (change)="handleEpicCreateTypeChange()">
-                                <span>Create New Epic</span>
-                            </mat-radio-button>
-                            <mat-radio-button value="existing" color="primary" (change)="handleEpicCreateTypeChange()">
-                                <span>Select Existing</span>
-                            </mat-radio-button>
-                        </mat-radio-group>
+                    <div class="form-group" [hidden]="!editForm.get('id').value">
+                        <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
                     </div>
+<!--                    <div class="pb-3">-->
+<!--                        <mat-radio-group formControlName="epicCreateType">-->
+<!--                            <mat-radio-button class="pe-5" value="new" color="primary" (change)="handleEpicCreateTypeChange()">-->
+<!--                                <span>Create New Epic</span>-->
+<!--                            </mat-radio-button>-->
+<!--                            <mat-radio-button value="existing" color="primary" (change)="handleEpicCreateTypeChange()">-->
+<!--                                <span>Select Existing</span>-->
+<!--                            </mat-radio-button>-->
+<!--                        </mat-radio-group>-->
+<!--                    </div>-->
 
                     <mat-form-field *ngIf="editForm.value.epicCreateType === 'new'" class="flex-auto">
                         <mat-label>Title</mat-label>
@@ -78,7 +81,7 @@
                         </div>
 
                         <div *ngIf="disable === false">
-                            <p-editor name="reqdescription" id="field_reqdescription_edit" [(ngModel)]="aiDes"
+                            <p-editor name="reqdescription" id="field_reqdescription_edit"
                                       formControlName="reqdescription"   [style]="{'height':'200px'}" >
 
                             </p-editor>
@@ -101,7 +104,7 @@
             <mat-step>
                 <ng-template matStepLabel>Step 2</ng-template>
                 <div class="row">
-<!--                    <p-editor name="reqdescription" id="field_reqdescriptions" [ngModel]="aiDes"-->
+<!--                    <p-editor name="reqdescription" id="field_reqdescriptions" [ngModel]="aiDes" formControlName="aiDescription"-->
 <!--                               [style]="{'height':'200px'}" >-->
 <!--                    </p-editor>-->
                     <div [innerHTML]="aiDes"></div>

@@ -14,6 +14,7 @@ import {EventManagerService} from '@shared/events/event.type';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IApi} from '@shared/models/model/microservice-api.model';
+import {SelectItem} from 'primeng/api';
 
 interface Item {
   value: any;
@@ -33,10 +34,11 @@ export class CreateStoryComponent implements OnInit {
   epic: any;
   currentStory: any;
   existingTemplates: any;
-  stories: any[];
+  stories: SelectItem[];
   selectedLabel = '';
   descriptions: string;
   existingStory: IStory;
+  selectedTemp :string;
 
   buildEventForm() {
     this.editForm = this.fb.group({
@@ -61,6 +63,12 @@ export class CreateStoryComponent implements OnInit {
     this.getStoryData();
     this.epic = this.data.epic;
     this.descriptions = this.epic.requirements[0].description;
+    if (this.data.createStatus !== 'Update'){
+      this.selectedTemp = 'custom'
+      this.editForm.patchValue({
+        description:  this.descriptions,
+      })
+    }
   }
 
   // ngOnChanges(changes: SimpleChanges) {
@@ -70,10 +78,14 @@ export class CreateStoryComponent implements OnInit {
   // }
 
   storyTemplates(){
-    this.stories = [];
-    this.stories.push('custom');
-    this.stories.push('login');
-    this.stories.push('email');
+    this.stories = [
+      {label: 'Custom', value: 'custom'},
+      {label: 'Login', value: 'login'},
+      {label: 'Email', value: 'email'},
+    ];
+    // this.stories.push('custom');
+    // this.stories.push('login');
+    // this.stories.push('email');
   }
 
   getStoryData() {
@@ -110,13 +122,13 @@ export class CreateStoryComponent implements OnInit {
   }
 
   updateForm(req: any) {
-
     this.editForm.patchValue({
       id: req.uuid,
       name: req.name,
       description: req.description,
       storyTemplate: req.storyTemplate
     });
+    this.selectedTemp = req.storyTemplate;
   }
 
   previousState() {
@@ -182,6 +194,10 @@ export class CreateStoryComponent implements OnInit {
     if (this.selectedLabel !== 'custom'){
       this.save();
     }
+  }
+
+  changeEvent(val){
+    this.selectedTemp = val;
   }
 
 }

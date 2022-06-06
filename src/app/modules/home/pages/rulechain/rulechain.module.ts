@@ -96,7 +96,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatStepperModule} from '@angular/material/stepper';
 import { PickListModule } from 'primeng/picklist';
 import {TabPageComponent} from '@home/pages/built-in-page/tab-page.component';
-
+import {ListboxModule} from 'primeng/listbox';
 
 @NgModule({
   declarations: [
@@ -182,7 +182,8 @@ import {TabPageComponent} from '@home/pages/built-in-page/tab-page.component';
     ChartsModule,
     MatChipsModule,
     MatStepperModule,
-    PickListModule
+    PickListModule,
+    ListboxModule
   ]
 })
 export class RuleChainModule { }

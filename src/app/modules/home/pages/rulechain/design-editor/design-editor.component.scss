@@ -617,13 +617,13 @@
 }
 
 .req-txt-overflow{
-    height: 33px;
+    height: 24px;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 200px;
     overflow: hidden;
-    text-align: center;
-    padding-left: 10px;
+    text-align: left;
+    padding-left: 1px;
 }
 
 .txt-description{
@@ -1088,7 +1088,7 @@
 }
 
 body .ui-editor-container .ui-editor-content .ql-editor {
-    background-color: #f7f7f7;
+    background-color: #ffffff;
 }
 
 
@@ -1258,4 +1258,14 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     overflow: hidden;
     text-align: center;
     padding-left: 10px;
+}
+
+.list-box{
+    body .ui-listbox {
+        padding: 0;
+        min-width: 12em;
+        background: #ffffff;
+        border: 1px solid #a6a6a6;
+        height: 350px;
+    }
 }

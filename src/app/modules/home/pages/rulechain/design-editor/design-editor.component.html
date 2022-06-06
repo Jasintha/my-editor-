@@ -52,15 +52,15 @@
                                 <i class="fa fa-cogs" style="font-size: 25px; color: orange" aria-hidden="true"></i>
                             </div>
                             <div class="col-9" style="display: flex; justify-content: start">
-                                <h4 class="req-txt-overflow" style="font-weight: 600;">{{req?.name}}</h4>
+                                <h5 class="req-txt-overflow" style="font-weight: 500;">{{req?.name}}</h5>
                                 <a class="edit" (click)="editRequirement(req?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                 <div class="inner-wrap">
                                     <input type="text" placeholder="Title">
                                     <textarea name="descripton" cols="" rows=""></textarea>
                                     <button>Submit</button>
                                 </div>
-                                <a virtuan-click-stop-propagation class="delete" (click)="deleteDesign(req?.uuid,'requirement')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                <a virtuan-click-stop-propagation class="assign" (click)="assignRequirementToEpic(currentReq)"><i class="fa fa-link" aria-hidden="true"></i></a>
+                                <a virtuan-click-stop-propagation class="delete" matTooltip="Delete" [matTooltipPosition]="toolTipPosition" (click)="deleteDesign(req?.uuid,'requirement')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a virtuan-click-stop-propagation class="assign" matTooltip="Assign" [matTooltipPosition]="toolTipPosition" (click)="assignRequirementToEpic(currentReq)"><i class="fa fa-link" aria-hidden="true"></i></a>
                             </div>
                             <div class="col-12" style="display:flex; justify-content: center">
                                 <div style="height: 100px; width: 257px;" >
@@ -180,11 +180,11 @@
                                 <p matTooltip="{{item?.description}}"
                                    [matTooltipPosition]="toolTipPosition"> {{ item.description }}</p>
                             </div>
-                            <a class="edit" (click)="editEpics(item)"><i class="fa fa-pencil"
+                            <a class="edit" matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editEpics(item)"><i class="fa fa-pencil"
                                                                          aria-hidden="true"></i></a>
-                            <a virtuan-click-stop-propagation class="delete" (click)="deleteDesign(item?.uuid, 'epic')"><i
+                            <a virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" class="delete" (click)="deleteDesign(item?.uuid, 'epic')"><i
                                     class="fa fa-trash" aria-hidden="true"></i></a>
-                            <a virtuan-click-stop-propagation class="assign" (click)="addStory(selectedEpic)"><i
+                            <a virtuan-click-stop-propagation matTooltip="Assign/Create Story" [matTooltipPosition]="toolTipPosition" class="assign" (click)="addStory(selectedEpic)"><i
                                     class="fa fa-link" aria-hidden="true"></i></a>
                         </div>
                     </div>
