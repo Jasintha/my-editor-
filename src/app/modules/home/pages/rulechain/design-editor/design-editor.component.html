@@ -311,7 +311,7 @@
                     </div>
                 </div>
                 <div class="col-12 d-flex justify-content-center" style="height: 20px;" matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">
-                  <h5 style="bottom: 20px" class="txt-overflow">{{story.name}}</h5>
+                  <h5 style="margin: 0" class="txt-overflow">{{story.name}}</h5>
 <!--                    <div class="row pb-1">-->
 <!--                        <div class="col-6 d-flex justify-content-center align-item-center">-->
 <!--                            <div  matTooltip="{{story.storyTemplate}}" [matTooltipPosition]="toolTipPosition">-->
@@ -353,40 +353,75 @@
                 <!--                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i-->
                 <!--                            class="fa fa-trash" aria-hidden="true"></i></a>-->
                 <!--                </div>-->
-                <div class="col-1">
-                    <div id="generate">
-                        <div [ngClass]="spinnerButton ? 'spinner spinner-load' : 'spinner'"  (click)="generateStory(story)">
-                            <i class="fa fa-play" aria-hidden="true" style="color: #009579;"></i>
+                <div class="col-12" style="padding-bottom: 10px;">
+                    <div class="row">
+                        <div class="col-1 d-flex justify-content-start align-items-center" style="padding-left: 20px ;">
+                                <div id="generate">
+                                    <div [ngClass]="spinnerButton ? 'spinner spinner-load' : 'spinner'"  (click)="generateStory(story)">
+                                        <i class="fa fa-play" aria-hidden="true" style="color: #009579;"></i>
+                                    </div>
+                                </div>
                         </div>
+                        <div class="col-11">
+                            <div class="row p-0 m-0">
+                                <div class="col-1 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
+                                    <div class="new" style="display: flex; justify-content: center;">
+<!--                                        <button  mat-button disabled aria-label="Example icon button with a heart icon"  style="background-color: #40a2dc; color: white; cursor: pointer;width: 36px; height: 36px">-->
+<!--                                            &lt;!&ndash;                            <i class="material-icons">edit_note</i>&ndash;&gt;-->
+<!--                                            <mat-icon  style="font-size: 16px">tune</mat-icon>-->
+<!--                                        </button>-->
+                                        <div class="story-editor-button" (click)="loadStoryDesignEditor(story)">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border-right: 1px solid #b2a9a9; position: absolute; height: 107px; left: -786px;top: 0px;"></div>
+                                <div class="col-5 d-flex justify-content-center align-items-center p-0 m-0">
+                                    <mat-form-field class="flex-auto" style="width: 250px;">
+                                        <!--                        <mat-label>Progress</mat-label>-->
+                                        <mat-select [ngModel]="story.status" (selectionChange)="handleProgress($event.value, story.uuid)">
+                                            <mat-option value="NEW">New</mat-option>
+                                            <mat-option value="IN_PROGRESS">In Progress</mat-option>
+                                            <mat-option value="COMPLETED">Completed</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-6 d-flex justify-content-center align-items-center p-0 m-0">
+                                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{story.statusCompletedValue}}' style="width: 300px;"></mat-progress-bar>
+                                                        <div class="line" style="position: absolute;bottom: 35px;right: 344px;"></div>
+                                                        <h6 class="mt-0" style="position: absolute; right: 333px; bottom: 8px; font-size: 11px">New</h6>
+                                                        <div class="line" style="position: absolute; top: 65px; right: 80px"></div>
+                                                        <h6 class="mt-0" style="position: absolute; right: 181px; bottom: 8px;font-size: 11px">Progress</h6>
+                                                        <div class="line" style="position: absolute; top: 65px; right: 206px"></div>
+                                                        <h6 class="mt-0" style="position: absolute; right: 52px; bottom: 8px; font-size: 11px">Completed</h6>
+                                </div>
+                            </div>
+
+                            </div>
                     </div>
                 </div>
-                <div class="col-2 d-flex justify-content-center" style="margin-right: 10px">
-                    <div class="new" (click)="loadStoryDesignEditor(story)"  style="display: flex; justify-content: center;">
-                        <button  mat-mini-fab disabled aria-label="Example icon button with a heart icon"  style="background-color: #40a2dc; color: white; cursor: pointer;width: 36px; height: 36px">
-                            <!--                            <i class="material-icons">edit_note</i>-->
-                            <mat-icon  style="font-size: 16px">border_color</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-3 justify-content-center">
-                    <mat-form-field class="flex-auto" style="width: 100%">
-<!--                        <mat-label>Progress</mat-label>-->
-                        <mat-select [ngModel]="story.status" (selectionChange)="handleProgress($event.value, story.uuid)">
-                            <mat-option value="NEW">New</mat-option>
-                            <mat-option value="IN_PROGRESS">In Progress</mat-option>
-                            <mat-option value="COMPLETED">Completed</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-3 justify-content-center">
-                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{story.statusCompletedValue}}' style="width: 300px; margin-left: 42px;"></mat-progress-bar>
-                    <div class="line" style="margin-left: 47px; margin-top: 5px;"></div>
-                    <h6 class="mt-0" style="position: absolute; right: 354px; font-size: 11px">New</h6>
-                    <div class="line" style="position: absolute;margin-left: 183px; margin-top: -4px;"></div>
-                    <h6 class="mt-0" style="position: absolute; right: 207px; font-size: 11px">Progress</h6>
-                    <div class="line" style="position: absolute;margin-left: 325px;margin-top: -4px;"></div>
-                    <h6 class="mt-0" style="position: absolute; right: 66px; font-size: 11px">Completed</h6>
-                </div>
+<!--                <div class="col-2 d-flex justify-content-center" style="margin-right: 10px">-->
+<!--                    -->
+<!--                </div>-->
+<!--                <div class="col-3 justify-content-center">-->
+<!--                    <mat-form-field class="flex-auto" style="width: 100%">-->
+<!--&lt;!&ndash;                        <mat-label>Progress</mat-label>&ndash;&gt;-->
+<!--                        <mat-select [ngModel]="story.status" (selectionChange)="handleProgress($event.value, story.uuid)">-->
+<!--                            <mat-option value="NEW">New</mat-option>-->
+<!--                            <mat-option value="IN_PROGRESS">In Progress</mat-option>-->
+<!--                            <mat-option value="COMPLETED">Completed</mat-option>-->
+<!--                        </mat-select>-->
+<!--                    </mat-form-field>-->
+<!--                </div>-->
+<!--                <div class="col-3 justify-content-center">-->
+<!--                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{story.statusCompletedValue}}' style="width: 300px; margin-left: 42px;"></mat-progress-bar>-->
+<!--                    <div class="line" style="margin-left: 47px; margin-top: 5px;"></div>-->
+<!--                    <h6 class="mt-0" style="position: absolute; right: 354px; font-size: 11px">New</h6>-->
+<!--                    <div class="line" style="position: absolute;margin-left: 183px; margin-top: -4px;"></div>-->
+<!--                    <h6 class="mt-0" style="position: absolute; right: 207px; font-size: 11px">Progress</h6>-->
+<!--                    <div class="line" style="position: absolute;margin-left: 325px;margin-top: -4px;"></div>-->
+<!--                    <h6 class="mt-0" style="position: absolute; right: 66px; font-size: 11px">Completed</h6>-->
+<!--                </div>-->
 <!--                <div class="col-1 justify-content-end">-->
 <!--                    <button mat-mini-fab disabled aria-label="Example icon button with a heart icon"-->
 <!--                            style="background-color: rgba(108,64,220,0.83); color: white; cursor: pointer; right: -110px; bottom: -20px">-->
