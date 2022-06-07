@@ -12,13 +12,6 @@
             <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'NEW'" fxFlex class="mat-block">
-        <mat-label>Scope</mat-label>
-        <mat-select formControlName="propertyScope">
-            <mat-option value="RULE">Rule</mat-option>
-            <mat-option value="GLOBAL">Global</mat-option>
-        </mat-select>
-    </mat-form-field>
     <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'RULE_INPUT'" fxFlex class="mat-block">
         <mat-label>Rule Input</mat-label>
         <mat-select formControlName="modelpropertyruleInput">
@@ -63,6 +56,8 @@
                 <mat-option value="PRIMITIVE">Primitive</mat-option>
                 <mat-option value="MAP">Map</mat-option>
                 <mat-option value="ANY">Any</mat-option>
+                <mat-option value="DB">Database</mat-option>
+                <mat-option value="MESSAGING">Messaging</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -93,7 +88,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex class="mat-block">
+        <mat-form-field fxFlex class="mat-block" *ngIf="domainModelVariableNodeConfigFormGroup.value.propinputType !== 'DB' && domainModelVariableNodeConfigFormGroup.value.propinputType !== 'MESSAGING'">
             <mat-label>Record</mat-label>
             <mat-select formControlName="proprecord">
                 <mat-option value="s">Single</mat-option>
@@ -218,6 +213,14 @@
         </mat-tree-node>
     </mat-tree>
     </ng-container>
+
+    <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.modelpropertyType === 'NEW' && (domainModelVariableNodeConfigFormGroup.value.propinputType !== 'DB' && domainModelVariableNodeConfigFormGroup.value.propinputType !== 'MESSAGING')" fxFlex class="mat-block">
+        <mat-label>Scope</mat-label>
+        <mat-select formControlName="propertyScope">
+            <mat-option value="RULE">Rule</mat-option>
+            <mat-option value="GLOBAL">Global</mat-option>
+        </mat-select>
+    </mat-form-field>
 
     <div fxFlex fxLayout="row" fxLayoutAlign="end center">
     <button mat-icon-button class="virtuan-fullscreen-button-style"

@@ -334,7 +334,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
 
       let esConnection = this.configuration.esConnection;
       if(this.configuration.esConnection){
-        esConnection = this.allConnectionProperties.find(x => x.name === this.configuration.esConnection.name );
+        esConnection = this.allModelProperties.find(x => x.name === this.configuration.esConnection.name );
       }
       
       let errorBranch = this.configuration.errorBranch;

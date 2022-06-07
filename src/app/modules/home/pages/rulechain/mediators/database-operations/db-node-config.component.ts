@@ -813,7 +813,7 @@ export class DBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDe
 
       let dbConnection = this.configuration.dbConnection;
       if(this.allConnectionProperties && this.configuration.dbConnection){
-        dbConnection = this.allConnectionProperties.find(x => x.name === this.configuration.dbConnection.name);
+        dbConnection = this.allModelProperties.find(x => x.name === this.configuration.dbConnection.name);
       }
 
       let entity = this.configuration.entity;
