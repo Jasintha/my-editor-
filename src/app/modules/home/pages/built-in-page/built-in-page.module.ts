@@ -42,6 +42,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PickListModule } from 'primeng/picklist';
 import {CustomPageViewComponent} from '@home/pages/built-in-page/custom-page.component';
 import {CustomPageApiDialogComponent} from '@home/pages/built-in-page/custom-page-api-dialog.component';
+import {FilterPageComponent} from '@home/pages/built-in-page/filter-page.component';
 
 @NgModule({
     declarations:[
@@ -55,7 +56,8 @@ import {CustomPageApiDialogComponent} from '@home/pages/built-in-page/custom-pag
         WidgetSelectDialogComponent,
         ViewModelConfigComponent,
         CustomPageViewComponent,
-        CustomPageApiDialogComponent
+        CustomPageApiDialogComponent,
+        FilterPageComponent
     ],
     imports: [
         CommonModule,
@@ -103,7 +105,8 @@ import {CustomPageApiDialogComponent} from '@home/pages/built-in-page/custom-pag
         WidgetSelectDialogComponent,
         ViewModelConfigComponent,
         CustomPageViewComponent,
-        CustomPageApiDialogComponent
+        CustomPageApiDialogComponent,
+        FilterPageComponent
     ],
     providers: [ ]
 })

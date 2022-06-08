@@ -1206,14 +1206,14 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
   addFieldsToHeaders() {
     const field = this.editForm.get(['attributeName']).value;
-    let detailsHeader = '';
-    let detailsId = 0;
+    let stepHeader = '';
+    let stepId = 0;
     if (this.editForm.get(['detailHeader']).value) {
-      detailsId = parseInt(this.editForm.get(['detailHeader']).value.split('-')[0]);
-      detailsHeader = this.editForm.get(['detailHeader']).value.split('-')[1];
+      stepId = parseInt(this.editForm.get(['detailHeader']).value.split('-')[0]);
+      stepHeader = this.editForm.get(['detailHeader']).value.split('-')[1];
     }
 
-    if (!field || !detailsId) {
+    if (!field || !stepId) {
       // this.messageService.add({
       //   severity: 'warn',
       //   summary: 'Warn',
@@ -1222,8 +1222,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     } else {
       const stepField = {
         field,
-        detailsHeader,
-        detailsId,
+        stepHeader,
+        stepId,
       };
       if (this.headerFieldArr.indexOf(stepField) === -1) {
         this.headerFieldArr.push(stepField);

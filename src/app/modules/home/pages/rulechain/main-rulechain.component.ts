@@ -140,6 +140,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     loadWidgetEditor : boolean;
     loadGridPageEditor : boolean;
     loadCustomPageEditor : boolean;
+    loadFilterPageEditor : boolean;
     isGenerating: boolean;
     reload: boolean;
     theme: string = 'vs-dark';
@@ -304,22 +305,31 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             this.loadPageEditor = false;
             this.loadCustomPageEditor = false;
             this.loadTabPageEditor = false;
+            this.loadFilterPageEditor = false;
         }  else if (item.subtype === 'tabbed'){
             this.loadTabPageEditor = true;
             this.loadGridPageEditor = false;
             this.loadPageEditor = false;
             this.loadCustomPageEditor = false;
-        }
-        else if (item.subtype === 'customPage') {
+            this.loadFilterPageEditor = false;
+        } else if (item.subtype === 'customPage') {
             this.loadPageEditor = false;
             this.loadGridPageEditor = false;
             this.loadCustomPageEditor = true;
             this.loadTabPageEditor = false;
+            this.loadFilterPageEditor = false;
+        } else if (item.subtype === 'FilterPage') {
+            this.loadPageEditor = false;
+            this.loadGridPageEditor = false;
+            this.loadCustomPageEditor = false;
+            this.loadTabPageEditor = false;
+            this.loadFilterPageEditor = true;
         } else {
             this.loadPageEditor = true;
             this.loadGridPageEditor = false;
             this.loadCustomPageEditor = false;
             this.loadTabPageEditor = false;
+            this.loadFilterPageEditor = false;
         }
         this.ruleChainLoaded = false;
         this.ruleChainMetaDataLoaded = false;
@@ -358,6 +368,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadPageEditor = false;
         this.loadGridPageEditor = false;
         this.loadCustomPageEditor = false;
+        this.loadFilterPageEditor = false;
         this.loadTabPageEditor = false;
         this.pageId =item.pageUUID;
         this.widgetId = item.widgetUUID;
@@ -381,6 +392,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadPageEditor = false;
         this.loadGridPageEditor = false;
         this.loadCustomPageEditor = false;
+        this.loadFilterPageEditor = false;
         this.loadTabPageEditor = false;
         this.loadWidgetEditor = false;
     }
@@ -406,6 +418,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadPageEditor = false;
         this.loadGridPageEditor = false;
         this.loadCustomPageEditor = false;
+        this.loadFilterPageEditor = false;
         this.loadTabPageEditor = false;
         this.loadWidgetEditor = false;
         if (this.reload) {
@@ -430,6 +443,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadPageEditor = false;
         this.loadGridPageEditor = false;
         this.loadCustomPageEditor = false;
+        this.loadFilterPageEditor = false;
         this.loadTabPageEditor = false;
         this.ruleprojectUid = "";
         this.editorType = "";

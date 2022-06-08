@@ -66,7 +66,7 @@ export class BuiltInPageService {
     return this.http.get(`${this.checkPageNameAvailabilityURL}/${uuid}/${pageId}/${name}`, { observe: 'response' });
   }
 
-  findBuiltInPagesForProjectId(id: string, uuid: string): Observable<EntityArrayResponseType> {
+  findBuiltInPagesForProjectId(id: string, uuid: string): Observable<EntityArrayResponseType> {//
     return this.http.get<IPage[]>(`${this.builtInPagesForProjectResourceUrl}/${uuid}/${id}`, { observe: 'response' });
   }
 

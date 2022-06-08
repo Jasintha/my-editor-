@@ -392,10 +392,11 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
       this.pageCreationStatus = 'gridSelection';
     } else if (template === 'tab-page'){
       this.save('tabbed', 'Template Page', template);
-    }
-    else if (template === 'custom'){
+    } else if (template === 'custom'){
       this.createCustomPage(template);
-    }else {
+    } else if (template === 'filter-page'){
+      this.createFilterPage(template);
+    } else {
       this.createTemplatePage(template);
     }
   }
@@ -406,6 +407,9 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
 
   createCustomPage(template: string) {
     this.save('customPage', 'Custom Page', template);
+  }
+  createFilterPage(template: string) {
+    this.save('FilterPage', 'Filter Page', template);
   }
 
   createCustomGrid() {
