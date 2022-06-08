@@ -1,0 +1,129 @@
+<form class="mat-form-dialog" [formGroup]="actorNodeConfigFormGroup" (ngSubmit)="save()" >
+    <mat-toolbar color="primary" >
+        <h2 mat-dialog-title>Create Requirement</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-dialog-content>
+        <div class="row">
+
+            <div >
+                <section style="padding-top: 10px;padding-bottom: 20px;">
+                    <label>Add Actors</label>
+                </section>
+                <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
+                    <mat-form-field fxFlex class="mat-block">
+                        <mat-label>Create Type</mat-label>
+                        <mat-select formControlName="createType">
+                            <mat-option value="New">New</mat-option>
+                            <mat-option value="Existing">Existing</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="actorNodeConfigFormGroup.value.createType === 'New'" fxFlex class="mat-block">
+                        <mat-label>Name</mat-label>
+                        <input matInput formControlName="actorName"/>
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="actorNodeConfigFormGroup.value.createType === 'Existing'" fxFlex class="mat-block">
+                        <mat-label>Actor</mat-label>
+                        <mat-select formControlName="actor">
+                            <mat-option *ngFor="let param of allActors" [value]="param">
+                                {{param.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex class="mat-block">
+                        <mat-label>Permission Level</mat-label>
+                        <mat-select formControlName="permissionLevel">
+                            <mat-option value="Read">Read</mat-option>
+                            <mat-option value="Write">Write</mat-option>
+                            <mat-option value="Delete">Delete</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button mat-icon-button class="virtuan-fullscreen-button-style"
+                            (click)="addActor()"
+                            matTooltip="Add Constant"
+                            matTooltipPosition="above">
+                        <mat-icon color="primary">add</mat-icon>
+                    </button>
+                </section>
+                <div fxFlex class="table-container" style="padding: 10px;">
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                        <ng-container matColumnDef="actorName">
+                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.actorName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="permissionLevel">
+                            <th mat-header-cell *matHeaderCellDef> Permission Level </th>
+                            <td mat-cell *matCellDef="let element"> {{element.permissionLevel}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                            <td mat-cell *matCellDef="let element;let i = index">
+                                <button mat-icon-button class="virtuan-mat-32" (click)="deleteRow(i)" matTooltip="Delete Constant" matTooltipPosition="above">
+                                    <mat-icon style="color:red;">delete</mat-icon>
+                                </button></td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+
+                <!--<md-table-container class="md-block" style="padding-top: 20px;" flex>
+                  &lt;!&ndash;<label>Constants</label>&ndash;&gt;
+                  <table md-table style="padding-top: 20px;">
+                    <thead md-head style="background-color: gainsboro;">
+                    <tr md-row>
+                      <th md-column><span>Name</span></th>
+                      <th md-column><span>Type</span></th>
+                      <th md-column><span>Custom Value</span></th>
+                      <th md-column><span>Action</span></th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row ng-repeat="prop in configuration.actors track by $index">
+                      <td md-cell>{{ prop.actorName }}</td>
+                      <td md-cell>{{ prop.actorType }}</td>
+                      <td md-cell>{{ prop.customValue }}</td>
+                      <td md-cell class="virtuan-action-cell">
+                        <md-button class="md-icon-button" aria-label="{{ 'action.delete' | translate }}"
+                                   ng-click="removeConstantRow($index)">
+                          <md-icon aria-label="{{ 'action.delete' | translate }}" class="material-icons"
+                                   style="color: #df1111;">delete
+                          </md-icon>
+                          <md-tooltip md-direction="top">
+                            Delete Field
+                          </md-tooltip>
+                        </md-button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </md-table-container>-->
+            </div>
+
+        </div>
+    </mat-dialog-content>
+    <div mat-dialog-actions fxLayoutAlign="end center">
+        <button mat-raised-button color="primary"
+                type="submit" cdkFocusInitial>
+            Save
+        </button>
+        <button mat-button color="primary"
+                type="button"
+                mat-dialog-close >
+            Cancel
+        </button>
+    </div>
+</form>
