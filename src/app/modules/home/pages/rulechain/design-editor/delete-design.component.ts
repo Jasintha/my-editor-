@@ -11,6 +11,9 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {RequirementService} from '@core/projectservices/requirement.service';
 import {StoryService} from '@core/projectservices/story-technical-view.service';
+import {Observable} from 'rxjs';
+import {HttpResponse} from '@angular/common/http';
+import {IRequirement, IStory, Story} from '@shared/models/model/requirement.model';
 
 @Component({
   selector: 'virtuan-delete-design-dialog',
@@ -20,6 +23,7 @@ export class DeleteDesignComponent {
   pageNavigation: IPageNavigation;
   projectUid: string;
   type: string;
+   isSaving = false;
 
   constructor(
       private requirementService: RequirementService,
@@ -52,11 +56,38 @@ export class DeleteDesignComponent {
           }
         this.dialogRef.close(res);
       });
-    }else if (this.data.type === 'epic'){
+    }else if (this.data.type === 'story-text'){
+        this.isSaving = true;
+        const obj = {
+            uuid: this.data.uuid.uuid,
+            storyText: '',
+            projectUuid: this.data.projectUid
+        }
+        this.subscribeToSaveResponse(this.storyService.storyTextUpdateReq(obj, this.data.projectUid));
+    } else if (this.data.type === 'epic'){
       this.storyService.deleteEpic(id, uuid).subscribe(response => {
         this.dialogRef.close(this.data.type);
       });
     }
 
   }
+
+    protected subscribeToSaveResponse(result: Observable<HttpResponse<IRequirement>>) {
+        result.subscribe(
+            () => this.onSaveSuccess(),
+            () => this.onSaveError()
+        );
+    }
+
+    protected onSaveSuccess() {
+        this.isSaving = false;
+        this.dialogRef.close(this.data.type);
+    }
+
+    protected onSaveError() {
+        this.isSaving = false;
+    }
+    protected onError(errorMessage: string) {
+    }
+
 }

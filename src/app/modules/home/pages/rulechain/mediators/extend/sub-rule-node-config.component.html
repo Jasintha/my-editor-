@@ -1,13 +1,17 @@
 <div [formGroup]="subRuleNodeConfigFormGroup">
-
-    <mat-form-field fxFlex class="mat-block">
-        <mat-label>Sub Rule</mat-label>
-        <mat-select formControlName="subRule">
-            <mat-option *ngFor="let subRule of allSubRules" [value]="subRule">
-                {{subRule.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+    <section fxLayout="column" fxLayout.gt-sm="row">
+        <mat-form-field fxFlex class="mat-block">
+            <mat-label>Sub Rule</mat-label>
+            <mat-select formControlName="subRule">
+                <mat-option *ngFor="let subRule of allSubRules" [value]="subRule">
+                    {{subRule.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-checkbox formControlName="isAsync">
+            Non Blocking
+        </mat-checkbox>
+    </section>
 
     <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <mat-form-field fxFlex class="mat-block">

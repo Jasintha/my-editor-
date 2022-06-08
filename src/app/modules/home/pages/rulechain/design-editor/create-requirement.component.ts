@@ -46,6 +46,7 @@ export class CreateRequirementComponent implements OnInit {
     this.editForm = this.fb.group({
       id: [],
       name: ['', [Validators.required]],
+      summary: [''],
       description:  ['', [Validators.required]]
     });
   }
@@ -137,7 +138,8 @@ export class CreateRequirementComponent implements OnInit {
       name: this.editForm.get(['name']).value,
       description: this.editForm.get(['description']).value,
       projectUuid: this.projectUid,
-      tags: this.tags
+      tags: this.tags,
+      summary: this.editForm.get(['summary']).value,
     };
   }
 

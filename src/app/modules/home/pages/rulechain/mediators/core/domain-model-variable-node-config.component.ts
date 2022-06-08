@@ -421,8 +421,13 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
         modelproperty = selectedNode;
     } else if (propertyType === 'NEW') {
         propertyDataType = this.domainModelVariableNodeConfigFormGroup.get('propinputType').value;
-        record = this.domainModelVariableNodeConfigFormGroup.get('proprecord').value;
-        propertyScope = this.domainModelVariableNodeConfigFormGroup.get('propertyScope').value;
+        if(propertyDataType !== 'DB' && propertyDataType !== 'MESSAGING'){
+            record = this.domainModelVariableNodeConfigFormGroup.get('proprecord').value;
+            propertyScope = this.domainModelVariableNodeConfigFormGroup.get('propertyScope').value;
+        } else {
+            record = '';
+            propertyScope = 'GLOBAL';
+        }
 
         if (propertyScope == 'GLOBAL') {
             name = this.titleCaseWord(name);

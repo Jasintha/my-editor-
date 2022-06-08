@@ -12,8 +12,8 @@
   <mat-form-field fxFlex class="mat-block">
     <mat-label>DB Connection</mat-label>
     <mat-select formControlName="dbConnection">
-      <ng-container *ngFor="let property of allConnectionProperties">
-        <mat-option *ngIf="property?.group === 'db'" [value]="property">
+      <ng-container *ngFor="let property of allModelProperties">
+        <mat-option *ngIf="property?.propertyDataType === 'DB'" [value]="property">
           {{property.name}}
         </mat-option>
       </ng-container>

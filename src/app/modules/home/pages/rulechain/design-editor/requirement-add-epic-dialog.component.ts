@@ -44,12 +44,14 @@ export class RequirementAddEpicDialogComponent implements OnInit {
 
   buildEventForm() {
     this.editForm = this.fb.group({
+        id:[],
         epicCreateType: ['new', [Validators.required]],
         name: ['', [Validators.required]],
         description: '',
         reqdescription: '',
         epicselection: null,
         referencename: ['', [Validators.required]],
+        aiDescription:''
     });
   }
 
@@ -96,7 +98,6 @@ export class RequirementAddEpicDialogComponent implements OnInit {
     this.editForm.patchValue({
       reqdescription: this.reqdesc,
     });
-    this.loadAIDes();
     if (this.data.createStatus === 'Update'){
       this.updateEpic();
     }
@@ -104,28 +105,19 @@ export class RequirementAddEpicDialogComponent implements OnInit {
 
   updateEpic(){
     const epic = this.data.epic;
-    if (epic.referenceName){
-      this.editForm.patchValue({
-        epicCreateType:'new',
-        name: epic.name,
-        description: epic.requirements[0].description,
-        reqdescription: '',
-        epicselection: '',
-        referencename: epic.referenceName
-      })
-    } else {
-      this.editForm.patchValue({
-        epicCreateType:'existing',
-        name: epic.name,
-        description: epic.requirements[0].description,
-        reqdescription: '',
-        epicselection: '',
-      })
-    }
+    this.editForm.patchValue({
+      id: epic.uuid,
+      epicCreateType:'new',
+      name: epic.name,
+      description: epic.requirements[0].description,
+      reqdescription: epic.requirements[0].description,
+      epicselection: '',
+      referencename: epic.referenceName
+    })
   }
 
   loadAIDes(){
-    const des = this.data.reqdesc.replace(/<[^>]*>/g, '');
+    const des = this.editForm.get('reqdescription').value.replace(/<[^>]*>/g, '');
     const formData = new FormData();
     formData.append('requirment', des )
     formData.append('domain', 'other' )
@@ -140,6 +132,9 @@ export class RequirementAddEpicDialogComponent implements OnInit {
         .subscribe(
             (res: any) => {
               this.aiDes = res.htext;
+              this.editForm.patchValue({
+                aiDescription: this.aiDes
+              })
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -169,52 +164,81 @@ export class RequirementAddEpicDialogComponent implements OnInit {
   }
 
   save() {
-    let epicCreateType = this.editForm.get(['epicCreateType']).value;
-    let reqdescription = this.editForm.get(['reqdescription']).value;
-    let epicname = '';
-    let description = '';
-    let epicuuid = '';
-    let epicRequirements = [];
-    let refname = '';
+    if (this.data.createStatus !== 'Update'){
+      let epicCreateType = 'new';
+      let reqdescription = this.editForm.get(['reqdescription']).value;
+      let epicname = '';
+      let description = '';
+      let epicuuid = '';
+      let epicRequirements = [];
+      let refname = '';
 
-    if (epicCreateType === 'new') {
-      epicname = this.editForm.get(['name']).value;
-      refname = this.editForm.get(['referencename']).value;
-      description = this.editForm.get(['description']).value;
-    } else {
-      let epicselection = this.editForm.get(['epicselection']).value;
-      if (epicselection) {
-        epicname = epicselection.name;
-        description = epicselection.description;
-        epicuuid = epicselection.uuid;
+      if (epicCreateType === 'new') {
+        epicname = this.editForm.get(['name']).value;
+        refname = this.editForm.get(['referencename']).value;
+        description = this.editForm.get(['description']).value;
+      } else {
+        let epicselection = this.editForm.get(['epicselection']).value;
+        if (epicselection) {
+          epicname = epicselection.name;
+          description = epicselection.description;
+          epicuuid = epicselection.uuid;
+        }
       }
-    }
 
-    epicRequirements.push({ requirementUUID: this.requuid, description: reqdescription });
+      epicRequirements.push({ requirementUUID: this.requuid, description: reqdescription });
 
-    let epicReq = {
-      requirements: epicRequirements,
-      name: epicname,
-      projectUuid: this.projectUid,
-      epicCreateType: epicCreateType,
-      description: description,
-      status: 'NEW',
-      epicuuid: epicuuid,
-      referenceName : refname
-    };
-    this.requirementService
-      .addEpicToReq(epicReq, this.projectUid)
-      .pipe(
-        filter((res: HttpResponse<any>) => res.ok),
-        map((res: HttpResponse<any>) => res.body)
-      )
-      .subscribe(
-            (res: any) => {
+      let epicReq = {
+        requirements: epicRequirements,
+        name: epicname,
+        projectUuid: this.projectUid,
+        epicCreateType: epicCreateType,
+        description: description,
+        status: 'NEW',
+        epicuuid: epicuuid,
+        referenceName : refname
+      };
+      this.requirementService
+          .addEpicToReq(epicReq, this.projectUid)
+          .pipe(
+              filter((res: HttpResponse<any>) => res.ok),
+              map((res: HttpResponse<any>) => res.body)
+          )
+          .subscribe(
+              (res: any) => {
                 this.dialogRef.close(epicReq);
-            },
-            (res: HttpErrorResponse) => this.onSaveError()
-      );
+              },
+              (res: HttpErrorResponse) => this.onSaveError()
+          );
+    }else {
+      const epic = this.data.epic;
+      let epicRequirementsUpdate = [];
+      let reqdescription = this.editForm.get(['reqdescription']).value;
 
+      epicRequirementsUpdate.push({ requirementUUID: this.requuid, description: reqdescription });
+      let updateepicReq = {
+        requirements: epicRequirementsUpdate,
+        name: this.editForm.get(['name']).value,
+        projectUuid: this.projectUid,
+        epicCreateType: 'new',
+        description: this.editForm.get(['description']).value,
+        status: 'NEW',
+        epicuuid: this.editForm.get(['id']).value,
+        referenceName : this.editForm.get(['referencename']).value
+      };
+      this.requirementService
+          .updateEpic(updateepicReq, this.projectUid)
+          .pipe(
+              filter((res: HttpResponse<any>) => res.ok),
+              map((res: HttpResponse<any>) => res.body)
+          )
+          .subscribe(
+              (res: any) => {
+                this.dialogRef.close(updateepicReq);
+              },
+              (res: HttpErrorResponse) => this.onSaveError()
+          );
+    }
   }
 
   handleEpicCreateTypeChange() {
@@ -242,6 +266,9 @@ export class RequirementAddEpicDialogComponent implements OnInit {
     stepper.previous();
   }
   goForward(stepper: MatStepper) {
+    if (stepper.selectedIndex === 0){
+      this.loadAIDes();
+    }
     stepper.next();
   }
 

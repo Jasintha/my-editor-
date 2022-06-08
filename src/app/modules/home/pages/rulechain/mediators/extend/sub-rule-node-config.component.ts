@@ -157,7 +157,8 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
       errorParameterparam: [],
       errorParameterproperty: [],
       errorParameterbranchparam: [],
-      isReturn: false
+      isReturn: false,
+      isAsync: false
     });
   }
 
@@ -475,12 +476,20 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
         errorParameterproperty: this.configuration.errorParameterproperty,
         errorParameterbranchparam: this.configuration.errorParameterbranchparam,
         errorIsAsync: this.configuration.errorIsAsync,
-        isReturn: this.configuration.isReturn
+        isReturn: this.configuration.isReturn,
+        isAsync: this.configuration.isAsync
       });
 
       this.changeSubscription = this.subRuleNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
           (configuration: any) => {
             this.configuration.isReturn = configuration;
+            this.updateModel(this.configuration);
+          }
+      );
+
+      this.changeSubscription = this.subRuleNodeConfigFormGroup.get('isAsync').valueChanges.subscribe(
+          (configuration: any) => {
+            this.configuration.isAsync = configuration;
             this.updateModel(this.configuration);
           }
       );

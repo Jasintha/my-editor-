@@ -1,6 +1,7 @@
 <form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()">
     <mat-toolbar color="primary">
-        <h2 mat-dialog-title>Create Story</h2>
+        <h2 mat-dialog-title *ngIf="data.createStatus === 'Update'">Update Story</h2>
+        <h2 mat-dialog-title *ngIf="data.createStatus !== 'Update'">Create Story</h2>
         <span fxFlex></span>
         <button mat-icon-button
                 mat-dialog-close
@@ -11,95 +12,135 @@
 
     <mat-dialog-content>
         <div class="row">
-            <div class="col-12" style="text-align: center;">
-                <div class="card" class="box-shadow"
-                     style="margin-bottom: 25px; box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{epic.name}}</h5>
-                        <div *ngIf="descriptions" class="inner-html-des" [innerHTML]="descriptions"> </div>
+            <div style="text-align: center; margin-bottom: 10px">
+                <mat-form-field class="flex-auto" style="width: 60%;align-content: center ">
+                    <mat-label>Title</mat-label>
+                    <input type="text" formControlName="name" matInput>
+                    <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <div class="col-7" style="border-right: 1px solid black">
+                    <div class="row">
+                        <div class="col-4">
+                            <p-listbox filter="true" [style]="{'height':'349px','width':'460px', 'margin-top':'2px','overflow':'auto'}" [options]="stories" formControlName="storyTemplate" [(ngModel)]="selectedTemp">
+                                <p-header>
+                                    Story Templates
+                                </p-header>
+                                <ng-template let-story let-i="index" pTemplate="item">
+                                    <div class="ui-helper-clearfix">
+                                        <mat-icon class="material-icons" *ngIf="story.value === 'custom'" style="color: #6c6c6c; font-size: 25px;display:inline-block;margin:5px 0 0 5px">extension</mat-icon>
+                                        <mat-icon class="material-icons" *ngIf="story.value === 'login'" style="color: #6c6c6c; font-size: 25px;display:inline-block;margin:5px 0 0 5px">account_circle</mat-icon>
+                                        <mat-icon class="material-icons" *ngIf="story.value === 'email'" style="color: #6c6c6c; font-size: 25px;display:inline-block;margin:5px 0 0 5px">email</mat-icon>
+                                        <!--                                <img src="assets/showcase/images/demo/car/{{story.label}}.png" style="display:inline-block;margin:5px 0 0 5px" width="48">-->
+                                        <span style="margin:6px 10px 0 10px">{{story.label}}</span>
+
+                                        <p style="font-size: 14px; float:right;margin:6px 10px 0 0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc pharetra sem nec mi rhoncus rutrum.
+                                            Aliquam quis augue et nisi mollis sagittis.</p>
+                                    </div>
+                                </ng-template>
+                                <!--                        <p-footer>-->
+                                <!--                            Selected: {{selectedCar||'none'}}-->
+                                <!--                        </p-footer>-->
+                            </p-listbox>
+                        </div>
+
+<!--                        <div class="col-6">-->
+<!--                            <div>-->
+<!--                                <h5>{{selectedTemp}}</h5>-->
+<!--                                <p style="font-size: 14px">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc pharetra sem nec mi rhoncus rutrum.-->
+<!--                                    Aliquam quis augue et nisi mollis sagittis. Nam gravida in tellus sed iaculis. Curabitur lacinia bibendum ex,-->
+<!--                                    ultricies placerat ex feugiat id. Praesent ut ligula vitae quam fringilla mollis in et justo.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
+
+
+
+
+                </div>
+                <div class="col-5">
+                    <h6 class="card-title">Epic - {{epic.name}}</h6>
+                    <p-editor class="story-text epic-des" name="text-pane" id="field_reqdescription" formControlName="description"
+                              [style]="{'height':'300px', 'margin-top':'10px','font-size':'2px','background-color':'#ffffff'}" [readonly]="true">
+                    </p-editor>
+<!--                        <div>-->
+<!--                            <div class="card-body">-->
+<!--                                <h5 class="card-title">{{epic.name}}</h5>-->
+<!--                                <div *ngIf="descriptions" class="inner-html-des" [innerHTML]="descriptions"> </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
                 </div>
             </div>
 
-            <p-carousel [value]="stories" [numVisible]="3" [numScroll]="3" [circular]="false"
-                        *ngIf="selectedLabel !== 'custom'">
-                <ng-template let-story pTemplate="item">
-                    <div class="product-item">
-                        <div class="product-item-content">
-                            <div class="mb-2" align="center">
-                                <div class="card story-card" *ngIf="story === 'custom'">
-                                    <h4>Custom</h4>
-                                    <div class="story-icon">
-                                        <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px;">
-                                            extension
-                                        </mat-icon>
-                                    </div>
-                                </div>
-                                <div class="card story-card" *ngIf="story === 'login'">
-                                    <h4>Login</h4>
-                                    <div class="story-icon">
-                                        <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px">
-                                            account_circle
-                                        </mat-icon>
-                                    </div>
-                                </div>
-                                <div class="card story-card" *ngIf="story === 'email'">
-                                    <h4>Email</h4>
-                                    <div class="story-icon">
-                                        <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 80px">email
-                                        </mat-icon>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 15px;" align="center">
-                            <p-radioButton name="screenselection"
-                                           [value]="story" label="{{story}}"
-                                           formControlName="storyTemplate"></p-radioButton>
 
-                        </div>
-                    </div>
-                </ng-template>
-            </p-carousel>
+<!--            <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                    <p-carousel class="story-temp-carousel" verticalViewPortHeight="160px" orientation="vertical" [value]="stories" [numVisible]="1" [numScroll]="1" [circular]="true"-->
+<!--                                *ngIf="selectedLabel !== 'custom'">-->
+<!--                        <ng-template let-story pTemplate="item">-->
+<!--                            <div class="product-item">-->
+<!--                                <div class="product-item-content">-->
+<!--                                    <div class="mb-2" align="center">-->
+<!--                                        <div class="card story-card" *ngIf="story === 'custom'">-->
+<!--                                            <h6>Custom</h6>-->
+<!--                                            <div class="story-icon">-->
+<!--                                                <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 40px;">-->
+<!--                                                    extension-->
+<!--                                                </mat-icon>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="card story-card" *ngIf="story === 'login'">-->
+<!--                                            <h6>Login</h6>-->
+<!--                                            <div class="story-icon">-->
+<!--                                                <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 40px">-->
+<!--                                                    account_circle-->
+<!--                                                </mat-icon>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="card story-card" *ngIf="story === 'email'">-->
+<!--                                            <h6>Email</h6>-->
+<!--                                            <div class="story-icon">-->
+<!--                                                <mat-icon class="material-icons" style="color: #6c6c6c; font-size: 40px">email-->
+<!--                                                </mat-icon>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div style="margin-top: 15px;" align="center">-->
+<!--                                    <p-radioButton name="screenselection"-->
+<!--                                                   [value]="story" label="{{story}}"-->
+<!--                                                   formControlName="storyTemplate"></p-radioButton>-->
+
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </ng-template>-->
+<!--                    </p-carousel>-->
+<!--                </div>-->
+<!--                <div class="col-6"></div>-->
+<!--            </div>-->
+
 
 
             <div class="form-group" [hidden]="!editForm.get('id').value">
                 <input type="hidden" class="form-control" id="id" name="id" formControlName="id"/>
             </div>
 
-            <div>
 
-                <mat-form-field class="flex-auto" style="width: 100%;">
-                    <mat-label>Title</mat-label>
-                    <input type="text" formControlName="name" matInput>
-                    <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
-                </mat-form-field>
-
-                <!-- <mat-form-field class="flex-auto">
-                     <mat-label>Description</mat-label>
-                     <input type="text" formControlName="description" matInput>
-                 </mat-form-field>-->
-
-                <!--            <mat-form-field class="flex-auto">-->
-                <!--                <div class="flex-auto" >-->
-                <!--                    <mat-label>Description</mat-label>-->
-                <!--                    <p-editor name="description" id="field_desc"-->
-                <!--                              formControlName="description" [style]="{'height':'320px'}"></p-editor>-->
-                <!--                </div>-->
-
-
-                <!--                <input type="text" formControlName="description" matInput>-->
-                <!--            </mat-form-field>-->
-
-            </div>
 
 
         </div>
     </mat-dialog-content>
     <div mat-dialog-actions fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving"
+        <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving" *ngIf="data.createStatus !== 'Update'"
                 type="submit" cdkFocusInitial>
-            Save
+            Create
+        </button>
+        <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving" *ngIf="data.createStatus === 'Update'"
+                type="submit" cdkFocusInitial>
+            Update
         </button>
         <button mat-button color="primary"
                 type="button"

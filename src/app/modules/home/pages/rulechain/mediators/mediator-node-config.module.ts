@@ -112,6 +112,10 @@ import {GeneralTaskNodeConfigComponent} from "@home/pages/rulechain/mediators/ac
 import {MessageSubscriberTaskNodeComponent} from "@home/pages/rulechain/mediators/activator/message-sub-task-node-config.component";
 import {FileReaderTaskNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/file-reader-task-node-config.component";
 import {ServiceCallTaskNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/service-call-task-node-config.component";
+import {GRPCUnaryNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/grpc-unary-node-config.component";
+import {GRPCServerSideStrNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/grpc-serverside-str-node-config.component";
+import {GRPCClientSideStrNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/grpc-clientside-str-node-config.component";
+import {GRPCBidirectionalStrNodeConfigComponent} from "@home/pages/rulechain/mediators/activator/grpc-bidirectional-str-node-config.component";
 
 import {TreeModule} from 'primeng/tree';
 import { ContextMenuModule } from 'primeng/contextmenu';
@@ -219,7 +223,11 @@ import { TabViewModule } from 'primeng/tabview';
     GeneralTaskNodeConfigComponent,
     MessageSubscriberTaskNodeComponent,
     FileReaderTaskNodeConfigComponent,
-    ServiceCallTaskNodeConfigComponent
+    ServiceCallTaskNodeConfigComponent,
+    GRPCUnaryNodeConfigComponent,
+    GRPCServerSideStrNodeConfigComponent,
+    GRPCClientSideStrNodeConfigComponent,
+    GRPCBidirectionalStrNodeConfigComponent
   ],
   imports: [
     CommonModule,
@@ -326,7 +334,11 @@ import { TabViewModule } from 'primeng/tabview';
     GeneralTaskNodeConfigComponent,
     MessageSubscriberTaskNodeComponent,
     FileReaderTaskNodeConfigComponent,
-    ServiceCallTaskNodeConfigComponent
+    ServiceCallTaskNodeConfigComponent,
+    GRPCUnaryNodeConfigComponent,
+    GRPCServerSideStrNodeConfigComponent,
+    GRPCClientSideStrNodeConfigComponent,
+    GRPCBidirectionalStrNodeConfigComponent
   ],
   providers: []
 })

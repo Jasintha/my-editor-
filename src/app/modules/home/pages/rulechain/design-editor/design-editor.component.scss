@@ -617,13 +617,13 @@
 }
 
 .req-txt-overflow{
-    height: 33px;
+    height: 24px;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 200px;
     overflow: hidden;
-    text-align: center;
-    padding-left: 10px;
+    text-align: left;
+    padding-left: 1px;
 }
 
 .txt-description{
@@ -661,15 +661,15 @@
 }
 
 .story-card{
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     text-align: center;
     cursor: pointer;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    //box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .story-icon{
-    margin: 30px 60px 0 0;
+    margin: -6px 18px 0 0;
 }
 
 
@@ -787,9 +787,9 @@
     to   { opacity: 1; }
 }
 
-.ui-carousel-prev {
-    display: none !important;
-}
+//.ui-carousel-prev {
+//    display: none !important;
+//}
 
 .carousel-next-hide {
     .ui-carousel-next  {
@@ -856,23 +856,9 @@
 }
 
 .wrap-story{
-    .edit-icon{
-        right: 55px;
-        top: 43px;
-        height: 20px;
-        position: absolute;
-        font-size: 13px;
-        padding: 2px 5px;
-        background: #007bff;
-        color: white;
-        border-radius: 5px;
-        visibility: hidden;
-        opacity: 0;
-    }
-
 
     .delete{
-        top: 22px;
+        top: 15px;
         height: 20px;
         right: 12px;
         position: absolute;
@@ -886,8 +872,50 @@
     }
 
     .swagger-link{
+        right: 42px;
+        top: 15px;
+        height: 20px;
+        position: absolute;
+        font-size: 13px;
+        padding: 2px 5px;
+        background: #a28b39;
+        color: white;
+        border-radius: 5px;
         visibility: hidden;
+        opacity: 0;
     }
+
+    .open-ui{
+        right: 72px;
+        top: 15px;
+        height: 20px;
+        position: absolute;
+        font-size: 13px;
+        padding: 2px 5px;
+        background: #2a8f30;
+        color: white;
+        border-radius: 5px;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .edit-icon{
+        right: 102px;
+        top: 15px;
+        height: 20px;
+        position: absolute;
+        font-size: 13px;
+        padding: 2px 5px;
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    //.swagger-link{
+    //    visibility: hidden;
+    //}
 
     &:hover{
         cursor: pointer;
@@ -903,13 +931,17 @@
             visibility: visible;
             opacity: 1;
         }
+        .open-ui{
+            visibility: visible;
+            opacity: 1;
+        }
     }
 
 }
 
 .wrap-text{
     .delete{
-        top: 22px;
+        top: 10px;
         z-index: 1;
         height: 20px;
         right: 25px;
@@ -924,15 +956,16 @@
     }
 
     .edit-icon-text{
-        right: 55px;
-        top: 43px;
+        top: 10px;
+        z-index: 1;
         height: 20px;
+        right: 60px;
         position: absolute;
-        font-size: 13px;
-        padding: 2px 5px;
+        font-size: 15px;
         background: #007bff;
-        color: white;
+        padding: 0 6px;
         border-radius: 5px;
+        color: white;
         visibility: hidden;
         opacity: 0;
     }
@@ -943,7 +976,7 @@
             visibility: visible;
             opacity: 1;
         }
-        .edit-icon{
+        .edit-icon-text{
             visibility: visible;
             opacity: 1;
         }
@@ -1055,7 +1088,7 @@
 }
 
 body .ui-editor-container .ui-editor-content .ql-editor {
-    background-color: #f7f7f7;
+    background-color: #ffffff;
 }
 
 
@@ -1064,7 +1097,12 @@ body .ui-editor-container .ui-editor-content .ql-editor {
         width: 370px;
     }
 }
-
+//.story-temp-carousel{
+//    .ui-carousel-items-content {
+//        height: 70px;
+//        width: 200px;
+//    }
+//}
 
 
 
@@ -1200,4 +1238,54 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     white-space: nowrap;
     width: 150px;
     text-align: left;
+}
+
+
+.tags-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  list-style: none;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.tags-overflow{
+    height: 33px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 50px;
+    overflow: hidden;
+    text-align: center;
+    padding-left: 10px;
+}
+
+
+.story-editor-button{
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #40a2dc;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    .fa {
+        color: white;
+    }
+}
+
+
+
+
+.list-box{
+    body .ui-listbox {
+        padding: 0;
+        min-width: 12em;
+        background: #ffffff;
+        border: 1px solid #a6a6a6;
+        height: 350px;
+    }
 }
