@@ -747,6 +747,7 @@
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     top: -1px;
+    cursor: pointer;
     //box-shadow: rgb(0 0 0 / 25%) 0px 54px 55px, rgb(0 0 0 / 12%) 0px -12px 30px, rgb(0 0 0 / 12%) 0px 4px 6px, rgb(0 0 0 / 17%) 0px 12px 13px, rgb(0 0 0 / 9%) 0px -3px 5px;
 }
 
@@ -875,7 +876,7 @@
         width: 21px;
         height: 19px;
         left: 26px;
-        top: 36px;
+        top: 14px;
         position: absolute;
         font-size: 13px;
         padding: 2px 5px;
@@ -890,7 +891,7 @@
         width: 21px;
         height: 19px;
         left: 26px;
-        top: 58px;
+        top: 51px;
         position: absolute;
         font-size: 13px;
         padding: 2px 5px;
@@ -1309,8 +1310,8 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     }
     .icon:hover{
         margin: 5px;
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
     }
     .arrow-icon{
         margin: 5px 15px;
