@@ -589,12 +589,13 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
     }
 
-    createDesign(val){
+    createDesign(val , uuid){
         if (val === 'actor'){
             const dialogRef = this.dialog.open(ActorDesignViewComponent, {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
                     projectUid: this.desprojectUid,
+                    storyUuid: uuid
                 }
             });
             dialogRef.afterClosed(

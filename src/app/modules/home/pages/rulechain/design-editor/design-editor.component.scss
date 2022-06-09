@@ -1309,9 +1309,10 @@ body .ui-editor-container .ui-editor-content .ql-editor {
         transition: .35s ease-in-out;
     }
     .icon:hover{
+        cursor: pointer;
         margin: 5px;
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
     }
     .arrow-icon{
         margin: 5px 15px;

@@ -364,13 +364,13 @@
 <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
 <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('process')">settings</mat-icon>-->
                                     <div class="story-pane-icon">
-                                        <img src="/assets/images/story/profile.png" class="icon" (click)="createDesign('actor')" matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
+                                        <img src="/assets/images/story/profile.png" class="icon" (click)="createDesign('actor', story.uuid)" matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
                                         <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img src="/assets/images/story/gears.png" class="icon" (click)="createDesign('model')" matTooltip="Model" [matTooltipPosition]="toolTipPosition">
+                                        <img src="/assets/images/story/gears.png" class="icon" (click)="createDesign('model', story.uuid)" matTooltip="Model" [matTooltipPosition]="toolTipPosition">
                                         <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img src="/assets/images/story/monitor.png" class="icon" (click)="createDesign('screen')" matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
+                                        <img src="/assets/images/story/monitor.png" class="icon" (click)="createDesign('screen', story.uuid)" matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
                                         <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img src="/assets/images/story/engineering.png" class="icon" (click)="createDesign('process')" matTooltip="Process" [matTooltipPosition]="toolTipPosition">
+                                        <img src="/assets/images/story/engineering.png" class="icon" (click)="createDesign('process', story.uuid)" matTooltip="Process" [matTooltipPosition]="toolTipPosition">
                                     </div>
                                 </div>
                                 <div class="col-1 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
@@ -467,7 +467,7 @@
 <!--                </div>-->
                 <div class="bottom-req" >
                     <div class="col-12 d-flex justify-content-center add-req-bottom">
-                        <button mat-raised-button style="top: -1px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
+                        <button mat-raised-button style="top: -3px; margin-right: 10px;z-index: 1000" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
 <!--                        <button mat-raised-button style="top: -1px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>-->
                  </div>
                 </div>
