@@ -538,7 +538,8 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
                 ...new StoryModelRequest(),
                 storyUuid: this.storyuuid,
                 createType: 'Existing',
-                modeluuid: selectedModel.uuid
+                modeluuid: selectedModel.uuid,
+                modelName: selectedModel.name
             };
         }
     }
