@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { createRequestOption } from '@shared/util/request-util';
 import {IApi} from '@shared/models/model/microservice-api.model';
-import {IStoryActorRequest} from '@shared/models/model/design-assets.model';
+import {IStoryActorRequest, IStoryScreenRequest} from '@shared/models/model/design-assets.model';
 
 
 type EntityResponseType = HttpResponse<IApi>;
@@ -13,6 +13,7 @@ type EntityArrayResponseType = HttpResponse<IApi[]>;
 @Injectable({ providedIn: 'root' })
 export class DesignAssets {
     public resourceUrl =  '/api/editor/stories/actors';
+    public screenResourceUrl =  '/api/editor/stories/screen';
     public commandresourceUrl =  '/api/editor/proj/commands';
     public queryresourceUrl =  '/api/editor/proj/querys';
     public apisForProjectResourceUrl =  '/api/editor/proj/microservice-apis/project';
@@ -26,6 +27,10 @@ export class DesignAssets {
 
     actorUpdate(storyReq: IStoryActorRequest, uuid: string): Observable<HttpResponse<IStoryActorRequest>> {
         return this.http.put<IStoryActorRequest>(`${this.resourceUrl}/${uuid}`, storyReq, { observe: 'response' });
+    }
+
+    screenUpdate(storyReq: IStoryScreenRequest, uuid: string): Observable<HttpResponse<IStoryScreenRequest>> {
+        return this.http.put<IStoryScreenRequest>(`${this.screenResourceUrl}/${uuid}`, storyReq, { observe: 'response' });
     }
 
     find(id: string, uuid: string): Observable<EntityResponseType> {

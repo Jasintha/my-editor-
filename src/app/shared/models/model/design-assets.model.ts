@@ -17,3 +17,14 @@ export interface IStoryActor {
 export class StoryActor implements IStoryActor {
     constructor(public actorName?: string, public actoruuid?: string,public createType?: string,public permissionLevel?: string) {}
 }
+
+export interface IStoryScreenRequest {
+    storyUuid?: string;
+    screenTemplate?: string;
+    screenName?: string;
+    screenActions?: any;
+}
+
+export class StoryScreenRequest implements IStoryScreenRequest {
+    constructor(public storyUuid?: string, public screenTemplate?: string, public screenName?: string, public screenActions?: any) {}
+}

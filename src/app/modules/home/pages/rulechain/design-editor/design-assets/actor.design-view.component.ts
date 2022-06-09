@@ -192,6 +192,7 @@ export class ActorDesignViewComponent implements  OnInit, OnDestroy, AfterViewIn
                 content: 'Add an page navigation',
             })
         );
+        this.dialogRef.close();
     }
 
     protected onSaveError() {// this.spinnerService.hide();

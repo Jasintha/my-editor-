@@ -606,6 +606,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
                     projectUid: this.desprojectUid,
+                    storyUuid: uuid
                 }
             });
             dialogRef.afterClosed(
@@ -616,6 +617,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
                     projectUid: this.desprojectUid,
+                    storyUuid: uuid
                 }
             });
             dialogRef.afterClosed(
@@ -626,6 +628,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
                     projectUid: this.desprojectUid,
+                    storyUuid: uuid
                 }
             });
             dialogRef.afterClosed(

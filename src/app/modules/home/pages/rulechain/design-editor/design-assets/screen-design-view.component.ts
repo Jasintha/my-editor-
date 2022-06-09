@@ -32,6 +32,13 @@ import {MatTableDataSource} from '@angular/material/table';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {StoryService} from '@core/projectservices/story-technical-view.service';
 import {filter, map} from 'rxjs/operators';
+import {IStoryActorRequest, IStoryScreenRequest, StoryActorRequest, StoryScreenRequest} from '@shared/models/model/design-assets.model';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {EventManagerService} from '@shared/events/event.type';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {DesignAssets} from '@core/projectservices/design-assets.service';
 
 @Component({
     selector: 'virtuan-screen-design-view',
@@ -51,6 +58,7 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
     set required(value: boolean) {
         this.requiredValue = coerceBooleanProperty(value);
     }
+    storyUuid: string
 
     @Input()
     disabled: boolean;
@@ -67,7 +75,7 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
     nodeDefinitionValue: RuleNodeDefinition;
 
     isSaving: boolean;
-    data: any;
+    // data: any;
     projectUid: string;
     createType: string;
     pageTemplateItems: any[];
@@ -109,7 +117,12 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
     constructor(private translate: TranslateService,
                 private ruleChainService: RuleChainService,
                 protected storyService: StoryService,
-                private fb: FormBuilder) {
+                private fb: FormBuilder,
+                public dialogRef: MatDialogRef<ScreenDesignViewComponent>,
+                @Inject(MAT_DIALOG_DATA)  public data: any,
+                protected eventManager: EventManagerService,
+                private spinnerService: NgxSpinnerService,
+                private designAssetsService: DesignAssets) {
         this.screenNodeConfigFormGroup = this.fb.group({
             screenName: '',
             screenTemplate: '',
@@ -144,6 +157,8 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
     }
 
     ngOnInit(): void {
+        this.projectUid = this.data.projectUid;
+        this.storyUuid = this.data.storyUuid
         this.existingPortals = [];
         this.loadPortals();
         this.isSaving = false;
@@ -281,6 +296,48 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
 
             this.propagateChange(this.required ? null : configuration);
         }
+    }
+
+    private createFromForm(): IStoryScreenRequest {
+        return {
+            ...new StoryScreenRequest(),
+            storyUuid: this.storyUuid,
+            screenTemplate: this.screenNodeConfigFormGroup.get(['screenTemplate']).value,
+            screenName: this.screenNodeConfigFormGroup.get(['screenName']).value,
+            screenActions: this.actionItems
+        };
+    }
+
+    save() {
+        this.isSaving = true;
+        const storyScreenRequest = this.createFromForm();
+        if (storyScreenRequest) {
+            this.subscribeToSaveResponse(this.designAssetsService.screenUpdate(storyScreenRequest, this.projectUid));
+        } else {
+            this.subscribeToSaveResponse(this.designAssetsService.screenUpdate(storyScreenRequest, this.projectUid));
+        }
+    }
+
+    protected subscribeToSaveResponse(result: Observable<HttpResponse<IStoryScreenRequest>>) {
+        result.subscribe(
+            () => this.onSaveSuccess(),
+            () => this.onSaveError()
+        );
+    }
+
+    protected onSaveSuccess() {
+        this.isSaving = false;
+        this.eventManager.dispatch(
+            new AppEvent(EventTypes.editorUITreeListModification, {
+                name: 'editorUITreeListModification',
+                content: 'Add an page navigation',
+            })
+        );
+        this.dialogRef.close();
+    }
+
+    protected onSaveError() {// this.spinnerService.hide();
+        this.isSaving = false;
     }
 
 }
