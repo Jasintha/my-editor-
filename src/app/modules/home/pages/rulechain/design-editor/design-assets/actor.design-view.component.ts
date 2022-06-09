@@ -51,6 +51,7 @@ export class ActorDesignViewComponent implements  OnInit, OnDestroy, AfterViewIn
     private requiredValue: boolean;
     projectUid: string;
     storyUuid: string;
+    allActors: any[] = [];
 
 
     ELEMENT_DATA: IStoryActor[] = [];
@@ -115,9 +116,9 @@ export class ActorDesignViewComponent implements  OnInit, OnDestroy, AfterViewIn
             .subscribe(
                 (res: any[]) => {
                     if (res) {
-                        // this.allActors = res;
+                        this.allActors = res;
                     } else {
-                        // this.allActors = [];
+                        this.allActors = [];
                     }
                 },
                 (res: HttpErrorResponse) => this.onError()
