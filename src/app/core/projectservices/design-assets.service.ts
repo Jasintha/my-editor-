@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { createRequestOption } from '@shared/util/request-util';
 import {IApi} from '@shared/models/model/microservice-api.model';
-import {IStoryActorRequest, IStoryScreenRequest} from '@shared/models/model/design-assets.model';
+import {IStoryActorRequest, IStoryModelRequest, IStoryProcessRequest, IStoryScreenRequest} from '@shared/models/model/design-assets.model';
 
 
 type EntityResponseType = HttpResponse<IApi>;
@@ -14,10 +14,12 @@ type EntityArrayResponseType = HttpResponse<IApi[]>;
 export class DesignAssets {
     public resourceUrl =  '/api/editor/stories/actors';
     public screenResourceUrl =  '/api/editor/stories/screen';
-    public commandresourceUrl =  '/api/editor/proj/commands';
-    public queryresourceUrl =  '/api/editor/proj/querys';
-    public apisForProjectResourceUrl =  '/api/editor/proj/microservice-apis/project';
-    public allForProjectResourceUrl =  '/api/editor/proj/microservice-apis/project/all';
+    public processResourceUrl =  '/api/editor/stories/process';
+    public modelResourceUrl =  '/api/editor/stories/mainmodel';
+    // public commandresourceUrl =  '/api/editor/proj/commands';
+    // public queryresourceUrl =  '/api/editor/proj/querys';
+    // public apisForProjectResourceUrl =  '/api/editor/proj/microservice-apis/project';
+    // public allForProjectResourceUrl =  '/api/editor/proj/microservice-apis/project/all';
 
     constructor(protected http: HttpClient) {}
 
@@ -33,32 +35,40 @@ export class DesignAssets {
         return this.http.put<IStoryScreenRequest>(`${this.screenResourceUrl}/${uuid}`, storyReq, { observe: 'response' });
     }
 
-    find(id: string, uuid: string): Observable<EntityResponseType> {
-        return this.http.get<IApi>(`${this.resourceUrl}/${uuid}/${id}`, { observe: 'response' });
+    processUpdate(storyReq: IStoryProcessRequest, uuid: string): Observable<HttpResponse<IStoryProcessRequest>> {
+        return this.http.put<IStoryProcessRequest>(`${this.processResourceUrl}/${uuid}`, storyReq, { observe: 'response' });
     }
 
-    findAPIsForProjectId(id: string, uuid: string): Observable<EntityArrayResponseType> {
-        return this.http.get<IApi[]>(`${this.apisForProjectResourceUrl}/${uuid}/${id}`, { observe: 'response' });
+    modelUpdate(storyReq: IStoryModelRequest, uuid: string): Observable<HttpResponse<IStoryModelRequest>> {
+        return this.http.put<IStoryModelRequest>(`${this.modelResourceUrl}/${uuid}`, storyReq, { observe: 'response' });
     }
 
-    findAllForProjectId(id: string, uuid: string): Observable<HttpResponse<any[]>> {
-        return this.http.get<any[]>(`${this.allForProjectResourceUrl}/${uuid}/${id}`, { observe: 'response' });
-    }
-
-    query(req?: any, uuid?: string): Observable<EntityArrayResponseType> {
-        const options = createRequestOption(req);
-        return this.http.get<IApi[]>(`${this.resourceUrl}/${uuid}`, { params: options, observe: 'response' });
-    }
-
-    delete(id: string, uuid: string): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${uuid}/${id}`, { observe: 'response' });
-    }
-
-    deleteCommand(id: string, uuid: string): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.commandresourceUrl}/${uuid}/${id}`, { observe: 'response' });
-    }
-
-    deleteQuery(id: string, uuid: string): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.queryresourceUrl}/${uuid}/${id}`, { observe: 'response' });
-    }
+    // find(id: string, uuid: string): Observable<EntityResponseType> {
+    //     return this.http.get<IApi>(`${this.resourceUrl}/${uuid}/${id}`, { observe: 'response' });
+    // }
+    //
+    // findAPIsForProjectId(id: string, uuid: string): Observable<EntityArrayResponseType> {
+    //     return this.http.get<IApi[]>(`${this.apisForProjectResourceUrl}/${uuid}/${id}`, { observe: 'response' });
+    // }
+    //
+    // findAllForProjectId(id: string, uuid: string): Observable<HttpResponse<any[]>> {
+    //     return this.http.get<any[]>(`${this.allForProjectResourceUrl}/${uuid}/${id}`, { observe: 'response' });
+    // }
+    //
+    // query(req?: any, uuid?: string): Observable<EntityArrayResponseType> {
+    //     const options = createRequestOption(req);
+    //     return this.http.get<IApi[]>(`${this.resourceUrl}/${uuid}`, { params: options, observe: 'response' });
+    // }
+    //
+    // delete(id: string, uuid: string): Observable<HttpResponse<any>> {
+    //     return this.http.delete<any>(`${this.resourceUrl}/${uuid}/${id}`, { observe: 'response' });
+    // }
+    //
+    // deleteCommand(id: string, uuid: string): Observable<HttpResponse<any>> {
+    //     return this.http.delete<any>(`${this.commandresourceUrl}/${uuid}/${id}`, { observe: 'response' });
+    // }
+    //
+    // deleteQuery(id: string, uuid: string): Observable<HttpResponse<any>> {
+    //     return this.http.delete<any>(`${this.queryresourceUrl}/${uuid}/${id}`, { observe: 'response' });
+    // }
 }

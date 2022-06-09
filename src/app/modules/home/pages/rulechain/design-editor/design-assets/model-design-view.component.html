@@ -15,7 +15,7 @@
             <div>
                 <mat-form-field *ngIf="!isNodeEdit" fxFlex class="mat-block">
                     <mat-label>Create Type</mat-label>
-                    <mat-select formControlName="createType">
+                    <mat-select formControlName="createType" (selectionChange)="changeValue($event.value)">
                         <mat-option value="New">New</mat-option>
                         <mat-option value="Existing">Existing</mat-option>
                     </mat-select>

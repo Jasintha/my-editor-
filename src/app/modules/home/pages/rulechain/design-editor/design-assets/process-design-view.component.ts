@@ -17,7 +17,7 @@ import {
     RuleNodeConfiguration,
     RuleNodeDefinition
 } from '@shared/models/rule-node.models';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { TranslateService } from '@ngx-translate/core';
@@ -38,6 +38,13 @@ import {ICommand} from '@shared/models/model/command.model';
 import {IQuery} from '@shared/models/model/query.model';
 import { AggregateService } from '@core/projectservices/microservice-aggregate.service';
 import {ProjectService} from '@core/projectservices/project.service';
+import {IStoryProcessRequest, IStoryScreenRequest, StoryProcessRequest, StoryScreenRequest} from '@shared/models/model/design-assets.model';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {EventManagerService} from '@shared/events/event.type';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {DesignAssets} from '@core/projectservices/design-assets.service';
 interface Item {
     value: any;
     label: string;
@@ -65,7 +72,6 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
     @Input()
     allActors: any[];
 
-    @Input()
     serviceUuid: string;
 
     @Input()
@@ -95,6 +101,8 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
     aggregateItems: Item[];
     editType: string;
     apiStyle: string;
+    projectUid: string;
+    storyUuid: string
 
     @Input()
     set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
@@ -128,7 +136,12 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
     constructor(private translate: TranslateService,
                 private ruleChainService: RuleChainService,
                 protected aggregateService: AggregateService,
-                private fb: FormBuilder) {
+                private fb: FormBuilder,
+                public dialogRef: MatDialogRef<ProcessDesignViewComponent>,
+                @Inject(MAT_DIALOG_DATA)  public data: any,
+                protected eventManager: EventManagerService,
+                private spinnerService: NgxSpinnerService,
+                private designAssetsService: DesignAssets) {
         this.processNodeConfigFormGroup = this.fb.group({
             processName: ['', Validators.required],
             apiTemplate: '',
@@ -191,6 +204,9 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
     }
 
     ngOnInit(): void {
+        this.projectUid =  this.data.projectUid;
+        this.storyUuid =  this.data.storyUuid;
+        this.serviceUuid = this.data.serviceUuid;
         this.isSaving = false;
         this.items = [];
         this.apiParams = [];
@@ -358,6 +374,50 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
 
             this.propagateChange(this.required ? null : configuration);
         }
+    }
+
+    private createFromForm(): IStoryProcessRequest {
+        return {
+            ...new StoryProcessRequest(),
+            storyUuid: this.storyUuid,
+            processName: this.processNodeConfigFormGroup.get('processName').value,
+            apiTemplate: this.processNodeConfigFormGroup.get('apiTemplate').value,
+            apiMethod: this.processNodeConfigFormGroup.get('apiMethod').value,
+            returnRecord:this.processNodeConfigFormGroup.get('returnRecord').value,
+            returnObject: this.processNodeConfigFormGroup.get('returnObject').value,
+        };
+    }
+
+    save() {
+        this.isSaving = true;
+        const storyProcessRequest = this.createFromForm();
+        if (storyProcessRequest) {
+            this.subscribeToSaveResponse(this.designAssetsService.processUpdate(storyProcessRequest, this.projectUid));
+        } else {
+            this.subscribeToSaveResponse(this.designAssetsService.processUpdate(storyProcessRequest, this.projectUid));
+        }
+    }
+
+    protected subscribeToSaveResponse(result: Observable<HttpResponse<IStoryScreenRequest>>) {
+        result.subscribe(
+            () => this.onSaveSuccess(),
+            () => this.onSaveError()
+        );
+    }
+
+    protected onSaveSuccess() {
+        this.isSaving = false;
+        this.eventManager.dispatch(
+            new AppEvent(EventTypes.editorUITreeListModification, {
+                name: 'editorUITreeListModification',
+                content: 'Add an page navigation',
+            })
+        );
+        this.dialogRef.close();
+    }
+
+    protected onSaveError() {// this.spinnerService.hide();
+        this.isSaving = false;
     }
 
 }

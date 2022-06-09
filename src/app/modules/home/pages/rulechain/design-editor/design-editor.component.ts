@@ -589,13 +589,13 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         });
     }
 
-    createDesign(val , uuid){
+    createDesign(val , story){
         if (val === 'actor'){
             const dialogRef = this.dialog.open(ActorDesignViewComponent, {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
                     projectUid: this.desprojectUid,
-                    storyUuid: uuid
+                    storyUuid: story.uuid
                 }
             });
             dialogRef.afterClosed(
@@ -606,7 +606,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
                     projectUid: this.desprojectUid,
-                    storyUuid: uuid
+                    storyUuid: story.uuid,
+                    serviceUuid: story.serviceUUID
                 }
             });
             dialogRef.afterClosed(
@@ -617,7 +618,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
                     projectUid: this.desprojectUid,
-                    storyUuid: uuid
+                    storyUuid: story.uuid,
                 }
             });
             dialogRef.afterClosed(
@@ -628,7 +629,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
                     projectUid: this.desprojectUid,
-                    storyUuid: uuid
+                    storyUuid: story.uuid
                 }
             });
             dialogRef.afterClosed(

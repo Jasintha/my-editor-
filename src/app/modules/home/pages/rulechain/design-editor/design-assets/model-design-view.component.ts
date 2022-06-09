@@ -35,7 +35,19 @@ import { TreeNode, MenuItem } from 'primeng/api';
 import { StoryService } from '@core/projectservices/story-technical-view.service';
 import { AggregateService } from '@core/projectservices/microservice-aggregate.service';
 import {MicroserviceAddModelDialogComponent} from "@home/pages/aggregate/microservice-add-model-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {EventManagerService} from '@shared/events/event.type';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {DesignAssets} from '@core/projectservices/design-assets.service';
+import {
+    IStoryModelRequest,
+    IStoryProcessRequest,
+    IStoryScreenRequest,
+    StoryModelRequest,
+    StoryProcessRequest
+} from '@shared/models/model/design-assets.model';
+import {AppEvent} from '@shared/events/app.event.class';
+import {EventTypes} from '@shared/events/event.queue';
 
 
 @Component({
@@ -63,14 +75,10 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     @Input()
     ruleNodeId: string;
 
-    @Input()
     projectUid: string;
-
-    @Input()
     storyuuid: string;
-
-    @Input()
     serviceUuid: string;
+    isSaving: boolean;
 
 
     inputitems: any[];
@@ -116,7 +124,12 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
                 protected storyService: StoryService,
                 protected aggregateService: AggregateService,
                 public dialog: MatDialog,
-                private fb: FormBuilder) {
+                private fb: FormBuilder,
+                public dialogRef: MatDialogRef<ModelDesignViewComponent>,
+                @Inject(MAT_DIALOG_DATA)  public data: any,
+                protected eventManager: EventManagerService,
+                private spinnerService: NgxSpinnerService,
+                private designAssetsService: DesignAssets) {
         this.modelNodeConfigFormGroup = this.fb.group({
             createType: "",
             modelName: "",
@@ -133,7 +146,10 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     }
 
     ngOnInit(): void {
-
+        this.serviceUuid = this.data.serviceUuid;
+        this.projectUid = this.data.projectUid;
+        this.storyuuid =  this.data.storyUuid;
+        this.isSaving =  false;
     }
 
     ngOnDestroy(): void {
@@ -507,6 +523,56 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     }
 
     protected onError() {
+    }
+
+    changeValue(val){
+        if (val === 'Existing'){
+            this.loadAggregatesForService('');
+        }
+    }
+
+    private createFromForm(): IStoryModelRequest {
+        const selectedModel = this.modelNodeConfigFormGroup.get(['modelselection']).value;
+        if (this.modelNodeConfigFormGroup.get(['createType']).value === 'Existing'){
+            return {
+                ...new StoryModelRequest(),
+                storyUuid: this.storyuuid,
+                createType: 'Existing',
+                modeluuid: selectedModel.uuid
+            };
+        }
+    }
+
+    save() {
+        this.isSaving = true;
+        const storyModelRequest = this.createFromForm();
+        if (storyModelRequest) {
+            this.subscribeToSaveResponse(this.designAssetsService.modelUpdate(storyModelRequest, this.projectUid));
+        } else {
+            this.subscribeToSaveResponse(this.designAssetsService.modelUpdate(storyModelRequest, this.projectUid));
+        }
+    }
+
+    protected subscribeToSaveResponse(result: Observable<HttpResponse<IStoryModelRequest>>) {
+        result.subscribe(
+            () => this.onSaveSuccess(),
+            () => this.onSaveError()
+        );
+    }
+
+    protected onSaveSuccess() {
+        this.isSaving = false;
+        this.eventManager.dispatch(
+            new AppEvent(EventTypes.editorUITreeListModification, {
+                name: 'editorUITreeListModification',
+                content: 'Add an page navigation',
+            })
+        );
+        this.dialogRef.close();
+    }
+
+    protected onSaveError() {// this.spinnerService.hide();
+        this.isSaving = false;
     }
 
 }
