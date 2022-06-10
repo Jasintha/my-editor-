@@ -55,6 +55,11 @@
                             (onNodeSelect)="onModelNodeSelect($event)"></p-tree>
                     <p-contextMenu #cm appendTo="body" [style]="{'text-decoration': 'none'}" [model]="modelitems"></p-contextMenu>
                 </div>
+<!--                <div  style="margin-top:20px;margin-bottom:10px;" *ngIf="this.modelNodeConfigFormGroup.get(['createType']).value === 'New'">-->
+<!--                    <p-tree [value]="newmodeldata" layout="horizontal" selectionMode="single" [(selection)]="selectedModelNode" [contextMenu]="cm" (onNodeContextMenuSelect)="modelcontextMenu($event, cm)"-->
+<!--                            (onNodeSelect)="onModelNodeSelect($event)"></p-tree>-->
+<!--                    <p-contextMenu #cm appendTo="body" [style]="{'text-decoration': 'none'}" [model]="modelitems"></p-contextMenu>-->
+<!--                </div>-->
             </mat-step>
 
 

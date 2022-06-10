@@ -86,8 +86,11 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     inputitems: any[];
 
     modeldata: TreeNode[];
+    newmodeldata: TreeNode[];
     modelitems: MenuItem[];
     selectedModelNode: TreeNode;
+    newCreatedAggregate: IAggregate;
+    createdNewModel = false;
 
     @Input() isNodeEdit: boolean;
 
@@ -152,6 +155,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         this.projectUid = this.data.projectUid;
         this.storyuuid =  this.data.storyUuid;
         this.isSaving =  false;
+        this.createdNewModel = false
     }
 
     ngOnDestroy(): void {
@@ -535,7 +539,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
 
     private createFromForm(): IStoryModelRequest {
         const selectedModel = this.modelNodeConfigFormGroup.get(['modelselection']).value;
-        if (this.modelNodeConfigFormGroup.get(['createType']).value === 'Existing'){
+        if (this.modelNodeConfigFormGroup.get(['createType']).value === 'Existing' && this.createdNewModel !== true){
             return {
                 ...new StoryModelRequest(),
                 storyUuid: this.storyuuid,
@@ -543,15 +547,13 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
                 modeluuid: selectedModel.uuid,
                 modelName: selectedModel.name
             };
-        }else if (this.modelNodeConfigFormGroup.get(['createType']).value === 'New'){
+        }else if (this.createdNewModel === true){
             return {
                 ...new StoryModelRequest(),
                 storyUuid: this.storyuuid,
                 createType: 'New',
-                modeluuid: selectedModel.uuid,
-                modelName: selectedModel.name,
-                isDto: this.modelNodeConfigFormGroup.get(['isDto']).value,
-                data: this.modeldata,
+                modeluuid: this.newCreatedAggregate.uuid,
+                modelName: this.newCreatedAggregate.name,
             };
         }
     }
@@ -564,6 +566,15 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         } else {
             this.subscribeToSaveResponse(this.designAssetsService.modelUpdate(storyModelRequest, this.projectUid));
         }
+        // if (this.modelNodeConfigFormGroup.get(['createType']).value === 'Existing'){
+        //     const selectedModel = this.modelNodeConfigFormGroup.get(['modelselection']).value;
+        //     const aggregateData = { aggregateId: selectedModel.uuid, data: this.modeldata };
+        //     this.subscribeToSaveResponse(this.aggregateService.saveModelDesign(aggregateData, this.serviceUuid));
+        // }else {
+        //     const aggregateData = { aggregateId: this.newCreatedAggregate.uuid, data: this.modeldata };
+        //     this.subscribeToSaveResponse(this.aggregateService.saveModelDesign(aggregateData, this.serviceUuid));
+        // }
+
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IStoryModelRequest>>) {
@@ -590,6 +601,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
 
     goBack(stepper: MatStepper) {
         stepper.previous();
+        this.createdNewModel = false;
     }
     goForward(stepper: MatStepper) {
         if (stepper.selectedIndex === 0){
@@ -635,11 +647,27 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     saveModel(aggregate: IAggregate) {
         this.isSaving = true;
 
-        if (aggregate.uuid) {
-            // aggregate.status = this.currentAggregate.status;
-            this.subscribeToModelSaveResponse(this.aggregateService.update(aggregate, this.projectUid));
-        } else {
-            this.subscribeToModelSaveResponse(this.aggregateService.create(aggregate, this.projectUid));
+        // if (aggregate.uuid) {
+        //     // aggregate.status = this.currentAggregate.status;
+        //     this.subscribeToModelSaveResponse(this.aggregateService.update(aggregate, this.serviceUuid));
+        // } else {
+        //     this.subscribeToModelSaveResponse(this.aggregateService.create(aggregate, this.serviceUuid));
+        // }
+        if(this.modelNodeConfigFormGroup.get(['createType']).value === 'New'){
+            let modelType = '';
+            if (this.modelNodeConfigFormGroup.get(['isDto']).value){
+                modelType = 'DTO';
+            } else {
+                modelType = 'MODEL';
+            }
+
+            let data = {
+                name: this.modelNodeConfigFormGroup.get(['modelName']).value,
+                type: modelType,
+                pmServiceUUID: this.serviceUuid,
+                projectUuid: this.projectUid,
+            };
+            this.subscribeToModelSaveResponse(this.storyService.createModel(data, this.projectUid));
         }
     }
 
@@ -668,10 +696,16 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     }
 
     protected onModelSaveSuccess(res) {
+        this.createdNewModel = true;
         this.modeldata = [];
-        const createdAggregate: IAggregate = res.body;
+        this.newCreatedAggregate = res.body;
+        this.loadAggregatesForService('');
+        this.modelNodeConfigFormGroup.patchValue({
+            createType: 'Existing',
+            modelselection: this.newCreatedAggregate,
+        })
         this.aggregateService
-            .findDesignById(createdAggregate.uuid,this.serviceUuid)
+            .findDesignById(this.newCreatedAggregate.uuid,this.serviceUuid)
             .pipe(
                 filter((resp: HttpResponse<TreeNode>) => resp.ok),
                 map((resp: HttpResponse<TreeNode>) => resp.body)
@@ -692,8 +726,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
                         })
                     );
                     this.modeldata = [];
-                    console.log(res)
-                    this.modeldata.push(res);
+                    this.modeldata.push(resp);
 
                     this.expandAll();
                 },
@@ -702,6 +735,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     }
 
     checkNameAvailability() {
+        this.modeldata = [];
         const aggregate = this.createModelFromForm();
         this.aggregateService
             .findNameAvailability(aggregate.name, this.projectUid)
