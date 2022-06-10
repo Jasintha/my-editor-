@@ -17,6 +17,14 @@
                     <input type="text" formControlName="screenName" matInput name="screenName" id="screen_name">
                     <mat-error *ngIf="screenNodeConfigFormGroup.controls.screenName.hasError('required')">This field is required</mat-error>
                 </mat-form-field>
+                <mat-form-field fxFlex class="mat-block">
+                    <mat-label>Model</mat-label>
+                    <mat-select formControlName="modelselection" (selectionChange)="onModelChange()">
+                        <mat-option *ngFor="let param of inputitems" [value]="param.value">
+                            {{param.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
                 <p-carousel [value]="pageTemplateItems" [numVisible]="3" [numScroll]="3" [circular]="true">
                     <ng-template let-template pTemplate="item">

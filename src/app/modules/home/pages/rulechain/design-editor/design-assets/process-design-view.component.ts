@@ -138,6 +138,7 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
                 protected aggregateService: AggregateService,
                 private fb: FormBuilder,
                 public dialogRef: MatDialogRef<ProcessDesignViewComponent>,
+                protected projectService: ProjectService,
                 @Inject(MAT_DIALOG_DATA)  public data: any,
                 protected eventManager: EventManagerService,
                 private spinnerService: NgxSpinnerService,
@@ -147,7 +148,8 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
             apiTemplate: '',
             apiMethod: '',
             returnObject: '',
-            returnRecord: ''
+            returnRecord: '',
+            selectedAPIInputs:null
 
         });
     }
@@ -203,6 +205,41 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
     registerOnTouched(fn: any): void {
     }
 
+    loadServiceAndUpdateForm(){
+        if (this.serviceUuid) {
+            this.projectService
+                .findWithModelEventsAndSubrules(this.serviceUuid)
+                .pipe(
+                    filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
+                    map((response: HttpResponse<IProject>) => response.body)
+                )
+                .subscribe(
+                    (res: IProject) => {
+                        this.project = res;
+                        this.aggregates = this.project.aggregates;
+                        if (this.aggregates) {
+                            this.loadAggregates();
+                        }
+                        let selectedAPIInputs = this.configuration.apiInput;
+                        if(selectedAPIInputs && this.items){
+                            selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
+                        }
+                        let returnObject = this.configuration.returnObject;
+                        if(returnObject && this.returnObject){
+                            returnObject = this.returnObject.find(x => (x.value.id === this.configuration.returnObject.id) && (x.value.inputType === this.configuration.returnObject.inputType) && (x.value.inputName === this.configuration.returnObject.inputName));
+                        }
+
+                        this.processNodeConfigFormGroup.patchValue({
+                            selectedAPIInputs: selectedAPIInputs,
+                            returnObject: returnObject
+                        });
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        }
+
+    }
+
     ngOnInit(): void {
         this.projectUid =  this.data.projectUid;
         this.storyUuid =  this.data.storyUuid;
@@ -213,6 +250,7 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
         this.aggregateItems = [];
         this.returnObject = [];
         this.addPrimitivesForReturnSelect();
+        this.loadServiceAndUpdateForm();
 
         if (this.serviceUuid) {
             this.aggregateService
@@ -365,6 +403,10 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
         if (!word) return word;
         return word[0].toLowerCase() + word.substr(1);
     }
+    onInputObjChange(){
+        this.configuration.apiInput = this.processNodeConfigFormGroup.get(['selectedAPIInputs']).value;
+        this.updateModel(this.configuration);
+    }
 
     private updateModel(configuration: RuleNodeConfiguration) {
 
@@ -377,6 +419,7 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
     }
 
     private createFromForm(): IStoryProcessRequest {
+        const val = this.processNodeConfigFormGroup.get(['selectedAPIInputs']).value;
         return {
             ...new StoryProcessRequest(),
             storyUuid: this.storyUuid,
@@ -385,6 +428,7 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
             apiMethod: this.processNodeConfigFormGroup.get('apiMethod').value,
             returnRecord:this.processNodeConfigFormGroup.get('returnRecord').value,
             returnObject: this.processNodeConfigFormGroup.get('returnObject').value,
+            apiInput: this.processNodeConfigFormGroup.get(['selectedAPIInputs']).value
         };
     }
 

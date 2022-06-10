@@ -1,4 +1,5 @@
 import {TreeNode} from 'primeng/api';
+import {APIInput} from '@shared/models/model/api-input.model';
 
 export interface IStoryActorRequest {
     storyUuid?: string;
@@ -25,10 +26,12 @@ export interface IStoryScreenRequest {
     screenTemplate?: string;
     screenName?: string;
     screenActions?: any;
+    modeluuid?: string;
 }
 
 export class StoryScreenRequest implements IStoryScreenRequest {
-    constructor(public storyUuid?: string, public screenTemplate?: string, public screenName?: string, public screenActions?: any) {}
+    constructor(public storyUuid?: string, public screenTemplate?: string, public screenName?: string,
+                public screenActions?: any,public modeluuid?: string) {}
 }
 
 export interface IStoryProcessRequest {
@@ -38,12 +41,13 @@ export interface IStoryProcessRequest {
     apiMethod?: string;
     returnRecord?: string;
     returnObject?: string;
+    apiInput?: APIInput;
 }
 
 export class StoryProcessRequest implements IStoryProcessRequest {
     constructor(public storyUuid?: string, public processName?: string, public apiTemplate?: string,
                 public apiMethod?: string, public returnRecord?: string,
-                public returnObject?: string) {}
+                public returnObject?: string,public apiInput?: APIInput) {}
 }
 
 

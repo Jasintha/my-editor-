@@ -39,6 +39,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {EventManagerService} from '@shared/events/event.type';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {DesignAssets} from '@core/projectservices/design-assets.service';
+import {AggregateService} from '@core/projectservices/microservice-aggregate.service';
 
 @Component({
     selector: 'virtuan-screen-design-view',
@@ -69,7 +70,6 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
     @Input()
     ruleNodeId: string;
 
-    @Input()
     serviceUuid: string;
 
     nodeDefinitionValue: RuleNodeDefinition;
@@ -82,6 +82,7 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
     existingPortals: any[];
     selectedPortal: any;
     selectedScreen: any;
+    inputitems: any[];
 
     actionItems: any[] = [];
 
@@ -119,11 +120,13 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
                 protected storyService: StoryService,
                 private fb: FormBuilder,
                 public dialogRef: MatDialogRef<ScreenDesignViewComponent>,
+                protected aggregateService: AggregateService,
                 @Inject(MAT_DIALOG_DATA)  public data: any,
                 protected eventManager: EventManagerService,
                 private spinnerService: NgxSpinnerService,
                 private designAssetsService: DesignAssets) {
         this.screenNodeConfigFormGroup = this.fb.group({
+            modelselection: null,
             screenName: '',
             screenTemplate: '',
             screeActions: []
@@ -159,10 +162,46 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
     ngOnInit(): void {
         this.projectUid = this.data.projectUid;
         this.storyUuid = this.data.storyUuid
+        this.serviceUuid = this.data.serviceUuid
         this.existingPortals = [];
         this.loadPortals();
         this.isSaving = false;
         this.getPageTemplates();
+        this.loadAggregatesForService();
+    }
+
+    loadAggregatesForService() {
+        this.aggregateService
+            .findByProjectUUId(this.serviceUuid, this.serviceUuid)
+            .pipe(
+                filter((res: HttpResponse<any[]>) => res.ok),
+                map((res: HttpResponse<any[]>) => res.body)
+            )
+            .subscribe(
+                (res: any[]) => {
+                    let existingModels = [];
+                    this.inputitems = [];
+                    if (res) {
+                        existingModels = res;
+                        let findModel;
+                        for (let i = 0; i < existingModels.length; i++) {
+                            if (existingModels[i].type === 'MODEL') {
+                                const dropdownLabel = existingModels[i].name;
+                                this.inputitems.push({ label: dropdownLabel, value: existingModels[i] });
+                            } else if (existingModels[i].type === 'DTO') {
+                                const dropdownLabel = existingModels[i].name;
+                                this.inputitems.push({ label: dropdownLabel, value: existingModels[i] });
+                            }
+                        }
+                        if (findModel && this.configuration.modeluuid) {
+                            this.screenNodeConfigFormGroup.patchValue({
+                                modelselection: findModel,
+                            });
+                        }
+                    }
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     onScreenTypeChanged() {
@@ -298,13 +337,21 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
         }
     }
 
+    onModelChange() {
+        let model = this.screenNodeConfigFormGroup.get(['modelselection']).value;
+        this.configuration.modeluuid = model.uuid;
+        this.updateModel(this.configuration);
+    }
+
     private createFromForm(): IStoryScreenRequest {
+        let model = this.screenNodeConfigFormGroup.get(['modelselection']).value;
         return {
             ...new StoryScreenRequest(),
             storyUuid: this.storyUuid,
             screenTemplate: this.screenNodeConfigFormGroup.get(['screenTemplate']).value,
             screenName: this.screenNodeConfigFormGroup.get(['screenName']).value,
-            screenActions: this.actionItems
+            screenActions: this.actionItems,
+            modeluuid: model.uuid
         };
     }
 

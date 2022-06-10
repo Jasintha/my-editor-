@@ -539,23 +539,24 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
 
     private createFromForm(): IStoryModelRequest {
         const selectedModel = this.modelNodeConfigFormGroup.get(['modelselection']).value;
-        if (this.modelNodeConfigFormGroup.get(['createType']).value === 'Existing' && this.createdNewModel !== true){
+        if (this.modelNodeConfigFormGroup.get(['createType']).value === 'Existing' ){
             return {
                 ...new StoryModelRequest(),
                 storyUuid: this.storyuuid,
-                createType: 'Existing',
+                createType: this.modelNodeConfigFormGroup.get(['createType']).value,
                 modeluuid: selectedModel.uuid,
                 modelName: selectedModel.name
             };
-        }else if (this.createdNewModel === true){
-            return {
-                ...new StoryModelRequest(),
-                storyUuid: this.storyuuid,
-                createType: 'New',
-                modeluuid: this.newCreatedAggregate.uuid,
-                modelName: this.newCreatedAggregate.name,
-            };
         }
+        // else if (this.createdNewModel === true){
+        //     return {
+        //         ...new StoryModelRequest(),
+        //         storyUuid: this.storyuuid,
+        //         createType: 'Existing',
+        //         modeluuid: this.newCreatedAggregate.uuid,
+        //         modelName: this.newCreatedAggregate.name,
+        //     };
+        // }
     }
 
     save() {
@@ -702,7 +703,9 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         this.loadAggregatesForService('');
         this.modelNodeConfigFormGroup.patchValue({
             createType: 'Existing',
+            modelName: '',
             modelselection: this.newCreatedAggregate,
+            isDto: false,
         })
         this.aggregateService
             .findDesignById(this.newCreatedAggregate.uuid,this.serviceUuid)
