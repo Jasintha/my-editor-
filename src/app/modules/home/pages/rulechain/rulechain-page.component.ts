@@ -204,6 +204,7 @@ export class RuleChainPageComponent extends PageComponent
   allDomainModelsWithSub: any[];
   allViewModelsWithSub: any[];
   allMicroservices: any[];
+  editorEdgeStyle: string;
 
   @Input()
   username: string;
@@ -417,6 +418,10 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   private init() {
+
+    if(this.editorType === "servicefile" || this.editorType === "maintask"){
+        this.editorEdgeStyle = "curved";
+    }
 
     if(this.editorType === "servicefile"){
         this.ruleNodeTypesLibraryArray= serviceruleNodeTypesLibrary;
