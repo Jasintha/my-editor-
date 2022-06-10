@@ -133,14 +133,15 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
   constructor(private translate: TranslateService,
               private ruleChainService: RuleChainService,
               protected aggregateService: AggregateService,
+              protected projectService: ProjectService,
               private fb: FormBuilder) {
     this.processNodeConfigFormGroup = this.fb.group({
       processName: ['', Validators.required],
       apiTemplate: '',
       apiMethod: '',
       returnObject: '',
-      returnRecord: ''
-
+      returnRecord: '',
+      selectedAPIInputs: null
     });
   }
 
@@ -202,7 +203,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     this.aggregateItems = [];
     this.returnObject = [];
     this.addPrimitivesForReturnSelect();
-
+/*
     if (this.serviceUuid) {
       this.aggregateService
           .findByProjectUUId(this.serviceUuid, this.serviceUuid)
@@ -219,7 +220,51 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
               },
               (res: HttpErrorResponse) => this.onError(res.message)
           );
-    }
+    } */
+  }
+
+  onInputObjChange(){
+    this.configuration.apiInput = this.processNodeConfigFormGroup.get(['selectedAPIInputs']).value;
+    this.updateModel(this.configuration);
+  }
+  onReturnObjChange(){
+    this.configuration.returnObject = this.processNodeConfigFormGroup.get(['returnObject']).value;
+    this.updateModel(this.configuration);
+  }
+
+  loadServiceAndUpdateForm(){
+     if (this.serviceUuid) {
+        this.projectService
+            .findWithModelEventsAndSubrules(this.serviceUuid)
+            .pipe(
+                filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
+                map((response: HttpResponse<IProject>) => response.body)
+            )
+            .subscribe(
+                (res: IProject) => {
+                  this.project = res;
+                  this.aggregates = this.project.aggregates;
+                  if (this.aggregates) {
+                    this.loadAggregates();
+                  }
+                  let selectedAPIInputs = this.configuration.apiInput;
+                  if(selectedAPIInputs && this.items){
+                    selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
+                  }
+                  let returnObject = this.configuration.returnObject;
+                  if(returnObject && this.returnObject){
+                    returnObject = this.returnObject.find(x => (x.value.id === this.configuration.returnObject.id) && (x.value.inputType === this.configuration.returnObject.inputType) && (x.value.inputName === this.configuration.returnObject.inputName));
+                  }
+
+                  this.processNodeConfigFormGroup.patchValue({
+                      selectedAPIInputs: selectedAPIInputs,
+                      returnObject: returnObject
+                  });
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+      }
+
   }
 
   addPrimitivesForReturnSelect() {
@@ -309,7 +354,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
         processName: this.configuration.processName,
         apiTemplate: this.configuration.apiTemplate,
         apiMethod: this.configuration.apiMethod,
-        returnObject: this.configuration.returnObject,
+//         returnObject: this.configuration.returnObject,
         returnRecord: this.configuration.returnRecord
       });
     }
@@ -331,18 +376,19 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
           this.updateModel(this.configuration);
         }
     );
-    this.changeSubscription = this.processNodeConfigFormGroup.get('returnObject').valueChanges.subscribe(
+   /*  this.changeSubscription = this.processNodeConfigFormGroup.get('returnObject').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.returnObject = configuration;
           this.updateModel(this.configuration);
         }
-    );
+    ); */
     this.changeSubscription = this.processNodeConfigFormGroup.get('returnRecord').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.returnRecord = configuration;
           this.updateModel(this.configuration);
         }
     );
+    this.loadServiceAndUpdateForm();
   }
 
   titleCaseWord(word: string) {

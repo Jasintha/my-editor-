@@ -31,6 +31,7 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {StoryService} from '@core/projectservices/story-technical-view.service';
+import { AggregateService } from '@core/projectservices/microservice-aggregate.service';
 import {filter, map} from 'rxjs/operators';
 
 @Component({
@@ -68,6 +69,8 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
 
   @Input()
   serviceUuid: string;
+
+  inputitems: any[];
 
   nodeDefinitionValue: RuleNodeDefinition;
 
@@ -114,8 +117,10 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
   constructor(private translate: TranslateService,
               private ruleChainService: RuleChainService,
               protected storyService: StoryService,
+              protected aggregateService: AggregateService,
               private fb: FormBuilder) {
     this.screenNodeConfigFormGroup = this.fb.group({
+      modelselection: null,
       screenName: '',
       screenTemplate: '',
       screeActions: []
@@ -179,6 +184,12 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
     this.screenNodeConfigFormGroup.patchValue({
       screeActions: this.actionItems,
     });
+  }
+
+  onModelChange() {
+    let model = this.screenNodeConfigFormGroup.get(['modelselection']).value;
+    this.configuration.modeluuid = model.uuid;
+    this.updateModel(this.configuration);
   }
 
   ngOnDestroy(): void {
@@ -266,6 +277,44 @@ export class ScreenNodeConfigComponent implements ControlValueAccessor, OnInit, 
           this.updateModel(this.configuration);
         }
     );
+    this.loadAggregatesForService();
+  }
+
+  loadAggregatesForService() {
+    this.aggregateService
+      .findByProjectUUId(this.serviceUuid, this.serviceUuid)
+      .pipe(
+        filter((res: HttpResponse<any[]>) => res.ok),
+        map((res: HttpResponse<any[]>) => res.body)
+      )
+      .subscribe(
+        (res: any[]) => {
+          let existingModels = [];
+          this.inputitems = [];
+          if (res) {
+            existingModels = res;
+            let findModel;
+            for (let i = 0; i < existingModels.length; i++) {
+              if (this.configuration.modeluuid && this.configuration.modeluuid === existingModels[i].uuid) {
+                findModel = existingModels[i];
+              }
+              if (existingModels[i].type === 'MODEL') {
+                const dropdownLabel = existingModels[i].name;
+                this.inputitems.push({ label: dropdownLabel, value: existingModels[i] });
+              } else if (existingModels[i].type === 'DTO') {
+                const dropdownLabel = existingModels[i].name;
+                this.inputitems.push({ label: dropdownLabel, value: existingModels[i] });
+              }
+            }
+            if (findModel && this.configuration.modeluuid) {
+              this.screenNodeConfigFormGroup.patchValue({
+                modelselection: findModel,
+              });
+            }
+          }
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
 
   titleCaseWord(word: string) {

@@ -23,6 +23,15 @@
   </mat-select>
  </mat-form-field>
 
+ <mat-form-field class="mat-block">
+  <mat-label>Target Input</mat-label>
+  <mat-select formControlName="selectedAPIInputs" (selectionChange)="onInputObjChange()">
+   <mat-option *ngFor="let option of items" [value]="option">
+    {{option.inputName}} : {{option.inputType}}
+   </mat-option>
+  </mat-select>
+ </mat-form-field>
+
  <mat-form-field fxFlex *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'" class="mat-block">
   <mat-label>Return Record</mat-label>
   <mat-select formControlName="returnRecord">
@@ -34,7 +43,7 @@
 
  <mat-form-field fxFlex *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'" class="mat-block">
   <mat-label>Return Value</mat-label>
-  <mat-select formControlName="returnObject">
+  <mat-select formControlName="returnObject" (selectionChange)="onReturnObjChange()">
    <mat-option *ngFor="let option of returnObject" [value]="option.value">
     {{option.label}}
    </mat-option>
