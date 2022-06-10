@@ -151,7 +151,7 @@
     </div>
 
 
-    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0" @inOutAnimation style="margin-left: -8px;height: 190px;">
+    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0" @inOutAnimation style="margin-left: 37px;height: 190px;">
 <!--        <div class="col-12">-->
 <!--            <div class="row">-->
 <!--                <div class="col-9"></div>-->
@@ -291,7 +291,7 @@
 
     <div *ngIf="filteredStories.length != 0" @inOutAnimation>
         <ng-container *ngFor="let story of filteredStories" >
-            <div id="storiesText" class="row section border row-color wrap-text"  style="margin-left: 120px; margin-bottom: -8px" *ngIf="story.storyText">
+            <div id="storiesText" class="row section border row-color wrap-text"  style="margin-left: 120px; margin-bottom: -8px;width: 1245px;" *ngIf="story.storyText">
                 <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
                     <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign(story,'story-text')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                     <a class="edit-icon-text" virtuan-click-stop-propagation (click)="editStoryText(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -304,7 +304,7 @@
                 </p-editor>
 
             </div>
-            <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px; margin-top: 20px;height: 90px;" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
+            <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px; margin-top: 20px;height: 90px;width: 1245px;" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
                 <div class="top-req">
                     <div class="col-12 d-flex justify-content-center add-req-top">
                         <button mat-raised-button style="top: -15px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
@@ -385,7 +385,7 @@
 
                                     </div>
                                 </div>
-                                <div style="border-right: 1px solid #b2a9a9; position: absolute; height: 88px; right: 1110px; width: 1px;top: 0px;"></div>
+                                <div style="border-right: 1px solid #b2a9a9; position: absolute; height: 88px; right: 1160px; width: 1px;top: 0px;"></div>
                                 <div class="col-3 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
                                     <h5 style="margin: 0;padding-top: 9px;" class="txt-overflow" matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">{{story.name}}</h5>
                                     <div>
@@ -393,13 +393,17 @@
                                         <a class="edit-icon" virtuan-click-stop-propagation matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editStory(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                     </div>
                                 </div>
-                                <div class="col-2 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
-                                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="progressValue">
+                                <div class="col-2 d-flex justify-content-end align-items-center p-0 m-0" style="margin-right: 10px; ">
+                                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [ngModel]="story.status">
                                         <div style=" display: flex; flex-direction: column;">
-                                        <mat-radio-button style="padding-bottom: 5px;" class="example-radio-button" *ngFor="let progress of progressRadio" [value]="progress">
 
-                                                <!--                                            {{progress}}-->
-                                            </mat-radio-button>
+                                            <mat-radio-button value="NEW"></mat-radio-button>
+                                            <mat-radio-button style="margin-top: 3px" color="primary" value="IN_PROGRESS"></mat-radio-button>
+                                            <mat-radio-button style="margin-top: 3px; color: green" value="COMPLETED"></mat-radio-button>
+<!--                                        <mat-radio-button style="padding-bottom: 5px;" class="example-radio-button" *ngFor="let progress of progressRadio" [value]="progress">-->
+
+<!--                                                &lt;!&ndash;                                            {{progress}}&ndash;&gt;-->
+<!--                                            </mat-radio-button>-->
                                         </div>
                                     </mat-radio-group>
                                 </div>

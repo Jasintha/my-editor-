@@ -10,50 +10,75 @@
     </mat-toolbar>
 
     <mat-dialog-content>
-        <div class="row">
 
-            <div>
-                <mat-form-field *ngIf="!isNodeEdit" fxFlex class="mat-block">
-                    <mat-label>Create Type</mat-label>
-                    <mat-select formControlName="createType" (selectionChange)="changeValue($event.value)">
-                        <mat-option value="New">New</mat-option>
-                        <mat-option value="Existing">Existing</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field *ngIf="!isNodeEdit && modelNodeConfigFormGroup.value.createType === 'New'" fxFlex class="mat-block">
-                    <mat-label>Model Name</mat-label>
-                    <input matInput formControlName="modelName"/>
-                </mat-form-field>
-                <mat-checkbox *ngIf="!isNodeEdit && modelNodeConfigFormGroup.value.createType === 'New'" formControlName="isDto">
-                    Create as Data Transfer Object(DTO)
-                </mat-checkbox>
+        <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
 
-                <mat-form-field *ngIf="isNodeEdit || modelNodeConfigFormGroup.value.createType === 'Existing'" fxFlex class="mat-block">
-                    <mat-label>Model</mat-label>
-                    <mat-select formControlName="modelselection" >
-                        <mat-option *ngFor="let param of inputitems" [value]="param.value">
-                            {{param.label}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <div *ngIf="isNodeEdit" style="margin-top:20px;margin-bottom:10px;">
+            <mat-step>
+                <ng-template matStepLabel>Step 1</ng-template>
+                <div class="row">
+
+                    <div>
+                        <mat-form-field *ngIf="!isNodeEdit" fxFlex class="mat-block">
+                            <mat-label>Create Type</mat-label>
+                            <mat-select formControlName="createType" (selectionChange)="changeValue($event.value)">
+                                <mat-option value="New">New</mat-option>
+                                <mat-option value="Existing">Existing</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field *ngIf="!isNodeEdit && modelNodeConfigFormGroup.value.createType === 'New'" fxFlex class="mat-block">
+                            <mat-label>Model Name</mat-label>
+                            <input matInput formControlName="modelName"/>
+                        </mat-form-field>
+                        <mat-checkbox *ngIf="!isNodeEdit && modelNodeConfigFormGroup.value.createType === 'New'" formControlName="isDto">
+                            Create as Data Transfer Object(DTO)
+                        </mat-checkbox>
+
+                        <mat-form-field *ngIf="isNodeEdit || modelNodeConfigFormGroup.value.createType === 'Existing'" fxFlex class="mat-block">
+                            <mat-label>Model</mat-label>
+                            <mat-select formControlName="modelselection" >
+                                <mat-option *ngFor="let param of inputitems" [value]="param.value">
+                                    {{param.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+            </mat-step>
+
+
+            <mat-step>
+                <ng-template matStepLabel>Step 2</ng-template>
+                <div  style="margin-top:20px;margin-bottom:10px;">
                     <p-tree [value]="modeldata" layout="horizontal" selectionMode="single" [(selection)]="selectedModelNode" [contextMenu]="cm" (onNodeContextMenuSelect)="modelcontextMenu($event, cm)"
                             (onNodeSelect)="onModelNodeSelect($event)"></p-tree>
                     <p-contextMenu #cm appendTo="body" [style]="{'text-decoration': 'none'}" [model]="modelitems"></p-contextMenu>
                 </div>
-            </div>
+            </mat-step>
 
-        </div>
+
+
+        </mat-horizontal-stepper>
+
+
+
     </mat-dialog-content>
     <div mat-dialog-actions fxLayoutAlign="end center">
-        <button mat-raised-button color="primary"
+        <button mat-button color="primary" (click)="goBack(stepper)" type="button" [disabled]="stepper.selectedIndex === 0">
+            PREVIOUS
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="goForward(stepper)" *ngIf="stepper.selectedIndex != 1">
+            NEXT
+        </button>
+        <button mat-raised-button color="primary" (click)="goForward(stepper)" *ngIf="stepper.selectedIndex === 1"
                 type="submit" cdkFocusInitial>
             Create
         </button>
-        <button mat-button color="primary"
-                type="button"
-                mat-dialog-close >
-            Cancel
-        </button>
+<!--        <button mat-button color="primary"-->
+<!--                type="button"-->
+<!--                mat-dialog-close >-->
+<!--            Cancel-->
+<!--        </button>-->
     </div>
 </form>

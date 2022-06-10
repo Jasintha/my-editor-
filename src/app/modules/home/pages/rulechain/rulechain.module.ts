@@ -101,7 +101,9 @@ import {ActorDesignViewComponent} from '@home/pages/rulechain/design-editor/desi
 import {ModelDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/model-design-view.component';
 import {ProcessDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/process-design-view.component';
 import {ScreenDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/screen-design-view.component';
-
+import {TreeModule} from 'primeng/tree';
+import {TreeNode} from 'primeng/api';
+import {ContextMenuModule} from 'primeng/contextmenu';
 @NgModule({
   declarations: [
     RuleChainPageComponent,
@@ -191,7 +193,9 @@ import {ScreenDesignViewComponent} from '@home/pages/rulechain/design-editor/des
     MatChipsModule,
     MatStepperModule,
     PickListModule,
-    ListboxModule
+    ListboxModule,
+    TreeModule,
+    ContextMenuModule
   ]
 })
 export class RuleChainModule { }

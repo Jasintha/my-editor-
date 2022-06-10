@@ -861,7 +861,7 @@
     .delete{
         top: 15px;
         height: 20px;
-        right: 12px;
+        right: -11px;
         position: absolute;
         font-size: 15px;
         background: #dc3545;
@@ -903,7 +903,7 @@
     }
 
     .edit-icon{
-        right: 14px;
+        right: -11px;
         top: 45px;
         height: 20px;
         position: absolute;
@@ -1176,7 +1176,7 @@ body .ui-editor-container .ui-editor-content .ql-editor {
 
 .description {
     height: 180px;
-    width: 363px;
+    width: 320px;
     display: none;
     padding: 15px;
     text-align: left;
@@ -1316,7 +1316,7 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     }
     .arrow-icon{
         margin: 5px 15px;
-        width: 35px;
+        width: 63px;
         height: 30px;
     }
 

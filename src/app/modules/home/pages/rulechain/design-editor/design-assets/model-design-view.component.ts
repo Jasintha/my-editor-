@@ -48,6 +48,8 @@ import {
 } from '@shared/models/model/design-assets.model';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
+import {MatStepper} from '@angular/material/stepper';
+import {Aggregate, IAggregate} from '@shared/models/model/aggregate.model';
 
 
 @Component({
@@ -541,6 +543,16 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
                 modeluuid: selectedModel.uuid,
                 modelName: selectedModel.name
             };
+        }else if (this.modelNodeConfigFormGroup.get(['createType']).value === 'New'){
+            return {
+                ...new StoryModelRequest(),
+                storyUuid: this.storyuuid,
+                createType: 'New',
+                modeluuid: selectedModel.uuid,
+                modelName: selectedModel.name,
+                isDto: this.modelNodeConfigFormGroup.get(['isDto']).value,
+                data: this.modeldata,
+            };
         }
     }
 
@@ -576,4 +588,135 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         this.isSaving = false;
     }
 
+    goBack(stepper: MatStepper) {
+        stepper.previous();
+    }
+    goForward(stepper: MatStepper) {
+        if (stepper.selectedIndex === 0){
+            // this.loadAIDes();
+        }
+
+
+        if (this.modelNodeConfigFormGroup.get(['createType']).value === 'Existing'){
+            const selectedModel = this.modelNodeConfigFormGroup.get(['modelselection']).value;
+            this.aggregateService
+                .findDesignById(selectedModel.uuid,this.serviceUuid)
+                .pipe(
+                    filter((res: HttpResponse<TreeNode>) => res.ok),
+                    map((res: HttpResponse<TreeNode>) => res.body)
+                )
+                .subscribe(
+                    (res: TreeNode) => {
+                        this.modeldata = [];
+                        console.log(res)
+                        this.modeldata.push(res);
+
+                        this.expandAll();
+                        stepper.next();
+                    },
+                    (res: HttpErrorResponse) => this.onError()
+                );
+        }else{
+            this.checkNameAvailability();
+            stepper.next();
+        }
+    }
+
+    expandAll(){
+        this.modeldata.forEach( node => {
+            this.expandRecursive(node, true);
+        } );
+    }
+
+    private expandRecursive(node:TreeNode, isExpand:boolean){
+        node.expanded = isExpand;
+    }
+
+    saveModel(aggregate: IAggregate) {
+        this.isSaving = true;
+
+        if (aggregate.uuid) {
+            // aggregate.status = this.currentAggregate.status;
+            this.subscribeToModelSaveResponse(this.aggregateService.update(aggregate, this.projectUid));
+        } else {
+            this.subscribeToModelSaveResponse(this.aggregateService.create(aggregate, this.projectUid));
+        }
+    }
+
+    private createModelFromForm(): IAggregate {
+        let type = '';
+        if (this.modelNodeConfigFormGroup.get(['createType']).value !== 'isDto') {
+            type = 'MODEL';
+        } else {
+            type = 'DTO';
+        }
+
+        return {
+            ...new Aggregate(),
+            uuid: '',
+            name: this.modelNodeConfigFormGroup.get(['modelName']).value,
+            type,
+            projectUuid: this.serviceUuid,
+        };
+    }
+
+    protected subscribeToModelSaveResponse(result: Observable<HttpResponse<IAggregate>>) {
+        result.subscribe(
+            res => this.onModelSaveSuccess(res),
+            () => this.onSaveError()
+        );
+    }
+
+    protected onModelSaveSuccess(res) {
+        this.modeldata = [];
+        const createdAggregate: IAggregate = res.body;
+        this.aggregateService
+            .findDesignById(createdAggregate.uuid,this.serviceUuid)
+            .pipe(
+                filter((resp: HttpResponse<TreeNode>) => resp.ok),
+                map((resp: HttpResponse<TreeNode>) => resp.body)
+            )
+            .subscribe(
+                (resp: TreeNode) => {
+                    this.isSaving = false;
+                    this.eventManager.dispatch(
+                        new AppEvent(EventTypes.editorTreeListModification, {
+                            name: 'editorTreeListModification',
+                            content: 'Add an Model',
+                        })
+                    );
+                    this.eventManager.dispatch(
+                        new AppEvent(EventTypes.editorUITreeListModification, {
+                            name: 'editorUITreeListModification',
+                            content: 'Add an Model',
+                        })
+                    );
+                    this.modeldata = [];
+                    console.log(res)
+                    this.modeldata.push(res);
+
+                    this.expandAll();
+                },
+                (resp: HttpErrorResponse) => this.onError()
+            );
+    }
+
+    checkNameAvailability() {
+        const aggregate = this.createModelFromForm();
+        this.aggregateService
+            .findNameAvailability(aggregate.name, this.projectUid)
+            .pipe(
+                filter((res: HttpResponse<any>) => res.ok),
+                map((res: HttpResponse<any>) => res.body)
+            )
+            .subscribe(
+                (res: any) => {
+                    if (res.IsNameExist) {
+                    } else {
+                        this.saveModel(aggregate);
+                    }
+                },
+                (res: HttpErrorResponse) => this.onError()
+            );
+    }
 }
