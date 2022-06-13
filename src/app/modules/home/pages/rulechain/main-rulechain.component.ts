@@ -318,7 +318,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             this.loadCustomPageEditor = true;
             this.loadTabPageEditor = false;
             this.loadFilterPageEditor = false;
-        } else if (item.subtype === 'FilterPage') {
+        } else if (item.subtype === 'Filter-Page') {
             this.loadPageEditor = false;
             this.loadGridPageEditor = false;
             this.loadCustomPageEditor = false;

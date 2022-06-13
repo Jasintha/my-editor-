@@ -48,6 +48,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     pageTemplateItems: SelectItem[];
     datamodelItems: SelectItem[];
     currentPage: IPage;
+    filterFormPage: IPage;
     microservices: IInstalledMicroservice[];
     microserviceProjects: IProject[];
     dashboardProjects: IProject[];
@@ -586,6 +587,9 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 (res: IPage) => {
                     this.currentPage = res;
                     this.updateForm(res);
+                    if(this.currentPage.attachedFormPage) {
+                        this.loadFilterPage(this.currentPage.attachedFormPage);
+                    }
                 }
             );
         // this.activatedRoute.data.subscribe(({ builtInPage }) => {
@@ -629,6 +633,20 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             }
             this.editForm.get('apiResourcePath').patchValue(suggestedPath, { emitEvent: true });
         }
+    }
+
+    loadFilterPage(filterPageUUID: any) {
+        this.builtInPageService
+            .find(filterPageUUID ,this.projectUid)
+            .pipe(
+                filter((mayBeOk: HttpResponse<IPage>) => mayBeOk.ok),
+                map((response: HttpResponse<IPage>) => response.body)
+            )
+            .subscribe(
+                (res: IPage) => {
+                    this.filterFormPage = res;
+                }
+            );
     }
 
     onchangePageTemplate() {

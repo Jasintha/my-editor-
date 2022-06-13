@@ -34,6 +34,10 @@
       <img *ngIf="template.value == 'tab-page'" width="200px" height="150px"
            class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/tabpage.jpg"
            alt="Template">
+      <img width="200px" height="150px"
+           *ngIf="template.value == 'static-page' || template.value == 'file-upload-page'"
+           class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/form.jpg"
+           alt="Template">
       <img *ngIf="template.value == 'filter-page'" width="200px" height="150px"
            class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/filterpage.jpg"
            alt="Template">

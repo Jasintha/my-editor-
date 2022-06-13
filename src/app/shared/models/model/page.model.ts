@@ -11,6 +11,7 @@ export interface IPage {
   pagetitle?: string;
   pageRefId?: string;
   pagetype?: string;
+  attachedFormPage?: string;
   pagetemplate?: string;
   views?: IView[];
   projectUuid?: string;
@@ -59,6 +60,7 @@ export class Page implements IPage {
     public pageActions?: IPageAction[],
     public linkRegistration?: boolean,
     public status?: string,
+    public attachedFormPage?: string,
     public noOfPillars?: number,
     public microservice?: IProject,
     public api?: any,

@@ -311,12 +311,18 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.spinnerService.show();
     // this.spinnerService.show();
     this.isSaving = true;
-    const builtInPage = this.createFromForm(pageViewType, pageTitle, pageTemplate);
-    if (builtInPage.uuid) {
-      this.subscribeToSaveResponse(this.builtInPageService.update(builtInPage, this.projectUid));
+    if(pageViewType === 'Filter-Page') {
+      const builtInPage = this.createFromForm('Filter-form', 'Filter-Form', 'Filter-form');
+        this.subscribeToFilterFormResponse(this.builtInPageService.create(builtInPage, this.projectUid));
     } else {
-      this.subscribeToSaveResponse(this.builtInPageService.create(builtInPage, this.projectUid));
+      const builtInPage = this.createFromForm(pageViewType, pageTitle, pageTemplate);
+      if (builtInPage.uuid) {
+        this.subscribeToSaveResponse(this.builtInPageService.update(builtInPage, this.projectUid));
+      } else {
+        this.subscribeToSaveResponse(this.builtInPageService.create(builtInPage, this.projectUid));
+      }
     }
+
   }
 
   private createFromForm(pageViewType: string, pageTitle: string, pageTemplate: string): IPage {
@@ -329,9 +335,12 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
         this.apiParams = [];
       }
 
-      if (this.pageViewType === 'singleWidget') {
+      if (pageViewType === 'singleWidget') {
         this.gridStyle = 'none';
         pageType = 'api-page';
+      }  if ('filter-form') {
+        this.gridStyle = 'none';
+        pageType = 'filter-form';
       }
       const pageNumber = this.totalPageCount + 1;
       return {
@@ -367,6 +376,41 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     );
 
     this.dialogRef.close();
+  }
+
+  protected subscribeToFilterFormResponse(result: Observable<HttpResponse<IPage>>) {
+    result.subscribe(
+        (res: any) => this.onFilterFormSaveSuccess(res.body),
+        () => this.onSaveError()
+    );
+  }
+
+  protected onFilterFormSaveSuccess(formPage: any) {
+    this.spinnerService.hide();
+    this.isSaving = false;
+    const filterPge = this.createFilterTable(formPage.uuid);
+    if (filterPge.uuid) {
+      this.subscribeToSaveResponse(this.builtInPageService.update(filterPge, this.projectUid));
+    } else {
+      this.subscribeToSaveResponse(this.builtInPageService.create(filterPge, this.projectUid));
+    }
+    this.dialogRef.close();
+  }
+
+  createFilterTable(formPageId: string) {
+    const pageNumber = this.totalPageCount + 1;
+    return {
+      ...new Page(),
+      uuid: this.editForm.get(['id']).value,
+      projectUuid: this.projectUid,
+      pagetitle: 'Filter-Page' + pageNumber,
+      pageViewType: 'Filter-Page',
+      pageGrid: this.grid,
+      attachedFormPage: formPageId,
+      pagetemplate: 'Filter-Page',
+      pagetype: 'Filter-Page',
+      status: 'init',
+    };
   }
 
   protected onSaveError() {
@@ -409,7 +453,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.save('customPage', 'Custom Page', template);
   }
   createFilterPage(template: string) {
-    this.save('FilterPage', 'Filter Page', template);
+    this.save('Filter-Page', 'Filter Page', template);
   }
 
   createCustomGrid() {
