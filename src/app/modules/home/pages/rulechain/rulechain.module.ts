@@ -97,7 +97,13 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { PickListModule } from 'primeng/picklist';
 import {TabPageComponent} from '@home/pages/built-in-page/tab-page.component';
 import {ListboxModule} from 'primeng/listbox';
-
+import {ActorDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/actor.design-view.component';
+import {ModelDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/model-design-view.component';
+import {ProcessDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/process-design-view.component';
+import {ScreenDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/screen-design-view.component';
+import {TreeModule} from 'primeng/tree';
+import {TreeNode} from 'primeng/api';
+import {ContextMenuModule} from 'primeng/contextmenu';
 @NgModule({
   declarations: [
     RuleChainPageComponent,
@@ -121,7 +127,11 @@ import {ListboxModule} from 'primeng/listbox';
       EditEpicComponent,
     DeleteDesignComponent,
       EnvSelectComponent,
-      TabPageComponent
+      TabPageComponent,
+      ActorDesignViewComponent,
+    ModelDesignViewComponent,
+    ProcessDesignViewComponent,
+    ScreenDesignViewComponent
   ],
   providers: [
     {
@@ -183,7 +193,9 @@ import {ListboxModule} from 'primeng/listbox';
     MatChipsModule,
     MatStepperModule,
     PickListModule,
-    ListboxModule
+    ListboxModule,
+    TreeModule,
+    ContextMenuModule
   ]
 })
 export class RuleChainModule { }

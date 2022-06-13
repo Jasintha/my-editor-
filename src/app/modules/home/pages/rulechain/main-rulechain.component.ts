@@ -449,8 +449,11 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.editorType = "";
         this.ruleprojectUid = item.projectuuid;
         this.loadWidgetEditor = false;
+
         if(item.type === "SERVICEFILE"){
-            this.editorType = "servicefile"
+            this.editorType = "servicefile";
+        } else if(item.type === "MAIN_TASK"){
+            this.editorType = "maintask";
         } else {
             this.editorType = "default";
         }

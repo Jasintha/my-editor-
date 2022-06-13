@@ -68,6 +68,11 @@ import { WebsocketService } from '@core/tracker/websocket.service';
 import {ApptypesService} from '@core/projectservices/apptypes.service';
 import { CreateTextComponent } from '@home/pages/rulechain/design-editor/create-text.component';
 import {trigger, style, animate, transition, state} from '@angular/animations';
+import {ScreenNodeConfigComponent} from '@home/pages/rulechain/mediators/design/screen-node-config.component';
+import {ActorDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/actor.design-view.component';
+import {ModelDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/model-design-view.component';
+import {ProcessDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/process-design-view.component';
+import {ScreenDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/screen-design-view.component';
 
 declare const SystemJS;
 
@@ -137,7 +142,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     reqArray: IRequirement[];
 
     currentReq: IRequirement;
-    toolTipPosition = 'left'
+    toolTipPosition = 'left';
+    progressRadio: string[] = ['New', 'In Progress', 'Complete'];
 
     existingEpics: any[];
     filteredStories: any[];
@@ -164,15 +170,16 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     reqCount = 0;
     backendGeneratorList: { [key: number]: string } = {};
     uiGeneratorList: { [key: number]: string } = {};
-    spinnerButton : boolean = false;
+    spinnerButton = false;
     hideCarouselNext = false;
     hideCarouselEpicNext = false;
+    spinnerButtonEnable : boolean = true;
 
     ListData: any = [];
     isBtnNext = true;
     isBtnPrevious = false;
     PageNo = 0;
-    PageSize = 5;
+    PageSize = 10;
     reqCreatedAt:string;
     existingEpicOne: IEpic;
 
@@ -212,6 +219,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.showStoryBoard = false;
         this.selectedEpicId = "";
         this.selectedEpic = null;
+        this.spinnerButtonEnable = true;
         this.loadEpics();
         this.appTypeService.getPreviewChainByAppType("ui")
             .pipe(
@@ -316,6 +324,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     loadStoriesForEpic(epicuuid) {
+        this.spinnerButtonEnable = true
         this.storyService
             .findStorieByEpic(this.desprojectUid, epicuuid)
             .pipe(
@@ -566,6 +575,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
         setTimeout(()=>{
             this.spinnerButton = false
+            this.spinnerButtonEnable = false
         }, 2500);
 
         const storyGen: IStoryGen = {
@@ -577,6 +587,58 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.projectService.generateStoryUI(story.projectUuid, storyGen).subscribe((storyGenResult) => {
             this.consoleLogService.writeConsoleLog('story generated');
         });
+    }
+
+    createDesign(val , story){
+        if (val === 'actor'){
+            const dialogRef = this.dialog.open(ActorDesignViewComponent, {
+                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+                data: {
+                    projectUid: this.desprojectUid,
+                    storyUuid: story.uuid
+                }
+            });
+            dialogRef.afterClosed(
+            ).subscribe(result => {
+            });
+        }else if (val === 'model'){
+            const dialogRef = this.dialog.open(ModelDesignViewComponent, {
+                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+                data: {
+                    projectUid: this.desprojectUid,
+                    storyUuid: story.uuid,
+                    serviceUuid: story.serviceUUID
+                }
+            });
+            dialogRef.afterClosed(
+            ).subscribe(result => {
+            });
+        }else if (val === 'process'){
+            const dialogRef = this.dialog.open(ProcessDesignViewComponent, {
+                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+                data: {
+                    projectUid: this.desprojectUid,
+                    storyUuid: story.uuid,
+                    serviceUuid: story.serviceUUID
+                }
+            });
+            dialogRef.afterClosed(
+            ).subscribe(result => {
+            });
+        }else if (val === 'screen'){
+            const dialogRef = this.dialog.open(ScreenDesignViewComponent, {
+                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+                data: {
+                    projectUid: this.desprojectUid,
+                    storyUuid: story.uuid,
+                    serviceUuid: story.serviceUUID
+                }
+            });
+            dialogRef.afterClosed(
+            ).subscribe(result => {
+            });
+        }
+
     }
 
     loadUIChatbox(uuid, apptype) {

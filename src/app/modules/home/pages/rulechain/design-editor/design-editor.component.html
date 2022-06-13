@@ -15,11 +15,11 @@
         </div>
     </div>
 </div>
-<div *ngIf="!viewEditor" class="container vertical" style="width: 990px">
+<div *ngIf="!viewEditor" class="container vertical" style="width: 1334px">
     <div style="position: relative">
-    <div id="requirements" class="row section border row-height create-req" style="height: 222px">
-        <div class="col-12 p-0">
-            <div class="row">
+    <div id="requirements" class="row section border row-height create-req" style="height: 222px;width: 835px;">
+<!--        <div class="col-12 p-0">-->
+<!--            <div class="row">-->
 <!--                <div class="col-9 d-flex">-->
 <!--                    <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;">-->
 <!--                        <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">-->
@@ -30,8 +30,8 @@
 <!--                <div class="col-3 d-flex justify-content-center">-->
 <!--                    <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem">Requirements</h1>-->
 <!--                </div>-->
-            </div>
-        </div>
+<!--            </div>-->
+<!--        </div>-->
 <!--        <div class="col-1">-->
 
 <!--            <div class="wrap add-button add-req-block" (click)="createRequirement()">-->
@@ -120,12 +120,15 @@
 <!--                         </button>-->
 <!--                     </div>-->
 <!--                </div>-->
+
+
                 <div class="col-12" style="display: flex; justify-content: end;">
-                    <div reqCounter class="counter-container content-center" style="bottom: 75px;
-    right: 295px; position: absolute">
+                    <div reqCounter class="counter-container content-center" style="bottom: 75px;right: 295px; position: absolute">
                         <p id="reqCounter" class="h2 text-secondary mb-0">{{reqCount}}</p>
                     </div>
                 </div>
+
+
             </div>
         </div>
 <!--        <div class="col-12 d-flex justify-content-start">-->
@@ -148,7 +151,7 @@
     </div>
 
 
-    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0" @inOutAnimation style="margin-left: 35px;height: 190px;">
+    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0" @inOutAnimation style="margin-left: 37px;height: 190px;">
 <!--        <div class="col-12">-->
 <!--            <div class="row">-->
 <!--                <div class="col-9"></div>-->
@@ -288,7 +291,7 @@
 
     <div *ngIf="filteredStories.length != 0" @inOutAnimation>
         <ng-container *ngFor="let story of filteredStories" >
-            <div id="storiesText" class="row section border row-color wrap-text"  style="margin-left: 120px; margin-bottom: -8px" *ngIf="story.storyText">
+            <div id="storiesText" class="row section border row-color wrap-text"  style="margin-left: 120px; margin-bottom: -8px;width: 1245px;" *ngIf="story.storyText">
                 <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
                     <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign(story,'story-text')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                     <a class="edit-icon-text" virtuan-click-stop-propagation (click)="editStoryText(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -301,7 +304,7 @@
                 </p-editor>
 
             </div>
-            <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px; margin-top: 20px" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
+            <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px; margin-top: 20px;height: 90px;width: 1245px;" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
                 <div class="top-req">
                     <div class="col-12 d-flex justify-content-center add-req-top">
                         <button mat-raised-button style="top: -15px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
@@ -310,30 +313,14 @@
                         <!--            <a class="add-text" virtuan-click-stop-propagation (click)="addText(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Text</a>-->
                     </div>
                 </div>
-                <div class="col-12 d-flex justify-content-center" style="height: 20px;" matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">
-                  <h5 style="margin: 0" class="txt-overflow">{{story.name}}</h5>
-<!--                    <div class="row pb-1">-->
-<!--                        <div class="col-6 d-flex justify-content-center align-item-center">-->
-<!--                            <div  matTooltip="{{story.storyTemplate}}" [matTooltipPosition]="toolTipPosition">-->
-<!--                                <h5 class="txt-overflow p-0">{{story.name}}</h5>-->
-<!--                            </div>-->
-                            <div>
-                                <a class="delete" virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" (click)="deleteDesign(story.uuid,'story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                <a class="swagger-link" virtuan-click-stop-propagation matTooltip="Swagger link" [matTooltipPosition]="toolTipPosition" (click)="openNewTab()"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                <a class="open-ui" virtuan-click-stop-propagation matTooltip="Open UI" [matTooltipPosition]="toolTipPosition" (click)="OpenUI()"><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
-                                <a class="edit-icon" virtuan-click-stop-propagation matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editStory(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            </div>
-<!--                        </div>-->
-<!--                        <div class="col-6">-->
+<!--                <div class="col-12 d-flex justify-content-center" style="height: 20px;" matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">-->
+<!--                  <h5 style="margin: 0" class="txt-overflow">{{story.name}}</h5>-->
 <!--                            <div>-->
-<!--                                &lt;!&ndash;                                <a class="edit-icon" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>&ndash;&gt;-->
+<!--                                <a class="delete" virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" (click)="deleteDesign(story.uuid,'story')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
+<!--                                <a class="edit-icon" virtuan-click-stop-propagation matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editStory(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
 <!--                            </div>-->
-<!--                            <div>-->
-<!--                                <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-                </div>
+<!--                </div>-->
+
                 <!--                <div class="col-2 wrap" matTooltip="{{story?.name}}" style="margin-right: 50px"-->
                 <!--                     >-->
                 <!--                    <h5 class="txt-overflow">{{story.name}}</h5>-->
@@ -357,44 +344,86 @@
                     <div class="row">
                         <div class="col-1 d-flex justify-content-start align-items-center" style="padding-left: 20px ;">
                                 <div id="generate">
-                                    <div [ngClass]="spinnerButton ? 'spinner spinner-load' : 'spinner'"  (click)="generateStory(story)">
+                                    <div *ngIf="spinnerButtonEnable" [ngClass]="spinnerButton ? 'spinner spinner-load' : 'spinner'"  (click)="generateStory(story)">
                                         <i class="fa fa-play" aria-hidden="true" style="color: #009579;"></i>
+                                    </div>
+                                    <div *ngIf="!spinnerButtonEnable">
+                                        <a class="swagger-link" virtuan-click-stop-propagation matTooltip="Swagger link" [matTooltipPosition]="toolTipPosition" (click)="openNewTab()"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                        <a class="open-ui" virtuan-click-stop-propagation matTooltip="Open UI" [matTooltipPosition]="toolTipPosition" (click)="OpenUI()"><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
                                     </div>
                                 </div>
                         </div>
                         <div class="col-11">
                             <div class="row p-0 m-0">
-                                <div class="col-1 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
-                                    <div class="new" style="display: flex; justify-content: center;">
-<!--                                        <button  mat-button disabled aria-label="Example icon button with a heart icon"  style="background-color: #40a2dc; color: white; cursor: pointer;width: 36px; height: 36px">-->
-<!--                                            &lt;!&ndash;                            <i class="material-icons">edit_note</i>&ndash;&gt;-->
-<!--                                            <mat-icon  style="font-size: 16px">tune</mat-icon>-->
-<!--                                        </button>-->
-                                        <div class="story-editor-button" (click)="loadStoryDesignEditor(story)">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </div>
+                                <div class="col-6 d-flex new justify-content-start align-items-center p-0 m-0" style="margin-right: 10px;display: flex;padding-bottom: 20px; justify-content: center; ">
+<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('actor')">person</mat-icon>-->
+<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
+<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('model')">chrome_reader_mode</mat-icon>-->
+<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
+<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('screen')">personal_video</mat-icon>-->
+<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
+<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('process')">settings</mat-icon>-->
+                                    <div class="story-pane-icon">
+                                        <img src="/assets/images/story/profile.png" class="icon" (click)="createDesign('actor', story)" matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
+                                        <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
+                                        <img src="/assets/images/story/gears.png" class="icon" (click)="createDesign('model', story)" matTooltip="Model" [matTooltipPosition]="toolTipPosition">
+                                        <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
+                                        <img src="/assets/images/story/monitor.png" class="icon" (click)="createDesign('screen', story)" matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
+                                        <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
+                                        <img src="/assets/images/story/engineering.png" class="icon" (click)="createDesign('process', story)" matTooltip="Process" [matTooltipPosition]="toolTipPosition">
                                     </div>
                                 </div>
-                                <div style="border-right: 1px solid #b2a9a9; position: absolute; height: 107px; left: -786px;top: 0px;"></div>
-                                <div class="col-5 d-flex justify-content-center align-items-center p-0 m-0">
-                                    <mat-form-field class="flex-auto" style="width: 250px;">
-                                        <!--                        <mat-label>Progress</mat-label>-->
-                                        <mat-select [ngModel]="story.status" (selectionChange)="handleProgress($event.value, story.uuid)">
-                                            <mat-option value="NEW">New</mat-option>
-                                            <mat-option value="IN_PROGRESS">In Progress</mat-option>
-                                            <mat-option value="COMPLETED">Completed</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
+                                <div class="col-1 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
+                                    <div class="new" style="display: flex; justify-content: center;">
+                                        <!--                                        <button  mat-button disabled aria-label="Example icon button with a heart icon"  style="background-color: #40a2dc; color: white; cursor: pointer;width: 36px; height: 36px">-->
+                                        <!--                                            &lt;!&ndash;                            <i class="material-icons">edit_note</i>&ndash;&gt;-->
+                                        <!--                                            <mat-icon  style="font-size: 16px">tune</mat-icon>-->
+                                        <!--                                        </button>-->
+                                        <div class="story-editor-button" matTooltip="Rule Editor" [matTooltipPosition]="toolTipPosition" (click)="loadStoryDesignEditor(story)">
+                                            <i class="fa fa-external-link-square" aria-hidden="true"></i>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class="col-6 d-flex justify-content-center align-items-center p-0 m-0">
-                                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{story.statusCompletedValue}}' style="width: 300px;"></mat-progress-bar>
-                                                        <div class="line" style="position: absolute;bottom: 35px;right: 344px;"></div>
-                                                        <h6 class="mt-0" style="position: absolute; right: 333px; bottom: 8px; font-size: 11px">New</h6>
-                                                        <div class="line" style="position: absolute; top: 65px; right: 80px"></div>
-                                                        <h6 class="mt-0" style="position: absolute; right: 181px; bottom: 8px;font-size: 11px">Progress</h6>
-                                                        <div class="line" style="position: absolute; top: 65px; right: 206px"></div>
-                                                        <h6 class="mt-0" style="position: absolute; right: 52px; bottom: 8px; font-size: 11px">Completed</h6>
+                                <div style="border-right: 1px solid #b2a9a9; position: absolute; height: 88px; right: 1160px; width: 1px;top: 0px;"></div>
+                                <div class="col-3 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
+                                    <h5 style="margin: 0;padding-top: 9px;" class="txt-overflow" matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">{{story.name}}</h5>
+                                    <div>
+                                        <a class="delete" virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" (click)="deleteDesign(story.uuid,'story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <a class="edit-icon" virtuan-click-stop-propagation matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editStory(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    </div>
                                 </div>
+                                <div class="col-2 d-flex justify-content-end align-items-center p-0 m-0" style="margin-right: 10px; ">
+                                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [ngModel]="story.status">
+                                        <div style=" display: flex; flex-direction: column;">
+
+                                            <mat-radio-button value="NEW"></mat-radio-button>
+                                            <mat-radio-button style="margin-top: 3px" color="primary" value="IN_PROGRESS"></mat-radio-button>
+                                            <mat-radio-button style="margin-top: 3px; color: green" value="COMPLETED"></mat-radio-button>
+<!--                                        <mat-radio-button style="padding-bottom: 5px;" class="example-radio-button" *ngFor="let progress of progressRadio" [value]="progress">-->
+
+<!--                                                &lt;!&ndash;                                            {{progress}}&ndash;&gt;-->
+<!--                                            </mat-radio-button>-->
+                                        </div>
+                                    </mat-radio-group>
+                                </div>
+<!--                                <div class="col-2 d-flex justify-content-center align-items-center p-0 m-0">-->
+<!--                                    <mat-form-field class="flex-auto" style="width: 250px;">-->
+<!--                                        &lt;!&ndash;                        <mat-label>Progress</mat-label>&ndash;&gt;-->
+<!--                                        <mat-select [ngModel]="story.status" (selectionChange)="handleProgress($event.value, story.uuid)">-->
+<!--                                            <mat-option value="NEW">New</mat-option>-->
+<!--                                            <mat-option value="IN_PROGRESS">In Progress</mat-option>-->
+<!--                                            <mat-option value="COMPLETED">Completed</mat-option>-->
+<!--                                        </mat-select>-->
+<!--                                    </mat-form-field>-->
+<!--                                </div>-->
+<!--                                <div class="col-3 d-flex justify-content-center align-items-center p-0 m-0">-->
+<!--                                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{story.statusCompletedValue}}' style="width: 250px;"></mat-progress-bar>-->
+<!--                                                        <div class="line" style="position: absolute;bottom: 35px;right: 265px;"></div>-->
+<!--                                                        <h6 class="mt-0" style="position: absolute; right: 261px; bottom: 8px; font-size: 11px">0</h6>-->
+<!--                                                        <div class="line" style="position: absolute; top: 65px; right: 22px"></div>-->
+<!--                                                        <h6 class="mt-0" style="position: absolute; right: 18px; bottom: 8px; font-size: 11px">100</h6>-->
+<!--                                </div>-->
                             </div>
 
                             </div>
@@ -442,7 +471,7 @@
 <!--                </div>-->
                 <div class="bottom-req" >
                     <div class="col-12 d-flex justify-content-center add-req-bottom">
-                        <button mat-raised-button style="top: -1px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
+                        <button mat-raised-button style="top: -3px; margin-right: 10px;z-index: 1000" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
 <!--                        <button mat-raised-button style="top: -1px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>-->
                  </div>
                 </div>

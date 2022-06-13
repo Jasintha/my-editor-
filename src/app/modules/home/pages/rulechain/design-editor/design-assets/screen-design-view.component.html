@@ -1,0 +1,104 @@
+<form class="mat-form-dialog" [formGroup]="screenNodeConfigFormGroup" (ngSubmit)="save()" >
+    <mat-toolbar color="primary" >
+        <h2 mat-dialog-title>Create Screen</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-dialog-content>
+        <div class="row">
+            <div [formGroup]="screenNodeConfigFormGroup">
+                <mat-form-field style="width: 100%">
+                    <mat-label>Screen Name</mat-label>
+                    <input type="text" formControlName="screenName" matInput name="screenName" id="screen_name">
+                    <mat-error *ngIf="screenNodeConfigFormGroup.controls.screenName.hasError('required')">This field is required</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex class="mat-block">
+                    <mat-label>Model</mat-label>
+                    <mat-select formControlName="modelselection" (selectionChange)="onModelChange()">
+                        <mat-option *ngFor="let param of inputitems" [value]="param.value">
+                            {{param.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <p-carousel [value]="pageTemplateItems" [numVisible]="3" [numScroll]="3" [circular]="true">
+                    <ng-template let-template pTemplate="item">
+                        <div class="product-item" >
+                            <div class="product-item-content" >
+                                <div class="mb-2" align="center" >
+                                    <img *ngIf="template.value == 'login-page'" class="product-image theme-page" width="200px" height="150px"
+                                         src="/assets/images/new_pages/page_wireframes/Login.jpg"
+                                         alt="Template">
+                                    <img width="200px" height="150px"
+                                         *ngIf="template.value == 'table-page' || template.value == 'aio-table'"
+                                         class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/table.jpg"
+                                         alt="Template">
+                                    <img width="200px" height="150px"
+                                         *ngIf="template.value == 'form-page' || template.value == 'file-upload-page'"
+                                         class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/form.jpg"
+                                         alt="Template">
+                                    <img width="200px" height="150px"
+                                         *ngIf="template.value == 'form-wizard-page'"
+                                         class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/wizardpage.jpg"
+                                         alt="Template">
+                                    <img *ngIf="template.value == 'register-page'" width="200px" height="150px"
+                                         class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/register.jpg"
+                                         alt="Template">
+                                    <img *ngIf="template.value == 'aio-grid'" width="200px" height="150px"
+                                         class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/Gridpage.jpg"
+                                         alt="Template">
+                                    <img *ngIf="template.value == 'tab-page'" width="200px" height="150px"
+                                         class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/tabpage.jpg"
+                                         alt="Template">
+                                    <img *ngIf="template.value == 'filter-page'" width="200px" height="150px"
+                                         class="product-image theme-page" src="/assets/images/new_pages/page_wireframes/filterpage.jpg"
+                                         alt="Template">
+                                    <!--<img src="/content/images/theme/{{product.themestyle}}.png" [alt]="product.name" class="product-image" />-->
+                                </div>
+                                <div>
+                                    <!--<h4 class="mb-1">{{product.name}}</h4>-->
+                                    <div style="margin-top: 15px;" align="center">
+                                        <p-radioButton name="screenselection"
+                                                       [value]="template.value" label="{{template.label}}" formControlName="screenTemplate"  (onClick)="onScreenTypeChanged()"></p-radioButton>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+                <div *ngIf="screenNodeConfigFormGroup.value.screenCreateType === 'existing' && pageTemplateItems?.length === 0"  class="alert alert-warning">
+                    <span>No screens found</span>
+                </div>
+
+                <div class="actions-bar" style="text-align: center">
+                    <mat-label>Available actions</mat-label>
+                    <div class="row">
+                        <div class="col-3" *ngFor="let option of actionItems">
+                            <h6 style="padding-left: 15px">{{option}}</h6>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </mat-dialog-content>
+    <div mat-dialog-actions fxLayoutAlign="end center">
+        <button mat-raised-button color="primary"
+                type="submit" cdkFocusInitial>
+            Create
+        </button>
+        <button mat-button color="primary"
+                type="button"
+                mat-dialog-close >
+            Cancel
+        </button>
+    </div>
+</form>

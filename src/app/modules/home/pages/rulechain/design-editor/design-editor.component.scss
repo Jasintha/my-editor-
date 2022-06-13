@@ -288,7 +288,7 @@
                 display: none;
             }
             &:hover{
-                cursor: pointer;
+                // cursor: pointer;
                 .edit{
                     visibility: visible;
                     opacity: 1;
@@ -747,6 +747,7 @@
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     top: -1px;
+    cursor: pointer;
     //box-shadow: rgb(0 0 0 / 25%) 0px 54px 55px, rgb(0 0 0 / 12%) 0px -12px 30px, rgb(0 0 0 / 12%) 0px 4px 6px, rgb(0 0 0 / 17%) 0px 12px 13px, rgb(0 0 0 / 9%) 0px -3px 5px;
 }
 
@@ -860,7 +861,7 @@
     .delete{
         top: 15px;
         height: 20px;
-        right: 12px;
+        right: -11px;
         position: absolute;
         font-size: 15px;
         background: #dc3545;
@@ -872,36 +873,38 @@
     }
 
     .swagger-link{
-        right: 42px;
-        top: 15px;
-        height: 20px;
+        width: 21px;
+        height: 19px;
+        left: 26px;
+        top: 14px;
         position: absolute;
         font-size: 13px;
         padding: 2px 5px;
         background: #a28b39;
         color: white;
         border-radius: 5px;
-        visibility: hidden;
-        opacity: 0;
+        //visibility: hidden;
+        //opacity: 0;
     }
 
     .open-ui{
-        right: 72px;
-        top: 15px;
-        height: 20px;
+        width: 21px;
+        height: 19px;
+        left: 26px;
+        top: 51px;
         position: absolute;
         font-size: 13px;
         padding: 2px 5px;
         background: #2a8f30;
         color: white;
         border-radius: 5px;
-        visibility: hidden;
-        opacity: 0;
+        //visibility: hidden;
+        //opacity: 0;
     }
 
     .edit-icon{
-        right: 102px;
-        top: 15px;
+        right: -11px;
+        top: 45px;
         height: 20px;
         position: absolute;
         font-size: 13px;
@@ -918,23 +921,25 @@
     //}
 
     &:hover{
-        cursor: pointer;
+        // cursor: pointer;
         .edit-icon{
+            cursor: pointer;
             visibility: visible;
             opacity: 1;
         }
         .delete{
+            cursor: pointer;
             visibility: visible;
             opacity: 1;
         }
-        .swagger-link{
-            visibility: visible;
-            opacity: 1;
-        }
-        .open-ui{
-            visibility: visible;
-            opacity: 1;
-        }
+        //.swagger-link{
+        //    visibility: visible;
+        //    opacity: 1;
+        //}
+        //.open-ui{
+        //    visibility: visible;
+        //    opacity: 1;
+        //}
     }
 
 }
@@ -1171,7 +1176,7 @@ body .ui-editor-container .ui-editor-content .ql-editor {
 
 .description {
     height: 180px;
-    width: 350px;
+    width: 320px;
     display: none;
     padding: 15px;
     text-align: left;
@@ -1227,9 +1232,9 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 110px;
+    width: 170px;
     text-align: center;
-    padding-left: 10px;
+    padding-left: 38px;
 }
 
 .epic-titledes-overflow{
@@ -1262,8 +1267,8 @@ body .ui-editor-container .ui-editor-content .ql-editor {
 
 
 .story-editor-button{
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -1271,6 +1276,7 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 30px;
 
     .fa {
         color: white;
@@ -1288,4 +1294,30 @@ body .ui-editor-container .ui-editor-content .ql-editor {
         border: 1px solid #a6a6a6;
         height: 350px;
     }
+}
+
+//.story-pane-icon{
+//    font-size: 40px;
+//    margin-right: 45px;
+//}
+.story-pane-icon{
+    .icon{
+        cursor: pointer;
+        margin: 5px;
+        width: 45px;
+        height: 45px;
+        transition: .35s ease-in-out;
+    }
+    .icon:hover{
+        cursor: pointer;
+        margin: 5px;
+        width: 40px;
+        height: 40px;
+    }
+    .arrow-icon{
+        margin: 5px 15px;
+        width: 63px;
+        height: 30px;
+    }
+
 }

@@ -77,6 +77,12 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   @Input()
   allErrorBranches: any[];
 
+  @Input()
+  inputEntities: any[];
+
+  @Input()
+  inputCustomobjects: any[];
+
   @Input() branchAvailability: any;
 
   errordatasource: MatTableDataSource<ErrorFunctionParameters>;
@@ -119,6 +125,9 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       subject: [],
       event: [],
       inputType: "",
+      modelType: "",
+      entity: "",
+      customObject: "",
       constant: [],
       param: [],
       property: [],
@@ -151,6 +160,31 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
     if (this.definedConfigComponentRef) {
       this.definedConfigComponentRef.destroy();
     }
+  }
+
+  refreshModelTypes(){
+    let modelType: string = this.eventPublisherNodeConfigFormGroup.get('modelType').value;
+    this.configuration.modelType= modelType;
+    if(modelType === 'MODEL'){
+        this.configuration.dtoName= "";
+        this.eventPublisherNodeConfigFormGroup.get('customObject').patchValue(null, {emitEvent: false});
+    } else if (modelType === 'DTO'){
+        this.configuration.modelName= "";
+        this.eventPublisherNodeConfigFormGroup.get('entity').patchValue(null, {emitEvent: false});
+    }
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+  }
+
+  onCustomObjSelect(){
+    let customObject = this.eventPublisherNodeConfigFormGroup.get('customObject').value;
+    this.configuration.dtoName= customObject.nameTitleCase;
+  }
+
+  onEntitySelect(){
+    let entity = this.eventPublisherNodeConfigFormGroup.get('entity').value;
+    this.configuration.modelName= entity.nameTitleCase;
   }
 
   ngAfterViewInit(): void {
@@ -342,11 +376,24 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
         errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
       }
 
+      let entity = this.configuration.entity;
+      if(entity && this.inputEntities){
+        entity = this.inputEntities.find(x => x.nameTitleCase === this.configuration.modelName );
+      }
+
+      let customObject = this.configuration.customObject;
+      if(customObject && this.inputCustomobjects){
+        customObject = this.inputCustomobjects.find(x => x.nameTitleCase === this.configuration.dtoName );
+      }
+
       let e = this.configuration.event;
      // e = this.allEvents.find(x => x.name === this.configuration.event);
 
       this.eventPublisherNodeConfigFormGroup.patchValue({
       //  eventSource: this.configuration.eventSource,
+        modelType: this.configuration.modelType,
+        customObject: customObject,
+        entity: entity,
         inputType: this.configuration.inputType,
         esConnection: esConnection,
         subject: this.configuration.subject,

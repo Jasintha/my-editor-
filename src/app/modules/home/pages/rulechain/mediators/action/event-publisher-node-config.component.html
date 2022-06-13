@@ -24,11 +24,34 @@
       <mat-label>Subject</mat-label>
       <input matInput formControlName="subject" required>
     </mat-form-field>
-    <mat-form-field fxFlex class="mat-block">
+    <!--<mat-form-field fxFlex class="mat-block">
         <mat-label>Event</mat-label>
         <mat-select formControlName="event">
             <mat-option *ngFor="let event of allEvents" [value]="event">
                 {{event}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>-->
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>Model Type</mat-label>
+        <mat-select formControlName="modelType" (selectionChange)="refreshModelTypes()">
+            <mat-option *ngIf="inputEntities?.length" value="MODEL">Model</mat-option>
+            <mat-option *ngIf="inputCustomobjects?.length" value="DTO">DTO</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="eventPublisherNodeConfigFormGroup.value.modelType === 'MODEL'" fxFlex class="mat-block">
+        <mat-label>Event Model</mat-label>
+        <mat-select formControlName="entity" (selectionChange)="onEntitySelect()">
+            <mat-option *ngFor="let nodeEntity of inputEntities" [value]="nodeEntity">
+                {{nodeEntity.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="eventPublisherNodeConfigFormGroup.value.modelType === 'DTO'" fxFlex class="mat-block">
+        <mat-label>Event Model</mat-label>
+        <mat-select formControlName="customObject" (selectionChange)="onCustomObjSelect()">
+            <mat-option *ngFor="let nodeEntity of inputCustomobjects" [value]="nodeEntity">
+                {{nodeEntity.name}}
             </mat-option>
         </mat-select>
     </mat-form-field>
