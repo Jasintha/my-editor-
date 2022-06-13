@@ -73,6 +73,7 @@ import {ActorDesignViewComponent} from '@home/pages/rulechain/design-editor/desi
 import {ModelDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/model-design-view.component';
 import {ProcessDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/process-design-view.component';
 import {ScreenDesignViewComponent} from '@home/pages/rulechain/design-editor/design-assets/screen-design-view.component';
+import {DesignWarningComponent} from '@home/pages/rulechain/design-editor/design-warning.component';
 
 declare const SystemJS;
 
@@ -595,24 +596,45 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
                     projectUid: this.desprojectUid,
-                    storyUuid: story.uuid
+                    storyUuid: story.uuid,
+                    story
                 }
             });
             dialogRef.afterClosed(
             ).subscribe(result => {
+                this.loadStoriesForEpic(this.existingEpicOne.uuid);
             });
         }else if (val === 'model'){
-            const dialogRef = this.dialog.open(ModelDesignViewComponent, {
-                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-                data: {
-                    projectUid: this.desprojectUid,
-                    storyUuid: story.uuid,
-                    serviceUuid: story.serviceUUID
-                }
-            });
-            dialogRef.afterClosed(
-            ).subscribe(result => {
-            });
+            if (story.storyActors){
+                const dialogRef = this.dialog.open(ModelDesignViewComponent, {
+                    panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+                    data: {
+                        projectUid: this.desprojectUid,
+                        storyUuid: story.uuid,
+                        serviceUuid: story.serviceUUID,
+                        story
+                    }
+                });
+                dialogRef.afterClosed(
+                ).subscribe(result => {
+                    this.loadStoriesForEpic(this.existingEpicOne.uuid);
+                });
+            }else {
+                const dialogRef = this.dialog.open(DesignWarningComponent, {
+                    panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+                    data: {
+                        projectUid: this.desprojectUid,
+                        storyUuid: story.uuid,
+                        serviceUuid: story.serviceUUID,
+                        story,
+                        design: 'Actor'
+                    }
+                });
+                dialogRef.afterClosed(
+                ).subscribe(result => {
+                    this.loadStoriesForEpic(this.existingEpicOne.uuid);
+                });
+            }
         }else if (val === 'process'){
             const dialogRef = this.dialog.open(ProcessDesignViewComponent, {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
@@ -631,12 +653,44 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 data: {
                     projectUid: this.desprojectUid,
                     storyUuid: story.uuid,
-                    serviceUuid: story.serviceUUID
+                    serviceUuid: story.serviceUUID,
+                    story
                 }
             });
             dialogRef.afterClosed(
             ).subscribe(result => {
+                this.loadStoriesForEpic(this.existingEpicOne.uuid);
             });
+            // if (story.modelUUID){
+            //     const dialogRef = this.dialog.open(ScreenDesignViewComponent, {
+            //         panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            //         data: {
+            //             projectUid: this.desprojectUid,
+            //             storyUuid: story.uuid,
+            //             serviceUuid: story.serviceUUID,
+            //             story
+            //         }
+            //     });
+            //     dialogRef.afterClosed(
+            //     ).subscribe(result => {
+            //         this.loadStoriesForEpic(this.existingEpicOne.uuid);
+            //     });
+            // }else {
+            //     const dialogRef = this.dialog.open(DesignWarningComponent, {
+            //         panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            //         data: {
+            //             projectUid: this.desprojectUid,
+            //             storyUuid: story.uuid,
+            //             serviceUuid: story.serviceUUID,
+            //             story,
+            //             design: 'Model'
+            //         }
+            //     });
+            //     dialogRef.afterClosed(
+            //     ).subscribe(result => {
+            //         this.loadStoriesForEpic(this.existingEpicOne.uuid);
+            //     });
+            // }
         }
 
     }

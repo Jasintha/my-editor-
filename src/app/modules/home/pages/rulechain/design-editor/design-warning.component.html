@@ -1,0 +1,27 @@
+<form (ngSubmit)="confirmDelete(data.uuid, data.projectUid)">
+    <mat-toolbar color="warn">
+        <h2>WARNING</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                (click)="cancel()"
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+    <div mat-dialog-content>
+        <span>
+            Before you fill this,
+            Please fill the   <b style="font-weight: bold">{{data.design}}?</b></span>
+    </div>
+    <div mat-dialog-actions fxLayoutAlign="end center">
+        <button mat-raised-button color="warn"
+                type="button" (click)="cancel()" cdkFocusInitial>
+            OK
+        </button>
+        <button mat-button color="warn"
+                type="button"
+                (click)="cancel()" cdkFocusInitial>
+            Cancel
+        </button>
+    </div>
+</form>

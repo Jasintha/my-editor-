@@ -147,7 +147,7 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
             processName: ['', Validators.required],
             apiTemplate: '',
             apiMethod: '',
-            returnObject: '',
+            returnObject: null,
             returnRecord: '',
             selectedAPIInputs:null
 
@@ -269,6 +269,16 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
                     (res: HttpErrorResponse) => this.onError(res.message)
                 );
         }
+
+        if (this.data.story.ProcessApiData){
+            this.update();
+        }
+    }
+
+    update(){
+        this.processNodeConfigFormGroup.patchValue({
+
+        })
     }
 
     addPrimitivesForReturnSelect() {

@@ -104,6 +104,7 @@ import {ScreenDesignViewComponent} from '@home/pages/rulechain/design-editor/des
 import {TreeModule} from 'primeng/tree';
 import {TreeNode} from 'primeng/api';
 import {ContextMenuModule} from 'primeng/contextmenu';
+import {DesignWarningComponent} from '@home/pages/rulechain/design-editor/design-warning.component';
 @NgModule({
   declarations: [
     RuleChainPageComponent,
@@ -131,7 +132,8 @@ import {ContextMenuModule} from 'primeng/contextmenu';
       ActorDesignViewComponent,
     ModelDesignViewComponent,
     ProcessDesignViewComponent,
-    ScreenDesignViewComponent
+    ScreenDesignViewComponent,
+    DesignWarningComponent
   ],
   providers: [
     {
