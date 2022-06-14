@@ -311,8 +311,8 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.spinnerService.show();
     // this.spinnerService.show();
     this.isSaving = true;
-    if(pageViewType === 'Filter-Page') {
-      const builtInPage = this.createFromForm('Filter-form', 'Filter-Form', 'Filter-form');
+    if(pageViewType === 'filterPage') {
+      const builtInPage = this.createFromForm('filterPage', 'Filter-Form', 'filter-form');
         this.subscribeToFilterFormResponse(this.builtInPageService.create(builtInPage, this.projectUid));
     } else {
       const builtInPage = this.createFromForm(pageViewType, pageTitle, pageTemplate);
@@ -404,11 +404,11 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
       uuid: this.editForm.get(['id']).value,
       projectUuid: this.projectUid,
       pagetitle: 'Filter-Page' + pageNumber,
-      pageViewType: 'Filter-Page',
+      pageViewType: 'filterPage',
       pageGrid: this.grid,
-      attachedFormPage: formPageId,
-      pagetemplate: 'Filter-Page',
-      pagetype: 'Filter-Page',
+      attachedPage: formPageId,
+      pagetemplate: 'filter-page',
+      pagetype: 'filter-page',
       status: 'init',
     };
   }
@@ -453,7 +453,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.save('customPage', 'Custom Page', template);
   }
   createFilterPage(template: string) {
-    this.save('Filter-Page', 'Filter Page', template);
+    this.save('filterPage', 'Filter Page', template);
   }
 
   createCustomGrid() {

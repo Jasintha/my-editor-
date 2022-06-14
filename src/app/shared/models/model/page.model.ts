@@ -11,7 +11,7 @@ export interface IPage {
   pagetitle?: string;
   pageRefId?: string;
   pagetype?: string;
-  attachedFormPage?: string;
+  attachedPage?: string;
   pagetemplate?: string;
   views?: IView[];
   projectUuid?: string;
@@ -43,6 +43,7 @@ export interface IPage {
   pageViewType?: string;
   pageGrid?: any;
   apiDataArray?: any;
+  attachedPageLocation?: string;
 }
 
 export class Page implements IPage {
@@ -60,7 +61,7 @@ export class Page implements IPage {
     public pageActions?: IPageAction[],
     public linkRegistration?: boolean,
     public status?: string,
-    public attachedFormPage?: string,
+    public attachedPage?: string,
     public noOfPillars?: number,
     public microservice?: IProject,
     public api?: any,
@@ -83,5 +84,6 @@ export class Page implements IPage {
     public pageViewType?: string,
     public pageGrid?: any,
     public apiDataArray? : any,
+    public attachedPageLocation? : string,
   ) {}
 }

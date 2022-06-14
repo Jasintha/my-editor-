@@ -45,7 +45,6 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     projectId: number;
     project: IProject;
     datamodels: IDatamodel[];
-    pageTemplateItems: SelectItem[];
     datamodelItems: SelectItem[];
     currentPage: IPage;
     filterFormPage: IPage;
@@ -104,13 +103,11 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     PARAM_DATA = [];
     dataSourceAIOParam = new MatTableDataSource(this.PARAM_DATA);
 
-    panelTypeItems: SelectItem[] = [
-        { label: 'Graph', value: 'graph' },
-        { label: 'Gauge', value: 'gauge' },
-        { label: 'Logs', value: 'logs' },
-        { label: 'Stat', value: 'stat' },
-        { label: 'Bar Gauge', value: 'bargauge' },
-        { label: 'Table', value: 'table' },
+    attachedPageLocationValues: SelectItem[] = [
+        { label: 'Top', value: 'Top' },
+        { label: 'Right', value: 'Right' },
+        { label: 'Bottom', value: 'Bottom' },
+        { label: 'Left', value: 'Left' },
     ];
 
     crudItems: SelectItem[] = [
@@ -134,10 +131,11 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
         { label: 'TRUE_OR_FALSE', value: 'TRUE_OR_FALSE' },
         { label: 'DATE', value: 'DATE' },
     ];
-    editForm: FormGroup;
+    filterTableData: FormGroup;
+    filterFormData: FormGroup;
     formDisable: boolean;
     buildNewForm() {
-        this.editForm = this.fb.group({
+        this.filterTableData = this.fb.group({
             id: [],
             selectedDatamodel: [],
             pagetitle: ['', [Validators.required]],
@@ -146,10 +144,10 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             apiResourcePath: [],
             isSecurePage: false,
             authority: '',
+            attachedPageLocation: '',
             isHomepage: false,
-            // operation: [],
             resourcePath: [],
-            selectedAggregate: [],
+            selectedAggregateTable: [],
             paramType: [],
             paramName: [],
             paramDataType: [],
@@ -174,70 +172,68 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             stepHeader:[],
             detailHeader:[],
             attributeName:[],
-            wizardDetailsGroup: this.fb.array([
-                new FormGroup({
-                    stepHeading: this.fb.control('Step 1'),
-                    stepId: this.fb.control(this.stepIndexId),
-                }),
-            ]),
-            detailsHeaderGroup: this.fb.array([
-                new FormGroup({
-                    stepHeading: this.fb.control('Header 1'),
-                    stepId: this.fb.control(this.headerIndexId),
-                }),
-            ]),
+        });
+    }
+
+    buildNewFilterForm() {
+        this.filterFormData = this.fb.group({
+            id: [],
+            selectedDatamodel: [],
+            pagetitle: ['', [Validators.required]],
+            pagetemplate: ['', [Validators.required]],
+            apiOperation: [],
+            apiResourcePath: [],
+            isSecurePage: false,
+            authority: '',
+            isHomepage: false,
+            resourcePath: [],
+            selectedAggregateForm: [],
+            paramType: [],
+            paramName: [],
+            paramDataType: [],
+            microservice: [],
+            api: [],
+            search: false,
+            aiosearch: false,
+            aiomicroservice: [],
+            dashboard: [],
+            dashboardsearch: false,
+            dashboardPanel: [],
+            panelType: '',
+            panelName: '',
+            dashboardUID: '',
+            dashboardTitle: '',
+            panelID: '',
+            aioapi: [],
+            inputValType: [],
+            matchedProperty: [],
+            pageconfig: [],
+            fieldName: [],
+            stepHeader:[],
+            detailHeader:[],
+            attributeName:[],
         });
     }
 
     setCategoryModelValidators() {
         const apptype = this.project.apptypesID;
 
-        this.editForm.get('pagetemplate').valueChanges.subscribe(pagetemplate => {
+        this.filterTableData.get('pagetemplate').valueChanges.subscribe(pagetemplate => {
             if (apptype === 'task.ui') {
-                this.editForm.get('selectedDatamodel').clearValidators();
-                this.editForm.get('selectedDatamodel').updateValueAndValidity();
-
-                if (pagetemplate === 'table-page' || pagetemplate === 'form-page' || pagetemplate === 'form-wizard-page') {
-                    this.editForm.get('resourcePath').setValidators([Validators.required]);
-                    this.editForm.get('resourcePath').updateValueAndValidity();
-
-                    this.editForm.get('selectedAggregate').setValidators([Validators.required]);
-                    this.editForm.get('selectedAggregate').updateValueAndValidity();
-                } else if (pagetemplate === 'file-upload-page') {
-                    this.editForm.get('resourcePath').setValidators([Validators.required]);
-                    this.editForm.get('resourcePath').updateValueAndValidity();
-
-                    this.editForm.get('selectedAggregate').clearValidators();
-                    this.editForm.get('selectedAggregate').updateValueAndValidity();
-                } else if (pagetemplate === 'aio-table' || pagetemplate === 'aio-grid') {
-                    this.editForm.get('resourcePath').clearValidators();
-                    this.editForm.get('resourcePath').updateValueAndValidity();
-
-                    this.editForm.get('selectedAggregate').setValidators([Validators.required]);
-                    this.editForm.get('selectedAggregate').updateValueAndValidity();
-                } else {
-                    this.editForm.get('resourcePath').clearValidators();
-                    this.editForm.get('resourcePath').updateValueAndValidity();
-
-                    this.editForm.get('selectedAggregate').clearValidators();
-                    this.editForm.get('selectedAggregate').updateValueAndValidity();
-                }
-            } else {
-                this.editForm.get('selectedDatamodel').setValidators([Validators.required]);
-                this.editForm.get('selectedDatamodel').updateValueAndValidity();
-
-                this.editForm.get('selectedAggregate').clearValidators();
-                this.editForm.get('selectedAggregate').updateValueAndValidity();
-
-                this.editForm.get('resourcePath').clearValidators();
-                this.editForm.get('resourcePath').updateValueAndValidity();
+                this.filterFormData.get('resourcePath').setValidators([Validators.required]);
+                this.filterFormData.get('resourcePath').updateValueAndValidity();
+                this.filterTableData.get('resourcePath').setValidators([Validators.required]);
+                this.filterTableData.get('resourcePath').updateValueAndValidity();
+                this.filterFormData.get('selectedAggregateForm').setValidators([Validators.required]);
+                this.filterFormData.get('selectedAggregateForm').updateValueAndValidity();
+                this.filterTableData.get('selectedAggregateTable').setValidators([Validators.required]);
+                this.filterTableData.get('selectedAggregateTable').updateValueAndValidity();
             }
         });
     }
 
     setCategoryModelValidatorsTest() {
         this.activatedRoute.params.subscribe(params => {
-            // this.projectId = params['projId'];
             if (this.projectUid) {
                 this.projectService
                     .find(this.projectUid)
@@ -248,41 +244,14 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                     .subscribe((res: IProject) => {
                         this.project = res;
                         if (this.project.apptypesID === 'task.ui') {
-                            this.editForm.get('pagetemplate').valueChanges.subscribe(pagetemplate => {
-                                if (
-                                    pagetemplate === 'table-page' ||
-                                    pagetemplate === 'form-page' ||
-                                    pagetemplate === 'form-wizard-page' ||
-                                    pagetemplate === 'file-upload-page'
-                                ) {
-                                    this.editForm.get('resourcePath').setValidators([Validators.required]);
-                                    this.editForm.get('resourcePath').updateValueAndValidity();
-                                }
-                                if (pagetemplate === 'aio-table' || pagetemplate === 'aio-grid' || pagetemplate === 'dashboard-page') {
-                                    this.editForm.get('resourcePath').clearValidators();
-                                    this.editForm.get('resourcePath').updateValueAndValidity();
-                                }
-                                if (pagetemplate === 'file-upload-page' || pagetemplate === 'dashboard-page') {
-                                    this.editForm.get('selectedAggregate').clearValidators();
-                                    this.editForm.get('selectedAggregate').updateValueAndValidity();
-                                } else {
-                                    this.editForm.get('selectedAggregate').setValidators([Validators.required]);
-                                    this.editForm.get('selectedAggregate').updateValueAndValidity();
-                                }
+                            this.filterTableData.get('pagetemplate').valueChanges.subscribe(pagetemplate => {
+                                    this.filterTableData.get('resourcePath').setValidators([Validators.required]);
+                                    this.filterTableData.get('resourcePath').updateValueAndValidity();
+                                    this.filterTableData.get('selectedAggregateTable').clearValidators();
+                                    this.filterTableData.get('selectedAggregateTable').updateValueAndValidity();
+                                    this.filterTableData.get('selectedAggregateTable').clearValidators();
+                                    this.filterTableData.get('selectedAggregateTable').updateValueAndValidity();
                             });
-
-                            this.editForm.get('selectedDatamodel').clearValidators();
-                            this.editForm.get('selectedDatamodel').updateValueAndValidity();
-                        }
-                        if (this.project.apptypesID === 'virtuan.webapp-v2') {
-                            this.editForm.get('selectedDatamodel').setValidators([Validators.required]);
-                            this.editForm.get('selectedDatamodel').updateValueAndValidity();
-
-                            this.editForm.get('selectedAggregate').clearValidators();
-                            this.editForm.get('selectedAggregate').updateValueAndValidity();
-
-                            this.editForm.get('resourcePath').clearValidators();
-                            this.editForm.get('resourcePath').updateValueAndValidity();
                         }
                     });
             }
@@ -313,8 +282,8 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     loadPage(){
         this.formDisable = true;
         this.buildNewForm();
+        this.buildNewFilterForm();
         this.datamodels = [];
-        this.pageTemplateItems = [];
         this.datamodelItems = [];
         this.isSaving = false;
         this.microserviceItems = [];
@@ -342,7 +311,6 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                     .subscribe(
                         (res: IProject) => {
                             this.project = res;
-                            this.getPageTemplates();
                             if (this.project.apptypesID === 'task.ui') {
                                 this.aggregates = this.project.aggregates;
                                 if (this.aggregates) {
@@ -369,9 +337,9 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     }
 
     addRow() {
-        const paramType = this.editForm.get(['paramType']).value;
-        const paramName = this.editForm.get(['paramName']).value;
-        const paramDataType = this.editForm.get(['paramDataType']).value;
+        const paramType = this.filterTableData.get(['paramType']).value;
+        const paramName = this.filterTableData.get(['paramName']).value;
+        const paramDataType = this.filterTableData.get(['paramDataType']).value;
 
         if (paramType === null || paramName === '' || paramName === null || paramDataType === null) {
             // this.messageService.add({
@@ -396,8 +364,8 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     }
 
     addParamMapping() {
-        const inputType = this.editForm.get(['inputValType']).value;
-        const paramName = this.editForm.get(['matchedProperty']).value;
+        const inputType = this.filterTableData.get(['inputValType']).value;
+        const paramName = this.filterTableData.get(['matchedProperty']).value;
 
         if (inputType === null || paramName === '' || paramName === null) {
             // this.messageService.add({
@@ -428,8 +396,8 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     }
 
     addAIOTableRow() {
-        const apiOperation = this.editForm.get(['apiOperation']).value;
-        const apiResourcePath = this.editForm.get(['apiResourcePath']).value;
+        const apiOperation = this.filterTableData.get(['apiOperation']).value;
+        const apiResourcePath = this.filterTableData.get(['apiResourcePath']).value;
 
         if (apiOperation === null || apiResourcePath === null || apiResourcePath === '') {
             // this.messageService.add({
@@ -521,11 +489,11 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     }
 
     addPanelRow() {
-        const panelType = this.editForm.get(['panelType']).value;
-        const panelName = this.editForm.get(['panelName']).value;
-        const panelID = this.editForm.get(['panelID']).value;
-        const dashboardUID = this.editForm.get(['dashboardUID']).value;
-        const dashboardTitle = this.editForm.get(['dashboardTitle']).value;
+        const panelType = this.filterTableData.get(['panelType']).value;
+        const panelName = this.filterTableData.get(['panelName']).value;
+        const panelID = this.filterTableData.get(['panelID']).value;
+        const dashboardUID = this.filterTableData.get(['dashboardUID']).value;
+        const dashboardTitle = this.filterTableData.get(['dashboardTitle']).value;
 
         if (panelType === null || panelName === '' || !panelID || !dashboardUID || !dashboardTitle) {
             // this.messageService.add({
@@ -587,8 +555,8 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 (res: IPage) => {
                     this.currentPage = res;
                     this.updateForm(res);
-                    if(this.currentPage.attachedFormPage) {
-                        this.loadFilterPage(this.currentPage.attachedFormPage);
+                    if(this.currentPage.attachedPage) {
+                        this.loadFilterFormPage(this.currentPage.attachedPage);
                     }
                 }
             );
@@ -599,8 +567,8 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     }
 
     onChangeMicroserviceAPI() {
-        const microservice = this.editForm.get(['microservice']).value;
-        const api = this.editForm.get(['api']).value;
+        const microservice = this.filterTableData.get(['microservice']).value;
+        const api = this.filterTableData.get(['api']).value;
         if (api && api.api) {
             const apiStart: boolean = api.api.resourcePath.startsWith('/');
             let suggestedPath = '';
@@ -610,13 +578,13 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 suggestedPath = '/' + microservice.name + '/api/' + api.api.resourcePath;
             }
 
-            this.editForm.get('resourcePath').patchValue(suggestedPath, { emitEvent: true });
+            this.filterTableData.get('resourcePath').patchValue(suggestedPath, { emitEvent: true });
         }
     }
 
     onChangeAioTableMicroserviceAPI() {
-        const microservice = this.editForm.get(['aiomicroservice']).value;
-        const api = this.editForm.get(['aioapi']).value;
+        const microservice = this.filterTableData.get(['aiomicroservice']).value;
+        const api = this.filterTableData.get(['aioapi']).value;
         if (api && api.api) {
             const apiStart: boolean = api.api.resourcePath.startsWith('/');
             let suggestedPath = '';
@@ -628,14 +596,14 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             if (api.api.apiJson && api.api.apiJson.operation) {
                 const op = api.api.apiJson.operation;
                 if (op === 'CREATE' || op === 'UPDATE' || op === 'FIND' || op === 'DELETE') {
-                    this.editForm.get('apiOperation').patchValue(op, { emitEvent: true });
+                    this.filterTableData.get('apiOperation').patchValue(op, { emitEvent: true });
                 }
             }
-            this.editForm.get('apiResourcePath').patchValue(suggestedPath, { emitEvent: true });
+            this.filterTableData.get('apiResourcePath').patchValue(suggestedPath, { emitEvent: true });
         }
     }
 
-    loadFilterPage(filterPageUUID: any) {
+    loadFilterFormPage(filterPageUUID: any) {
         this.builtInPageService
             .find(filterPageUUID ,this.projectUid)
             .pipe(
@@ -656,9 +624,9 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
 
     onChangeMicroserviceProject() {
         this.apiItems = [];
-        const microservice = this.editForm.get(['microservice']).value;
-        this.editForm.get('resourcePath').patchValue('', { emitEvent: true });
-        this.editForm.get('api').patchValue([], { emitEvent: true });
+        const microservice = this.filterTableData.get(['microservice']).value;
+        this.filterTableData.get('resourcePath').patchValue('', { emitEvent: true });
+        this.filterTableData.get('api').patchValue([], { emitEvent: true });
 
         if (microservice.microserviceApis) {
             for (let i = 0; i < microservice.microserviceApis.length; i++) {
@@ -696,10 +664,10 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
 
     onChangeAioTableMicroserviceProject() {
         this.apiItems = [];
-        const microservice = this.editForm.get(['aiomicroservice']).value;
-        this.editForm.get('apiResourcePath').patchValue('', { emitEvent: true });
-        this.editForm.get('apiOperation').patchValue('', { emitEvent: true });
-        this.editForm.get('aioapi').patchValue([], { emitEvent: true });
+        const microservice = this.filterTableData.get(['aiomicroservice']).value;
+        this.filterTableData.get('apiResourcePath').patchValue('', { emitEvent: true });
+        this.filterTableData.get('apiOperation').patchValue('', { emitEvent: true });
+        this.filterTableData.get('aioapi').patchValue([], { emitEvent: true });
 
         if (microservice.microserviceApis) {
             for (let i = 0; i < microservice.microserviceApis.length; i++) {
@@ -753,7 +721,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
 
     onChangeMicroservice() {
         this.apiItems = [];
-        const microservice = this.editForm.get(['microservice']).value;
+        const microservice = this.filterTableData.get(['microservice']).value;
         this.microserviceService
             .findApis(microservice.uuid, this.projectUid)
             .pipe(
@@ -774,7 +742,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     }
 
     notifyFormModelChange(currentDatamodel: IAggregate) {
-        const selectedModel: IAggregate = this.editForm.get(['selectedAggregateForm']).value;
+        const selectedModel: IAggregate = this.filterFormData.get(['selectedAggregateForm']).value;
         this.eventManager.dispatch(
             new AppEvent(EventTypes.newViewModelCreation, {
                 name: 'newViewModelCreation',
@@ -784,7 +752,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     }
 
     notifyTableModelChange(currentDatamodel: IAggregate) {
-        const selectedModel: IAggregate = this.editForm.get(['selectedAggregateTable']).value;
+        const selectedModel: IAggregate = this.filterTableData.get(['selectedAggregateTable']).value;
         this.eventManager.dispatch(
             new AppEvent(EventTypes.newViewModelCreation, {
                 name: 'newViewModelCreation',
@@ -823,19 +791,11 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             this.onChangeFilterFormModel(builtInPage.model, true);
         }
         if (builtInPage.authority) {
-            this.editForm.patchValue({
+            this.filterTableData.patchValue({
                 isSecurePage: true,
             });
         }
         if (this.project.apptypesID === 'task.ui') {
-            if (builtInPage.pagetemplate === 'register-page') {
-                this.pageTemplateItems.push({ label: 'Register Page', value: 'register-page' });
-            } else if (builtInPage.pagetemplate === 'login-page') {
-                this.pageTemplateItems.push({ label: 'Login Page', value: 'login-page' });
-                if (builtInPage.loginParams) {
-                    this.loginParams = builtInPage.loginParams;
-                }
-            }
             if (builtInPage.pagetemplate !== 'aio-table' && builtInPage.pagetemplate !== 'aio-grid' && builtInPage.params) {
                 if (builtInPage.params) {
                     this.apiParams = builtInPage.params;
@@ -849,10 +809,10 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             } else if (builtInPage.pagetemplate === 'dashboard-page' && builtInPage.dashboardPanelDetails) {
                 this.dashboardPanelDetails = builtInPage.dashboardPanelDetails;
             }
-            this.editForm.patchValue({
+            this.filterTableData.patchValue({
                 id: builtInPage.uuid,
                 apiType: builtInPage.apiType,
-                selectedAggregate: builtInPage.model,
+                selectedAggregateTable: builtInPage.model,
                 resourcePath: builtInPage.resourcePath,
                 //  operation: builtInPage.operation,
                 pagetitle: builtInPage.pagetitle,
@@ -861,51 +821,10 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 projectUuid: this.projectUid,
                 isHomepage: builtInPage.isHomepage,
             });
-            if (builtInPage && builtInPage.stepHeaders && builtInPage.stepHeaders.length > 0) {
-                this.wizardDetailsGroup.removeAt(0);
-                this.detailsHeaderGroup.removeAt(0);
-                for (const steph of builtInPage.stepHeaders) {
-                    if(builtInPage.pagetemplate === 'form-wizard-page') {
-                        this.insertWizardDetailsGroup(steph.stepHeader);
-                    } else if (builtInPage.pagetemplate === 'static-page') {
-                        this. insertDetailsHeaderGroup(steph.stepHeader);
-                    }
-                }
-            }
-            if (builtInPage && builtInPage.stepMappings && builtInPage.stepMappings.length > 0) {
-                if(builtInPage.pagetemplate === 'form-wizard-page') {
-                    this.stepFieldArr = builtInPage.stepMappings;
-                    this.dataSourceWizard = new MatTableDataSource(this.stepFieldArr);
-                } else if (builtInPage.pagetemplate === 'static-page') {
-                    this.headerFieldArr = builtInPage.stepMappings;
-                    this.dataSourceDetailsPage = new MatTableDataSource( this.headerFieldArr);
-                }
-            }
             this.pageTitle = builtInPage.pagetitle;
         }
         this.pagestyle = builtInPage.pagestyle;
     }
-
-    getPageTemplates() {
-        if (this.project.apptypesID === 'task.ui') {
-            if (!this.isLoginPageExist) {
-                this.pageTemplateItems.push({ label: 'Login Page', value: 'login-page' });
-            }
-            if (!this.isRegisterPageExist) {
-                this.pageTemplateItems.push({ label: 'Register Page', value: 'register-page' });
-            }
-            this.pageTemplateItems.push({ label: 'Table View', value: 'table-page' });
-            this.pageTemplateItems.push({ label: 'Form View', value: 'form-page' });
-            this.pageTemplateItems.push({ label: 'Form Wizard View', value: 'form-wizard-page' });
-            this.pageTemplateItems.push({ label: 'Grid View', value: 'aio-grid' });
-            this.pageTemplateItems.push({ label: 'All-in-One Table View', value: 'aio-table' });
-            this.pageTemplateItems.push({ label: 'File Upload View', value: 'file-upload-page' });
-        } else {
-            this.pageTemplateItems.push({ label: 'Table View', value: 'aio-table' });
-            this.pageTemplateItems.push({ label: 'Grid View', value: 'aio-grid' });
-        }
-    }
-
     loadEntities() {
         for (let i = 0; i < this.datamodels.length; i++) {
             if (this.datamodels[i].status === 'ENABLED') {
@@ -929,44 +848,55 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
         }
     }
 
-    private createFromForm(): IPage {
+    private getFilterTablePage(): IPage {
         let headersArray = [];
         let fieldMappingArray = [];
         if (this.project.apptypesID === 'task.ui') {
-            if (this.editForm.get(['pagetemplate']).value === 'aio-table') {
-                this.dashboardPanelDetails = [];
-            } else if (this.editForm.get(['pagetemplate']).value === 'dashboard-page') {
-                this.apiResourceDetails = [];
-                this.apiParams = [];
-            }
-            if(this.currentPage.pagetemplate === 'static-page') {
-                headersArray = this.getAllWizardSteps('static');
-                fieldMappingArray = this.headerFieldArr;
-            } else {
-                headersArray = this.getAllWizardSteps('wizard');
-                fieldMappingArray = this.stepFieldArr;
-            }
             return {
                 ...new Page(),
-                uuid: this.editForm.get(['id']).value,
-                model: this.editForm.get(['selectedAggregate']).value,
-                pagetitle: this.editForm.get(['pagetitle']).value,
-                pagetemplate: this.editForm.get(['pagetemplate']).value,
-                pagetype: 'api-page',
+                uuid: this.filterTableData.get(['id']).value,
+                model: this.filterTableData.get(['selectedAggregateTable']).value,
+                pagetitle: this.pageTitle,
+                pagetemplate: 'filter-page',
+                pagetype: 'filter-page',
                 params: this.apiParams,
                 loginParams: this.loginParams,
                 apiResourceDetails: this.apiResourceDetails,
                 dashboardPanelDetails: this.dashboardPanelDetails,
-                //   operation: this.editForm.get(['operation']).value,
-                resourcePath: this.editForm.get(['resourcePath']).value,
+                resourcePath: this.filterTableData.get(['resourcePath']).value,
                 status: 'ENABLED',
                 projectUuid: this.projectUid,
                 pagestyle: this.pagestyle,
-                pageViewType: 'singleWidget',
-                stepHeaders: headersArray,
-                stepMappings: fieldMappingArray,
-                authority: this.editForm.get(['authority']).value,
-                isHomepage: this.editForm.get(['isHomepage']).value,
+                pageViewType: 'filterPage',
+                authority: this.filterTableData.get(['authority']).value,
+                isHomepage: this.filterTableData.get(['isHomepage']).value,
+                attachedPage: this.filterFormPage.uuid,
+                attachedPageLocation: this.filterTableData.get(['attachedPageLocation']).value,
+            };
+        }
+    }
+
+    private getFilterFormPage(): IPage {
+        let headersArray = [];
+        let fieldMappingArray = [];
+        if (this.project.apptypesID === 'task.ui') {
+            return {
+                ...new Page(),
+                uuid: this.filterFormPage.uuid,
+                model: this.filterFormData.get(['selectedAggregateForm']).value,
+                pagetitle: this.pageTitle,
+                pagetemplate: 'filter-form',
+                pagetype: 'filter-form',
+                params: this.apiParams,
+                loginParams: this.loginParams,
+                apiResourceDetails: this.apiResourceDetails,
+                resourcePath: this.filterTableData.get(['resourcePath']).value,
+                status: 'ENABLED',
+                projectUuid: this.projectUid,
+                pagestyle: this.pagestyle,
+                pageViewType: 'filterForm',
+                authority: this.filterFormData.get(['authority']).value,
+                isHomepage: this.filterFormData.get(['isHomepage']).value,
             };
         }
     }
@@ -980,7 +910,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        if (this.editForm.get(['pagetitle']).value !== this.currentPage.pagetitle){
+        if (this.filterTableData.get(['pagetitle']).value !== this.currentPage.pagetitle){
             this.eventManager.dispatch(
                 new AppEvent(EventTypes.editorUITreeListModification, {
                     name: 'editorUITreeListModification',
@@ -988,7 +918,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 })
             );
         }
-        this.pageTitle = this.editForm.get(['pagetitle']).value;
+        this.pageTitle = this.filterTableData.get(['pagetitle']).value;
         // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Form saved' });
         this.enableToEdit();
     }
@@ -1051,9 +981,10 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     }
 
     checkPageNameExist() {
-        const page = this.createFromForm();
+        const filterTablePage = this.getFilterTablePage();
+        const filterFormPage = this.getFilterFormPage();
         this.builtInPageService
-            .findPageNameAvailability(page.pagetitle, this.currentPage.uuid, this.projectUid)
+            .findPageNameAvailability(this.pageTitle, this.currentPage.uuid, this.projectUid)
             .pipe(
                 filter((res: HttpResponse<any>) => res.ok),
                 map((res: HttpResponse<any>) => res.body)
@@ -1064,7 +995,8 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                         this.consoleLogService.writeConsoleLog('Page name exists');
                     } else {
                         this.consoleLogService.writeConsoleLog('Page saved successfully');
-                        this.save(page);
+                        this.save(filterTablePage);
+                        this.save(filterFormPage);
                     }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
@@ -1083,7 +1015,6 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 .subscribe(
                     (res: IProject) => {
                         this.project = res;
-                        this.getPageTemplates();
                         if (this.project.apptypesID === 'task.ui') {
                             this.aggregates = this.project.aggregates;
                             if (this.aggregates) {
@@ -1137,173 +1068,6 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 );
         }
     }
-
-    addFieldsToSteps() {
-        const field = this.editForm.get(['fieldName']).value;
-        let stepHeader = '';
-        let stepId = 0;
-        if (this.editForm.get(['stepHeader']).value) {
-            stepId = parseInt(this.editForm.get(['stepHeader']).value.split('-')[0]);
-            stepHeader = this.editForm.get(['stepHeader']).value.split('-')[1];
-        }
-
-        if (!field || !stepId) {
-            // this.messageService.add({
-            //   severity: 'warn',
-            //   summary: 'Warn',
-            //   detail: 'Please fill all the fields',
-            // });
-        } else {
-            const stepField = {
-                field,
-                stepHeader,
-                stepId,
-            };
-            if (this.stepFieldArr.indexOf(stepField) === -1) {
-                this.stepFieldArr.push(stepField);
-                //  this.ELEMENT_DATA.push(stepField);
-                this.dataSourceWizard = new MatTableDataSource(this.stepFieldArr);
-            }
-        }
-    }
-    removeWizardDetailsGroup(index: number) {
-        this.wizardDetailsGroup.removeAt(index);
-        this.saveAllWizardSteps();
-    }
-
-    saveAllWizardSteps() {
-        this.stepHeadersList = [];
-        const allStepControllers = this.wizardDetailsGroup.controls;
-        for (let i = 0; i < allStepControllers.length; i++) {
-            this.stepHeadersList.push({
-                label: allStepControllers[i].value.stepHeading,
-                value: allStepControllers[i].value.stepId + '-' + allStepControllers[i].value.stepHeading,
-            });
-        }
-    }
-
-    getAllWizardSteps(group) {
-        const wizardStepObjArray = [];
-        let allStepControllers = []
-        if (group === 'wizard') {
-            allStepControllers = this.wizardDetailsGroup.controls;
-        } else {
-            allStepControllers = this.detailsHeaderGroup.controls;
-        }
-        for (let i = 0; i < allStepControllers.length; i++) {
-            const wizardStepObj = {
-                StepHeader: allStepControllers[i]['controls'].stepHeading.value,
-                StepId: allStepControllers[i]['controls'].stepId.value,
-            };
-            wizardStepObjArray.push(wizardStepObj);
-        }
-        return wizardStepObjArray;
-    }
-
-    deleteFieldSteps(param) {
-        const indexnum = this.ELEMENT_DATA.indexOf(param);
-        this.ELEMENT_DATA.splice(indexnum, 1);
-        this.dataSourceAIOParam = new MatTableDataSource(this.ELEMENT_DATA);
-
-        const index = this.stepFieldArr.indexOf(param);
-        this.stepFieldArr.splice(index, 1);
-    }
-
-    get wizardDetailsGroup() {
-        return this.editForm.get('wizardDetailsGroup') as FormArray;
-    }
-
-    insertWizardDetailsGroup(stepH) {
-        this.stepIndexId = this.wizardDetailsGroup.length + 1;
-        // this.stepIndexId++;
-        this.wizardDetailsGroup.push(this.addWizardDetailsGroup(stepH));
-        this.saveAllWizardSteps();
-    }
-
-    addWizardDetailsGroup(stepH): FormGroup {
-        let stepHeader = 'Step ' + this.stepIndexId;
-        if (stepH) {
-            stepHeader = stepH;
-        }
-        return new FormGroup({
-            stepHeading: new FormControl(stepHeader),
-            stepId: new FormControl(this.stepIndexId), // [TODO] should add validations
-        });
-    }
-
-
-    get detailsHeaderGroup() {
-        return this.editForm.get('detailsHeaderGroup') as FormArray;
-    }
-    insertDetailsHeaderGroup(stepH) {
-        this.headerIndexId = this.detailsHeaderGroup.length + 1;
-        // this.stepIndexId++;
-        this.detailsHeaderGroup.push(this.addDetailsHeaderGroup(stepH));
-        this.saveAllWizardSteps();
-    }
-    addDetailsHeaderGroup(stepH): FormGroup {
-        let detailHeader = 'Header ' + this.headerIndexId;
-        if (stepH) {
-            detailHeader = stepH;
-        }
-        return new FormGroup({
-            stepHeading: new FormControl(detailHeader),
-            stepId: new FormControl(this.headerIndexId),
-        });
-    }
-    addFieldsToHeaders() {
-        const field = this.editForm.get(['attributeName']).value;
-        let detailsHeader = '';
-        let detailsId = 0;
-        if (this.editForm.get(['detailHeader']).value) {
-            detailsId = parseInt(this.editForm.get(['detailHeader']).value.split('-')[0]);
-            detailsHeader = this.editForm.get(['detailHeader']).value.split('-')[1];
-        }
-
-        if (!field || !detailsId) {
-            // this.messageService.add({
-            //   severity: 'warn',
-            //   summary: 'Warn',
-            //   detail: 'Please fill all the fields',
-            // });
-        } else {
-            const stepField = {
-                field,
-                detailsHeader,
-                detailsId,
-            };
-            if (this.headerFieldArr.indexOf(stepField) === -1) {
-                this.headerFieldArr.push(stepField);
-                //  this.DETAILS_DATA.push(stepField);
-                this.dataSourceDetailsPage = new MatTableDataSource( this.headerFieldArr);
-            }
-        }
-    }
-    removeDetailsHeaderGroup(index: number) {
-        this.detailsHeaderGroup.removeAt(index);
-        this.getAllDetailsHeaders();
-    }
-    getAllDetailsHeaders() {
-        this.detailsHeadersList = [];
-        const allStepControllers = this.detailsHeaderGroup.controls;
-        for (let i = 0; i < allStepControllers.length; i++) {
-            this.detailsHeadersList.push({
-                label: allStepControllers[i].value.stepHeading,
-                value: allStepControllers[i].value.stepId + '-' + allStepControllers[i].value.stepHeading,
-            });
-        }
-    }
-    deleteFieldHeaders(param) {
-        const indexnum = this.ELEMENT_DATA.indexOf(param);
-        this.DETAILS_DATA.splice(indexnum, 1);
-        this.dataSourceDetailsPage = new MatTableDataSource(this.DETAILS_DATA);
-
-        const index = this.headerFieldArr.indexOf(param);
-        this.headerFieldArr.splice(index, 1);
-    }
-
-
-
 
     onRowEditInit(car: Config) {
         this.clonedCars[car.property] = { ...car };
