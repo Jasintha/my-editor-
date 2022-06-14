@@ -155,7 +155,10 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         this.projectUid = this.data.projectUid;
         this.storyuuid =  this.data.storyUuid;
         this.isSaving =  false;
-        this.createdNewModel = false
+        this.createdNewModel = false;
+        if (this.data.story.modelUUID){
+            this.update();
+        }
     }
 
     ngOnDestroy(): void {
@@ -165,6 +168,29 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     }
 
     ngAfterViewInit(): void {
+    }
+
+    update(){
+        this.loadAggregatesForService('');
+        let model;
+        this.aggregateService
+            .find(this.data.story.modelUUID, this.serviceUuid)
+            .pipe(
+                filter((res: HttpResponse<any>) => res.ok),
+                map((res: HttpResponse<any>) => res.body)
+            )
+            .subscribe(
+                (res: any[]) => {
+                    model = res
+                },
+                (res: HttpErrorResponse) => this.onError()
+            );
+        this.modelNodeConfigFormGroup.patchValue({
+            createType: 'Existing',
+            modelName: '',
+            modelselection: model,
+            isDto: false,
+        })
     }
 
 
@@ -588,9 +614,15 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     protected onSaveSuccess() {
         this.isSaving = false;
         this.eventManager.dispatch(
+            new AppEvent(EventTypes.editorTreeListModification, {
+                name: 'editorTreeListModification',
+                content: 'Add an Model',
+            })
+        );
+        this.eventManager.dispatch(
             new AppEvent(EventTypes.editorUITreeListModification, {
                 name: 'editorUITreeListModification',
-                content: 'Add an page navigation',
+                content: 'Add an Model',
             })
         );
         this.dialogRef.close();

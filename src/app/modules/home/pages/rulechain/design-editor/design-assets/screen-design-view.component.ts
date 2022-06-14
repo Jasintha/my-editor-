@@ -155,7 +155,7 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
                         this.existingPortals = [];
                     }
                 },
-                (res: HttpErrorResponse) => this.onError(res.message)
+                (res: HttpErrorResponse) => this.onError()
             );
     }
 
@@ -168,6 +168,31 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
         this.isSaving = false;
         this.getPageTemplates();
         this.loadAggregatesForService();
+        if (this.data.story.screenData){
+            this.update();
+        }
+    }
+
+    update(){
+        const screenDate = this.data.story.screenData;
+        let model;
+        this.aggregateService
+            .find(screenDate.modeluuid, this.serviceUuid)
+            .pipe(
+                filter((res: HttpResponse<any>) => res.ok),
+                map((res: HttpResponse<any>) => res.body)
+            )
+            .subscribe(
+                (res: any[]) => {
+                    model = res
+                },
+                (res: HttpErrorResponse) => this.onError()
+            );
+        this.screenNodeConfigFormGroup.patchValue({
+            modeluuid: model,
+            screenName: screenDate.screenName,
+            screenTemplate: screenDate.screenTemplate
+        })
     }
 
     loadAggregatesForService() {
@@ -200,7 +225,7 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
                         }
                     }
                 },
-                (res: HttpErrorResponse) => this.onError(res.message)
+                (res: HttpErrorResponse) => this.onError()
             );
     }
 
@@ -239,7 +264,7 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
     ngAfterViewInit(): void {
     }
 
-    protected onError(errorMessage: string) {
+    protected onError() {
         //  this.logger.error(errorMessage);
     }
 

@@ -95,6 +95,15 @@ export class ActorDesignViewComponent implements  OnInit, OnDestroy, AfterViewIn
         this.projectUid =  this.data.projectUid;
         this.storyUuid = this.data.storyUuid;
         this.loadActors();
+        if (this.data.story.storyActors){
+            this.update();
+        }
+    }
+
+    update(){
+        this.ELEMENT_DATA = this.data.story.storyActors;
+        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+
     }
 
     ngOnDestroy(): void {

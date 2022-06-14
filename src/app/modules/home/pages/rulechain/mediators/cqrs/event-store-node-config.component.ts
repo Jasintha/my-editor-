@@ -185,6 +185,31 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
     }
   }
 
+  refreshModelTypes(){
+    let modelType: string = this.eventStoreNodeConfigFormGroup.get('modelType').value;
+    this.configuration.modelType= modelType;
+    if(modelType === 'MODEL'){
+        this.configuration.dtoName= "";
+        this.eventStoreNodeConfigFormGroup.get('customObject').patchValue(null, {emitEvent: false});
+    } else if (modelType === 'DTO'){
+        this.configuration.modelName= "";
+        this.eventStoreNodeConfigFormGroup.get('entity').patchValue(null, {emitEvent: false});
+    }
+    if (this.definedConfigComponent) {
+      this.propagateChange(this.configuration);
+    }
+  }
+
+  onCustomObjSelect(){
+    let customObject = this.eventStoreNodeConfigFormGroup.get('customObject').value;
+    this.configuration.dtoName= customObject.nameTitleCase;
+  }
+
+  onEntitySelect(){
+    let entity = this.eventStoreNodeConfigFormGroup.get('entity').value;
+    this.configuration.modelName= entity.nameTitleCase;
+  }
+
   refreshErrorParameterInputTypes(){
     let errorInputType: string = this.eventStoreNodeConfigFormGroup.get('errorParameterinputType').value;
     this.configuration.errorParameterinputType = errorInputType;
@@ -429,11 +454,24 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
       }
 
+      let entity = this.configuration.entity;
+      if(entity && this.inputEntities){
+        entity = this.inputEntities.find(x => x.nameTitleCase === this.configuration.modelName );
+      }
+
+      let customObject = this.configuration.customObject;
+      if(customObject && this.inputCustomobjects){
+        customObject = this.inputCustomobjects.find(x => x.nameTitleCase === this.configuration.dtoName );
+      }
+
       this.eventStoreNodeConfigFormGroup.patchValue({
         inputType: this.configuration.inputType,
+        modelType: this.configuration.modelType,
+        customObject: customObject,
+        entity: entity,
         //dbType: dbType,
         dbAction: this.configuration.dbAction,
-        event: this.configuration.event,
+//         event: this.configuration.event,
         errorMsg: this.configuration.errorMsg,
         errorAction: this.configuration.errorAction,
         param: param,
@@ -520,14 +558,14 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       );
       */
 
-      this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('event').valueChanges.subscribe(
+/*       this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('event').valueChanges.subscribe(
         (configuration: any) => {
 
           this.configuration.event = configuration;
           this.updateModel(this.configuration);
         }
       );
-      
+       */
       
       this.changeSubscription = this.eventStoreNodeConfigFormGroup.get('assignedReference').valueChanges.subscribe(
         (configuration: any) => {
