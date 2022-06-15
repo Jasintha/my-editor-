@@ -171,24 +171,10 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     }
 
     update(){
-        this.loadAggregatesForService('');
-        let model;
-        this.aggregateService
-            .find(this.data.story.modelUUID, this.serviceUuid)
-            .pipe(
-                filter((res: HttpResponse<any>) => res.ok),
-                map((res: HttpResponse<any>) => res.body)
-            )
-            .subscribe(
-                (res: any[]) => {
-                    model = res
-                },
-                (res: HttpErrorResponse) => this.onError()
-            );
+        this.loadAggregatesForService(this.data.story.modelUUID);
         this.modelNodeConfigFormGroup.patchValue({
             createType: 'Existing',
             modelName: '',
-            modelselection: model,
             isDto: false,
         })
     }

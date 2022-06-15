@@ -304,7 +304,7 @@
                         <a class="edit-icon-text" virtuan-click-stop-propagation (click)="editStoryText(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </div>
                     <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.storyText"
-                              [style]="{'height':'100px', 'margin-top':'10px' , 'border': 'none'}" [readonly]="true">
+                              [style]="{'height':'100px', 'margin-top':'10px' , 'border': 'none','width' : '1050px'}" [readonly]="true">
                         <p-header hidden>
                             <span class="ql-formats"></span>
                         </p-header>
@@ -371,13 +371,17 @@
 <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
 <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('process')">settings</mat-icon>-->
                                     <div class="story-pane-icon">
-                                        <img src="{{storyImages[0].src}}" class="icon" (click)="createDesign('actor', story)" matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
+                                        <img *ngIf="story.storyActors" src="/assets/images/story/actor.png" class="icon" (click)="createDesign('actor', story)" matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
+                                        <img *ngIf="!story.storyActors" src="/assets/images/story/actor-un.png" class="icon" (click)="createDesign('actor', story)" matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
                                         <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img src="{{storyImages[1].src}}" class="icon" (click)="createDesign('model', story)" matTooltip="Model" [matTooltipPosition]="toolTipPosition">
+                                        <img *ngIf="story.modelUUID" src="/assets/images/story/model.png" class="icon" (click)="createDesign('model', story)" matTooltip="Model" [matTooltipPosition]="toolTipPosition">
+                                        <img *ngIf="!story.modelUUID" src="/assets/images/story/model-un.png" class="icon" (click)="createDesign('model', story)" matTooltip="Model" [matTooltipPosition]="toolTipPosition">
                                         <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img src="{{storyImages[2].src}}" class="icon" (click)="createDesign('screen', story)" matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
+                                        <img *ngIf="story.screenUUID" src="/assets/images/story/screen.png" class="icon" (click)="createDesign('screen', story)" matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
+                                        <img *ngIf="!story.screenUUID" src="/assets/images/story/screen-un.png" class="icon" (click)="createDesign('screen', story)" matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
                                         <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img src="{{storyImages[3].src}}" class="icon" (click)="createDesign('process', story)" matTooltip="Process" [matTooltipPosition]="toolTipPosition">
+                                        <img *ngIf="story.processApiUUID" src="/assets/images/story/gen.png" class="icon" (click)="createDesign('process', story)" matTooltip="Process" [matTooltipPosition]="toolTipPosition">
+                                        <img *ngIf="!story.processApiUUID" src="/assets/images/story/gen-un.png" class="icon" (click)="createDesign('process', story)" matTooltip="Process" [matTooltipPosition]="toolTipPosition">
                                     </div>
                                 </div>
                                 <div class="col-1 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
@@ -387,7 +391,7 @@
                                         <!--                                            <mat-icon  style="font-size: 16px">tune</mat-icon>-->
                                         <!--                                        </button>-->
                                         <div class="story-editor-button" matTooltip="Rule Editor" [matTooltipPosition]="toolTipPosition" (click)="loadStoryDesignEditor(story)">
-                                            <i class="fa fa-external-link-square" aria-hidden="true"></i>
+                                            <i class="fa fa-external-link" aria-hidden="true"></i>
                                         </div>
 
                                     </div>

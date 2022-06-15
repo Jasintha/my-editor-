@@ -167,7 +167,7 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
         this.loadPortals();
         this.isSaving = false;
         this.getPageTemplates();
-        this.loadAggregatesForService();
+        this.loadAggregatesForService('');
         if (this.data.story.screenData){
             this.update();
         }
@@ -175,27 +175,14 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
 
     update(){
         const screenDate = this.data.story.screenData;
-        let model;
-        this.aggregateService
-            .find(screenDate.modeluuid, this.serviceUuid)
-            .pipe(
-                filter((res: HttpResponse<any>) => res.ok),
-                map((res: HttpResponse<any>) => res.body)
-            )
-            .subscribe(
-                (res: any[]) => {
-                    model = res
-                },
-                (res: HttpErrorResponse) => this.onError()
-            );
+        this.loadAggregatesForService(screenDate.modeluuid);
         this.screenNodeConfigFormGroup.patchValue({
-            modeluuid: model,
             screenName: screenDate.screenName,
             screenTemplate: screenDate.screenTemplate
         })
     }
 
-    loadAggregatesForService() {
+    loadAggregatesForService(storyModelUuid) {
         this.aggregateService
             .findByProjectUUId(this.serviceUuid, this.serviceUuid)
             .pipe(
@@ -210,6 +197,9 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
                         existingModels = res;
                         let findModel;
                         for (let i = 0; i < existingModels.length; i++) {
+                            if (storyModelUuid && storyModelUuid === existingModels[i].uuid) {
+                                findModel = existingModels[i];
+                            }
                             if (existingModels[i].type === 'MODEL') {
                                 const dropdownLabel = existingModels[i].name;
                                 this.inputitems.push({ label: dropdownLabel, value: existingModels[i] });
@@ -218,10 +208,11 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
                                 this.inputitems.push({ label: dropdownLabel, value: existingModels[i] });
                             }
                         }
-                        if (findModel && this.configuration.modeluuid) {
+                        if (findModel && storyModelUuid) {
                             this.screenNodeConfigFormGroup.patchValue({
                                 modelselection: findModel,
                             });
+                            this.onModelChange();
                         }
                     }
                 },
