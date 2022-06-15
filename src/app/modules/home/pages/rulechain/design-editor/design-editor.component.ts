@@ -611,7 +611,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     createDesign(val , story){
         if (val === 'actor'){
-            this.changeImage("actor", "actor")
+            this.changeImage("actor", "actor");
             const dialogRef = this.dialog.open(ActorDesignViewComponent, {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
@@ -622,11 +622,11 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             });
             dialogRef.afterClosed(
             ).subscribe(result => {
-                this.changeImage("actor-un", "actor")
+                this.changeImage("actor-un", "actor");
                 this.loadStoriesForEpic(this.existingEpicOne.uuid);
             });
         }else if (val === 'model'){
-            this.changeImage("model", "model")
+            this.changeImage("model", "model");
             if (story.storyActors){
                 const dialogRef = this.dialog.open(ModelDesignViewComponent, {
                     panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
@@ -640,7 +640,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 dialogRef.afterClosed(
                 ).subscribe(result => {
                     this.loadStoriesForEpic(this.existingEpicOne.uuid);
-                    this.changeImage("model-un", "model")
+                    this.changeImage("model-un", "model");
                 });
             }else {
                 const dialogRef = this.dialog.open(DesignWarningComponent, {
@@ -656,12 +656,12 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 dialogRef.afterClosed(
                 ).subscribe(result => {
                     this.loadStoriesForEpic(this.existingEpicOne.uuid);
-                    this.changeImage("model-un", "model")
+                    this.changeImage("model-un", "model");
 
                 });
             }
         }else if (val === 'process'){
-            this.changeImage("gen", "generate")
+            this.changeImage("gen", "generate");
             const dialogRef = this.dialog.open(ProcessDesignViewComponent, {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
@@ -672,10 +672,10 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             });
             dialogRef.afterClosed(
             ).subscribe(result => {
-                this.changeImage("gen-un", "generate")
+                this.changeImage("gen-un", "generate");
             });
         }else if (val === 'screen'){
-            this.changeImage("screen", "screen")
+            this.changeImage("screen", "screen");
             const dialogRef = this.dialog.open(ScreenDesignViewComponent, {
                 panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
@@ -687,7 +687,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             });
             dialogRef.afterClosed(
             ).subscribe(result => {
-                this.changeImage("screen-un", "screen")
+                this.changeImage("screen-un", "screen");
                 this.loadStoriesForEpic(this.existingEpicOne.uuid);
             });
             // if (story.modelUUID){
