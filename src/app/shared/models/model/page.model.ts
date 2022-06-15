@@ -5,6 +5,7 @@ import { IAggregate } from '@shared/models/model/aggregate.model';
 import { IPageConfig } from '@shared/models/model/page-config.model';
 import { IPageAction } from '@shared/models/model/page-action.model';
 import { IAPIInput } from '@shared/models/model/api-input.model';
+import {IButtonType} from '@shared/models/model/button-type.model';
 
 export interface IPage {
   uuid?: string;
@@ -44,6 +45,7 @@ export interface IPage {
   pageGrid?: any;
   apiDataArray?: any;
   attachedPageLocation?: string;
+  buttonPanel?: IButtonType[]
 }
 
 export class Page implements IPage {
@@ -85,5 +87,6 @@ export class Page implements IPage {
     public pageGrid?: any,
     public apiDataArray? : any,
     public attachedPageLocation? : string,
+    public buttonPanel? : IButtonType[]
   ) {}
 }

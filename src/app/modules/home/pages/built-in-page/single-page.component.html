@@ -597,7 +597,7 @@
                         <!--                                            </p-dropdown>-->
                         <!--                                        </div>-->
                         <!--                                        <div class="col-md-3">-->
-                        <!--                                            <p-dropdown placeholder="Choose Param Type" name="paramType" [options]="paramitems"-->
+                        <!--                                            <p-dropdown placeholder="Choose Param Type" name="paramType" [options]="operationItems"-->
                         <!--                                                        formControlName="paramType" [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>-->
                         <!--                                        </div>-->
                         <!--                                        <div class="col-md-3">-->
@@ -753,7 +753,7 @@
                                     color="primary"
                                     type="button" [disabled]="formDisable">
                                 <mat-icon>add</mat-icon>
-                                Create Main Menu
+                                Add to Main Menu
                             </button>
                         </div>
                         <div  *ngIf="editForm.value.pagetemplate == 'table-page'" class="col-4">
@@ -762,12 +762,102 @@
                                     mat-raised-button
                                     type="button" [disabled]="formDisable">
                                 <mat-icon>add</mat-icon>
-                                Create Page Navigation
+                                Add Page Navigation
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+            <ng-container class="flex-auto">
+                <div class="form-group">
+                    <label class="form-control-label">Add Buttons</label>
+                    <div class="card">
+                        <div class="card-body row">
+                            <div class="col-md-2">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Caption</mat-label>
+                                    <input type="text" formControlName="btnCaption" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Resource path</mat-label>
+                                    <input type="text" formControlName="btnResourcePath" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Operation</mat-label>
+                                        <mat-select formControlName="btnOperation">
+                                            <mat-option *ngFor="let option of operationItems" [value]="option.value">
+                                                {{option.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Color</mat-label>
+                                    <input type="color" formControlName="btnColor" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Tooltip</mat-label>
+                                    <input type="text" formControlName="btnTooltip" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2" style='text-align: center'>
+                                <button type="button"  mat-raised-button (click)="addRow()"><mat-icon>add</mat-icon> ADD</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div  style="padding-top:20px;padding-bottom:20px;">
+                    <table mat-table matSort  [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="caption">
+                            <th mat-header-cell *matHeaderCellDef>Caption</th>
+                            <td mat-cell *matCellDef="let element">{{element.caption}}</td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="resourcepath">
+                            <th mat-header-cell *matHeaderCellDef>Resource path</th>
+                            <td mat-cell *matCellDef="let element">{{element.resourcePath}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="operation">
+                            <th mat-header-cell *matHeaderCellDef>Operation</th>
+                            <td mat-cell *matCellDef="let element">{{element.operation}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="color">
+                            <th mat-header-cell *matHeaderCellDef>Color</th>
+                            <td mat-cell *matCellDef="let element">{{element.color}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="tooltip">
+                            <th mat-header-cell *matHeaderCellDef>Tooltip</th>
+                            <td mat-cell *matCellDef="let element">{{element.tooltip}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header >Action</th>
+                            <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                <button (click)="deleteRow(row)"
+                                        mat-icon-button
+                                        type="button">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+
+                </div>
+            </ng-container>
             <div class="row">
                 <div class="col-12 model-type">
                     <div class="form-group"

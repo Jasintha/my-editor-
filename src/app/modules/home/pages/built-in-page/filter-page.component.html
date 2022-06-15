@@ -167,7 +167,7 @@
                                         color="primary"
                                         type="button" [disabled]="formDisable">
                                     <mat-icon>add</mat-icon>
-                                    Create Main Menu
+                                    Add to Main Menu
                                 </button>
                             </div>
                             <div  class="col-4">
@@ -176,7 +176,7 @@
                                         mat-raised-button
                                         type="button" [disabled]="formDisable">
                                     <mat-icon>add</mat-icon>
-                                    Create Page Navigation
+                                    Add Page Navigation
                                 </button>
                             </div>
                         </div>
@@ -276,44 +276,8 @@
                                     required
                                 </mat-error>
                             </mat-form-field>
-
-
-                            <div class="form-group" style=" padding-top: 5px; ">
-                                <mat-checkbox [disabled]="formDisable" formControlName="isSecurePage">Limit page access
-                                    to a role
-                                </mat-checkbox>
-                            </div>
-
-                            <div class="form-group" *ngIf="filterFormData.value.isSecurePage">
-                                <mat-form-field [style]="{'width':'100%'}">
-                                    <mat-label>Add authorized role</mat-label>
-                                    <input type="text" formControlName="authority" [readonly]="formDisable" matInput
-                                           name="resourcepath">
-                                </mat-form-field>
-                            </div>
                         </div>
-
                     </ng-container>
-                    <div class="row mt-3">
-                        <div class="col-3">
-                            <button (click)="createMainMenu()"
-                                    mat-raised-button
-                                    color="primary"
-                                    type="button" [disabled]="formDisable">
-                                <mat-icon>add</mat-icon>
-                                Create Main Menu
-                            </button>
-                        </div>
-                        <div  class="col-4">
-                            <button (click)="createPageNavigation()"
-                                    color="primary"
-                                    mat-raised-button
-                                    type="button" [disabled]="formDisable">
-                                <mat-icon>add</mat-icon>
-                                Create Page Navigation
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="row">

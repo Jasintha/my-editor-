@@ -32,6 +32,7 @@ import {ViewModelConfigComponent} from '@home/pages/built-in-page/view-model-con
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
+import {IButtonType} from '@shared/models/model/button-type.model';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -85,7 +86,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   detailsHeadersList: SelectItem[] = [];
   stepIndexId = 1;
   headerIndexId = 1;
-
+  displayedColumns: string[] = ['caption', 'resourcepath', 'operation','color', 'tooltip', 'actions'];
+  BTN_ELEMENT_DATA: IButtonType[];
+  dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
   displayedStepHeaderColumns: string[] = ['field', 'stepheader', 'actions'];
   ELEMENT_DATA = [];
   dataSourceWizard = new MatTableDataSource(this.ELEMENT_DATA);
@@ -121,9 +124,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'User Name', value: 'UNAME' },
     { label: 'Password', value: 'password' },
   ];
-  paramitems: SelectItem[] = [
-    { label: 'Query', value: 'QUERY' },
-    { label: 'Path', value: 'PATH' },
+  operationItems: SelectItem[] = [
+    { label: 'Create', value: 'Create' },
+    { label: 'Find', value: 'Find' },
+    { label: 'Delete', value: 'Delete' },
+    { label: 'Update', value: 'Update' },
   ];
   paramDataTypeItems: SelectItem[] = [
     { label: 'TEXT', value: 'TEXT' },
@@ -172,6 +177,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       stepHeader:[],
       detailHeader:[],
       attributeName:[],
+      btnCaption: [],
+      btnResourcePath: [],
+      btnOperation: [],
+      btnColor: [],
+      btnTooltip: [],
       wizardDetailsGroup: this.fb.array([
         new FormGroup({
           stepHeading: this.fb.control('Step 1'),
@@ -326,6 +336,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.apiParams = [];
     this.apiResourceDetails = [];
     this.dashboardPanelDetails = [];
+    this.BTN_ELEMENT_DATA = [];
     this.activatedRoute.params.subscribe(params => {
       // this.projectId = params['projId'];
       // this.projectUid = params.projectUid;
@@ -346,7 +357,6 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
                       this.loadAggregates();
                     }
                     this.loadMicroserviceProjects();
-                    // this.loadMicroservices();
                     this.loadUpdateForm();
                   }
                   this.setCategoryModelValidators();
@@ -366,24 +376,24 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   addRow() {
-    const paramType = this.editForm.get(['paramType']).value;
-    const paramName = this.editForm.get(['paramName']).value;
-    const paramDataType = this.editForm.get(['paramDataType']).value;
+    const btnCaption = this.editForm.get(['btnCaption']).value;
+    const btnResourcePath = this.editForm.get(['btnResourcePath']).value;
+    const btnOperation = this.editForm.get(['btnOperation']).value;
+    const btnColor = this.editForm.get(['btnColor']).value;
+    const btnTooltip = this.editForm.get(['btnTooltip']).value;
 
-    if (paramType === null || paramName === '' || paramName === null || paramDataType === null) {
-      // this.messageService.add({
-      //   severity: 'warn',
-      //   summary: 'Warn',
-      //   detail: 'Please fill all the fields',
-      // });
-    } else {
-      const param: APIInput = {
-        paramType,
-        inputType: paramDataType,
-        inputName: paramName,
+    if (btnCaption !== null || btnResourcePath !== '' || btnOperation !== null) {
+      const button: IButtonType = {
+        caption: btnCaption ,
+        resourcePath: btnResourcePath,
+        operation: btnOperation,
+        color: btnColor,
+        tooltip: btnTooltip,
       };
-
-      this.apiParams.push(param);
+      this.BTN_ELEMENT_DATA.push(button);
+      this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
+    } else {
+          // error message
     }
   }
 
@@ -567,6 +577,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
             (res: IPage) => {
               this.currentPage = res;
               this.updateForm(res);
+              // this.BTN_ELEMENT_DATA = this.currentPage.buttonPanel;
+            //  this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
             }
         );
     // this.activatedRoute.data.subscribe(({ builtInPage }) => {
@@ -920,6 +932,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         stepMappings: fieldMappingArray,
         authority: this.editForm.get(['authority']).value,
         isHomepage: this.editForm.get(['isHomepage']).value,
+        buttonPanel: this.BTN_ELEMENT_DATA
       };
     }
   }
