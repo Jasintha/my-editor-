@@ -291,18 +291,25 @@
 
     <div *ngIf="filteredStories.length != 0" @inOutAnimation>
         <ng-container *ngFor="let story of filteredStories" >
-            <div id="storiesText" class="row section border row-color wrap-text"  style="margin-left: 120px; margin-bottom: -8px;width: 1245px;" *ngIf="story.storyText">
-                <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
-                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign(story,'story-text')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    <a class="edit-icon-text" virtuan-click-stop-propagation (click)="editStoryText(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+            <div id="storiesText" class="row section border row-color wrap-text pb-0"  style="margin-left: 120px; margin-bottom: -8px;width: 1245px;" *ngIf="story.storyText">
+                <div class="col-1 d-flex justify-content-center align-items-center">
+                    <div class="story-text-editor-button" matTooltip="Rule Editor" [matTooltipPosition]="toolTipPosition" style="margin-right: 20px;">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                    </div>
                 </div>
-                <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.storyText"
-                          [style]="{'height':'100px', 'margin-top':'10px'}" [readonly]="true">
-                    <p-header hidden>
-                        <span class="ql-formats"></span>
-                    </p-header>
-                </p-editor>
-
+                <div style="border-right: 1px solid #b2a9a9; position: absolute; height: 120px; right: 1159px; width: 1px;top: 0px;"></div>
+                <div class="col-11">
+                    <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
+                        <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign(story,'story-text')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a class="edit-icon-text" virtuan-click-stop-propagation (click)="editStoryText(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </div>
+                    <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.storyText"
+                              [style]="{'height':'100px', 'margin-top':'10px' , 'border': 'none'}" [readonly]="true">
+                        <p-header hidden>
+                            <span class="ql-formats"></span>
+                        </p-header>
+                    </p-editor>
+                </div>
             </div>
             <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px; margin-top: 20px;height: 90px;width: 1245px;" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
                 <div class="top-req">
@@ -364,13 +371,13 @@
 <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
 <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('process')">settings</mat-icon>-->
                                     <div class="story-pane-icon">
-                                        <img src="/assets/images/story/profile.png" class="icon" (click)="createDesign('actor', story)" matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
+                                        <img src="{{storyImages[0].src}}" class="icon" (click)="createDesign('actor', story)" matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
                                         <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img src="/assets/images/story/gears.png" class="icon" (click)="createDesign('model', story)" matTooltip="Model" [matTooltipPosition]="toolTipPosition">
+                                        <img src="{{storyImages[1].src}}" class="icon" (click)="createDesign('model', story)" matTooltip="Model" [matTooltipPosition]="toolTipPosition">
                                         <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img src="/assets/images/story/monitor.png" class="icon" (click)="createDesign('screen', story)" matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
+                                        <img src="{{storyImages[2].src}}" class="icon" (click)="createDesign('screen', story)" matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
                                         <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img src="/assets/images/story/engineering.png" class="icon" (click)="createDesign('process', story)" matTooltip="Process" [matTooltipPosition]="toolTipPosition">
+                                        <img src="{{storyImages[3].src}}" class="icon" (click)="createDesign('process', story)" matTooltip="Process" [matTooltipPosition]="toolTipPosition">
                                     </div>
                                 </div>
                                 <div class="col-1 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
@@ -393,7 +400,7 @@
                                         <a class="edit-icon" virtuan-click-stop-propagation matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editStory(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                     </div>
                                 </div>
-                                <div class="col-2 d-flex justify-content-end align-items-center p-0 m-0" style="margin-right: 10px; ">
+                                <div class="col-2 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
                                     <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [ngModel]="story.status">
                                         <div style=" display: flex; flex-direction: column;">
 
