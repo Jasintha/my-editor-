@@ -627,18 +627,6 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             });
         }else if (val === 'model'){
             this.changeImage("model", "model")
-            const dialogRef = this.dialog.open(ModelDesignViewComponent, {
-                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-                data: {
-                    projectUid: this.desprojectUid,
-                    storyUuid: story.uuid,
-                    serviceUuid: story.serviceUUID
-                }
-            });
-            dialogRef.afterClosed(
-            ).subscribe(result => {
-                this.changeImage("model-un", "model")
-            });
             if (story.storyActors){
                 const dialogRef = this.dialog.open(ModelDesignViewComponent, {
                     panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
@@ -652,6 +640,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 dialogRef.afterClosed(
                 ).subscribe(result => {
                     this.loadStoriesForEpic(this.existingEpicOne.uuid);
+                    this.changeImage("model-un", "model")
                 });
             }else {
                 const dialogRef = this.dialog.open(DesignWarningComponent, {
@@ -667,6 +656,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                 dialogRef.afterClosed(
                 ).subscribe(result => {
                     this.loadStoriesForEpic(this.existingEpicOne.uuid);
+                    this.changeImage("model-un", "model")
+
                 });
             }
         }else if (val === 'process'){

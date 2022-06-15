@@ -859,6 +859,8 @@
 .wrap-story{
 
     .delete{
+        width: 24px;
+        text-align: center;
         top: 15px;
         height: 20px;
         right: 5px;
@@ -874,6 +876,7 @@
 
     .swagger-link{
         width: 21px;
+        text-align: center;
         height: 19px;
         left: 26px;
         top: 14px;
@@ -889,6 +892,7 @@
 
     .open-ui{
         width: 21px;
+        text-align: center;
         height: 19px;
         left: 26px;
         top: 51px;
@@ -903,6 +907,8 @@
     }
 
     .edit-icon{
+        width: 24px;
+        text-align: center;
         right: 5px;
         top: 45px;
         height: 20px;
@@ -946,9 +952,11 @@
 
 .wrap-text{
     .delete{
-        top: 10px;
+        width: 24px;
+        text-align: center;
+        top: 15px;
         height: 20px;
-        right: 25px;
+        right: 5px;
         position: absolute;
         font-size: 15px;
         background: #dc3545;
@@ -960,9 +968,11 @@
     }
 
     .edit-icon-text{
-        top: 10px;
+        width: 24px;
         height: 20px;
-        right: 60px;
+        text-align: center;
+        right: 5px;
+        top: 45px;
         position: absolute;
         font-size: 15px;
         background: #007bff;
