@@ -2,7 +2,7 @@
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
 
         <div class="row justify-content-center title-temp">
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <h3 *ngIf="formDisable">{{pageTitle}}</h3>
                 <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
                     <mat-label>Page Title</mat-label>
@@ -12,11 +12,25 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon"
                         (click)="enableToEdit()">
                     <mat-icon>edit</mat-icon>
                 </button>
+            </div>
+            <div class="col-md-3">
+                <div style="float:right; margin: 5px" >
+                    <div class="example-button-container">
+                        <mat-form-field style="width: 100%">
+                            <mat-label>Tab layout</mat-label>
+                            <mat-select formControlName="tabLayout">
+                                <mat-option *ngFor="let option of tabLayouts" [value]="option.value">
+                                    {{option.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="button-row" style="float:right; margin: 5px" >

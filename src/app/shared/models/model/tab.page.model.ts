@@ -25,6 +25,7 @@ export interface ITabbedPage {
     tabPages?: ITabPage[];
     pageViewType?: string;
     status?: string;
+    tabLayout?: string;
 }
 
 export class TabbedPage implements ITabbedPage {
@@ -38,6 +39,7 @@ export class TabbedPage implements ITabbedPage {
         public uuid?: string,
         public tabPages?: ITabPage[],
         public pageViewType?:  string,
-        public status?: string
+        public status?: string,
+        public tabLayout?: string
     ) {}
 }

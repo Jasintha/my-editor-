@@ -17,6 +17,7 @@ import {Observable} from 'rxjs';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {SelectItem} from 'primeng/api';
 
 @Component({
     selector: 'virtuan-tab-page-view',
@@ -36,11 +37,17 @@ export class TabPageComponent implements OnDestroy, OnInit {
     formDisable: boolean;
     pageTitle: string;
     currentPage: IPage;
+    tabLayouts: SelectItem[] = [
+        { label: 'Vertical', value: 'Vertical' },
+        { label: 'Horizontal', value: 'Horizontal' },
+    ];
+
     buildNewForm() {
         this.editForm = this.fb.group({
             pagetitle: '',
             id: [],
             tabName: '',
+            tabLayout: '',
             page: []
         });
     }
@@ -94,10 +101,11 @@ export class TabPageComponent implements OnDestroy, OnInit {
                 map((response: HttpResponse<IPage>) => response.body)
             )
             .subscribe(
-                (res: IPage) => {
+                (res: ITabbedPage) => {
                     this.currentPage = res;
                     this.pageTitle = res.pagetitle;
                     this.editForm.get('pagetitle').patchValue(res.pagetitle);
+                    this.editForm.get('tabLayout').patchValue(res.tabLayout);
                     if(res.status === 'ENABLED') {
                         this.updatePage(res);
                     }
@@ -176,7 +184,8 @@ export class TabPageComponent implements OnDestroy, OnInit {
             projectUuid: this.currentPage.projectUuid,
             pagetemplate: this.currentPage.pagetemplate,
             pageViewType: this.currentPage.pageViewType,
-            status: 'ENABLED'
+            status: 'ENABLED',
+            tabLayout: this.editForm.get('tabLayout').value
         };
     }
 
