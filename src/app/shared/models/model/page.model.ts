@@ -45,7 +45,9 @@ export interface IPage {
   pageGrid?: any;
   apiDataArray?: any;
   attachedPageLocation?: string;
-  buttonPanel?: IButtonType[]
+  buttonPanel?: IButtonType[];
+  rowHeaders?: any[];
+  rowMappings?: any[];
 }
 
 export class Page implements IPage {
@@ -87,6 +89,8 @@ export class Page implements IPage {
     public pageGrid?: any,
     public apiDataArray? : any,
     public attachedPageLocation? : string,
-    public buttonPanel? : IButtonType[]
+    public buttonPanel? : IButtonType[],
+    public rowHeaders?: any[],
+    public rowMappings?: any[],
   ) {}
 }

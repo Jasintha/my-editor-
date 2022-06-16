@@ -17,3 +17,22 @@ export interface ISourceTargetFieldsRequest {
 export class SourceTargetFieldsRequest implements ISourceTargetFieldsRequest {
   constructor(public sourceFormFields?: IFormField[], public targetFormFields?: IFormField[]) {}
 }
+
+
+export interface IRowFieldMapping {
+  field?: string;
+  rowId?: number;
+}
+
+export class RowFieldMapping implements IRowFieldMapping {
+  constructor(public field?: string, public rowId?: number) {}
+}
+
+export interface IRowHeader {
+  rowId?: number;
+  rowHeader?: string;
+}
+
+export class RowHeader implements IRowHeader {
+  constructor(public rowId?: number, public rowHeader?: string) {}
+}

@@ -33,6 +33,7 @@ import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 import {IButtonType} from '@shared/models/model/button-type.model';
+import {IFormField, IRowFieldMapping, IRowHeader, ISourceTargetFieldsRequest, RowFieldMapping} from '@shared/models/model/form-field.model';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -92,6 +93,14 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   displayedStepHeaderColumns: string[] = ['field', 'stepheader', 'actions'];
   ELEMENT_DATA = [];
   dataSourceWizard = new MatTableDataSource(this.ELEMENT_DATA);
+  sourceTargetFieldsRequest: ISourceTargetFieldsRequest;
+  rowHeaderMappingArray: IRowFieldMapping[] = [];
+  fieldDataSourceWizard = new MatTableDataSource(this.rowHeaderMappingArray);
+  sourceProperties: IFormField[];
+  targetProperties: IFormField[];
+  rowIdList = [];
+  rowHeaderList: IRowHeader[] = [];
+  fieldMapDisplayedColumns: string[] = ['field','rowId'];
 
   displayedDetailHeaderColumns: string[] = ['field', 'detailsHeader', 'actions'];
   DETAILS_DATA = [];
@@ -182,6 +191,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       btnOperation: [],
       btnColor: [],
       btnTooltip: [],
+      rowId: [],
+      rowHeader: [],
       wizardDetailsGroup: this.fb.array([
         new FormGroup({
           stepHeading: this.fb.control('Step 1'),
@@ -487,6 +498,89 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     });
   }
 
+  onRowIdChange(rowId, field, index) {
+    if(this.rowHeaderMappingArray[index].field === field) {
+      this.rowHeaderMappingArray[index].rowId = rowId;
+    }
+  }
+
+  saveRowHeader() {
+    const rowId = this.editForm.get(['rowId']).value;
+    const rowHeader = this.editForm.get(['rowHeader']).value;
+    if(rowHeader!== undefined && rowId < this.rowHeaderList.length -1)
+    this.rowHeaderList[rowId].rowHeader =  this.editForm.get(['rowHeader']).value;
+  }
+
+
+  changeRowHeader() {
+    const rowId = this.editForm.get(['rowId']).value;
+    if(rowId && rowId < this.rowHeaderList.length -1) {
+      const rowHeader =  this.rowHeaderList[rowId].rowHeader;
+      this.editForm.get(['rowHeader']).patchValue(rowHeader);
+    }
+  }
+
+  //
+  // openRowFieldMappingConfig()  {
+  //   const dialogRef = this.dialog.open(CreateFieldRowMappingComponent, {
+  //     panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+  //     data: {
+  //       projectUid: this.projectUid,
+  //       pageId: this.pageId,
+  //     }
+  //   });
+  //   dialogRef.afterClosed(
+  //   ).subscribe(result => {
+  //     console.log(`Dialog result: ${result}`);
+  //   });
+  // }
+
+  loadAllSourceTargetFormFieldsForPage() {
+    if (!this.pageId) {
+      // this.loadAll();
+    } else {
+      // this.spinnerService.show();
+      this.builtInPageService
+          .findAllSourceTargetFormFieldsForPage(this.pageId, this.projectUid)
+          .pipe(
+              filter((res: HttpResponse<ISourceTargetFieldsRequest>) => res.ok),
+              map((res: HttpResponse<ISourceTargetFieldsRequest>) => res.body)
+          )
+          .subscribe(
+              (res: ISourceTargetFieldsRequest) => {
+                this.CreateFormFieldTable(res);
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );
+    }
+  }
+
+  CreateFormFieldTable(res: ISourceTargetFieldsRequest) {
+    this.rowHeaderMappingArray = [];
+    this.rowIdList = [];
+    this.rowHeaderList = [];
+    this.sourceTargetFieldsRequest = res;
+    this.sourceProperties = this.sourceTargetFieldsRequest.sourceFormFields;
+    this.targetProperties = this.sourceTargetFieldsRequest.targetFormFields;
+    if (this.targetProperties) {
+      for (let i = 0; i < this.targetProperties.length; i++) {
+        const hasChild = this.targetProperties[i] && this.targetProperties[i].children;
+        if (!hasChild) {
+          const fieldMapping =  new RowFieldMapping();
+          fieldMapping.field = this.targetProperties[i].propertyName;
+          fieldMapping.rowId = i;
+          this.rowHeaderMappingArray.push(fieldMapping);
+          this.rowIdList.push(fieldMapping.rowId);
+          this.rowHeaderList.push({
+            rowId: fieldMapping.rowId,
+            rowHeader: '',
+          });
+          this.fieldDataSourceWizard = new MatTableDataSource(this.rowHeaderMappingArray);
+        }
+      }
+    }
+  }
+
   openViewModelChangeDialog()  {
     const dialogRef = this.dialog.open(ViewModelConfigComponent, {
       panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
@@ -577,6 +671,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
             (res: IPage) => {
               this.currentPage = res;
               this.updateForm(res);
+              this.loadAllSourceTargetFormFieldsForPage();
               // this.BTN_ELEMENT_DATA = this.currentPage.buttonPanel;
             //  this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
             }
@@ -932,7 +1027,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         stepMappings: fieldMappingArray,
         authority: this.editForm.get(['authority']).value,
         isHomepage: this.editForm.get(['isHomepage']).value,
-        buttonPanel: this.BTN_ELEMENT_DATA
+        buttonPanel: this.BTN_ELEMENT_DATA,
+        rowHeaders: this.rowHeaderList,
+        rowMappings: this.rowHeaderMappingArray
       };
     }
   }

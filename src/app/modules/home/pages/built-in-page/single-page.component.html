@@ -380,7 +380,6 @@
                                         <tr mat-header-row *matHeaderRowDef="displayedStepHeaderColumns"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedStepHeaderColumns;"></tr>
                                     </table>
-
                                 </div>
                             </div>
                         </ng-container>
@@ -888,6 +887,64 @@
                     </virtuan-microservice-model>
                 </div>
             </div>
+            <ng-container>
+                <div class="card">
+                    <div class="card-body row">
+                <div class="col-md-2">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Row Id</mat-label>
+                        <mat-select formControlName="rowId" (selectionChange)="changeRowHeader()">
+                            <mat-option *ngFor="let option of rowIdList" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field class="flex-auto" >
+                        <mat-label>Header</mat-label>
+                        <input type="text" formControlName="rowHeader" matInput>
+                    </mat-form-field>
+                </div>
+                        <button (click)="saveRowHeader()"
+                                mat-icon-button
+                                type="button">
+                            <mat-icon>save</mat-icon>
+                        </button>
+
+                    </div>
+                </div>
+
+                <div style="padding-top:20px;padding-bottom:20px;">
+                    <table mat-table matSort [dataSource]="fieldDataSourceWizard"
+                           class="mat-elevation-z8 demo-table">
+
+                        <ng-container matColumnDef="field">
+                            <th mat-header-cell *matHeaderCellDef>Field</th>
+                            <td mat-cell *matCellDef="let element">{{element.field}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="rowId">
+                            <th mat-header-cell *matHeaderCellDef>Row</th>
+<!--                            <td mat-cell *matCellDef="let element">{{element.rowId}}</td>-->
+                            <td *matCellDef="let element; let ind = index" class="w-10 text-secondary" mat-cell>
+                                <mat-form-field>
+                                <mat-select [(value)]="element.rowId" (selectionChange)="onRowIdChange(element.rowId, element.field, ind)" >
+                                    <mat-option *ngFor="let option of rowIdList" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-select>
+                                    </mat-form-field>
+                            </td>
+<!--                            <mat-label>Page Template</mat-label>-->
+
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="fieldMapDisplayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: fieldMapDisplayedColumns;"></tr>
+                    </table>
+                </div>
+            </ng-container>
         </div>
         <div class="form-button-footer" style="padding-top: 25px; float: right">
             <!--                    <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()" style="margin-right: 8px">-->
