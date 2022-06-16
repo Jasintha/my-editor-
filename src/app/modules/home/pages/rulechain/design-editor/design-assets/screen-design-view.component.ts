@@ -180,6 +180,7 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
             screenName: screenDate.screenName,
             screenTemplate: screenDate.screenTemplate
         })
+        this.onScreenTypeChanged();
     }
 
     loadAggregatesForService(storyModelUuid) {
@@ -355,8 +356,8 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
 
     onModelChange() {
         let model = this.screenNodeConfigFormGroup.get(['modelselection']).value;
-        this.configuration.modeluuid = model.uuid;
-        this.updateModel(this.configuration);
+        // this.configuration.modeluuid = model.uuid;
+        // this.updateModel(this.configuration);
     }
 
     private createFromForm(): IStoryScreenRequest {
