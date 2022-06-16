@@ -171,24 +171,10 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     }
 
     update(){
-        this.loadAggregatesForService('');
-        let model;
-        this.aggregateService
-            .find(this.data.story.modelUUID, this.serviceUuid)
-            .pipe(
-                filter((res: HttpResponse<any>) => res.ok),
-                map((res: HttpResponse<any>) => res.body)
-            )
-            .subscribe(
-                (res: any[]) => {
-                    model = res
-                },
-                (res: HttpErrorResponse) => this.onError()
-            );
+        this.loadAggregatesForService(this.data.story.modelUUID);
         this.modelNodeConfigFormGroup.patchValue({
             createType: 'Existing',
             modelName: '',
-            modelselection: model,
             isDto: false,
         })
     }
@@ -641,29 +627,30 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
             // this.loadAIDes();
         }
 
+        if (this.modelNodeConfigFormGroup.get(['createType']).value && (this.modelNodeConfigFormGroup.get(['modelselection']).value || this.modelNodeConfigFormGroup.get(['modelName']).value)){
+            if (this.modelNodeConfigFormGroup.get(['createType']).value === 'Existing'){
+                const selectedModel = this.modelNodeConfigFormGroup.get(['modelselection']).value;
+                this.aggregateService
+                    .findDesignById(selectedModel.uuid,this.serviceUuid)
+                    .pipe(
+                        filter((res: HttpResponse<TreeNode>) => res.ok),
+                        map((res: HttpResponse<TreeNode>) => res.body)
+                    )
+                    .subscribe(
+                        (res: TreeNode) => {
+                            this.modeldata = [];
+                            console.log(res)
+                            this.modeldata.push(res);
 
-        if (this.modelNodeConfigFormGroup.get(['createType']).value === 'Existing'){
-            const selectedModel = this.modelNodeConfigFormGroup.get(['modelselection']).value;
-            this.aggregateService
-                .findDesignById(selectedModel.uuid,this.serviceUuid)
-                .pipe(
-                    filter((res: HttpResponse<TreeNode>) => res.ok),
-                    map((res: HttpResponse<TreeNode>) => res.body)
-                )
-                .subscribe(
-                    (res: TreeNode) => {
-                        this.modeldata = [];
-                        console.log(res)
-                        this.modeldata.push(res);
-
-                        this.expandAll();
-                        stepper.next();
-                    },
-                    (res: HttpErrorResponse) => this.onError()
-                );
-        }else{
-            this.checkNameAvailability();
-            stepper.next();
+                            this.expandAll();
+                            stepper.next();
+                        },
+                        (res: HttpErrorResponse) => this.onError()
+                    );
+            }else{
+                this.checkNameAvailability();
+                stepper.next();
+            }
         }
     }
 

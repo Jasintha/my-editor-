@@ -49,7 +49,11 @@
 
 
             <mat-step>
-                <ng-template matStepLabel>Step 2</ng-template>
+                <ng-template matStepLabel>
+                    <div class="mat-step-custom-click" (click)="goForward(stepper)">
+                        <span>Step 2</span>
+                    </div>
+                </ng-template>
                 <div  style="margin-top:20px;margin-bottom:10px;">
                     <p-tree [value]="modeldata" layout="horizontal" selectionMode="single" [(selection)]="selectedModelNode" [contextMenu]="cm" (onNodeContextMenuSelect)="modelcontextMenu($event, cm)"
                             (onNodeSelect)="onModelNodeSelect($event)"></p-tree>

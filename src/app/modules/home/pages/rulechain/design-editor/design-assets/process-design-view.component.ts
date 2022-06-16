@@ -220,19 +220,20 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
                         if (this.aggregates) {
                             this.loadAggregates();
                         }
-                        let selectedAPIInputs = this.configuration.apiInput;
-                        if(selectedAPIInputs && this.items){
-                            selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
+                        let selectedAPIInputs = this.data.story.processApiData.apiInput;
+                        if(this.items && this.data.story.processApiData.apiInput){
+                            selectedAPIInputs = this.items.find(x => (x.value.id === this.data.story.processApiData.apiInput.id) && (x.value.inputName === this.data.story.processApiData.apiInput.inputName));
+                            this.processNodeConfigFormGroup.patchValue({
+                                selectedAPIInputs: selectedAPIInputs.value,
+                            });
                         }
-                        let returnObject = this.configuration.returnObject;
+                        let returnObject = this.data.story.processApiData.returnObject;
                         if(returnObject && this.returnObject){
-                            returnObject = this.returnObject.find(x => (x.value.id === this.configuration.returnObject.id) && (x.value.inputType === this.configuration.returnObject.inputType) && (x.value.inputName === this.configuration.returnObject.inputName));
+                            returnObject = this.returnObject.find(x => (x.value.id === this.data.story.processApiData.returnObject.id) && (x.value.inputType === this.data.story.processApiData.returnObject.inputType) && (x.value.inputName === this.data.story.processApiData.returnObject.inputName));
+                            this.processNodeConfigFormGroup.patchValue({
+                                returnObject: returnObject.value
+                            });
                         }
-
-                        this.processNodeConfigFormGroup.patchValue({
-                            selectedAPIInputs: selectedAPIInputs,
-                            returnObject: returnObject
-                        });
                     },
                     (res: HttpErrorResponse) => this.onError(res.message)
                 );
@@ -252,32 +253,36 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
         this.addPrimitivesForReturnSelect();
         this.loadServiceAndUpdateForm();
 
-        if (this.serviceUuid) {
-            this.aggregateService
-                .findByProjectUUId(this.serviceUuid, this.serviceUuid)
-                .pipe(
-                    filter((mayBeOk: HttpResponse<any[]>) => mayBeOk.ok),
-                    map((response: HttpResponse<any[]>) => response.body)
-                )
-                .subscribe(
-                    (res: any[]) => {
-                        this.aggregates = res;
-                        if (this.aggregates) {
-                            this.loadAggregates();
-                        }
-                    },
-                    (res: HttpErrorResponse) => this.onError(res.message)
-                );
-        }
+        // if (this.serviceUuid) {
+        //     this.aggregateService
+        //         .findByProjectUUId(this.serviceUuid, this.serviceUuid)
+        //         .pipe(
+        //             filter((mayBeOk: HttpResponse<any[]>) => mayBeOk.ok),
+        //             map((response: HttpResponse<any[]>) => response.body)
+        //         )
+        //         .subscribe(
+        //             (res: any[]) => {
+        //                 this.aggregates = res;
+        //                 if (this.aggregates) {
+        //                     this.loadAggregates();
+        //                 }
+        //             },
+        //             (res: HttpErrorResponse) => this.onError(res.message)
+        //         );
+        // }
 
-        if (this.data.story.ProcessApiData){
+        if (this.data.story.processApiUUID[0]){
             this.update();
         }
     }
 
     update(){
+        const processData = this.data.story.processApiData;
         this.processNodeConfigFormGroup.patchValue({
-
+            processName: processData.processName,
+            apiTemplate: processData.apiTemplate,
+            apiMethod: processData.apiMethod,
+            returnRecord: processData.returnRecord,
         })
     }
 
@@ -414,8 +419,8 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
         return word[0].toLowerCase() + word.substr(1);
     }
     onInputObjChange(){
-        this.configuration.apiInput = this.processNodeConfigFormGroup.get(['selectedAPIInputs']).value;
-        this.updateModel(this.configuration);
+        // this.configuration.apiInput = this.processNodeConfigFormGroup.get(['selectedAPIInputs']).value;
+        // this.updateModel(this.configuration);
     }
 
     private updateModel(configuration: RuleNodeConfiguration) {

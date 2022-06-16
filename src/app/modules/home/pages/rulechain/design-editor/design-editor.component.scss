@@ -863,7 +863,7 @@
         text-align: center;
         top: 15px;
         height: 20px;
-        right: 5px;
+        right: -13px;
         position: absolute;
         font-size: 15px;
         background: #dc3545;
@@ -909,7 +909,7 @@
     .edit-icon{
         width: 24px;
         text-align: center;
-        right: 5px;
+        right: -13px;
         top: 45px;
         height: 20px;
         position: absolute;
@@ -1267,11 +1267,23 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     height: 33px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 50px;
+    width: 80px;
     overflow: hidden;
     text-align: center;
     padding-left: 10px;
 }
+
+
+.virtuan-default .mat-radio-button.mat-warn.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #29d21d;
+}
+
+.virtuan-default .mat-radio-button.mat-warn .mat-radio-inner-circle {
+    background-color: #3ed24a;
+}
+
+
+
 
 
 .story-editor-button{
@@ -1284,7 +1296,7 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 30px;
+    font-size: 27px;
 
     .fa {
         color: white;
@@ -1331,13 +1343,13 @@ body .ui-editor-container .ui-editor-content .ql-editor {
         margin: 5px;
         width: 45px;
         height: 45px;
-        transition: .35s ease-in-out;
+        transition: 1s ease;
     }
     .icon:hover{
-        cursor: pointer;
-        margin: 5px;
-        width: 40px;
-        height: 40px;
+        -webkit-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+        transform: scale(1.2);
+        transition: 1s ease;
     }
     .arrow-icon{
         margin: 5px 15px;
@@ -1406,6 +1418,8 @@ body .ui-editor-container .ui-editor-content .ql-editor {
     border-top-right-radius: 3px;
     top: 9px
 }
+
+
 
 
 
