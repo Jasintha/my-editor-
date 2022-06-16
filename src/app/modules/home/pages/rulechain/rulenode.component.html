@@ -16,20 +16,20 @@
 
 -->
 
-<div
+<div class="box-shadow"
         (dblclick)="userNodeCallbacks.doubleClick($event, node)"
         (mousedown)="userNodeCallbacks.mouseDown($event, node)"
         (mouseenter)="userNodeCallbacks.mouseEnter($event, node)"
-        (mouseleave)="userNodeCallbacks.mouseLeave($event, node)">
+        (mouseleave)="userNodeCallbacks.mouseLeave($event, node)" >
   <!--  <div class="fc-node-overlay">-->
   <!--    -->
   <!--  </div>-->
   <div
-          class="application-resource-tree__node-kind-icon application-resource-tree__node-kind-icon--big" style="display: flex; align-items: center; justify-content: center">
+          class="application-resource-tree__node-kind-icon application-resource-tree__node-kind-icon--big " style="display: flex; align-items: center; justify-content: center; padding-top: 7px;">
+      <mat-icon class="{{node.nodeClass}}" *ngIf="!iconUrl">{{node.icon}}</mat-icon>
     <!--    <img class="gen-icon"  src="/content/images/gen/skeleton.png" width="25"-->
     <!--         height="25"-->
     <!--         alt="">-->
-    <mat-icon class="{{node.nodeClass}}" *ngIf="!iconUrl" fxFlex="15" style="margin-right: 18px;">{{node.icon}}</mat-icon>
     <!--        <img *ngIf="iconUrl" fxFlex="15" [src]="iconUrl"/>-->
   </div>
   <div *ngIf="!verticaledgeenabled" class="virtuan-rule-node"
@@ -45,16 +45,16 @@
         <span class="virtuan-node-title truncate" *ngIf="node.name">{{ node.name }}</span>
       </div>
     </div>
-    <div class="{{flowchartConstants.leftConnectorClass}}">
-      <div fc-magnet [connector]="connector" [callbacks]="callbacks"
-           *ngFor="let connector of modelservice.nodes.getConnectorsByType(node, flowchartConstants.leftConnectorType)">
-        <div fc-connector [connector]="connector"
-             [nodeRectInfo]="nodeRectInfo"
-             [mouseOverConnector]="mouseOverConnector"
-             [callbacks]="callbacks"
-             [modelservice]="modelservice"></div>
-      </div>
-    </div>
+<!--    <div class="{{flowchartConstants.leftConnectorClass}}">-->
+<!--      <div fc-magnet [connector]="connector" [callbacks]="callbacks"-->
+<!--           *ngFor="let connector of modelservice.nodes.getConnectorsByType(node, flowchartConstants.leftConnectorType)">-->
+<!--        <div fc-connector [connector]="connector"-->
+<!--             [nodeRectInfo]="nodeRectInfo"-->
+<!--             [mouseOverConnector]="mouseOverConnector"-->
+<!--             [callbacks]="callbacks"-->
+<!--             [modelservice]="modelservice"></div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="{{flowchartConstants.rightConnectorClass}}">
       <div fc-magnet [connector]="connector" [callbacks]="callbacks"
            *ngFor="let connector of modelservice.nodes.getConnectorsByType(node, flowchartConstants.rightConnectorType)">
