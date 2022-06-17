@@ -168,7 +168,7 @@ const routes: Routes = [
     component: MainRuleChainComponent,
     data: {
       breadcrumb: {
-        label: 'rulechain.rulechains',
+        label: '',
         icon: 'settings_ethernet'
       }
     },
@@ -183,7 +183,7 @@ const routes: Routes = [
             icon: 'settings_ethernet'
           } as BreadCrumbConfig<RuleChainPageComponent>,
           auth: [Authority.TENANT_ADMIN],
-          title: 'rulechain.rulechain',
+          title: '',
           import: false
         },
         resolve: {
@@ -204,7 +204,7 @@ const routes: Routes = [
         icon: 'settings_ethernet'
       } as BreadCrumbConfig<MainRuleChainComponent>,
       auth: [Authority.TENANT_ADMIN],
-      title: 'rulechain.rulechain',
+      title: '',
     }
   }
 ];
