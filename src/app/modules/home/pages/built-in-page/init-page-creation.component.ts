@@ -527,7 +527,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       formFieldsGroup: this.fb.array([
         new FormGroup({
-          columns: this.fb.array(this.getChoicesGroups()),
+          columns: this.fb.array([]),
         }),
       ]),
     });
@@ -542,7 +542,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
 
   addFormFieldsGroup(): FormGroup {
     return new FormGroup({
-      columns: this.fb.array(this.getChoicesGroups()),
+      columns: this.fb.array([]),
     });
   }
 
@@ -588,15 +588,6 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.columnFormGroup(index).push(this.addColumnFormFieldsGroup());
   }
 
-  getChoicesGroups() {
-    const choicesAssay = [];
-    // if (array) {
-    //   for (let i = 0; i < array.length; i++) {
-    //     choicesAssay.push(this.getChoiceGroup(array[i]));
-    //   }
-    // }
-    return choicesAssay;
-  }
 
   getMaxCount(rowIndex, columnIndex) {
     const columnsInRow = this.columnFormGroup(rowIndex);
