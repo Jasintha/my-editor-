@@ -10,7 +10,7 @@ export class Grid implements IGrid {
 }
 
 export interface IRow {
-  containers?: any;
+  containers?: IContainer[];
 }
 
 export class Row implements IRow {

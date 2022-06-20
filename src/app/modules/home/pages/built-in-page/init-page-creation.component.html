@@ -248,24 +248,52 @@
                         <div [formGroup]="choice">
 
                             <label class="form-control-label">Row {{k + 1}} </label>
-                            <div class="row">
-                                <div class="col-4">
-                                    <label class="form-control-label">Number of columns </label>
-                                </div>
-                                <div class="col-4">
-                                    <mat-form-field class="flex-auto">
-                                        <input type="number" name="columns" min="1" max="4" formControlName="columns" onKeyDown="return false" matInput>
-                                    </mat-form-field>
-<!--                                    <input matInput  type="number" name="columns" min="1" max="4" formControlName="columns" onKeyDown="return false">-->
-                                </div>
+<!--                            <div class="row">-->
+<!--                                <div class="col-4">-->
+<!--                                    <label class="form-control-label">Number of columns </label>-->
+<!--                                </div>-->
+<!--                                <div class="col-4">-->
+<!--                                    <mat-form-field class="flex-auto">-->
+<!--                                        <input type="number" name="columns" min="1" max="4" formControlName="columns" onKeyDown="return false" matInput>-->
+<!--                                    </mat-form-field>-->
+<!--&lt;!&ndash;                                    <input matInput  type="number" name="columns" min="1" max="4" formControlName="columns" onKeyDown="return false">&ndash;&gt;-->
+<!--                                </div>-->
 
-                                <div class="col-4">
-                                    <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="removeFormControllers(k)">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
+<!--                                <div class="col-4">-->
+<!--                                    <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="removeFormControllers(k)">-->
+<!--                                        <mat-icon>delete</mat-icon>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <div class="scroll-choices">
+                                <div style="float: right; margin-top: 2%; margin-right: 6%">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                                    <input type="button"
+                                           (click)="insertColumnFormControllersGroup(k)"
+                                           value="Add choice"  class="btn fa fa-plus"
+                                           style="background-color: #6D7F8B; color:white;border: none;">
+                                </div>
+                                <br>
+                                <div style="padding-top: 10px"
+                                     *ngFor="let choice of columnFormGroup(k)['controls']; let i = index">
+                                    <div [formGroup]="choice">
+                                        <label class="form-control-label">Choice {{i + 1}} </label>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <input class="form-control" type="number"
+                                                       formControlName="columnSize" min="1" max="{{getMaxCount(k,i)}}">
+                                            </div>
+                                            <div class="col-2">
+                                                <button pButton type="button"
+                                                        (click)="removeColumnFormController(i)"
+                                                        class="ui-button-danger ui-button-raised"
+                                                        icon="fa fa-trash-o">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

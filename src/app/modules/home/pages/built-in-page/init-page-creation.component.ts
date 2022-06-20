@@ -10,7 +10,7 @@ import {IPage, Page} from '@shared/models/model/page.model';
 import { IAggregate } from '@app/shared/models/model/aggregate.model';
 import {IInstalledMicroservice} from '@shared/models/model/installed-microservice.model';
 import {APIInput} from '@shared/models/model/api-input.model';
-import {Grid, IGrid, Row} from '@app/shared/models/model/grid.model';
+import {Container, Grid, IGrid, Row} from '@app/shared/models/model/grid.model';
 import {ProjectService} from '@core/projectservices/project.service';
 import {Widget} from '@shared/models/model/widget.model';
 import {FormControllers, IFormControllers} from '@shared/models/model/form-controllers.model';
@@ -83,6 +83,8 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   widgetCreationStatus = 'widgetTypeSelection';
   totalPageCount: number;
   grid: IGrid;
+  selectedFieldIndex: number;
+  selectedChildIndex: number;
 
   panelTypeItems: Item[] = [
     { label: 'Graph', value: 'graph' },
@@ -164,17 +166,17 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    protected builtInPageService: BuiltInPageService,
-    protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder,
-    // protected toolbarTrackerService: ToolbarTrackerService,
-    protected projectService: ProjectService,
-    protected microserviceService: MicroserviceInstallerService,
-    protected eventManager: EventManagerService,
-    public dialogRef: MatDialogRef<InitPageCreationComponent>,
-    @Inject(MAT_DIALOG_DATA)  public data: any,
-    private spinnerService: NgxSpinnerService,
-    // private spinnerService: NgxSpinnerService,
+      protected builtInPageService: BuiltInPageService,
+      protected activatedRoute: ActivatedRoute,
+      private fb: FormBuilder,
+      // protected toolbarTrackerService: ToolbarTrackerService,
+      protected projectService: ProjectService,
+      protected microserviceService: MicroserviceInstallerService,
+      protected eventManager: EventManagerService,
+      public dialogRef: MatDialogRef<InitPageCreationComponent>,
+      @Inject(MAT_DIALOG_DATA)  public data: any,
+      private spinnerService: NgxSpinnerService,
+      // private spinnerService: NgxSpinnerService,
   ) {
     this.typeSelected = 'square-jelly-box';
   }
@@ -249,34 +251,35 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.stepHeadersList = [];
     this.stepFieldArr = [];
     this.stepIndexId = 1;
+    this.selectedFieldIndex = 0;
     this.createCustomGridForm();
     this.projectUid = this.data.projectUid;
     // this.projectId = params['projId'];
     // this.toolbarTrackerService.setProjectUUID(this.projectUid);
     if (this.projectUid) {
       this.projectService
-        .findWithModels(this.projectUid)
-        .pipe(
-          filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
-          map((response: HttpResponse<IProject>) => response.body)
-        )
-        .subscribe(
-          (res: IProject) => {
-            this.project = res;
-            this.numOfPages();
-            //  this.getPageTemplates();
-            if (this.project.apptypesID === 'task.ui') {
-              this.aggregates = this.project.aggregates;
-              if (this.aggregates) {
-              }
-            } else {
-              this.datamodels = this.project.datamodels;
-            }
+          .findWithModels(this.projectUid)
+          .pipe(
+              filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
+              map((response: HttpResponse<IProject>) => response.body)
+          )
+          .subscribe(
+              (res: IProject) => {
+                this.project = res;
+                this.numOfPages();
+                //  this.getPageTemplates();
+                if (this.project.apptypesID === 'task.ui') {
+                  this.aggregates = this.project.aggregates;
+                  if (this.aggregates) {
+                  }
+                } else {
+                  this.datamodels = this.project.datamodels;
+                }
 
-            // this.loadUpdateForm();
-          },
-          (res: HttpErrorResponse) => this.onError(res.message)
-        );
+                // this.loadUpdateForm();
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );
     } else {
       //     if (this.createStatus == 'update') {
       //     }
@@ -313,7 +316,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.isSaving = true;
     if(pageViewType === 'filterPage') {
       const builtInPage = this.createFromForm('filterPage', 'Filter-Form', 'filter-form');
-        this.subscribeToFilterFormResponse(this.builtInPageService.create(builtInPage, this.projectUid));
+      this.subscribeToFilterFormResponse(this.builtInPageService.create(builtInPage, this.projectUid));
     } else {
       const builtInPage = this.createFromForm(pageViewType, pageTitle, pageTemplate);
       if (builtInPage.uuid) {
@@ -359,8 +362,8 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPage>>) {
     result.subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
+        () => this.onSaveSuccess(),
+        () => this.onSaveError()
     );
   }
 
@@ -510,36 +513,12 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
 
   getRow(columns) {
     const row = new Row();
-
-    switch (columns) {
-      case 1:
-        row.containers = [{ containerCols: 12, widget: new Widget() }];
-        return row;
-      case 2:
-        row.containers = [
-          { containerCols: 6, widget: new Widget() },
-          { containerCols: 6, widget: new Widget() },
-        ];
-        return row;
-      case 3:
-        row.containers = [
-          { containerCols: 4, widget: new Widget() },
-          { containerCols: 4, widget: new Widget() },
-          { containerCols: 4, widget: new Widget() },
-        ];
-        return row;
-      case 4:
-        row.containers = [
-          { containerCols: 3, widget: new Widget() },
-          { containerCols: 3, widget: new Widget() },
-          { containerCols: 3, widget: new Widget() },
-          { containerCols: 3, widget: new Widget() },
-        ];
-        return row;
-      default:
-        row.containers = [{ containerCols: 12, widget: new Widget() }];
-        return row;
+    row.containers = [];
+    for (let j = 0; j < columns.length ; j++) {
+       const container =  { ...new Container(),  containerCols: columns[j].columnSize, widget: new Widget()};
+      row.containers.push(container);
     }
+    return row;
   }
 
   //// ---- custom Grid ---- ////
@@ -548,7 +527,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       formFieldsGroup: this.fb.array([
         new FormGroup({
-          columns: new FormControl(1),
+          columns: this.fb.array(this.getChoicesGroups()),
         }),
       ]),
     });
@@ -563,7 +542,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
 
   addFormFieldsGroup(): FormGroup {
     return new FormGroup({
-      columns: new FormControl(1),
+      columns: this.fb.array(this.getChoicesGroups()),
     });
   }
 
@@ -575,7 +554,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
       const customGrid = new Grid();
       const rowArray = [];
       for (let i = 0; i < formData.fieldList.length; i++) {
-        const row = this.getRow(formData.fieldList[i].columns);
+        const row =  this.getRow(formData.fieldList[i].columns);
         rowArray.push(row);
       }
       customGrid.name = 'custom';
@@ -594,6 +573,50 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
 
   get formFieldsGroup() {
     return this.form.get('formFieldsGroup') as FormArray;
+  }
+
+  columnFormGroup(index) {
+    return this.formFieldsGroup.controls[index]['controls'].columns as FormArray;
+  }
+
+  removeColumnFormController(index: number) {
+    this.columnFormGroup(index).removeAt(index);
+  }
+
+  insertColumnFormControllersGroup(index) {
+    this.selectedFieldIndex = index;
+    this.columnFormGroup(index).push(this.addColumnFormFieldsGroup());
+  }
+
+  getChoicesGroups() {
+    const choicesAssay = [];
+    // if (array) {
+    //   for (let i = 0; i < array.length; i++) {
+    //     choicesAssay.push(this.getChoiceGroup(array[i]));
+    //   }
+    // }
+    return choicesAssay;
+  }
+
+  getMaxCount(rowIndex, columnIndex) {
+    const columnsInRow = this.columnFormGroup(rowIndex);
+    const selectedColumn = columnsInRow['controls'][columnIndex];
+    let totalColumns = 0;
+    for (let i = 0; i < columnsInRow.length; i++) {
+      if(i !== columnIndex) {
+        totalColumns += columnsInRow.controls[i]['controls'].columnSize.value
+      }
+    }
+    if(totalColumns < 12) {
+      return 12-totalColumns;
+    }
+    return 12
+  }
+
+  addColumnFormFieldsGroup(): FormGroup {
+    return new FormGroup({
+      columnSize: new FormControl(),
+    });
   }
 
   removeFormControllers(index: number) {
