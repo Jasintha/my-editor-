@@ -27,6 +27,36 @@
         </div>
         <div>
             <div class="row">
+                <div class="col-12 model-type">
+                    <div class="form-group"
+                         *ngIf="editForm.value.pagetemplate !== 'file-upload-widget' && editForm.value.pagetemplate !== 'dashboard-page'">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <mat-form-field  [style]="{'width':'100%'}">
+                                    <mat-label>Model</mat-label>
+                                    <mat-select formControlName="selectedAggregate" (selectionChange)="onChangePageModel($event,false)"
+                                                [disabled]="formDisable">
+                                        <mat-option *ngFor="let option of aggregateItems" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                <button *ngIf="editForm.value.selectedAggregate" mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
+                            </div>
+                            <div *ngIf="editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'form-wizard-page' || editForm.value.pagetemplate == 'register-page'" class="col-md-2">
+                                <button *ngIf="editForm.value.selectedAggregate" mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openPageControllerConfig()" cdkFocusInitial>Edit Form Controllers</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <virtuan-microservice-model [aggregateId]="aggregateId" [projectUid]='projectUid'
+                                                [isCompactView]=true>
+                    </virtuan-microservice-model>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-4 temp-image">
                     <div class="ui-panel-content ui-widget-content justify-content-center" style="padding-top: 5px">
                         <img *ngIf="editForm.value.pagetemplate == 'login-page'" class="pageTmpImgInPage"
@@ -769,7 +799,9 @@
             </div>
             <ng-container class="flex-auto">
                 <div class="form-group">
-                    <label class="form-control-label">Add Buttons</label>
+                    <h5>
+                        <span>Add action buttons</span>
+                    </h5>
                     <div class="card">
                         <div class="card-body row">
                             <div class="col-md-2">
@@ -857,37 +889,10 @@
 
                 </div>
             </ng-container>
-            <div class="row">
-                <div class="col-12 model-type">
-                    <div class="form-group"
-                         *ngIf="editForm.value.pagetemplate !== 'file-upload-widget' && editForm.value.pagetemplate !== 'dashboard-page'">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <mat-form-field  [style]="{'width':'100%'}">
-                                            <mat-label>Model</mat-label>
-                                            <mat-select formControlName="selectedAggregate" (selectionChange)="onChangePageModel($event,false)"
-                                                        [disabled]="formDisable">
-                                                <mat-option *ngFor="let option of aggregateItems" [value]="option.value">
-                                                    {{option.label}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
-                                    </div>
-                                    <div *ngIf="editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'form-wizard-page' || editForm.value.pagetemplate == 'register-page'" class="col-md-2">
-                                        <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openPageControllerConfig()" cdkFocusInitial>Edit Form Controllers</button>
-                                    </div>
-                                </div>
-
-                    </div>
-                    <virtuan-microservice-model [aggregateId]="aggregateId" [projectUid]='projectUid'
-                                                [isCompactView]=true>
-                    </virtuan-microservice-model>
-                </div>
-            </div>
-            <ng-container>
+            <ng-container *ngIf="editForm.value.selectedAggregate">
+                <h5>
+                    <span>Change field order</span>
+                </h5>
                 <div class="card">
                     <div class="card-body row">
                 <div class="col-md-2">

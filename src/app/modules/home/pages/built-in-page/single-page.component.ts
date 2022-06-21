@@ -1399,6 +1399,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         projectUid: this.projectUid,
         createStatus: status,
         uuid: this.currentPage.uuid,
+        page: this.currentPage
       }
     });
     dialogRef.afterClosed(

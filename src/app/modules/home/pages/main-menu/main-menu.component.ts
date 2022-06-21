@@ -117,7 +117,7 @@ export class MainMenuComponent implements OnInit {
                 this.project = res;
                 this.datamodels = this.project.datamodels;
                 this.pages = this.project.pages;
-                this.loadPages();
+                this.loadPage();
                 if (this.data.createStatus) {
                   this.loadUpdateForm();
                 }
@@ -143,13 +143,16 @@ export class MainMenuComponent implements OnInit {
         );
   }
 
-  loadPages() {
-    for (let i = 0; i < this.pages.length; i++) {
-      if (this.pages[i].status === 'ENABLED') {
-        const dropdownLabel = this.pages[i].pagetitle;
-        this.pageItems.push({ label: dropdownLabel, value: this.pages[i] });
-      }
-    }
+  loadPage() {
+    // for (let i = 0; i < this.pages.length; i++) {
+    //   if (this.pages[i].status === 'ENABLED') {
+    //     const dropdownLabel = this.pages[i].pagetitle;
+    //     this.pageItems.push({ label: dropdownLabel, value: this.pages[i] });
+    //   }
+    // }
+    this.editForm.patchValue({
+      page:  this.data.page,
+    });
   }
 
   updateForm(mainmenu: IMainMenu) {
