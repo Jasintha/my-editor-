@@ -1050,7 +1050,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         var interval = setInterval(function () {
             width = width + 5;
             div.style.width = width + '%';
-            if (width === 60) {
+            if (width === 45) {
                 clearInterval(interval);
                 p.isActive = true;
             }
