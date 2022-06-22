@@ -1,20 +1,47 @@
-<div *ngIf="!viewEditor" class="fixed-position">
-    <div class="row">
-        <div class="wrapper option-1 option-1-1">
-            <ol class="c-stepper">
-                <li [ngClass]="currentLevel === 'requirement' || requirementLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
-                    <h6 class="c-stepper__title">Step 1</h6>
-                </li>
-                <li [ngClass]="currentLevel === 'epic' || epicLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
-                    <h6 class="c-stepper__title">Step 2</h6>
-                </li>
-                <li [ngClass]="currentLevel === 'story' || storyLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
-                    <h6 class="c-stepper__title">Step 3</h6>
-                </li>
-            </ol>
+<!--<div *ngIf="!viewEditor" class="fixed-position">-->
+<!--    <div class="row">-->
+<!--        <div class="wrapper option-1 option-1-1">-->
+<!--            <ol class="c-stepper">-->
+<!--                <li [ngClass]="currentLevel === 'requirement' || requirementLevel ? 'c-stepper__item_selected': 'c-stepper__item'">-->
+<!--                    <h6 class="c-stepper__title">Step 1</h6>-->
+<!--                </li>-->
+<!--                <li [ngClass]="currentLevel === 'epic' || epicLevel ? 'c-stepper__item_selected': 'c-stepper__item'">-->
+<!--                    <h6 class="c-stepper__title">Step 2</h6>-->
+<!--                </li>-->
+<!--                <li [ngClass]="currentLevel === 'story' || storyLevel ? 'c-stepper__item_selected': 'c-stepper__item'">-->
+<!--                    <h6 class="c-stepper__title">Step 3</h6>-->
+<!--                </li>-->
+<!--            </ol>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="row">
+    <div class="col-1">
+        <div class="vertical-stepper" style="padding: 96px 20px 20px 34px;">
+            <div class="wrapper">
+                <ol class="c-stepper">
+                    <li [ngClass]="currentLevel === 'requirement' || requirementLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
+
+                        <div class="c-stepper__content">
+                            <h3 class="c-stepper__title mt-0">Requirement</h3>
+                        </div>
+                    </li>
+                    <li [ngClass]="currentLevel === 'epic'  || epicLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
+                        <div class="c-stepper__content">
+                            <h3 class="c-stepper__title mt-0">Epic</h3>
+                        </div>
+                    </li>
+                    <li [ngClass]="currentLevel === 'story' || storyLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
+                        <div class="c-stepper__content">
+                            <h3 class="c-stepper__title mt-0">Story</h3>
+                        </div>
+                    </li>
+                </ol>
+            </div>
         </div>
+
     </div>
-</div>
+    <div class="col-11">
 <div *ngIf="!viewEditor" class="container vertical" style="width: 1334px">
     <div style="position: relative">
     <div id="requirements" class="row section border row-height create-req" style="height: 222px;width: 835px;">
@@ -618,6 +645,8 @@
             </div>
         </div>
     </div>-->
+    </div>
+</div>
     </div>
 </div>
 
