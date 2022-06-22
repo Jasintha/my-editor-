@@ -217,12 +217,15 @@
                                 <p matTooltip="{{item?.description}}"
                                    [matTooltipPosition]="toolTipPosition"> {{ item.description }}</p>
                             </div>
-                            <a class="edit" matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editEpics(item)"><i class="fa fa-pencil"
-                                                                         aria-hidden="true"></i></a>
-                            <a virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" class="delete" (click)="deleteDesign(item?.uuid, 'epic')"><i
-                                    class="fa fa-trash" aria-hidden="true"></i></a>
-                            <a virtuan-click-stop-propagation matTooltip="Assign/Create Story" [matTooltipPosition]="toolTipPosition" class="assign" (click)="addStory(selectedEpic)"><i
-                                    class="fa fa-link" aria-hidden="true"></i></a>
+                            <div *ngIf="currentLevel=== 'epic'">
+                                <a class="edit" matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editEpics(item)"><i class="fa fa-pencil"
+                                                                                                                                     aria-hidden="true"></i></a>
+                                <a virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" class="delete" (click)="deleteDesign(item?.uuid, 'epic')"><i
+                                  class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a virtuan-click-stop-propagation matTooltip="Assign/Create Story" [matTooltipPosition]="toolTipPosition" class="assign" (click)="addStory(selectedEpic)"><i
+                                  class="fa fa-link" aria-hidden="true"></i></a>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -331,14 +334,14 @@
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>
                     </div>
                 </div>
-                <div style="border-right: 1px solid #b2a9a9; position: absolute; height: 120px; right: 1159px; width: 1px;top: 0px;"></div>
+                <div style="border-right: 1px solid #b2a9a9; position: absolute; height: 101px; right: 1159px; width: 1px;top: 0px;"></div>
                 <div class="col-11">
                     <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
                         <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign(story,'story-text')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         <a class="edit-icon-text" virtuan-click-stop-propagation (click)="editStoryText(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </div>
                     <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.storyText"
-                              [style]="{'height':'100px', 'margin-top':'10px' , 'border': 'none','width' : '1050px'}" [readonly]="true">
+                              [style]="{'height':'90px', 'border': 'none','width' : '1050px'}" [readonly]="true">
                         <p-header hidden>
                             <span class="ql-formats"></span>
                         </p-header>

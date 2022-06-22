@@ -48,12 +48,12 @@
             //    border-top: 5px solid slateblue;
             //    border-left: 5px solid slateblue;
             //}
-            //&::after{
-            //    content: "";
-            //    height: 60%;
-            //    border-left: 5px solid mediumseagreen;
-            //    border-bottom: 5px solid mediumseagreen;
-            //}
+            &::after{
+                content: "";
+                height: 60%;
+                border-left: 5px solid mediumseagreen;
+                border-bottom: 5px solid mediumseagreen;
+            }
         }
         #stories{
             padding-right: 0;
