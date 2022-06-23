@@ -14,8 +14,8 @@
 
 </div>-->
 
-<div style="height: 90vh;">
-    <div style="width: 100%; height: 92vh; background: #ffffff;">
+<div style="height: 100%;">
+    <div style="width: 100%; height: 100%; background: #ffffff;">
 
         <as-split direction="horizontal">
             <!--<as-split-area [size]="15">TOP</as-split-area>-->
@@ -90,6 +90,10 @@
                 <div>
                     <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist" style="position: fixed; background-color: lightgrey; margin-top: 0; padding-top: 55px">
                         <li class="nav-item" role="presentation">
+                            <h1 class="display-4"><img src="../assets/images/apps_icon.png"  style="width: 45px;margin-bottom: 12px;transform: rotate(270deg);" ></h1>
+                        </li>
+
+                        <li class="nav-item" role="presentation">
                             <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('design')" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"  aria-selected="false">Design</button>
                         </li>
                         <li class="nav-item" role="presentation">
@@ -98,6 +102,23 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('portal')" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"  aria-selected="false">UI</button>
                         </li>
+
+                        <span fxFlex></span>
+                        <span class="logout">
+                             <button mat-mini-fab matTooltip="Logout" [matMenuTriggerFor]="menu" style="width: 34px; height: 34px;margin-left: 5px;margin-bottom: 15px"
+                                     color="primary">
+                              <mat-icon>perm_identity</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="logout()">
+                                  <mat-icon>power_settings_new</mat-icon>
+                                  <span>Logout</span>
+                                </button>
+                            </mat-menu>
+                          </span>
+
+
+
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'design'}" role="tabpanel"

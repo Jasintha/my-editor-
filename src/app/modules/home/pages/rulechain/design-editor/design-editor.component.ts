@@ -180,7 +180,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     isBtnNext = true;
     isBtnPrevious = false;
     PageNo = 0;
-    PageSize = 10;
+    PageSize = 5;
     reqCreatedAt:string;
     existingEpicOne: IEpic;
 
@@ -1027,7 +1027,6 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     setState(item: any) {
-
         if (!item.isActive) {
             var $this = this;
             this.ListData = this.ListData.map((p: any) => {
@@ -1050,7 +1049,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         var interval = setInterval(function () {
             width = width + 5;
             div.style.width = width + '%';
-            if (width === 45) {
+            if (width === 70) {
                 clearInterval(interval);
                 p.isActive = true;
             }

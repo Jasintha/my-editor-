@@ -15,7 +15,7 @@
 <!--        </div>-->
 <!--    </div>-->
 <!--</div>-->
-<div class="row">
+<div class="row" *ngIf="!viewEditor">
     <div class="col-1">
         <div class="vertical-stepper" style="padding: 96px 20px 20px 34px;">
             <div class="wrapper">
@@ -330,7 +330,7 @@
         <ng-container *ngFor="let story of filteredStories" >
             <div id="storiesText" class="row section border row-color wrap-text pb-0"  style="margin-left: 120px; margin-bottom: -8px;width: 1245px;" *ngIf="story.storyText">
                 <div class="col-1 d-flex justify-content-center align-items-center">
-                    <div class="story-text-editor-button" matTooltip="Rule Editor" [matTooltipPosition]="toolTipPosition" style="margin-right: 20px;">
+                    <div class="story-text-editor-button" matTooltip="Text" [matTooltipPosition]="toolTipPosition" style="margin-right: 20px;">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>
                     </div>
                 </div>
@@ -388,7 +388,7 @@
                     <div class="row">
                         <div class="col-1 d-flex justify-content-start align-items-center" style="padding-left: 20px ;">
                                 <div id="generate">
-                                    <div *ngIf="spinnerButtonEnable" [ngClass]="spinnerButton ? 'spinner spinner-load' : 'spinner'"  (click)="generateStory(story)">
+                                    <div *ngIf="spinnerButtonEnable" [ngClass]="spinnerButton ? 'spinner spinner-load' : 'spinner'"  (click)="generateStory(story)" matTooltip="Generate" [matTooltipPosition]="toolTipPosition">
                                         <i class="fa fa-play" aria-hidden="true" style="color: #009579;"></i>
                                     </div>
                                     <div *ngIf="!spinnerButtonEnable">
