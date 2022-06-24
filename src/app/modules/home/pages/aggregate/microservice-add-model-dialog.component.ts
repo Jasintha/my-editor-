@@ -298,7 +298,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       isEncrypted: model.isEncrypted,
       isUnique: model.isUnique,
       domain: model.domain,
-      isAlphabeticChar: model.isAlphabeticChar,
+      hasAlphabeticChar: model.hasAlphabeticChar,
       charLength: model.charLength,
       format: model.format,
       hasWhiteSpaces: model.hasWhiteSpaces,
@@ -306,7 +306,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       hasCaseSensitivity: model.hasCaseSensitivity,
       valueObjectStatus : model.valueObjectStatus,
       required: model.required,
-      isSpecialChar: model.isSpecialChar,
+      hasSpecialChar: model.hasSpecialChar,
       hasNumericChar: model.hasNumericChar,
       allowedAlphabeticChar: model.allowedAlphabeticChar,
       valueObjectReference: model.valueObjectReference,
@@ -408,6 +408,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
         valueObjStatus = 'existing';
         propertyTypeToSave = propType;
         valueObjReference = this.valueObjReference;
+        regxStr = this.editForm.get(['propertytype']).value.regexString
       }
     }
 
@@ -444,7 +445,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       isEncrypted: encript,
       isUnique: unique,
       domain: domain,
-      isAlphabeticChar: hasAlpchar,
+      hasAlphabeticChar: hasAlpchar,
       charLength: charLen,
       format: format,
       hasWhiteSpaces: hasWhiteSpc,
@@ -452,7 +453,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       hasCaseSensitivity: caseSensitive,
       valueObjectStatus : valueObjStatus,
       required: required,
-      isSpecialChar: hasspecialchar,
+      hasSpecialChar: hasspecialchar,
       hasNumericChar: hasnumericchar,
       allowedAlphabeticChar: allowdAlpChar,
       valueObjectReference: valueObjReference
@@ -475,8 +476,8 @@ export interface IMicroserviceModel {
   isEncrypted?: boolean;
   isUnique?: boolean;
   domain?: string;
-  isAlphabeticChar?: boolean;
-  isSpecialChar?: boolean;
+  hasAlphabeticChar?: boolean;
+  hasSpecialChar?: boolean;
   allowedAlphabeticChar?: string;
   hasCaseSensitivity?: boolean;
   charLength?: boolean;
