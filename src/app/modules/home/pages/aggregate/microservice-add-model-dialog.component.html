@@ -183,13 +183,13 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="flex-auto"  *ngIf="editForm.value.selectedValidateType === 'regex'">
+                <mat-form-field class="flex-auto"  *ngIf="editForm.value.selectedValidateType === 'regexString'">
                     <mat-label>Regex String</mat-label>
                     <input type="text" formControlName="regexString" matInput>
                     <mat-error *ngIf="editForm.controls.regexString.hasError('required')">This field is required</mat-error>
                 </mat-form-field>
 
-                <div *ngIf="editForm.value.selectedValidateType === 'validation'">
+                <div *ngIf="editForm.value.selectedValidateType === 'custom'">
 
                     <div class="row">
                         <div class="col-4">
