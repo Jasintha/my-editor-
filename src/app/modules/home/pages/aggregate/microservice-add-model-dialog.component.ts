@@ -399,7 +399,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
           propType = 'DATE';
         }else if(this.editForm.get(['propertytype']).value.dataType === 'email'){
           propType = 'EMAIL';
-        }else if(this.editForm.get(['propertytype']).value.dataType === 'trueorfalse'){
+        }else if(this.editForm.get(['propertytype']).value.dataType === 'bool'){
           propType = 'TRUE_OR_FALSE';
         }
         valueObjType = this.editForm.get(['propertytype']).value.valueObjectType;
