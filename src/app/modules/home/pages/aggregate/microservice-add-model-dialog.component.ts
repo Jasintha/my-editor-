@@ -29,6 +29,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
   valueObjectsList: SelectItem[];
   editForm: FormGroup;
   selectedValueObj:IValueObject;
+  showForm = false;
   propertytypeItems: SelectItem[] = [
     { label: 'TEXT', value: 'TEXT' },
     { label: 'NUMBER', value: 'NUMBER' },
@@ -238,6 +239,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
   // }
 
   changedValueObject(val){
+    this.showForm = true;
     const validation = val.validations;
     this.valueObjReference = val.uuid;
     this.editForm.patchValue({
@@ -268,6 +270,8 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       this.editForm.get('propertytype').setValidators([Validators.required]);
       this.editForm.get('propertytype').updateValueAndValidity();
     }
+    this.showForm = false;
+    this.editForm.get('propertytype').reset();
     this.editForm.get('alphabeticChar').reset();
     this.editForm.get('specialChar').reset();
     this.editForm.get('numericChar').reset();
