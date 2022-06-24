@@ -74,6 +74,7 @@ import {MatTabChangeEvent} from '@angular/material/tabs';
 import {EnvSelectComponent} from '@home/pages/rulechain/env-select.component';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 import {AggregateService} from '@core/projectservices/microservice-aggregate.service';
+import {LoginService} from '@core/services/login.services';
 
 declare const SystemJS;
 
@@ -185,7 +186,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService, private requirementService: RequirementService,
     private projectService: ProjectService,private deleteOperationService: DeleteOperationService,private addOperationService:AddOperationService, public dialog: MatDialog,
     private eventManager: EventManagerService, private socket: WebsocketService, private breakpointService: BreakpointTrackerService, private themeService: ThemeTrackerService,
-    protected appTypeService: ApptypesService, protected aggregateService: AggregateService, private consoleLogService: ConsoleLogService) {
+    protected appTypeService: ApptypesService, protected aggregateService: AggregateService, private consoleLogService: ConsoleLogService,private loginService: LoginService) {
 
     }
 
@@ -644,6 +645,11 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         //
         //     }
         // });
+    }
+
+    logout(){
+        this.loginService.logout();
+        this.router.navigate(['']);
     }
 
   protected onSaveSuccess() {
