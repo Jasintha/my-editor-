@@ -96,4 +96,8 @@ export class AggregateService {
   createValueObj(aggregate: IValueObject, uuid: string): Observable<HttpResponse<IValueObject>> {
     return this.http.post<IValueObject>(`${this.createValueObject}/${uuid}`, aggregate, { observe: 'response' });
   }
+
+  findValueObj(uuid: string,id: string): Observable<HttpResponse<IValueObject[]>> {
+    return this.http.get<IValueObject[]>(`${this.createValueObject}/${uuid}/${id}`, { observe: 'response' });
+  }
 }

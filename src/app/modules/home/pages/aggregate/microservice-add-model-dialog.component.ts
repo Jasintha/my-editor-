@@ -24,6 +24,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
   // projectId: number;
   projectUid: string;
   customField = false;
+  valueObjReference: string;
   valueObjects: IValueObject[];
   valueObjectsList: SelectItem[];
   editForm: FormGroup;
@@ -175,11 +176,27 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
         selectedPropGroup: this.propdata.selectedPropGroup,
         isNotPersist: this.propdata.isNotPersist,
       });
+      this.updateModel();
     }
     this.loadRetrieveValueObj();
   }
   protected onError(errorMessage: string) {
     // this.logger.error(errorMessage);
+  }
+
+  updateModel(){
+    this.aggregateService
+        .findValueObj(this.propdata.projectUid,this.propdata.valueObjReference)
+        .pipe(
+            filter((mayBeOk: HttpResponse<IValueObject[]>) => mayBeOk.ok),
+            map((response: HttpResponse<IValueObject[]>) => response.body)
+        )
+        .subscribe(
+            (res: IValueObject[]) => {
+             const valueObj = res;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
   }
 
   loadRetrieveValueObj() {
@@ -218,6 +235,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
 
   changedValueObject(val){
     const validation = val.validations;
+    this.valueObjReference = val.uuid;
     this.editForm.patchValue({
       alphabeticChar: validation.alphabeticChar,
       specialChar: validation.specialChar,
@@ -290,7 +308,8 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       required: model.required,
       isSpecialChar: model.isSpecialChar,
       hasNumericChar: model.hasNumericChar,
-      allowedAlphabeticChar: model.allowedAlphabeticChar
+      allowedAlphabeticChar: model.allowedAlphabeticChar,
+      valueObjectReference: model.valueObjectReference,
     };
     this.dialogRef.close(data);
     // this.activeModal.close(data);
@@ -360,6 +379,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     let hasnumericchar = this.editForm.get(['numericChar']).value;
     let hasspecialchar = this.editForm.get(['specialChar']).value;
     let propertyTypeToSave = '';
+    let valueObjReference = '';
 
     if (type === 'property'){
       if (this.customField){
@@ -387,6 +407,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
         domain = this.editForm.get(['propertytype']).value.domain;
         valueObjStatus = 'existing';
         propertyTypeToSave = propType;
+        valueObjReference = this.valueObjReference;
       }
     }
 
@@ -434,6 +455,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       isSpecialChar: hasspecialchar,
       hasNumericChar: hasnumericchar,
       allowedAlphabeticChar: allowdAlpChar,
+      valueObjectReference: valueObjReference
     };
   }
 }
