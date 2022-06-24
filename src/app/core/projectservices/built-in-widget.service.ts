@@ -22,10 +22,10 @@ type StringArrayResponseType = HttpResponse<string[]>;
 
 @Injectable({ providedIn: 'root' })
 export class BuiltInWidgetService {
-  public resourceUrl = '/api/editor/proj/widget';
+  public resourceUrl = '/api/editor/proj/page';
 
-  public widgetResourceUrl = '/api/editor/proj/widget';
-  public widgetForProjectResourceUrl = '/api/editor/proj/uws/widget/project';
+  public widgetResourceUrl = '/api/editor/proj/page';
+  public widgetForProjectResourceUrl = '/api/editor/proj/uws/page/project';
 
   public builtInResourceUrl = '/api/editor/proj/pages/built-in';
   public builtInWidgetsForProjectResourceUrl = '/api/editor/proj/uws/pages/built-in/project';
@@ -33,7 +33,7 @@ export class BuiltInWidgetService {
   public builtInWidgetActionTypesResourceUrl = '/api/editor/proj/pages/built-in/page-template/action-types';
   public builtInWidgetNavigationParamsResourceUrl = '/api/editor/proj/pages/built-in/page-navigation-params';
   public builtInWidgetSourceTargetFormFieldsResourceUrl = '/api/editor/proj/widgets/built-in/page-source-target-fields';
-  public builtInWidgetUpdateFormFieldsResourceUrl = '/api/editor/proj/widgets/built-in/widget-form-configs';
+  public builtInWidgetUpdateFormFieldsResourceUrl = '/api/editor/proj/widgets/built-in/page-form-configs';
   public builtInWidgetstatusChangeCheckResourceUrl = '/api/editor/proj/pages/built-in/statuschange/check';
   public builtInWidgetDisablestatusChangeConfirmedResourceUrl = '/api/editor/proj/pages/built-in/statusdisabled/confirmed';
   public builtInWidgetEnablestatusChangeConfirmedResourceUrl = '/api/editor/proj/pages/built-in/statusenabled/confirmed';
@@ -43,7 +43,7 @@ export class BuiltInWidgetService {
   public resourceAgrUrl = '/api/editor/proj/aggregates';
   public designresourceUrl = '/api/editor/proj/aggregates/design';
   public pageStyleUrl = '/api/editor/proj/pages/pagestyle';
-  public widgetsInPageResourceURL = '/api/editor/proj/page/widget';
+  public widgetsInPageResourceURL = '/api/editor/proj/page/page';
 
   constructor(protected http: HttpClient) {}
 

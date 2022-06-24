@@ -19,9 +19,11 @@ export class Row implements IRow {
 
 export interface IContainer {
   containerCols?: any;
-  widget?: IWidget;
+  page?: string;
+  pagetitle?: string;
+  pagetype?: string;
 }
 
 export class Container implements IContainer {
-  constructor(public containerCols?: number, public widget?: IWidget) {}
+  constructor(public containerCols?: number, public page?: string, public pagetitle?: string, public pagetype?: string) {}
 }

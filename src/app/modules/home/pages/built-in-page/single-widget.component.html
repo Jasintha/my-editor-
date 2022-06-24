@@ -46,10 +46,10 @@
                             <div class="ui-panel-content ui-widget-content justify-content-center" style="padding-top: 5px">
                                 <img *ngIf="editForm.value.pagetemplate == 'login-page'" class="pageTmpImgInPage" src="../../../../../assets/images/pages/login.jpg"
                                      alt="Template" style="width: 100%">
-                                <img *ngIf="editForm.value.pagetemplate == 'aio-table'|| editForm.value.pagetemplate =='table-widget'"
+                                <img *ngIf="editForm.value.pagetemplate == 'aio-table'|| editForm.value.pagetemplate =='table-page'"
                                      class="pageTmpImgInPage" src="../../../../../assets/images/pages/allinone.jpg"
                                      alt="Template" style="width: 100%">
-                                <img *ngIf="editForm.value.pagetemplate == 'form-widget' || editForm.value.pagetemplate == 'file-upload-widget'"
+                                <img *ngIf="editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'file-upload-page'"
                                      class="pageTmpImgInPage" src="../../../../../assets/images/pages/form.jpg"
                                      alt="Template" style="width: 100%">
                                 <img *ngIf="editForm.value.pagetemplate == 'register-page'"
@@ -134,7 +134,7 @@
                                                 [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
                                 </div>-->
                                 <div class="form-group"
-                                     *ngIf="editForm.value.pagetemplate === 'table-widget' || editForm.value.pagetemplate === 'form-widget'|| editForm.value.pagetemplate === 'form-wizard-widget' || editForm.value.pagetemplate === 'file-upload-widget' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">
+                                     *ngIf="editForm.value.pagetemplate === 'table-page' || editForm.value.pagetemplate === 'form-page'|| editForm.value.pagetemplate === 'form-wizard-page' || editForm.value.pagetemplate === 'file-upload-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">
                                     <div *ngIf="project?.apptypesID === 'task.ui'" class="form-group"
                                          style=" padding-top: 5px; ">
                                         <p-checkbox formControlName="search" binary="true" [disabled]="formDisable"></p-checkbox>
@@ -168,7 +168,7 @@
                                         </small>
                                     </div>
                                 </div>
-                                <div class="wiz-step" *ngIf="editForm.value.pagetemplate === 'form-wizard-widget'"
+                                <div class="wiz-step" *ngIf="editForm.value.pagetemplate === 'form-wizard-page'"
                                      formArrayName="wizardDetailsGroup">
                                     <div class="row">
                                         <div class="col-md-7">
@@ -203,7 +203,7 @@
                                     </div>
                                 </div>
 
-                                <ng-container *ngIf="editForm.value.pagetemplate === 'form-wizard-widget'">
+                                <ng-container *ngIf="editForm.value.pagetemplate === 'form-wizard-page'">
                                     <div class="form-group">
                                         <label class="form-control-label">Add form fields to steps</label>
                                         <div class="card">
@@ -311,7 +311,7 @@
 
                                     </div>
                                 </div>
-                                <!--                        <ng-container *ngIf="editForm.value.pagetemplate === 'table-widget' || editForm.value.pagetemplate === 'form-widget' || editForm.value.pagetemplate === 'file-upload-widget' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">-->
+                                <!--                        <ng-container *ngIf="editForm.value.pagetemplate === 'table-page' || editForm.value.pagetemplate === 'form-page' || editForm.value.pagetemplate === 'file-upload-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">-->
                                 <!--                            <div class="form-group">-->
                                 <!--                                <label class="form-control-label">Add Params</label>-->
                                 <!--                                <div class="card">-->
@@ -465,7 +465,7 @@
                     <div class="row">
                         <div class="col-12 model-type">
                             <div class="form-group"
-                                 *ngIf="editForm.value.pagetemplate !== 'file-upload-widget' && editForm.value.pagetemplate !== 'dashboard-page'">
+                                 *ngIf="editForm.value.pagetemplate !== 'file-upload-page' && editForm.value.pagetemplate !== 'dashboard-page'">
                                 <div class="row">
                                     <div class="col-md-8">
                                         <mat-form-field  [style]="{'width':'100%'}">

@@ -270,14 +270,14 @@
                                     <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
                                     <input type="button"
                                            (click)="insertColumnFormControllersGroup(k)"
-                                           value="Add choice"  class="btn fa fa-plus"
+                                           value="Add column"  class="btn fa fa-plus"
                                            style="background-color: #6D7F8B; color:white;border: none;">
                                 </div>
                                 <br>
                                 <div style="padding-top: 10px"
                                      *ngFor="let choice of columnFormGroup(k)['controls']; let i = index">
                                     <div [formGroup]="choice">
-                                        <label class="form-control-label">Choice {{i + 1}} </label>
+                                        <label class="form-control-label">Column {{i + 1}} </label>
                                         <div class="row">
                                             <div class="col-5">
                                                 <input class="form-control" type="number"

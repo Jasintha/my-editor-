@@ -5,10 +5,14 @@ import {IProject} from '@shared/models/model/project.model';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {EventManagerService} from '@shared/events/event.type';
 import {IWidget} from '@shared/models/model/widget.model';
-import {MenuItem} from 'primeng/api';
+import {MenuItem, SelectItem} from 'primeng/api';
+import {filter, map} from 'rxjs/operators';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {IPage} from '@shared/models/model/page.model';
+import {BuiltInPageService} from '@core/projectservices/built-in-page.service';
 
 @Component({
-    selector: 'virtuan-widget-select',
+    selector: 'virtuan-page-select',
     templateUrl: './widget-select-dialog.component.html',
     styleUrls: ['./built-in-widget.scss']
 })
@@ -21,6 +25,7 @@ export class WidgetSelectDialogComponent implements OnInit {
     uuid: string
     createStatus: string
     tabView = 'tables-tab';
+    builtInPages: IPage[];
     items: MenuItem[];
 
     constructor(
@@ -28,11 +33,13 @@ export class WidgetSelectDialogComponent implements OnInit {
         private fb: FormBuilder,
         protected eventManager: EventManagerService,
         public dialogRef: MatDialogRef<WidgetSelectDialogComponent>,
+        public builtInPageService: BuiltInPageService,
         @Inject(MAT_DIALOG_DATA)  public data: any,
     ) {}
 
 
     ngOnInit(): void {
+        this.loadPagesByProjectId(this.data.projectUid);
         this.items = [
             {
                 label: 'Form Widgets',
@@ -67,10 +74,33 @@ export class WidgetSelectDialogComponent implements OnInit {
             },
         ];
     }
+
+    loadPagesByProjectId(projId: string) {
+        if (projId) {
+            // this.spinnerService.show();
+            this.builtInPageService
+                .findBuiltInPagesForProjectId(projId, projId)
+                .pipe(
+                    filter((res: HttpResponse<IPage[]>) => res.ok),
+                    map((res: HttpResponse<IPage[]>) => res.body)
+                )
+                .subscribe(
+                    (res: IPage[]) => {
+                        this.builtInPages = res;
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        }
+    }
+
+    protected onError(errorMessage: string) {
+        // this.spinnerService.hide();
+        // this.logger.error(errorMessage);
+    }
     navigate(tabName) {
         this.tabView = tabName;
     }
-    setWidgetType(widgetTemplate) {
+    setPage(widgetTemplate) {
         this.dialogRef.close(widgetTemplate);
     }
 }

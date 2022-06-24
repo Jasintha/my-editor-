@@ -92,11 +92,11 @@ export class AddFormControllersComponent implements OnInit {
     this.microserviceProjects = [];
     this.apiItems = [];
     this.createForm();
-    if(this.data.widgetUid) {
-      this.loadAllSourceTargetFormFieldsForWidget(this.data.widgetUid, this.data.projectUid);
-    } else {
+    // if(this.data.widgetUid) {
+    //   this.loadAllSourceTargetFormFieldsForWidget(this.data.widgetUid, this.data.projectUid);
+    // } else {
       this.loadAllSourceTargetFormFieldsForPage(this.data.pageId, this.data.projectUid);
-    }
+   // }
 
     this.isSaving = false;
     this.keyValPairs = [];
@@ -253,25 +253,25 @@ export class AddFormControllersComponent implements OnInit {
     }
   }
 
-  loadAllSourceTargetFormFieldsForWidget(widgetId: string, uuid: string) {
-    if (!widgetId) {
-      // this.loadAll();
-    } else {
-      // this.spinnerService.show();
-      this.builtInWidgetService
-          .findAllSourceTargetFormFieldsForWidget(widgetId, uuid)
-          .pipe(
-              filter((res: HttpResponse<ISourceTargetFieldsRequest>) => res.ok),
-              map((res: HttpResponse<ISourceTargetFieldsRequest>) => res.body)
-          )
-          .subscribe(
-              (res: ISourceTargetFieldsRequest) => {
-                this.processFormControllerData(res);
-              },
-              (res: HttpErrorResponse) => this.onError(res.message)
-          );
-    }
-  }
+  // loadAllSourceTargetFormFieldsForWidget(widgetId: string, uuid: string) {
+  //   if (!widgetId) {
+  //     // this.loadAll();
+  //   } else {
+  //     // this.spinnerService.show();
+  //     this.builtInWidgetService
+  //         .findAllSourceTargetFormFieldsForWidget(widgetId, uuid)
+  //         .pipe(
+  //             filter((res: HttpResponse<ISourceTargetFieldsRequest>) => res.ok),
+  //             map((res: HttpResponse<ISourceTargetFieldsRequest>) => res.body)
+  //         )
+  //         .subscribe(
+  //             (res: ISourceTargetFieldsRequest) => {
+  //               this.processFormControllerData(res);
+  //             },
+  //             (res: HttpErrorResponse) => this.onError(res.message)
+  //         );
+  //   }
+  // }
 
   loadAllSourceTargetFormFieldsForPage(pageId: string, uuid: string) {
     if (!pageId) {
@@ -355,11 +355,11 @@ export class AddFormControllersComponent implements OnInit {
     // this.spinnerService.show();
     this.isSaving = true;
     const formData = this.createFromForm();
-    if(this.data.widgetId) {
-      this.subscribeToSaveResponse(this.builtInWidgetService.saveWidgetFormOrder(formData.fieldList, this.data.pageId, this.data.projectUid));
-    } else {
+   //  if(this.data.widgetId) {
+   // //   this.subscribeToSaveResponse(this.builtInWidgetService.saveWidgetFormOrder(formData.fieldList, this.data.pageId, this.data.projectUid));
+   //  } else {
       this.subscribeToSaveResponse(this.builtInPageService.savePageFormOrder(formData.fieldList, this.data.pageId, this.data.projectUid));
-    }
+  //  }
 
   }
 

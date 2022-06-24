@@ -153,13 +153,13 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
         this.editForm.get('selectedDatamodel').clearValidators();
         this.editForm.get('selectedDatamodel').updateValueAndValidity();
 
-        if (pagetemplate === 'table-widget' || pagetemplate === 'form-widget' || pagetemplate === 'form-wizard-widget') {
+        if (pagetemplate === 'table-page' || pagetemplate === 'form-page' || pagetemplate === 'form-wizard-page') {
           this.editForm.get('resourcePath').setValidators([Validators.required]);
           this.editForm.get('resourcePath').updateValueAndValidity();
 
           this.editForm.get('selectedAggregate').setValidators([Validators.required]);
           this.editForm.get('selectedAggregate').updateValueAndValidity();
-        } else if (pagetemplate === 'file-upload-widget') {
+        } else if (pagetemplate === 'file-upload-page') {
           this.editForm.get('resourcePath').setValidators([Validators.required]);
           this.editForm.get('resourcePath').updateValueAndValidity();
 
@@ -206,19 +206,19 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
               if (this.project.apptypesID === 'task.ui') {
                 this.editForm.get('pagetemplate').valueChanges.subscribe(pagetemplate => {
                   if (
-                      pagetemplate === 'table-widget' ||
-                      pagetemplate === 'form-widget' ||
-                      pagetemplate === 'form-wizard-widget' ||
-                      pagetemplate === 'file-upload-widget'
+                      pagetemplate === 'table-page' ||
+                      pagetemplate === 'form-page' ||
+                      pagetemplate === 'form-wizard-page' ||
+                      pagetemplate === 'file-upload-page'
                   ) {
                     this.editForm.get('resourcePath').setValidators([Validators.required]);
                     this.editForm.get('resourcePath').updateValueAndValidity();
                   }
-                  if (pagetemplate === 'aio-table' || pagetemplate === 'aio-grid' || pagetemplate === 'dashboard-widget') {
+                  if (pagetemplate === 'aio-table' || pagetemplate === 'aio-grid' || pagetemplate === 'dashboard-page') {
                     this.editForm.get('resourcePath').clearValidators();
                     this.editForm.get('resourcePath').updateValueAndValidity();
                   }
-                  if (pagetemplate === 'file-upload-widget' || pagetemplate === 'dashboard-widget') {
+                  if (pagetemplate === 'file-upload-page' || pagetemplate === 'dashboard-page') {
                     this.editForm.get('selectedAggregate').clearValidators();
                     this.editForm.get('selectedAggregate').updateValueAndValidity();
                   } else {
@@ -702,10 +702,10 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
       this.onChangePageModel(widgetData.model, true);
     }
     if (this.project.apptypesID === 'task.ui') {
-      if (widgetData.widgettemplate === 'register-widget') {
-        this.widgetTemplateItems.push({ label: 'Register Page', value: 'register-widget' });
-      } else if (widgetData.widgettemplate === 'login-widget') {
-        this.widgetTemplateItems.push({ label: 'Login Page', value: 'login-widget' });
+      if (widgetData.widgettemplate === 'register-page') {
+        this.widgetTemplateItems.push({ label: 'Register Page', value: 'register-page' });
+      } else if (widgetData.widgettemplate === 'login-page') {
+        this.widgetTemplateItems.push({ label: 'Login Page', value: 'login-page' });
         this.loginParams = widgetData.loginParams;
       }
       if (widgetData.widgettemplate !== 'aio-table' && widgetData.widgettemplate !== 'aio-grid' && widgetData.params) {
@@ -714,7 +714,7 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
 
       if (widgetData.widgettemplate === 'aio-table' || (widgetData.widgettemplate !== 'aio-grid' && widgetData.apiResourceDetails)) {
         this.apiResourceDetails = widgetData.apiResourceDetails;
-      } else if (widgetData.widgettemplate === 'dashboard-widget' && widgetData.dashboardPanelDetails) {
+      } else if (widgetData.widgettemplate === 'dashboard-page' && widgetData.dashboardPanelDetails) {
         this.dashboardPanelDetails = widgetData.dashboardPanelDetails;
       }
       this.editForm.patchValue({
@@ -734,17 +734,17 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
   getPageTemplates() {
     if (this.project.apptypesID === 'task.ui') {
       if (!this.isLoginPageExist) {
-        //  this.widgetTemplateItems.push({ label: 'Login Page', value: 'login-widget' });
+        //  this.widgetTemplateItems.push({ label: 'Login Page', value: 'login-page' });
       }
       if (!this.isRegisterPageExist) {
-        //   this.widgetTemplateItems.push({ label: 'Register Page', value: 'register-widget' });
+        //   this.widgetTemplateItems.push({ label: 'Register Page', value: 'register-page' });
       }
-      this.widgetTemplateItems.push({ label: 'Table View', value: 'table-widget' });
-      this.widgetTemplateItems.push({ label: 'Form View', value: 'form-widget' });
-      // this.widgetTemplateItems.push({ label: 'Form Wizard View', value: 'form-wizard-widget' });
+      this.widgetTemplateItems.push({ label: 'Table View', value: 'table-page' });
+      this.widgetTemplateItems.push({ label: 'Form View', value: 'form-page' });
+      // this.widgetTemplateItems.push({ label: 'Form Wizard View', value: 'form-wizard-page' });
       // this.widgetTemplateItems.push({ label: 'Grid View', value: 'aio-grid' });
       // this.widgetTemplateItems.push({ label: 'All-in-One Table View', value: 'aio-table' });
-      // this.widgetTemplateItems.push({ label: 'File Upload View', value: 'file-upload-widget' });
+      // this.widgetTemplateItems.push({ label: 'File Upload View', value: 'file-upload-page' });
     }
   }
 
@@ -776,7 +776,7 @@ export class SingleWidgetComponent implements OnInit, OnDestroy {
     if (this.project.apptypesID === 'task.ui') {
       if (this.editForm.get(['pagetemplate']).value === 'aio-table') {
         this.dashboardPanelDetails = [];
-      } else if (this.editForm.get(['pagetemplate']).value === 'dashboard-widget') {
+      } else if (this.editForm.get(['pagetemplate']).value === 'dashboard-page') {
         this.apiResourceDetails = [];
         this.apiParams = [];
       }

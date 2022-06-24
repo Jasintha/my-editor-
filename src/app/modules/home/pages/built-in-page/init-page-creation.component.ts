@@ -197,8 +197,8 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
       {
         name: 'grid1',
         rows: [
-          { containers: [{ containerCols: 12, widget: new Widget() }] },
-          { containers: [{ containerCols: 12, widget: new Widget() }] },
+          { containers: [{ containerCols: 12, page: '' }] },
+          { containers: [{ containerCols: 12, page: '' }] },
         ],
       },
       {
@@ -206,11 +206,11 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
         rows: [
           {
             containers: [
-              { containerCols: 6, widget: new Widget() },
-              { containerCols: 6, widget: new Widget() },
+              { containerCols: 6, page: '' },
+              { containerCols: 6, page: ''},
             ],
           },
-          { containers: [{ containerCols: 12, widget: new Widget() }] },
+          { containers: [{ containerCols: 12, page: '' }] },
         ],
       },
       {
@@ -218,11 +218,11 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
         rows: [
           {
             containers: [
-              { containerCols: 9, widget: new Widget() },
-              { containerCols: 3, widget: new Widget() },
+              { containerCols: 9, page: '' },
+              { containerCols: 3, page: '' },
             ],
           },
-          { containers: [{ containerCols: 12, widget: new Widget() }] },
+          { containers: [{ containerCols: 12, page: '' }] },
         ],
       },
     ];
@@ -503,7 +503,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   }
 
   setWidgetType(widgetTemplate) {
-    this.grid.rows[this.selectedRowIndex].containers[this.selectedContainerIndex].widget.widgettemplate = widgetTemplate;
+    this.grid.rows[this.selectedRowIndex].containers[this.selectedContainerIndex].page = widgetTemplate;
     this.widgetCreationStatus = 'addWidgetDetails';
   }
 

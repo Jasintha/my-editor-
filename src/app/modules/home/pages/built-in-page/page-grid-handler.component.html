@@ -27,25 +27,25 @@
             <div *ngFor="let raw of grid.rows; let i = index" style="max-height: 30vh" [attr.data-index]="i" class="row">
                 <div *ngFor="let container of raw.containers  let j = index" [attr.data-index]="j"
                      class="grid-col col-{{container.containerCols}}" style="padding: 7%"><i
-                    *ngIf="!container.widget.widgetTitle" (click)="selectWidgetType(i, j)"
+                    *ngIf="!container.page" (click)="selectApageForContainer(i, j)"
                     class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
-                    <div *ngIf="container.widget.widgetTitle">
-<!--                        <div   *ngIf="container.widget.widgettemplate === 'form-widget'" class=" d-flex justify-content-center init-page-image">-->
+                    <div *ngIf="container.page">
+<!--                        <div   *ngIf="container.page.widgettemplate === 'form-page'" class=" d-flex justify-content-center init-page-image">-->
 <!--                            <img class="pageTmpImg" src="../../../content/images/pages/form.jpg"-->
 <!--                                 alt="Template">-->
 <!--                        </div>-->
-<!--                        <div   *ngIf="container.widget.widgettemplate === 'table-widget'" class=" d-flex justify-content-center init-page-image">-->
+<!--                        <div   *ngIf="container.page.widgettemplate === 'table-page'" class=" d-flex justify-content-center init-page-image">-->
 <!--                            <img class="pageTmpImg" src="../../../content/images/pages/allinone.jpg"-->
 <!--                                 alt="Template">-->
 <!--                        </div>-->
                         <div>
-                            {{container.widget.widgetTitle}}
+                            {{container.pagetitle}}
                         </div>
                         <div>
-                            {{container.widget.widgettemplate}}
+                            {{container.pagetype}}
                         </div>
                     </div>
-                    <div><i *ngIf="container.widget.widgetTitle" (click)="editWidget(container.widget)"
+                    <div><i *ngIf="container.page" (click)="editWidget(container.page)"g
                             class="fa fa-edit fa-2x" aria-hidden="true"></i></div>
                 </div>
             </div>

@@ -38,7 +38,7 @@ export class BuiltInPageService {
   public builtInPageEnablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/pages/built-in/statusenabled/confirmed';
   public checkPageNameAvailabilityURL =  '/api/editor/proj/pages/names';
   public checkEntityNameAvailabilityURL =  '/api/editor/proj/aggregates/names';
-  public widgetForProjectResourceUrl =  '/api/editor/proj/uws/pages/widget/project';
+  public widgetForProjectResourceUrl =  '/api/editor/proj/uws/pages/page/project';
   public aggregateModelKeysResourceUrl =  '/api/editor/proj/aggregates/keys';
   public resourceAgrUrl =  '/api/editor/proj/aggregates';
   public designresourceUrl =  '/api/editor/proj/aggregates/design';

@@ -235,12 +235,12 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     onEditMultiWidgetPage() {
         this.eventSubscriber = this.eventManager
             .on(EventTypes.editMultiWidgetPage)
-            .subscribe(event => this.showWidgetEditor(event));
+            .subscribe(event => this.viewPageEditor(event.payload));
     }
 
-    showWidgetEditor(event) {
-        this.viewSingleWidget(event.payload);
-    }
+    // showWidgetEditor(event) {
+    //     this.viewSingleWidget(event.payload);
+    // }
 
     // onEditCustomPage() {
     //     this.eventSubscriber = this.eventManager
@@ -349,30 +349,30 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadWidgetEditor = false;
     }
 
-    viewSingleWidget(item){
-        this.loadWidgetEditor = true;
-        this.ruleChainLoaded = false;
-        this.ruleChainMetaDataLoaded = false;
-        this.connectionPropertyTemplatesLoaded = false;
-        this.ruleNodeComponentsLoaded = false;
-        this.ruleChain = null;
-        this.ruleChainMetaData = null;
-        this.connectionPropertyTemplates = null;
-        this.ruleNodeComponents = null;
-        this.loadDesignRequirement = false;
-        this.requirementUid = "";
-        this.lambdauid = "";
-        this.lambdauid = "";
-        this.loadFunctionEditor = false;
-        this.loadModelView = false;
-        this.loadPageEditor = false;
-        this.loadGridPageEditor = false;
-        this.loadCustomPageEditor = false;
-        this.loadFilterPageEditor = false;
-        this.loadTabPageEditor = false;
-        this.pageId =item.pageUUID;
-        this.widgetId = item.widgetUUID;
-    }
+    // viewSingleWidget(item){
+    //     this.loadWidgetEditor = true;
+    //     this.ruleChainLoaded = false;
+    //     this.ruleChainMetaDataLoaded = false;
+    //     this.connectionPropertyTemplatesLoaded = false;
+    //     this.ruleNodeComponentsLoaded = false;
+    //     this.ruleChain = null;
+    //     this.ruleChainMetaData = null;
+    //     this.connectionPropertyTemplates = null;
+    //     this.ruleNodeComponents = null;
+    //     this.loadDesignRequirement = false;
+    //     this.requirementUid = "";
+    //     this.lambdauid = "";
+    //     this.lambdauid = "";
+    //     this.loadFunctionEditor = false;
+    //     this.loadModelView = false;
+    //     this.loadPageEditor = false;
+    //     this.loadGridPageEditor = false;
+    //     this.loadCustomPageEditor = false;
+    //     this.loadFilterPageEditor = false;
+    //     this.loadTabPageEditor = false;
+    //     this.pageId =item.pageUUID;
+    //     this.widgetId = item.widgetUUID;
+    // }
 
     viewFuncEditor(item){
         this.ruleChainLoaded = false;
