@@ -194,6 +194,10 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
         .subscribe(
             (res: IValueObject[]) => {
              const valueObj = res;
+             this.editForm.patchValue({
+               propertytype: valueObj
+             })
+             this.changedValueObject(valueObj);
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -310,6 +314,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       hasNumericChar: model.hasNumericChar,
       allowedAlphabeticChar: model.allowedAlphabeticChar,
       valueObjectReference: model.valueObjectReference,
+      validationType: model.validationType,
     };
     this.dialogRef.close(data);
     // this.activeModal.close(data);
@@ -380,6 +385,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     let hasspecialchar = this.editForm.get(['specialChar']).value;
     let propertyTypeToSave = '';
     let valueObjReference = '';
+    const validationType = this.editForm.get(['selectedValidateType']).value;
 
     if (type === 'property'){
       if (this.customField){
@@ -456,7 +462,8 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       hasSpecialChar: hasspecialchar,
       hasNumericChar: hasnumericchar,
       allowedAlphabeticChar: allowdAlpChar,
-      valueObjectReference: valueObjReference
+      valueObjectReference: valueObjReference,
+      validationType: validationType
     };
   }
 }
@@ -487,6 +494,7 @@ export interface IMicroserviceModel {
   valueObjectStatus?: string;
   required?: boolean;
   hasNumericChar?: boolean;
+  validationType?:string;
 }
 
 export class MicroserviceModel implements IMicroserviceModel {
@@ -515,7 +523,8 @@ export class MicroserviceModel implements IMicroserviceModel {
       public regexString?: string,
       public valueObjectStatus?: string,
       public required?: boolean,
-      public hasNumericChar?: boolean
+      public hasNumericChar?: boolean,
+      public validationType?:string
   ) {}
 }
 
