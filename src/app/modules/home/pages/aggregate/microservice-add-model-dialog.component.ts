@@ -366,7 +366,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
         valueObjType = 'custom';
         domain = this.editForm.get(['domain']).value;
         name = this.editForm.get(['fieldName']).value;
-        valueObjStatus = 'existing';
+        valueObjStatus = 'new';
         propertyTypeToSave = this.editForm.get(['datatype']).value;
       }else {
         if (this.editForm.get(['propertytype']).value.dataType === 'string'){
@@ -382,7 +382,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
         }else if(this.editForm.get(['propertytype']).value.dataType === 'trueorfalse'){
           propType = 'TRUE_OR_FALSE';
         }
-        valueObjType = 'virtuan';
+        valueObjType = this.editForm.get(['propertytype']).value.valueObjectType;
         name = this.editForm.get(['propertytype']).value.name;
         domain = this.editForm.get(['propertytype']).value.domain;
         valueObjStatus = 'existing';
@@ -433,7 +433,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       required: required,
       isSpecialChar: hasspecialchar,
       hasNumericChar: hasnumericchar,
-      allowedAlphabeticChar: allowdAlpChar
+      allowedAlphabeticChar: allowdAlpChar,
     };
   }
 }
