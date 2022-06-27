@@ -212,7 +212,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       numericChar:value.hasNumericChar,
       whiteSpaces:value.hasWhiteSpaces,
       casSensitivity:value.hasCaseSensitivity,
-      requiredChar: value.requiredChar,
+      requiredChar: value.RequiredChar,
       format: value.format,
       length: value.charLength,
       range: value.range,
