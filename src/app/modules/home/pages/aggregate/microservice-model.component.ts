@@ -203,7 +203,8 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
         selectedPropGroup: event.node.data.selectedPropGroup,
         isNotPersist: event.node.data.isNotPersist,
         valueObjReference: event.node.data.valueObjectReference,
-        projectUid: this.projectUid
+        projectUid: this.projectUid,
+        valueUpdate: event.node.data
       }
     });
     dialogRef.afterClosed().subscribe((result: any) => {

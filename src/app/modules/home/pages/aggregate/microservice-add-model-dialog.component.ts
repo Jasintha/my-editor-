@@ -198,10 +198,30 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
              this.editForm.patchValue({
                propertytype: valueObj
              })
-             this.changedValueObject(valueObj);
+             this.updateValidations(this.propdata.valueUpdate);
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+  }
+  updateValidations(value){
+    this.showForm = true;
+    this.valueObjReference = value.uuid;
+    this.editForm.patchValue({
+      alphabeticChar: value.hasAlphabeticChar,
+      specialChar: value.hasSpecialChar,
+      numericChar:value.hasNumericChar,
+      whiteSpaces:value.hasWhiteSpaces,
+      casSensitivity:value.hasCaseSensitivity,
+      requiredChar: value.requiredChar,
+      format: value.format,
+      length: value.charLength,
+      range: value.range,
+      unique: value.isUnique,
+      allowedAlphabeticChar: value.allowedAlphabeticChar,
+      encript: value.isEncrypted,
+      required: value.required,
+      regexString : value.required,
+    })
   }
 
   loadRetrieveValueObj() {
