@@ -205,7 +205,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
   }
   updateValidations(value){
     this.showForm = true;
-    this.valueObjReference = value.uuid;
+    this.valueObjReference = value.valueObjectReference;
     this.editForm.patchValue({
       alphabeticChar: value.hasAlphabeticChar,
       specialChar: value.hasSpecialChar,
@@ -219,8 +219,8 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       unique: value.isUnique,
       allowedAlphabeticChar: value.allowedAlphabeticChar,
       encript: value.isEncrypted,
-      required: value.required,
-      regexString : value.required,
+      required: value.isrequired,
+      regexString : value.regexString,
     })
   }
 
@@ -275,7 +275,8 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       unique: val.unique,
       allowedAlphabeticChar: validation.allowedAlphabeticChar,
       encript: val.encrypt,
-      required: val.required
+      required: val.required,
+      regexString : val.regexString,
     })
 
   }
@@ -333,7 +334,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       regexString: model.regexString,
       hasCaseSensitivity: model.hasCaseSensitivity,
       valueObjectStatus : model.valueObjectStatus,
-      required: model.required,
+      isrequired: model.isrequired,
       hasSpecialChar: model.hasSpecialChar,
       hasNumericChar: model.hasNumericChar,
       allowedAlphabeticChar: model.allowedAlphabeticChar,
@@ -483,7 +484,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       regexString: regxStr,
       hasCaseSensitivity: caseSensitive,
       valueObjectStatus : valueObjStatus,
-      required: required,
+      isrequired: required,
       hasSpecialChar: hasspecialchar,
       hasNumericChar: hasnumericchar,
       allowedAlphabeticChar: allowdAlpChar,
@@ -517,7 +518,7 @@ export interface IMicroserviceModel {
   format?: string;
   regexString?: string;
   valueObjectStatus?: string;
-  required?: boolean;
+  isrequired?: boolean;
   hasNumericChar?: boolean;
   validationType?:string;
 }
@@ -547,7 +548,7 @@ export class MicroserviceModel implements IMicroserviceModel {
       public format?: string,
       public regexString?: string,
       public valueObjectStatus?: string,
-      public required?: boolean,
+      public isrequired?: boolean,
       public hasNumericChar?: boolean,
       public validationType?:string
   ) {}
