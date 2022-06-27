@@ -202,7 +202,9 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
         selectedEntity: event.node.data.selectedEntity,
         selectedPropGroup: event.node.data.selectedPropGroup,
         isNotPersist: event.node.data.isNotPersist,
-
+        valueObjReference: event.node.data.valueObjectReference,
+        projectUid: this.projectUid,
+        valueUpdate: event.node.data
       }
     });
     dialogRef.afterClosed().subscribe((result: any) => {
@@ -225,6 +227,20 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
             event.node.key = datakey;
             // event.node.styleClass = 'test';
             event.node.data = Object.assign(event.node.data, result);
+
+            const aggregateData = { aggregateId: this.modelUid, data: this.data };
+            this.aggregateService
+                .saveModelDesign(aggregateData, this.projectUid)
+                .pipe(
+                    filter((res: HttpResponse<any>) => res.ok),
+                    map((res: HttpResponse<any>) => res.body)
+                )
+                .subscribe(
+                    (res: any) => {
+                      this.loadDesign();
+                    },
+                    (res: HttpErrorResponse) => this.onError()
+                );
     });
 
     // const modalRef = this.modalService.open(MicroServiceAddModelConstraintsDialogComponent, { size: 'lg', backdrop: 'static' });
@@ -350,8 +366,19 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
               event.node.children = [];
             }
             event.node.children.push(data);
-            // const aggregateData = { aggregateId: this.aggregateId, data: this.data };
-            //this.subscribeToSaveResponse(this.aggregateService.saveModelDesign(aggregateData, this.projectUid));
+            const aggregateData = { aggregateId: this.modelUid, data: this.data };
+            this.aggregateService
+                .saveModelDesign(aggregateData, this.projectUid)
+                .pipe(
+                    filter((res: HttpResponse<any>) => res.ok),
+                    map((res: HttpResponse<any>) => res.body)
+                )
+                .subscribe(
+                    (res: any) => {
+                      this.loadDesign();
+                    },
+                    (res: HttpErrorResponse) => this.onError()
+                );
     });
     // const modalRef = this.modalService.open(MicroServiceAddModelDialogComponent, { size: 'lg', backdrop: 'static' });
     // modalRef.componentInstance.edit = false;
