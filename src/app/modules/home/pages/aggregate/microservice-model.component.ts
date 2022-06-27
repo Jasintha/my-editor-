@@ -236,7 +236,9 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
                     map((res: HttpResponse<any>) => res.body)
                 )
                 .subscribe(
-                    (res: any) => {},
+                    (res: any) => {
+                      this.loadDesign();
+                    },
                     (res: HttpErrorResponse) => this.onError()
                 );
     });
@@ -372,7 +374,9 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
                     map((res: HttpResponse<any>) => res.body)
                 )
                 .subscribe(
-                    (res: any) => {},
+                    (res: any) => {
+                      this.loadDesign();
+                    },
                     (res: HttpErrorResponse) => this.onError()
                 );
     });
