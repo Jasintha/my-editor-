@@ -205,6 +205,12 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
   }
   updateValidations(value){
     this.showForm = true;
+    let validationType;
+    if (value.validationType === ''){
+      validationType = 'custom';
+    }else {
+      validationType = value.validationType;
+    }
     this.valueObjReference = value.valueObjectReference;
     this.editForm.patchValue({
       alphabeticChar: value.hasAlphabeticChar,
@@ -221,7 +227,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       encript: value.isEncrypted,
       required: value.isrequired,
       regexString : value.regexString,
-      selectedValidateType: value.validationType
+      selectedValidateType: validationType
     })
   }
 
@@ -261,12 +267,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
 
   changedValueObject(val){
     this.showForm = true;
-    let validationType;
-    if (val.regexString){
-      validationType = 'regexString'
-    }else {
-      validationType = 'custom'
-    }
+    const validationType = 'custom';
     const validation = val.validations;
     this.valueObjReference = val.uuid;
     this.editForm.patchValue({
@@ -419,10 +420,10 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     let propertyTypeToSave = '';
     let valueObjReference = '';
     const validationType = this.editForm.get(['selectedValidateType']).value;
-    if (validationType === 'custom'){
-      regxStr = '';
-    } else {
+    if (validationType === 'regexString' && this.editForm.get(['propertytype']).value.valueObjectType ){
       regxStr = this.editForm.get(['regexString']).value;
+    } else {
+      regxStr = '';
     }
 
     if (type === 'property'){

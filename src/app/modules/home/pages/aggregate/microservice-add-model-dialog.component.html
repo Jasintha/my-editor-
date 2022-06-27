@@ -70,13 +70,16 @@
                     </p-listbox>
                 </div>
                 <div class="col-4" *ngIf="showForm">
-                    <mat-form-field class="flex-auto" >
-                        <mat-label>Validation Type</mat-label>
-                        <mat-select formControlName="selectedValidateType">
-                            <mat-option value="regexString">Regex String</mat-option>
-                            <mat-option value="custom">Custom</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+
+                    <div *ngIf="editForm.value.propertytype.valueObjectType !== 'virtuan'">
+                        <mat-form-field class="flex-auto" >
+                            <mat-label>Validation Type</mat-label>
+                            <mat-select formControlName="selectedValidateType">
+                                <mat-option value="regexString">Regex String</mat-option>
+                                <mat-option value="custom">Custom</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
 
 
                     <div *ngIf="editForm.value.selectedValidateType === 'custom'">
@@ -169,6 +172,11 @@
                         <mat-form-field class="flex-auto" >
                             <mat-label>Range</mat-label>
                             <input type="text" formControlName="range" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto" *ngIf="editForm.value.propertytype.valueObjectType === 'virtuan'">
+                            <mat-label>Regex String</mat-label>
+                            <input type="text" formControlName="regexString" matInput readonly>
                         </mat-form-field>
 
                     </div>
