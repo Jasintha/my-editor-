@@ -218,7 +218,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       numericChar:value.hasNumericChar,
       whiteSpaces:value.hasWhiteSpaces,
       casSensitivity:value.hasCaseSensitivity,
-      requiredChar: value.RequiredChar,
+      requiredChar: value.requiredChar,
       format: value.format,
       length: value.charLength,
       range: value.range,
@@ -420,8 +420,23 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     let propertyTypeToSave = '';
     let valueObjReference = '';
     const validationType = this.editForm.get(['selectedValidateType']).value;
-    if (validationType === 'regexString' && this.editForm.get(['propertytype']).value.valueObjectType ){
+    if (validationType === 'regexString' && this.editForm.get(['propertytype']).value.valueObjectType === 'custom' ){
       regxStr = this.editForm.get(['regexString']).value;
+      if (this.editForm.get(['propertytype']).value){
+        const regex = this.editForm.get(['propertytype']).value.regexString;
+        if ( regex !== regxStr){
+          hasnumericchar = false;
+          hasspecialchar = false;
+          caseSensitive = false;
+          hasWhiteSpc = false;
+          format = '';
+          charLen = '';
+          hasAlpchar = false;
+          allowdAlpChar = '';
+          range= '';
+          requiredChar= '';
+        }
+      }
     } else {
       regxStr = '';
     }
@@ -454,7 +469,6 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
         valueObjStatus = 'existing';
         propertyTypeToSave = propType;
         valueObjReference = this.valueObjReference;
-        regxStr = this.editForm.get(['propertytype']).value.regexString
       }
     }
 
