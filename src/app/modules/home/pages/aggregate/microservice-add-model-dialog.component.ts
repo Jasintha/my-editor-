@@ -250,7 +250,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       casSensitivity:validation.casSensitivity,
       requiredChar: validation.requiredChar,
       format: validation.format,
-      length: validation.length,
+      length: validation.charLength,
       range: validation.range,
       unique: val.unique,
       allowedAlphabeticChar: validation.allowedAlphabeticChar,
@@ -398,6 +398,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
         name = this.editForm.get(['fieldName']).value;
         valueObjStatus = 'new';
         propertyTypeToSave = this.editForm.get(['datatype']).value;
+        propType = this.editForm.get(['datatype']).value;
       }else {
         if (this.editForm.get(['propertytype']).value.dataType === 'string'){
           propType = 'TEXT';
