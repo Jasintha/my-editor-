@@ -221,6 +221,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       encript: value.isEncrypted,
       required: value.isrequired,
       regexString : value.regexString,
+      selectedValidateType: value.validationType
     })
   }
 
@@ -260,6 +261,12 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
 
   changedValueObject(val){
     this.showForm = true;
+    let validationType;
+    if (val.regexString){
+      validationType = 'regexString'
+    }else {
+      validationType = 'custom'
+    }
     const validation = val.validations;
     this.valueObjReference = val.uuid;
     this.editForm.patchValue({
@@ -277,6 +284,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       encript: val.encrypt,
       required: val.required,
       regexString : val.regexString,
+      selectedValidateType: validationType
     })
 
   }
@@ -402,7 +410,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     let charLen = this.editForm.get(['length']).value;
     let format  = this.editForm.get(['format']).value;
     let hasWhiteSpc = this.editForm.get(['whiteSpaces']).value;
-    let regxStr = this.editForm.get(['regexString']).value;
+    let regxStr;
     let caseSensitive  = this.editForm.get(['casSensitivity']).value;
     let valueObjStatus;
     let required = this.editForm.get(['required']).value;
@@ -411,6 +419,11 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     let propertyTypeToSave = '';
     let valueObjReference = '';
     const validationType = this.editForm.get(['selectedValidateType']).value;
+    if (validationType === 'custom'){
+      regxStr = '';
+    } else {
+      regxStr = this.editForm.get(['regexString']).value;
+    }
 
     if (type === 'property'){
       if (this.customField){

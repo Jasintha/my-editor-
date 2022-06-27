@@ -31,6 +31,8 @@
                 <mat-checkbox (change)="changeCreateType($event.checked)" [(ngModel)]="customField" [ngModelOptions]="{standalone: true}">
                     Custom Field
                 </mat-checkbox>
+
+
             </section>
 
 <!--            <mat-form-field class="flex-auto"  *ngIf="editForm.value.type === 'property'">-->
@@ -68,90 +70,114 @@
                     </p-listbox>
                 </div>
                 <div class="col-4" *ngIf="showForm">
-
-                    <section class="flex-auto" >
-                        <mat-checkbox formControlName="required">
-                            Required
-                        </mat-checkbox>
-                    </section>
-
-                    <section class="flex-auto" >
-                        <mat-checkbox formControlName="encript">
-                            Encrypt
-                        </mat-checkbox>
-                    </section>
-
-                    <section class="flex-auto" >
-                        <mat-checkbox formControlName="isNotPersist">
-                            Do not Persist
-                        </mat-checkbox>
-                    </section>
-
-                    <section class="flex-auto" >
-                        <mat-checkbox formControlName="unique">
-                            Unique
-                        </mat-checkbox>
-                    </section>
-
-                    <section class="flex-auto" >
-                        <mat-checkbox formControlName="alphabeticChar">
-                            Alphabetic Character
-                        </mat-checkbox>
-                    </section>
-
-                    <section class="flex-auto"  >
-                        <mat-checkbox formControlName="specialChar">
-                            Special Character
-                        </mat-checkbox>
-                    </section>
-
-                    <section class="flex-auto"  >
-                        <mat-checkbox formControlName="numericChar">
-                            Numeric Character
-                        </mat-checkbox>
-                    </section>
-
-                    <section class="flex-auto" >
-                        <mat-checkbox formControlName="whiteSpaces">
-                            WhiteSpaces
-                        </mat-checkbox>
-                    </section>
-
-                    <section class="flex-auto">
-                        <mat-checkbox formControlName="casSensitivity">
-                            CasSensitivity
-                        </mat-checkbox>
-                    </section>
-
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Allowed Alphabetic Character</mat-label>
-                        <input type="text" formControlName="allowedAlphabeticChar" matInput>
-                    </mat-form-field>
-
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Required Character</mat-label>
-                        <input type="text" formControlName="requiredChar" matInput>
-                    </mat-form-field>
-
                     <mat-form-field class="flex-auto" >
-                        <mat-label>Format</mat-label>
-                        <input type="text" formControlName="format" matInput>
+                        <mat-label>Validation Type</mat-label>
+                        <mat-select formControlName="selectedValidateType">
+                            <mat-option value="regexString">Regex String</mat-option>
+                            <mat-option value="custom">Custom</mat-option>
+                        </mat-select>
                     </mat-form-field>
 
-                    <mat-form-field class="flex-auto" >
-                        <mat-label>Character Length</mat-label>
-                        <input type="text" formControlName="length" matInput>
-                    </mat-form-field>
 
-                    <mat-form-field class="flex-auto" >
-                        <mat-label>Range</mat-label>
-                        <input type="text" formControlName="range" matInput>
-                    </mat-form-field>
+                    <div *ngIf="editForm.value.selectedValidateType === 'custom'">
+                        <div class="row">
+                            <div class="col-6">
+                                <section class="flex-auto" >
+                                    <mat-checkbox formControlName="required">
+                                        Required
+                                    </mat-checkbox>
+                                </section>
+                            </div>
+                            <div class="col-6">
+                                <section class="flex-auto" >
+                                    <mat-checkbox formControlName="encript">
+                                        Encrypt
+                                    </mat-checkbox>
+                                </section>
 
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Regex String</mat-label>
-                        <input type="text" formControlName="regexString" matInput>
-                    </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <section class="flex-auto" >
+                                    <mat-checkbox formControlName="isNotPersist">
+                                        Don't Persist
+                                    </mat-checkbox>
+                                </section>
+                            </div>
+                            <div class="col-6">
+                                <section class="flex-auto" >
+                                    <mat-checkbox formControlName="unique">
+                                        Unique
+                                    </mat-checkbox>
+                                </section>
+
+                            </div>
+                        </div>
+
+                        <section class="flex-auto" >
+                            <mat-checkbox formControlName="alphabeticChar">
+                                Alphabetic Character
+                            </mat-checkbox>
+                        </section>
+
+                        <section class="flex-auto"  >
+                            <mat-checkbox formControlName="specialChar">
+                                Special Character
+                            </mat-checkbox>
+                        </section>
+
+                        <section class="flex-auto"  >
+                            <mat-checkbox formControlName="numericChar">
+                                Numeric Character
+                            </mat-checkbox>
+                        </section>
+
+                        <section class="flex-auto" >
+                            <mat-checkbox formControlName="whiteSpaces">
+                                WhiteSpaces
+                            </mat-checkbox>
+                        </section>
+
+                        <section class="flex-auto">
+                            <mat-checkbox formControlName="casSensitivity">
+                                CasSensitivity
+                            </mat-checkbox>
+                        </section>
+
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Allowed Alphabetic Character</mat-label>
+                            <input type="text" formControlName="allowedAlphabeticChar" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Required Character</mat-label>
+                            <input type="text" formControlName="requiredChar" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto" >
+                            <mat-label>Format</mat-label>
+                            <input type="text" formControlName="format" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto" >
+                            <mat-label>Character Length</mat-label>
+                            <input type="text" formControlName="length" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto" >
+                            <mat-label>Range</mat-label>
+                            <input type="text" formControlName="range" matInput>
+                        </mat-form-field>
+
+                    </div>
+                    <div *ngIf="editForm.value.selectedValidateType === 'regexString'">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Regex String</mat-label>
+                            <input type="text" formControlName="regexString" matInput>
+                        </mat-form-field>
+                    </div>
 
                 </div>
             </div>
