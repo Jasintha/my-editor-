@@ -497,6 +497,9 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadDesignRequirement = false;
         this.requirementUid = "";
         this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
+        this.loadCustomPageEditor = false;
+        this.loadFilterPageEditor = false;
         this.loadTabPageEditor = false;
     }
 
