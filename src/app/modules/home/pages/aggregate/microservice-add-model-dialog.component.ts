@@ -420,7 +420,13 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     let propertyTypeToSave = '';
     let valueObjReference = '';
     const validationType = this.editForm.get(['selectedValidateType']).value;
-    if (validationType === 'regexString' && this.editForm.get(['propertytype']).value.valueObjectType === 'custom' ){
+    let valObjType;
+    if (this.customField){
+      valObjType = 'custom'
+    }else {
+      valObjType = this.editForm.get(['propertytype']).value.valueObjectType;
+    }
+    if (validationType === 'regexString' && valObjType === 'custom' ){
       regxStr = this.editForm.get(['regexString']).value;
       if (this.editForm.get(['propertytype']).value){
         const regex = this.editForm.get(['propertytype']).value.regexString;
