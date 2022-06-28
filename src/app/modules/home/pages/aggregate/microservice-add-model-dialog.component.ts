@@ -403,12 +403,12 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     let propType;
     let valueObjType;
     let range = this.editForm.get(['range']).value;
-    let requiredChar = this.editForm.get(['requiredChar']).value;;
-    let encript = this.editForm.get(['encript']).value;;
+    let requiredChar = this.editForm.get(['requiredChar']).value;
+    let encript = this.editForm.get(['encript']).value;
     let unique = this.editForm.get(['unique']).value;
     let domain;
     let hasAlpchar = this.editForm.get(['alphabeticChar']).value;
-    let allowdAlpChar = this.editForm.get(['allowedAlphabeticChar']).value;;
+    let allowdAlpChar = this.editForm.get(['allowedAlphabeticChar']).value;
     let charLen = this.editForm.get(['length']).value;
     let format  = this.editForm.get(['format']).value;
     let hasWhiteSpc = this.editForm.get(['whiteSpaces']).value;
@@ -425,7 +425,9 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     if (this.customField){
       valObjType = 'custom'
     }else {
-      valObjType = this.editForm.get(['propertytype']).value.valueObjectType;
+      if (type === 'property'){
+        valObjType = this.editForm.get(['propertytype']).value.valueObjectType;
+      }
     }
     if (validationType === 'regexString' && valObjType === 'custom' ){
       regxStr = this.editForm.get(['regexString']).value;
