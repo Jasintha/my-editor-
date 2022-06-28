@@ -316,6 +316,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     this.editForm.get('unique').reset();
     this.editForm.get('encript').reset();
     this.editForm.get('allowedAlphabeticChar').reset();
+    this.editForm.get('regexString').reset();
   }
 
   save() {
