@@ -43,10 +43,10 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-md-2">
-                                <button *ngIf="editForm.value.selectedAggregate" mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
+                                <button [disabled]="formDisable" *ngIf="editForm.value.selectedAggregate" mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
                             </div>
-                            <div *ngIf="editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'form-wizard-page' || editForm.value.pagetemplate == 'register-page'" class="col-md-2">
-                                <button *ngIf="editForm.value.selectedAggregate" mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openPageControllerConfig()" cdkFocusInitial>Edit Form Controllers</button>
+                            <div  *ngIf="editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'form-wizard-page' || editForm.value.pagetemplate == 'register-page'" class="col-md-2">
+                                <button [disabled]="formDisable" *ngIf="editForm.value.selectedAggregate" mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openPageControllerConfig()" cdkFocusInitial>Edit Form Controllers</button>
                             </div>
                         </div>
 
@@ -712,7 +712,7 @@
                                             <div class="col-md-4">
                                                 <mat-form-field [style]="{'width':'100%'}">
                                                     <mat-label>Choose Operation</mat-label>
-                                                    <mat-select formControlName="apiOperation"
+                                                    <mat-select  formControlName="apiOperation"
                                                                 [disabled]="formDisable">
                                                         <mat-option *ngFor="let option of crudItems"
                                                                     [value]="option.value">
@@ -807,19 +807,19 @@
                             <div class="col-md-2">
                                 <mat-form-field class="flex-auto" >
                                     <mat-label>Caption</mat-label>
-                                    <input type="text" formControlName="btnCaption" matInput>
+                                    <input [disabled]="formDisable" type="text" formControlName="btnCaption" matInput>
                                 </mat-form-field>
                             </div>
                             <div class="col-md-2">
                                 <mat-form-field class="flex-auto" >
                                     <mat-label>Resource path</mat-label>
-                                    <input type="text" formControlName="btnResourcePath" matInput>
+                                    <input [disabled]="formDisable" type="text" formControlName="btnResourcePath" matInput>
                                 </mat-form-field>
                             </div>
                             <div class="col-md-2">
                                     <mat-form-field class="flex-auto">
                                         <mat-label>Operation</mat-label>
-                                        <mat-select formControlName="btnOperation">
+                                        <mat-select [disabled]="formDisable" formControlName="btnOperation">
                                             <mat-option *ngFor="let option of operationItems" [value]="option.value">
                                                 {{option.label}}
                                             </mat-option>
@@ -829,17 +829,17 @@
                             <div class="col-md-2">
                                 <mat-form-field class="flex-auto" >
                                     <mat-label>Color</mat-label>
-                                    <input type="color" formControlName="btnColor" matInput>
+                                    <input [disabled]="formDisable" type="color" formControlName="btnColor" matInput>
                                 </mat-form-field>
                             </div>
                             <div class="col-md-2">
                                 <mat-form-field class="flex-auto" >
                                     <mat-label>Tooltip</mat-label>
-                                    <input type="text" formControlName="btnTooltip" matInput>
+                                    <input [disabled]="formDisable" type="text" formControlName="btnTooltip" matInput>
                                 </mat-form-field>
                             </div>
                             <div class="col-md-2" style='text-align: center'>
-                                <button type="button"  mat-raised-button (click)="addRow()"><mat-icon>add</mat-icon> ADD</button>
+                                <button [disabled]="formDisable" type="button"  mat-raised-button (click)="addRow()"><mat-icon>add</mat-icon> ADD</button>
                             </div>
                         </div>
 
@@ -898,7 +898,7 @@
                 <div class="col-md-2">
                     <mat-form-field class="flex-auto">
                         <mat-label>Row Id</mat-label>
-                        <mat-select formControlName="rowId" (selectionChange)="changeRowHeader()">
+                        <mat-select [disabled]="formDisable" formControlName="rowId" (selectionChange)="changeRowHeader()">
                             <mat-option *ngFor="let option of rowIdList" [value]="option">
                                 {{option}}
                             </mat-option>
@@ -908,10 +908,10 @@
                 <div class="col-md-2">
                     <mat-form-field class="flex-auto" >
                         <mat-label>Header</mat-label>
-                        <input type="text" formControlName="rowHeader" matInput>
+                        <input [disabled]="formDisable" type="text" formControlName="rowHeader" matInput>
                     </mat-form-field>
                 </div>
-                        <button (click)="saveRowHeader()"
+                        <button [disabled]="formDisable" (click)="saveRowHeader()"
                                 mat-icon-button
                                 type="button">
                             <mat-icon>save</mat-icon>
@@ -934,7 +934,7 @@
 <!--                            <td mat-cell *matCellDef="let element">{{element.rowId}}</td>-->
                             <td *matCellDef="let element; let ind = index" class="w-10 text-secondary" mat-cell>
                                 <mat-form-field>
-                                <mat-select [(value)]="element.rowId" (selectionChange)="onRowIdChange(element.rowId, element.field, ind)" >
+                                <mat-select [disabled]="formDisable" [(value)]="element.rowId" (selectionChange)="onRowIdChange(element.rowId, element.field, ind)" >
                                     <mat-option *ngFor="let option of rowIdList" [value]="option">
                                         {{option}}
                                     </mat-option>

@@ -535,9 +535,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   //   });
   // }
 
-  loadAllSourceTargetFormFieldsForPage() {
-    if (!this.pageId) {
-      // this.loadAll();
+  loadAllSourceTargetFormFieldsForPage(page : IPage) {
+    if (page.rowMappings && page.rowMappings.length > 0) {
+      this.CreateFormFieldTable(page, true);
     } else {
       // this.spinnerService.show();
       this.builtInPageService
@@ -548,21 +548,21 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
           )
           .subscribe(
               (res: ISourceTargetFieldsRequest) => {
-                this.CreateFormFieldTable(res);
+                this.CreateFormFieldTable(res, false);
               },
               (res: HttpErrorResponse) => this.onError(res.message)
           );
     }
   }
 
-  CreateFormFieldTable(res: ISourceTargetFieldsRequest) {
+  CreateFormFieldTable(rowMappingSource: any, isUpdate: boolean) {
     this.rowHeaderMappingArray = [];
     this.rowIdList = [];
     this.rowHeaderList = [];
-    this.sourceTargetFieldsRequest = res;
+    this.sourceTargetFieldsRequest = rowMappingSource;
     this.sourceProperties = this.sourceTargetFieldsRequest.sourceFormFields;
     this.targetProperties = this.sourceTargetFieldsRequest.targetFormFields;
-    if (this.targetProperties) {
+    if (this.targetProperties && !isUpdate) {
       for (let i = 0; i < this.targetProperties.length; i++) {
         const hasChild = this.targetProperties[i] && this.targetProperties[i].children;
         if (!hasChild) {
@@ -577,6 +577,19 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
           });
           this.fieldDataSourceWizard = new MatTableDataSource(this.rowHeaderMappingArray);
         }
+      }
+    } else if (rowMappingSource.rowMappings && isUpdate) {
+      for (let i = 0; i < rowMappingSource.rowMappings.length; i++) {
+          const fieldMapping =  new RowFieldMapping();
+          fieldMapping.field = rowMappingSource.rowMappings[i].propertyName;
+          fieldMapping.rowId = rowMappingSource.rowMappings[i].rowId;
+          this.rowHeaderMappingArray.push(fieldMapping);
+          this.rowIdList.push(fieldMapping.rowId);
+          this.rowHeaderList.push({
+            rowId: fieldMapping.rowId,
+            rowHeader: '',
+          });
+          this.fieldDataSourceWizard = new MatTableDataSource(this.rowHeaderMappingArray);
       }
     }
   }
@@ -635,11 +648,20 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.dashboardPanelDetails.splice(index, 1);
   }
 
-  loadAggregates() {
+  loadAggregates(selectedAggregate? : IAggregate) {
+   let selectedAggr;
     for (let i = 0; i < this.aggregates.length; i++) {
       if (this.aggregates[i].status === 'ENABLED') {
         const dropdownLabel = this.aggregates[i].name;
         this.aggregateItems.push({ label: dropdownLabel, value: this.aggregates[i] });
+      }
+      if (selectedAggregate && selectedAggregate.uuid === this.aggregates[i].uuid) {
+        selectedAggr = this.aggregates[i];
+      }
+      if (selectedAggr) {
+        this.editForm.patchValue({
+          selectedAggregate: selectedAggr,
+        });
       }
     }
   }
@@ -670,12 +692,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         .subscribe(
             (res: IPage) => {
               this.currentPage = res;
-              this.updateForm(res);
-              this.loadAllSourceTargetFormFieldsForPage();
+              this.loadAllSourceTargetFormFieldsForPage(res);
               // this.BTN_ELEMENT_DATA = this.currentPage.buttonPanel;
             //  this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-            }
-        );
+              this.updateForm(res);
+            });
     // this.activatedRoute.data.subscribe(({ builtInPage }) => {
     //   this.currentPage = builtInPage;
     //   this.updateForm(builtInPage);
@@ -942,8 +963,18 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         }
       }
       this.pageTitle = builtInPage.pagetitle;
+      if(builtInPage.buttonPanel) {
+        this.BTN_ELEMENT_DATA = builtInPage.buttonPanel;
+        this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
+      }
+      if(builtInPage.rowMappings) {
+        this.rowHeaderMappingArray = builtInPage.rowMappings;
+        this.fieldDataSourceWizard = new MatTableDataSource(this.rowHeaderMappingArray);
+        this.rowHeaderList = builtInPage.rowHeaders;
+      }
     }
     this.pagestyle = builtInPage.pagestyle;
+    this.loadAggregates(builtInPage.model);
   }
 
   getPageTemplates() {
