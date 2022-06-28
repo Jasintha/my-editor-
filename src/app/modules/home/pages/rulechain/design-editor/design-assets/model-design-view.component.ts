@@ -412,7 +412,9 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
                 name: currentName,
                 propertytype: event.node.data.propertytype,
                 modelId: selectedAg.uuid,
-                projectUid: this.serviceUuid
+                projectUid: this.serviceUuid,
+                valueObjReference: event.node.data.valueObjectReference,
+                valueUpdate: event.node.data
             }
         });
         dialogRef.afterClosed().subscribe((result: any) => {

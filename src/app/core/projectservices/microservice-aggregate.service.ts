@@ -7,6 +7,7 @@ import { IAggregate } from '@shared/models/model/aggregate.model';
 import { IProject } from '@shared/models/model/project.model';
 import { IStatusChangeRequest } from '@shared/models/model/status-change-request.model';
 import {createRequestOption} from '@shared/util/request-util';
+import {IValueObject} from '@home/pages/aggregate/microservice-add-model-dialog.component';
 
 type EntityResponseType = HttpResponse<IAggregate>;
 type EntityArrayResponseType = HttpResponse<IAggregate[]>;
@@ -25,6 +26,8 @@ export class AggregateService {
   public exportResoucreURL =  '/api/editor/proj/aggregates/export';
   public aggregateModelKeysResourceUrl =  '/api/editor/proj/aggregates/keys';
   public checkEntityNameAvailabilityURL =  '/api/editor/proj/aggregates/names';
+  public retrieveAllValueObj = '/api/editor/proj/valueobjects/all';
+  public createValueObject = '/api/editor/proj/valueobjects'
   constructor(protected http: HttpClient) {}
 
   create(aggregate: IAggregate, uuid: string): Observable<EntityResponseType> {
@@ -84,5 +87,17 @@ export class AggregateService {
 
   findNameAvailability(name: string, uuid: string): Observable<HttpResponse<any>> {
     return this.http.get(`${this.checkEntityNameAvailabilityURL}/${uuid}/${name}`, { observe: 'response' });
+  }
+
+  findAllRetrieveValueObj(uuid: string): Observable<HttpResponse<IValueObject[]>> {
+    return this.http.get<IValueObject[]>(`${this.retrieveAllValueObj}/${uuid}`, { observe: 'response' });
+  }
+
+  createValueObj(aggregate: IValueObject, uuid: string): Observable<HttpResponse<IValueObject>> {
+    return this.http.post<IValueObject>(`${this.createValueObject}/${uuid}`, aggregate, { observe: 'response' });
+  }
+
+  findValueObj(uuid: string,id: string): Observable<HttpResponse<IValueObject[]>> {
+    return this.http.get<IValueObject[]>(`${this.createValueObject}/${uuid}/${id}`, { observe: 'response' });
   }
 }
