@@ -9,7 +9,7 @@
 
         <div class="row justify-content-center title-temp">
             <div class="col-md-8">
-                <h3 *ngIf="formDisable">{{pageTitle}}xx</h3>
+                <h3 *ngIf="formDisable">{{pageTitle}}</h3>
                 <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
                     <mat-label>Page Title</mat-label>
                     <input type="text" [(ngModel)]="pageTitle" matInput [ngModelOptions]="{standalone: true}">
@@ -28,6 +28,31 @@
                 <div class="row justify-content-center title-temp">
                     <div class="col-md-12">
                         <h5 *ngIf="formDisable">Filter Table</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 model-type">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <mat-form-field  [style]="{'width':'100%'}">
+                                        <mat-label>Model</mat-label>
+                                        <mat-select formControlName="selectedAggregateTable" (selectionChange)="onChangeFilterTableModel($event,false)"
+                                                    [disabled]="formDisable">
+                                            <mat-option *ngFor="let option of aggregateItems" [value]="option.value">
+                                                {{option.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
+                                </div>
+                            </div>
+                        </div>
+                        <virtuan-microservice-model [aggregateId]="aggregateId" [projectUid]='projectUid'
+                                                    [isCompactView]=true>
+                        </virtuan-microservice-model>
                     </div>
                 </div>
                 <div class="row">
@@ -119,46 +144,6 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-
-                            <div class="wiz-step" *ngIf="filterTableData.value.pagetemplate === 'form-wizard-page'"
-                                 formArrayName="wizardDetailsGroup">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <h6>Add wizard page steps</h6>
-                                    </div>
-                                    <div class="col-md-5" style='text-align: right'>
-                                        <button type="button" style="float: right;" mat-raised-button color="primary"
-                                                (click)="insertWizardDetailsGroup('')" [disabled]="formDisable">
-                                            <mat-icon>add</mat-icon>
-                                            Add More
-                                        </button>
-                                    </div>
-                                </div>
-                                <div style="padding-top: 10px"
-                                     *ngFor="let step of wizardDetailsGroup.controls; let i = index">
-                                    <div [formGroup]="step">
-                                        <label class="form-control-label" for="field_pagetitle">Step Header</label>
-                                        <div class="row">
-                                            <div class="col-md-10">
-                                                <mat-form-field [style]="{'width':'100%'}">
-                                                    <!--                                                        <mat-label>Add authorized role</mat-label>-->
-                                                    <input type="text" [readonly]="formDisable"
-                                                           formControlName="stepHeading" matInput name="stepHeading">
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-2">
-                                            <span class="flex-auto">
-                                                <button type="button" mat-mini-fab
-                                                        aria-label="Example icon-button with a heart icon"
-                                                        (click)="removeWizardDetailsGroup(i)" [disabled]="formDisable">
-                                                    <mat-icon>delete</mat-icon>
-                                                </button>
-                                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </ng-container>
                         <div class="row mt-3">
                             <div class="col-3">
@@ -180,31 +165,6 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 model-type">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <mat-form-field  [style]="{'width':'100%'}">
-                                        <mat-label>Model</mat-label>
-                                        <mat-select formControlName="selectedAggregateTable" (selectionChange)="onChangeFilterTableModel($event,false)"
-                                                    [disabled]="formDisable">
-                                            <mat-option *ngFor="let option of aggregateItems" [value]="option.value">
-                                                {{option.label}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-2">
-                                    <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
-                                </div>
-                            </div>
-                        </div>
-                        <virtuan-microservice-model [aggregateId]="aggregateId" [projectUid]='projectUid'
-                                                    [isCompactView]=true>
-                        </virtuan-microservice-model>
                     </div>
                 </div>
             </form>

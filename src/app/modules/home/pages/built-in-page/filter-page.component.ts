@@ -519,11 +519,27 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
         this.dashboardPanelDetails.splice(index, 1);
     }
 
-    loadAggregates() {
+    loadAggregates(selectedAggregate? : IAggregate, isFilterForm?:  boolean) {
+        let selectedAggr;
         for (let i = 0; i < this.aggregates.length; i++) {
             if (this.aggregates[i].status === 'ENABLED') {
                 const dropdownLabel = this.aggregates[i].name;
                 this.aggregateItems.push({ label: dropdownLabel, value: this.aggregates[i] });
+            }
+            if (selectedAggregate && selectedAggregate.uuid === this.aggregates[i].uuid) {
+                selectedAggr = this.aggregates[i];
+            }
+            if (selectedAggr) {
+                if(isFilterForm) {
+                    this.filterFormData.patchValue({
+                        selectedAggregateForm: selectedAggr,
+                    });
+                }  else {
+                    this.filterTableData.patchValue({
+                        selectedAggregateTable: selectedAggr,
+                    });
+                }
+
             }
         }
     }
@@ -554,7 +570,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             .subscribe(
                 (res: IPage) => {
                     this.currentPage = res;
-                    this.updateForm(res);
+                    this.updateFilterTabledata(res);
                     if(this.currentPage.attachedPage) {
                         this.loadFilterFormPage(this.currentPage.attachedPage);
                     }
@@ -613,6 +629,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             .subscribe(
                 (res: IPage) => {
                     this.filterFormPage = res;
+                    this.updateFilterFormdata(res)
                 }
             );
     }
@@ -786,7 +803,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
         }
     }
 
-    updateForm(builtInPage: IPage) {
+    updateFilterTabledata(builtInPage: IPage) {
         if (builtInPage.model && builtInPage.model.config) {
             this.onChangeFilterFormModel(builtInPage.model, true);
         }
@@ -824,6 +841,23 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             this.pageTitle = builtInPage.pagetitle;
         }
         this.pagestyle = builtInPage.pagestyle;
+        this.loadAggregates(builtInPage.model, false)
+    }
+
+    updateFilterFormdata(builtInPage: IPage) {
+        if (this.project.apptypesID === 'task.ui') {
+            this.filterFormData.patchValue({
+                id: builtInPage.uuid,
+                apiType: builtInPage.apiType,
+                selectedAggregateForm: builtInPage.model,
+                resourcePath: builtInPage.resourcePath,
+                pagetemplate: builtInPage.pagetemplate,
+                authority: builtInPage.authority,
+                projectUuid: this.projectUid,
+                isHomepage: builtInPage.isHomepage,
+            });
+        }
+        this.loadAggregates(builtInPage.model, true)
     }
     loadEntities() {
         for (let i = 0; i < this.datamodels.length; i++) {
@@ -854,7 +888,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
         if (this.project.apptypesID === 'task.ui') {
             return {
                 ...new Page(),
-                uuid: this.filterTableData.get(['id']).value,
+                uuid: this.pageId,
                 model: this.filterTableData.get(['selectedAggregateTable']).value,
                 pagetitle: this.pageTitle,
                 pagetemplate: 'filter-page',
