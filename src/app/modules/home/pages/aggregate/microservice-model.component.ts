@@ -77,6 +77,19 @@ export class MicroserviceModelComponent implements OnInit, OnChanges {
 
   deleteNode(e) {
     this.removeNode(this.data);
+      const aggregateData = { aggregateId: this.modelUid, data: this.data };
+      this.aggregateService
+          .saveModelDesign(aggregateData, this.projectUid)
+          .pipe(
+              filter((res: HttpResponse<any>) => res.ok),
+              map((res: HttpResponse<any>) => res.body)
+          )
+          .subscribe(
+              (res: any) => {
+                  this.loadDesign();
+              },
+              (res: HttpErrorResponse) => this.onError()
+          );
   }
 
   editNode(node) {

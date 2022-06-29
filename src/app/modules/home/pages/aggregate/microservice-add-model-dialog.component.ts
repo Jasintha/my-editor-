@@ -316,6 +316,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     this.editForm.get('unique').reset();
     this.editForm.get('encript').reset();
     this.editForm.get('allowedAlphabeticChar').reset();
+    this.editForm.get('regexString').reset();
   }
 
   save() {
@@ -402,12 +403,12 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     let propType;
     let valueObjType;
     let range = this.editForm.get(['range']).value;
-    let requiredChar = this.editForm.get(['requiredChar']).value;;
-    let encript = this.editForm.get(['encript']).value;;
+    let requiredChar = this.editForm.get(['requiredChar']).value;
+    let encript = this.editForm.get(['encript']).value;
     let unique = this.editForm.get(['unique']).value;
     let domain;
     let hasAlpchar = this.editForm.get(['alphabeticChar']).value;
-    let allowdAlpChar = this.editForm.get(['allowedAlphabeticChar']).value;;
+    let allowdAlpChar = this.editForm.get(['allowedAlphabeticChar']).value;
     let charLen = this.editForm.get(['length']).value;
     let format  = this.editForm.get(['format']).value;
     let hasWhiteSpc = this.editForm.get(['whiteSpaces']).value;
@@ -420,7 +421,15 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     let propertyTypeToSave = '';
     let valueObjReference = '';
     const validationType = this.editForm.get(['selectedValidateType']).value;
-    if (validationType === 'regexString' && this.editForm.get(['propertytype']).value.valueObjectType === 'custom' ){
+    let valObjType;
+    if (this.customField){
+      valObjType = 'custom'
+    }else {
+      if (type === 'property'){
+        valObjType = this.editForm.get(['propertytype']).value.valueObjectType;
+      }
+    }
+    if (validationType === 'regexString' && valObjType === 'custom' ){
       regxStr = this.editForm.get(['regexString']).value;
       if (this.editForm.get(['propertytype']).value){
         const regex = this.editForm.get(['propertytype']).value.regexString;
