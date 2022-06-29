@@ -46,7 +46,7 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-2">
-                                    <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
+                                    <button [disabled]="formDisable" mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
                                 </div>
                             </div>
                         </div>
@@ -231,8 +231,8 @@
                             </div>
                             <mat-form-field [style]="{'width':'100%'}">
                                 <mat-label>Resource Path</mat-label>
-                                <input type="text" formControlName="resourcePath" matInput name="resourcepath" [readonly]="formDisable">
-                                <mat-error *ngIf="filterFormData.controls.resourcePath.hasError('required')">This field is
+                                <input type="text" formControlName="formResourcePath" matInput name="formResourcePath" [readonly]="formDisable">
+                                <mat-error *ngIf="filterFormData.controls.formResourcePath.hasError('required')">This field is
                                     required
                                 </mat-error>
                             </mat-form-field>
@@ -256,7 +256,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-md-2">
-                                <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
+                                <button [disabled]="formDisable" mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openViewModelChangeDialog()" cdkFocusInitial> Edit View Model</button>
                             </div>
                             <div *ngIf="filterFormData.value.pagetemplate == 'filter-page'" class="col-md-2">
                                 <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " (click)="openPageControllerConfig()" cdkFocusInitial>Edit Form Controllers</button>

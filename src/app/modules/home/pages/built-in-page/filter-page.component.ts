@@ -186,7 +186,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             isSecurePage: false,
             authority: '',
             isHomepage: false,
-            resourcePath: [],
+            formResourcePath: [],
             selectedAggregateForm: [],
             paramType: [],
             paramName: [],
@@ -220,8 +220,8 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
 
         this.filterTableData.get('pagetemplate').valueChanges.subscribe(pagetemplate => {
             if (apptype === 'task.ui') {
-                this.filterFormData.get('resourcePath').setValidators([Validators.required]);
-                this.filterFormData.get('resourcePath').updateValueAndValidity();
+                this.filterFormData.get('formResourcePath').setValidators([Validators.required]);
+                this.filterFormData.get('formResourcePath').updateValueAndValidity();
                 this.filterTableData.get('resourcePath').setValidators([Validators.required]);
                 this.filterTableData.get('resourcePath').updateValueAndValidity();
                 this.filterFormData.get('selectedAggregateForm').setValidators([Validators.required]);
@@ -809,7 +809,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
         }
         if (builtInPage.authority) {
             this.filterTableData.patchValue({
-                isSecurePage: true,
+                attachedPageLocation: true,
             });
         }
         if (this.project.apptypesID === 'task.ui') {
@@ -841,6 +841,11 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             this.pageTitle = builtInPage.pagetitle;
         }
         this.pagestyle = builtInPage.pagestyle;
+        if(builtInPage.attachedPageLocation) {
+            this.filterTableData.patchValue({
+                attachedPageLocation: builtInPage.attachedPageLocation,
+            });
+        }
         this.loadAggregates(builtInPage.model, false)
     }
 
@@ -850,7 +855,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 id: builtInPage.uuid,
                 apiType: builtInPage.apiType,
                 selectedAggregateForm: builtInPage.model,
-                resourcePath: builtInPage.resourcePath,
+                formResourcePath: builtInPage.resourcePath,
                 pagetemplate: builtInPage.pagetemplate,
                 authority: builtInPage.authority,
                 projectUuid: this.projectUid,
@@ -918,13 +923,13 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 ...new Page(),
                 uuid: this.filterFormPage.uuid,
                 model: this.filterFormData.get(['selectedAggregateForm']).value,
-                pagetitle: this.pageTitle,
+                pagetitle: 'filter-form_ '+this.pageTitle,
                 pagetemplate: 'filter-form',
                 pagetype: 'filter-form',
                 params: this.apiParams,
                 loginParams: this.loginParams,
                 apiResourceDetails: this.apiResourceDetails,
-                resourcePath: this.filterTableData.get(['resourcePath']).value,
+                resourcePath: this.filterFormData.get(['formResourcePath']).value,
                 status: 'ENABLED',
                 projectUuid: this.projectUid,
                 pagestyle: this.pagestyle,
