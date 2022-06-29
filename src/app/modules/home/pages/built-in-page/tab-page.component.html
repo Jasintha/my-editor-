@@ -81,7 +81,7 @@
                 <div class="row" style="margin: 10px">
                     <div class="col-8">
                         <mat-form-field class="flex-auto" style="width: 100%">
-                            <mat-label>Select Page</mat-label>
+                            <mat-label>Change Page</mat-label>
                             <mat-select (selectionChange)="onTabPageChange(index)"  formControlName="page">
                                 <mat-option *ngFor="let option of pages" [value]="option.value">
                                     {{option.label}}
@@ -89,12 +89,16 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-
                 </div>
-
-
-
-
+                <div class="row">
+                    <div *ngIf="tab && tab.page" class="col-md-4">
+                        <div style="border: 2px solid grey">
+                            <h5>selected page</h5>
+                            <div>  title : {{tab.page.pagetitle}}  </div>
+                            <div> type : {{tab.page.pagetemplate}}  </div>
+                        </div>
+                    </div>
+                </div>
             </mat-tab>
         </mat-tab-group>
 
