@@ -308,7 +308,9 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
             map((res: HttpResponse<any>) => res.body)
           )
           .subscribe(
-            (res: any) => {},
+            (res: any) => {
+              this.loadDesign();
+            },
             (res: HttpErrorResponse) => this.onError()
           );
   }
@@ -368,6 +370,22 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
     return node;
   }
 
+  loadDesign() {
+    this.aggregateService
+        .findDesignById(this.configuration.modeluuid,this.serviceUuid)
+        .pipe(
+            filter((res: HttpResponse<TreeNode>) => res.ok),
+            map((res: HttpResponse<TreeNode>) => res.body)
+        )
+        .subscribe(
+            (res: TreeNode) => {
+              this.modeldata = [];
+              this.modeldata.push(res);
+            },
+            (res: HttpErrorResponse) => this.onError()
+        );
+  }
+
 
   editModel(event) {
     let selectedAg = this.modelNodeConfigFormGroup.get(['modelselection']).value;
@@ -422,7 +440,9 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
             map((res: HttpResponse<any>) => res.body)
           )
           .subscribe(
-            (res: any) => {},
+            (res: any) => {
+              this.loadDesign();
+            },
             (res: HttpErrorResponse) => this.onError()
           );
         }
@@ -462,7 +482,9 @@ export class ModelNodeConfigComponent implements ControlValueAccessor, OnInit, O
             map((res: HttpResponse<any>) => res.body)
           )
           .subscribe(
-            (res: any) => {},
+            (res: any) => {
+              this.loadDesign();
+            },
             (res: HttpErrorResponse) => this.onError()
           );
       }

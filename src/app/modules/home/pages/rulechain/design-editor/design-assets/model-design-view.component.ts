@@ -93,6 +93,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
     createdNewModel = false;
 
     @Input() isNodeEdit: boolean;
+    modelUID:string;
 
     nodeDefinitionValue: RuleNodeDefinition;
 
@@ -154,6 +155,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         this.serviceUuid = this.data.serviceUuid;
         this.projectUid = this.data.projectUid;
         this.storyuuid =  this.data.storyUuid;
+        this.modelUID = this.data.story.modelUUID;
         this.isSaving =  false;
         this.createdNewModel = false;
         if (this.data.story.modelUUID){
@@ -277,6 +279,24 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         }
     }
 
+    loadDesign() {
+        this.aggregateService
+            .findDesignById(this.modelUID,this.serviceUuid)
+            .pipe(
+                filter((res: HttpResponse<TreeNode>) => res.ok),
+                map((res: HttpResponse<TreeNode>) => res.body)
+            )
+            .subscribe(
+                (res: TreeNode) => {
+                    this.modeldata = [];
+                    this.modeldata.push(res);
+
+                    this.expandAll();
+                },
+                (res: HttpErrorResponse) => this.onError()
+            );
+    }
+
 
     loadAggregatesForService(storyModelUuid) {
         this.aggregateService
@@ -337,7 +357,9 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
                 map((res: HttpResponse<any>) => res.body)
             )
             .subscribe(
-                (res: any) => {},
+                (res: any) => {
+                    this.loadDesign();
+                },
                 (res: HttpErrorResponse) => this.onError()
             );
     }
@@ -451,7 +473,9 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
                         map((res: HttpResponse<any>) => res.body)
                     )
                     .subscribe(
-                        (res: any) => {},
+                        (res: any) => {
+                            this.loadDesign();
+                        },
                         (res: HttpErrorResponse) => this.onError()
                     );
             }
@@ -491,7 +515,9 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
                         map((res: HttpResponse<any>) => res.body)
                     )
                     .subscribe(
-                        (res: any) => {},
+                        (res: any) => {
+                            this.loadDesign();
+                        },
                         (res: HttpErrorResponse) => this.onError()
                     );
             }
@@ -632,6 +658,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         if (this.modelNodeConfigFormGroup.get(['createType']).value && (this.modelNodeConfigFormGroup.get(['modelselection']).value || this.modelNodeConfigFormGroup.get(['modelName']).value)){
             if (this.modelNodeConfigFormGroup.get(['createType']).value === 'Existing'){
                 const selectedModel = this.modelNodeConfigFormGroup.get(['modelselection']).value;
+                this.modelUID = selectedModel.uuid;
                 this.aggregateService
                     .findDesignById(selectedModel.uuid,this.serviceUuid)
                     .pipe(
@@ -721,6 +748,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         this.createdNewModel = true;
         this.modeldata = [];
         this.newCreatedAggregate = res.body;
+        this.modelUID = this.newCreatedAggregate.uuid;
         this.loadAggregatesForService('');
         this.modelNodeConfigFormGroup.patchValue({
             createType: 'Existing',
