@@ -348,6 +348,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.apiResourceDetails = [];
     this.dashboardPanelDetails = [];
     this.BTN_ELEMENT_DATA = [];
+    this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
     this.activatedRoute.params.subscribe(params => {
       // this.projectId = params['projId'];
       // this.projectUid = params.projectUid;
