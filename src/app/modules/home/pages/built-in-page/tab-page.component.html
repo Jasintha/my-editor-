@@ -92,11 +92,17 @@
                 </div>
                 <div class="row">
                     <div *ngIf="tab && tab.page" class="col-md-4">
-                        <div style="border: 2px solid grey">
-                            <h5>selected page</h5>
-                            <div>  title : {{tab.page.pagetitle}}  </div>
-                            <div> type : {{tab.page.pagetemplate}}  </div>
-                        </div>
+                        <mat-card style=" margin: 10px; box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;">
+                            <mat-card-header>
+                                <mat-card-title>Selected Page</mat-card-title>
+                            </mat-card-header>
+                            <mat-divider></mat-divider>
+                            <img mat-card-image src="/assets/images/new_pages/page_wireframes/form.jpg" style="height: 260px" alt="">
+                            <mat-card-content>
+                                    <p style="font-size: 15px" class="mb-0"><strong>Title :</strong> {{tab.page.pagetitle}}</p>
+                                    <p style="font-size: 15px"><strong>Type :</strong> {{tab.page.pagetemplate}}</p>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                 </div>
             </mat-tab>
