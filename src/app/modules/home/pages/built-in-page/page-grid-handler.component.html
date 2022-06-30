@@ -1,5 +1,5 @@
-<div>
-    <h2    style="margin-bottom: -135px;"  id="page-heading">
+<div style="padding: 20px;">
+    <h2 style="margin-bottom: -135px;"  id="page-heading">
         <span *ngIf="formDisable">{{pageTitle}}</span>
         <div *ngIf="!formDisable" class="form-group">
             <form name="editForm" role="form" novalidate  [formGroup]="editForm">
@@ -51,9 +51,13 @@
             </div>
         </div>
     </div>
+
+  <div style="display: flex; justify-content: end; padding-top: 25px">
     <button type="submit"
             (click)="previousState()"
-            class="btn " style="margin-right: 8px; background-color: #6D7F8B; color: white; float: left ">
-        <i class="fas fa-arrow-left"></i>&nbsp;<span> Back</span>
+            class="btn " style="margin-right: 63px; background-color: #6D7F8B; color: white; float: left ">
+      <i class="fas fa-arrow-left"></i>&nbsp;<span> Back</span>
     </button>
+  </div>
+
     </div>
