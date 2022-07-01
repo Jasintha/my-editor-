@@ -43,6 +43,7 @@ import { PickListModule } from 'primeng/picklist';
 import {CustomPageViewComponent} from '@home/pages/built-in-page/custom-page.component';
 import {CustomPageApiDialogComponent} from '@home/pages/built-in-page/custom-page-api-dialog.component';
 import {FilterPageComponent} from '@home/pages/built-in-page/filter-page.component';
+import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
 
 @NgModule({
     declarations:[
@@ -57,7 +58,8 @@ import {FilterPageComponent} from '@home/pages/built-in-page/filter-page.compone
         ViewModelConfigComponent,
         CustomPageViewComponent,
         CustomPageApiDialogComponent,
-        FilterPageComponent
+        FilterPageComponent,
+        ModelChangeConfirmDialogComponent
     ],
     imports: [
         CommonModule,
@@ -106,7 +108,8 @@ import {FilterPageComponent} from '@home/pages/built-in-page/filter-page.compone
         ViewModelConfigComponent,
         CustomPageViewComponent,
         CustomPageApiDialogComponent,
-        FilterPageComponent
+        FilterPageComponent,
+        ModelChangeConfirmDialogComponent
     ],
     providers: [ ]
 })
