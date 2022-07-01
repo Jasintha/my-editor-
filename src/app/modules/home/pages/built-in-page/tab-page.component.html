@@ -97,7 +97,17 @@
                                 <mat-card-title>Selected Page</mat-card-title>
                             </mat-card-header>
                             <mat-divider></mat-divider>
-                            <img mat-card-image src="/assets/images/new_pages/page_wireframes/form.jpg" style="height: 260px" alt="">
+                            <img *ngIf="tab.page.pagetemplate === 'form-page'" mat-card-image src="/assets/images/new_pages/page_wireframes/form.jpg" style="height: 260px" alt="">
+                            <img *ngIf="tab.page.pagetemplate === 'table-page' || tab.page.pagetemplate === 'aio-table'" mat-card-image src="/assets/images/new_pages/page_wireframes/table.jpg" style="height: 260px" alt="">
+                            <img *ngIf="tab.page.pagetemplate === 'login-page'" mat-card-image src="/assets/images/new_pages/page_wireframes/Login.jpg" style="height: 260px" alt="">
+                            <img *ngIf="tab.page.pagetemplate === 'register-page'" mat-card-image src="/assets/images/new_pages/page_wireframes/register.jpg" style="height: 260px" alt="">
+<!--                            <img *ngIf="tab.page.pagetemplate === 'aio-table'" mat-card-image src="/assets/images/new_pages/page_wireframes/table.jpg" style="height: 260px" alt="">-->
+                            <img *ngIf="tab.page.pagetemplate === 'aio-grid' || tab.page.pagetemplate === 'grid-page'" mat-card-image src="/assets/images/new_pages/page_wireframes/Gridpage.jpg" style="height: 260px" alt="">
+                            <img *ngIf="tab.page.pagetemplate === 'form-wizard-page'" mat-card-image src="/assets/images/new_pages/page_wireframes/wizardpage.jpg" style="height: 260px" alt="">
+                            <img *ngIf="tab.page.pagetemplate === 'custom'" mat-card-image src="/assets/images/new_pages/page_wireframes/Custompage.jpg" style="height: 260px" alt="">
+                            <img *ngIf="tab.page.pagetemplate === 'tab-page'" mat-card-image src="/assets/images/new_pages/page_wireframes/tabpage.jpg" style="height: 260px" alt="">
+                            <img *ngIf="tab.page.pagetemplate === 'static-page'" mat-card-image src="/assets/images/new_pages/page_wireframes/staticpage.jpg" style="height: 260px" alt="">
+                            <img *ngIf="tab.page.pagetemplate === 'filter-page'" mat-card-image src="/assets/images/new_pages/page_wireframes/filterpage.jpg" style="height: 260px" alt="">
                             <mat-card-content>
                                     <p style="font-size: 15px" class="mb-0"><strong>Title :</strong> {{tab.page.pagetitle}}</p>
                                     <p style="font-size: 15px"><strong>Type :</strong> {{tab.page.pagetemplate}}</p>
