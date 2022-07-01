@@ -250,16 +250,17 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
                   let selectedAPIInputs = this.configuration.apiInput;
                   if(selectedAPIInputs && this.items){
                     selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
+                    this.processNodeConfigFormGroup.patchValue({
+                      selectedAPIInputs: selectedAPIInputs.value,
+                    });
                   }
                   let returnObject = this.configuration.returnObject;
                   if(returnObject && this.returnObject){
                     returnObject = this.returnObject.find(x => (x.value.id === this.configuration.returnObject.id) && (x.value.inputType === this.configuration.returnObject.inputType) && (x.value.inputName === this.configuration.returnObject.inputName));
+                    this.processNodeConfigFormGroup.patchValue({
+                      returnObject: returnObject.value
+                    });
                   }
-
-                  this.processNodeConfigFormGroup.patchValue({
-                      selectedAPIInputs: selectedAPIInputs,
-                      returnObject: returnObject
-                  });
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
