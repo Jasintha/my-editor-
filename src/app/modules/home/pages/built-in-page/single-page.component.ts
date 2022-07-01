@@ -34,6 +34,8 @@ import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigati
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 import {IButtonType} from '@shared/models/model/button-type.model';
 import {IFormField, IRowFieldMapping, IRowHeader, ISourceTargetFieldsRequest, RowFieldMapping} from '@shared/models/model/form-field.model';
+import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-in-page-delete-dialog.component';
+import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -348,6 +350,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.apiResourceDetails = [];
     this.dashboardPanelDetails = [];
     this.BTN_ELEMENT_DATA = [];
+    this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
     this.activatedRoute.params.subscribe(params => {
       // this.projectId = params['projId'];
       // this.projectUid = params.projectUid;
@@ -480,7 +483,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
           this.modelPropertyList.push({ label: dropdownLabel, value: dropdownLabel });
         }
       }
-      this.notifyModelChange(currentDatamodel);
+      this.changePageModel(currentDatamodel);
     }
   }
 
@@ -502,6 +505,21 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     if(this.rowHeaderMappingArray[index].field === field) {
       this.rowHeaderMappingArray[index].rowId = rowId;
     }
+  }
+
+  changePageModel(currentDatamodel : IAggregate) {
+    const dialogRef = this.dialog.open(ModelChangeConfirmDialogComponent, {
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+    });
+    dialogRef.afterClosed(
+    ).subscribe(result => {
+      if (result) {
+       const page = this.getChangedPageModel(currentDatamodel);
+       this.notifyModelChange(currentDatamodel);
+       this.save(page);
+      }
+    });
+//         return false;
   }
 
   saveRowHeader() {
@@ -900,9 +918,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   updateForm(builtInPage: IPage) {
-    if (builtInPage.model && builtInPage.model.config) {
-      this.onChangePageModel(builtInPage.model, true);
-    }
+    // if (builtInPage.model && builtInPage.model.config) {
+    //   this.onChangePageModel(builtInPage.model, true);
+    // }
     if (builtInPage.authority) {
       this.editForm.patchValue({
         isSecurePage: true,
@@ -1065,6 +1083,13 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
+  getChangedPageModel(currentDatamodel){
+    return {
+      ...this.currentPage,
+      model: currentDatamodel,
+    };
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPage>>) {
     result.subscribe(
         () => this.onSaveSuccess(),
@@ -1084,6 +1109,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
     this.pageTitle = this.editForm.get(['pagetitle']).value;
     // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Form saved' });
+    this.loadPage();
     this.enableToEdit();
   }
 
