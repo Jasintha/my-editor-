@@ -341,7 +341,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
       if (pageViewType === 'singleWidget') {
         this.gridStyle = 'none';
         pageType = 'api-page';
-      }  if ('filter-form') {
+      }  if (pageViewType === 'filter-form') {
         this.gridStyle = 'none';
         pageType = 'filter-form';
       }

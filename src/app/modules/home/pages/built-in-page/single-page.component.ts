@@ -89,7 +89,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   detailsHeadersList: SelectItem[] = [];
   stepIndexId = 1;
   headerIndexId = 1;
-  displayedColumns: string[] = ['caption', 'resourcepath', 'operation','color', 'tooltip', 'actions'];
+  displayedColumns: string[] = ['caption', 'resourcepath', 'operation', 'page', 'color', 'tooltip', 'actions'];
   BTN_ELEMENT_DATA: IButtonType[];
   dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
   displayedStepHeaderColumns: string[] = ['field', 'stepheader', 'actions'];
@@ -103,7 +103,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   rowIdList = [];
   rowHeaderList: IRowHeader[] = [];
   fieldMapDisplayedColumns: string[] = ['field','rowId'];
-
+  allpages = [];
+  pages = [];
   displayedDetailHeaderColumns: string[] = ['field', 'detailsHeader', 'actions'];
   DETAILS_DATA = [];
   dataSourceDetailsPage = new MatTableDataSource(this.DETAILS_DATA);
@@ -140,6 +141,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'Find', value: 'Find' },
     { label: 'Delete', value: 'Delete' },
     { label: 'Update', value: 'Update' },
+    { label: 'Navigation', value: 'Navigation' },
   ];
   paramDataTypeItems: SelectItem[] = [
     { label: 'TEXT', value: 'TEXT' },
@@ -147,6 +149,10 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'FLOAT', value: 'FLOAT' },
     { label: 'TRUE_OR_FALSE', value: 'TRUE_OR_FALSE' },
     { label: 'DATE', value: 'DATE' },
+  ];
+  tabLayouts: SelectItem[] = [
+    { label: 'Vertical', value: 'Vertical' },
+    { label: 'Horizontal', value: 'Horizontal' },
   ];
   editForm: FormGroup;
   formDisable: boolean;
@@ -191,10 +197,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       btnCaption: [],
       btnResourcePath: [],
       btnOperation: [],
+      navigatePage: [],
       btnColor: [],
       btnTooltip: [],
       rowId: [],
       rowHeader: [],
+      wizardLayout: '',
       wizardDetailsGroup: this.fb.array([
         new FormGroup({
           stepHeading: this.fb.control('Step 1'),
@@ -351,6 +359,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.dashboardPanelDetails = [];
     this.BTN_ELEMENT_DATA = [];
     this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
+    this.loadAllPages();
     this.activatedRoute.params.subscribe(params => {
       // this.projectId = params['projId'];
       // this.projectUid = params.projectUid;
@@ -395,6 +404,13 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     const btnOperation = this.editForm.get(['btnOperation']).value;
     const btnColor = this.editForm.get(['btnColor']).value;
     const btnTooltip = this.editForm.get(['btnTooltip']).value;
+    const navigatePage = this.editForm.get(['navigatePage']).value;
+    let pageId = '';
+    let pageName = '';
+      if(navigatePage) {
+        pageId = navigatePage.uuid;
+        pageName = navigatePage.pagetitle;
+      }
 
     if (btnCaption !== null || btnResourcePath !== '' || btnOperation !== null) {
       const button: IButtonType = {
@@ -403,6 +419,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         operation: btnOperation,
         color: btnColor,
         tooltip: btnTooltip,
+        pageId,
+        pageName
       };
       this.BTN_ELEMENT_DATA.push(button);
       this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
@@ -412,8 +430,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   deleteRow(param) {
-    const index = this.apiParams.indexOf(param);
-    this.apiParams.splice(index, 1);
+    const index = this.BTN_ELEMENT_DATA.indexOf(param);
+    this.BTN_ELEMENT_DATA.splice(index, 1);
+    this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
   }
 
   addParamMapping() {
@@ -514,9 +533,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     dialogRef.afterClosed(
     ).subscribe(result => {
       if (result) {
-       const page = this.getChangedPageModel(currentDatamodel);
-       this.notifyModelChange(currentDatamodel);
-       this.save(page);
+        const page = this.getChangedPageModel(currentDatamodel);
+        this.notifyModelChange(currentDatamodel);
+        this.save(page);
       }
     });
 //         return false;
@@ -698,6 +717,34 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+  }
+
+  loadAllPages() {
+    if (this.projectUid) {
+      this.builtInPageService
+          .findBuiltInPagesForProjectId(this.projectUid, this.projectUid)
+          .pipe(
+              filter((res: HttpResponse<IPage[]>) => res.ok),
+              map((res: HttpResponse<IPage[]>) => res.body)
+          )
+          .subscribe(
+              (res: IPage[]) => {
+                for(const page of res) {
+                  if (page.uuid !== this.pageId) {
+                    this.allpages.push(page);
+                  }
+                }
+                this.loadPages();
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );}
+  }
+
+  loadPages() {
+    for (let i = 0; i < this.allpages.length; i++) {
+      const dropdownLabel = this.allpages[i].pagetitle;
+      this.pages.push({ label: dropdownLabel, value: this.allpages[i] });
+    }
   }
 
   loadUpdateForm() {
@@ -1078,7 +1125,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         isHomepage: this.editForm.get(['isHomepage']).value,
         buttonPanel: this.BTN_ELEMENT_DATA,
         rowHeaders: this.rowHeaderList,
-        rowMappings: this.rowHeaderMappingArray
+        rowMappings: this.rowHeaderMappingArray,
+        tabLayout: this.editForm.get(['wizardLayout']).value,
       };
     }
   }
@@ -1312,8 +1360,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
     for (let i = 0; i < allStepControllers.length; i++) {
       const wizardStepObj = {
-        StepHeader: allStepControllers[i]['controls'].stepHeading.value,
-        StepId: allStepControllers[i]['controls'].stepId.value,
+        StepHeader: allStepControllers[i].controls.stepHeading.value,
+        StepId: allStepControllers[i].controls.stepId.value,
       };
       wizardStepObjArray.push(wizardStepObj);
     }

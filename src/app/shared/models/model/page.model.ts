@@ -48,6 +48,7 @@ export interface IPage {
   buttonPanel?: IButtonType[];
   rowHeaders?: any[];
   rowMappings?: any[];
+  tabLayout?: string;
 }
 
 export class Page implements IPage {
@@ -92,5 +93,6 @@ export class Page implements IPage {
     public buttonPanel? : IButtonType[],
     public rowHeaders?: any[],
     public rowMappings?: any[],
+    public tabLayout?: string,
   ) {}
 }

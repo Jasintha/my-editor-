@@ -5,6 +5,8 @@ export interface IButtonType {
     operation?: string;
     color?: string;
     tooltip?: string;
+    pageId?: string;
+    pageName?: string;
 }
 
 export class ButtonType implements IButtonType {
@@ -14,5 +16,7 @@ export class ButtonType implements IButtonType {
                 public operation?: string,
                 public color?: string,
                 public tooltip?: string,
+                public pageId?: string,
+                public pageName?: string,
     ) {}
 }
