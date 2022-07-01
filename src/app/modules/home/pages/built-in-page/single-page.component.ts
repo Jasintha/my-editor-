@@ -526,19 +526,21 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
-  changePageModel(currentDatamodel : IAggregate) {
-    const dialogRef = this.dialog.open(ModelChangeConfirmDialogComponent, {
-      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-    });
-    dialogRef.afterClosed(
-    ).subscribe(result => {
-      if (result) {
-        const page = this.getChangedPageModel(currentDatamodel);
-        this.notifyModelChange(currentDatamodel);
-        this.save(page);
-      }
-    });
-//         return false;
+  changePageModel(selectedModel : IAggregate) {
+    const currentModel = this.currentPage.model;
+    if(currentModel) {
+      const dialogRef = this.dialog.open(ModelChangeConfirmDialogComponent, {
+        panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+      });
+      dialogRef.afterClosed(
+      ).subscribe(result => {
+        if (result) {
+          const page = this.getChangedPageModel(selectedModel);
+          this.notifyModelChange(selectedModel);
+          this.save(page);
+        }
+      });
+    }
   }
 
   saveRowHeader() {
@@ -1006,6 +1008,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         authority: builtInPage.authority,
         projectUuid: this.projectUid,
         isHomepage: builtInPage.isHomepage,
+        wizardLayout: builtInPage.tabLayout
       });
       if (builtInPage && builtInPage.stepHeaders && builtInPage.stepHeaders.length > 0) {
         this.wizardDetailsGroup.removeAt(0);
@@ -1134,6 +1137,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   getChangedPageModel(currentDatamodel){
     return {
       ...this.currentPage,
+      rowMappings: [],
+      rowHeader: [],
+      stepHeaders: [],
+      stepMappings: [],
+      params: [],
+      loginParams: [],
       model: currentDatamodel,
     };
   }
@@ -1158,7 +1167,6 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.pageTitle = this.editForm.get(['pagetitle']).value;
     // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Form saved' });
     this.loadPage();
-    this.enableToEdit();
   }
 
   protected onSaveError() {
