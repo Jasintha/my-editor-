@@ -106,8 +106,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   allpages = [];
   pages = [];
   displayedDetailHeaderColumns: string[] = ['field', 'detailsHeader', 'actions'];
-  DETAILS_DATA = [];
-  dataSourceDetailsPage = new MatTableDataSource(this.DETAILS_DATA);
+  dataSourceDetailsPage = new MatTableDataSource(this.headerFieldArr);
 
   displayedLoginParamColumns: string[] = ['input', 'param', 'actions'];
   LOGIN_DATA = [];
@@ -494,15 +493,19 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       this.modelPropertyList = [];
       let currentDatamodel: IAggregate;
       currentDatamodel = edit ? event : event.value;
-      let currentDatamodeProperties: IProperty[];
-      currentDatamodeProperties = edit ? event.config.children : event.value.config.children;
-      for (let i = 0; i < currentDatamodeProperties.length; i++) {
-        if (currentDatamodeProperties[i].data.type === 'property') {
-          const dropdownLabel = currentDatamodeProperties[i].label;
-          this.modelPropertyList.push({ label: dropdownLabel, value: dropdownLabel });
-        }
-      }
+      this.loadModelPropertyList(event,edit);
       this.changePageModel(currentDatamodel);
+    }
+  }
+
+  loadModelPropertyList(event, edit){
+    let currentDatamodeProperties: IProperty[];
+    currentDatamodeProperties = edit ? event.config.children : event.value.config.children;
+    for (let i = 0; i < currentDatamodeProperties.length; i++) {
+      if (currentDatamodeProperties[i].data.type === 'property') {
+        const dropdownLabel = currentDatamodeProperties[i].label;
+        this.modelPropertyList.push({ label: dropdownLabel, value: dropdownLabel });
+      }
     }
   }
 
@@ -967,9 +970,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   updateForm(builtInPage: IPage) {
-    // if (builtInPage.model && builtInPage.model.config) {
-    //   this.onChangePageModel(builtInPage.model, true);
-    // }
+    if (builtInPage.model && builtInPage.model.config) {
+      this.loadModelPropertyList(builtInPage.model, true);
+    }
     if (builtInPage.authority) {
       this.editForm.patchValue({
         isSecurePage: true,
@@ -1377,13 +1380,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   deleteFieldSteps(param) {
-    const indexnum = this.ELEMENT_DATA.indexOf(param);
-    this.ELEMENT_DATA.splice(indexnum, 1);
-    this.dataSourceAIOParam = new MatTableDataSource(this.ELEMENT_DATA);
-
     const index = this.stepFieldArr.indexOf(param);
     this.stepFieldArr.splice(index, 1);
+    this.dataSourceWizard = new MatTableDataSource(this.stepFieldArr);
   }
+
 
   get wizardDetailsGroup() {
     return this.editForm.get('wizardDetailsGroup') as FormArray;
@@ -1450,7 +1451,6 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       };
       if (this.headerFieldArr.indexOf(stepField) === -1) {
         this.headerFieldArr.push(stepField);
-      //  this.DETAILS_DATA.push(stepField);
         this.dataSourceDetailsPage = new MatTableDataSource( this.headerFieldArr);
       }
     }
@@ -1471,8 +1471,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
   deleteFieldHeaders(param) {
     const indexnum = this.ELEMENT_DATA.indexOf(param);
-    this.DETAILS_DATA.splice(indexnum, 1);
-    this.dataSourceDetailsPage = new MatTableDataSource(this.DETAILS_DATA);
+    this.headerFieldArr.splice(indexnum, 1);
+    this.dataSourceDetailsPage = new MatTableDataSource(this.headerFieldArr);
 
     const index = this.headerFieldArr.indexOf(param);
     this.headerFieldArr.splice(index, 1);
