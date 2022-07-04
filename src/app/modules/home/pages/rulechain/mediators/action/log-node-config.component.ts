@@ -153,14 +153,15 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
   
     let inputType: string = this.logNodeConfigFormGroup.get('loginputType').value;
     let logfieldName: string = this.logNodeConfigFormGroup.get('logFieldName').value;
-    
+
     if (inputType === 'RULE_INPUT'){
       let selectedParam = this.logNodeConfigFormGroup.get('logparam').value;
       let logparameter = {
         'logFieldName': logfieldName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParam.inputName
+        'property': selectedParam.inputName,
+        'scope': ''
       };
       this.configuration.logFieldProperties.push(logparameter);
       this.updateModel(this.configuration);
@@ -170,7 +171,8 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         'logFieldName': logfieldName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedProperty.name
+        'property': selectedProperty.name,
+        'scope': selectedProperty.propertyScope
       };
       this.configuration.logFieldProperties.push(logproperty);
       this.updateModel(this.configuration);
@@ -180,7 +182,8 @@ export class LogNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         'logFieldName': logfieldName,
         'inputType': inputType,
         'input': '-',
-        'property': selectedBranchParam.name
+        'property': selectedBranchParam.name,
+        'scope': ''
       };
       this.configuration.logFieldProperties.push(logbranchparam);
       this.updateModel(this.configuration);
