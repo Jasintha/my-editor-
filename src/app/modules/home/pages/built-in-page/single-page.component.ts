@@ -1470,12 +1470,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
   deleteFieldHeaders(param) {
-    const indexnum = this.ELEMENT_DATA.indexOf(param);
-    this.headerFieldArr.splice(indexnum, 1);
-    this.dataSourceDetailsPage = new MatTableDataSource(this.headerFieldArr);
-
     const index = this.headerFieldArr.indexOf(param);
     this.headerFieldArr.splice(index, 1);
+    this.dataSourceDetailsPage = new MatTableDataSource(this.headerFieldArr);
   }
 
 

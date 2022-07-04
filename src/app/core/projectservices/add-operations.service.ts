@@ -108,6 +108,7 @@ export class AddOperationService {
                 projectUid: projectUId,
                 createStatus: status,
                 uuid: item.uuid,
+                formTree: true
             }
         });
         dialogRef.afterClosed(
