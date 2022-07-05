@@ -433,30 +433,30 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     // this.toolbarTrackerService.setIsEntityPage('no');
   }
 
-  pageTemplateTypeSelection(template: string) {
+  pageTemplateTypeSelection(template: string, title) {
     this.pageTemplateType = template;
     if (template === 'blank') {
       this.pageCreationStatus = 'gridSelection';
     } else if (template === 'tab-page'){
-      this.save('tabbed', 'Template Page', template);
+      this.save('tabbed', title, template);
     } else if (template === 'custom'){
-      this.createCustomPage(template);
+      this.createCustomPage(template, title);
     } else if (template === 'filter-page'){
-      this.createFilterPage(template);
+      this.createFilterPage(template, title);
     } else {
-      this.createTemplatePage(template);
+      this.createTemplatePage(template,title);
     }
   }
 
-  createTemplatePage(template: string) {
-    this.save('singleWidget', 'Template Page', template);
+  createTemplatePage(template: string, title: string) {
+    this.save('singleWidget', title, template);
   }
 
-  createCustomPage(template: string) {
+  createCustomPage(template: string, title: string) {
     this.save('customPage', 'Custom Page', template);
   }
-  createFilterPage(template: string) {
-    this.save('filterPage', 'Filter Page', template);
+  createFilterPage(template: string, title: string) {
+    this.save('filterPage', title, template);
   }
 
   createCustomGrid() {
