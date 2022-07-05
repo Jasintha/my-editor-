@@ -41,14 +41,14 @@
                 </mat-select>
             </mat-form-field>
 
-<!--            <mat-form-field class="flex-auto" *ngIf="editForm.value.menuType === 'link'">-->
-<!--                <mat-label>Page</mat-label>-->
-<!--                <mat-select formControlName="page" >-->
-<!--                    <mat-option *ngFor="let option of pageItems" [value]="option.value">-->
-<!--                        {{option.label}}-->
-<!--                    </mat-option>-->
-<!--                </mat-select>-->
-<!--            </mat-form-field>-->
+            <mat-form-field class="flex-auto" *ngIf="editForm.value.menuType === 'link' && data.formTree">
+                <mat-label>Page</mat-label>
+                <mat-select formControlName="page" >
+                    <mat-option *ngFor="let option of pageItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
 
     </mat-dialog-content>

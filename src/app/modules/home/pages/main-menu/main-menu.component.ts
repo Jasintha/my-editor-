@@ -98,7 +98,7 @@ export class MainMenuComponent implements OnInit {
   getMainMenuData() {
     this.projectUid = this.data.projectUid;
     this.buildMenuForm();
-    this.setMenuCategoryValidators();
+    // this.setMenuCategoryValidators();
     this.datamodels = [];
     this.pages = [];
     this.pageItems = [];
@@ -144,15 +144,18 @@ export class MainMenuComponent implements OnInit {
   }
 
   loadPage() {
-    // for (let i = 0; i < this.pages.length; i++) {
-    //   if (this.pages[i].status === 'ENABLED') {
-    //     const dropdownLabel = this.pages[i].pagetitle;
-    //     this.pageItems.push({ label: dropdownLabel, value: this.pages[i] });
-    //   }
-    // }
-    this.editForm.patchValue({
-      page:  this.data.page,
-    });
+    if (this.data.formTree){
+      for (let i = 0; i < this.pages.length; i++) {
+        if (this.pages[i].status === 'ENABLED') {
+          const dropdownLabel = this.pages[i].pagetitle;
+          this.pageItems.push({ label: dropdownLabel, value: this.pages[i] });
+        }
+      }
+    }else {
+      this.editForm.patchValue({
+        page:  this.data.page,
+      });
+    }
   }
 
   updateForm(mainmenu: IMainMenu) {
