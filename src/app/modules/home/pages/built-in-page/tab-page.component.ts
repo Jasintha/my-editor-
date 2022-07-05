@@ -167,6 +167,15 @@ export class TabPageComponent implements OnDestroy, OnInit {
     protected onSaveSuccess() {
         this.spinnerService.hide();
         this.isSaving = false;
+        if (this.editForm.get(['pagetitle']).value !== this.currentPage.pagetitle){
+            this.eventManager.dispatch(
+                new AppEvent(EventTypes.editorUITreeListModification, {
+                    name: 'editorUITreeListModification',
+                    content: 'Deleted an built in page',
+                })
+            );
+        }
+        this.pageTitle = this.editForm.get(['pagetitle']).value;
     }
 
     protected onSaveError() {

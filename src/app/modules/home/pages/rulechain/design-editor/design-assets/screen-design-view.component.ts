@@ -270,6 +270,8 @@ export class ScreenDesignViewComponent implements ControlValueAccessor, OnInit, 
             {label:'Form Wizard Page', value:'form-wizard-page'},
             {label:'AIO-Grid Page', value:'aio-grid'},
             {label:'Tab Page', value:'tab-page'},
+            {label:'Custom Page', value:'custom-page'},
+            {label:'Static Page', value:'static-page'},
             {label:'Filter Page', value:'filter-page'}
         ];
         // this.pageTemplateItems.push('login-page' );
