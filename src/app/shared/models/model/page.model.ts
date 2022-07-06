@@ -6,6 +6,7 @@ import { IPageConfig } from '@shared/models/model/page-config.model';
 import { IPageAction } from '@shared/models/model/page-action.model';
 import { IAPIInput } from '@shared/models/model/api-input.model';
 import {IButtonType} from '@shared/models/model/button-type.model';
+import {IChartDetails} from '@shared/models/model/chart-details.model';
 
 export interface IPage {
   uuid?: string;
@@ -49,6 +50,7 @@ export interface IPage {
   rowHeaders?: any[];
   rowMappings?: any[];
   tabLayout?: string;
+  chartDetails?: IChartDetails;
 }
 
 export class Page implements IPage {
@@ -94,5 +96,6 @@ export class Page implements IPage {
     public rowHeaders?: any[],
     public rowMappings?: any[],
     public tabLayout?: string,
+    public chartDetails?: IChartDetails,
   ) {}
 }

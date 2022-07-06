@@ -122,6 +122,43 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
+                        <div *ngIf="editForm.value.pagetemplate == 'chart-page'" class="form-group" style="padding: 1%; margin-top: 3%">
+                            <mat-form-field [style]="{'width':'100%'}">
+                                <mat-label>Chart type</mat-label>
+                                <mat-select formControlName="chartType" [disabled]="formDisable">
+                                    <mat-option *ngFor="let option of chartTypes" [value]="option.value">
+                                        {{option.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field *ngIf="editForm.value.chartType == 'BarChart'" [style]="{'width':'100%'}">
+                                <mat-label>Chart axis</mat-label>
+                                <mat-select formControlName="barChartAxis" [disabled]="formDisable">
+                                    <mat-option *ngFor="let option of chartAxis" [value]="option.value">
+                                        {{option.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field *ngIf="editForm.value.chartType == 'DonutChart'" [style]="{'width':'100%'}">
+                                <mat-label>Arc size</mat-label>
+                                    <input type="number" formControlName="donutArcsize" [readonly]="formDisable" matInput
+                                           name="donutArcsize" >
+                            </mat-form-field>
+                            <mat-form-field [style]="{'width':'100%'}">
+                                <mat-label>Chart height</mat-label>
+                                <input type="number" formControlName="chartHeight" [readonly]="formDisable" matInput
+                                       name="chartHeight" >
+                            </mat-form-field>
+                            <ng-container>
+                                <label id="example-radio-group-label">Show legend</label>
+                                <mat-radio-group aria-labelledby="example-radio-group-label"
+                                                 class="ps-5" aria-label="show Legend" formControlName="showLegend">
+                                    <mat-radio-button class="pe-3" value="show">Show</mat-radio-button>
+                                    <mat-radio-button value="hide">Hide</mat-radio-button>
+                                </mat-radio-group>
+                            </ng-container>
+
+                        </div>
                         <!--                                <table mat-table matSort  [dataSource]="dataSourceLogin" class="mat-elevation-z8 demo-table">-->
                         <!--                                    &lt;!&ndash; Name Column &ndash;&gt;-->
                         <!--                                    <ng-container matColumnDef="property">-->
@@ -912,7 +949,7 @@
 
                 </div>
             </ng-container>
-            <ng-container *ngIf="currentPage.model">
+            <ng-container *ngIf="currentPage && currentPage.model && currentPage.pagetemplate !== 'chart-page'">
                 <h5>
                     <span>Change field order</span>
                 </h5>
