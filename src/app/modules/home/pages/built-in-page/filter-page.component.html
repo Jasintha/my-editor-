@@ -12,7 +12,7 @@
                 <h3 *ngIf="formDisable">{{pageTitle}}</h3>
                 <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
                     <mat-label>Page Title</mat-label>
-                    <input type="text" [(ngModel)]="pageTitle" matInput [ngModelOptions]="{standalone: true}">
+                    <input type="text" [(ngModel)]="pageTitle" matInput [ngModelOptions]="{standalone: true}" formControlName="pagetitle">
                 </mat-form-field>
             </div>
 

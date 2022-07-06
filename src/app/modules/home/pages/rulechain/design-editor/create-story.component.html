@@ -36,8 +36,21 @@
                                         <!--                                <img src="assets/showcase/images/demo/car/{{story.label}}.png" style="display:inline-block;margin:5px 0 0 5px" width="48">-->
                                         <span style="margin:6px 10px 0 10px">{{story.label}}</span>
 
-                                        <p style="font-size: 14px; float:right;margin:6px 10px 0 0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc pharetra sem nec mi rhoncus rutrum.
-                                            Aliquam quis augue et nisi mollis sagittis.</p>
+                                        <p style="font-size: 14px; float:right;margin:6px 10px 0 0" *ngIf="story.value === 'custom'">
+                                            The custom story template allows creating a customized story by adding an actor and a model according to the user’s will.
+                                            Furthermore, a screen can be used to add the UI components of the custom story and a process can be used to add basic logic to the story.
+                                        </p>
+                                        <p style="font-size: 14px; float:right;margin:6px 10px 0 0" *ngIf="story.value === 'login'">
+                                            The login story template allows creating a login story by automatically adding the actor,
+                                            model, screen, and the process including the logic of a basic login functionality. Later,
+                                            the user can edit the flow according to the user’s necessities.
+                                        </p>
+                                        <p style="font-size: 14px; float:right;margin:6px 10px 0 0" *ngIf="story.value === 'email'">
+                                            The email story template allows creating a story by automatically adding the actor, model, screen,
+                                            and the process including the logic of sending an email. Later, the user can edit the flow according to
+                                            the user’s necessities.
+
+                                        </p>
                                     </div>
                                 </ng-template>
                                 <!--                        <p-footer>-->
@@ -63,7 +76,7 @@
                 <div class="col-5">
                     <h6 class="card-title">Epic - {{epic.name}}</h6>
                     <p-editor class="story-text epic-des" name="text-pane" id="field_reqdescription" formControlName="description"
-                              [style]="{'height':'300px', 'margin-top':'10px','font-size':'2px','background-color':'#ffffff'}" [readonly]="true">
+                              [style]="{'height':'310px', 'margin-top':'10px','font-size':'2px','background-color':'#ffffff'}" [readonly]="true">
                     </p-editor>
 <!--                        <div>-->
 <!--                            <div class="card-body">-->
