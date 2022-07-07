@@ -32,7 +32,7 @@ import {ViewModelConfigComponent} from '@home/pages/built-in-page/view-model-con
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
-import {IActions, IButtonType} from '@shared/models/model/button-type.model';
+import {Actions, IActions, IButtonType} from '@shared/models/model/button-type.model';
 import {IFormField, IRowFieldMapping, IRowHeader, ISourceTargetFieldsRequest, RowFieldMapping} from '@shared/models/model/form-field.model';
 import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-in-page-delete-dialog.component';
 import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
@@ -375,6 +375,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.BTN_ELEMENT_DATA = [];
     this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
     this.loadAllPages();
+    this.actions = new Actions();
     this.activatedRoute.params.subscribe(params => {
       // this.projectId = params['projId'];
       // this.projectUid = params.projectUid;
