@@ -1,3 +1,24 @@
+export interface IActions {
+    buttons?: IButtons;
+}
+
+export class Actions implements IActions {
+    constructor(public buttons?: IButtons,
+    ) {}
+}
+
+export interface IButtons {
+    child?: IButtonType[];
+    Align?: string;
+}
+
+export class Buttons implements IButtons {
+    constructor(public child?: IButtonType[],
+                public Align?: string,
+    ) {}
+}
+
+
 export interface IButtonType {
     id?: string;
     caption?: string;

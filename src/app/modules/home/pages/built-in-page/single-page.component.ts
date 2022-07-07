@@ -32,7 +32,7 @@ import {ViewModelConfigComponent} from '@home/pages/built-in-page/view-model-con
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
-import {IButtonType} from '@shared/models/model/button-type.model';
+import {IActions, IButtonType} from '@shared/models/model/button-type.model';
 import {IFormField, IRowFieldMapping, IRowHeader, ISourceTargetFieldsRequest, RowFieldMapping} from '@shared/models/model/form-field.model';
 import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-in-page-delete-dialog.component';
 import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
@@ -91,6 +91,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   stepIndexId = 1;
   headerIndexId = 1;
   displayedColumns: string[] = ['caption', 'resourcepath', 'operation', 'page', 'color', 'tooltip', 'actions'];
+  actions: IActions;
   BTN_ELEMENT_DATA: IButtonType[];
   dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
   displayedStepHeaderColumns: string[] = ['field', 'stepheader', 'actions'];
@@ -1058,8 +1059,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         })
       }
       this.pageTitle = builtInPage.pagetitle;
-      if(builtInPage.buttonPanel) {
-        this.BTN_ELEMENT_DATA = builtInPage.buttonPanel;
+      if(builtInPage.actions && builtInPage.actions.buttons && builtInPage.actions.buttons.child ) {
+        this.BTN_ELEMENT_DATA = builtInPage.actions.buttons.child;
         this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
       }
       if(builtInPage.rowMappings) {
@@ -1141,6 +1142,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         chartDetails.DonutChartArcSize = this.editForm.get(['donutArcsize']).value;
         chartDetails.ShowLegend = this.editForm.get(['showLegend']).value;
       }
+      this.actions.buttons.child = this.BTN_ELEMENT_DATA;
       return {
         ...new Page(),
         uuid: this.editForm.get(['id']).value,
@@ -1162,7 +1164,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         stepMappings: fieldMappingArray,
         authority: this.editForm.get(['authority']).value,
         isHomepage: this.editForm.get(['isHomepage']).value,
-        buttonPanel: this.BTN_ELEMENT_DATA,
+        actions: this.actions,
         rowHeaders: this.rowHeaderList,
         rowMappings: this.rowHeaderMappingArray,
         tabLayout: this.editForm.get(['wizardLayout']).value,

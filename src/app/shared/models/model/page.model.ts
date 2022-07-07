@@ -5,7 +5,7 @@ import { IAggregate } from '@shared/models/model/aggregate.model';
 import { IPageConfig } from '@shared/models/model/page-config.model';
 import { IPageAction } from '@shared/models/model/page-action.model';
 import { IAPIInput } from '@shared/models/model/api-input.model';
-import {IButtonType} from '@shared/models/model/button-type.model';
+import {IActions, IButtonType} from '@shared/models/model/button-type.model';
 import {IChartDetails} from '@shared/models/model/chart-details.model';
 
 export interface IPage {
@@ -46,7 +46,7 @@ export interface IPage {
   pageGrid?: any;
   apiDataArray?: any;
   attachedPageLocation?: string;
-  buttonPanel?: IButtonType[];
+  actions?: IActions;
   rowHeaders?: any[];
   rowMappings?: any[];
   tabLayout?: string;
@@ -92,7 +92,7 @@ export class Page implements IPage {
     public pageGrid?: any,
     public apiDataArray? : any,
     public attachedPageLocation? : string,
-    public buttonPanel? : IButtonType[],
+    public actions? : IActions,
     public rowHeaders?: any[],
     public rowMappings?: any[],
     public tabLayout?: string,
