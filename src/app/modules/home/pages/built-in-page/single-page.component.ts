@@ -152,8 +152,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'DATE', value: 'DATE' },
   ];
   tabLayouts: SelectItem[] = [
-    { label: 'Vertical', value: 'Vertical' },
-    { label: 'Horizontal', value: 'Horizontal' },
+    { label: 'vertical', value: 'vertical' },
+    { label: 'horizontal', value: 'horizontal' },
   ];
   chartTypes: SelectItem[] = [
     { label: 'BarChart', value: 'BarChart' },
