@@ -105,6 +105,7 @@ import {TreeModule} from 'primeng/tree';
 import {TreeNode} from 'primeng/api';
 import {ContextMenuModule} from 'primeng/contextmenu';
 import {DesignWarningComponent} from '@home/pages/rulechain/design-editor/design-warning.component';
+import {LoginPopupComponent} from '@modules/login/loginpopup/login-popup.component';
 @NgModule({
   declarations: [
     RuleChainPageComponent,
@@ -133,7 +134,8 @@ import {DesignWarningComponent} from '@home/pages/rulechain/design-editor/design
     ModelDesignViewComponent,
     ProcessDesignViewComponent,
     ScreenDesignViewComponent,
-    DesignWarningComponent
+    DesignWarningComponent,
+    LoginPopupComponent
   ],
   providers: [
     {

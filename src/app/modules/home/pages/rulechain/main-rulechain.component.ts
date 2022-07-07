@@ -75,6 +75,8 @@ import {EnvSelectComponent} from '@home/pages/rulechain/env-select.component';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 import {AggregateService} from '@core/projectservices/microservice-aggregate.service';
 import {LoginService} from '@core/services/login.services';
+import {LoginComponent} from '@modules/login/pages/login/login.component';
+import {LoginPopupComponent} from '@modules/login/loginpopup/login-popup.component';
 
 declare const SystemJS;
 
@@ -191,8 +193,21 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.openDialog();
         // this.requirementUid =
         //     this.requirementCount =
+    }
+
+    openDialog(): void {
+        const dialogRef = this.dialog.open(LoginPopupComponent, {
+            width: '450px',
+            backdropClass: 'backdropBackground',
+            disableClose: true// HERE
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+        });
     }
 
 
@@ -504,6 +519,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
+        this.openDialog();
         this.splitPartOneSize = 100;
         this.splitPartTwoSize = 0;
         this.splitConsoleSizeOne = 100;
