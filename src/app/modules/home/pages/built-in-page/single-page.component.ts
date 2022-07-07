@@ -138,11 +138,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'Password', value: 'password' },
   ];
   operationItems: SelectItem[] = [
-    { label: 'Create', value: 'Create' },
-    { label: 'Find', value: 'Find' },
-    { label: 'Delete', value: 'Delete' },
-    { label: 'Update', value: 'Update' },
-    { label: 'Navigation', value: 'Navigation' },
+    { label: 'CREATE', value: 'CREATE' },
+    { label: 'FIND', value: 'FIND' },
+    { label: 'DELETE', value: 'DELETE' },
+    { label: 'UPDATE', value: 'UPDATE' },
+    { label: 'NAVIGATE', value: 'NAVIGATE' },
   ];
   paramDataTypeItems: SelectItem[] = [
     { label: 'TEXT', value: 'TEXT' },
