@@ -937,10 +937,14 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         const url =  ip +  endpoint;
         window.open(url);
     }
-    OpenUI(){
+    OpenUI(story: any){
+        const storyId = story.uuid;
+        const epicId = story.epicUUID;
+        const serviceId = story.serviceUUID;
+        const requirementId = this.requirementUid;
         const ip = window.location.origin;
         const endpoint = '/uip/#/';
-        const url =  ip +  endpoint;
+        const url =  ip +  endpoint + '?storyId='+storyId +'&epicId='+epicId+'&requirementId='+requirementId+'&serviceId='+serviceId;
         window.open(url);
     }
 
