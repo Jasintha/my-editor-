@@ -940,12 +940,26 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     OpenUI(story: any){
         const storyId = story.uuid;
         const epicId = story.epicUUID;
-        const serviceId = story.serviceUUID;
+        const serviceId = story.serviceMasterUUID;
         const requirementId = this.requirementUid;
-        const ip = window.location.origin;
-        const endpoint = '/uip/#/';
-        const url =  ip +  endpoint + '?storyId='+storyId +'&epicId='+epicId+'&requirementId='+requirementId+'&serviceId='+serviceId;
-        window.open(url);
+        this.storyService
+            .sendStoryDetails(storyId, epicId, requirementId , serviceId)
+            .pipe(
+                filter((res: HttpResponse<any>) => res.ok),
+                map((res: HttpResponse<any>) => res.body)
+            )
+            .subscribe(
+                (res: any) => {
+                    if (res){
+                        const ip = window.location.origin;
+                        const endpoint = '/uip/#/';
+                        const url =  ip +  endpoint + '?storyId='+storyId +'&epicId='+epicId+'&requirementId='+
+                            requirementId+'&serviceId='+serviceId;
+                        window.open(url);
+                    }
+                }
+            );
+
     }
 
     selectedReq(val){

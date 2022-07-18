@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import {createRequestOption} from '@shared/util/request-util';
@@ -20,6 +20,7 @@ export class StoryService {
   public storyEnablestatusChangeConfirmedResourceUrl = '/api/editor/stories/statusenabled/confirmed';
   public storyStatusChange = '/api/editor/stories/status';
   public storyTextReq = '/api/editor/stories/text';
+  public storyDetailURL = '/proxy/setstorydata';
 
   constructor(protected http: HttpClient) {}
 
@@ -160,5 +161,14 @@ export class StoryService {
 
   storyTextUpdateReq(textReq: IStoryUpdateReq, uuid):Observable<HttpResponse<IStoryUpdateReq>> {
     return this.http.put<IStoryUpdateReq>(`${this.storyTextReq}/${uuid}`, textReq, { observe: 'response' });
+  }
+
+  sendStoryDetails(storyid, epicid, reqid, serviceid): Observable<HttpResponse<any>> {
+    let params = new HttpParams();
+    params = params.append('storyid', storyid);
+    params = params.append('epicid', epicid);
+    params = params.append('reqid', reqid);
+    params = params.append('serviceid', serviceid);
+    return this.http.post<any>(`${this.storyDetailURL}`, null, { params, observe: 'response' });
   }
 }
