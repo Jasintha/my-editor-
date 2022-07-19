@@ -20,7 +20,7 @@ export class StoryService {
   public storyEnablestatusChangeConfirmedResourceUrl = '/api/editor/stories/statusenabled/confirmed';
   public storyStatusChange = '/api/editor/stories/status';
   public storyTextReq = '/api/editor/stories/text';
-  public storyDetailURL = '/proxy/setstorydata';
+  public storyDetailURL = '/sp/setstorydata';
 
   constructor(protected http: HttpClient) {}
 
