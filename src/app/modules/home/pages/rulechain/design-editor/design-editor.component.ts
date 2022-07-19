@@ -942,6 +942,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         const epicId = story.epicUUID;
         const serviceId = story.serviceMasterUUID;
         const requirementId = this.requirementUid;
+        const jwtToken = localStorage.getItem('jwt_token');
         this.storyService
             .sendStoryDetails(storyId, epicId, requirementId , serviceId)
             .pipe(
@@ -954,7 +955,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                         const ip = window.location.origin;
                         const endpoint = '/uip/#/';
                         const url =  ip +  endpoint + '?storyId='+storyId +'&epicId='+epicId+'&requirementId='+
-                            requirementId+'&serviceId='+serviceId;
+                            requirementId+'&serviceId='+serviceId + '&token='+ jwtToken;
                         window.open(url);
                     }
                 }
