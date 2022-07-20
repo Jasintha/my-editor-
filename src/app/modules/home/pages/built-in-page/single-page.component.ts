@@ -218,6 +218,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       donutArcsize: 0,
       chartHeight: 0,
       showLegend: false,
+      pageDescription: '',
       wizardDetailsGroup: this.fb.array([
         new FormGroup({
           stepHeading: this.fb.control('Step 1'),
@@ -306,7 +307,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
                     this.editForm.get('resourcePath').clearValidators();
                     this.editForm.get('resourcePath').updateValueAndValidity();
                   }
-                  if (pagetemplate === 'file-upload-page' || pagetemplate === 'dashboard-page') {
+                  if (pagetemplate === 'file-upload-page' || pagetemplate === 'label-page') {
                     this.editForm.get('selectedAggregate').clearValidators();
                     this.editForm.get('selectedAggregate').updateValueAndValidity();
                   } else {
@@ -1150,6 +1151,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         uuid: this.editForm.get(['id']).value,
         model: this.editForm.get(['selectedAggregate']).value,
         pagetitle: this.editForm.get(['pagetitle']).value,
+        pageDescription: this.editForm.get(['pageDescription']).value,
         pagetemplate: this.editForm.get(['pagetemplate']).value,
         pagetype: 'api-page',
         params: this.apiParams,

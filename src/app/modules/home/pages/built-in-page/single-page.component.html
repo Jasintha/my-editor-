@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-12 model-type">
                     <div class="form-group"
-                         *ngIf="editForm.value.pagetemplate !== 'file-upload-page' && editForm.value.pagetemplate !== 'dashboard-page'">
+                         *ngIf="editForm.value.pagetemplate !== 'file-upload-page' && editForm.value.pagetemplate !== 'label-page'">
                         <div class="row">
                             <div class="col-md-8">
                                 <mat-form-field  [style]="{'width':'100%'}">
@@ -377,7 +377,12 @@
                                 </div>
                             </div>
                         </div>
-
+                        <ng-container *ngIf="editForm.value.pagetemplate === 'label-page'">
+                            <mat-form-field style="width: 700px; height: 100px;" appearance="fill">
+                                <mat-label>Description</mat-label>
+                                <textarea [disabled]="formDisable" cdkTextareaAutosize formControlName="pageDescription" name="pageDescription" matInput placeholder="This page is about..."></textarea>
+                            </mat-form-field>
+                        </ng-container>
                         <ng-container *ngIf="editForm.value.pagetemplate === 'form-wizard-page'">
                             <div class="form-group">
                                 <label class="form-control-label">Add form fields to steps</label>
