@@ -11,6 +11,7 @@ import {IChartDetails} from '@shared/models/model/chart-details.model';
 export interface IPage {
   uuid?: string;
   pagetitle?: string;
+  pageDescription?: string;
   pageRefId?: string;
   pagetype?: string;
   attachedPage?: string;
@@ -57,6 +58,7 @@ export class Page implements IPage {
   constructor(
     public uuid?: string,
     public pagetitle?: string,
+    public pageDescription?: string,
     public pageRefId?: string,
     public pagetype?: string,
     public pagetemplate?: string,

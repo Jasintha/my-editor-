@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="theme">
+            <h2><span>Theme</span></h2>
+            <hr>
+
+            <dl class="row-md entity-details">
+                <dt><span>Theme Style</span></dt>
+                <dd>
+                    <span>{{theme.themestyle}}</span>
+                </dd>
+                <dt><span>Layout Orientation</span></dt>
+                <dd>
+                    <span>{{theme.layoutorientationRTL}}</span>
+                </dd>
+                <dt><span>Toolbar Position</span></dt>
+                <dd>
+                    <span>{{theme.toolbarposition}}</span>
+                </dd>
+                <dt><span>Footer Position</span></dt>
+                <dd>
+                    <span>{{theme.footerposition}}</span>
+                </dd>
+                <dt><span>Footer Visibility</span></dt>
+                <dd>
+                    <span>{{theme.footervisibility}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info" style="margin-right: 8px;">
+                <i class="fas fa-arrow-left"></i>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/theme', 'proj', projectUid, theme.uuid, 'edit']"
+                    class="btn btn-primary">
+                <i class="fas fa-pencil"></i>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Please wait... </p>
+</ngx-spinner>

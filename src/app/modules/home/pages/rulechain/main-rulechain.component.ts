@@ -155,6 +155,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     splitConsoleSizeOne = 90;
     splitConsoleSizeTwo = 5;
     loadTabPageEditor: boolean;
+    loadThemeEditor: boolean;
 
     private _transformer = (node: any, level: number) => {
         return {
@@ -292,12 +293,36 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 
         } else if(item.type === 'UI_PAGE'){
             this.viewPageEditor(item)
-        } else if(item.type === 'API' || item.type === 'COMMAND' || item.type === 'QUERY' || item.type === 'TASK' ||
+        } else if(item.type === 'PARENT_PAGE_THEMES'){
+            this.viewPageTheme(item);
+        }else if(item.type === 'API' || item.type === 'COMMAND' || item.type === 'QUERY' || item.type === 'TASK' ||
             item.type === 'MAIN_TASK' || item.type === 'SERVICEFILE' || item.type === 'WORKFLOW' ) {
             this.viewRule(item);
         }else {
 
         }
+    }
+    viewPageTheme(item) {
+        this.ruleChainLoaded = false;
+        this.ruleChainMetaDataLoaded = false;
+        this.connectionPropertyTemplatesLoaded = false;
+        this.ruleNodeComponentsLoaded = false;
+        this.ruleChain = null;
+        this.ruleChainMetaData = null;
+        this.connectionPropertyTemplates = null;
+        this.ruleNodeComponents = null;
+        this.lambdauid = "";
+        this.loadFunctionEditor = false;
+        this.modelUid = item.uuid;
+        this.loadModelView = false;
+        this.loadDesignRequirement = false;
+        this.requirementUid = "";
+        this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
+        this.loadCustomPageEditor = false;
+        this.loadFilterPageEditor = false;
+        this.loadTabPageEditor = false;
+        this.loadThemeEditor = true;
     }
 
     viewPageEditor(item){
@@ -348,6 +373,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.projectUid = item.projectuuid;
         this.pageId = item.uuid
         this.loadWidgetEditor = false;
+        this.loadThemeEditor = false;
     }
 
     // viewSingleWidget(item){
@@ -396,6 +422,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadFilterPageEditor = false;
         this.loadTabPageEditor = false;
         this.loadWidgetEditor = false;
+        this.loadThemeEditor = false;
     }
 
     viewReqEditor(item?){
@@ -428,7 +455,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             this.reload = true;
         }
         this.loadDesignRequirement = true;
-
+        this.loadThemeEditor = false;
     }
 
     viewRule(item) {
@@ -450,7 +477,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.editorType = "";
         this.ruleprojectUid = item.projectuuid;
         this.loadWidgetEditor = false;
-
+        this.loadThemeEditor = false;
         if(item.type === "SERVICEFILE"){
             this.editorType = "servicefile";
         } else if(item.type === "MAIN_TASK"){
@@ -501,6 +528,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadCustomPageEditor = false;
         this.loadFilterPageEditor = false;
         this.loadTabPageEditor = false;
+        this.loadThemeEditor = false;
     }
 
     ngOnInit(): void {

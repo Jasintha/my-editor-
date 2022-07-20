@@ -70,6 +70,7 @@ import {ServicefileModule} from '@home/pages/servicefile/servicefile.module';
 import {CreateHybridfunctionModule} from '@home/pages/create-hybridfunction/create-hybridfunction.module';
 import {CreateLamdafunctionModule} from '@home/pages/create-lamdafunction/create-lamdafunction.module';
 import {CreateTaskModule} from '@home/pages/create-task/create-task.module';
+import {TestThemeModule} from '@home/pages/theme/theme.module';
 import {AggregateModule} from '@home/pages/aggregate/aggregate.module';
 import {CreateServiceModule} from '@home/pages/create-service/create-service.module';
 import {BuiltInPageModule} from '@home/pages/built-in-page/built-in-page.module';
@@ -164,6 +165,7 @@ import {DesignWarningComponent} from '@home/pages/rulechain/design-editor/design
     CreateLamdafunctionModule,
     CreateTaskModule,
     AggregateModule,
+    TestThemeModule,
     MonacoEditorModule,
     CreateServiceModule,
     CreateServiceModule,

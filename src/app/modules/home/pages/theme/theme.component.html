@@ -1,0 +1,54 @@
+<div>
+    <h2 id="page-heading">
+        <span>Theme</span>
+    </h2>
+
+    <br/>
+    <div class="alert alert-warning" *ngIf="themes?.length === 0">
+        <span>No themes found</span>
+    </div>
+    <div class="ui-g-12">
+        <div class="ui-g-12">
+            <div class="ui-g-3">
+                <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+                    <div class="ui-g-12">
+                        <div style="padding-left:50px;">
+                            <label class="form-control-label">Selected Theme :</label>
+                            <p-dropdown [options]="allThemeItems" (onChange)="handleChange($event.value)" formControlName="selectedTheme" [panelStyle]="{minWidth:'20em'}"></p-dropdown>
+                        </div>
+                        <div class="row" style="padding-top: 15px;">
+                            <div *ngIf="themeId" style="padding-left:65px;">
+                                <div>
+                                    <button pButton type="button" label="Settings" (click)="updateSideBarVisible()" class="ui-button ui-button-raised" icon="fa fa-sliders" style="background-color: #dee6eb; color:  #6d7f8b; border: none; ">
+
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="editForm.value.selectedTheme && currentTheme" style="padding-left:20px;">
+                                <div *ngIf="editForm.value.selectedTheme.uuid != currentTheme?.uuid">
+                                    <button pButton type="submit" label="Apply Theme" class="ui-button-success ui-button-raised" icon="fa fa-check">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="imageContainer ui-g-6" *ngIf="themeImage && themeId">
+            <img class="themeImage" src="/content/images/theme/{{themeImage}}.png" style="width: 100%;height: 100%;border-style: ridge;cursor: pointer;" (click)="updateSideBarVisible()">
+                <div class="middle">
+                    <div class="text" (click)="updateSideBarVisible()" ><span >Click to Edit</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Please wait... </p>
+</ngx-spinner>
+
+
+<p-sidebar *ngIf="isSelected" [(visible)]="isSidebarVisible" [style]="{width:'90%',overflow: 'scroll'}" position="right" [blockScroll]="true" [showCloseIcon]="false" (onHide)="sidenavClosed()">
+    <virtuan-theme-update projectUid ='{{projectUid}}' themeId='{{themeId}}' rowValues='{{rowValues}}' [isVisible]="isSidebarVisible"  creatStatus='{{createStatus}}' (isVisibleEvent)="backSidebar($event)"></virtuan-theme-update>
+</p-sidebar>

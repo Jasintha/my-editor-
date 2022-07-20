@@ -41,6 +41,7 @@
                         <virtuan-page-grid-handler *ngIf="loadGridPageEditor" [projectUid]="projectUid" [pageId]="pageId" > </virtuan-page-grid-handler>
                         <virtuan-tab-page-view *ngIf="loadTabPageEditor" [projectUid]="projectUid" [pageId]="pageId"  > </virtuan-tab-page-view>
                         <virtuan-filter-page *ngIf="loadFilterPageEditor" [projectUid]="projectUid" [pageId]="pageId" > </virtuan-filter-page>
+                        <virtuan-theme-update *ngIf="loadThemeEditor" [projectUid]="projectUid" [pageId]="pageId"></virtuan-theme-update>
                     </as-split-area>
                     <as-split-area [size]="splitConsoleSizeTwo">
                         <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
@@ -235,7 +236,7 @@
                                             type="button">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
-                                    <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_PORTAL'"  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
+                                    <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_PORTAL' && node.data.type != 'PARENT_PAGE_THEMES'"  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
                                 </mat-tree-node>
                                 <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
                                     <button mat-icon-button
@@ -252,7 +253,7 @@
                                     </div>
 
 
-                                    <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_PORTAL'"  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon >add</mat-icon></button>
+                                    <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_PORTAL' && node.data.type != 'PARENT_PAGE_THEMES'"  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon >add</mat-icon></button>
                                     <mat-progress-bar *ngIf="node.isLoading"
                                                       mode="indeterminate"
                                                       class="example-tree-progress-bar"></mat-progress-bar>

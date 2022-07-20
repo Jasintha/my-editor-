@@ -1,0 +1,956 @@
+.themeImage {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+}
+.middle {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+.imageContainer {
+  position: relative;
+}
+.image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+}
+
+.imageContainer:hover .themeImage {
+  opacity: 0.3;
+}
+
+.imageContainer:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  cursor: pointer;
+  background-color: #4cc792;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+
+.tab {
+  float: left;
+  border: 1px solid #ccc;
+  background-color: #1a202e;
+  width: 100%;
+  height: 100%;
+}
+
+.head {
+  font-size: 17px;
+  text-align: center;
+  color: white;
+  width: 100%;
+  height: 100px;
+}
+
+.tab button {
+  display: block;
+  background-color: inherit;
+  color: white;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+.tab button:hover {
+  background-color: white;
+  color: black;
+  border: none;
+}
+.tab button.active {
+  background-color: white;
+  color: black;
+  border: none;
+}
+
+.tabcontent {
+  float: left;
+  padding: 0px 12px;
+  border: 1px solid #ccc;
+  width: 70%;
+  border-left: none;
+  height: 300px;
+}
+
+.color-card {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  margin-right: 4%;
+  border: 1px solid #0f6ab4;
+  margin-top: 2%;
+}
+
+/* Card Style   ------------------------------- */
+
+.card {
+  max-height: 90%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.card:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.margin-top-bottom-40 {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.margin-left-right-40 {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+/* Input Style 1  ------------------------------- */
+
+.style1-input {
+  width: 300px;
+  display: block;
+  border: none;
+  padding: 14px 0;
+  border-bottom: solid 1px #0275d8;
+  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #0275d8 4%);
+  background-position: -300px 0;
+  background-size: 300px 100%;
+  background-repeat: no-repeat;
+  color: darken(#0275d8, 20%);
+  &:focus,
+  &:valid {
+    box-shadow: none;
+    outline: none;
+    background-position: 0 0;
+    &::-webkit-input-placeholder {
+      color: #0275d8;
+      font-size: 11px;
+      transform: translateY(-20px);
+      visibility: visible !important;
+    }
+  }
+}
+
+/* Input Style 2 ------------------------------- */
+.style2-group {
+  position: relative;
+}
+
+.style2-form {
+  position: relative;
+  margin-bottom: 45px;
+}
+.style2-input {
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 300px;
+  border: none;
+  border-bottom: 1px solid #757575;
+}
+.style2-input:focus {
+  outline: none;
+}
+
+.style2-label {
+  color: #999;
+  font-size: 18px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.style2-input:focus ~ .style2-label,
+.style2-input:valid ~ .style2-label {
+  top: -20px;
+  font-size: 14px;
+  color: #5264ae;
+}
+
+.bar {
+  position: relative;
+  display: block;
+  width: 300px;
+}
+.bar:before,
+.bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #5264ae;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+.bar:before {
+  left: 50%;
+}
+.bar:after {
+  right: 50%;
+}
+.style2-input:focus ~ .bar:before,
+.style2-input:focus ~ .bar:after {
+  width: 50%;
+}
+
+.highlight {
+  position: absolute;
+  height: 60%;
+  width: 100px;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.style2-input:focus ~ .highlight {
+  -webkit-animation: inputHighlighter 0.3s ease;
+  -moz-animation: inputHighlighter 0.3s ease;
+  animation: inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@-moz-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+
+/* Input Style 3 ------------------------------- */
+
+.style3-input[type='text'] {
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(2.5em + 2px);
+  margin: 0 0 1em;
+  padding: 6px;
+  border: 1px solid #bababa;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 16px;
+  resize: none;
+  outline: none;
+}
+.style3-input[type='text']:focus {
+  border-color: #0275d8;
+}
+.style3-input[type='text']:focus + .style3-label[placeholder]:before {
+  color: #0275d8;
+}
+.style3-input[type='text']:focus + .style3-label[placeholder]:before,
+.style3-input[type='text']:valid + .style3-label[placeholder]:before {
+  transition-duration: 0.2s;
+  transform: translate(0, -1.6em) scale(0.9, 0.9);
+  font-weight: bold;
+}
+.style3-input[type='text']:valid {
+  border-color: green;
+}
+.style3-input[type='text']:valid + .style3-label[placeholder]:before {
+  color: green;
+}
+.style3-input[type='text']:invalid + .style3-label[placeholder][alt]:before {
+  content: attr(alt);
+}
+.style3-input[type='text'] + .style3-label[placeholder] {
+  display: block;
+  pointer-events: none;
+  line-height: 1.25em;
+  margin-top: calc(-3em - 2px);
+  margin-bottom: calc((3em - 1em) + 2px);
+}
+.style3-input[type='text'] + .style3-label[placeholder]:before {
+  content: attr(placeholder);
+  display: inline-block;
+  margin: 0 calc(0.5em + 2px);
+  padding: 0 2px;
+  color: #7d7d7d;
+  white-space: nowrap;
+  transition: 0.3s ease-in-out;
+  background-image: linear-gradient(to bottom, #ffffff, #ffffff);
+  background-size: 100% 5px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+/* Input Style 4 ------------------------------- */
+
+.style4-input {
+  background-color: ghostwhite;
+  border-radius: 12px;
+  border: none;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.style4-input:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 1px #0275d8;
+}
+/* Input Style 5 ------------------------------- */
+
+.style5-group {
+  height: 50px;
+  position: relative;
+  width: 100%;
+}
+
+.margin-top-bottom-40 {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.style5-input {
+  background-color: ghostwhite;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #000000;
+  font-size: 18px;
+  height: 100%;
+  outline: 0;
+  padding: 4px 20px 0;
+  width: 100%;
+}
+
+.style5-cut {
+  //background-color: #15172b;
+  border-radius: 10px;
+  height: 20px;
+  left: 20px;
+  position: absolute;
+  top: -20px;
+  transform: translateY(0);
+  transition: transform 200ms;
+  width: 76px;
+}
+
+.style5-input:focus ~ .cut,
+.style5-input:not(:placeholder-shown) ~ .cut {
+  transform: translateY(8px);
+}
+
+.style5-label {
+  //color: #65657b;
+  font-family: sans-serif;
+  left: 20px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 50%;
+  transition: transform 200ms, color 200ms;
+  top: 20px;
+}
+
+.style5-input:focus ~ .style5-label,
+.style5-input:not(:placeholder-shown) ~ .style5-label {
+  transform: translateY(-30px) translateX(10px) scale(0.95);
+}
+
+.style5-input:not(:placeholder-shown) ~ .style5-label {
+  color: #000000;
+}
+
+.style5-input:focus ~ .style5-label {
+  color: #0275d8;
+}
+/* Input Style 5 ------------------------------- */
+.style6-input {
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #bababa;
+  border-radius: 6px;
+}
+
+.style6-input:focus {
+  outline: none !important;
+  border-color: #0275d8;
+}
+/* Button Theme 2 ------------------------------- */
+
+.style1-button {
+  backface-visibility: hidden;
+  background-color: #405cf5;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  width: auto;
+  height: 44px;
+  line-height: 1.15;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all 0.2s, box-shadow 0.08s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.style1-button:disabled {
+  cursor: default;
+}
+
+.style1-button:focus {
+  box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0,
+    rgba(50, 151, 211, 0.3) 0 0 0 4px;
+}
+
+.style1-sec-button {
+  background-color: rgba(51, 51, 51, 0.05);
+  border-radius: 0.75rem;
+  border-width: 0;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 1.5rem;
+  width: auto;
+  height: 44px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.style1-ter-button {
+  background-color: #111827;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-size: 14px;
+  padding: 0.75rem 1.2rem;
+  text-align: center;
+  text-decoration: none #6b7280 solid;
+  text-decoration-thickness: auto;
+  transition-duration: 0.2s;
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  height: 44px;
+}
+
+.style1-ter-button:hover {
+  background-color: #374151;
+}
+
+.style1-ter-button:focus {
+  box-shadow: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .style1-ter-button {
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+/* Button Theme 2 ------------------------------- */
+.style2-button {
+  background-color: #ea4c89;
+  border-style: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  width: auto;
+  height: 44px;
+}
+.style2-button:hover,
+.style2-button:focus {
+  background-color: #f082ac;
+}
+.style2-sec-button {
+  appearance: none;
+  background-color: #fafbfc;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #24292e;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  position: relative;
+  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: break-word;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  width: auto;
+  height: 44px;
+}
+
+.style2-sec-button:hover {
+  background-color: #f3f4f6;
+  text-decoration: none;
+  transition-duration: 0.1s;
+}
+
+.style2-sec-button:active {
+  background-color: #edeff2;
+  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+  transition: none 0s;
+}
+
+.style2-sec-button:focus {
+  outline: 1px transparent;
+}
+
+.style2-sec-button:before {
+  display: none;
+}
+
+.style2-ter-button {
+  background-color: #ccf;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  transition: 200ms;
+  box-sizing: border-box;
+  border: 0;
+  font-size: 14px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  width: auto;
+  height: 44px;
+}
+
+.style2-ter-button:not(:disabled):hover,
+.style2-ter-button:not(:disabled):focus {
+  outline: 0;
+  background: #ccf;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Button Theme 3 ------------------------------- */
+.style3-button {
+  align-items: center;
+  background-clip: padding-box;
+  background-color: #fa6400;
+  border: 1px solid transparent;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  width: auto;
+  height: 44px;
+}
+
+.style3-button:hover,
+.style3-button:focus {
+  background-color: #fb8332;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.style3-button:hover {
+  transform: translateY(-1px);
+}
+
+.style3-button:active {
+  background-color: #c85000;
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  transform: translateY(0);
+}
+
+.style3-sec-button {
+  align-items: center;
+  background: #ffffff;
+  border: 0 solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  color: #1a202c;
+  display: inline-flex;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 24px;
+  overflow-wrap: break-word;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  width: auto;
+  height: 44px;
+}
+
+.style3-ter-button {
+  background-color: #ffbf00;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  transition: 200ms;
+  box-sizing: border-box;
+  border: 0;
+  font-size: 14px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  width: auto;
+  height: 44px;
+}
+
+.style3-ter-button:not(:disabled):hover,
+.style3-ter-button:not(:disabled):focus {
+  outline: 0;
+  background: #ffbf00;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Button Theme 4 ------------------------------- */
+.style4-button {
+  background-color: #13aa52;
+  border: 1px solid #13aa52;
+  border-radius: 4px;
+  padding: 10px 25px;
+  width: auto;
+  height: 44px;
+  font-size: 16px;
+  font-weight: 400;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  outline: 0;
+  text-align: center;
+  transform: translateY(0);
+  transition: transform 150ms, box-shadow 150ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.style4-button:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
+  transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  .style4-button {
+    padding: 10px 30px;
+  }
+}
+
+.style4-sec-button {
+  border-radius: 4px;
+  padding: 10px 25px;
+  width: auto;
+  height: 44px;
+  font-size: 16px;
+  font-weight: 400;
+  background-color: #ffffff;
+  border: 1px solid rgb(209, 213, 219);
+  box-sizing: border-box;
+  color: #111827;
+  line-height: 1.25rem;
+  text-align: center;
+  text-decoration: none #d1d5db solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.style4-sec-button:hover {
+  background-color: rgb(249, 250, 251);
+}
+
+.style4-sec-button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.style4-sec-button:focus-visible {
+  box-shadow: none;
+}
+
+.style4-ter-button {
+  border-radius: 4px;
+  padding: 10px 25px;
+  width: auto;
+  height: 44px;
+  font-size: 16px;
+  font-weight: 400;
+  align-items: center;
+  background-color: #ffe7e7;
+  background-position: 0 0;
+  border: 1px solid #fee0e0;
+  box-sizing: border-box;
+  color: #d33a2c;
+  cursor: pointer;
+  display: flex;
+  line-height: 33.4929px;
+  list-style: outside url(https://www.smashingmagazine.com/images/bullet.svg) none;
+  text-align: left;
+  text-decoration: none;
+  text-shadow: none;
+  text-underline-offset: 1px;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  word-break: break-word;
+}
+
+.style4-ter-button:active,
+.style4-ter-button:hover,
+.style4-ter-button:focus {
+  outline: 0;
+}
+
+.style4-ter-button:active {
+  background-color: #d33a2c;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #ffffff;
+}
+
+.style4-ter-button:hover {
+  background-color: #ffe3e3;
+  border-color: #faa4a4;
+}
+
+.style4-ter-button:active:hover,
+.style4-ter-button:focus:hover,
+.style4-ter-button:focus {
+  background-color: #d33a2c;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #ffffff;
+}
+
+/* Button Theme 5 ------------------------------- */
+.style5-button {
+  width: auto;
+  height: 44px;
+  font-size: 16px;
+  padding: 10px 25px;
+  border-radius: 5px;
+  background-color: initial;
+  background-image: linear-gradient(#8614f8 0, #760be0 100%);
+  border-style: none;
+  box-shadow: rgba(245, 244, 247, 0.25) 0 1px 1px inset;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  margin-left: -4px;
+  outline: 0;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.05, 0.03, 0.35, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: bottom;
+}
+
+.style5-button:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 1000px) {
+  .style5-button {
+    font-size: 14px;
+    height: 55px;
+    line-height: 55px;
+    width: 150px;
+  }
+}
+
+.style5-sec-button {
+  width: auto;
+  height: 44px;
+  font-size: 16px;
+  padding: 10px 25px;
+  border-radius: 5px;
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #363636;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 1.5;
+  position: relative;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.style5-sec-button:active {
+  border-color: #4a4a4a;
+  outline: 0;
+}
+
+.style5-sec-button:focus {
+  border-color: #485fc7;
+  outline: 0;
+}
+
+.style5-sec-button:hover {
+  border-color: #b5b5b5;
+}
+
+.style5-sec-button:focus:not(:active) {
+  box-shadow: rgba(72, 95, 199, 0.25) 0 0 0 0.125em;
+}
+
+.style5-ter-button {
+  width: auto;
+  height: 44px;
+  font-size: 16px;
+  padding: 10px 25px;
+  border-radius: 5px;
+  background-color: #222;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+  max-width: none;
+  min-height: 44px;
+  min-width: 10px;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.style5-ter-button:hover,
+.style5-ter-button:focus {
+  opacity: 0.75;
+}
