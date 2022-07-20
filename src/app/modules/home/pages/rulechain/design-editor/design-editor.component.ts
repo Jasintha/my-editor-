@@ -952,7 +952,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             .subscribe(
                 (res: any) => {
                         const ip = window.location.origin;
-                        const endpoint = '/uip/#/';
+                        const endpoint = '/uip';
                         const url =  ip +  endpoint + '?storyId='+storyId +'&epicId='+epicId+'&requirementId='+
                             requirementId+'&serviceId='+serviceId + '&token='+ jwtToken;
                         window.open(url);
