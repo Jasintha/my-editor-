@@ -16,23 +16,23 @@
                 <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
             </div>
 
-            <mat-form-field class="flex-auto">
-                <mat-label>From Page</mat-label>
-                <mat-select formControlName="fromPage">
-                    <mat-option *ngFor="let option of pages" [value]="option.value">
-                        {{option.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+<!--            <mat-form-field class="flex-auto">-->
+<!--                <mat-label>From Page</mat-label>-->
+<!--                <mat-select formControlName="fromPage">-->
+<!--                    <mat-option *ngFor="let option of pages" [value]="option.value">-->
+<!--                        {{option.label}}-->
+<!--                    </mat-option>-->
+<!--                </mat-select>-->
+<!--            </mat-form-field>-->
 
-            <mat-form-field class="flex-auto">
-                <mat-label>Event</mat-label>
-                <mat-select formControlName="event" >
-                    <mat-option *ngFor="let option of eventType" [value]="option.value">
-                        {{option.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+<!--            <mat-form-field class="flex-auto">-->
+<!--                <mat-label>Event</mat-label>-->
+<!--                <mat-select formControlName="event" >-->
+<!--                    <mat-option *ngFor="let option of eventType" [value]="option.value">-->
+<!--                        {{option.label}}-->
+<!--                    </mat-option>-->
+<!--                </mat-select>-->
+<!--            </mat-form-field>-->
 
 
 
@@ -49,7 +49,7 @@
                     <div class="col-md-3">
                         <mat-form-field class="flex-auto" >
                             <mat-label>Choose Model Property</mat-label>
-                            <mat-select formControlName="paramDataType">
+                            <mat-select formControlName="paramProperty">
                                 <mat-option *ngFor="let option of modelProperties" [value]="option.value">
                                     {{option.label}}
                                 </mat-option>

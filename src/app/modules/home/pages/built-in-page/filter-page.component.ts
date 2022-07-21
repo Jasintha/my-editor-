@@ -1154,6 +1154,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 projectUid: this.projectUid,
                 createStatus: status,
                 uuid: this.currentPage.uuid,
+                currentPage: this.currentPage
             }
         });
         dialogRef.afterClosed(

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import { IPage } from '@app/shared/models/model/page.model';
 import {IPageNavigation, PageNavigation, PageParam} from '@shared/models/model/page-navigation.model';
 import {SelectItem} from 'primeng/api';
@@ -28,7 +28,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
   styleUrls: ['./page-navigation.component.scss']
 })
 export class PageNavigationComponent implements OnInit {
-
+  currentPage: IPage;
   isSaving: boolean;
   allpages: IPage[];
   pages: SelectItem[];
@@ -50,7 +50,7 @@ export class PageNavigationComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    event: ['', [Validators.required]],
+    event: [''],
     fromPage: ['', [Validators.required]],
     toPage: ['', [Validators.required]],
     paramName: [],
@@ -74,6 +74,12 @@ export class PageNavigationComponent implements OnInit {
   ngOnInit(): void {
     this.spinnerService.hide();
     this.getPageNavigationData();
+    if (this.data.currentPage) {
+      this.editForm.patchValue({
+        fromPage: this.data.currentPage
+      })
+      this.setPageProperties();
+    }
   }
 
   getPageNavigationData() {
@@ -97,9 +103,9 @@ export class PageNavigationComponent implements OnInit {
               (res: IPage[]) => {
                 this.allpages = res;
                 this.loadPages();
-                if (this.data.createStatus === 'Update') {
+               // if (this.data.createStatus === 'Update') {
                   this.loadUpdateForm();
-                }
+                // }
               },
               (res: HttpErrorResponse) => this.onError(res.message)
           );
@@ -206,10 +212,10 @@ export class PageNavigationComponent implements OnInit {
     this.pageParams.splice(index, 1);
   }
 
-  onPageChange(event) {
+  setPageProperties() {
     this.modelProperties = [];
     this.pageParams = [];
-    const currentPage: IPage = event.value;
+    const currentPage: IPage = this.data.currentPage;
     this.loadEventItems(currentPage.pagetemplate);
     let currentDatamodeProperties: IProperty[];
     if (currentPage.pagetype === 'api-page') {
