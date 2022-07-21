@@ -37,6 +37,7 @@ import {IFormField, IRowFieldMapping, IRowHeader, ISourceTargetFieldsRequest, Ro
 import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-in-page-delete-dialog.component';
 import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
 import {ChartDetails} from '@shared/models/model/chart-details.model';
+import {INavigationParam} from '@shared/models/model/page-navigation.model';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -107,6 +108,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   fieldMapDisplayedColumns: string[] = ['field','rowId'];
   allpages = [];
   pages = [];
+  navigationParams: INavigationParam[] = [];
   displayedDetailHeaderColumns: string[] = ['field', 'detailsHeader', 'actions'];
   dataSourceDetailsPage = new MatTableDataSource(this.headerFieldArr);
 
@@ -1173,6 +1175,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         rowMappings: this.rowHeaderMappingArray,
         tabLayout: this.editForm.get(['wizardLayout']).value,
         chartDetails,
+        navigationParams: this.navigationParams
       };
     }
   }
@@ -1565,12 +1568,14 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         projectUid: this.projectUid,
         createStatus: status,
         uuid: this.currentPage.uuid,
-        currentPage: this.currentPage
+        currentPage: this.currentPage,
+        navigationParams: this.currentPage.navigationParams
       }
     });
     dialogRef.afterClosed(
     ).subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      this.navigationParams = result;
+     // console.log(`Dialog resurelt: ${result}`);
     });
   }
 }

@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import { IPage } from '@app/shared/models/model/page.model';
-import {IPageNavigation, PageNavigation, PageParam} from '@shared/models/model/page-navigation.model';
+import {INavigationParam, IPageNavigation, NavigationParam, PageNavigation, PageParam} from '@shared/models/model/page-navigation.model';
 import {SelectItem} from 'primeng/api';
 import {IProject} from '@shared/models/model/project.model';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -34,9 +34,9 @@ export class PageNavigationComponent implements OnInit {
   pages: SelectItem[];
   eventItems: SelectItem[];
   modelProperties: SelectItem[];
-  //projectId: number;
+  // projectId: number;
   project: IProject;
-  pageParams: PageParam[];
+  navigationParams: INavigationParam[];
   projectUid: string;
   eventType: SelectItem[] = [
     { label: 'On load', value: 'e0' },
@@ -44,15 +44,13 @@ export class PageNavigationComponent implements OnInit {
   ];
 
   displayedColumns: string[] = ['name', 'property' ,'actions'];
-  ELEMENT_DATA: PageParam[] = [];
+  ELEMENT_DATA: NavigationParam[] = [];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
   typeSelected: string;
 
   editForm = this.fb.group({
     id: [],
     event: [''],
-    fromPage: ['', [Validators.required]],
-    toPage: ['', [Validators.required]],
     paramName: [],
     paramProperty: [],
   });
@@ -72,8 +70,7 @@ export class PageNavigationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.spinnerService.hide();
-    this.getPageNavigationData();
+    this.updateForm();
     if (this.data.currentPage) {
       this.editForm.patchValue({
         fromPage: this.data.currentPage
@@ -82,105 +79,20 @@ export class PageNavigationComponent implements OnInit {
     }
   }
 
-  getPageNavigationData() {
-    this.projectUid = this.data.projectUid;
-    // if (this.creatStatus == 'new') {
-    //   this.editForm.reset();
-    // }
-    this.isSaving = false;
-    this.pages = [];
-    this.eventItems = [];
-    this.modelProperties = [];
-    this.pageParams = [];
-    if (this.projectUid) {
-      this.pageService
-          .findBuiltInPagesForProjectId(this.projectUid, this.projectUid)
-          .pipe(
-              filter((res: HttpResponse<IPage[]>) => res.ok),
-              map((res: HttpResponse<IPage[]>) => res.body)
-          )
-          .subscribe(
-              (res: IPage[]) => {
-                this.allpages = res;
-                this.loadPages();
-               // if (this.data.createStatus === 'Update') {
-                  this.loadUpdateForm();
-                // }
-              },
-              (res: HttpErrorResponse) => this.onError(res.message)
-          );
-    }
-  }
-
-  loadPages() {
-    for (let i = 0; i < this.allpages.length; i++) {
-      const dropdownLabel = this.allpages[i].pagetitle;
-      this.pages.push({ label: dropdownLabel, value: this.allpages[i] });
-    }
-  }
-
-  loadUpdateForm() {
-    this.pageNavigationService
-        .find(this.data.uuid ,this.projectUid)
-        .pipe(
-            filter((mayBeOk: HttpResponse<IPageNavigation>) => mayBeOk.ok),
-            map((response: HttpResponse<IPageNavigation>) => response.body)
-        )
-        .subscribe(
-            (res: IPageNavigation) => {
-              this.updateForm(res);
-            }
-        );
-    // const obj = JSON.parse(this.rowData);
-    // this.updateForm(obj);
-  }
-
-  async updateForm(pageNavigation: IPageNavigation) {
-    this.modelProperties = [];
-    if (pageNavigation.fromPage) {
-     // const currentPage: IPage = this.allpages.find(item => item.uuid === pageNavigation.fromPage.uuid);
-      this.eventItems = [];
-      // let currentDatamodeProperties: IProperty[];
-      // if (currentPage.pagetype === 'api-page') {
-      //   currentDatamodeProperties = currentPage.model.config.children;
-      //   for (let i = 0; i < currentDatamodeProperties.length; i++) {
-      //     if (currentDatamodeProperties[i].data.type === 'property') {
-      //       const dropdownLabel = currentDatamodeProperties[i].label;
-      //       this.modelProperties.push({ label: dropdownLabel, value: dropdownLabel });
-      //     }
-      //   }
-      // }
-
-      this.editForm.patchValue({
-        id: pageNavigation.uuid,
-        event: pageNavigation.event,
-       // fromPage: this.allpages.find(item => item.uuid === pageNavigation.fromPage.uuid),
-        toPage: this.allpages.find(item => item.uuid === pageNavigation.toPage.uuid),
-      });
-      this.pageParams = pageNavigation.pageParams;
-      this.ELEMENT_DATA =  this.pageParams;
+  async updateForm() {
+    if( this.data && this.data.navigationParams){
+      this.navigationParams = this.data.navigationParams;
+      this.ELEMENT_DATA =  this.navigationParams;
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-      if (pageNavigation.fromPage && pageNavigation.fromPage.pagetemplate) {
-        this.loadEventItems(pageNavigation.fromPage.pagetemplate);
-      }
     }
   }
 
   previousState() {
-    // this.isVisibleEvent.emit(false);
     this.dialogRef.close();
   }
 
   save() {
-    this.spinnerService.show();
-    // this.spinnerService.show();
-    this.isSaving = true;
-    const pageNavigation = this.createFromForm();
-    if (pageNavigation.uuid) {
-      this.subscribeToSaveResponse(this.pageNavigationService.update(pageNavigation, this.projectUid));
-    } else {
-      this.subscribeToSaveResponse(this.pageNavigationService.create(pageNavigation, this.projectUid));
-    }
+    this.dialogRef.close(this.navigationParams);
   }
 
   addRow() {
@@ -194,31 +106,21 @@ export class PageNavigationComponent implements OnInit {
       //   detail: 'Please fill all the fields',
       // });
     } else {
-      const param: PageParam = {
+      const param: NavigationParam = {
         name: paramName,
-        propertyName: paramProperty,
+        value: paramProperty,
       };
 
-      this.pageParams.push(param);
+      this.navigationParams.push(param);
       this.ELEMENT_DATA.push(param);
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
     }
   }
 
-  deleteRow(param) {
-    const indexnum = this.ELEMENT_DATA.indexOf(param);
-    this.ELEMENT_DATA.splice(indexnum, 1);
-    this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-
-    const index = this.pageParams.indexOf(param);
-    this.pageParams.splice(index, 1);
-  }
-
   setPageProperties() {
     this.modelProperties = [];
-    this.pageParams = [];
+    this.navigationParams = [];
     const currentPage: IPage = this.data.currentPage;
-    this.loadEventItems(currentPage.pagetemplate);
     let currentDatamodeProperties: IProperty[];
     if (currentPage.pagetype === 'api-page') {
       currentDatamodeProperties = currentPage.model.config.children;
@@ -231,64 +133,12 @@ export class PageNavigationComponent implements OnInit {
     }
   }
 
-  getEventData(pagetemplate) {
-    return this.pageService.findEventsForPageTemplate(pagetemplate, this.projectUid).toPromise();
-  }
+  deleteRow(param) {
+    const indexnum = this.ELEMENT_DATA.indexOf(param);
+    this.ELEMENT_DATA.splice(indexnum, 1);
+    this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
 
-  async loadEventItems(pagetemplate) {
-    this.eventItems = [];
-    const res: HttpResponse<IEvent[]> = await this.getEventData(pagetemplate);
-    const allevents: IEvent[] = res.body;
-    for (let i = 0; i < allevents.length; i++) {
-      const dropdownLabel = allevents[i].name;
-      this.eventItems.push({ label: dropdownLabel, value: allevents[i] });
-    }
+    const index = this.navigationParams.indexOf(param);
+    this.navigationParams.splice(index, 1);
   }
-
-  private createFromForm(): IPageNavigation {
-    return {
-      ...new PageNavigation(),
-      uuid: this.editForm.get(['id']).value,
-      event: this.editForm.get(['event']).value,
-      fromPage: this.editForm.get(['fromPage']).value,
-      toPage: this.editForm.get(['toPage']).value,
-      pageParams: this.pageParams,
-      projectUuid: this.editForm.get(['fromPage']).value.projectUuid,
-    };
-  }
-
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IPageNavigation>>) {
-    result.subscribe(
-        () => this.onSaveSuccess(),
-        () => this.onSaveError()
-    );
-  }
-
-  protected onSaveSuccess() {
-    this.spinnerService.hide();
-    // this.spinnerService.hide();
-    this.isSaving = false;
-    this.eventManager.dispatch(
-        new AppEvent(EventTypes.editorUITreeListModification, {
-          name: 'editorUITreeListModification',
-          content: 'Add an page navigation',
-        })
-    );
-    this.previousState();
-  }
-
-  protected onSaveError() {
-    this.spinnerService.hide();
-    // this.spinnerService.hide();
-    this.isSaving = false;
-  }
-  protected onError(errorMessage: string) {
-    // this.logger.error(errorMessage);
-  }
-
-  // ngOnDestroy() {
-  //   this.toolbarTrackerService.setProjectUUID('');
-  //   this.toolbarTrackerService.setIsEntityPage('no');
-  // }
-
 }

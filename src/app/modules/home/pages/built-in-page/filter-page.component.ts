@@ -32,6 +32,7 @@ import {ViewModelConfigComponent} from '@home/pages/built-in-page/view-model-con
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
+import {INavigationParam} from '@shared/models/model/page-navigation.model';
 
 @Component({
     selector: 'virtuan-filter-page',
@@ -86,7 +87,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     detailsHeadersList: SelectItem[] = [];
     stepIndexId = 1;
     headerIndexId = 1;
-
+    navigationParams: INavigationParam[] = [];
     displayedStepHeaderColumns: string[] = ['field', 'stepheader', 'actions'];
     ELEMENT_DATA = [];
     dataSourceWizard = new MatTableDataSource(this.ELEMENT_DATA);
@@ -911,6 +912,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 isHomepage: this.filterTableData.get(['isHomepage']).value,
                 attachedPage: this.filterFormPage.uuid,
                 attachedPageLocation: this.filterTableData.get(['attachedPageLocation']).value,
+                navigationParams: this.navigationParams
             };
         }
     }
@@ -936,6 +938,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 pageViewType: 'filterForm',
                 authority: this.filterFormData.get(['authority']).value,
                 isHomepage: this.filterFormData.get(['isHomepage']).value,
+                navigationParams: this.navigationParams
             };
         }
     }
@@ -1159,7 +1162,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
         });
         dialogRef.afterClosed(
         ).subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            this.navigationParams = result;
         });
     }
 }

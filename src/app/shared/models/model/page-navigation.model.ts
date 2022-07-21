@@ -28,3 +28,13 @@ export interface IPageParam {
 export class PageParam implements IPageParam {
   constructor(public name?: string, public propertyName?: string) {}
 }
+
+
+export interface INavigationParam {
+  name?: string;
+  value?: string;
+}
+
+export class NavigationParam implements INavigationParam {
+  constructor(public name?: string, public value?: string) {}
+}
