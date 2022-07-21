@@ -123,41 +123,43 @@ export class PageNavigationComponent implements OnInit {
     this.pageNavigationService
         .find(this.data.uuid ,this.projectUid)
         .pipe(
-            filter((mayBeOk: HttpResponse<IMainMenu>) => mayBeOk.ok),
-            map((response: HttpResponse<IMainMenu>) => response.body)
+            filter((mayBeOk: HttpResponse<IPageNavigation>) => mayBeOk.ok),
+            map((response: HttpResponse<IPageNavigation>) => response.body)
         )
         .subscribe(
-            (res: IMainMenu) => {
+            (res: IPageNavigation) => {
               this.updateForm(res);
             }
         );
-    //const obj = JSON.parse(this.rowData);
-    //this.updateForm(obj);
+    // const obj = JSON.parse(this.rowData);
+    // this.updateForm(obj);
   }
 
   async updateForm(pageNavigation: IPageNavigation) {
     this.modelProperties = [];
     if (pageNavigation.fromPage) {
-      const currentPage: IPage = this.allpages.find(item => item.uuid === pageNavigation.fromPage.uuid);
+     // const currentPage: IPage = this.allpages.find(item => item.uuid === pageNavigation.fromPage.uuid);
       this.eventItems = [];
-      let currentDatamodeProperties: IProperty[];
-      if (currentPage.pagetype === 'api-page') {
-        currentDatamodeProperties = currentPage.model.config.children;
-        for (let i = 0; i < currentDatamodeProperties.length; i++) {
-          if (currentDatamodeProperties[i].data.type === 'property') {
-            const dropdownLabel = currentDatamodeProperties[i].label;
-            this.modelProperties.push({ label: dropdownLabel, value: dropdownLabel });
-          }
-        }
-      }
+      // let currentDatamodeProperties: IProperty[];
+      // if (currentPage.pagetype === 'api-page') {
+      //   currentDatamodeProperties = currentPage.model.config.children;
+      //   for (let i = 0; i < currentDatamodeProperties.length; i++) {
+      //     if (currentDatamodeProperties[i].data.type === 'property') {
+      //       const dropdownLabel = currentDatamodeProperties[i].label;
+      //       this.modelProperties.push({ label: dropdownLabel, value: dropdownLabel });
+      //     }
+      //   }
+      // }
 
       this.editForm.patchValue({
         id: pageNavigation.uuid,
         event: pageNavigation.event,
-        fromPage: this.allpages.find(item => item.uuid === pageNavigation.fromPage.uuid),
+       // fromPage: this.allpages.find(item => item.uuid === pageNavigation.fromPage.uuid),
         toPage: this.allpages.find(item => item.uuid === pageNavigation.toPage.uuid),
       });
       this.pageParams = pageNavigation.pageParams;
+      this.ELEMENT_DATA =  this.pageParams;
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
       if (pageNavigation.fromPage && pageNavigation.fromPage.pagetemplate) {
         this.loadEventItems(pageNavigation.fromPage.pagetemplate);
       }
