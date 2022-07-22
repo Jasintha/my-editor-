@@ -1026,6 +1026,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         apiType: builtInPage.apiType,
         selectedAggregate: builtInPage.model,
         resourcePath: builtInPage.resourcePath,
+        pageDescription: builtInPage.pageDescription,
         //  operation: builtInPage.operation,
         pagetitle: builtInPage.pagetitle,
         pagetemplate: builtInPage.pagetemplate,
@@ -1574,7 +1575,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     });
     dialogRef.afterClosed(
     ).subscribe(result => {
-      this.navigationParams = result;
+      if (result) {
+        this.navigationParams = result;
+      }
      // console.log(`Dialog resurelt: ${result}`);
     });
   }

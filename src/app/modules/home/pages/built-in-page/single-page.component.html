@@ -25,6 +25,16 @@
                 </button>
             </div>
         </div>
+        <div class="row justify-content-center title-temp">
+            <div class="col-md-12">
+                <ng-container>
+                    <mat-form-field style="width: 1000px; height: 100px;" appearance="fill">
+                        <mat-label>Description</mat-label>
+                        <textarea style="overflow: auto" [readonly]="formDisable" cdkTextareaAutosize formControlName="pageDescription" name="pageDescription" matInput placeholder="This page is about..."></textarea>
+                    </mat-form-field>
+                </ng-container>
+            </div>
+        </div>
         <div>
             <div class="row">
                 <div class="col-12 model-type">
@@ -377,12 +387,6 @@
                                 </div>
                             </div>
                         </div>
-                        <ng-container *ngIf="editForm.value.pagetemplate === 'label-page'">
-                            <mat-form-field style="width: 700px; height: 100px;" appearance="fill">
-                                <mat-label>Description</mat-label>
-                                <textarea [disabled]="formDisable" cdkTextareaAutosize formControlName="pageDescription" name="pageDescription" matInput placeholder="This page is about..."></textarea>
-                            </mat-form-field>
-                        </ng-container>
                         <ng-container *ngIf="editForm.value.pagetemplate === 'form-wizard-page'">
                             <div class="form-group">
                                 <label class="form-control-label">Add form fields to steps</label>
