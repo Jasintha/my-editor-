@@ -126,7 +126,7 @@ export class PageNavigationComponent implements OnInit {
       currentDatamodeProperties = currentPage.model.config.children;
       for (let i = 0; i < currentDatamodeProperties.length; i++) {
         if (currentDatamodeProperties[i].data.type === 'property') {
-          const dropdownLabel = currentDatamodeProperties[i].label;
+          const dropdownLabel = currentDatamodeProperties[i].label.toLowerCase( );
           this.modelProperties.push({ label: dropdownLabel, value: dropdownLabel });
         }
       }
