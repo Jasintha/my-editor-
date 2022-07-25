@@ -259,7 +259,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
                   console.log(">>>>>>>>>>");
 
 
-                  if(this.configuration.apiInput && this.items){
+                  if(this.configuration.apiInput && this.configuration.apiInput.id && this.items){
                     let selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
 
                     console.log("selectedAPIInputs");
@@ -269,7 +269,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
                       selectedAPIInputs: selectedAPIInputs.value,
                     });
                   }
-                  if(this.configuration.returnObject && this.returnObject){
+                  if(this.configuration.returnObject && this.configuration.returnObject.id && this.returnObject){
                     let returnObject = this.returnObject.find(x => (x.value.id === this.configuration.returnObject.id) && (x.value.inputType === this.configuration.returnObject.inputType) && (x.value.inputName === this.configuration.returnObject.inputName));
                     console.log("returnObject");
                     console.log(returnObject);                
