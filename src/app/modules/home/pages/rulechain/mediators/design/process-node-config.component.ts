@@ -247,16 +247,20 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
                   if (this.aggregates) {
                     this.loadAggregates();
                   }
-                  let selectedAPIInputs = this.configuration.apiInput;
-                  if(selectedAPIInputs && this.items){
-                    selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
+                  if(this.configuration.apiInput && this.items){
+                    let selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
+
+                    console.log("selectedAPIInputs");
+                    console.log(selectedAPIInputs);
+
                     this.processNodeConfigFormGroup.patchValue({
                       selectedAPIInputs: selectedAPIInputs.value,
                     });
                   }
-                  let returnObject = this.configuration.returnObject;
-                  if(returnObject && this.returnObject){
-                    returnObject = this.returnObject.find(x => (x.value.id === this.configuration.returnObject.id) && (x.value.inputType === this.configuration.returnObject.inputType) && (x.value.inputName === this.configuration.returnObject.inputName));
+                  if(this.configuration.returnObject && this.returnObject){
+                    let returnObject = this.returnObject.find(x => (x.value.id === this.configuration.returnObject.id) && (x.value.inputType === this.configuration.returnObject.inputType) && (x.value.inputName === this.configuration.returnObject.inputName));
+                    console.log("returnObject");
+                    console.log(returnObject);                
                     this.processNodeConfigFormGroup.patchValue({
                       returnObject: returnObject.value
                     });
