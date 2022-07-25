@@ -247,6 +247,18 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
                   if (this.aggregates) {
                     this.loadAggregates();
                   }
+
+                  console.log("selectedAPIInputs >>>>>>");
+                  console.log(this.configuration.apiInput);
+                  console.log(this.items);
+
+                  console.log("returnObject >>>>>>>>>>");
+                  console.log(this.configuration.returnObject);
+                  console.log(this.returnObject);
+
+                  console.log(">>>>>>>>>>");
+
+
                   if(this.configuration.apiInput && this.items){
                     let selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
 
