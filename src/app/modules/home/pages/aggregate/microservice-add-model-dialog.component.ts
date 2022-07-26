@@ -227,7 +227,8 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       encript: value.isEncrypted,
       required: value.isrequired,
       regexString : value.regexString,
-      selectedValidateType: validationType
+      selectedValidateType: validationType,
+      fieldName: value.name
     })
   }
 
@@ -285,7 +286,8 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       encript: val.encrypt,
       required: val.required,
       regexString : val.regexString,
-      selectedValidateType: validationType
+      selectedValidateType: validationType,
+      fieldName: value.name
     })
 
   }
@@ -309,6 +311,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     this.editForm.get('casSensitivity').reset();
     this.editForm.get('requiredChar').reset();
     this.editForm.get('format').reset();
+    this.editForm.get('fieldName').reset();
     this.editForm.get('length').reset();
     this.editForm.get('range').reset();
     this.editForm.get('required').reset();
@@ -473,7 +476,8 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
           propType = 'TRUE_OR_FALSE';
         }
         valueObjType = this.editForm.get(['propertytype']).value.valueObjectType;
-        name = this.editForm.get(['propertytype']).value.name;
+        name = this.editForm.get(['fieldName']).value;
+//         name = this.editForm.get(['propertytype']).value.name;
         domain = this.editForm.get(['propertytype']).value.domain;
         valueObjStatus = 'existing';
         propertyTypeToSave = propType;
