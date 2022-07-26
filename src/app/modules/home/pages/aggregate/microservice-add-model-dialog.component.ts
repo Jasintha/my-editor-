@@ -287,7 +287,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       required: val.required,
       regexString : val.regexString,
       selectedValidateType: validationType,
-      fieldName: value.name
+      fieldName: val.name
     })
 
   }
