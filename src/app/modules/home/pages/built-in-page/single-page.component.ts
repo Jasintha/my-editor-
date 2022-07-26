@@ -1577,6 +1577,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     ).subscribe(result => {
       if (result) {
         this.navigationParams = result;
+        this.checkPageNameExist()
       }
      // console.log(`Dialog resurelt: ${result}`);
     });

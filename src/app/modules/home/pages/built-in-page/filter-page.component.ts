@@ -1163,6 +1163,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
         dialogRef.afterClosed(
         ).subscribe(result => {
             this.navigationParams = result;
+            this.checkPageNameExist()
         });
     }
 }

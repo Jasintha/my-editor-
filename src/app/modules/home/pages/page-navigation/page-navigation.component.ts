@@ -36,7 +36,7 @@ export class PageNavigationComponent implements OnInit {
   modelProperties: SelectItem[];
   // projectId: number;
   project: IProject;
-  navigationParams: INavigationParam[];
+  navigationParams: INavigationParam[] = [];
   projectUid: string;
   eventType: SelectItem[] = [
     { label: 'On load', value: 'e0' },
@@ -44,8 +44,7 @@ export class PageNavigationComponent implements OnInit {
   ];
 
   displayedColumns: string[] = ['name', 'property' ,'actions'];
-  ELEMENT_DATA: NavigationParam[] = [];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  dataSource = new MatTableDataSource(this.navigationParams);
   typeSelected: string;
 
   editForm = this.fb.group({
@@ -82,8 +81,7 @@ export class PageNavigationComponent implements OnInit {
   async updateForm() {
     if( this.data && this.data.navigationParams){
       this.navigationParams = this.data.navigationParams;
-      this.ELEMENT_DATA =  this.navigationParams;
-      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource(this.navigationParams);
     }
   }
 
@@ -112,14 +110,12 @@ export class PageNavigationComponent implements OnInit {
       };
 
       this.navigationParams.push(param);
-      this.ELEMENT_DATA.push(param);
-      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource(this.navigationParams);
     }
   }
 
   setPageProperties() {
     this.modelProperties = [];
-    this.navigationParams = [];
     const currentPage: IPage = this.data.currentPage;
     let currentDatamodeProperties: IProperty[];
     if (currentPage.pagetype === 'api-page') {
@@ -134,11 +130,8 @@ export class PageNavigationComponent implements OnInit {
   }
 
   deleteRow(param) {
-    const indexnum = this.ELEMENT_DATA.indexOf(param);
-    this.ELEMENT_DATA.splice(indexnum, 1);
-    this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-
-    const index = this.navigationParams.indexOf(param);
-    this.navigationParams.splice(index, 1);
+    const indexnum = this.navigationParams.indexOf(param);
+    this.navigationParams.splice(indexnum, 1);
+    this.dataSource = new MatTableDataSource(this.navigationParams);
   }
 }
