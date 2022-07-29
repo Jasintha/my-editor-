@@ -138,6 +138,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'Subtitle', value: 'Subtitle'},
     { label: 'Description', value: 'Description'},
     { label: 'Field', value: 'Field'},
+    { label: 'Image', value: 'Image'},
   ];
   crudItems: SelectItem[] = [
     { label: 'CREATE', value: 'CREATE' },

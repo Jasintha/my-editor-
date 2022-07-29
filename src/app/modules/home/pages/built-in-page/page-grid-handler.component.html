@@ -1,43 +1,50 @@
 <div style="padding: 20px;">
-    <h2 style="margin-bottom: -135px;"  id="page-heading">
-        <span *ngIf="formDisable">{{pageTitle}}</span>
-        <div *ngIf="!formDisable" class="form-group">
-            <form name="editForm" role="form" novalidate  [formGroup]="editForm">
-            <input type="text" class="form-control" omitSpecialChar keyWordValidation name="pagetitle" id="field_pagetitle"
-                   formControlName="pagetitle"/>
-            <div *ngIf="editForm.get('pagetitle').invalid && (editForm.get('pagetitle').dirty || editForm.get('pagetitle').touched)">
-                <small class="form-text text-danger" >
-                    Page Title is required.
-                </small>
-            </div>
-            </form>
-        </div>
-        <p-toast></p-toast>
-        <button style="border: none;background-color: white; margin-left: 30px"
-                type="button" class="fa fa-pencil-square-o" aria-hidden="true"
-                (click)="enableDisableForm()"></button>
-        <button *ngIf="!formDisable" style="border: none;background-color: white; margin-left: 30px"
-                type="button" class="fa fa-save" aria-hidden="true"
-                (click)="checkPageNameExistAndSave()"></button>
-    </h2>
+    <div class="card">
+        <div class="card-body row">
 
+            <h2 id="page-heading">
+                <span *ngIf="formDisable">{{pageTitle}}</span>
+                <div *ngIf="!formDisable" class="form-group">
+                    <form name="editForm" role="form" novalidate  [formGroup]="editForm">
+                        <input type="text" class="form-control" omitSpecialChar keyWordValidation name="pagetitle" id="field_pagetitle"
+                               formControlName="pagetitle"/>
+                        <div *ngIf="editForm.get('pagetitle').invalid && (editForm.get('pagetitle').dirty || editForm.get('pagetitle').touched)">
+                            <small class="form-text text-danger" >
+                                Page Title is required.
+                            </small>
+                        </div>
+                    </form>
+                </div>
+                <p-toast></p-toast>
+                <button style="border: none;background-color: white; margin-left: 30px"
+                        type="button" class="fa fa-pencil-square-o" aria-hidden="true"
+                        (click)="enableDisableForm()"></button>
+                <button *ngIf="!formDisable" style="border: none;background-color: white; margin-left: 30px"
+                        type="button" class="fa fa-save" aria-hidden="true"
+                        (click)="checkPageNameExistAndSave()"></button>
+            </h2>
+        </div>
+    </div>
     <br/>
     <div class="container" >
-        <div class="page-type">
-            <div *ngFor="let raw of grid.rows; let i = index" style="max-height: 30vh" [attr.data-index]="i" class="row">
+        <div class="page-container">
+            <div class="card">
+                <div class="card-body row">
+
+                <div *ngFor="let raw of grid.rows; let i = index" style="max-height: 30vh" [attr.data-index]="i" class="row">
                 <div *ngFor="let container of raw.containers  let j = index" [attr.data-index]="j"
-                     class="grid-col col-{{container.containerCols}}" style="padding: 7%"><i
-                    *ngIf="!container.page" (click)="selectApageForContainer(i, j)"
-                    class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
+                     class="grid-col col-{{container.containerCols}}" align="center" style="padding: 7%"><i
+                        *ngIf="!container.page" (click)="selectApageForContainer(i, j)"
+                        class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
                     <div *ngIf="container.page">
-<!--                        <div   *ngIf="container.page.widgettemplate === 'form-page'" class=" d-flex justify-content-center init-page-image">-->
-<!--                            <img class="pageTmpImg" src="../../../content/images/pages/form.jpg"-->
-<!--                                 alt="Template">-->
-<!--                        </div>-->
-<!--                        <div   *ngIf="container.page.widgettemplate === 'table-page'" class=" d-flex justify-content-center init-page-image">-->
-<!--                            <img class="pageTmpImg" src="../../../content/images/pages/allinone.jpg"-->
-<!--                                 alt="Template">-->
-<!--                        </div>-->
+                        <!--                        <div   *ngIf="container.page.widgettemplate === 'form-page'" class=" d-flex justify-content-center init-page-image">-->
+                        <!--                            <img class="pageTmpImg" src="../../../content/images/pages/form.jpg"-->
+                        <!--                                 alt="Template">-->
+                        <!--                        </div>-->
+                        <!--                        <div   *ngIf="container.page.widgettemplate === 'table-page'" class=" d-flex justify-content-center init-page-image">-->
+                        <!--                            <img class="pageTmpImg" src="../../../content/images/pages/allinone.jpg"-->
+                        <!--                                 alt="Template">-->
+                        <!--                        </div>-->
                         <div>
                             {{container.pagetitle}}
                         </div>
@@ -51,13 +58,15 @@
             </div>
         </div>
     </div>
-
-  <div style="display: flex; justify-content: end; padding-top: 25px">
-    <button type="submit"
-            (click)="previousState()"
-            class="btn " style="margin-right: 63px; background-color: #6D7F8B; color: white; float: left ">
-      <i class="fas fa-arrow-left"></i>&nbsp;<span> Back</span>
-    </button>
-  </div>
-
+        </div>
     </div>
+
+<!--    <div style="display: flex; justify-content: end; padding-top: 25px">-->
+<!--        <button type="submit"-->
+<!--                (click)="previousState()"-->
+<!--                class="btn " style="margin-right: 63px; background-color: #6D7F8B; color: white; float: left ">-->
+<!--            <i class="fas fa-arrow-left"></i>&nbsp;<span> Back</span>-->
+<!--        </button>-->
+<!--    </div>-->
+
+</div>
