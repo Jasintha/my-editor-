@@ -118,10 +118,12 @@ export class RequirementAddEpicDialogComponent implements OnInit {
 
   loadAIDes(){
     const des = this.editForm.get('reqdescription').value.replace(/<[^>]*>/g, '');
-    const formData = new FormData();
-    formData.append('requirment', des )
-    formData.append('domain', 'other' )
-    formData.append('region', 'other' )
+    // const formData = new FormData();
+    // formData.append('requirment', des )
+    // formData.append('domain', 'other' )
+    // formData.append('region', 'other' )
+
+    const formData = {requirment: des, domain: 'other', region: 'other'  }
 
     this.requirementService
         .findAIDescription(formData)
