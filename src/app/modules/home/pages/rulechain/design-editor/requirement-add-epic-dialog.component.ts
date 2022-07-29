@@ -134,6 +134,7 @@ export class RequirementAddEpicDialogComponent implements OnInit {
         .subscribe(
             (res: any) => {
               this.aiDes = res.htext;
+              this.sourceProperties = res.entites;
               this.editForm.patchValue({
                 aiDescription: this.aiDes
               })
