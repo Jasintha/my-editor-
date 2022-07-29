@@ -139,6 +139,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'User Name', value: 'UNAME' },
     { label: 'Password', value: 'password' },
   ];
+  confirmationTypes: SelectItem[] = [
+    { label: 'Without-Confirm', value: 'Without-Confirm' },
+    { label: 'Basic-Confirm', value: 'Basic-Confirm' },
+    { label: 'Text-Confirm', value: 'Text-Confirm' },
+  ];
   operationItems: SelectItem[] = [
     { label: 'CREATE', value: 'CREATE' },
     { label: 'FIND', value: 'FIND' },

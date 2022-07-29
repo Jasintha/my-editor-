@@ -717,6 +717,20 @@
                         <!--                        </ng-container>-->
                         <ng-container
                                 *ngIf="editForm.value.pagetemplate === 'aio-table' || editForm.value.pagetemplate === 'aio-grid'">
+                            <div class="card" style="margin-bottom: 20px">
+                                <div class="card-body row">
+                                    <div class="row col-md-12">
+                                        <div style="padding: 10px">
+                                            <label class="form-control-label" style="margin-right: 30px">Action pages view type</label>
+                                            <mat-radio-group aria-label="Select an option" formControlName="actionPagetype">
+                                                <mat-radio-button value="default">Use default views</mat-radio-button>
+                                                <mat-radio-button value="navigate" style="margin-left: 5px">Navigate to another page</mat-radio-button>
+                                            </mat-radio-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="form-control-label">Add API Details</label>
                                 <div class="card">
@@ -864,26 +878,36 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-md-2">
+                                <mat-form-field class="flex-auto">
+                                    <mat-label>Operation</mat-label>
+                                    <mat-select [disabled]="formDisable" formControlName="btnOperation">
+                                        <mat-option *ngFor="let option of operationItems" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
                                 <mat-form-field class="flex-auto" >
                                     <mat-label>Resource path</mat-label>
                                     <input [disabled]="formDisable" type="text" formControlName="btnResourcePath" matInput>
                                 </mat-form-field>
-                            </div>
-                            <div class="col-md-2">
-                                    <mat-form-field class="flex-auto">
-                                        <mat-label>Operation</mat-label>
-                                        <mat-select [disabled]="formDisable" formControlName="btnOperation">
-                                            <mat-option *ngFor="let option of operationItems" [value]="option.value">
-                                                {{option.label}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
                             </div>
                             <div class="col-md-2" *ngIf="editForm.value.btnOperation == 'NAVIGATE'">
                                 <mat-form-field  class="flex-auto" style="width: 100%">
                                     <mat-label>To Page</mat-label>
                                     <mat-select formControlName="navigatePage">
                                         <mat-option *ngFor="let option of pages" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                <mat-form-field class="flex-auto">
+                                    <mat-label>Confirmation Type</mat-label>
+                                    <mat-select [disabled]="formDisable" formControlName="btnConfirmationType">
+                                        <mat-option *ngFor="let option of confirmationTypes" [value]="option.value">
                                             {{option.label}}
                                         </mat-option>
                                     </mat-select>
