@@ -116,6 +116,10 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   LOGIN_DATA = [];
   dataSourceLogin = new MatTableDataSource(this.LOGIN_DATA);
 
+  displayedtileParamColumns: string[] = ['tileField', 'attribute', 'actions'];
+  TILE_DATA = [];
+  dataSourceTile = new MatTableDataSource(this.TILE_DATA);
+
   displayedAioParamColumns: string[] = ['operation', 'path', 'actions'];
   PARAM_DATA = [];
   dataSourceAIOParam = new MatTableDataSource(this.PARAM_DATA);
@@ -129,6 +133,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'Table', value: 'table' },
   ];
 
+  tilePageFields: SelectItem[] = [
+    { label: 'Title', value: 'Title'},
+    { label: 'Subtitle', value: 'Subtitle'},
+    { label: 'Description', value: 'Description'},
+    { label: 'Field', value: 'Field'},
+  ];
   crudItems: SelectItem[] = [
     { label: 'CREATE', value: 'CREATE' },
     { label: 'UPDATE', value: 'UPDATE' },
@@ -206,6 +216,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       aioapi: [],
       inputValType: [],
       matchedProperty: [],
+      matchedAttribute: [],
+      tileFieldCount: [],
+      fieldType: [],
       pageconfig: [],
       fieldName: [],
       stepHeader:[],
@@ -226,6 +239,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       chartHeight: 0,
       showLegend: false,
       pageDescription: '',
+      btnConfirmationType: '',
       wizardDetailsGroup: this.fb.array([
         new FormGroup({
           stepHeading: this.fb.control('Step 1'),
@@ -479,6 +493,28 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         this.loginParams.push(param);
         this.LOGIN_DATA.push(param);
         this.dataSourceLogin = new MatTableDataSource(this.LOGIN_DATA);
+      }
+    }
+  }
+
+  addTileFieldMapping() {
+    const tileField = this.editForm.get(['fieldType']).value;
+    const attribute = this.editForm.get(['matchedAttribute']).value;
+
+    if (tileField === null || attribute === '' || attribute === null) {
+      // this.messageService.add({
+      //   severity: 'warn',
+      //   summary: 'Warn',
+      //   detail: 'Please fill all the fields',
+      // });
+    } else {
+      const param = {
+        tileField,
+        attribute,
+      };
+      if (this.TILE_DATA.indexOf(param) === -1) {
+        this.TILE_DATA.push(param);
+        this.dataSourceTile = new MatTableDataSource(this.TILE_DATA);
       }
     }
   }
@@ -1051,6 +1087,15 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
           }
         }
       }
+      if (builtInPage && builtInPage.tileFields && builtInPage.tileFields.length > 0) {
+        if(builtInPage.pagetemplate === 'tile-page' || builtInPage.pagetemplate === 'aio-grid') {
+          this.TILE_DATA = builtInPage.tileFields;
+          this.dataSourceTile = new MatTableDataSource(this.TILE_DATA);
+        } else if (builtInPage.pagetemplate === 'static-page') {
+          this.headerFieldArr = builtInPage.stepMappings;
+          this.dataSourceDetailsPage = new MatTableDataSource( this.headerFieldArr);
+        }
+      }
       if (builtInPage && builtInPage.stepMappings && builtInPage.stepMappings.length > 0) {
         if(builtInPage.pagetemplate === 'form-wizard-page') {
           this.stepFieldArr = builtInPage.stepMappings;
@@ -1181,7 +1226,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         rowMappings: this.rowHeaderMappingArray,
         tabLayout: this.editForm.get(['wizardLayout']).value,
         chartDetails,
-        navigationParams: this.navigationParams
+        navigationParams: this.navigationParams,
+        tileFields: this.TILE_DATA,
+        tileFieldCount: this.editForm.get(['tileFieldCount']).value,
       };
     }
   }

@@ -81,7 +81,7 @@
                         <img *ngIf="editForm.value.pagetemplate == 'register-page'"
                              class="pageTmpImgInPage" src="../../../../../assets/images/pages/register.jpg"
                              alt="Template" style="width: 100%">
-                        <img *ngIf="editForm.value.pagetemplate == 'aio-grid'"
+                        <img *ngIf="editForm.value.pagetemplate == 'aio-grid' || editForm.value.pagetemplate == 'tile-page'"
                              class="pageTmpImgInPage" src="../../../../../assets/images/pages/grid.jpg"
                              alt="Template" style="width: 100%">
                     </div>
@@ -118,6 +118,18 @@
                             <!--                                            Page Template is required.-->
                             <!--                                        </small>-->
                             <!--                                    </div>-->
+
+                            <div *ngIf="editForm.value.pagetemplate == 'tile-page'" class="card">
+                                <div class="card-body row">
+                                    <div class="col-md-8">
+                                        <mat-form-field [style]="{'width':'100%'}">
+                                            <mat-label>Number of attributes to display</mat-label>
+                                            <input type="number" formControlName="tileFieldCount" [readonly]="formDisable" matInput
+                                                   name="tileFieldCount" >
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -279,7 +291,7 @@
                         </div>-->
 
                         <div class="form-group"
-                             *ngIf="editForm.value.pagetemplate === 'table-page' || editForm.value.pagetemplate === 'form-page' || editForm.value.pagetemplate == 'static-page'|| editForm.value.pagetemplate === 'form-wizard-page' || editForm.value.pagetemplate === 'file-upload-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">
+                             *ngIf="editForm.value.pagetemplate === 'tile-page' || editForm.value.pagetemplate === 'table-page' || editForm.value.pagetemplate === 'form-page' || editForm.value.pagetemplate == 'static-page'|| editForm.value.pagetemplate === 'form-wizard-page' || editForm.value.pagetemplate === 'file-upload-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">
                             <div class="row">
                                 <div class="col-12">
                                     <div *ngIf="project?.apptypesID === 'task.ui'" class="form-group"
@@ -345,6 +357,76 @@
                                     <input type="text" formControlName="authority" [readonly]="formDisable" matInput
                                            name="resourcepath" id="field_authority">
                                 </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" *ngIf="editForm.value.pagetemplate === 'tile-page' || editForm.value.pagetemplate === 'aio-grid'">
+                            <h6 style="margin-top: 15px">Match attributes for tile fields</h6>
+                            <div class="card">
+                                <div class="card-body row">
+                                    <div class="col-md-3">
+                                        <mat-form-field [style]="{'width':'100%'}">
+                                            <mat-label>Choose Param Type</mat-label>
+                                            <mat-select formControlName="fieldType"
+                                                        [disabled]="formDisable">
+                                                <mat-option *ngFor="let option of tilePageFields" [value]="option.value">
+                                                    {{option.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field [style]="{'width':'100%'}">
+                                            <mat-label>Choose Model Property</mat-label>
+                                            <mat-select formControlName="matchedAttribute"
+                                                        [disabled]="formDisable">
+                                                <mat-option *ngFor="let option of modelPropertyList"
+                                                            [value]="option.value">
+                                                    {{option.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" style="float: right;" mat-raised-button color="primary"
+                                                (click)="addTileFieldMapping()" [disabled]="formDisable">
+                                            <mat-icon>add</mat-icon>
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style=" :20px;padding-bottom:20px;">
+                                <table mat-table matSort [dataSource]="dataSourceTile"
+                                       class="mat-elevation-z8 demo-table">
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="tileField">
+                                        <th mat-header-cell *matHeaderCellDef>Field</th>
+                                        <td mat-cell *matCellDef="let element">{{element.tileField}}</td>
+                                    </ng-container>
+
+                                    <!-- Weight Column -->
+                                    <ng-container matColumnDef="attribute">
+                                        <th mat-header-cell *matHeaderCellDef>Attribute</th>
+                                        <td mat-cell *matCellDef="let element">{{element.attribute}}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="actions">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Action</th>
+                                        <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                            <button (click)="deleteParamMapping(row)"
+                                                    mat-icon-button
+                                                    type="button" [disabled]="formDisable">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedtileParamColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedtileParamColumns;"></tr>
+                                </table>
+
                             </div>
                         </div>
 

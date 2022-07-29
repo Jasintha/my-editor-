@@ -54,6 +54,8 @@ export interface IPage {
   tabLayout?: string;
   chartDetails?: IChartDetails;
   navigationParams?: INavigationParam[];
+  tileFieldCount?: number,
+  tileFields?: any[],
 }
 
 export class Page implements IPage {
@@ -102,5 +104,7 @@ export class Page implements IPage {
     public tabLayout?: string,
     public chartDetails?: IChartDetails,
     public navigationParams?: INavigationParam[],
+    public tileFields?: any[],
+    public tileFieldCount?: number,
   ) {}
 }
