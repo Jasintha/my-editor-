@@ -111,6 +111,7 @@ export class RequirementService {
       observe: 'response',
     });
   }
+
   enable(id: string, uuid: string): Observable<EntityResponseType> {
     return this.http.put<IRequirement>(`${this.requirementEnablestatusChangeConfirmedResourceUrl}/${uuid}/${id}`, id, {
       observe: 'response',
@@ -118,6 +119,6 @@ export class RequirementService {
   }
 
   findAIDescription(des): Observable<HttpResponse<any>>{
-    return this.http.post<any>(`http://140.82.12.61/nlpp/`, des,  { observe: 'response'}  );
+    return this.http.post<any>(`/nlpp/`, des,  { observe: 'response'}  );
   }
 }
