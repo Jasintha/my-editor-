@@ -309,5 +309,5 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
     //  this.definedConfigComponent.validate();
    // }
   }
-
+// this.definedConfigComponent.validate();
 }
