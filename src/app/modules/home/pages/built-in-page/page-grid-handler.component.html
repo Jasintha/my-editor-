@@ -2,12 +2,14 @@
                 <div class="row justify-content-center title-temp">
                     <div class="col-md-8">
                         <h3 *ngIf="formDisable">{{pageTitle}}</h3>
+                        <form name="editForm" role="form" novalidate  [formGroup]="editForm">
                         <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
                             <mat-label>Page Title</mat-label>
                             <input type="text" formControlName="pagetitle" matInput name="pagetitle">
                             <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required
                             </mat-error>
                         </mat-form-field>
+                        </form>
                     </div>
 
                     <div class="col-md-4">
