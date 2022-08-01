@@ -126,8 +126,7 @@
                             dragdrop="true" sourceFilterPlaceholder="Search by brand" targetFilterPlaceholder="Search by Name" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
                     <ng-template let-property pTemplate="item">
                         <div class="ui-helper-clearfix">
-                            <div style="font-size:14px;float:left;margin:15px 5px 0 0">{{property.propertyName}}
-                                <span *ngIf="property.isLinkedProperty"> : {{property.selectType}}</span>
+                            <div style="font-size:14px;float:left;margin:15px 5px 0 0">{{property}}
                             </div>
                         </div>
                     </ng-template>

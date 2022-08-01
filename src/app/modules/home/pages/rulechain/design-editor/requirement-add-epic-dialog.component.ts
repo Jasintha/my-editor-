@@ -35,8 +35,8 @@ export class RequirementAddEpicDialogComponent implements OnInit {
   existingEpics: any[];
   editForm: FormGroup;
   disable = true;
-  sourceProperties: [];
-  targetProperties: [];
+  sourceProperties = [];
+  targetProperties= [];
   aiDes: string;
 
   @ViewChild('stepper') private myStepper: MatStepper;
