@@ -243,7 +243,7 @@ export class PageGridHandlerComponent implements OnInit, OnDestroy {
             (res: IPage) => {
               if(res && res.pagetitle) {
                 this.grid.rows[rowIndex].containers[columnIndex].pagetitle = res.pagetitle;
-                this.grid.rows[rowIndex].containers[columnIndex].pagetype = res.pagetype;
+                this.grid.rows[rowIndex].containers[columnIndex].pagetype = res.pagetemplate;
               }
             }
         );

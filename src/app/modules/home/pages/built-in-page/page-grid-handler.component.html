@@ -1,30 +1,26 @@
 <div style="padding: 20px;">
-    <div class="card">
-        <div class="card-body row">
+                <div class="row justify-content-center title-temp">
+                    <div class="col-md-8">
+                        <h3 *ngIf="formDisable">{{pageTitle}}</h3>
+                        <mat-form-field *ngIf="!formDisable" [style]="{'width':'100%'}">
+                            <mat-label>Page Title</mat-label>
+                            <input type="text" formControlName="pagetitle" matInput name="pagetitle">
+                            <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
 
-            <h2 id="page-heading">
-                <span *ngIf="formDisable">{{pageTitle}}</span>
-                <div *ngIf="!formDisable" class="form-group">
-                    <form name="editForm" role="form" novalidate  [formGroup]="editForm">
-                        <input type="text" class="form-control" omitSpecialChar keyWordValidation name="pagetitle" id="field_pagetitle"
-                               formControlName="pagetitle"/>
-                        <div *ngIf="editForm.get('pagetitle').invalid && (editForm.get('pagetitle').dirty || editForm.get('pagetitle').touched)">
-                            <small class="form-text text-danger" >
-                                Page Title is required.
-                            </small>
-                        </div>
-                    </form>
+                    <div class="col-md-4">
+                        <button type="button" mat-mini-fab aria-label=""
+                                (click)="enableDisableForm()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button style="background-color: #2b53d7; margin-left: 10px " *ngIf="!formDisable" type="button" mat-mini-fab aria-label=""
+                                (click)="checkPageNameExistAndSave()">
+                            <mat-icon>save</mat-icon>
+                        </button>
+                    </div>
                 </div>
-                <p-toast></p-toast>
-                <button style="border: none;background-color: white; margin-left: 30px"
-                        type="button" class="fa fa-pencil-square-o" aria-hidden="true"
-                        (click)="enableDisableForm()"></button>
-                <button *ngIf="!formDisable" style="border: none;background-color: white; margin-left: 30px"
-                        type="button" class="fa fa-save" aria-hidden="true"
-                        (click)="checkPageNameExistAndSave()"></button>
-            </h2>
-        </div>
-    </div>
     <br/>
     <div class="container" >
         <div class="page-container">
@@ -33,27 +29,51 @@
 
                 <div *ngFor="let raw of grid.rows; let i = index" style="max-height: 30vh" [attr.data-index]="i" class="row">
                 <div *ngFor="let container of raw.containers  let j = index" [attr.data-index]="j"
-                     class="grid-col col-{{container.containerCols}}" align="center" style="padding: 7%"><i
-                        *ngIf="!container.page" (click)="selectApageForContainer(i, j)"
-                        class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
+                     class="grid-col col-{{container.containerCols}}" align="center" style="padding: 7%">
+
+                    <button style="background-color: #2b53d7; margin-left: 5px " *ngIf="!container.page" type="button" mat-mini-fab aria-label=""
+                            (click)="selectApageForContainer(i, j)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+
+<!--                    <i-->
+<!--                        *ngIf="!container.page" (click)="selectApageForContainer(i, j)"-->
+<!--                        class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>-->
                     <div *ngIf="container.page">
-                        <!--                        <div   *ngIf="container.page.widgettemplate === 'form-page'" class=" d-flex justify-content-center init-page-image">-->
-                        <!--                            <img class="pageTmpImg" src="../../../content/images/pages/form.jpg"-->
-                        <!--                                 alt="Template">-->
-                        <!--                        </div>-->
-                        <!--                        <div   *ngIf="container.page.widgettemplate === 'table-page'" class=" d-flex justify-content-center init-page-image">-->
-                        <!--                            <img class="pageTmpImg" src="../../../content/images/pages/allinone.jpg"-->
-                        <!--                                 alt="Template">-->
-                        <!--                        </div>-->
-                        <div>
-                            {{container.pagetitle}}
+                        <div class="row">
+                        <div class="col-md-8">
+                            <button style="float: left; background-color: darkgreen " type="button" mat-mini-fab aria-label=""
+                                    (click)="editWidget(container.page)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <div style="font-size: 18px; font-weight: 400; margin-bottom: 10px">
+                                {{container.pagetitle}}
+                            </div>
+                            <div>
+                                {{container.pagetype}}
+                            </div>
                         </div>
-                        <div>
-                            {{container.pagetype}}
+                            <div class="col-md-4">
+                                <div class="">
+                                    <img width="150" height="100" *ngIf="container.pagetype == 'login-page'"
+                                         src="../../../../../assets/images/pages/login.jpg"
+                                         alt="Template" style="width: 100%">
+                                    <img width="150" height="100" *ngIf="container.pagetype == 'aio-table'|| container.pagetype =='table-page'" src="../../../../../assets/images/new_pages/page_wireframes/table.jpg"
+                                         alt="Template" style="width: 100%">
+                                    <img width="150" height="100" *ngIf="container.pagetype == 'form-page' || container.pagetype == 'static-page'  || container.pagetype == 'file-upload-page' || container.pagetype == 'form-wizard-page'"
+                                         src="../../../../../assets/images/new_pages/page_wireframes/form.jpg"
+                                         alt="Template" style="width: 100%">
+                                    <img width="150" height="100" *ngIf="container.pagetype == 'register-page'"
+                                         src="../../../../../assets/images/new_pages/page_wireframes/register.jpg"
+                                         alt="Template" style="width: 100%">
+                                    <img width="150" height="100" *ngIf="container.pagetype == 'aio-grid' || container.pagetype == 'tile-page'"
+                                         src="../../../../../assets/images/new_pages/page_wireframes/Gridpage.jpg"
+                                         alt="Template" style="width: 100%">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div><i *ngIf="container.page" (click)="editWidget(container.page)"g
-                            class="fa fa-edit fa-2x" aria-hidden="true"></i></div>
+
                 </div>
             </div>
         </div>
