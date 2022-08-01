@@ -174,8 +174,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     spinnerButton = false;
     hideCarouselNext = false;
     hideCarouselEpicNext = false;
-    spinnerButtonEnable : boolean = true;
-
+    spinnerButtonEnable = true;
+    currentStory: string = '';
     ListData: any = [];
     isBtnNext = true;
     isBtnPrevious = false;
@@ -186,20 +186,20 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     storyImages = [
         {
-            src : "/assets/images/story/actor-un.png",
-            name : "actor"
+            src : '/assets/images/story/actor-un.png',
+            name : 'actor'
         },
         {
-            src : "/assets/images/story/model-un.png",
-            name : "model"
+            src : '/assets/images/story/model-un.png',
+            name : 'model'
         },
         {
-            src : "/assets/images/story/screen-un.png",
-            name : "screen"
+            src : '/assets/images/story/screen-un.png',
+            name : 'screen'
         },
         {
-            src : "/assets/images/story/gen-un.png",
-            name : "generate"
+            src : '/assets/images/story/gen-un.png',
+            name : 'generate'
         }
     ]
 
@@ -237,11 +237,11 @@ export class DesignEditorComponent implements OnInit, OnChanges {
         this.existingEpics = [];
         this.filteredStories = [];
         this.showStoryBoard = false;
-        this.selectedEpicId = "";
+        this.selectedEpicId = '';
         this.selectedEpic = null;
         this.spinnerButtonEnable = true;
         this.loadEpics();
-        this.appTypeService.getPreviewChainByAppType("ui")
+        this.appTypeService.getPreviewChainByAppType('ui')
             .pipe(
                 filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
                 map((response: HttpResponse<IGenerator[]>) => response.body)
@@ -255,7 +255,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                         console.log(this.uiGeneratorList);
                     }
                 });
-        this.appTypeService.getPreviewChainByAppType("be")
+        this.appTypeService.getPreviewChainByAppType('be')
             .pipe(
                 filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
                 map((response: HttpResponse<IGenerator[]>) => response.body)
@@ -288,7 +288,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     loadEpics() {
         this.showStoryBoard = false;
         this.filteredStories = [];
-        this.selectedEpicId = "";
+        this.selectedEpicId = '';
         this.selectedEpic = null;
         this.resetRuleEditorValues();
         this.requirementService
@@ -591,6 +591,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     generateStory(story: any) {
+        this.currentStory = story.uuid;
         this.spinnerButton = true
 
         setTimeout(()=>{
@@ -602,8 +603,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             storyUuid: story.uuid,
             projectUuid: story.projectUuid,
         };
-        this.loadUIChatbox(story.portalUUID, "ui");
-        this.loadBEChatbox(story.serviceUUID, "be");
+        this.loadUIChatbox(story.portalUUID, 'ui');
+        this.loadBEChatbox(story.serviceUUID, 'be');
         this.projectService.generateStoryUI(story.projectUuid, storyGen).subscribe((storyGenResult) => {
             this.consoleLogService.writeConsoleLog('story generated');
         });
@@ -723,32 +724,32 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     changeImage(src , type){
         this.storyImages.map(item =>{
             if (item.name === type){
-                item.src =  "/assets/images/story/"+ src + ".png"
+                item.src =  '/assets/images/story/'+ src + '.png'
             }
         })
     }
 
     loadUIChatbox(uuid, apptype) {
-        console.log("chat box load");
-        console.log("uuid");
+        console.log('chat box load');
+        console.log('uuid');
         console.log(uuid);
-        console.log("apptype");
+        console.log('apptype');
         console.log(apptype);
         this.socket.getEventListener().subscribe(event => {
             if (event.type === 'message') {
-                let topic = event.data.topic;
+                const topic = event.data.topic;
                 if (topic === 'generator') {
-                    let data = event.data.content;
+                    const data = event.data.content;
 
                     let projectUUID = '';
                     let status = '';
                     let time = '';
                     let position = -1;
 
-                    let allKeyValuePairs = data.split(',');
+                    const allKeyValuePairs = data.split(',');
                     if (allKeyValuePairs) {
                         allKeyValuePairs.forEach(keyval => {
-                            let keyAndValArr = keyval.split('=', 2);
+                            const keyAndValArr = keyval.split('=', 2);
                             let key = '';
                             let val = '';
 
@@ -773,26 +774,27 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                             }
                         });
                     }
-                    console.log("gen msg projectUUID");
+                    console.log('gen msg projectUUID');
                     console.log(projectUUID);
 
                     if (uuid === projectUUID) {
                         if (status) {
-                            console.log("inside socket apptype");
+                            console.log('inside socket apptype');
                             console.log(apptype);
                             if (status.trim() === 'didnot') {
-                                let code = '{"status": "Error", "detail": "Generation failed at ' + this.uiGeneratorList[position] + '"}';
+                                const code = '{"status": "Error", "detail": "Generation failed at ' + this.uiGeneratorList[position] + '"}';
                                 this.consoleLogService.writeConsoleLog(code);
 
                             } else if (status.trim() === 'done') {
-                                console.log("position");
+                                console.log('position');
                                 console.log(position);
                                 console.log(this.uiGeneratorList[position]);
-                                let code = '{"status": "Success", "detail": "Generation successful at ' + this.uiGeneratorList[position] + '"}';
+                                const code = '{"status": "Success", "detail": "Generation successful at ' + this.uiGeneratorList[position] + '"}';
                                 this.consoleLogService.writeConsoleLog(code);
 
                             } else if (status.trim() === 'done') {
-                                let code = '{"status": "In progress", "detail": "Generation started at ' + this.uiGeneratorList[position] + '"}';
+                                const code = '{"status": "In progress", "detail": "Generation started at ' +
+                                    this.uiGeneratorList[position] + '"}';
                                 this.consoleLogService.writeConsoleLog(code);
                             }
                         }
@@ -803,26 +805,26 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     loadBEChatbox(uuid, apptype) {
-        console.log("chat box load");
-        console.log("uuid");
+        console.log('chat box load');
+        console.log('uuid');
         console.log(uuid);
-        console.log("apptype");
+        console.log('apptype');
         console.log(apptype);
         this.socket.getEventListener().subscribe(event => {
             if (event.type === 'message') {
-                let topic = event.data.topic;
+                const topic = event.data.topic;
                 if (topic === 'generator') {
-                    let data = event.data.content;
+                    const data = event.data.content;
 
                     let projectUUID = '';
                     let status = '';
                     let time = '';
                     let position = -1;
 
-                    let allKeyValuePairs = data.split(',');
+                    const allKeyValuePairs = data.split(',');
                     if (allKeyValuePairs) {
                         allKeyValuePairs.forEach(keyval => {
-                            let keyAndValArr = keyval.split('=', 2);
+                            const keyAndValArr = keyval.split('=', 2);
                             let key = '';
                             let val = '';
 
@@ -847,25 +849,25 @@ export class DesignEditorComponent implements OnInit, OnChanges {
                             }
                         });
                     }
-                    console.log("gen msg projectUUID");
+                    console.log('gen msg projectUUID');
                     console.log(projectUUID);
 
                     if (uuid === projectUUID) {
                         if (status) {
-                            console.log("inside socket apptype");
+                            console.log('inside socket apptype');
                             console.log(apptype);
                             if (status.trim() === 'didnot') {
-                                let code = '{"status": "Error", "detail": "Generation failed at ' + this.backendGeneratorList[position] + '"}';
+                                const code = '{"status": "Error", "detail": "Generation failed at ' + this.backendGeneratorList[position] + '"}';
                                 this.consoleLogService.writeConsoleLog(code);
                             } else if (status.trim() === 'done') {
-                                console.log("position");
+                                console.log('position');
                                 console.log(position);
                                 console.log(this.backendGeneratorList[position]);
-                                let code = '{"status": "Success", "detail": "Generation successful at ' + this.backendGeneratorList[position] + '"}';
+                                const code = '{"status": "Success", "detail": "Generation successful at ' + this.backendGeneratorList[position] + '"}';
                                 this.consoleLogService.writeConsoleLog(code);
 
                             } else if (status.trim() === 'done') {
-                                let code = '{"status": "In progress", "detail": "Generation started at ' + this.backendGeneratorList[position] + '"}';
+                                const code = '{"status": "In progress", "detail": "Generation started at ' + this.backendGeneratorList[position] + '"}';
                                 this.consoleLogService.writeConsoleLog(code);
 
                             }
@@ -951,10 +953,10 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             )
             .subscribe(
                 (res: any) => {
-                        const ip = window.location.origin;
-                        const endpoint = '/uip/#/';
-                        const url =  ip +  endpoint;
-                        window.open(url);
+                    const ip = window.location.origin;
+                    const endpoint = '/uip/#/';
+                    const url =  ip +  endpoint;
+                    window.open(url);
                 }
             );
 
@@ -1017,8 +1019,8 @@ export class DesignEditorComponent implements OnInit, OnChanges {
             this.PageNo = this.PageNo - 1;
 
         if (this.PageNo > 0) {
-            var offset = (this.PageNo - 1) * this.PageSize;
-            var data = this.existingEpics.slice(offset).slice(0, this.PageSize);
+            const offset = (this.PageNo - 1) * this.PageSize;
+            const data = this.existingEpics.slice(offset).slice(0, this.PageSize);
             if (data && data.length > 0) {
                 this.ListData = data;
                 this.isBtnNext = true;
@@ -1044,7 +1046,7 @@ export class DesignEditorComponent implements OnInit, OnChanges {
 
     setState(item: any) {
         if (!item.isActive) {
-            var $this = this;
+            const $this = this;
             this.ListData = this.ListData.map((p: any) => {
                 if (item.uuid === p.uuid) {
                     $this.open(p);
@@ -1060,9 +1062,9 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     }
 
     open(p: any) {
-        var width = 0;
-        var div: any = document.getElementById('flexParent' + p.uuid);
-        var interval = setInterval(function () {
+        let width = 0;
+        const div: any = document.getElementById('flexParent' + p.uuid);
+        const interval = setInterval(function () {
             width = width + 5;
             div.style.width = width + '%';
             if (width === 70) {
@@ -1074,9 +1076,9 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     close(p: any) {
         if (p.isActive) {
             p.isActive = false;
-            var div: any = document.getElementById('flexParent' + p.uuid);
-            var width = Number(div.style.width.split('%')[0]);
-            var interval = setInterval(function () {
+            const div: any = document.getElementById('flexParent' + p.uuid);
+            let width = Number(div.style.width.split('%')[0]);
+            const interval = setInterval(function () {
                 width = width - 5;
                 div.style.width = width === 0 ? 'auto' : width + '%';
                 if (width === 0) {

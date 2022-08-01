@@ -440,7 +440,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   addRow() {
     const btnCaption = this.editForm.get(['btnCaption']).value;
-    const btnResourcePath = this.editForm.get(['btnResourcePath']).value;
+    const btnResourcePath = this.getBtnResourcePath(this.editForm.get(['btnResourcePath']).value);
     const btnOperation = this.editForm.get(['btnOperation']).value;
     const btnColor = this.editForm.get(['btnColor']).value;
     const btnTooltip = this.editForm.get(['btnTooltip']).value;
@@ -467,6 +467,17 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     } else {
       // error message
     }
+  }
+
+  getBtnResourcePath(resourcePath) {
+    if (resourcePath) {
+      if (!resourcePath.startsWith('/')) {
+        resourcePath = '/' + resourcePath;
+      }
+    } else {
+      resourcePath = '/';
+    }
+    return resourcePath;
   }
 
   deleteRow(param) {

@@ -388,10 +388,10 @@
                     <div class="row">
                         <div class="col-1 d-flex justify-content-start align-items-center" style="padding-left: 20px ;">
                                 <div id="generate">
-                                    <div *ngIf="spinnerButtonEnable" [ngClass]="spinnerButton ? 'spinner spinner-load' : 'spinner'"  (click)="generateStory(story)" matTooltip="Generate" [matTooltipPosition]="toolTipPosition">
+                                    <div *ngIf="spinnerButtonEnable || currentStory !== story.uuid" [ngClass]="spinnerButton && currentStory === story.uuid ? 'spinner spinner-load' : 'spinner'"  (click)="generateStory(story)" matTooltip="Generate" [matTooltipPosition]="toolTipPosition">
                                         <i class="fa fa-play" aria-hidden="true" style="color: #009579;"></i>
                                     </div>
-                                    <div *ngIf="!spinnerButtonEnable">
+                                    <div *ngIf="!spinnerButtonEnable && currentStory === story.uuid">
                                         <a class="swagger-link" virtuan-click-stop-propagation matTooltip="Swagger link" [matTooltipPosition]="toolTipPosition" (click)="openNewTab()"><i class="fa fa-external-link" aria-hidden="true"></i></a>
                                         <a class="open-ui" virtuan-click-stop-propagation matTooltip="Open UI" [matTooltipPosition]="toolTipPosition" (click)="OpenUI(story)"><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
                                     </div>
