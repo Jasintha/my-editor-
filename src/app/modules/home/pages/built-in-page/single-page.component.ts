@@ -438,19 +438,36 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.loadPageConfigsByPageId(this.pageId, this.projectUid);
   }
 
-  addRow() {
-    const btnCaption = this.editForm.get(['btnCaption']).value;
-    const btnResourcePath = this.getBtnResourcePath(this.editForm.get(['btnResourcePath']).value);
-    const btnOperation = this.editForm.get(['btnOperation']).value;
-    const btnColor = this.editForm.get(['btnColor']).value;
-    const btnTooltip = this.editForm.get(['btnTooltip']).value;
-    const navigatePage = this.editForm.get(['navigatePage']).value;
-    let pageId = '';
-    let pageName = '';
-    if(navigatePage) {
-      pageId = navigatePage.uuid;
-      pageName = navigatePage.pagetitle;
+  addRow(setDefaults, defButtonCaption?, defBtnResourcePath?, defBtnOperation?, defBtnColor?, defBtnTooltip?) {
+
+    let btnCaption = '';
+    let btnResourcePath = '';
+    let btnOperation = '';
+    let btnColor = '';
+    let btnTooltip = '';
+    let navigatePage = new Page();
+    let   pageId = '';
+    let  pageName = '';
+    if(setDefaults) {
+      btnCaption = defButtonCaption;
+      btnResourcePath = defBtnResourcePath;
+      btnOperation = defBtnOperation;
+      btnColor = defBtnColor;
+      btnTooltip = defBtnTooltip;
     }
+    else{
+      btnCaption = this.editForm.get(['btnCaption']).value;
+      btnResourcePath = this.getBtnResourcePath(this.editForm.get(['btnResourcePath']).value);
+      btnOperation = this.editForm.get(['btnOperation']).value;
+      btnColor = this.editForm.get(['btnColor']).value;
+      btnTooltip = this.editForm.get(['btnTooltip']).value;
+      navigatePage = this.editForm.get(['navigatePage']).value;
+      if(navigatePage) {
+        pageId = navigatePage.uuid;
+        pageName = navigatePage.pagetitle;
+      }
+    }
+
 
     if (btnCaption !== null || btnResourcePath !== '' || btnOperation !== null) {
       const button: IButtonType = {
@@ -478,6 +495,17 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       resourcePath = '/';
     }
     return resourcePath;
+  }
+
+  addDefaultBtns() {
+    if(this.currentPage.pagetemplate === 'form-page') {
+      const btnCaption = 'Add';
+      const btnResourcePath = this.editForm.get(['resourcePath']).value;
+      const btnOperation = 'CREATE';
+      const btnColor = '#0f6ab4';
+      const btnTooltip = 'Add';
+      this.addRow(true, btnCaption, btnResourcePath, btnOperation, btnColor, btnTooltip);
+    }
   }
 
   deleteRow(param) {
@@ -1188,6 +1216,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     let headersArray = [];
     let fieldMappingArray = [];
     let chartDetails;
+    if(!(this.BTN_ELEMENT_DATA.length > 0)) {
+   //   this.addDefaultBtns();
+    }
     if (this.project.apptypesID === 'task.ui') {
       if (this.editForm.get(['pagetemplate']).value === 'aio-table') {
         this.dashboardPanelDetails = [];
@@ -1643,7 +1674,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         this.navigationParams = result;
         this.checkPageNameExist()
       }
-     // console.log(`Dialog resurelt: ${result}`);
+      // console.log(`Dialog resurelt: ${result}`);
     });
   }
 }
