@@ -611,6 +611,7 @@ export interface TemplateBodyParameter {
   inputType: string;
   input: string;
   property: string;
+  propertyScope: string;
 }
 
 export interface ErrorFunctionParameters {
