@@ -794,6 +794,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   loadAggregates(selectedAggregate? : IAggregate) {
     let selectedAggr;
+    this.aggregateItems = []
     for (let i = 0; i < this.aggregates.length; i++) {
       if (this.aggregates[i].status === 'ENABLED') {
         const dropdownLabel = this.aggregates[i].name;
@@ -1405,7 +1406,6 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
                 if (this.project.apptypesID === 'task.ui') {
                   this.aggregates = this.project.aggregates;
                   if (this.aggregates) {
-                    this.aggregateItems = [];
                     this.loadAggregates();
                   }
                 } else {
