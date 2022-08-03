@@ -324,7 +324,8 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
         'parameterName': paramPrefix+ number,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterParam.inputName
+        'property': selectedParameterParam.inputName,
+        'propertyScope': ''
       };
       this.configuration.templateParameters.push(parameter);
       this.updateModel(this.configuration);
@@ -334,7 +335,8 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
         'parameterName': paramPrefix+ number,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterProperty.name
+        'property': selectedParameterProperty.name,
+        'propertyScope': selectedParameterProperty.propertyScope
       };
       this.configuration.templateParameters.push(parameterproperty);
       this.updateModel(this.configuration);
@@ -344,7 +346,8 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
         'parameterName': paramPrefix+ number,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterBranch.name
+        'property': selectedParameterBranch.name,
+        'propertyScope': ''
       };
       this.configuration.templateParameters.push(parameterbranch);
       this.updateModel(this.configuration);
@@ -354,7 +357,8 @@ export class StringTemplateNodeConfigComponent implements ControlValueAccessor, 
         'parameterName': paramPrefix+ number,
         'inputType': inputType,
         'input': '-',
-        'property': selectedParameterConstant.constantName
+        'property': selectedParameterConstant.constantName,
+        'propertyScope': selectedParameterConstant.scope
       };
       this.configuration.templateParameters.push(parameterconstant);
       this.updateModel(this.configuration);
