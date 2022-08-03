@@ -198,14 +198,19 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 
 
     movetoNextReq(nextUUID) {
-    this.requirementUid = nextUUID;
+        this.requirementUid = nextUUID;
     }
-
 
     selectActiveNode(node) {
         this.activeNode = node;
         this.projectUid = this.activeNode.data.projectuuid;
         this.viewComponent(node.data);
+    }
+
+    refreshTree() {
+        this.loadTreeData();
+        this.loadUITreeData();
+      //  this.loadDesignTreeData();
     }
 
 //   viewRule(item){
