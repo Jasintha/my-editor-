@@ -1045,56 +1045,56 @@ export class EmailNodeConfigComponent implements ControlValueAccessor, OnInit, O
       );
       
 
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondbranchparam').valueChanges.subscribe(
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('secondbranchparam').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.secondbranchparam = configuration;
           this.updateModel(this.configuration);
         }
       );
       
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondparam').valueChanges.subscribe(
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('secondparam').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.secondparam = configuration;
           this.updateModel(this.configuration);
         }
       );
 
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondconstant').valueChanges.subscribe(
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('secondconstant').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.secondconstant = configuration;
           this.updateModel(this.configuration);
         }
       );
 
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('secondproperty').valueChanges.subscribe(
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('secondproperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.secondproperty = configuration;
           this.updateModel(this.configuration);
         }
       );      
 
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('firstbranchparam').valueChanges.subscribe(
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('firstbranchparam').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.firstbranchparam = configuration;
           this.updateModel(this.configuration);
         }
       );
       
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('firstparam').valueChanges.subscribe(
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('firstparam').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.firstparam = configuration;
           this.updateModel(this.configuration);
         }
       );
 
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('firstconstant').valueChanges.subscribe(
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('firstconstant').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.firstconstant = configuration;
           this.updateModel(this.configuration);
         }
       );
 
-      this.changeSubscription = this.filterNodeConfigFormGroup.get('firstproperty').valueChanges.subscribe(
+      this.changeSubscription = this.emailSendNodeConfigFormGroup.get('firstproperty').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.firstproperty = configuration;
           this.updateModel(this.configuration);
