@@ -1255,4 +1255,24 @@
                                                  [nodeDefinition]="nodeDefinitionValue">
         </virtuan-grpc-bidirectional-str-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiEmailNode'">
+        <virtuan-email-node-config #emailNodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [allConstants]=" allConstants"
+                                        [inputEntities]=" inputEntities"
+                                        [allRuleInputs]="allRuleInputs"
+                                        [inputCustomobjects]="inputCustomobjects"
+                                        [allVariables]="allVariables"
+                                        [inputProperties]="inputProperties"
+                                        [branchAvailability]="branchAvailability"
+                                        [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                        [allViewModelsWithSub]="allViewModelsWithSub"
+                                        [apptype]="apptype"
+                                        [allRoots]="allRoots"
+                                        [allErrorBranches]="allErrorBranches"
+                                        [allModelProperties]="allModelProperties"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-email-node-config>
+    </ng-container>
 </div>

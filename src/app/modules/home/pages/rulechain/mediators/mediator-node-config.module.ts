@@ -20,6 +20,7 @@ import { PayloadNodeConfigComponent } from './action/payload-node-config.compone
 import { EmailInitNodeConfigComponent } from './action/email-init-node-config.component';
 import { EmailInitV2NodeConfigComponent } from './action/email-init-v2-node-config.component';
 import { EmailSendNodeConfigComponent } from './action/email-send-node-config.component';
+import { EmailNodeConfigComponent } from './action/email-node-config.component';
 import { EventPublisherNodeConfigComponent } from './action/event-publisher-node-config.component';
 import { EventReceiverNodeConfigComponent } from './action/event-receiver-node-config.component';
 import { SmsInitNodeConfigComponent } from './action/sms-init-node-config.component';
@@ -157,6 +158,7 @@ import { TabViewModule } from 'primeng/tabview';
     EmailInitNodeConfigComponent,
     EmailInitV2NodeConfigComponent,
     EmailSendNodeConfigComponent,
+    EmailNodeConfigComponent,
     FilterNodeConfigComponent,
     CrudNodeConfigComponent,
     ConnectorNodeConfigComponent,
@@ -267,6 +269,7 @@ import { TabViewModule } from 'primeng/tabview';
     EventReceiverNodeConfigComponent,
     EventPublisherNodeConfigComponent,
     EmailSendNodeConfigComponent,
+    EmailNodeConfigComponent,
     ReferencePropertyNodeConfigComponent,
     ConnectionPropertyNodeConfigComponent,
     EmailInitNodeConfigComponent,
