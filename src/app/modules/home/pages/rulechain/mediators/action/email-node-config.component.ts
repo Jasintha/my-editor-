@@ -230,7 +230,7 @@ export class EmailNodeConfigComponent implements ControlValueAccessor, OnInit, O
       param: null,
       constant: null,
       property: null,
-      branchparam: null
+      branchparam: null,
       firstinputType: "",
       firstparam: null,
       firstconstant: null,
