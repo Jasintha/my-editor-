@@ -1,0 +1,23 @@
+<div [formGroup]="emailInitNodeConfigFormGroup">
+    <mat-form-field class="mat-block">
+      <mat-label>Client ID</mat-label>
+      <input matInput formControlName="clientId" required>
+      <mat-error *ngIf="emailInitNodeConfigFormGroup.get('clientId').hasError('required')">
+          Client ID is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="mat-block">
+        <mat-label>Client Secret</mat-label>
+        <input matInput formControlName="clientSecret" required>
+        <mat-error *ngIf="emailInitNodeConfigFormGroup.get('clientSecret').hasError('required')">
+            Client Secret is required
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="mat-block">
+        <mat-label>Refresh Token</mat-label>
+        <input matInput formControlName="refreshToken" required>
+        <mat-error *ngIf="emailInitNodeConfigFormGroup.get('refreshToken').hasError('required')">
+            Refresh Token is required
+        </mat-error>
+    </mat-form-field>
+</div>

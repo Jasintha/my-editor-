@@ -736,6 +736,13 @@
                                         [nodeDefinition]="nodeDefinitionValue">
         </virtuan-email-init-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiEmail___InitV2Node'">
+        <virtuan-email-init-v2-node-config #emailInitV2NodeConfigComponent
+                                        formControlName="configuration"
+                                        [ruleNodeId]="ruleNodeId"
+                                        [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-email-init-v2-node-config>
+    </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiEmail___SendNode'">
         <virtuan-email-send-node-config #emailSendNodeConfigComponent
                                         formControlName="configuration"
