@@ -92,7 +92,7 @@ export class EmailInitV2NodeConfigComponent implements ControlValueAccessor, OnI
               private fb: FormBuilder) {
     this.emailInitNodeConfigFormGroup = this.fb.group({
       clientId: ["", Validators.required],
-      clientSecret: ["", Validators.required]
+      clientSecret: ["", Validators.required],
       refreshToken: ["", Validators.required]
     });
   }
