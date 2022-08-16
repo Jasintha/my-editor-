@@ -68,7 +68,7 @@ export class AddFormControllersComponent implements OnInit {
   displayedDrpParamColumns: string[] = ['dropdownField', 'attribute', 'actions'];
   choiceType: SelectItem[] = [
     { label: 'Add API for get Choices', value: 'API' },
-    { label: 'Add Choices for manually', value: 'Manually' },
+    { label: 'Add Choices for manually', value: 'Static' },
   ];
 
   dropdownFields: SelectItem[] = [
@@ -279,7 +279,7 @@ export class AddFormControllersComponent implements OnInit {
 
   backToFields() {
     this.isFieldSelected = false;
-    if (this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].choiceType.value === 'Manually') {
+    if (this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].choiceType.value === 'Static') {
       this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].choiceUrl.reset();
     } else if (this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].choiceType.value === 'API') {
       this.choiceFormGroup.clear();
@@ -295,7 +295,7 @@ export class AddFormControllersComponent implements OnInit {
     this.isChildFieldSelected = false;
     if (
         this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex]['controls']
-            .choiceType.value == 'Manually'
+            .choiceType.value == 'Static'
     ) {
       this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
           'controls'
