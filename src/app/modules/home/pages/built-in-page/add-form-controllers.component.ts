@@ -19,6 +19,7 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {BuiltInWidgetService} from '@core/projectservices/built-in-widget.service';
+import {MatTableDataSource} from '@angular/material/table';
 
 
 interface ControllerItem {
@@ -44,7 +45,8 @@ export class AddFormControllersComponent implements OnInit {
   microserviceProjectItems: SelectItem[];
   microserviceProjects: IProject[];
   apiItems: SelectItem[];
-
+  dropdownMappings = [];
+  dataSourceDropdownMapping = new MatTableDataSource(this.dropdownMappings);
   // cars2: Car[];
   clonedCars: { [s: string]: Config } = {};
   projectUid: string;
@@ -63,10 +65,16 @@ export class AddFormControllersComponent implements OnInit {
     { label: 'Checkbox', value: 'Checkbox' },
     { label: 'Dropdown', value: 'Dropdown' },
   ];
-
+  displayedDrpParamColumns: string[] = ['dropdownField', 'attribute', 'actions'];
   choiceType: SelectItem[] = [
     { label: 'Add API for get Choices', value: 'API' },
     { label: 'Add Choices for manually', value: 'Manually' },
+  ];
+
+  dropdownFields: SelectItem[] = [
+    { label: 'label', value: 'label'},
+    { label: 'service_reference', value: 'service_reference'},
+    { label: 'external_label', value: 'external_label'},
   ];
 
   @Input() public envuuid;
@@ -105,6 +113,12 @@ export class AddFormControllersComponent implements OnInit {
       { field: 'Controller', header: 'Controller' },
     ];
     this.loadMicroserviceProjects();
+  }
+
+  deleteParamMapping(param) {
+    const indexnum = this.dropdownMappings.indexOf(param);
+    this.dropdownMappings.splice(indexnum, 1);
+    this.dataSourceDropdownMapping = new MatTableDataSource(this.dropdownMappings);
   }
 
   loadMicroserviceProjects() {
@@ -153,6 +167,31 @@ export class AddFormControllersComponent implements OnInit {
     }
   }
 
+  addDrpDownAttriuteMapping() {
+    const dropdownField = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].fieldType.value;
+    const attribute = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].fieldAttribute.value;
+
+    if (dropdownField === null || attribute === '' || attribute === null) {
+      // this.messageService.add({
+      //   severity: 'warn',
+      //   summary: 'Warn',
+      //   detail: 'Please fill all the fields',
+      // });
+    } else {
+      const param = {
+        dropdownField,
+        attribute,
+      };
+      if (this.dropdownMappings.indexOf(param) === -1) {
+        this.dropdownMappings.push(param);
+        this.dataSourceDropdownMapping = new MatTableDataSource(this.dropdownMappings);
+      }
+      this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].dropdownMappings.patchValue(this.dropdownMappings,
+          { emitEvent: true });
+    }
+  }
+
+
   loadMicroserviceProjectDropdownItems() {
     for (let i = 0; i < this.microserviceProjects.length; i++) {
       const dropdownLabel = this.microserviceProjects[i].displayName;
@@ -165,6 +204,19 @@ export class AddFormControllersComponent implements OnInit {
   }
 
   onChangeMicroserviceProjectInChild() {
+    const microservice = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
+        'controls'
+        ].microservice.value;
+    this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
+        'controls'
+        ].choiceUrl.patchValue('', { emitEvent: true });
+    this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
+        'controls'
+        ].api.patchValue([], { emitEvent: true });
+    this.loadAPISforMS(microservice);
+  }
+
+  onChangeDropdownChoiceType() {
     const microservice = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children['controls'][this.selectedChildIndex][
         'controls'
         ].microservice.value;
@@ -379,8 +431,12 @@ export class AddFormControllersComponent implements OnInit {
       propertyType: new FormControl(values.propertyType),
       propertyName: new FormControl(values.propertyName),
       fieldController: new FormControl(values.fieldController),
+      fieldType: new FormControl(values.fieldType),
+      fieldAttribute: new FormControl(values.fieldAttribute),
       fieldcategory: new FormControl(type),
       choiceUrl: new FormControl(values.choiceUrl),
+      dropdownMappings: new FormControl(values.dropdownMappings),
+      selectType: new FormControl(values.selectType),
       isrequired: new FormControl(values.isrequired),
       defaultvalue: new FormControl(values.defaultValue),
       placeholder: new FormControl(values.placeholder),

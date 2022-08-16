@@ -9,7 +9,7 @@
         </button>
     </mat-toolbar>
     <mat-dialog-content>
-        <div formArrayName="formFieldsGroup">
+        <div formArrayName="formFieldsGroup" style="width: 700px">
             <div *ngFor="let emp of formFieldsGroup.controls; let i = index">
                 <div class="row-g-12" [formGroup]="emp">
                     <div class="tile row" *ngIf="!isFieldSelected">
@@ -208,7 +208,7 @@
 
                                             <div class="form-group"  *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown' ">
                                                 <label class="form-control-label">Choice Type </label>
-                                                <p-dropdown placeholder="Choose" name="choiceType"
+                                                <p-dropdown placeholder="Choose" name="choiceType" (onChange)="onChangeMicroserviceProjectInChild()"
                                                             [options]="choiceType" formControlName="choiceType"
                                                             [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" ></p-dropdown>
                                             </div>
@@ -318,6 +318,66 @@
                                 </div>
                                 <input type="text" class="form-control" name="choiceUrl"
                                        formControlName="choiceUrl"/>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <h6 style="margin-top: 15px">Select dropdown attributes</h6>
+                                            <div class="card">
+                                                <div class="card-body row">
+                                                    <div class="col-md-3">
+
+                                                        <p-dropdown placeholder="Drodown field" name="fieldType"
+                                                                    [options]="dropdownFields" formControlName="fieldType"
+                                                                    [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" filter="true"></p-dropdown>
+
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                    <input class="form-control" type="text" placeholder="attribute" formControlName="fieldAttribute">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <button type="button" style="float: right;" mat-raised-button color="primary"
+                                                                (click)="addDrpDownAttriuteMapping()">
+                                                            <mat-icon>add</mat-icon>
+                                                            Add
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style=" :20px;padding-bottom:20px;">
+                                                <table mat-table matSort [dataSource]="dataSourceDropdownMapping"
+                                                       class="mat-elevation-z8 demo-table">
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="dropdownField">
+                                                        <th mat-header-cell *matHeaderCellDef>Field</th>
+                                                        <td mat-cell *matCellDef="let element">{{element.dropdownField}}</td>
+                                                    </ng-container>
+
+                                                    <!-- Weight Column -->
+                                                    <ng-container matColumnDef="attribute">
+                                                        <th mat-header-cell *matHeaderCellDef>Attribute</th>
+                                                        <td mat-cell *matCellDef="let element">{{element.attribute}}</td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="actions">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Action</th>
+                                                        <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                                            <button (click)="deleteParamMapping(row)"
+                                                                    mat-icon-button
+                                                                    type="button">
+                                                                <mat-icon>delete</mat-icon>
+                                                            </button>
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <tr mat-header-row *matHeaderRowDef="displayedDrpParamColumns"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedDrpParamColumns;"></tr>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="scroll-choices" *ngIf="this.form.value.formFieldsGroup[i].choiceType === 'Manually'">
