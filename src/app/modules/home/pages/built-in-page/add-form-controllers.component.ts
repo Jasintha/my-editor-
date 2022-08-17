@@ -46,7 +46,8 @@ export class AddFormControllersComponent implements OnInit {
   microserviceProjects: IProject[];
   apiItems: SelectItem[];
   dropdownMappings = [];
-  dataSourceDropdownMapping = new MatTableDataSource(this.dropdownMappings);
+  dataSourceDropdownMapp = new MatTableDataSource(this.dropdownMappings);
+  dataSourceDropdownMapping : any [];
   // cars2: Car[];
   clonedCars: { [s: string]: Config } = {};
   projectUid: string;
@@ -67,8 +68,8 @@ export class AddFormControllersComponent implements OnInit {
   ];
   displayedDrpParamColumns: string[] = ['dropdownField', 'attribute', 'actions'];
   choiceType: SelectItem[] = [
-    { label: 'Add API for get Choices', value: 'API' },
-    { label: 'Add Choices for manually', value: 'Static' },
+    { label: 'API', value: 'API' },
+    { label: 'Static', value: 'Static' },
   ];
 
   dropdownFields: SelectItem[] = [
@@ -99,6 +100,8 @@ export class AddFormControllersComponent implements OnInit {
     this.microserviceProjectItems = [];
     this.microserviceProjects = [];
     this.apiItems = [];
+    this.selectedFieldIndex = 0;
+    this.dataSourceDropdownMapping = [];
     this.createForm();
     // if(this.data.widgetUid) {
     //   this.loadAllSourceTargetFormFieldsForWidget(this.data.widgetUid, this.data.projectUid);
@@ -116,9 +119,10 @@ export class AddFormControllersComponent implements OnInit {
   }
 
   deleteParamMapping(param) {
-    const indexnum = this.dropdownMappings.indexOf(param);
-    this.dropdownMappings.splice(indexnum, 1);
-    this.dataSourceDropdownMapping = new MatTableDataSource(this.dropdownMappings);
+    const indexnum = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].dropdownMappings.value.indexOf(param);
+    const dropdownMap = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].dropdownMappings.value.splice(indexnum, 1);
+    this.dataSourceDropdownMapp = new MatTableDataSource(dropdownMap);
+    this.dataSourceDropdownMapping[this.selectedFieldIndex] =  this.dataSourceDropdownMapp;
   }
 
   loadMicroserviceProjects() {
@@ -182,11 +186,12 @@ export class AddFormControllersComponent implements OnInit {
         dropdownField,
         attribute,
       };
-      if (this.dropdownMappings.indexOf(param) === -1) {
-        this.dropdownMappings.push(param);
-        this.dataSourceDropdownMapping = new MatTableDataSource(this.dropdownMappings);
+      if ( this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].dropdownMappings.value.indexOf(param) === -1) {
+        this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].dropdownMappings.value.push(param);
+        this.dataSourceDropdownMapp = new MatTableDataSource(this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].dropdownMappings.value);
+        this.dataSourceDropdownMapping[this.selectedFieldIndex] =  this.dataSourceDropdownMapp;
       }
-      this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].dropdownMappings.patchValue(this.dropdownMappings,
+      this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].dropdownMappings.patchValue(this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].dropdownMappings.value,
           { emitEvent: true });
     }
   }
@@ -352,7 +357,7 @@ export class AddFormControllersComponent implements OnInit {
     if (this.targetProperties) {
       for (let i = 0; i < this.targetProperties.length; i++) {
         const hasChild = this.targetProperties[i].children && this.targetProperties[i].children.length > 0;
-        this.insertFormControllersGroup(this.targetProperties[i], hasChild);
+        this.insertFormControllersGroup(this.targetProperties[i], hasChild, i);
         if (hasChild) {
           this.selectedFieldIndex = i;
           for (let j = 0; j < this.targetProperties[i].children.length; j++) {
@@ -493,9 +498,13 @@ export class AddFormControllersComponent implements OnInit {
     return this.form.get('formFieldsGroup') as FormArray;
   }
 
-  insertFormControllersGroup(values, hasChild) {
+  insertFormControllersGroup(values, hasChild, index) {
     const category = hasChild ? 'object' : 'property';
     this.formFieldsGroup.push(this.addFormFieldsGroup(values, category));
+    if(values.fieldController === 'Dropdown') {
+      this.dataSourceDropdownMapp = new MatTableDataSource(this.formFieldsGroup.controls[index]['controls'].dropdownMappings.value);
+      this.dataSourceDropdownMapping[index] =  this.dataSourceDropdownMapp;
+    }
   }
 
   get choiceFormGroup() {
