@@ -19,12 +19,15 @@ import {TaskDeleteDialogComponent} from '@home/pages/create-task/task-delete-dia
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import {SharedModule} from '@shared/shared.module';
+import {NgxSpinnerModule} from 'ngx-spinner';
+import {SubMenuComponent} from '@home/pages/sub-menu/sub-menu.component';
+import {SubMenuDeleteDialogComponent} from '@home/pages/sub-menu/sub-menu-delete-dialog.component';
 
 
 @NgModule({
     declarations:[
-        CreateTaskComponent,
-        TaskDeleteDialogComponent
+        SubMenuComponent,
+        SubMenuDeleteDialogComponent
     ],
     imports: [
         CommonModule,
@@ -47,12 +50,13 @@ import {SharedModule} from '@shared/shared.module';
         MatSnackBarModule,
         MatToolbarModule,
         FlexModule,
-        SharedModule
+        SharedModule,
+        NgxSpinnerModule,
     ],
     exports:[
-        CreateTaskComponent,
-        TaskDeleteDialogComponent
+        SubMenuComponent,
+        SubMenuDeleteDialogComponent
     ]
 })
-export class CreateTaskModule {
+export class SubMenuModule {
 }

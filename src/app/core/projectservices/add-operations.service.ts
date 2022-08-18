@@ -13,6 +13,7 @@ import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-cre
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 import {ServicefileComponent} from '@home/pages/servicefile/servicefile.component';
+import {SubMenuComponent} from '@home/pages/sub-menu/sub-menu.component';
 
 @Injectable({ providedIn: 'root' })
 export class AddOperationService {
@@ -42,6 +43,8 @@ export class AddOperationService {
             this.createUIPages(node ,projectUid , status);
         }  else if (node.type === 'PARENT_UI_MAIN_MENU'){
             this.createMainMenu(node ,projectUid , status);
+        } else if (node.type === 'PARENT_UI_SUB_MENU'){
+            this.addASubMenu(node ,projectUid , status);
         } else if (node.type === 'PARENT_UI_MODEL'){
             this.createModel(node ,projectUid , status, 'task.ui');
         } else if (node.type === 'PARENT_PAGE_NAVIGATIONS'){
@@ -116,6 +119,23 @@ export class AddOperationService {
             console.log(`Dialog result: ${result}`);
         });
     }
+
+    addASubMenu(item, projectUId , status) {
+        const dialogRef = this.dialog.open(SubMenuComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: projectUId,
+                createStatus: status,
+                mainMenuId: item.uuid,
+                formTree: true
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
 
     createUIPages(item, projectUId , status) {
         const dialogRef = this.dialog.open(InitPageCreationComponent, {

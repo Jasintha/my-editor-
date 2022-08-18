@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IMainMenu } from '@app/shared/models/model/main-menu.model';
 import {createRequestOption} from '@shared/util/request-util';
 import {IMoveMainMenu} from '@shared/models/model/move-menu.model';
+import {ISubMenu} from '@shared/models/model/sub-menu.model';
 
 
 
@@ -12,9 +13,11 @@ type EntityArrayResponseType = HttpResponse<IMainMenu[]>;
 
 @Injectable({ providedIn: 'root' })
 export class MainMenuService {
+  public resourceUrlSubMenus =  '/api/editor/proj/sub-menus';
   public resourceUrl =  '/api/editor/proj/main-menus';
   public mainMenuMoveresourceUrl =  '/api/editor/proj/main-menus/move-menu';
   public mainMenusForProjectResourceUrl =  '/api/editor/proj/main-menus/project';
+  public subMenusForMainMenuResourceUrl = '/api/editor/proj/sub-menus/main-menu';
   public mainMenusNotBelongsToLinkForProjectResourceUrl =  '/api/editor/proj/main-menus/project/not-belongs-to-link';
   public mainmenustatusChangeCheckResourceUrl =  '/api/editor/proj/main-menus/statuschange/check';
   public mainmenuDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/main-menus/statusdisabled/confirmed';
@@ -64,5 +67,21 @@ export class MainMenuService {
 
   moveMenu(moveMenuRequest: IMoveMainMenu, uuid: string): Observable<EntityResponseType> {
     return this.http.post<IMainMenu>(`${this.mainMenuMoveresourceUrl}/${uuid}/${uuid}`, moveMenuRequest, { observe: 'response' });
+  }
+
+  createSubMenu(submenu: ISubMenu, uuid: string): Observable<EntityResponseType> {
+    return this.http.post<ISubMenu>(`${this.resourceUrlSubMenus}/${uuid}`, submenu, { observe: 'response' });
+  }
+
+  updateSubMen(submenu: ISubMenu, uuid: string): Observable<EntityResponseType> {
+    return this.http.put<ISubMenu>(`${this.resourceUrlSubMenus}/${uuid}`, submenu, { observe: 'response' });
+  }
+
+  findSubMenu(id: string, mainmenuid: string, uuid: string): Observable<EntityResponseType> {
+    return this.http.get<ISubMenu>(`${this.resourceUrlSubMenus}/${uuid}/${mainmenuid}/${id}`, { observe: 'response' });
+  }
+
+  findSubMenusForMainMenuId(id: string, uuid: string): Observable<EntityArrayResponseType> {
+    return this.http.get<ISubMenu[]>(`${this.subMenusForMainMenuResourceUrl}/${uuid}/${id}`, { observe: 'response' });
   }
 }

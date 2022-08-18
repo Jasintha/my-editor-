@@ -58,7 +58,7 @@ export class MainMenuDeleteDialogComponent {
 //   ngOnInit() {
 //     this.activatedRoute.data.subscribe(({ mainmenu }) => {
 //       setTimeout(() => {
-//         this.ngbModalRef = this.modalService.open(MainMenuDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
+//         this.ngbModalRef = this.modalService.open(SubMenuDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
 //         this.ngbModalRef.componentInstance.mainmenu = mainmenu;
 //         this.ngbModalRef.result.then(
 //           result => {
