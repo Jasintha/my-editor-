@@ -85,8 +85,8 @@ export class AggregateService {
   }
 
 
-  findNameAvailability(name: string, uuid: string): Observable<HttpResponse<any>> {
-    return this.http.get(`${this.checkEntityNameAvailabilityURL}/${uuid}/${name}`, { observe: 'response' });
+  findNameAvailability(name: string, uuid: string, entityId: string): Observable<HttpResponse<any>> {
+    return this.http.get(`${this.checkEntityNameAvailabilityURL}/${uuid}/${entityId}/${name}`, { observe: 'response' });
   }
 
   findAllRetrieveValueObj(uuid: string): Observable<HttpResponse<IValueObject[]>> {

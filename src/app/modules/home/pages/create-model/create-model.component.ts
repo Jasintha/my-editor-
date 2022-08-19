@@ -269,7 +269,7 @@ export class CreateModelComponent implements OnInit {
   checkNameAvailability() {
     const aggregate = this.createFromForm();
     this.aggregateService
-        .findNameAvailability(aggregate.name, this.projectUid)
+        .findNameAvailability(aggregate.name, this.projectUid, aggregate.uuid)
         .pipe(
             filter((res: HttpResponse<any>) => res.ok),
             map((res: HttpResponse<any>) => res.body)
