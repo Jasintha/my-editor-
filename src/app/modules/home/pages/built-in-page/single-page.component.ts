@@ -32,7 +32,7 @@ import {ViewModelConfigComponent} from '@home/pages/built-in-page/view-model-con
 import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
-import {Actions, Buttons, IActions, IButtonType} from '@shared/models/model/button-type.model';
+import {Actions, Buttons, ButtonType, IActions, IButtonEvent, IButtonType} from '@shared/models/model/button-type.model';
 import {IFormField, IRowFieldMapping, IRowHeader, ISourceTargetFieldsRequest, RowFieldMapping} from '@shared/models/model/form-field.model';
 import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-in-page-delete-dialog.component';
 import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
@@ -92,6 +92,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   stepIndexId = 1;
   headerIndexId = 1;
   displayedColumns: string[] = ['caption', 'resourcepath', 'operation', 'page', 'color', 'tooltip', 'actions'];
+  eventDisplayedColumns: string[] = ['button', 'event', 'action', 'page', 'api', 'actions'];
   actions: IActions;
   BTN_ELEMENT_DATA: IButtonType[];
   dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
@@ -111,11 +112,13 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   navigationParams: INavigationParam[] = [];
   displayedDetailHeaderColumns: string[] = ['field', 'detailsHeader', 'actions'];
   dataSourceDetailsPage = new MatTableDataSource(this.headerFieldArr);
-
+  fieldOrderView = false;
+  actionButtonView = false;
   displayedLoginParamColumns: string[] = ['input', 'param', 'actions'];
   LOGIN_DATA = [];
   dataSourceLogin = new MatTableDataSource(this.LOGIN_DATA);
-
+  btnEventActionList: IButtonType[];
+  eventDataSource = new MatTableDataSource(this.btnEventActionList);
   displayedtileParamColumns: string[] = ['tileField', 'attribute', 'actions'];
   TILE_DATA = [];
   dataSourceTile = new MatTableDataSource(this.TILE_DATA);
@@ -182,6 +185,16 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'vertical', value: 'vertical' },
     { label: 'horizontal', value: 'horizontal' },
   ];
+  pageEvents: SelectItem[] = [
+    { label: 'ON-LOAD', value: 'ON-LOAD' },
+    { label: 'ON-SUBMIT', value: 'ON-SUBMIT' },
+    { label: 'AFTER-SUBMIT', value: 'AFTER-SUBMIT' },
+  ];
+
+  pageEventsActions: SelectItem[] = [
+    { label: 'CALL_PAGE_ONLOAD', value: 'CALL_PAGE_ONLOAD' },
+    { label: 'CALL_API', value: 'CALL_API' },
+  ];
   editForm: FormGroup;
   formDisable: boolean;
   buildNewForm() {
@@ -241,6 +254,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       showLegend: false,
       pageDescription: '',
       btnConfirmationType: '',
+      pageEventActionPage: '',
+      pageEventAction: '',
+      pageEvent: '',
+      pageActionButton: '',
+      pageEventActionApi: '',
       wizardDetailsGroup: this.fb.array([
         new FormGroup({
           stepHeading: this.fb.control('Step 1'),
@@ -397,6 +415,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.dashboardPanelDetails = [];
     this.BTN_ELEMENT_DATA = [];
     this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
+    this.btnEventActionList = [];
+    this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
     this.loadAllPages();
     this.actions = new Actions();
     this.actions.buttons = new Buttons()
@@ -486,6 +506,41 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
+  addPageEvent() {
+    let button = new ButtonType();
+    let btnEvent = '';
+    let btnEventAction = '';
+    let btnEventActionPage = new Page();
+    let btnEventActionAPI = '';
+    let   pageId = '';
+    let  pageName = '';
+    button = this.editForm.get(['pageActionButton']).value;
+    btnEvent = this.editForm.get(['pageEvent']).value;
+    btnEventAction = this.editForm.get(['pageEventAction']).value;
+
+    btnEventActionAPI = this.editForm.get(['pageEventActionApi']).value;
+    btnEventActionPage = this.editForm.get(['pageEventActionPage']).value;
+    if(btnEventActionPage) {
+      pageId = btnEventActionPage.uuid;
+      pageName = btnEventActionPage.pagetitle;
+    }
+    if (button !== null && btnEvent !== '' && btnEventAction !== null) {
+      const buttonEvent: IButtonEvent = {
+        btnId: button.uuid ,
+        btnCaption: button.caption ,
+        resourcePath: btnEventActionAPI,
+        event: btnEvent,
+        eventAction: btnEventAction,
+        pageName,
+        pageId,
+      };
+      this.btnEventActionList.push(buttonEvent);
+      this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
+    } else {
+      // error message
+    }
+  }
+
   getBtnResourcePath(resourcePath) {
     if (resourcePath) {
       if (!resourcePath.startsWith('/')) {
@@ -512,6 +567,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     const index = this.BTN_ELEMENT_DATA.indexOf(param);
     this.BTN_ELEMENT_DATA.splice(index, 1);
     this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
+  }
+
+  deleteEventRow(param) {
+    const index = this.btnEventActionList.indexOf(param);
+    this.btnEventActionList.splice(index, 1);
+    this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
   }
 
   addParamMapping() {
@@ -1095,7 +1156,10 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
           this.apiParams = builtInPage.params;
         }
       }
-
+      if(builtInPage.buttonEvents) {
+        this.btnEventActionList = builtInPage.buttonEvents
+        this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
+      }
       if (builtInPage.pagetemplate === 'aio-table' || (builtInPage.pagetemplate !== 'aio-grid' && builtInPage.apiResourceDetails)) {
         if (builtInPage.apiResourceDetails) {
           this.apiResourceDetails = builtInPage.apiResourceDetails;
@@ -1273,6 +1337,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         navigationParams: this.navigationParams,
         tileFields: this.TILE_DATA,
         tileFieldCount: this.editForm.get(['tileFieldCount']).value,
+        buttonEvents: this.btnEventActionList
       };
     }
   }

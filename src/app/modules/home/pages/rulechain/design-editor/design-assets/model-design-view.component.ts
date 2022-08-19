@@ -790,7 +790,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         this.modeldata = [];
         const aggregate = this.createModelFromForm();
         this.aggregateService
-            .findNameAvailability(aggregate.name, this.projectUid)
+            .findNameAvailability(aggregate.name, this.projectUid, aggregate.uuid)
             .pipe(
                 filter((res: HttpResponse<any>) => res.ok),
                 map((res: HttpResponse<any>) => res.body)

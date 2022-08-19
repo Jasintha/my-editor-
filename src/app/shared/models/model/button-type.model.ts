@@ -20,7 +20,7 @@ export class Buttons implements IButtons {
 
 
 export interface IButtonType {
-    id?: string;
+    uuid?: string;
     caption?: string;
     resourcePath?: string;
     operation?: string;
@@ -31,7 +31,7 @@ export interface IButtonType {
 }
 
 export class ButtonType implements IButtonType {
-    constructor(public id?: string,
+    constructor(public uuid?: string,
                 public caption?: string,
                 public resourcePath?: string,
                 public operation?: string,
@@ -39,5 +39,28 @@ export class ButtonType implements IButtonType {
                 public tooltip?: string,
                 public pageId?: string,
                 public pageName?: string,
+    ) {}
+}
+
+export interface IButtonEvent {
+    id?: string;
+    btnCaption?: string;
+    btnId?: string;
+    resourcePath?: string;
+    event?: string;
+    eventAction?: string;
+    pageId?: string;
+    pageName?: string;
+}
+
+export class ButtonEvent implements IButtonEvent {
+    constructor(
+    public id?: string,
+    public btnCaption?: string,
+    public  btnId?: string,
+    public resourcePath?: string,
+    public event?: string,
+    public eventAction?: string,
+    public pageId?: string,
     ) {}
 }

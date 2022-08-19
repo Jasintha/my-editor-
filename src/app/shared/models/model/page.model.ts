@@ -5,7 +5,7 @@ import { IAggregate } from '@shared/models/model/aggregate.model';
 import { IPageConfig } from '@shared/models/model/page-config.model';
 import { IPageAction } from '@shared/models/model/page-action.model';
 import { IAPIInput } from '@shared/models/model/api-input.model';
-import {IActions, IButtonType} from '@shared/models/model/button-type.model';
+import {IActions, IButtonEvent, IButtonType} from '@shared/models/model/button-type.model';
 import {IChartDetails} from '@shared/models/model/chart-details.model';
 import {INavigationParam} from '@shared/models/model/page-navigation.model';
 
@@ -56,6 +56,7 @@ export interface IPage {
   navigationParams?: INavigationParam[];
   tileFieldCount?: number,
   tileFields?: any[],
+  buttonEvents?: IButtonEvent[];
 }
 
 export class Page implements IPage {
@@ -106,5 +107,6 @@ export class Page implements IPage {
     public navigationParams?: INavigationParam[],
     public tileFields?: any[],
     public tileFieldCount?: number,
+    public   buttonEvents?: IButtonEvent[]
   ) {}
 }
