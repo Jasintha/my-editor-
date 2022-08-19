@@ -10,7 +10,28 @@
     </mat-toolbar>
 
     <mat-dialog-content>
-        <div class="row">
+        <mat-checkbox formControlName="existing">
+            Select From Existing Service
+        </mat-checkbox>
+        <div class="row" *ngIf="editForm.value.existing">
+            <mat-form-field class="flex-auto">
+                <mat-label>Microservice</mat-label>
+                <mat-select formControlName="microservice" (selectionChange)="refreshMicroservices()">
+                    <mat-option *ngFor="let microservice of allMicroservices" [value]="microservice">
+                        {{microservice.displayName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Model</mat-label>
+                <mat-select formControlName="selectedAggregate">
+                    <mat-option *ngFor="let option of aggregateItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row" *ngIf="!editForm.value.existing">
 
             <div class="pt-3 pb-3">
                 <label id="example-radio-group-label">Type</label>

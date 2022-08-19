@@ -43,6 +43,10 @@ export class AggregateService {
     return this.http.put<IAggregate>(`${this.resourceUrl}/${uuid}`, aggregate, { observe: 'response' });
   }
 
+  importModelsFromService(aggregate: any, uuid: string): Observable<EntityResponseType> {
+    return this.http.put<IAggregate>(`${this.resourceUrl}/importfromservice/${uuid}`, aggregate, { observe: 'response' });
+  }
+
   find(id: string, uuid: string): Observable<EntityResponseType> {
     return this.http.get<IAggregate>(`${this.resourceUrl}/${uuid}/${id}`, { observe: 'response' });
   }
