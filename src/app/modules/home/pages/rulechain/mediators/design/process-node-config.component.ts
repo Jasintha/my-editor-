@@ -76,6 +76,11 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
   @Input()
   ruleNodeId: string;
 
+  @Input()
+  allMicroservices: any[];
+
+  apiItems: any[];
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   crudItems: any[] = ['CREATE','UPDATE','DELETE','FIND','FINDALL', 'EMPTY'];
@@ -141,7 +146,10 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
       apiMethod: '',
       returnObject: '',
       returnRecord: '',
-      selectedAPIInputs: null
+      selectedAPIInputs: null,
+      existing: false,
+      microservice: null,
+      microserviceApi: null
     });
   }
 
@@ -186,6 +194,62 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
         this.items.push({ label: dropdownLabel, value: input });
         this.returnObject.push({ label: dropdownLabel, value: returnObj });
       }
+    }
+  }
+
+  refreshMicroservices() {
+    this.apiItems = [];
+    const microservice = this.processNodeConfigFormGroup.get(['microservice']).value;
+
+    this.configuration.microservice= microservice.name;
+    this.configuration.microserviceUuid= microservice.masterUuid;
+    this.configuration.apiresourcepath= '';
+    this.updateModel(this.configuration);
+
+    if (microservice.microserviceApis) {
+      for (let i = 0; i < microservice.microserviceApis.length; i++) {
+        const apiObj = {
+          'apiType': 'API',
+          'api': microservice.microserviceApis[i],
+        };
+        this.apiItems.push(apiObj);
+      }
+    }
+
+    if (microservice.commands) {
+      for (let i = 0; i < microservice.commands.length; i++) {
+        const commandObj = {
+          'apiType': 'COMMAND',
+          'api': microservice.commands[i],
+        };
+        this.apiItems.push(commandObj);
+      }
+    }
+
+    if (microservice.queries) {
+      for (let i = 0; i < microservice.queries.length; i++) {
+        const queryObj = {
+          'apiType': 'QUERY',
+          'api': microservice.queries[i],
+        };
+        this.apiItems.push(queryObj);
+      }
+    }
+  }
+
+  onChangeMicroserviceAPI() {
+    const api = this.processNodeConfigFormGroup.get(['microserviceApi']).value;
+    if (api) {
+      const apiStart: boolean = api.resourcePath.startsWith('/');
+      let suggestedPath = '';
+      if (apiStart) {
+        suggestedPath = api.resourcePath;
+      } else {
+        suggestedPath = '/' + api.resourcePath;
+      }
+      this.configuration.apiId= api.uuid;
+      this.configuration.apiresourcepath= suggestedPath;
+      this.updateModel(this.configuration);
     }
   }
 
@@ -350,15 +414,93 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
         this.updateModel(configuration);
       });
     } else {
+
+
+      let microservice;
+      let microserviceApi;
+      let microserviceUuid = this.configuration.microserviceUuid;
+      let microserviceResourcePath = this.configuration.apiresourcepath;
+      let microserviceId = this.configuration.apiId;
+      if (this.configuration.existing && microserviceUuid && this.allMicroservices){
+        microservice = this.allMicroservices.find(x => x.masterUuid === microserviceUuid );
+
+        if (microservice && microservice.microserviceApis) {
+          for (let i = 0; i < microservice.microserviceApis.length; i++) {
+            const apiObj = {
+              'apiType': 'API',
+              'api': microservice.microserviceApis[i],
+            };
+            this.apiItems.push(apiObj);
+          }
+        }
+
+        if (microservice && microservice.commands) {
+          for (let i = 0; i < microservice.commands.length; i++) {
+            const commandObj = {
+              'apiType': 'COMMAND',
+              'api': microservice.commands[i],
+            };
+            this.apiItems.push(commandObj);
+          }
+        }
+
+        if (microservice && microservice.queries) {
+          for (let i = 0; i < microservice.queries.length; i++) {
+            const queryObj = {
+              'apiType': 'QUERY',
+              'api': microservice.queries[i],
+            };
+            this.apiItems.push(queryObj);
+          }
+        }
+
+        if (microserviceId){
+            let searchedmicroserviceApi = this.apiItems.find(x => x.api.uuid === microserviceId);
+            if(searchedmicroserviceApi){
+                microserviceApi = searchedmicroserviceApi.api;
+            }
+        }
+
+      }
+
       this.processNodeConfigFormGroup.patchValue({
         processName: this.configuration.processName,
         apiTemplate: this.configuration.apiTemplate,
         apiMethod: this.configuration.apiMethod,
 //         returnObject: this.configuration.returnObject,
-        returnRecord: this.configuration.returnRecord
+        returnRecord: this.configuration.returnRecord,
+        existing: this.configuration.existing,
+        microservice: microservice,
+        microserviceApi: microserviceApi
       });
     }
-    this.changeSubscription = this.processNodeConfigFormGroup.get('apiTemplate').valueChanges.subscribe(
+    this.changeSubscription = this.processNodeConfigFormGroup.get('existing').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.existing = configuration;
+
+          if(configuration){
+// //             this.configuration.url = '';
+//             this.configuration.param= {};
+//             this.configuration.property= {};
+//             this.configuration.branchparam= {};
+//             this.configuration.constant= {};
+//             this.configuration.inputType= '';
+//             this.processNodeConfigFormGroup.get('constant').patchValue(null, {emitEvent: false});
+//             this.processNodeConfigFormGroup.get('param').patchValue(null, {emitEvent: false});
+//             this.processNodeConfigFormGroup.get('property').patchValue(null, {emitEvent: false});
+//             this.processNodeConfigFormGroup.get('branchparam').patchValue(null, {emitEvent: false});
+//             this.processNodeConfigFormGroup.get('inputType').patchValue('', {emitEvent: false});
+          } else {
+            this.configuration.microservice= '';
+            this.configuration.microserviceUuid= '';
+            this.configuration.apiresourcepath= '';
+            this.processNodeConfigFormGroup.get('microservice').patchValue(null, {emitEvent: false});
+            this.processNodeConfigFormGroup.get('microserviceApi').patchValue(null, {emitEvent: false});
+          }
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('existing').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.apiTemplate = configuration;
           this.updateModel(this.configuration);

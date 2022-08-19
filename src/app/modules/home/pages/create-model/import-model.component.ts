@@ -32,6 +32,8 @@ export class ImportModelComponent implements OnInit {
   project: IProject;
   projectUid: string;
   appType: string;
+  allMicroservices: any;
+  aggregates: IAggregate[];
 
   @ViewChild('fileInput')
   fileInput: FileUpload;
@@ -41,11 +43,15 @@ export class ImportModelComponent implements OnInit {
     { label: 'DTO', value: 'DTO' },
   ];
   editForm: FormGroup;
+  aggregateItems: Item[];
 
   buildAggreForm(type) {
     this.editForm = this.fb.group({
+    existing: false,
     type: "MODEL",
     isCreateDefaultFields: false,
+    microservice: null,
+    selectedAggregate: null
     });
   }
 
@@ -65,6 +71,8 @@ export class ImportModelComponent implements OnInit {
   ngOnInit(): void {
     this.projectUid = this.data.projectUid;
     this.spinnerService.hide();
+    this.allMicroservices = [];
+    this.loadMicroserviceProjects();
     this.buildAggreForm('MODEL');
   }
 
@@ -72,45 +80,97 @@ export class ImportModelComponent implements OnInit {
     // this.isVisibleEvent.emit(false);
   }
 
+  loadMicroserviceProjects() {
+    this.aggregateService
+        .findAllMicroserviceProjects()
+        .pipe(
+            filter((mayBeOk: HttpResponse<IProject[]>) => mayBeOk.ok),
+            map((response: HttpResponse<IProject[]>) => response.body)
+        )
+        .subscribe(
+            (res: IProject[]) => {
+              this.allMicroservices = res;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+  }
+
+  refreshMicroservices(){
+    let microservice = this.editForm.get(['microservice']).value;
+      this.aggregateService
+          .findByProjectUUId(microservice.projectUuid, microservice.projectUuid)
+          .pipe(
+              filter((mayBeOk: HttpResponse<IAggregate[]>) => mayBeOk.ok),
+              map((response: HttpResponse<IAggregate[]>) => response.body)
+          )
+          .subscribe(
+              (res: IAggregate[]) => {
+                this.aggregates = res;
+                this.loadAggregates();
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );
+  }
+
+  loadAggregates() {
+    this.aggregateItems = [];
+    if (this.aggregates) {
+      for (let i = 0; i < this.aggregates.length; i++) {
+        if (this.aggregates[i].status === 'ENABLED') {
+          const dropdownLabel = this.aggregates[i].name + ' - ' + this.aggregates[i].type;
+          this.aggregateItems.push({ label: dropdownLabel, value: this.aggregates[i] });
+        }
+      }
+    }
+  }
 
   save() {
     this.isSaving = true;
-    const formData = new FormData();
-    this.fileInput.files.forEach(file => {
-      formData.append('file', file);
-    });
 
-    let isCreateDefaultFields = this.editForm.get(['isCreateDefaultFields']).value;
+    let existing = this.editForm.get(['existing']).value;
 
-    if (isCreateDefaultFields) {
-      isCreateDefaultFields = true;
+    if(existing){
+        let microservice = this.editForm.get(['microservice']).value;
+        let aggregate = this.editForm.get(['selectedAggregate']).value;
+        let createReq = {'modeluuid': aggregate.uuid, 'fromServiceId': microservice.projectUuid, 'toServiceId': this.projectUid };
+        this.subscribeToSaveResponse(this.aggregateService.importModelsFromService(createReq, this.projectUid));
+
     } else {
-      isCreateDefaultFields = false;
+        const formData = new FormData();
+        this.fileInput.files.forEach(file => {
+          formData.append('file', file);
+        });
+
+        let isCreateDefaultFields = this.editForm.get(['isCreateDefaultFields']).value;
+
+        if (isCreateDefaultFields) {
+          isCreateDefaultFields = true;
+        } else {
+          isCreateDefaultFields = false;
+        }
+
+        let mdType = this.editForm.get(['type']).value;
+
+        if(mdType === 'DTO'){
+            isCreateDefaultFields = false;
+        }
+
+        let modelData: string = '';
+        modelData = this.editForm.get(['type']).value;
+        let type = { type: modelData, isCreateDefaultFields: isCreateDefaultFields };
+
+        formData.append(
+          'modeldata',
+          new Blob([JSON.stringify(type)], {
+            type: 'application/json',
+          })
+        );
+
+        this.subscribeToSaveResponse(this.aggregateService.uploadDomainModelsFile(formData, this.projectUid));
+
     }
 
-    let mdType = this.editForm.get(['type']).value;
 
-    if(mdType === 'DTO'){
-        isCreateDefaultFields = false;
-    }
-
-
-    let modelData: string = '';
-//     if (this.apptype === 'task.ui' || this.apptype === 'dashboard') {
-//       modelData = 'MODEL';
-//     } else {
-      modelData = this.editForm.get(['type']).value;
-//     }
-    let type = { type: modelData, isCreateDefaultFields: isCreateDefaultFields };
-
-    formData.append(
-      'modeldata',
-      new Blob([JSON.stringify(type)], {
-        type: 'application/json',
-      })
-    );
-
-    this.subscribeToSaveResponse(this.aggregateService.uploadDomainModelsFile(formData, this.projectUid));
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<any>>) {
