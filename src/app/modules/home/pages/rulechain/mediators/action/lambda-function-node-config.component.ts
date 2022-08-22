@@ -57,7 +57,7 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
   allRoots: any[];
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
 
   @Input()
   disabled: boolean;
@@ -210,6 +210,13 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       this.configuration.errorParameterproperty= {};
       this.lambdaFunctionNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.lambdaFunctionNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.lambdaFunctionNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.lambdaFunctionNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.lambdaFunctionNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -429,8 +436,8 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let assignedProperty = this.configuration.assignedProperty;
