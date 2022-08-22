@@ -33,6 +33,8 @@ import {MainMenuComponent} from '@home/pages/main-menu/main-menu.component';
 import {PageNavigationComponent} from '@home/pages/page-navigation/page-navigation.component';
 import {ConsoleLogService} from '@core/projectservices/console-logs.service';
 import {INavigationParam} from '@shared/models/model/page-navigation.model';
+import {IFormField, IRowFieldMapping, IRowHeader, ISourceTargetFieldsRequest, RowFieldMapping} from '@shared/models/model/form-field.model';
+import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
 
 @Component({
     selector: 'virtuan-filter-page',
@@ -91,19 +93,23 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     displayedStepHeaderColumns: string[] = ['field', 'stepheader', 'actions'];
     ELEMENT_DATA = [];
     dataSourceWizard = new MatTableDataSource(this.ELEMENT_DATA);
-
+    fieldOrderView = false;
     displayedDetailHeaderColumns: string[] = ['field', 'detailsHeader', 'actions'];
     DETAILS_DATA = [];
     dataSourceDetailsPage = new MatTableDataSource(this.DETAILS_DATA);
-
+    rowHeaderList: IRowHeader[] = [];
+    rowIdList = [];
     displayedLoginParamColumns: string[] = ['input', 'param', 'actions'];
     LOGIN_DATA = [];
     dataSourceLogin = new MatTableDataSource(this.LOGIN_DATA);
-
+    rowHeaderMappingArray: IRowFieldMapping[] = [];
+    fieldDataSourceWizard = new MatTableDataSource(this.rowHeaderMappingArray);
     displayedAioParamColumns: string[] = ['operation', 'path', 'actions'];
     PARAM_DATA = [];
     dataSourceAIOParam = new MatTableDataSource(this.PARAM_DATA);
-
+    sourceTargetFieldsRequest: ISourceTargetFieldsRequest;
+    sourceProperties: IFormField[];
+    targetProperties: IFormField[];
     attachedPageLocationValues: SelectItem[] = [
         { label: 'Top', value: 'Top' },
         { label: 'Right', value: 'Right' },
@@ -135,6 +141,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     filterTableData: FormGroup;
     filterFormData: FormGroup;
     formDisable: boolean;
+    fieldMapDisplayedColumns: string[] = ['field','rowId'];
     buildNewForm() {
         this.filterTableData = this.fb.group({
             id: [],
@@ -213,6 +220,8 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             stepHeader:[],
             detailHeader:[],
             attributeName:[],
+            rowId: [],
+            rowHeader: [],
         });
     }
 
@@ -394,6 +403,126 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
 
         const index = this.loginParams.indexOf(param);
         this.loginParams.splice(index, 1);
+    }
+
+    onRowIdChange(rowId, field, index) {
+        if(this.rowHeaderMappingArray[index].field === field) {
+            this.rowHeaderMappingArray[index].rowId = rowId;
+        }
+    }
+
+    changePageModel(selectedModel : IAggregate) {
+        const currentModel = this.currentPage.model;
+        if(currentModel) {
+            const dialogRef = this.dialog.open(ModelChangeConfirmDialogComponent, {
+                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            });
+            dialogRef.afterClosed(
+            ).subscribe(result => {
+                if (result) {
+                    const page = this.getChangedPageModel(selectedModel);
+                    this.notifyModelChange(selectedModel);
+                    this.save(page);
+                }
+            });
+        }
+    }
+
+    saveRowHeader() {
+        const rowId = this.filterFormData.get(['rowId']).value;
+        const rowHeader = this.filterFormData.get(['rowHeader']).value;
+        if(rowHeader!== undefined && rowId < this.rowHeaderList.length -1)
+            this.rowHeaderList[rowId].rowHeader =  this.filterFormData.get(['rowHeader']).value;
+    }
+
+
+    changeRowHeader() {
+        const rowId = this.filterFormData.get(['rowId']).value;
+        if(rowId && rowId < this.rowHeaderList.length -1) {
+            const rowHeader =  this.rowHeaderList[rowId].rowHeader;
+            this.filterFormData.get(['rowHeader']).patchValue(rowHeader);
+        }
+    }
+
+    loadAllSourceTargetFormFieldsForPage(page : IPage) {
+        if (page.rowMappings && page.rowMappings.length > 0) {
+            this.CreateFormFieldTable(page, true);
+        } else {
+            // this.spinnerService.show();
+            this.builtInPageService
+                .findAllSourceTargetFormFieldsForPage(this.pageId, this.projectUid)
+                .pipe(
+                    filter((res: HttpResponse<ISourceTargetFieldsRequest>) => res.ok),
+                    map((res: HttpResponse<ISourceTargetFieldsRequest>) => res.body)
+                )
+                .subscribe(
+                    (res: ISourceTargetFieldsRequest) => {
+                        this.CreateFormFieldTable(res, false);
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        }
+    }
+
+    CreateFormFieldTable(rowMappingSource: any, isUpdate: boolean) {
+        this.rowHeaderMappingArray = [];
+        this.rowIdList = [];
+        this.rowHeaderList = [];
+        this.sourceTargetFieldsRequest = rowMappingSource;
+        this.sourceProperties = this.sourceTargetFieldsRequest.sourceFormFields;
+        this.targetProperties = this.sourceTargetFieldsRequest.targetFormFields;
+        if (this.targetProperties && !isUpdate) {
+            for (let i = 0; i < this.targetProperties.length; i++) {
+                const hasChild = this.targetProperties[i] && this.targetProperties[i].children;
+                if (!hasChild) {
+                    const fieldMapping =  new RowFieldMapping();
+                    fieldMapping.field = this.targetProperties[i].propertyName;
+                    fieldMapping.rowId = i;
+                    this.rowHeaderMappingArray.push(fieldMapping);
+                    this.rowIdList.push(fieldMapping.rowId);
+                    this.rowHeaderList.push({
+                        rowId: fieldMapping.rowId,
+                        rowHeader: '',
+                    });
+                    this.fieldDataSourceWizard = new MatTableDataSource(this.rowHeaderMappingArray);
+                }
+            }
+        } else if (rowMappingSource.rowMappings && isUpdate) {
+            for (let i = 0; i < rowMappingSource.rowMappings.length; i++) {
+                const fieldMapping =  new RowFieldMapping();
+                fieldMapping.field = rowMappingSource.rowMappings[i].propertyName;
+                fieldMapping.rowId = rowMappingSource.rowMappings[i].rowId;
+                this.rowHeaderMappingArray.push(fieldMapping);
+                this.rowIdList.push(fieldMapping.rowId);
+                this.rowHeaderList.push({
+                    rowId: fieldMapping.rowId,
+                    rowHeader: '',
+                });
+                this.fieldDataSourceWizard = new MatTableDataSource(this.rowHeaderMappingArray);
+            }
+        }
+    }
+
+    getChangedPageModel(currentDatamodel){
+        return {
+            ...this.currentPage,
+            rowMappings: [],
+            rowHeader: [],
+            stepHeaders: [],
+            stepMappings: [],
+            params: [],
+            loginParams: [],
+            model: currentDatamodel,
+        };
+    }
+    notifyModelChange(currentDatamodel: IAggregate) {
+        const selectedModel: IAggregate = this.filterFormData.get(['selectedAggregate']).value;
+        this.eventManager.dispatch(
+            new AppEvent(EventTypes.newViewModelCreation, {
+                name: 'newViewModelCreation',
+                content: currentDatamodel.uuid,
+            })
+        );
     }
 
     addAIOTableRow() {
@@ -630,6 +759,7 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
             .subscribe(
                 (res: IPage) => {
                     this.filterFormPage = res;
+                    this.loadAllSourceTargetFormFieldsForPage(res);
                     this.updateFilterFormdata(res)
                 }
             );
@@ -862,6 +992,11 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 projectUuid: this.projectUid,
                 isHomepage: builtInPage.isHomepage,
             });
+            if(this.filterFormPage.rowMappings) {
+                this.rowHeaderMappingArray = this.filterFormPage.rowMappings;
+                this.fieldDataSourceWizard = new MatTableDataSource(this.rowHeaderMappingArray);
+                this.rowHeaderList = this.filterFormPage.rowHeaders;
+            }
         }
         this.loadAggregates(builtInPage.model, true)
     }
@@ -889,8 +1024,8 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     }
 
     private getFilterTablePage(): IPage {
-        let headersArray = [];
-        let fieldMappingArray = [];
+        const headersArray = [];
+        const fieldMappingArray = [];
         if (this.project.apptypesID === 'task.ui') {
             return {
                 ...new Page(),
@@ -918,8 +1053,6 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
     }
 
     private getFilterFormPage(): IPage {
-        let headersArray = [];
-        let fieldMappingArray = [];
         if (this.project.apptypesID === 'task.ui') {
             return {
                 ...new Page(),
@@ -938,7 +1071,9 @@ export class FilterPageComponent implements OnDestroy , OnChanges{
                 pageViewType: 'filterForm',
                 authority: this.filterFormData.get(['authority']).value,
                 isHomepage: this.filterFormData.get(['isHomepage']).value,
-                navigationParams: this.navigationParams
+                navigationParams: this.navigationParams,
+                rowHeaders: this.rowHeaderList,
+                rowMappings: this.rowHeaderMappingArray,
             };
         }
     }
