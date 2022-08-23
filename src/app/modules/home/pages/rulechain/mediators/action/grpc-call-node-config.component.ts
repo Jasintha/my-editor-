@@ -70,7 +70,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
   allModelProperties: any[];
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
 
   @Input()
   allReferenceProperties: any[];
@@ -201,6 +201,13 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       this.configuration.errorParameterproperty = {};
       this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').patchValue([], { emitEvent: false });
       this.grpcCallNodeConfigFormGroup.get('errorParameterparam').patchValue([], { emitEvent: false });
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.grpcCallNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -222,7 +229,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
     if (errorInputType === 'RULE_INPUT') {
       let selectedErrorParameterParam = this.grpcCallNodeConfigFormGroup.get('errorParameterparam').value;
       let errorParameter = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterParam.inputName
@@ -232,7 +239,7 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
     } else if (errorInputType === 'PROPERTY') {
       let selectedErrorParameterProperty = this.grpcCallNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterProperty.name
@@ -242,12 +249,21 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
     } else if (errorInputType === 'BRANCH_PARAM') {
       let selectedErrorParameterBranch = this.grpcCallNodeConfigFormGroup.get('errorParameterbranchparam').value;
       let errorParameterbranchparam = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterBranch.name
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.paramName,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
       this.updateModel(this.configuration);
     }
 
@@ -456,8 +472,8 @@ export class GRPCCallNodeConfigComponent implements ControlValueAccessor, OnInit
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if (errorBranch && this.allErrorBranches) {
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name);
+      if (errorBranch && this.allSubRules) {
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name);
       }
 
       //second input

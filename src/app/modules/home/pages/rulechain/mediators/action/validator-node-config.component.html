@@ -171,7 +171,7 @@
       <mat-option value="1">Log & Continue</mat-option>
       <mat-option value="2">Log & Exit</mat-option>
       <mat-option value="3">Return</mat-option>
-      <mat-option value="4">Call an Error Branch</mat-option>
+      <mat-option value="4">Call an Error Process</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -185,7 +185,7 @@
         Error Function Details
       </mat-panel-title>
       <mat-panel-description>
-        Call an error branch if error occured
+        Call an error process if error occured
       </mat-panel-description>
     </mat-expansion-panel-header>
 
@@ -193,7 +193,7 @@
       <mat-form-field fxFlex class="mat-block">
         <mat-label>Branch</mat-label>
         <mat-select formControlName="errorBranch">
-          <mat-option *ngFor="let root of allErrorBranches" [value]="root">
+          <mat-option *ngFor="let root of allSubRules" [value]="root">
             {{root.name}}
           </mat-option>
         </mat-select>
@@ -214,8 +214,9 @@
       </mat-form-field>
 
       <mat-form-field fxFlex class="mat-block">
-        <mat-label>Error Parameter Input Type</mat-label>
+        <mat-label>Process Input Type</mat-label>
         <mat-select formControlName="errorParameterinputType" (selectionChange)="refreshErrorParameterInputTypes()">
+          <mat-option value="ERROR">Error String</mat-option>
           <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
           <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
           <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>

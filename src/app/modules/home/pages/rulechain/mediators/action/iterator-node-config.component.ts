@@ -61,7 +61,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
   allRuleInputs: any[];
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
   
   @Input()
   inputEntities: any[];
@@ -175,6 +175,13 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       this.configuration.errorParameterproperty= {};
       this.iteratorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.iteratorNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.iteratorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.iteratorNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.iteratorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -214,7 +221,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.iteratorNodeConfigFormGroup.get('errorParameterparam').value;
       let errorParameter = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterParam.inputName
@@ -224,7 +231,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
     } else if (errorInputType === 'PROPERTY'){
       let selectedErrorParameterProperty = this.iteratorNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterProperty.name
@@ -234,12 +241,21 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
     } else if (errorInputType === 'BRANCH_PARAM'){
       let selectedErrorParameterBranch = this.iteratorNodeConfigFormGroup.get('errorParameterbranchparam').value;
       let errorParameterbranchparam = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterBranch.name
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.paramName,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
       this.updateModel(this.configuration);
     }
 
@@ -297,8 +313,8 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let assignedProperty = this.configuration.assignedProperty;

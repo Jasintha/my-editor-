@@ -295,7 +295,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
         if (errorInputType === 'RULE_INPUT'){
             let selectedErrorParameterParam = this.excelReadNodeConfigFormGroup.get('errorParameterparam').value;
             let errorParameter = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterParam.inputName
@@ -305,7 +305,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
         } else if (errorInputType === 'PROPERTY'){
             let selectedErrorParameterProperty = this.excelReadNodeConfigFormGroup.get('errorParameterproperty').value;
             let errorParameterproperty = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterProperty.name
@@ -315,7 +315,7 @@ export class ExcelReadNodeConfigComponent implements ControlValueAccessor, OnIni
         } else if (errorInputType === 'BRANCH_PARAM'){
             let selectedErrorParameterBranch = this.excelReadNodeConfigFormGroup.get('errorParameterbranchparam').value;
             let errorParameterbranchparam = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterBranch.name

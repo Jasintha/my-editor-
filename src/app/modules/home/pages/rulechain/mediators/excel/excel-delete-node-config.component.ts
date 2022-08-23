@@ -238,7 +238,7 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
         if (errorInputType === 'RULE_INPUT'){
             let selectedErrorParameterParam = this.excelDeleteNodeConfigFormGroup.get('errorParameterparam').value;
             let errorParameter = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterParam.inputName
@@ -248,7 +248,7 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
         } else if (errorInputType === 'PROPERTY'){
             let selectedErrorParameterProperty = this.excelDeleteNodeConfigFormGroup.get('errorParameterproperty').value;
             let errorParameterproperty = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterProperty.name
@@ -258,7 +258,7 @@ export class ExcelDeleteNodeConfigComponent implements ControlValueAccessor, OnI
         } else if (errorInputType === 'BRANCH_PARAM'){
             let selectedErrorParameterBranch = this.excelDeleteNodeConfigFormGroup.get('errorParameterbranchparam').value;
             let errorParameterbranchparam = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterBranch.name

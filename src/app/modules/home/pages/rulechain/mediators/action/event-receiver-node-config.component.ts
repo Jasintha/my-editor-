@@ -66,7 +66,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
   ruleNodeId: string;
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
   
   errordatasource: MatTableDataSource<ErrorFunctionParameters>;
   displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
@@ -169,6 +169,13 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
       this.configuration.errorParameterproperty= {};
       this.eventReceiverNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.eventReceiverNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.eventReceiverNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.eventReceiverNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.eventReceiverNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -190,7 +197,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.eventReceiverNodeConfigFormGroup.get('errorParameterparam').value;
       let errorParameter = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterParam.inputName
@@ -200,7 +207,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
     } else if (errorInputType === 'PROPERTY'){
       let selectedErrorParameterProperty = this.eventReceiverNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterProperty.name
@@ -210,12 +217,21 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
     } else if (errorInputType === 'BRANCH_PARAM'){
       let selectedErrorParameterBranch = this.eventReceiverNodeConfigFormGroup.get('errorParameterbranchparam').value;
       let errorParameterbranchparam = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterBranch.name
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.paramName,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
       this.updateModel(this.configuration);
     }
 
@@ -263,8 +279,8 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       this.eventReceiverNodeConfigFormGroup.patchValue({

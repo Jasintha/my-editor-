@@ -95,7 +95,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
   apptype: string;
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
 
   @Input()
   allDomainModelsWithSub: any[];
@@ -264,6 +264,13 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
       this.configuration.errorParameterproperty= {};
       this.emailSendNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.emailSendNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.emailSendNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.emailSendNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.emailSendNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -374,7 +381,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.emailSendNodeConfigFormGroup.get('errorParameterparam').value;
       let errorParameter = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterParam.inputName
@@ -384,7 +391,7 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     } else if (errorInputType === 'PROPERTY'){
       let selectedErrorParameterProperty = this.emailSendNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterProperty.name
@@ -394,12 +401,21 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
     } else if (errorInputType === 'BRANCH_PARAM'){
       let selectedErrorParameterBranch = this.emailSendNodeConfigFormGroup.get('errorParameterbranchparam').value;
       let errorParameterbranchparam = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterBranch.name
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.paramName,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
       this.updateModel(this.configuration);
     }
 
@@ -564,8 +580,8 @@ export class EmailSendNodeConfigComponent implements ControlValueAccessor, OnIni
         }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let c = this.configuration.toemailconstant;

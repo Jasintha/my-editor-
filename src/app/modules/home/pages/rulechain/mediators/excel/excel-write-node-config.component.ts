@@ -377,7 +377,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
         if (errorInputType === 'RULE_INPUT'){
             let selectedErrorParameterParam = this.excelWriteNodeConfigFormGroup.get('errorParameterparam').value;
             let errorParameter = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterParam.inputName
@@ -387,7 +387,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
         } else if (errorInputType === 'PROPERTY'){
             let selectedErrorParameterProperty = this.excelWriteNodeConfigFormGroup.get('errorParameterproperty').value;
             let errorParameterproperty = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterProperty.name
@@ -397,7 +397,7 @@ export class ExcelWriteNodeConfigComponent implements ControlValueAccessor, OnIn
         } else if (errorInputType === 'BRANCH_PARAM'){
             let selectedErrorParameterBranch = this.excelWriteNodeConfigFormGroup.get('errorParameterbranchparam').value;
             let errorParameterbranchparam = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterBranch.name

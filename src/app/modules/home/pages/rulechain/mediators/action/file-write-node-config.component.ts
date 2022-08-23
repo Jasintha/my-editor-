@@ -70,7 +70,7 @@ export class FileWriteNodeConfigComponent implements ControlValueAccessor, OnIni
   allModelProperties: any[];
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
 
   @Input()
   allReferenceProperties: any[];
@@ -190,6 +190,13 @@ export class FileWriteNodeConfigComponent implements ControlValueAccessor, OnIni
       this.configuration.errorParameterproperty= {};
       this.fileWriteNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.fileWriteNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.fileWriteNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.fileWriteNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.fileWriteNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -211,7 +218,7 @@ export class FileWriteNodeConfigComponent implements ControlValueAccessor, OnIni
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.fileWriteNodeConfigFormGroup.get('errorParameterparam').value;
       let errorParameter = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterParam.inputName
@@ -221,7 +228,7 @@ export class FileWriteNodeConfigComponent implements ControlValueAccessor, OnIni
     } else if (errorInputType === 'PROPERTY'){
       let selectedErrorParameterProperty = this.fileWriteNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterProperty.name
@@ -231,12 +238,21 @@ export class FileWriteNodeConfigComponent implements ControlValueAccessor, OnIni
     } else if (errorInputType === 'BRANCH_PARAM'){
       let selectedErrorParameterBranch = this.fileWriteNodeConfigFormGroup.get('errorParameterbranchparam').value;
       let errorParameterbranchparam = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterBranch.name
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.paramName,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
       this.updateModel(this.configuration);
     }
 
@@ -361,8 +377,8 @@ export class FileWriteNodeConfigComponent implements ControlValueAccessor, OnIni
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       this.fileWriteNodeConfigFormGroup.patchValue({

@@ -57,7 +57,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     allRoots: any[];
 
     @Input()
-    allErrorBranches: any[];
+    allSubRules: any[];
 
     @Input()
     disabled: boolean;
@@ -305,6 +305,13 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             this.configuration.errorParameterproperty= {};
             this.pdfNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
             this.pdfNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+        } else if (errorInputType === 'ERROR'){
+          this.configuration.errorParameterbranchparam= {};
+          this.configuration.errorParameterparam= {};
+          this.configuration.errorParameterproperty= {};
+          this.pdfNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+          this.pdfNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+          this.pdfNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
         }
         if (this.definedConfigComponent) {
             this.propagateChange(this.configuration);
@@ -381,7 +388,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         if (errorInputType === 'RULE_INPUT'){
             let selectedErrorParameterParam = this.pdfNodeConfigFormGroup.get('errorParameterparam').value;
             let errorParameter = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterParam.inputName
@@ -391,7 +398,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         } else if (errorInputType === 'PROPERTY'){
             let selectedErrorParameterProperty = this.pdfNodeConfigFormGroup.get('errorParameterproperty').value;
             let errorParameterproperty = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterProperty.name
@@ -401,13 +408,22 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         } else if (errorInputType === 'BRANCH_PARAM'){
             let selectedErrorParameterBranch = this.pdfNodeConfigFormGroup.get('errorParameterbranchparam').value;
             let errorParameterbranchparam = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterBranch.name
             };
             this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
             this.updateModel(this.configuration);
+        } else if (errorInputType === 'ERROR'){
+          let errString = {
+            'parameterName': errorBranchparameter.paramName,
+            'inputType': errorInputType,
+            'input': '-',
+            'property': ''
+          };
+          this.configuration.errorFunctionParameters.push(errString);
+          this.updateModel(this.configuration);
         }
 
         this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
@@ -543,8 +559,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             }
 
             let errorBranch = this.configuration.errorBranch;
-            if(errorBranch && this.allErrorBranches){
-                errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+            if(errorBranch && this.allSubRules){
+                errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
             }
 
             let assignedReference = this.configuration.assignedReference;
