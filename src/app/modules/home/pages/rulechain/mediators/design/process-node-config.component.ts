@@ -502,7 +502,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     );
     this.changeSubscription = this.processNodeConfigFormGroup.get('existing').valueChanges.subscribe(
         (configuration: any) => {
-          this.configuration.apiTemplate = configuration;
+          this.configuration.existing = configuration;
           this.updateModel(this.configuration);
         }
     );
