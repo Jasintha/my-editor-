@@ -247,7 +247,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
       } else {
         suggestedPath = '/' + api.resourcePath;
       }
-      this.configuration.apiId= api.uuid;
+      this.configuration.apiUuid= api.uuid;
       this.configuration.apiresourcepath= suggestedPath;
       this.updateModel(this.configuration);
     }
@@ -420,7 +420,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
       let microserviceApi;
       let microserviceUuid = this.configuration.microserviceUuid;
       let microserviceResourcePath = this.configuration.apiresourcepath;
-      let microserviceId = this.configuration.apiId;
+      let microserviceId = this.configuration.apiUuid;
       if (this.configuration.existing && microserviceUuid && this.allMicroservices){
         microservice = this.allMicroservices.find(x => x.masterUuid === microserviceUuid );
 
