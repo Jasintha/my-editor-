@@ -17,6 +17,8 @@
 
             <div  *ngIf="pageCreationStatus === 'typeSelection'">
                 <div class="col-md-12">
+                    <div class="card card-body ">
+                        <span style="margin-top: 10px; margin-bottom: 20px"><h5> Container layouts </h5></span>
                     <div class="row">
                         <div class="col-md-3 init-page-card">
                             <div class="card m-auto box-card red" (click)="pageTemplateTypeSelection('blank')">
@@ -28,6 +30,38 @@
                                 </div>
                                 <div class=" d-flex justify-content-center init-page-image">
                                     <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/Custompage.jpg" alt="Template" >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 init-page-card">
+                            <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('tab-page', 'Tab Page')">
+                                <div class=" card-body" >
+
+                                    <div class="box-heading">
+                                        <h5>Tab Page</h5>
+                                    </div>
+                                </div>
+                                <div class=" d-flex justify-content-center init-page-image">
+                                    <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/tabpage.jpg" alt="Template">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="card card-body ">
+                        <span style="margin-top: 10px; margin-bottom: 20px"><h5> Page templates </h5></span>
+                        <div class="row">
+                        <div class="col-md-3 init-page-card">
+                            <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('register-page', 'Register Page')">
+                                <div class=" card-body" >
+
+                                    <div class="box-heading">
+                                        <h5>Register Page</h5>
+                                    </div>
+                                </div>
+                                <div class=" d-flex justify-content-center init-page-image">
+                                    <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/register.jpg" alt="Template">
                                 </div>
                             </div>
                         </div>
@@ -45,6 +79,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-3 init-page-card">
                             <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('table-page', 'Table Page')">
                                 <div class=" card-body" >
@@ -67,58 +102,6 @@
                                 </div>
                                 <div class=" d-flex justify-content-center init-page-image">
                                     <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/Login.jpg" alt="Template">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 init-page-card">
-                            <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('register-page', 'Register Page')">
-                                <div class=" card-body" >
-
-                                    <div class="box-heading">
-                                        <h5>Register Page</h5>
-                                    </div>
-                                </div>
-                                <div class=" d-flex justify-content-center init-page-image">
-                                    <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/register.jpg" alt="Template">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 init-page-card">
-                            <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('aio-table', 'AIO Table Page')">
-                                <div class=" card-body" >
-
-                                    <div class="box-heading">
-                                        <h5 class="mt-0">AIO Table Page</h5>
-                                    </div>
-                                </div>
-                                <div class=" d-flex justify-content-center init-page-image">
-                                    <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/table.jpg" alt="Template">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 init-page-card">
-                            <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('aio-grid', 'AIO Tile Page')">
-                                <div class=" card-body">
-                                    <div class="box-heading">
-                                        <h5>AIO Tile Page</h5>
-                                    </div>
-                                </div>
-                                <div class=" d-flex justify-content-center init-page-image">
-                                    <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/Gridpage.jpg" alt="Template">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 init-page-card">
-                            <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('tile-page', 'Tile Page')">
-                                <div class=" card-body">
-                                    <div class="box-heading">
-                                        <h5>Tile page</h5>
-                                    </div>
-                                </div>
-                                <div class=" d-flex justify-content-center init-page-image">
-                                    <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/table.jpg" alt="Template">
                                 </div>
                             </div>
                         </div>
@@ -148,20 +131,20 @@
                                 </div>
                             </div>
                         </div>
+                            <div class="col-md-3 init-page-card">
+                                <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('aio-table', 'AIO Table Page')">
+                                    <div class=" card-body" >
 
-                        <div class="col-md-3 init-page-card">
-                            <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('tab-page', 'Tab Page')">
-                                <div class=" card-body" >
-
-                                    <div class="box-heading">
-                                        <h5>Tab Page</h5>
+                                        <div class="box-heading">
+                                            <h5 class="mt-0">AIO Table Page</h5>
+                                        </div>
+                                    </div>
+                                    <div class=" d-flex justify-content-center init-page-image">
+                                        <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/table.jpg" alt="Template">
                                     </div>
                                 </div>
-                                <div class=" d-flex justify-content-center init-page-image">
-                                    <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/tabpage.jpg" alt="Template">
-                                </div>
                             </div>
-                        </div>
+
                         <div class="col-md-3 init-page-card">
                             <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('static-page', 'Static Page')">
                                 <div class=" card-body" >
@@ -213,7 +196,34 @@
                                 </div>
                             </div>
                         </div>
+                            <div class="col-md-3 init-page-card">
+                                <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('aio-grid', 'AIO Tile Page')">
+                                    <div class=" card-body">
+                                        <div class="box-heading">
+                                            <h5>AIO Tile Page</h5>
+                                        </div>
+                                    </div>
+                                    <div class=" d-flex justify-content-center init-page-image">
+                                        <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/Gridpage.jpg" alt="Template">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    <div class="row">
+                        <div class="col-md-3 init-page-card">
+                            <div class="card m-auto box-card cyan" (click)="pageTemplateTypeSelection('tile-page', 'Tile Page')">
+                                <div class=" card-body">
+                                    <div class="box-heading">
+                                        <h5>Tile page</h5>
+                                    </div>
+                                </div>
+                                <div class=" d-flex justify-content-center init-page-image">
+                                    <img class="pageTmpImg box-shadow" src="../../../../../assets/images/new_pages/page_wireframes/table.jpg" alt="Template">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
 
