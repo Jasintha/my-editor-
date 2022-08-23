@@ -112,6 +112,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   navigationParams: INavigationParam[] = [];
   displayedDetailHeaderColumns: string[] = ['field', 'detailsHeader', 'actions'];
   dataSourceDetailsPage = new MatTableDataSource(this.headerFieldArr);
+  modelConfigView = false;
   fieldOrderView = false;
   actionButtonView = false;
   displayedLoginParamColumns: string[] = ['input', 'param', 'actions'];

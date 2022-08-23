@@ -17,7 +17,6 @@ import {Observable} from 'rxjs';
 import {FormControllers, IFormControllers} from '@shared/models/model/form-controllers.model';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {BuiltInWidgetService} from '@core/projectservices/built-in-widget.service';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -35,6 +34,10 @@ interface ControllerItem {
   styleUrls: ['./built-in-page.component.scss'],
 })
 export class AddFormControllersComponent implements OnInit {
+
+  @Input('pageId') pageId: string;
+  @Input('projectUid') projectUid: string;
+  @Input('widgetUid') widgetUid: string;
   keyValPairs: IKeyData[];
   isSaving: boolean;
   cols: any[];
@@ -50,8 +53,6 @@ export class AddFormControllersComponent implements OnInit {
   dataSourceDropdownMapping : any [];
   // cars2: Car[];
   clonedCars: { [s: string]: Config } = {};
-  projectUid: string;
-  pageId: string;
   isFieldSelected: boolean;
   isChildFieldSelected: boolean;
   selectedFieldIndex: number;
@@ -86,8 +87,6 @@ export class AddFormControllersComponent implements OnInit {
       protected builtInPageService: BuiltInPageService,
       protected builtInWidgetService: BuiltInWidgetService,
       protected projectService: ProjectService,
-      @Inject(MAT_DIALOG_DATA)  public data: any,
-      public dialogRef: MatDialogRef<AddFormControllersComponent>,
   ) {}
 
   clear() {
@@ -106,7 +105,7 @@ export class AddFormControllersComponent implements OnInit {
     // if(this.data.widgetUid) {
     //   this.loadAllSourceTargetFormFieldsForWidget(this.data.widgetUid, this.data.projectUid);
     // } else {
-      this.loadAllSourceTargetFormFieldsForPage(this.data.pageId, this.data.projectUid);
+      this.loadAllSourceTargetFormFieldsForPage(this.pageId, this.projectUid);
    // }
 
     this.isSaving = false;
@@ -387,7 +386,6 @@ export class AddFormControllersComponent implements OnInit {
     this.eventManager.dispatch(
         new AppEvent(EventTypes.envAppListModification, { name: 'envAppListModification', content: 'List modified' })
     );
-    this.dialogRef.close();
   }
 
   protected onSaveError() {
@@ -415,7 +413,7 @@ export class AddFormControllersComponent implements OnInit {
    //  if(this.data.widgetId) {
    // //   this.subscribeToSaveResponse(this.builtInWidgetService.saveWidgetFormOrder(formData.fieldList, this.data.pageId, this.data.projectUid));
    //  } else {
-      this.subscribeToSaveResponse(this.builtInPageService.savePageFormOrder(formData.fieldList, this.data.pageId, this.data.projectUid));
+      this.subscribeToSaveResponse(this.builtInPageService.savePageFormOrder(formData.fieldList, this.pageId, this.projectUid));
   //  }
 
   }
@@ -440,7 +438,7 @@ export class AddFormControllersComponent implements OnInit {
       fieldAttribute: new FormControl(values.fieldAttribute),
       fieldcategory: new FormControl(type),
       choiceUrl: new FormControl(values.choiceUrl),
-      dropdownMappings: new FormControl(values.dropdownMappings),
+      dropdownMappings: new FormControl(values.dropdownMappings ? values.dropdownMappings: []),
       selectType: new FormControl(values.selectType),
       isrequired: new FormControl(values.isrequired),
       defaultvalue: new FormControl(values.defaultValue),
@@ -449,7 +447,7 @@ export class AddFormControllersComponent implements OnInit {
       microservice: new FormControl(''),
       api: new FormControl(''),
       search: new FormControl(''),
-      fieldValueChoices: this.fb.array(this.getChoicesGroups(values.fieldValueChoices)),
+      fieldValueChoices: this.fb.array(this.getChoicesGroups(values.fieldValueChoices ? values.fieldValueChoices : [])),
       children: this.fb.array([]),
       choiceType: new FormControl(values.choiceType),
     });

@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Inject} from '@angular/core';
+import {Component, OnInit, OnDestroy, Inject, Input} from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
@@ -23,7 +23,6 @@ import { EventTypes } from '@shared/events/event.queue';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { BuiltInWidgetService } from '@core/projectservices/built-in-widget.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 @Component({
     selector: 'virtuan-view-model-config',
     templateUrl: './view-model-config.component.html',
@@ -53,21 +52,22 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     ],
 })
 export class ViewModelConfigComponent implements OnInit, OnDestroy {
+
+    @Input('pageId') pageId: string;
+    @Input('projectUid') projectUid: string;
+    @Input('widgetUid') widgetUid: string;
     pageConfigs: IConfig[];
     pageActions: IPageAction[];
     configs: IPageConfig;
     currentAccount: any;
     eventSubscriber1: Subscription;
-    eventSubscriber2: Subscription;
     cols: any[];
-    pageId: string;
     page: IPage;
     sourceTargetFieldsRequest: ISourceTargetFieldsRequest;
     datamodel: IDatamodel;
     clonedCars: { [s: string]: Config } = {};
     sortField: string;
     sortOrder: number;
-    projectUid: string;
     widgetId: string;
     isWidgetView: boolean;
     sourceProperties: IFormField[];
@@ -83,8 +83,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
         private spinnerService: NgxSpinnerService,
         protected pageService: BuiltInPageService,
         protected builtInWidgetService: BuiltInWidgetService,
-        @Inject(MAT_DIALOG_DATA)  public data: any,
-        public dialogRef: MatDialogRef<ViewModelConfigComponent>,
         private router: Router,
         private location: Location
     ) {
@@ -204,9 +202,9 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
         this.sourceProperties = [];
         this.targetProperties = [];
         // this.loadAll();
-        this.pageId = this.data.pageId;
-        this.projectUid = this.data.projectUid;
-        this.widgetId = this.data.widgetUid;
+        this.pageId = this.pageId;
+        this.projectUid = this.projectUid;
+        this.widgetId = this.widgetUid;
         this.activatedRoute.params.subscribe(params => {
             // this.projectId = params['projId'];
             // this.projectUid = params['projectUid'];
@@ -276,7 +274,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 (res: any) => {
-                    this.dialogRef.close();
                     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved Form Order' });
                 },
                 (res: HttpErrorResponse) => this.onSaveError()
@@ -292,7 +289,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 (res: any) => {
-                    this.dialogRef.close();
                     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved Form Order' });
                 },
                 (res: HttpErrorResponse) => this.onSaveError()
@@ -358,7 +354,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
     }
 
     protected onSaveSuccess() {
-        this.dialogRef.close();
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Config is updated' });
     }
 
@@ -369,7 +364,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         // this.eventManager.destroy(this.eventSubscriber);
         this.eventSubscriber1.unsubscribe();
-        this.eventSubscriber2.unsubscribe();
     }
 
     trackId(index: number, item: IPageConfig) {
