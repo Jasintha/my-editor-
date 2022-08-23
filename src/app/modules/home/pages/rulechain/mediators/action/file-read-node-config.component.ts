@@ -64,7 +64,7 @@ export class FileReadNodeConfigComponent implements ControlValueAccessor, OnInit
   allConstants: any[];
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
 
   @Input()
   inputCustomobjects: any[];
@@ -190,6 +190,13 @@ export class FileReadNodeConfigComponent implements ControlValueAccessor, OnInit
       this.configuration.errorParameterproperty= {};
       this.fileReadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.fileReadNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.fileReadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.fileReadNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.fileReadNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -237,6 +244,15 @@ export class FileReadNodeConfigComponent implements ControlValueAccessor, OnInit
         'property': selectedErrorParameterBranch.name
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
       this.updateModel(this.configuration);
     }
 
@@ -361,8 +377,8 @@ export class FileReadNodeConfigComponent implements ControlValueAccessor, OnInit
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       this.fileReadNodeConfigFormGroup.patchValue({

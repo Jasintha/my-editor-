@@ -93,7 +93,7 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
   allModelProperties: any[];
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
 
   errordatasource: MatTableDataSource<ErrorFunctionParameters>;
   displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
@@ -228,6 +228,13 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       this.configuration.errorParameterproperty= {};
       this.eventStoreNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.eventStoreNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.eventStoreNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.eventStoreNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.eventStoreNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -275,6 +282,15 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
         'property': selectedErrorParameterBranch.name
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
       this.updateModel(this.configuration);
     }
 
@@ -450,8 +466,8 @@ export class EventStoreNodeConfigComponent implements ControlValueAccessor, OnIn
       }
       
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let entity = this.configuration.entity;

@@ -303,6 +303,15 @@ export class LambdaFunctionNodeConfigComponent implements ControlValueAccessor, 
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
       this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
+      this.updateModel(this.configuration);
     }
 
     this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);

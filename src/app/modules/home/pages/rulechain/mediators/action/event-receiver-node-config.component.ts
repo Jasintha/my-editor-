@@ -66,7 +66,7 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
   ruleNodeId: string;
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
   
   errordatasource: MatTableDataSource<ErrorFunctionParameters>;
   displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
@@ -169,6 +169,13 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
       this.configuration.errorParameterproperty= {};
       this.eventReceiverNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.eventReceiverNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.eventReceiverNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.eventReceiverNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.eventReceiverNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -217,6 +224,15 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
       this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
+      this.updateModel(this.configuration);
     }
 
     this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
@@ -263,8 +279,8 @@ export class EventReceiverNodeConfigComponent implements ControlValueAccessor, O
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       this.eventReceiverNodeConfigFormGroup.patchValue({

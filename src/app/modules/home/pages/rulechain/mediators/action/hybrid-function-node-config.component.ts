@@ -51,7 +51,7 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
   allRoots: any[];
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
 
   @Input()
   set required(value: boolean) {
@@ -209,6 +209,13 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       this.configuration.errorParameterproperty= {};
       this.hybridFunctionNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.hybridFunctionNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.hybridFunctionNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.hybridFunctionNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.hybridFunctionNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -294,6 +301,15 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
         'property': selectedErrorParameterBranch.name
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
       this.updateModel(this.configuration);
     }
 
@@ -433,8 +449,8 @@ export class HybridFunctionNodeConfigComponent implements ControlValueAccessor, 
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let assignedReference = this.configuration.assignedReference;

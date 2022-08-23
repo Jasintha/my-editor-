@@ -75,7 +75,7 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
   allRuleInputs: any[];
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
 
   @Input()
   inputEntities: any[];
@@ -217,6 +217,13 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       this.configuration.errorParameterproperty= {};
       this.eventPublisherNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.eventPublisherNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.eventPublisherNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.eventPublisherNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.eventPublisherNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -264,6 +271,15 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
         'property': selectedErrorParameterBranch.name
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
       this.updateModel(this.configuration);
     }
 
@@ -372,8 +388,8 @@ export class EventPublisherNodeConfigComponent implements ControlValueAccessor, 
       }
       
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let entity = this.configuration.entity;

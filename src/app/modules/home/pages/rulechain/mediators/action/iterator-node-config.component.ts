@@ -61,7 +61,7 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
   allRuleInputs: any[];
 
   @Input()
-  allErrorBranches: any[];
+  allSubRules: any[];
   
   @Input()
   inputEntities: any[];
@@ -175,6 +175,13 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       this.configuration.errorParameterproperty= {};
       this.iteratorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.iteratorNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.iteratorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.iteratorNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.iteratorNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -241,6 +248,15 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
       this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
+      this.updateModel(this.configuration);
     }
 
     this.errordatasource = new MatTableDataSource(this.configuration.errorFunctionParameters);
@@ -297,8 +313,8 @@ export class IteratorNodeConfigComponent implements ControlValueAccessor, OnInit
       }
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       let assignedProperty = this.configuration.assignedProperty;

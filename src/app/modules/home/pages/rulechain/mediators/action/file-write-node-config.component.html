@@ -100,7 +100,7 @@
       <mat-option value="1">Log & Continue</mat-option>
       <mat-option value="2">Log & Exit</mat-option>
       <mat-option value="3">Return</mat-option>
-      <mat-option value="4">Call an Error Branch</mat-option>
+      <mat-option value="4">Call an Error Process</mat-option>
     </mat-select>
   </mat-form-field>
   <div *ngIf="configuration.errorAction == '4'">
@@ -109,18 +109,18 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Error Branch Details
+          Error Process Details
         </mat-panel-title>
         <mat-panel-description>
-          Call an error branch if error occured
+          Call an error process if error occured
         </mat-panel-description>
       </mat-expansion-panel-header>
 
       <section fxLayout="column" fxLayout.gt-sm="row">
         <mat-form-field fxFlex class="mat-block">
-          <mat-label>Branch</mat-label>
+          <mat-label>Error Process</mat-label>
           <mat-select formControlName="errorBranch">
-            <mat-option *ngFor="let root of allErrorBranches" [value]="root">
+            <mat-option *ngFor="let root of allSubRules" [value]="root">
               {{root.name}}
             </mat-option>
           </mat-select>
@@ -132,19 +132,20 @@
 
       <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <mat-form-field fxFlex class="mat-block">
-          <mat-label>Branch parameter</mat-label>
+          <mat-label>Process Input</mat-label>
           <mat-select formControlName="errorBranchparameter">
             <ng-container *ngFor="let param of configuration?.errorBranch?.params">
-              <mat-option *ngIf="param.name !== '_error'" [value]="param">
-                {{param.name}} - {{param.input}}
+              <mat-option [value]="param">
+                <span *ngIf="param.inputType === 'model' || param.inputType === 'dto';else primitive_param">{{param.paramName}} - {{param.inputName}}</span><ng-template #primitive_param><span>{{param.paramName}} - {{param.inputType}}</span></ng-template>
               </mat-option>
             </ng-container>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field fxFlex class="mat-block">
-          <mat-label>Error Parameter Input Type</mat-label>
+          <mat-label>Process Input Type</mat-label>
           <mat-select formControlName="errorParameterinputType" (selectionChange)="refreshErrorParameterInputTypes()">
+            <mat-option value="ERROR">Error String</mat-option>
             <mat-option *ngIf="!branchAvailability?.branchFound && allRuleInputs?.length" value="RULE_INPUT">Rule Input</mat-option>
             <mat-option *ngIf="allModelProperties?.length" value="PROPERTY">Property</mat-option>
             <mat-option *ngIf="branchAvailability?.branchFound && branchAvailability?.branchParams?.length" value="BRANCH_PARAM">Branch Param</mat-option>

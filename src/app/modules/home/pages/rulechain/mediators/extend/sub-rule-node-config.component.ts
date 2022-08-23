@@ -91,8 +91,6 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
   @Input()
   allReferenceProperties: any[];
 
-  @Input()
-  allErrorBranches: any[];
 
   errordatasource: MatTableDataSource<ErrorFunctionParameters>;
   displayErroredColumns: string[] = ['parameterName', 'inputType', 'input', 'property', 'actions'];
@@ -331,6 +329,13 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
       this.configuration.errorParameterproperty= {};
       this.subRuleNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
       this.subRuleNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+    } else if (errorInputType === 'ERROR'){
+      this.configuration.errorParameterbranchparam= {};
+      this.configuration.errorParameterparam= {};
+      this.configuration.errorParameterproperty= {};
+      this.subRuleNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
+      this.subRuleNodeConfigFormGroup.get('errorParameterparam').patchValue([], {emitEvent: false});
+      this.subRuleNodeConfigFormGroup.get('errorParameterproperty').patchValue([], {emitEvent: false});
     }
     if (this.definedConfigComponent) {
       this.propagateChange(this.configuration);
@@ -378,6 +383,15 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
         'property': selectedErrorParameterBranch.name
       };
       this.configuration.errorFunctionParameters.push(errorParameterbranchparam);
+      this.updateModel(this.configuration);
+    } else if (errorInputType === 'ERROR'){
+      let errString = {
+        'parameterName': errorBranchparameter.name,
+        'inputType': errorInputType,
+        'input': '-',
+        'property': ''
+      };
+      this.configuration.errorFunctionParameters.push(errString);
       this.updateModel(this.configuration);
     }
 
@@ -448,8 +462,8 @@ export class SubRuleNodeConfigComponent implements ControlValueAccessor, OnInit,
       */
 
       let errorBranch = this.configuration.errorBranch;
-      if(errorBranch && this.allErrorBranches){
-        errorBranch = this.allErrorBranches.find(x => x.name === this.configuration.errorBranch.name );
+      if(errorBranch && this.allSubRules){
+        errorBranch = this.allSubRules.find(x => x.name === this.configuration.errorBranch.name );
       }
 
       this.subRuleNodeConfigFormGroup.patchValue({
