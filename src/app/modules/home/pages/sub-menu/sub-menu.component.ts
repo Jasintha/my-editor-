@@ -164,6 +164,9 @@ export class SubMenuComponent implements OnInit {
         if (this.pages[i].status === 'ENABLED') {
           const dropdownLabel = this.pages[i].pagetitle;
           this.pageItems.push({ label: dropdownLabel, value: this.pages[i] });
+        } else if(this.pages[i].pageViewType === 'multiWidget' || this.pages[i].pageViewType === 'tabbed') {
+          const dropdownLabel = this.pages[i].pagetitle;
+          this.pageItems.push({ label: dropdownLabel, value: this.pages[i] });
         }
       }
   }

@@ -76,6 +76,7 @@ export class MainMenuComponent implements OnInit {
   }
 
   constructor(
+      protected builtInPageService: BuiltInPageService,
       protected mainmenuService: MainMenuService,
       protected custompageService: CustomPageService,
       protected builtinpageService: BuiltInPageService,
@@ -106,25 +107,22 @@ export class MainMenuComponent implements OnInit {
     this.isSaving = false;
 
     if (this.projectUid) {
-      this.projectService
-          .findWithPages(this.projectUid, this.projectUid)
+      this.builtInPageService
+          .findBuiltInPagesForProjectId(this.projectUid, this.projectUid)
           .pipe(
-              filter((mayBeOk: HttpResponse<IProject>) => mayBeOk.ok),
-              map((response: HttpResponse<IProject>) => response.body)
+              filter((res: HttpResponse<IPage[]>) => res.ok),
+              map((res: HttpResponse<IPage[]>) => res.body)
           )
           .subscribe(
-              (res: IProject) => {
-                this.project = res;
-                this.datamodels = this.project.datamodels;
-                this.pages = this.project.pages;
-                this.loadPage();
-                if (this.data.createStatus) {
-                  this.loadUpdateForm();
+              (res: IPage[]) => {
+                for(const page of res) {
+                  this.pages.push(page);
                 }
+                this.loadPage();
+                this.loadUpdateForm();
               },
               (res: HttpErrorResponse) => this.onError(res.message)
-          );
-    }
+          );}
   }
 
   loadUpdateForm() {
@@ -147,6 +145,9 @@ export class MainMenuComponent implements OnInit {
     if (this.data.formTree){
       for (let i = 0; i < this.pages.length; i++) {
         if (this.pages[i].status === 'ENABLED') {
+          const dropdownLabel = this.pages[i].pagetitle;
+          this.pageItems.push({ label: dropdownLabel, value: this.pages[i] });
+        } else if(this.pages[i].pageViewType === 'multiWidget' || this.pages[i].pageViewType === 'tabbed') {
           const dropdownLabel = this.pages[i].pagetitle;
           this.pageItems.push({ label: dropdownLabel, value: this.pages[i] });
         }
