@@ -239,7 +239,7 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
         if (errorInputType === 'RULE_INPUT'){
             let selectedErrorParameterParam = this.excelCopyNodeConfigFormGroup.get('errorParameterparam').value;
             let errorParameter = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterParam.inputName
@@ -249,7 +249,7 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
         } else if (errorInputType === 'PROPERTY'){
             let selectedErrorParameterProperty = this.excelCopyNodeConfigFormGroup.get('errorParameterproperty').value;
             let errorParameterproperty = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterProperty.name
@@ -259,7 +259,7 @@ export class ExcelCopyNodeConfigComponent implements ControlValueAccessor, OnIni
         } else if (errorInputType === 'BRANCH_PARAM'){
             let selectedErrorParameterBranch = this.excelCopyNodeConfigFormGroup.get('errorParameterbranchparam').value;
             let errorParameterbranchparam = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterBranch.name

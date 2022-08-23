@@ -265,7 +265,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.fileDownloadNodeConfigFormGroup.get('errorParameterparam').value;
       let errorParameter = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterParam.inputName
@@ -275,7 +275,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
     } else if (errorInputType === 'PROPERTY'){
       let selectedErrorParameterProperty = this.fileDownloadNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterProperty.name
@@ -285,7 +285,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
     } else if (errorInputType === 'BRANCH_PARAM'){
       let selectedErrorParameterBranch = this.fileDownloadNodeConfigFormGroup.get('errorParameterbranchparam').value;
       let errorParameterbranchparam = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterBranch.name
@@ -294,7 +294,7 @@ export class FileDownloadNodeConfigComponent implements ControlValueAccessor, On
       this.updateModel(this.configuration);
     } else if (errorInputType === 'ERROR'){
       let errString = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': ''

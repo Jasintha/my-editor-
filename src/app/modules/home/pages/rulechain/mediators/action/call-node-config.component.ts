@@ -530,7 +530,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
     if (errorInputType === 'RULE_INPUT'){
       let selectedErrorParameterParam = this.callNodeConfigFormGroup.get('errorParameterparam').value;
       let errorParameter = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterParam.inputName
@@ -540,7 +540,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
     } else if (errorInputType === 'PROPERTY'){
       let selectedErrorParameterProperty = this.callNodeConfigFormGroup.get('errorParameterproperty').value;
       let errorParameterproperty = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterProperty.name
@@ -550,7 +550,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
     } else if (errorInputType === 'BRANCH_PARAM'){
       let selectedErrorParameterBranch = this.callNodeConfigFormGroup.get('errorParameterbranchparam').value;
       let errorParameterbranchparam = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': selectedErrorParameterBranch.name
@@ -559,7 +559,7 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       this.updateModel(this.configuration);
     } else if (errorInputType === 'ERROR'){
       let errString = {
-        'parameterName': errorBranchparameter.name,
+        'parameterName': errorBranchparameter.paramName,
         'inputType': errorInputType,
         'input': '-',
         'property': ''

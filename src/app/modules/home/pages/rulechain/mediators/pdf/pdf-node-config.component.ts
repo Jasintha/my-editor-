@@ -388,7 +388,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         if (errorInputType === 'RULE_INPUT'){
             let selectedErrorParameterParam = this.pdfNodeConfigFormGroup.get('errorParameterparam').value;
             let errorParameter = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterParam.inputName
@@ -398,7 +398,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         } else if (errorInputType === 'PROPERTY'){
             let selectedErrorParameterProperty = this.pdfNodeConfigFormGroup.get('errorParameterproperty').value;
             let errorParameterproperty = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterProperty.name
@@ -408,7 +408,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         } else if (errorInputType === 'BRANCH_PARAM'){
             let selectedErrorParameterBranch = this.pdfNodeConfigFormGroup.get('errorParameterbranchparam').value;
             let errorParameterbranchparam = {
-                'parameterName': errorBranchparameter.name,
+                'parameterName': errorBranchparameter.paramName,
                 'inputType': errorInputType,
                 'input': '-',
                 'property': selectedErrorParameterBranch.name
@@ -417,7 +417,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             this.updateModel(this.configuration);
         } else if (errorInputType === 'ERROR'){
           let errString = {
-            'parameterName': errorBranchparameter.name,
+            'parameterName': errorBranchparameter.paramName,
             'inputType': errorInputType,
             'input': '-',
             'property': ''
