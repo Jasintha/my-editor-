@@ -440,7 +440,7 @@ export class AddFormControllersComponent implements OnInit {
       fieldAttribute: new FormControl(values.fieldAttribute),
       fieldcategory: new FormControl(type),
       choiceUrl: new FormControl(values.choiceUrl),
-      dropdownMappings: new FormControl(values.dropdownMappings),
+      dropdownMappings: new FormControl(values.dropdownMappings ? values.dropdownMappings: []),
       selectType: new FormControl(values.selectType),
       isrequired: new FormControl(values.isrequired),
       defaultvalue: new FormControl(values.defaultValue),
@@ -449,7 +449,7 @@ export class AddFormControllersComponent implements OnInit {
       microservice: new FormControl(''),
       api: new FormControl(''),
       search: new FormControl(''),
-      fieldValueChoices: this.fb.array(this.getChoicesGroups(values.fieldValueChoices)),
+      fieldValueChoices: this.fb.array(this.getChoicesGroups(values.fieldValueChoices ? values.fieldValueChoices : [])),
       children: this.fb.array([]),
       choiceType: new FormControl(values.choiceType),
     });
