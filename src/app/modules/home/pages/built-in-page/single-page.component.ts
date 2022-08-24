@@ -917,6 +917,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   loadPages() {
+    this.pages = [];
     for (let i = 0; i < this.allpages.length; i++) {
       const dropdownLabel = this.allpages[i].pagetitle;
       this.pages.push({ label: dropdownLabel, value: this.allpages[i] });
@@ -1133,6 +1134,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   loadMicroserviceProjectDropdownItems() {
+    this.microserviceProjectItems = [];
     for (let i = 0; i < this.microserviceProjects.length; i++) {
       const dropdownLabel = this.microserviceProjects[i].displayName;
       this.microserviceProjectItems.push({ label: dropdownLabel, value: this.microserviceProjects[i] });
