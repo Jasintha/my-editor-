@@ -80,6 +80,7 @@ import { ShopifyOrderNodeConfigComponent } from './shopify/shopify-order-node-co
 //database operations
 import { CrudNodeConfigComponent } from './database-operations/crud-node-config.component';
  import { DBNodeConfigComponent } from './database-operations/db-node-config.component';
+ import { DBDynamicQueryNodeConfigComponent } from './database-operations/db-dynamic-query-node-config.component';
 import { DashboardQueryNodeConfigComponent } from './database-operations/dashboard-query-node-config.component';
 // import { QueryBuilderNodeConfigComponent } from './database-operations/query-builder-node-config.component';
 
@@ -194,6 +195,7 @@ import { TabViewModule } from 'primeng/tabview';
     GRPCCallNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
+     DBDynamicQueryNodeConfigComponent,
      DashboardQueryNodeConfigComponent,
      SubRuleNodeConfigComponent,
       PdfNodeConfigComponent,
@@ -306,6 +308,7 @@ import { TabViewModule } from 'primeng/tabview';
     GRPCCallNodeConfigComponent,
     // QueryBuilderNodeConfigComponent,
      DBNodeConfigComponent,
+     DBDynamicQueryNodeConfigComponent,
      DashboardQueryNodeConfigComponent,
      SubRuleNodeConfigComponent,
     PdfNodeConfigComponent,
