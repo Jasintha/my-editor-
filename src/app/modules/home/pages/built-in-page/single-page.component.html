@@ -309,7 +309,7 @@
                                         <mat-form-field [style]="{'width':'100%'}">
                                             <mat-label>Microservice</mat-label>
                                             <mat-select formControlName="microservice"
-                                                        (selectionChange)="onChangeMicroserviceProject()"
+                                                        (selectionChange)="onChangeMicroservice()"
                                                         [disabled]="formDisable">
                                                 <mat-option *ngFor="let option of microserviceProjectItems"
                                                             [value]="option.value">
@@ -335,14 +335,30 @@
                                     </div>
                                 </div>
                             </div>
-                            <mat-form-field [style]="{'width':'100%'}">
-                                <mat-label>Resource Path</mat-label>
-                                <input type="text" formControlName="resourcePath" matInput name="resourcepath"
-                                       id="field_resourcepath" [readonly]="formDisable">
-                                <mat-error *ngIf="editForm.controls.resourcePath.hasError('required')">This field is
-                                    required
-                                </mat-error>
-                            </mat-form-field>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field [style]="{'width':'100%'}">
+                                        <mat-label>Method</mat-label>
+                                        <mat-select formControlName="resPathMethod"
+                                                    [disabled]="formDisable">
+                                            <mat-option *ngFor="let option of resourcePathMethods" [value]="option.value">
+                                                {{option.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-9">
+                                    <mat-form-field [style]="{'width':'100%'}">
+                                        <mat-label>Resource Path</mat-label>
+                                        <input type="text" formControlName="resourcePath" matInput name="resourcepath"
+                                               id="field_resourcepath" [readonly]="formDisable">
+                                        <mat-error *ngIf="editForm.controls.resourcePath.hasError('required')">This field is
+                                            required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
 
 
                             <div class="form-group" style=" padding-top: 5px; ">
@@ -355,7 +371,7 @@
                                 <mat-form-field [style]="{'width':'100%'}">
                                     <mat-label>Add authorized role</mat-label>
                                     <input type="text" formControlName="authority" [readonly]="formDisable" matInput
-                                           name="resourcepath" id="field_authority">
+                                           name="authority" id="field_authority">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -949,13 +965,13 @@
             <div class="card" style="margin-bottom: 20px; margin-top: 20px">
                 <div class="card-body row">
                     <div class="row col-md-12">
-                        <mat-accordion>
+                        <mat-accordion *ngIf="editForm.value.pagetemplate !== 'table-page' && editForm.value.pagetemplate !== 'tile-page' && editForm.value.pagetemplate !== 'aio-grid' && editForm.value.pagetemplate !== 'label-page'">
                             <mat-expansion-panel (opened)="fieldOrderView = true"
                                                  (closed)="fieldOrderView = false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         <h5>
-                                            <span>Re-Order form fields</span>
+                                            <span>Re-order form fields</span>
                                         </h5>
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>

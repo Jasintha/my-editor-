@@ -148,6 +148,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'UPDATE', value: 'UPDATE' },
     { label: 'DELETE', value: 'DELETE' },
     { label: 'FIND', value: 'FIND' },
+    { label: 'SEARCH', value: 'SEARCH' },
   ];
   loginInputs: SelectItem[] = [
     { label: 'User Name', value: 'UNAME' },
@@ -164,6 +165,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'DELETE', value: 'DELETE' },
     { label: 'UPDATE', value: 'UPDATE' },
     { label: 'NAVIGATE', value: 'NAVIGATE' },
+    { label: 'SEARCH', value: 'SEARCH' },
   ];
   paramDataTypeItems: SelectItem[] = [
     { label: 'TEXT', value: 'TEXT' },
@@ -190,7 +192,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'ON-SUBMIT', value: 'ON-SUBMIT' },
     { label: 'AFTER-SUBMIT', value: 'AFTER-SUBMIT' },
   ];
-
+  resourcePathMethods: SelectItem[] = [
+    { label: 'GET', value: 'GET' },
+    { label: 'POST', value: 'POST' },
+    { label: 'PUT', value: 'PUT' },
+    { label: 'DELETE', value: 'DELETE' },
+  ];
   pageEventsActions: SelectItem[] = [
     { label: 'CALL_PAGE_ONLOAD', value: 'CALL_PAGE_ONLOAD' },
     { label: 'CALL_API', value: 'CALL_API' },
@@ -208,7 +215,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       isSecurePage: false,
       authority: '',
       isHomepage: false,
-      // operation: [],
+      resPathMethod: [],
       resourcePath: [],
       selectedAggregate: [],
       paramType: [],
@@ -948,7 +955,13 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       } else {
         suggestedPath = '/' + microservice.name + '/api/' + api.api.resourcePath;
       }
-
+      if (api.api.apiJson && api.api.apiJson.operation) {
+        const op = api.api.apiJson.operation;
+        if (op === 'CREATE' || op === 'UPDATE' || op === 'FIND' || op === 'DELETE') {
+          this.editForm.get('apiOperation').patchValue(op, { emitEvent: true });
+          this.editForm.get('resPathMethod').patchValue(op === 'CREATE' ? 'POST' : op === 'UPDATE' ? 'PUT' : op === 'FIND' ? 'GET' : op === 'DELETE' ? 'DELETE' : '', { emitEvent: true });
+        }
+      }
       this.editForm.get('resourcePath').patchValue(suggestedPath, { emitEvent: true });
     }
   }
@@ -968,6 +981,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         const op = api.api.apiJson.operation;
         if (op === 'CREATE' || op === 'UPDATE' || op === 'FIND' || op === 'DELETE') {
           this.editForm.get('apiOperation').patchValue(op, { emitEvent: true });
+          this.editForm.get('resPathMethod').patchValue(op === 'CREATE' ? 'POST' : op === 'UPDATE' ? 'PUT' : op === 'FIND' ? 'GET' : op === 'DELETE' ? 'DELETE' : '', { emitEvent: true });
         }
       }
       this.editForm.get('apiResourcePath').patchValue(suggestedPath, { emitEvent: true });
@@ -983,6 +997,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.apiItems = [];
     const microservice = this.editForm.get(['microservice']).value;
     this.editForm.get('resourcePath').patchValue('', { emitEvent: true });
+    this.editForm.get('resPathMethod').patchValue('', { emitEvent: true });
     this.editForm.get('api').patchValue([], { emitEvent: true });
 
     if (microservice.microserviceApis) {
@@ -1080,7 +1095,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.apiItems = [];
     const microservice = this.editForm.get(['microservice']).value;
     this.microserviceService
-        .findApis(microservice.uuid, this.projectUid)
+        .findApis(microservice.masterUuid, this.projectUid)
         .pipe(
             filter((mayBeOk: HttpResponse<string[]>) => mayBeOk.ok),
             map((response: HttpResponse<string[]>) => response.body)
@@ -1171,6 +1186,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         id: builtInPage.uuid,
         apiType: builtInPage.apiType,
         selectedAggregate: builtInPage.model,
+        resPathMethod: builtInPage.resourcePathMethod,
         resourcePath: builtInPage.resourcePath,
         pageDescription: builtInPage.pageDescription,
         //  operation: builtInPage.operation,
@@ -1319,7 +1335,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         loginParams: this.loginParams,
         apiResourceDetails: this.apiResourceDetails,
         dashboardPanelDetails: this.dashboardPanelDetails,
-        //   operation: this.editForm.get(['operation']).value,
+        resourcePathMethod: this.editForm.get(['resPathMethod']).value,
         resourcePath: this.editForm.get(['resourcePath']).value,
         status: 'ENABLED',
         projectUuid: this.projectUid,

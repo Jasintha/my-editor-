@@ -33,6 +33,7 @@ export interface IPage {
   query?: any;
   operation?: string;
   params?: IAPIInput[];
+  resourcePathMethod?: string;
   resourcePath?: string;
   model?: any;
   apiResourceDetails?: any[];
@@ -84,6 +85,7 @@ export class Page implements IPage {
     public query?: any,
     public operation?: string,
     public params?: IAPIInput[],
+    public resourcePathMethod?: string,
     public resourcePath?: string,
     public model?: IAggregate,
     public apiResourceDetails?: any[],
