@@ -500,9 +500,9 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
           this.updateModel(this.configuration);
         }
     );
-    this.changeSubscription = this.processNodeConfigFormGroup.get('existing').valueChanges.subscribe(
+    this.changeSubscription = this.processNodeConfigFormGroup.get('apiTemplate').valueChanges.subscribe(
         (configuration: any) => {
-          this.configuration.existing = configuration;
+          this.configuration.apiTemplate = configuration;
           this.updateModel(this.configuration);
         }
     );
