@@ -309,7 +309,7 @@
                                         <mat-form-field [style]="{'width':'100%'}">
                                             <mat-label>Microservice</mat-label>
                                             <mat-select formControlName="microservice"
-                                                        (selectionChange)="onChangeMicroservice()"
+                                                        (selectionChange)="onChangeMicroserviceProject()"
                                                         [disabled]="formDisable">
                                                 <mat-option *ngFor="let option of microserviceProjectItems"
                                                             [value]="option.value">
