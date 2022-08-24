@@ -1300,7 +1300,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     let fieldMappingArray = [];
     let chartDetails;
     if(!(this.BTN_ELEMENT_DATA.length > 0)) {
-   //   this.addDefaultBtns();
+      this.addDefaultBtns();
     }
     if (this.project.apptypesID === 'task.ui') {
       if (this.editForm.get(['pagetemplate']).value === 'aio-table') {
