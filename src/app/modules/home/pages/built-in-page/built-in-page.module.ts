@@ -44,6 +44,7 @@ import {CustomPageViewComponent} from '@home/pages/built-in-page/custom-page.com
 import {CustomPageApiDialogComponent} from '@home/pages/built-in-page/custom-page-api-dialog.component';
 import {FilterPageComponent} from '@home/pages/built-in-page/filter-page.component';
 import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
+import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-save-confirm-dialog.component';
 
 @NgModule({
     declarations:[
@@ -59,7 +60,8 @@ import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model
         CustomPageViewComponent,
         CustomPageApiDialogComponent,
         FilterPageComponent,
-        ModelChangeConfirmDialogComponent
+        ModelChangeConfirmDialogComponent,
+        PageSaveConfirmDialogComponent
     ],
     imports: [
         CommonModule,
@@ -109,7 +111,8 @@ import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model
         CustomPageViewComponent,
         CustomPageApiDialogComponent,
         FilterPageComponent,
-        ModelChangeConfirmDialogComponent
+        ModelChangeConfirmDialogComponent,
+        PageSaveConfirmDialogComponent
     ],
     providers: [ ]
 })

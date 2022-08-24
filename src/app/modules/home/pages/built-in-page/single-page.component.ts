@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { IProject } from '@app/shared/models/model/project.model';
 import {IDatamodel} from '@shared/models/model/datamodel.model';
-import {SelectItem} from 'primeng/api';
+import {MessageService, SelectItem} from 'primeng/api';
 import {IPage, Page} from '@shared/models/model/page.model';
 import { IAggregate } from '@app/shared/models/model/aggregate.model';
 import {APIInput} from '@shared/models/model/api-input.model';
@@ -38,11 +38,13 @@ import {BuiltInPageDeleteDialogComponent} from '@home/pages/built-in-page/built-
 import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
 import {ChartDetails} from '@shared/models/model/chart-details.model';
 import {INavigationParam} from '@shared/models/model/page-navigation.model';
+import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-save-confirm-dialog.component';
 
 @Component({
   selector: 'virtuan-single-page-view',
   templateUrl: './single-page.component.html',
   styleUrls: ['./built-in-page.component.scss'],
+  providers: [MessageService],
 })
 export class SinglePageViewComponent implements OnDestroy , OnChanges{
   @Input() projectUid: string;
@@ -391,19 +393,24 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       private router: Router,
       protected pageConfigService: PageConfigService,
       public dialog: MatDialog,
-      private consoleLogService: ConsoleLogService
+      private consoleLogService: ConsoleLogService,
+      private messageService: MessageService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    this.loadPage()
+    this.loadPage(false)
   }
 
   // ngOnInit() {
   //   this.loadPage();
   // }
 
-  loadPage(){
-    this.formDisable = true;
+  loadPage(isreaload: boolean){
+    if(!isreaload) {
+      this.formDisable = true;
+    } else {
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Page saved' });
+    }
     this.buildNewForm();
     this.datamodels = [];
     this.pageTemplateItems = [];
@@ -508,6 +515,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       };
       this.BTN_ELEMENT_DATA.push(button);
       this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
+      this.checkPageNameExist();
     } else {
       // error message
     }
@@ -587,11 +595,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     const paramName = this.editForm.get(['matchedProperty']).value;
 
     if (inputType === null || paramName === '' || paramName === null) {
-      // this.messageService.add({
-      //   severity: 'warn',
-      //   summary: 'Warn',
-      //   detail: 'Please fill all the fields',
-      // });
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warn',
+        detail: 'Please fill all the fields',
+      });
     } else {
       const param = {
         inputType,
@@ -610,11 +618,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     const attribute = this.editForm.get(['matchedAttribute']).value;
 
     if (tileField === null || attribute === '' || attribute === null) {
-      // this.messageService.add({
-      //   severity: 'warn',
-      //   summary: 'Warn',
-      //   detail: 'Please fill all the fields',
-      // });
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warn',
+        detail: 'Please fill all the fields',
+      });
     } else {
       const param = {
         tileField,
@@ -641,11 +649,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     const apiResourcePath = this.editForm.get(['apiResourcePath']).value;
 
     if (apiOperation === null || apiResourcePath === null || apiResourcePath === '') {
-      // this.messageService.add({
-      //   severity: 'warn',
-      //   summary: 'Warn',
-      //   detail: 'Please fill all the fields',
-      // });
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warn',
+        detail: 'Please fill all the fields',
+      });
     } else {
       const resource = {
         apiOperation,
@@ -653,8 +661,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       };
 
       this.apiResourceDetails.push(resource);
-      this.PARAM_DATA.push(resource);
-      this.dataSourceAIOParam = new MatTableDataSource(this.PARAM_DATA);
+      this.dataSourceAIOParam = new MatTableDataSource(this.apiResourceDetails);
     }
   }
 
@@ -665,6 +672,24 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       currentDatamodel = edit ? event : event.value;
       this.loadModelPropertyList(event,edit);
       this.changePageModel(currentDatamodel);
+    }
+  }
+
+  validatePageSave() {
+    const page = this.currentPage;
+    if(page.model && page.resourcePath && page.actions && page.actions.buttons && page.actions.buttons.child
+        && page.actions.buttons.child.length > 0) {
+      const dialogRef = this.dialog.open(PageSaveConfirmDialogComponent, {
+        panelClass: ['virtuan-dialog'],
+      });
+      dialogRef.afterClosed(
+      ).subscribe(result => {
+        if (result) {
+          this.checkPageNameExist();
+        }
+      });
+    } else {
+      this.checkPageNameExist();
     }
   }
 
@@ -821,12 +846,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   deleteaddAIOTableRow(apiDetail) {
-    const indexnum = this.PARAM_DATA.indexOf(apiDetail);
-    this.PARAM_DATA.splice(indexnum, 1);
-    this.dataSourceAIOParam = new MatTableDataSource(this.PARAM_DATA);
-
     const index = this.apiResourceDetails.indexOf(apiDetail);
     this.apiResourceDetails.splice(index, 1);
+    this.dataSourceAIOParam = new MatTableDataSource(this.apiResourceDetails);
   }
 
   addPanelRow() {
@@ -837,11 +859,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     const dashboardTitle = this.editForm.get(['dashboardTitle']).value;
 
     if (panelType === null || panelName === '' || !panelID || !dashboardUID || !dashboardTitle) {
-      // this.messageService.add({
-      //   severity: 'warn',
-      //   summary: 'Warn',
-      //   detail: 'Please fill all the fields',
-      // });
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warn',
+        detail: 'Please fill all the fields',
+      });
     } else {
       const panel = {
         panelName,
@@ -905,6 +927,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
           )
           .subscribe(
               (res: IPage[]) => {
+                this.allpages = [];
                 for(const page of res) {
                   if (page.uuid !== this.pageId) {
                     this.allpages.push(page);
@@ -1179,7 +1202,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       }
       if (builtInPage.pagetemplate === 'aio-table' || (builtInPage.pagetemplate !== 'aio-grid' && builtInPage.apiResourceDetails)) {
         if (builtInPage.apiResourceDetails) {
+          this.apiResourceDetails =[];
           this.apiResourceDetails = builtInPage.apiResourceDetails;
+          this.dataSourceAIOParam = new MatTableDataSource(this.apiResourceDetails);
         }
       } else if (builtInPage.pagetemplate === 'dashboard-page' && builtInPage.dashboardPanelDetails) {
         this.dashboardPanelDetails = builtInPage.dashboardPanelDetails;
@@ -1391,14 +1416,13 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       );
     }
     this.pageTitle = this.editForm.get(['pagetitle']).value;
-    // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Form saved' });
-    this.loadPage();
+    this.loadPage(true);
   }
 
   protected onSaveError() {
     // this.spinnerService.hide();
     this.isSaving = false;
-    // this.messageService.add({ severity: 'error', summary: 'error', detail: 'Error' });
+    this.messageService.add({ severity: 'error', summary: 'error', detail: 'Error' });
   }
 
   protected onError(errorMessage: string) {
@@ -1549,11 +1573,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
 
     if (!field || !stepId) {
-      // this.messageService.add({
-      //   severity: 'warn',
-      //   summary: 'Warn',
-      //   detail: 'Please fill all the fields',
-      // });
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warn',
+        detail: 'Please fill all the fields',
+      });
     } else {
       const stepField = {
         field,
@@ -1660,11 +1684,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
 
     if (!field || !stepId) {
-      // this.messageService.add({
-      //   severity: 'warn',
-      //   summary: 'Warn',
-      //   detail: 'Please fill all the fields',
-      // });
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warn',
+        detail: 'Please fill all the fields',
+      });
     } else {
       const stepField = {
         field,
@@ -1715,7 +1739,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     } else {
       this.pageConfigs[index] = this.clonedCars[car.property];
       delete this.clonedCars[car.property];
-      // this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Value is required' });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Value is required' });
     }
   }
 

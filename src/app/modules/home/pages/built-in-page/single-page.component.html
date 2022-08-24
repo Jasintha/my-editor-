@@ -1,6 +1,6 @@
 <div class="justify-content-center" style="margin-top: 100px; overflow-x: auto; padding: 0 50px 0 50px">
-
-    <form name="editForm" role="form" novalidate (ngSubmit)="checkPageNameExist()" [formGroup]="editForm">
+    <p-toast></p-toast>
+    <form name="editForm" role="form" novalidate (ngSubmit)="validatePageSave()" [formGroup]="editForm">
 
 
         <div class="form-group" [hidden]="!editForm.get('id').value">

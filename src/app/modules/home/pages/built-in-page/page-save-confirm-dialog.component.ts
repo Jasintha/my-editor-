@@ -12,17 +12,17 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 
 @Component({
-  selector: 'virtuan-model-change-confirm-dialog',
-  templateUrl: './model-change-confirm-dialog.component.html',
+  selector: 'virtuan-page-save-confirm-dialog',
+  templateUrl: './page-save-confirm-dialog.component.html',
 })
-export class ModelChangeConfirmDialogComponent {
+export class PageSaveConfirmDialogComponent {
   builtInPage: IPage;
   projectUid: string;
 
   constructor(
     protected builtInPageService: BuiltInPageService,
     protected eventManager: EventManagerService,
-    public dialogRef: MatDialogRef<ModelChangeConfirmDialogComponent>,
+    public dialogRef: MatDialogRef<PageSaveConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA)  public data: any,
   ) {}
 

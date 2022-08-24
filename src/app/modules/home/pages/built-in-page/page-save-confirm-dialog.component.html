@@ -1,0 +1,26 @@
+<form (ngSubmit)="confirmChange()">
+    <mat-toolbar color="warn">
+        <h2>Action confirmation</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                (click)="cancel()"
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+    <div mat-dialog-content>
+        <p>Are you sure you want to save the current changes? </p>
+        <span>* It will change all model dependent configurations</span>
+    </div>
+    <div mat-dialog-actions fxLayoutAlign="end center">
+        <button mat-raised-button color="warn"
+                type="submit">
+            YES
+        </button>
+        <button mat-button color="warn"
+                type="button"
+                (click)="cancel()" cdkFocusInitial>
+            NO
+        </button>
+    </div>
+</form>
