@@ -220,7 +220,7 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
         if (this.widgetId) {
             this.isWidgetView = true;
             this.loadPageConfigsByPageId(this.widgetId, this.projectUid);
-            this.loadAllSourceTargetFormFieldsForWidget(this.widgetId, this.projectUid);
+          //  this.loadAllSourceTargetFormFieldsForWidget(this.widgetId, this.projectUid);
         } else {
             this.loadPageConfigsByPageId(this.pageId, this.projectUid);
             this.loadAllSourceTargetFormFieldsForPage(this.pageId, this.projectUid);
@@ -235,28 +235,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
             { field: 'name', header: 'Name' },
             { field: 'actionType', header: 'Action Type' },
         ];
-    }
-
-    loadAllSourceTargetFormFieldsForWidget(pageId: string, uuid: string) {
-        if (!pageId) {
-        } else {
-            // this.spinnerService.show();
-            this.builtInWidgetService
-                .findAllSourceTargetFormFieldsForWidget(pageId, uuid)
-                .pipe(
-                    filter((res: HttpResponse<ISourceTargetFieldsRequest>) => res.ok),
-                    map((res: HttpResponse<ISourceTargetFieldsRequest>) => res.body)
-                )
-                .subscribe(
-                    (res: ISourceTargetFieldsRequest) => {
-                        this.sourceTargetFieldsRequest = res;
-                        this.sourceProperties = this.sourceTargetFieldsRequest.sourceFormFields;
-                        this.targetProperties = this.sourceTargetFieldsRequest.targetFormFields;
-                        // this.spinnerService.hide();
-                    },
-                    (res: HttpErrorResponse) => this.onError(res.message)
-                );
-        }
     }
 
     saveFormOrder() {
