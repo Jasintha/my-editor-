@@ -1,6 +1,6 @@
 <form class="mat-form-dialog" [formGroup]="actorNodeConfigFormGroup" (ngSubmit)="save()" >
     <mat-toolbar color="primary" >
-        <h2 mat-dialog-title>Create Actor</h2>
+        <h2 mat-dialog-title>Create User</h2>
         <span fxFlex></span>
         <button mat-icon-button
                 mat-dialog-close
@@ -14,7 +14,7 @@
 
             <div >
                 <section style="padding-top: 10px;padding-bottom: 20px;">
-                    <label>Add Actors</label>
+                    <label>Add Users</label>
                 </section>
                 <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
                     <mat-form-field fxFlex class="mat-block">
@@ -30,7 +30,7 @@
                     </mat-form-field>
 
                     <mat-form-field *ngIf="actorNodeConfigFormGroup.value.createType === 'Existing'" fxFlex class="mat-block">
-                        <mat-label>Actor</mat-label>
+                        <mat-label>User</mat-label>
                         <mat-select formControlName="actor">
                             <mat-option *ngFor="let param of allActors" [value]="param">
                                 {{param.name}}
