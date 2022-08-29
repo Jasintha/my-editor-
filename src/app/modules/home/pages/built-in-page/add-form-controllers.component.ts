@@ -434,6 +434,7 @@ export class AddFormControllersComponent implements OnInit {
   addFormFieldsGroup(values: any, type: string): FormGroup {
     return new FormGroup({
       propertyType: new FormControl(values.propertyType),
+      propertyId: new FormControl(values.propertyId),
       propertyName: new FormControl(values.propertyName),
       fieldController: new FormControl(values.fieldController),
       fieldType: new FormControl(values.fieldType),
@@ -473,6 +474,7 @@ export class AddFormControllersComponent implements OnInit {
   addChildFormFieldsGroup(values: any): FormGroup {
     return new FormGroup({
       propertyType: new FormControl(values.propertyType),
+      propertyId: new FormControl(values.propertyId),
       propertyName: new FormControl(values.propertyName),
       fieldController: new FormControl(values.fieldController),
       choiceUrl: new FormControl(values.choiceUrl),
