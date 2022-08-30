@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { IPage } from '@app/shared/models/model/page.model';
 import {IDatamodel} from '@shared/models/model/datamodel.model';
 import {IProject} from '@shared/models/model/project.model';
@@ -26,6 +26,9 @@ import {EpicServiceGenReq, IEpicServiceBuildStatus} from '@shared/models/model/e
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {WebsocketService} from '@core/tracker/websocket.service';
+import {BreakpointTrackerService} from '@core/tracker/breakpoint.service';
+import {IGenerator} from '@shared/models/model/generator-chain.model';
 
 @Component({
   selector: 'virtuan-build-view',
@@ -41,8 +44,8 @@ import {MatSort} from '@angular/material/sort';
   ],
 })
 export class BuildViewComponent implements OnInit {
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   isSaving: boolean;
   isGenerated = false;
   displayedColumns: string[] = ['servicename', 'lastbuildstatus', 'lastrungenerator', 'statusinfo'];
@@ -50,6 +53,15 @@ export class BuildViewComponent implements OnInit {
   buildStatusData: IEpicServiceBuildStatus[] = [];
   dataSource: MatTableDataSource<IEpicServiceBuildStatus>;
   isBuildLogAvailable: boolean;
+  expandedElement: IEpicServiceBuildStatus | null;
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  isGenerating: boolean;
+  reload: boolean;
+  theme: string = 'vs-dark';
+  editorOptions: any = { language: 'json', readOnly: true, renderLineHighlight: 'none' };
+  code: string = '';
+  generatorList: { [key: number]: string } = {};
+  generatorChain: IGenerator[];
   genTypes: SelectItem[] = [
     { label: 'All', value: 'All' },
     { label: 'Custom', value: 'Custom' },
@@ -64,8 +76,8 @@ export class BuildViewComponent implements OnInit {
       genType: ['', [Validators.required]],
       selectedServices: []
     });
+    this.editForm.get('genType').patchValue('All', {emitEvent: true});
   }
-
   constructor(
       protected builtInPageService: BuiltInPageService,
       protected mainmenuService: MainMenuService,
@@ -76,6 +88,9 @@ export class BuildViewComponent implements OnInit {
       protected projectService: ProjectService,
       protected eventManager: EventManagerService,
       private spinnerService: NgxSpinnerService,
+      private socket: WebsocketService,
+      private breakpointService: BreakpointTrackerService,
+      private cdr: ChangeDetectorRef,
   ) {
     this.typeSelected = 'square-jelly-box';
   }
@@ -88,7 +103,6 @@ export class BuildViewComponent implements OnInit {
     this.targetProperties = [];
     this.buildStatusData = [];
     this.loadServicesForGenerate();
-    this.addDummyData();
     this.dataSource = new MatTableDataSource(this.buildStatusData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -110,21 +124,32 @@ export class BuildViewComponent implements OnInit {
     this.isSaving = true;
     const genReq = this.createFromForm();
     this.getBuildstatusData();
+    this.loadGenLogs();
     if (genReq.services.length > 0) {
       this.subscribeToSaveResponse(this.projectService.generateServices(genReq));
     }
   }
 
+  refreshLogs(){
+    this.getBuildstatusData();
+  }
+
   private createFromForm(): EpicServiceGenReq {
-    const servicesToGenerate = this.editForm.get(['selectedServices']).value;
     const servicesIdList = [];
-    for (let i = 0; i < servicesToGenerate.length; i++) {
-      servicesIdList.push(servicesToGenerate[i].serviceUUID);
+    const servicesToGenerate = this.editForm.get(['selectedServices']).value;
+    if(this.editForm.get(['selectedServices']).value === 'All') {
+      for (let i = 0; i < this.servicesToGenerate.length; i++) {
+        servicesIdList.push(this.servicesToGenerate[i].serviceUUID);
+      }
+    } else {
+      for (let i = 0; i < servicesToGenerate.length; i++) {
+        servicesIdList.push(servicesToGenerate[i].serviceUUID);
+      }
     }
-      return {
-        ...new EpicServiceGenReq(),
-        services: servicesIdList,
-      };
+    return {
+      ...new EpicServiceGenReq(),
+      services: servicesIdList,
+    };
   }
 
   getBuildstatusData () {
@@ -138,6 +163,9 @@ export class BuildViewComponent implements OnInit {
             (res: IEpicServiceBuildStatus[]) => {
               this.buildStatusData = res;
               this.dataSource = new MatTableDataSource(this.buildStatusData);
+              this.cdr.detectChanges();
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
               this.isBuildLogAvailable = true;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -187,103 +215,73 @@ export class BuildViewComponent implements OnInit {
   }
 
 
-  addDummyData (){
-    this.isBuildLogAvailable = true;
-    this.servicesToGenerate = [{
-      uuid: '2312323',
-      name: 'Service 0',
-      referenceName: 'Srv0',
-      serviceUUID: '12123xxx'
-    },
-      {
-        uuid: '2312323',
-        name: 'Service 1',
-        referenceName: 'Srv1',
-        serviceUUID: '12123xxx'
-      },
-      {
-        uuid: '2312323',
-        name: 'Service 2',
-        referenceName: 'Srv2',
-        serviceUUID: '12123xxx'
-      },
-      {
-        uuid: '2312323',
-        name: 'Service 3',
-        referenceName: 'Srv3',
-        serviceUUID: '12123xxx'
-      },{
-        uuid: '2312323',
-        name: 'Service 4',
-        referenceName: 'Srv4',
-        serviceUUID: '12123xxx'
-      },{
-        uuid: '2312323',
-        name: 'Service 5',
-        referenceName: 'Srv5',
-        serviceUUID: '12123xxx'
-      },{
-        uuid: '2312323',
-        name: 'Service 6',
-        referenceName: 'Srv6',
-        serviceUUID: '12123xxx'
-      }
-    ];
-    this.buildStatusData = [{
-      servicename: 'service 1',
-      lastbuildstatus: 'lastbuildstatus',
-      referenceName:  'referenceName',
-      apptype:  'apptype',
-      serviceuuid:  'serviceuuid',
-      lastrungenerator:  'lastrungenerator',
-      lastrungenid:  'lastrungenid',
-      gitrunid:  'gitrunid',
-      statusinfo:  'statusinfo',
-    },
-      {
-        servicename: 'service 1',
-        lastbuildstatus: 'lastbuildstatus',
-        referenceName:  'referenceName',
-        apptype:  'apptype',
-        serviceuuid:  'serviceuuid',
-        lastrungenerator:  'lastrungenerator',
-        lastrungenid:  'lastrungenid',
-        gitrunid:  'gitrunid',
-        statusinfo:  'statusinfo',
-      },
-      {
-        servicename: 'service 1',
-        lastbuildstatus: 'lastbuildstatus',
-        referenceName:  'referenceName',
-        apptype:  'apptype',
-        serviceuuid:  'serviceuuid',
-        lastrungenerator:  'lastrungenerator',
-        lastrungenid:  'lastrungenid',
-        gitrunid:  'gitrunid',
-        statusinfo:  'statusinfo',
-      },
-      {
-        servicename: 'service 1',
-        lastbuildstatus: 'lastbuildstatus',
-        referenceName:  'referenceName',
-        apptype:  'apptype',
-        serviceuuid:  'serviceuuid',
-        lastrungenerator:  'lastrungenerator',
-        lastrungenid:  'lastrungenid',
-        gitrunid:  'gitrunid',
-        statusinfo:  'statusinfo',
-      },
-      {
-        servicename: 'service 1',
-        lastbuildstatus: 'lastbuildstatus',
-        referenceName:  'referenceName',
-        apptype:  'apptype',
-        serviceuuid:  'serviceuuid',
-        lastrungenerator:  'lastrungenerator',
-        lastrungenid:  'lastrungenid',
-        gitrunid:  'gitrunid',
-        statusinfo:  'statusinfo',
-      },];
-    this.dataSource = new MatTableDataSource(this.buildStatusData);
+
+  loadGenLogs() {
+    this.socket.getEventListener().subscribe(event => {
+      if (event.type === 'message') {
+        const topic = event.data.topic;
+        if (topic === 'generator') {
+          const data = event.data.content;
+
+          let projectUUID = '';
+          let status = '';
+          let time = '';
+          let position = -1;
+
+          const allKeyValuePairs = data.split(',');
+          if (allKeyValuePairs) {
+            allKeyValuePairs.forEach(keyval => {
+              const keyAndValArr = keyval.split('=', 2);
+              let key = '';
+              let val = '';
+
+              if (keyAndValArr) {
+                for (let i = 0; i < keyAndValArr.length; i++) {
+                  if (i === 0) {
+                    key = keyAndValArr[i];
+                  } else {
+                    val = keyAndValArr[i];
+                  }
+                }
+              }
+
+              if (key === 'projectuuid') {
+                projectUUID = val;
+              } else if (key === 'status') {
+                status = val;
+              } else if (key === 'time') {
+                time = val;
+              } else if (key === 'position') {
+                position = +val;
+              }
+            });
+          }
+
+         // if (uuid === projectUUID) {
+            if (status) {
+              if (status.trim() === 'didnot') {
+                if(this.code !== '') {
+                  this.code = this.code + ',\n';
+                }
+                this.code = this.code + '{"status": "Error", "detail": "Generation failed at '+ this.generatorList[position] + '"}';
+
+              } else if (status.trim() === 'done') {
+                if(this.code !== '') {
+                  this.code = this.code + ',\n';
+                }
+                this.code = this.code + '{"status": "Success", "detail": "Generation successful at '+ this.generatorList[position] + '"}';
+
+              } else if (status.trim() === 'done') {
+                if(this.code !== '') {
+                  this.code = this.code + ',\n';
+                }
+                this.code = this.code + '{"status": "In progress", "detail": "Generation started at '+ this.generatorList[position] + '"}';
+              }
+            }
+          }
+        }
+     // }
+    });
   }
+
 }

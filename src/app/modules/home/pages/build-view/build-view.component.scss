@@ -64,3 +64,8 @@ body .ui-multiselect {
   border: none;
   border-bottom: 1px solid #8f8e8e;
 }
+
+.pi-chevron-down:before {
+  content: "\e902";
+  display: none;
+}

@@ -18,7 +18,7 @@
             </mat-form-field>
         </div>
         <div class="col-md-5">
-            <div *ngIf="editForm.value.genType === 'Custom'">
+            <div *ngIf="editForm.value.genType === 'Custom'" style="margin-top: 8px">
                 <div>
                     <p-multiSelect [options]="servicesToGenerate" formControlName="selectedServices" optionLabel="name"  [panelStyle]="{'width':'700px'}" [filter]="true"></p-multiSelect>
                 </div>
@@ -33,8 +33,16 @@
 </div>
 
 <div style="margin-top: 40px;" class="row title-container">
-    <div class="col-md-10">
-        <h6  style="margin-left: 5px">Current build status</h6>
+    <div class="col-md-1">
+        <h6  style="margin-left: 5px;">Current build status</h6>
+
+        </div>
+    <div class="col-md-1">
+       <span> <button  type="button" style="color: grey; background-color: white; border: none; margin-top: 12px" (click)="refreshLogs()"
+                class="ui-button-danger ui-button-raised">
+                  <mat-icon>refresh</mat-icon>
+        </button>
+           </span>
     </div>
 </div>
 
@@ -46,31 +54,39 @@
             </mat-form-field>
 
             <div class="mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource" matSort>
-                    <ng-container matColumnDef="servicename">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Service Name </th>
-                        <td mat-cell *matCellDef="let row"> {{row.servicename}} </td>
+                <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows  class="mat-elevation-z8">
+                    <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+                        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
                     </ng-container>
-
-                     <ng-container matColumnDef="lastbuildstatus">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Build Status </th>
-                        <td mat-cell *matCellDef="let row"> {{row.lastbuildstatus}} </td>
+                    <ng-container matColumnDef="expand">
+                        <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                                <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                                <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                            </button>
+                        </td>
                     </ng-container>
-
-
-                    <ng-container matColumnDef="lastrungenerator">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Run Generator </th>
-                        <td mat-cell *matCellDef="let row"> {{row.lastrungenerator}} </td>
+                    <ng-container matColumnDef="expandedDetail">
+                        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                            <div class="example-element-detail"
+                                 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                <ngx-monaco-editor style=" height: 100px;!important; width: 100%;" [options]="editorOptions" [(ngModel)]="element.statusinfo"  [ngModelOptions]="{standalone: true}" ngDefaultControl></ngx-monaco-editor>
+                                <div class="example-element-description">
+                                    {{element.servicename}}
+                                    <span class="example-element-description-attribution"> -- Build Log </span>
+                                </div>
+                            </div>
+                        </td>
                     </ng-container>
-
-                    <ng-container matColumnDef="statusinfo">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status info </th>
-                        <td mat-cell *matCellDef="let row" [style.color]="row.statusinfo"> {{row.statusinfo}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+                    <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+                        class="example-element-row"
+                        [class.example-expanded-row]="expandedElement === element"
+                        (click)="expandedElement = expandedElement === element ? null : element">
                     </tr>
+                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                 </table>
 
                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

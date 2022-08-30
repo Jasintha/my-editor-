@@ -20,6 +20,7 @@ import {SharedModule} from '@shared/shared.module';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {BuildViewComponent} from '@home/pages/build-view/build-view.component';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {MonacoEditorModule} from 'ngx-monaco-editor';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
         FlexModule,
         SharedModule,
         NgxSpinnerModule,
-        MultiSelectModule
+        MultiSelectModule,
+        MonacoEditorModule
     ],
     exports:[
         BuildViewComponent
