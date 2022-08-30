@@ -328,6 +328,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadFilterPageEditor = false;
         this.loadTabPageEditor = false;
         this.loadThemeEditor = true;
+        this.loadBuildWindow = false;
     }
 
     viewPageEditor(item){
@@ -379,6 +380,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.pageId = item.uuid
         this.loadWidgetEditor = false;
         this.loadThemeEditor = false;
+        this.loadBuildWindow = false;
     }
 
     // viewSingleWidget(item){
@@ -428,6 +430,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadTabPageEditor = false;
         this.loadWidgetEditor = false;
         this.loadThemeEditor = false;
+        this.loadBuildWindow = false;
     }
 
     viewReqEditor(item?){
@@ -461,6 +464,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         }
         this.loadDesignRequirement = true;
         this.loadThemeEditor = false;
+        this.loadBuildWindow = false;
     }
 
     viewBuildWindow(){
@@ -541,7 +545,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             this.ruleNodeComponentsLoaded = true;
             this.ruleNodeComponents = ruleNodeComponents;
         });
-
+        this.loadBuildWindow = false;
     }
     viewModel(item){
         this.ruleChainLoaded = false;
@@ -564,6 +568,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadFilterPageEditor = false;
         this.loadTabPageEditor = false;
         this.loadThemeEditor = false;
+        this.loadBuildWindow = false;
     }
 
     ngOnInit(): void {

@@ -4,94 +4,80 @@
     </div>
 </div>
 <form name="editForm" role="form" novalidate  [formGroup]="editForm">
-<div  class="card">
-
-    <div class="card-body row">
+    <div class="row">
         <div class="col-md-5">
-            <mat-form-field [style]="{'width':'80%'}">
-                <mat-label>Select build type</mat-label>
-                <mat-select formControlName="genType">
-                    <mat-option *ngFor="let option of genTypes" [value]="option.value">
-                        {{option.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-5">
-            <div *ngIf="editForm.value.genType === 'Custom'" style="margin-top: 8px">
+            <div style="margin-top: 8px">
                 <div>
                     <p-multiSelect [options]="servicesToGenerate" formControlName="selectedServices" optionLabel="name"  [panelStyle]="{'width':'700px'}" [filter]="true"></p-multiSelect>
                 </div>
             </div>
         </div>
         <div class="col-md-1">
-            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white; " (click)="generate()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">play_circle_outline</mat-icon></button>
+            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white; " (click)="generate()" cdkFocusInitial><mat-icon style="font-size: 30px; margin-bottom: 6px">play_circle_outline</mat-icon></button>
         </div>
     </div>
 
 
-</div>
 
-<div style="margin-top: 40px;" class="row title-container">
-    <div class="col-md-1">
-        <h6  style="margin-left: 5px;">Current build status</h6>
+    <div *ngIf="isBuildLogAvailable">
+        <div class="row" style="margin-top: 50px">
+            <div style="margin-top: 40px;" class="row">
+                <div class="col-md-1">
+                    <h6  style="margin-left: 10px;">Current build status</h6>
 
-        </div>
-    <div class="col-md-1">
+                </div>
+                <div class="col-md-1">
        <span> <button  type="button" style="color: grey; background-color: white; border: none; margin-top: 12px" (click)="refreshLogs()"
-                class="ui-button-danger ui-button-raised">
+                       class="ui-button-danger ui-button-raised">
                   <mat-icon>refresh</mat-icon>
         </button>
            </span>
-    </div>
-</div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <mat-form-field style="float: right; margin-right: 50px">
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
 
-<div class="card" *ngIf="isBuildLogAvailable">
-    <div class="card-body row">
-        <div class="col-md-12">
-            <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-            </mat-form-field>
-
-            <div class="mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows  class="mat-elevation-z8">
-                    <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
-                        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-                        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="expand">
-                        <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-                        <td mat-cell *matCellDef="let element">
-                            <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
-                                <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
-                                <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
-                            </button>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="expandedDetail">
-                        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-                            <div class="example-element-detail"
-                                 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                <ngx-monaco-editor style=" height: 100px;!important; width: 100%;" [options]="editorOptions" [(ngModel)]="element.statusinfo"  [ngModelOptions]="{standalone: true}" ngDefaultControl></ngx-monaco-editor>
-                                <div class="example-element-description">
-                                    {{element.servicename}}
-                                    <span class="example-element-description-attribution"> -- Build Log </span>
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows  class="mat-elevation-z8">
+                        <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+                            <th mat-header-cell *matHeaderCellDef> {{columnHeaders[column]}} </th>
+                            <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="expand">
+                            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                                    <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                                    <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="expandedDetail">
+                            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                                <div class="example-element-detail"
+                                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <ngx-monaco-editor style=" height: 100px;!important; width: 100%;" [options]="editorOptions" [(ngModel)]="element.statusinfo"  [ngModelOptions]="{standalone: true}" ngDefaultControl></ngx-monaco-editor>
+                                    <div class="example-element-description">
+                                        {{element.servicename}}
+                                        <span class="example-element-description-attribution"> -- Build Log </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
-                    <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
-                        class="example-element-row"
-                        [class.example-expanded-row]="expandedElement === element"
-                        (click)="expandedElement = expandedElement === element ? null : element">
-                    </tr>
-                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-                </table>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+                        <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+                            class="example-element-row"
+                            [class.example-expanded-row]="expandedElement === element"
+                            (click)="expandedElement = expandedElement === element ? null : element">
+                        </tr>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                    </table>
 
-                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </form>
