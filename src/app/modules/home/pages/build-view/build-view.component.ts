@@ -105,6 +105,7 @@ export class BuildViewComponent implements OnInit {
     this.buildStatusData = [];
     this.getBuildstatusData();
     this.loadServicesForGenerate();
+    this.addDummyData();
     this.dataSource = new MatTableDataSource(this.buildStatusData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -288,4 +289,131 @@ export class BuildViewComponent implements OnInit {
     });
   }
 
+
+
+
+  addDummyData (){
+    this.isBuildLogAvailable = true;
+    this.servicesToGenerate = [{
+      uuid: '2312323',
+      name: 'Service 0',
+      referenceName: 'Srv0',
+      serviceUUID: '12123xxx'
+    },
+      {
+        uuid: '2312323',
+        name: 'Service 1',
+        referenceName: 'Srv1',
+        serviceUUID: '12123xxx'
+      },
+      {
+        uuid: '2312323',
+        name: 'Service 2',
+        referenceName: 'Srv2',
+        serviceUUID: '12123xxx'
+      },
+      {
+        uuid: '2312323',
+        name: 'Service 3',
+        referenceName: 'Srv3',
+        serviceUUID: '12123xxx'
+      },{
+        uuid: '2312323',
+        name: 'Service 4',
+        referenceName: 'Srv4',
+        serviceUUID: '12123xxx'
+      },{
+        uuid: '2312323',
+        name: 'Service 5',
+        referenceName: 'Srv5',
+        serviceUUID: '12123xxx'
+      },{
+        uuid: '2312323',
+        name: 'Service 6',
+        referenceName: 'Srv6',
+        serviceUUID: '12123xxx'
+      }
+    ];
+    this.buildStatusData = [{
+      servicename: 'service 1',
+      lastbuildstatus: 'lastbuildstatus',
+      referenceName:  'referenceName',
+      apptype:  'apptype',
+      serviceuuid:  'serviceuuid',
+      lastrungenerator:  'lastrungenerator',
+      lastrungenid:  'lastrungenid',
+      gitrunid:  'gitrunid',
+      statusinfo:  'statusinfo',
+    },
+      {
+        servicename: 'service 1',
+        lastbuildstatus: 'lastbuildstatus',
+        referenceName:  'referenceName',
+        apptype:  'apptype',
+        serviceuuid:  'serviceuuid',
+        lastrungenerator:  'lastrungenerator',
+        lastrungenid:  'lastrungenid',
+        gitrunid:  'gitrunid',
+        statusinfo:  'statusinfo',
+      },
+      {
+        servicename: 'service 1',
+        lastbuildstatus: 'lastbuildstatus',
+        referenceName:  'referenceName',
+        apptype:  'apptype',
+        serviceuuid:  'serviceuuid',
+        lastrungenerator:  'lastrungenerator',
+        lastrungenid:  'lastrungenid',
+        gitrunid:  'gitrunid',
+        statusinfo:  'statusinfo',
+      },
+      {
+        servicename: 'service 1',
+        lastbuildstatus: 'lastbuildstatus',
+        referenceName:  'referenceName',
+        apptype:  'apptype',
+        serviceuuid:  'serviceuuid',
+        lastrungenerator:  'lastrungenerator',
+        lastrungenid:  'lastrungenid',
+        gitrunid:  'gitrunid',
+        statusinfo:  'statusinfo',
+      },
+      {
+        servicename: 'service 1',
+        lastbuildstatus: 'lastbuildstatus',
+        referenceName:  'referenceName',
+        apptype:  'apptype',
+        serviceuuid:  'serviceuuid',
+        lastrungenerator:  'lastrungenerator',
+        lastrungenid:  'lastrungenid',
+        gitrunid:  'gitrunid',
+        statusinfo:  'statusinfo',
+      },
+      {
+        servicename: 'service 1',
+        lastbuildstatus: 'lastbuildstatus',
+        referenceName:  'referenceName',
+        apptype:  'apptype',
+        serviceuuid:  'serviceuuid',
+        lastrungenerator:  'lastrungenerator',
+        lastrungenid:  'lastrungenid',
+        gitrunid:  'gitrunid',
+        statusinfo:  'statusinfo',
+      },
+      {
+        servicename: 'service 1',
+        lastbuildstatus: 'lastbuildstatus',
+        referenceName:  'referenceName',
+        apptype:  'apptype',
+        serviceuuid:  'serviceuuid',
+        lastrungenerator:  'lastrungenerator',
+        lastrungenid:  'lastrungenid',
+        gitrunid:  'gitrunid',
+        statusinfo:  'statusinfo',
+      },];
+    this.dataSource = new MatTableDataSource(this.buildStatusData);
+    this.cdr.detectChanges();
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
 }

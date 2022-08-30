@@ -50,6 +50,7 @@ tr.example-element-row:not(.example-expanded-row):active {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   margin-bottom: 25px;
   padding: 0.2%;
+  background-color: #d9d9d9;
 }
 
 body .ui-multiselect .ui-multiselect-label {
@@ -70,6 +71,13 @@ body .ui-multiselect {
   display: none;
 }
 
-thead{
-  background-color: #00948500;
+tr.mat-header-row {
+  height: 56px;
+  background-color: #4bc1b4 !important;
+}
+
+.virtuan-default .mat-cell, .virtuan-default .mat-footer-cell, .virtuan-default .mat-header-cell, .virtuan-dark .mat-cell, .virtuan-dark .mat-footer-cell, .virtuan-dark .mat-header-cell {
+  height: 20px;
+  font-size: 14px;
+  color: whitesmoke;
 }
