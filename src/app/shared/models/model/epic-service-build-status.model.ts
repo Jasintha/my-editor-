@@ -8,6 +8,7 @@ export interface IEpicServiceBuildStatus {
     lastrungenid?: string;
     gitrunid?: string;
     statusinfo?: string;
+    generatortime?: string;
 
 }
 
@@ -22,6 +23,7 @@ export class EpicServiceBuildStatus implements IEpicServiceBuildStatus {
         public lastrungenid?: string,
         public gitrunid?: string,
         public statusinfo?: string,
+        public generatortime?: string,
     ) {}
 }
 

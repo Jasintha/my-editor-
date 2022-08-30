@@ -48,8 +48,8 @@ export class BuildViewComponent implements OnInit {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   isSaving: boolean;
   isGenerated = false;
-  displayedColumns: string[] = [ 'lastbuildstatus', 'servicename', 'lastrungenerator', 'statusinfo'];
-  columnHeaders = { lastbuildstatus: 'Last build status', servicename: 'Service name', statusinfo: 'Status info',  lastrungenerator: 'Last run generator',}
+  displayedColumns: string[] = [ 'lastbuildstatus', 'servicename', 'generatortime', 'statusinfo'];
+  columnHeaders = { lastbuildstatus: 'Last build status', servicename: 'Service name', statusinfo: 'Status info',  generatortime: 'Generated time',}
   servicesToGenerate: IEpicService[] = [];
   buildStatusData: IEpicServiceBuildStatus[] = [];
   dataSource: MatTableDataSource<IEpicServiceBuildStatus>;
@@ -168,6 +168,8 @@ export class BuildViewComponent implements OnInit {
               this.cdr.detectChanges();
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
+              this.dataSource.paginator.pageSize = 5;
+              this.dataSource.paginator.pageIndex = 1;
               this.isBuildLogAvailable = true;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
