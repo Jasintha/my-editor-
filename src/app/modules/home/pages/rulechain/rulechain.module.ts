@@ -107,6 +107,7 @@ import {TreeNode} from 'primeng/api';
 import {ContextMenuModule} from 'primeng/contextmenu';
 import {DesignWarningComponent} from '@home/pages/rulechain/design-editor/design-warning.component';
 import {SubMenuModule} from '@home/pages/sub-menu/sub-menu.module';
+import {BuildViewModule} from '@home/pages/build-view/build-view.module';
 @NgModule({
   declarations: [
     RuleChainPageComponent,
@@ -174,6 +175,7 @@ import {SubMenuModule} from '@home/pages/sub-menu/sub-menu.module';
     ServicefileModule,
     MainMenuModule,
     SubMenuModule,
+    BuildViewModule,
     PageNavigationModule,
     RouterModule,
     MatFormFieldModule,

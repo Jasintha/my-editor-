@@ -156,7 +156,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     splitConsoleSizeTwo = 5;
     loadTabPageEditor: boolean;
     loadThemeEditor: boolean;
-
+    loadBuildWindow: boolean;
     private _transformer = (node: any, level: number) => {
         return {
             expandable: !!node.children && node.children.length > 0,
@@ -463,6 +463,36 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadThemeEditor = false;
     }
 
+    viewBuildWindow(){
+        this.ruleChainLoaded = false;
+        this.ruleChainMetaDataLoaded = false;
+        this.connectionPropertyTemplatesLoaded = false;
+        this.ruleNodeComponentsLoaded = false;
+        this.ruleChain = null;
+        this.ruleChainMetaData = null;
+        this.connectionPropertyTemplates = null;
+        this.ruleNodeComponents = null;
+        this.lambdauid = "";
+        this.loadFunctionEditor = false;
+        this.loadModelView = false;
+        this.requirementUid = "";
+        this.loadDesignRequirement = false;
+        this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
+        this.loadCustomPageEditor = false;
+        this.loadFilterPageEditor = false;
+        this.loadTabPageEditor = false;
+        this.loadWidgetEditor = false;
+        if (this.reload) {
+            this.reload = false;
+        } else {
+            this.reload = true;
+        }
+        this.loadDesignRequirement = false;
+        this.loadThemeEditor = false;
+        this.loadBuildWindow = true;
+    }
+
     viewRule(item) {
         this.lambdauid = "";
         this.loadFunctionEditor = false;
@@ -582,14 +612,22 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 
     changeSplit(val){
         this.currentTab = val;
-        if (val !== 'design'){
+        if (val !== 'design' &&  val !== 'build' ){
             this.splitPartOneSize = 84;
             this.splitPartTwoSize = 16;
         } else if (val === 'design'){
             this.splitPartOneSize = 100;
             this.splitPartTwoSize = 0;
             this.loadDesignTreeData();
+        }else if ( val === 'build') {
+            this.splitPartOneSize = 100;
+            this.splitPartTwoSize = 0;
+            this.loadBuildView();
         }
+    }
+
+    loadBuildView(){
+        this.viewBuildWindow();
     }
 
     loadDesignTreeData(){

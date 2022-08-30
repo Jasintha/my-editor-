@@ -10,6 +10,8 @@ import {ICreateFolderStatus, IMMPJobStatusResponse} from '@shared/models/model/m
 import {createRequestOption} from '@shared/util/request-util';
 import {defaultHttpOptions} from '@core/http/http-utils';
 import {IStoryGen} from '@shared/models/model/story-gen.model';
+import {IEpicService} from '@shared/models/model/epic-service.model';
+import {EpicServiceGenReq, IEpicServiceBuildStatus} from '@shared/models/model/epic-service-build-status.model';
 type StoryGenResponseType = HttpResponse<IStoryGen>;
 type EntityResponseType = HttpResponse<IProject>;
 type ReleaseConfigResponseType = HttpResponse<IReleaseConfigReq>;
@@ -211,6 +213,24 @@ export class ProjectService {
   generateStoryUI(uuid: string, story: IStoryGen): Observable<StoryGenResponseType> {
     console.log('Generating story from story id');
     return this.http.put<IStoryGen>(`${this.genResourceUrl}/stories/preview/gen/${uuid}`, story, {
+      observe: 'response',
+    });
+  }
+
+  findServicesForGen(): Observable<HttpResponse<IEpicService[]>> {
+    return this.http.get<IEpicService[]>(`${this.genResourceUrl}/epics/servicesforgen`, {
+      observe: 'response',
+    });
+  }
+
+  generateServices(servicesGenReq: EpicServiceGenReq): Observable<any> {
+    return this.http.post<any>(`${this.genResourceUrl}/epics/generateservices`,servicesGenReq, {
+      observe: 'response',
+    });
+  }
+
+  getBuildStatusData(): Observable<HttpResponse<IEpicServiceBuildStatus[]>> {
+    return this.http.get<IEpicServiceBuildStatus[]>(`${this.genResourceUrl}/epics/servicebuilds`, {
       observe: 'response',
     });
   }

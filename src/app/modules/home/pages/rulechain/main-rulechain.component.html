@@ -42,6 +42,7 @@
                         <virtuan-tab-page-view *ngIf="loadTabPageEditor" [projectUid]="projectUid" [pageId]="pageId"  > </virtuan-tab-page-view>
                         <virtuan-filter-page *ngIf="loadFilterPageEditor" [projectUid]="projectUid" [pageId]="pageId" > </virtuan-filter-page>
                         <virtuan-theme-update *ngIf="loadThemeEditor" [projectUid]="projectUid" [pageId]="pageId"></virtuan-theme-update>
+                        <virtuan-build-view *ngIf="loadBuildWindow"></virtuan-build-view>
                     </as-split-area>
                     <as-split-area [size]="splitConsoleSizeTwo">
                         <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
@@ -102,6 +103,9 @@
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('portal')" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"  aria-selected="false">UI</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('build')" data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'build'}" type="button" role="tab"  aria-selected="false">Build</button>
                         </li>
 
                         <span fxFlex></span>
