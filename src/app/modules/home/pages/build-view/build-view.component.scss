@@ -1,5 +1,11 @@
-table .build-view{
-  width: 100%;
+.virtuan-default .mat-table, .virtuan-dark .mat-table {
+  width: 97%;
+  max-width: 100%;
+  display: table;
+  table-layout: auto;
+  border-collapse: separate;
+  margin: 0;
+  margin-left: 1%;
 }
 
 tr.example-detail-row {
@@ -96,4 +102,9 @@ body .ui-multiselect {
   color: #51d05c !important;
   font-size: 30px;
   margin-right: 5px;
+}
+
+.build-view th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+  padding-left: 24px;
+  color: white;
 }
