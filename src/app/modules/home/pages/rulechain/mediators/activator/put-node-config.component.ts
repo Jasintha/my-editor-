@@ -203,6 +203,13 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                     this.loadViewmodels();
                   }
 
+                  if(this.items) {
+                    this.items.push(this.fileinput);
+                  } else {
+                    this.items = [];
+                    this.items.push(this.fileinput);
+                  }
+
                   this.updateForm();
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
@@ -216,13 +223,13 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       if(selectedAPIInputs && this.items){
         if(this.configuration.selectedAPIInputs.inputType !== 'FILE'){
             selectedAPIInputs = this.items.find(x => (x.id === this.configuration.selectedAPIInputs.id) && (x.inputName === this.configuration.selectedAPIInputs.inputName));
+        } else {
+            selectedAPIInputs = this.items.find(x => (x.inputType === this.configuration.selectedAPIInputs.inputType) && (x.inputName === this.configuration.selectedAPIInputs.inputName));
         }
       }
       let returnObj = this.configuration.returnObj;
       if(returnObj && this.returnItems){
-        if(this.configuration.returnObj.inputType !== 'FILE'){
-            returnObj = this.returnItems.find(x => (x.id === this.configuration.returnObj.id) && (x.inputType === this.configuration.returnObj.inputType) && (x.inputName === this.configuration.returnObj.inputName));
-        }
+        returnObj = this.returnItems.find(x => (x.id === this.configuration.returnObj.id) && (x.inputType === this.configuration.returnObj.inputType) && (x.inputName === this.configuration.returnObj.inputName));
       }
 
       this.putNodeConfigFormGroup.patchValue({
