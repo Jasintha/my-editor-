@@ -83,6 +83,13 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
 
   nodeDefinitionValue: RuleNodeDefinition;
 
+  fileinput: any = {
+    id: '',
+    paramType: APIParamType.BODY,
+    inputType: APIInputType.FILE,
+    inputName: 'file',
+  };
+
   crudItems: any[] = ['CREATE','UPDATE','DELETE','FIND','FINDALL', 'EMPTY'];
 
   apiMethod: any[] = ['POST','GET','PUT','DELETE'];
@@ -370,11 +377,21 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     if(!this.returnObject){
         this.returnObject = [];
     }
+
+    const dropdownLabelFile = 'FILE';
+    const fileReturnObj: APIInput = {
+      id: '',
+      paramType: APIParamType.RETURN,
+      inputType: APIInputType.FILE,
+      inputName: 'file',
+    };
+
     this.returnObject.push({ label: dropdownLabelText, value: stringReturnObj });
     this.returnObject.push({ label: dropdownLabelNumber, value: intReturnObj });
     this.returnObject.push({ label: dropdownLabelFloat, value: floatReturnObj });
     this.returnObject.push({ label: dropdownLabelBoolean, value: boolReturnObj });
     this.returnObject.push({ label: dropdownLabelDate, value: dateReturnObj });
+    this.returnObject.push({ label: dropdownLabelFile, value: fileReturnObj });
 //
 //     this.returnItems.push(stringReturnObj );
 //     this.returnItems.push( intReturnObj );

@@ -55,10 +55,13 @@
         <mat-form-field class="mat-block" *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'CREATE' || processNodeConfigFormGroup.value.apiTemplate === 'UPDATE' ||
  processNodeConfigFormGroup.value.apiTemplate === 'DELETE' || processNodeConfigFormGroup.value.apiTemplate === 'FIND' || processNodeConfigFormGroup.value.apiTemplate === 'FINDALL' ||
  (processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'  &&  (processNodeConfigFormGroup.value.apiMethod === 'POST' || processNodeConfigFormGroup.value.apiMethod === 'PUT'))">
-            <mat-label>Target Model</mat-label>
+            <mat-label>Target Object</mat-label>
             <mat-select formControlName="selectedAPIInputs" (selectionChange)="onInputObjChange()">
                 <mat-option *ngFor="let option of items" [value]="option.value">
                     {{option.label}}
+                </mat-option>
+                <mat-option *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'" [value]="fileinput">
+                    FILE
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -73,7 +76,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'" class="mat-block">
-            <mat-label>Return Model</mat-label>
+            <mat-label>Return Object</mat-label>
             <mat-select formControlName="returnObject" (selectionChange)="onReturnObjChange()">
                 <mat-option *ngFor="let option of returnObject" [value]="option.value">
                     {{option.label}}

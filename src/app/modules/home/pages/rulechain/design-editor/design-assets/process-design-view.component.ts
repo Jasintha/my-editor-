@@ -104,6 +104,13 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
     projectUid: string;
     storyUuid: string
 
+  fileinput: any = {
+    id: '',
+    paramType: APIParamType.BODY,
+    inputType: APIInputType.FILE,
+    inputName: 'file',
+  };
+
     @Input()
     set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
         if (this.nodeDefinitionValue !== nodeDefinition) {
@@ -322,6 +329,15 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
             inputType: APIInputType.DATE,
             inputName: '_t',
         };
+
+        const dropdownLabelFile = 'FILE';
+        const fileReturnObj: APIInput = {
+          id: '',
+          paramType: APIParamType.RETURN,
+          inputType: APIInputType.FILE,
+          inputName: 'file',
+        };
+
         if(!this.returnObject){
             this.returnObject = [];
         }
@@ -330,6 +346,7 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
         this.returnObject.push({ label: dropdownLabelFloat, value: floatReturnObj });
         this.returnObject.push({ label: dropdownLabelBoolean, value: boolReturnObj });
         this.returnObject.push({ label: dropdownLabelDate, value: dateReturnObj });
+        this.returnObject.push({ label: dropdownLabelFile, value: fileReturnObj });
 //
 //     this.returnItems.push(stringReturnObj );
 //     this.returnItems.push( intReturnObj );
