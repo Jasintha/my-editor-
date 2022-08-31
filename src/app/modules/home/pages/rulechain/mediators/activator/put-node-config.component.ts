@@ -214,11 +214,15 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
   updateForm(){
       let selectedAPIInputs = this.configuration.selectedAPIInputs;
       if(selectedAPIInputs && this.items){
-        selectedAPIInputs = this.items.find(x => (x.id === this.configuration.selectedAPIInputs.id) && (x.inputName === this.configuration.selectedAPIInputs.inputName));
+        if(this.configuration.selectedAPIInputs.inputType !== 'FILE'){
+            selectedAPIInputs = this.items.find(x => (x.id === this.configuration.selectedAPIInputs.id) && (x.inputName === this.configuration.selectedAPIInputs.inputName));
+        }
       }
       let returnObj = this.configuration.returnObj;
       if(returnObj && this.returnItems){
-        returnObj = this.returnItems.find(x => (x.id === this.configuration.returnObj.id) && (x.inputType === this.configuration.returnObj.inputType) && (x.inputName === this.configuration.returnObj.inputName));
+        if(this.configuration.returnObj.inputType !== 'FILE'){
+            returnObj = this.returnItems.find(x => (x.id === this.configuration.returnObj.id) && (x.inputType === this.configuration.returnObj.inputType) && (x.inputName === this.configuration.returnObj.inputName));
+        }
       }
 
       this.putNodeConfigFormGroup.patchValue({
