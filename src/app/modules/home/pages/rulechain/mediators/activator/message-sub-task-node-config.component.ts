@@ -181,6 +181,7 @@ export class MessageSubscriberTaskNodeComponent implements ControlValueAccessor,
                   this.project = res;
                   this.aggregates = this.project.aggregates;
                   this.viewmodels = this.project.viewmodels;
+                  this.items = [];
                   if (this.aggregates) {
                     this.loadAggregates();
                   }
