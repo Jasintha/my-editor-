@@ -1,4 +1,4 @@
-table {
+table .build-view{
   width: 100%;
 }
 
@@ -66,18 +66,34 @@ body .ui-multiselect {
   border-bottom: 1px solid #8f8e8e;
 }
 
-.pi-chevron-down:before {
+.build-view .pi-chevron-down:before {
   content: "\e902";
   display: none;
 }
 
-tr.mat-header-row {
+.build-view tr.mat-header-row {
   height: 56px;
   background-color: #4bc1b4 !important;
 }
 
-.virtuan-default .mat-cell, .virtuan-default .mat-footer-cell, .virtuan-default .mat-header-cell, .virtuan-dark .mat-cell, .virtuan-dark .mat-footer-cell, .virtuan-dark .mat-header-cell {
+.build-view .virtuan-default .mat-header-cell, .virtuan-dark .mat-header-cell {
   height: 20px;
   font-size: 14px;
   color: whitesmoke;
+}
+
+.build-view .yellow {
+  color: #dede56 !important;
+  font-size: 30px;
+  margin-right: 5px;
+}
+.build-view .red {
+  color: #ee4e6f !important;
+  font-size: 30px;
+  margin-right: 5px;
+}
+.build-view .green {
+  color: #51d05c !important;
+  font-size: 30px;
+  margin-right: 5px;
 }

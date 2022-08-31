@@ -48,8 +48,8 @@ export class BuildViewComponent implements OnInit {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   isSaving: boolean;
   isGenerated = false;
-  displayedColumns: string[] = [ 'lastbuildstatus', 'servicename', 'generatortime', 'statusinfo'];
-  columnHeaders = { lastbuildstatus: 'Last build status', servicename: 'Service name', statusinfo: 'Status info',  generatortime: 'Generated time',}
+  displayedColumns: string[] = [  'servicename','referenceName','lastrungenerator', 'generatortime'];
+  columnHeaders = { lastbuildstatus: 'Last build status', servicename: 'Service',referenceName:'Reference Name', lastrungenerator:'Last Generator', statusinfo: 'Status info',  generatortime: 'Last generartor duration',}
   servicesToGenerate: IEpicService[] = [];
   buildStatusData: IEpicServiceBuildStatus[] = [];
   dataSource: MatTableDataSource<IEpicServiceBuildStatus>;
@@ -124,6 +124,11 @@ export class BuildViewComponent implements OnInit {
   generate() {
     this.spinnerService.show();
     this.isSaving = true;
+    this.isGenerating = true;
+    setTimeout(()=>{
+      this.isGenerating = false;
+      this.cdr.detectChanges();
+    }, 50000);
     const genReq = this.createFromForm();
     this.getBuildstatusData();
     this.loadGenLogs();
