@@ -116,6 +116,13 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
     { label: 'DATE', value: 'DATE' },
   ];
 
+  fileinput: any = {
+    id: '',
+    paramType: APIParamType.BODY,
+    inputType: APIInputType.FILE,
+    inputName: 'file',
+  };
+
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
     if (this.nodeDefinitionValue !== nodeDefinition) {
@@ -267,6 +274,14 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
       inputType: APIInputType.DATE,
       inputName: '_t',
     };
+
+    const dropdownLabelFile = 'FILE';
+    const fileReturnObj: APIInput = {
+      id: '',
+      paramType: APIParamType.RETURN,
+      inputType: APIInputType.FILE,
+      inputName: 'file',
+    };
 //     this.returnItems.push({ label: dropdownLabelText, value: stringReturnObj });
 //     this.returnItems.push({ label: dropdownLabelNumber, value: intReturnObj });
 //     this.returnItems.push({ label: dropdownLabelFloat, value: floatReturnObj });
@@ -278,6 +293,7 @@ export class PostNodeConfigComponent implements ControlValueAccessor, OnInit, On
     this.returnItems.push(floatReturnObj);
     this.returnItems.push( boolReturnObj );
     this.returnItems.push(dateReturnObj );
+    this.returnItems.push(fileReturnObj );
   }
 
 

@@ -12,6 +12,9 @@
             <mat-option *ngFor="let option of items" [value]="option">
                 {{option.inputName}} : {{option.inputType}}
             </mat-option>
+            <mat-option [value]="fileinput">
+                File
+            </mat-option>
         </mat-select>
     </mat-form-field>
 

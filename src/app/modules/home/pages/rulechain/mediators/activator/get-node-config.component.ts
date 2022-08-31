@@ -266,6 +266,14 @@ export class GetNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       inputType: APIInputType.DATE,
       inputName: '_t',
     };
+
+    const dropdownLabelFile = 'FILE';
+    const fileReturnObj: APIInput = {
+      id: '',
+      paramType: APIParamType.RETURN,
+      inputType: APIInputType.FILE,
+      inputName: 'file',
+    };
 //     this.returnItems.push({ label: dropdownLabelText, value: stringReturnObj });
 //     this.returnItems.push({ label: dropdownLabelNumber, value: intReturnObj });
 //     this.returnItems.push({ label: dropdownLabelFloat, value: floatReturnObj });
@@ -277,6 +285,7 @@ export class GetNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     this.returnItems.push(floatReturnObj);
     this.returnItems.push( boolReturnObj );
     this.returnItems.push(dateReturnObj );
+    this.returnItems.push(fileReturnObj );
   }
 
   loadAggregates() {

@@ -270,6 +270,14 @@ export class DeleteNodeConfigComponent implements ControlValueAccessor, OnInit, 
       inputType: APIInputType.DATE,
       inputName: '_t',
     };
+
+    const dropdownLabelFile = 'FILE';
+    const fileReturnObj: APIInput = {
+      id: '',
+      paramType: APIParamType.RETURN,
+      inputType: APIInputType.FILE,
+      inputName: 'file',
+    };
 //     this.returnItems.push({ label: dropdownLabelText, value: stringReturnObj });
 //     this.returnItems.push({ label: dropdownLabelNumber, value: intReturnObj });
 //     this.returnItems.push({ label: dropdownLabelFloat, value: floatReturnObj });
@@ -281,6 +289,7 @@ export class DeleteNodeConfigComponent implements ControlValueAccessor, OnInit, 
     this.returnItems.push(floatReturnObj);
     this.returnItems.push( boolReturnObj );
     this.returnItems.push(dateReturnObj );
+    this.returnItems.push(fileReturnObj );
   }
 
   loadAggregates() {

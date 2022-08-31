@@ -95,6 +95,13 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
   viewmodelItems: Item[];
   viewmodels: IViewmodel[];
 
+  fileinput: any = {
+    id: '',
+    paramType: APIParamType.BODY,
+    inputType: APIInputType.FILE,
+    inputName: 'file',
+  };
+
   @Input()
   serviceUuid: string;
 
@@ -281,6 +288,15 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
       inputType: APIInputType.DATE,
       inputName: '_t',
     };
+
+    const dropdownLabelFile = 'FILE';
+    const fileReturnObj: APIInput = {
+      id: '',
+      paramType: APIParamType.RETURN,
+      inputType: APIInputType.FILE,
+      inputName: 'file',
+    };
+
 //     this.returnItems.push({ label: dropdownLabelText, value: stringReturnObj });
 //     this.returnItems.push({ label: dropdownLabelNumber, value: intReturnObj });
 //     this.returnItems.push({ label: dropdownLabelFloat, value: floatReturnObj });
@@ -292,6 +308,7 @@ export class PutNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     this.returnItems.push(floatReturnObj);
     this.returnItems.push( boolReturnObj );
     this.returnItems.push(dateReturnObj );
+    this.returnItems.push(fileReturnObj );
   }
 
 
