@@ -18,6 +18,7 @@ type StatusChangeRequestArrayResponseType = HttpResponse<IStatusChangeRequest[]>
 export class AggregateService {
   public resourceUrl =  '/api/editor/proj/aggregates';
   public projectresourceUrl =  '/api/editor/proj/aggregates/project';
+  public projserviceresourceUrl = '/api/editor/projects';
   public designresourceUrl =  '/api/editor/proj/aggregates/design';
   public aggregatestatusChangeResourceUrl =  '/api/editor/proj/aggregates/statuschange';
   public aggregateDisablestatusChangeConfirmedResourceUrl =  '/api/editor/proj/aggregates/statuschange/disable';
@@ -35,7 +36,7 @@ export class AggregateService {
   }
 
   findAllMicroserviceProjects(): Observable<EntityArrayResponseType> {
-    return this.http.get<IProject[]>(`${this.resourceUrl}/microservices`, { observe: 'response' });
+    return this.http.get<IProject[]>(`${this.projserviceresourceUrl}/microservices`, { observe: 'response' });
   }
 
 
