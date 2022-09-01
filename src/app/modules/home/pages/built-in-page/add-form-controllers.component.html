@@ -1,15 +1,5 @@
 <form name="addSecretForm" [formGroup]="form" (ngSubmit)="addFormControllers()">
-    <mat-toolbar color="primary">
-        <h2 mat-dialog-title>Select Form Controllers</h2>
-        <span fxFlex></span>
-        <button mat-icon-button
-                mat-dialog-close
-                type="button">
-            <mat-icon class="material-icons">close</mat-icon>
-        </button>
-    </mat-toolbar>
-    <mat-dialog-content>
-        <div formArrayName="formFieldsGroup" style="width: 700px">
+        <div formArrayName="formFieldsGroup">
             <div *ngFor="let emp of formFieldsGroup.controls; let i = index">
                 <div class="row-g-12" [formGroup]="emp">
                     <div class="tile row" *ngIf="!isFieldSelected">
@@ -22,24 +12,24 @@
 
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'"
                                      src="../../../../../assets/images/form_control/textbox.jpg"
-                                     style="width: 70%; height: 3%">
+                                     style="width: 24%; height: 3%">
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Radiobutton'"
                                      src="../../../../../assets/images/form_control/radio.jpg"
-                                     style="width: 70%; height: 3% ">
+                                     style="width: 24%; height: 3% ">
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Checkbox'"
                                      src="../../../../../assets/images/form_control/checkbox.jpg"
-                                     style="width: 70%; height: 3% ">
+                                     style="width: 24%; height: 3% ">
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Dropdown'"
                                      src="../../../../../assets/images/form_control/dropdown.jpg"
-                                     style="width: 70%; height: 3% ">
+                                     style="width: 24%; height: 3% ">
 
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'DATE_INPUT'"
                                      src="../../../../../assets/images/form_control/date.jpg"
-                                     style="width: 70%; height: 3% ">
+                                     style="width: 24%; height: 3% ">
 
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'TRUE_OR_FALSE_PICKER'"
                                      src="../../../../../assets/images/form_control/tureorfalse.jpg"
-                                     style="width: 70%; height: 3% ">
+                                     style="width: 24%; height: 3% ">
 
                                 <i *ngIf="this.form.value.formFieldsGroup[i].fieldcategory === 'object'"
                                    style="font-size:30px " class="fa fa-exchange" aria-hidden="true"></i>
@@ -116,21 +106,21 @@
                                         <div class="col-md-5" *ngIf="!isChildFieldSelected">
                                             <div class="form-group" style="text-align: center">
                                                 <img
-                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Textbox'"
-                                                    src="../../../../../assets/images/form_control/textbox.jpg"
-                                                    style="width: 70%; height: 3%">
+                                                        *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Textbox'"
+                                                        src="../../../../../assets/images/form_control/textbox.jpg"
+                                                        style="width: 70%; height: 3%">
                                                 <img
-                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Radiobutton'"
-                                                    src="../../../../../assets/images/form_control/radio.jpg"
-                                                    style="width: 70%; height: 3% ">
+                                                        *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Radiobutton'"
+                                                        src="../../../../../assets/images/form_control/radio.jpg"
+                                                        style="width: 70%; height: 3% ">
                                                 <img
-                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Checkbox'"
-                                                    src="../../../../../assets/images/form_control/checkbox.jpg"
-                                                    style="width: 70%; height: 3% ">
+                                                        *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Checkbox'"
+                                                        src="../../../../../assets/images/form_control/checkbox.jpg"
+                                                        style="width: 70%; height: 3% ">
                                                 <img
-                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown'"
-                                                    src="../../../../../assets/images/form_control/dropdown.jpg"
-                                                    style="width: 70%; height: 3% ">
+                                                        *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown'"
+                                                        src="../../../../../assets/images/form_control/dropdown.jpg"
+                                                        style="width: 70%; height: 3% ">
                                                 <img *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'DATE_INPUT'"
                                                      src="../../../../../assets/images/form_control/date.jpg"
                                                      style="width: 70%; height: 3% ">
@@ -167,19 +157,19 @@
                                             </div>
 
                                             <div
-                                                *ngIf="this.form.value.formFieldsGroup[i].children[k].propertyType === 'DATE'">
+                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].propertyType === 'DATE'">
                                                 <label class="form-control-label">Controller </label>
                                                 <input type="text" readonly class="form-control" name="fieldController"
                                                        formControlName="fieldController"/>
                                             </div>
                                             <div
-                                                *ngIf="this.form.value.formFieldsGroup[i].children[k].propertyType === 'TRUE_OR_FALSE'">
+                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].propertyType === 'TRUE_OR_FALSE'">
                                                 <label class="form-control-label">Controller </label>
                                                 <input type="text" readonly class="form-control" name="fieldController"
                                                        formControlName="fieldController"/>
                                             </div>
                                             <div
-                                                *ngIf="this.form.value.formFieldsGroup[i].children[k].propertyType === 'EMAIL'">
+                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].propertyType === 'EMAIL'">
                                                 <label class="form-control-label">Controller </label>
                                                 <input readonly type="text" class="form-control" name="fieldController"
                                                        formControlName="fieldController"/>
@@ -203,7 +193,7 @@
                                             <label class="form-control-label p-sm-2">Required </label>
                                         </div>
                                         <div
-                                            *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown'|| this.form.value.formFieldsGroup[i].children[k].fieldController === 'Radiobutton'">
+                                                *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown'|| this.form.value.formFieldsGroup[i].children[k].fieldController === 'Radiobutton'">
                                             <h5>{{this.form.value.formFieldsGroup[i].fieldController}} Choices</h5>
 
                                             <div class="form-group"  *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown' ">
@@ -214,7 +204,7 @@
                                             </div>
 
                                             <div
-                                                *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown' && this.form.value.formFieldsGroup[i].children[k].choiceType === 'API'">
+                                                    *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown' && this.form.value.formFieldsGroup[i].children[k].choiceType === 'API'">
                                                 <div class="form-group"
                                                      style=" padding-top: 5px; ">
                                                     <p-checkbox formControlName="search" binary="true"></p-checkbox>
@@ -284,7 +274,7 @@
                             </div>
                         </div>
                         <div
-                            *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Dropdown'|| this.form.value.formFieldsGroup[i].fieldController === 'Radiobutton'">
+                                *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Dropdown'|| this.form.value.formFieldsGroup[i].fieldController === 'Radiobutton'">
                             <h5>{{this.form.value.formFieldsGroup[i].fieldController}} Choices</h5>
 
                             <div class="form-group">
@@ -332,7 +322,7 @@
 
                                                     </div>
                                                     <div class="col-md-4">
-                                                    <input class="form-control" type="text" placeholder="attribute" formControlName="fieldAttribute">
+                                                        <input class="form-control" type="text" placeholder="attribute" formControlName="fieldAttribute">
                                                     </div>
                                                     <div class="offset-md-1 col-md-2">
                                                         <button type="button" style="float: right;" mat-raised-button color="primary"
@@ -421,9 +411,8 @@
             </div>
 
         </div>
-        <div class="d-grid gap-2" style="text-align: center; margin-top: 2%">
-            <button type="submit" *ngIf="!isFieldSelected" value="Save" class="btn savebtn">Save</button>
+        <div  style="float: right; margin-top: 2%">
+            <button type="submit" *ngIf="!isFieldSelected" value="Save"  class="btn savebtn">Save</button>
         </div>
-    </mat-dialog-content>
 
 </form>
