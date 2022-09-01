@@ -538,6 +538,10 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
 
       }
 
+      if (this.configuration.processType !== 'TASK') {
+        this.configuration.processType = 'API'
+      }
+
       this.processNodeConfigFormGroup.patchValue({
         processType: this.configuration.processType,
         operation: this.configuration.operation,
