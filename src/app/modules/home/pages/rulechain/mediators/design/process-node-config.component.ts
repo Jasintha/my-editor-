@@ -496,6 +496,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
       let microserviceUuid = this.configuration.microserviceUuid;
       let microserviceResourcePath = this.configuration.apiresourcepath;
       let microserviceId = this.configuration.apiUuid;
+      this.apiItems = [];
       if (this.configuration.existing && microserviceUuid && this.allMicroservices){
         microservice = this.allMicroservices.find(x => x.masterUuid === microserviceUuid );
 
@@ -539,8 +540,12 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
       }
 
       if (this.configuration.processType !== 'TASK') {
-        this.configuration.processType = 'API'
+        this.configuration.processType = 'API';
       }
+
+      console.log("process type");
+      console.log(this.configuration.processType);
+
 
       this.processNodeConfigFormGroup.patchValue({
         processType: this.configuration.processType,
