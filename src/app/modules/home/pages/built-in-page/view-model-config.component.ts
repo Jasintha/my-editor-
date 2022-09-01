@@ -1,16 +1,15 @@
-import {Component, OnInit, OnDestroy, Inject} from '@angular/core';
+import {Component, OnInit, OnDestroy, Inject, Input} from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { SortEvent } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
-import { SelectItem } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 
 import { IPageConfig, PageConfig, IConfig, Config } from '@shared/models/model/page-config.model';
 import { IPageAction, PageAction } from '@shared/models/model/page-action.model';
-import { IFormField, FormField, ISourceTargetFieldsRequest } from '@shared/models/model/form-field.model';
+import {IFormField, FormField, ISourceTargetFieldsRequest, IRowFieldMapping} from '@shared/models/model/form-field.model';
 import { IPage } from '@shared/models/model/page.model';
 import { IDatamodel } from '@shared/models/model/datamodel.model';
 import { IProperty } from '@shared/models/model/property.model';
@@ -23,7 +22,7 @@ import { EventTypes } from '@shared/events/event.queue';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { BuiltInWidgetService } from '@core/projectservices/built-in-widget.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatTableDataSource} from '@angular/material/table';
 @Component({
     selector: 'virtuan-view-model-config',
     templateUrl: './view-model-config.component.html',
@@ -53,25 +52,29 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     ],
 })
 export class ViewModelConfigComponent implements OnInit, OnDestroy {
+
+    @Input('pageId') pageId: string;
+    @Input('projectUid') projectUid: string;
+    @Input('widgetUid') widgetUid: string;
     pageConfigs: IConfig[];
     pageActions: IPageAction[];
     configs: IPageConfig;
     currentAccount: any;
     eventSubscriber1: Subscription;
-    eventSubscriber2: Subscription;
     cols: any[];
-    pageId: string;
     page: IPage;
     sourceTargetFieldsRequest: ISourceTargetFieldsRequest;
     datamodel: IDatamodel;
     clonedCars: { [s: string]: Config } = {};
     sortField: string;
     sortOrder: number;
-    projectUid: string;
     widgetId: string;
     isWidgetView: boolean;
     sourceProperties: IFormField[];
     targetProperties: IFormField[];
+    pageViewModelFields: any[] = [];
+    fieldMapDisplayedColumns: string[] = ['field','group','visibility'];
+    fieldDataSourceWizard = new MatTableDataSource(this.pageViewModelFields);
 
     constructor(
         private messageService: MessageService,
@@ -83,8 +86,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
         private spinnerService: NgxSpinnerService,
         protected pageService: BuiltInPageService,
         protected builtInWidgetService: BuiltInWidgetService,
-        @Inject(MAT_DIALOG_DATA)  public data: any,
-        public dialogRef: MatDialogRef<ViewModelConfigComponent>,
         private router: Router,
         private location: Location
     ) {
@@ -189,10 +190,12 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
                 )
                 .subscribe(
                     (res: ISourceTargetFieldsRequest) => {
+                        this.pageViewModelFields = [];
                         this.sourceTargetFieldsRequest = res;
                         this.sourceProperties = this.sourceTargetFieldsRequest.sourceFormFields;
                         this.targetProperties = this.sourceTargetFieldsRequest.targetFormFields;
                         // this.spinnerService.hide();
+                        this.pageViewModelFields = this.targetProperties;
                     },
                     (res: HttpErrorResponse) => this.onError(res.message)
                 );
@@ -204,9 +207,9 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
         this.sourceProperties = [];
         this.targetProperties = [];
         // this.loadAll();
-        this.pageId = this.data.pageId;
-        this.projectUid = this.data.projectUid;
-        this.widgetId = this.data.widgetUid;
+        this.pageId = this.pageId;
+        this.projectUid = this.projectUid;
+        this.widgetId = this.widgetUid;
         this.activatedRoute.params.subscribe(params => {
             // this.projectId = params['projId'];
             // this.projectUid = params['projectUid'];
@@ -220,7 +223,7 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
         if (this.widgetId) {
             this.isWidgetView = true;
             this.loadPageConfigsByPageId(this.widgetId, this.projectUid);
-          //  this.loadAllSourceTargetFormFieldsForWidget(this.widgetId, this.projectUid);
+            this.loadAllSourceTargetFormFieldsForWidget(this.widgetId, this.projectUid);
         } else {
             this.loadPageConfigsByPageId(this.pageId, this.projectUid);
             this.loadAllSourceTargetFormFieldsForPage(this.pageId, this.projectUid);
@@ -235,6 +238,28 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
             { field: 'name', header: 'Name' },
             { field: 'actionType', header: 'Action Type' },
         ];
+    }
+
+    loadAllSourceTargetFormFieldsForWidget(pageId: string, uuid: string) {
+        if (!pageId) {
+        } else {
+            // this.spinnerService.show();
+            this.builtInWidgetService
+                .findAllSourceTargetFormFieldsForWidget(pageId, uuid)
+                .pipe(
+                    filter((res: HttpResponse<ISourceTargetFieldsRequest>) => res.ok),
+                    map((res: HttpResponse<ISourceTargetFieldsRequest>) => res.body)
+                )
+                .subscribe(
+                    (res: ISourceTargetFieldsRequest) => {
+                        this.sourceTargetFieldsRequest = res;
+                        this.sourceProperties = this.sourceTargetFieldsRequest.sourceFormFields;
+                        this.targetProperties = this.sourceTargetFieldsRequest.targetFormFields;
+                        // this.spinnerService.hide();
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        }
     }
 
     saveFormOrder() {
@@ -254,7 +279,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 (res: any) => {
-                    this.dialogRef.close();
                     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved Form Order' });
                 },
                 (res: HttpErrorResponse) => this.onSaveError()
@@ -270,7 +294,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 (res: any) => {
-                    this.dialogRef.close();
                     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved Form Order' });
                 },
                 (res: HttpErrorResponse) => this.onSaveError()
@@ -336,7 +359,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
     }
 
     protected onSaveSuccess() {
-        this.dialogRef.close();
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Config is updated' });
     }
 
@@ -347,7 +369,6 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         // this.eventManager.destroy(this.eventSubscriber);
         this.eventSubscriber1.unsubscribe();
-        this.eventSubscriber2.unsubscribe();
     }
 
     trackId(index: number, item: IPageConfig) {

@@ -39,6 +39,7 @@ import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model
 import {ChartDetails} from '@shared/models/model/chart-details.model';
 import {INavigationParam} from '@shared/models/model/page-navigation.model';
 import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-save-confirm-dialog.component';
+import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-event.component';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -633,6 +634,19 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         this.dataSourceTile = new MatTableDataSource(this.TILE_DATA);
       }
     }
+  }
+
+  addActionButton(){
+    const page = this.currentPage;
+      const dialogRef = this.dialog.open(PageActionEventComponent, {
+        panelClass: ['virtuan-dialog'],
+      });
+      dialogRef.afterClosed(
+      ).subscribe(result => {
+        if (result) {
+          this.checkPageNameExist();
+        }
+      });
   }
 
   deleteParamMapping(param) {

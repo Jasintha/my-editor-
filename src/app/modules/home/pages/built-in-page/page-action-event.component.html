@@ -1,0 +1,76 @@
+<mat-toolbar color="primary">
+    <h2 mat-dialog-title>Add action button</h2>
+    <span fxFlex></span>
+    <button mat-icon-button
+            mat-dialog-close
+            type="button">
+        <mat-icon class="material-icons">close</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-dialog-content>
+    <form name="editForm" role="form" novalidate (ngSubmit)="saveAction()" [formGroup]="editForm">
+        <div style="box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;;margin-bottom: 8px">
+                <div class="form-group">
+                    <div class="card card-body">
+                        <div class="row">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Caption</mat-label>
+                                    <input  type="text" formControlName="btnCaption" matInput>
+                                </mat-form-field>
+
+
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Operation</mat-label>
+                                <mat-select  formControlName="btnOperation">
+                                    <mat-option *ngFor="let option of operationItems" [value]="option.value">
+                                        {{option.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+
+                            <mat-form-field class="flex-auto" >
+                                <mat-label>Resource path</mat-label>
+                                <input type="text" formControlName="btnResourcePath" matInput>
+                            </mat-form-field>
+
+                            <div *ngIf="editForm.value.btnOperation == 'NAVIGATE'">
+                                <mat-form-field  class="flex-auto" style="width: 100%">
+                                    <mat-label>To Page</mat-label>
+                                    <mat-select formControlName="navigatePage">
+                                        <mat-option *ngFor="let option of pages" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Confirmation Type</mat-label>
+                                <mat-select  formControlName="btnConfirmationType">
+                                    <mat-option *ngFor="let option of confirmationTypes" [value]="option.value">
+                                        {{option.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div class="col-md-6">
+                                <mat-form-field class="flex-auto" >
+                                    <mat-label>Color</mat-label>
+                                    <input  type="color" formControlName="btnColor" matInput>
+                                </mat-form-field>
+                            </div>
+                            <mat-form-field class="flex-auto" >
+                                <mat-label>Tooltip</mat-label>
+                                <input  type="text" formControlName="btnTooltip" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button style="float: right;" type="button"  mat-raised-button (click)="addRow(false)"><mat-icon>add</mat-icon> ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </form>
+</mat-dialog-content>

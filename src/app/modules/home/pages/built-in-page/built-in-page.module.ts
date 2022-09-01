@@ -45,6 +45,7 @@ import {CustomPageApiDialogComponent} from '@home/pages/built-in-page/custom-pag
 import {FilterPageComponent} from '@home/pages/built-in-page/filter-page.component';
 import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
 import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-save-confirm-dialog.component';
+import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-event.component';
 
 @NgModule({
     declarations:[
@@ -57,6 +58,7 @@ import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-sav
         PageGridHandlerComponent,
         WidgetSelectDialogComponent,
         ViewModelConfigComponent,
+        PageActionEventComponent,
         CustomPageViewComponent,
         CustomPageApiDialogComponent,
         FilterPageComponent,
@@ -108,6 +110,7 @@ import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-sav
         PageGridHandlerComponent,
         WidgetSelectDialogComponent,
         ViewModelConfigComponent,
+        PageActionEventComponent,
         CustomPageViewComponent,
         CustomPageApiDialogComponent,
         FilterPageComponent,
