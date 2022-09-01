@@ -227,12 +227,26 @@ export class ProcessDesignViewComponent implements ControlValueAccessor, OnInit,
                         if (this.aggregates) {
                             this.loadAggregates();
                         }
+                        if(this.items) {
+                            this.items.push({ label: 'FILE', value: this.fileinput });
+                        } else {
+                            this.items = [];
+                            this.items.push({ label: 'FILE', value: this.fileinput });
+                        }
+
                         let selectedAPIInputs = this.data.story.processApiData.apiInput;
                         if(this.items && this.data.story.processApiData.apiInput){
-                            selectedAPIInputs = this.items.find(x => (x.value.id === this.data.story.processApiData.apiInput.id) && (x.value.inputName === this.data.story.processApiData.apiInput.inputName));
-                            this.processNodeConfigFormGroup.patchValue({
-                                selectedAPIInputs: selectedAPIInputs.value,
-                            });
+                            if(this.configuration.selectedAPIInputs.inputType !== 'FILE'){
+                                selectedAPIInputs = this.items.find(x => (x.value.id === this.data.story.processApiData.apiInput.id) && (x.value.inputName === this.data.story.processApiData.apiInput.inputName));
+                                this.processNodeConfigFormGroup.patchValue({
+                                    selectedAPIInputs: selectedAPIInputs.value,
+                                });
+                            } else {
+                                selectedAPIInputs = this.items.find(x => (x.value.inputType === this.data.story.processApiData.apiInput.inputType) && (x.value.inputName === this.data.story.processApiData.apiInput.inputName));
+                                this.processNodeConfigFormGroup.patchValue({
+                                    selectedAPIInputs: selectedAPIInputs.value,
+                                });
+                            }
                         }
                         let returnObject = this.data.story.processApiData.returnObject;
                         if(returnObject && this.returnObject){

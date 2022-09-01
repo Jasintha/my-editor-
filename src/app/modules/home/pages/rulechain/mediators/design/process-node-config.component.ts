@@ -357,11 +357,25 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
                     this.loadAggregates();
                   }
 
+                  if(this.items) {
+                    this.items.push({ label: 'FILE', value: this.fileinput });
+                  } else {
+                    this.items = [];
+                    this.items.push({ label: 'FILE', value: this.fileinput });
+                  }
+
                   if(this.configuration.apiInput && this.configuration.apiInput.id && this.items){
-                    let selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
-                    this.processNodeConfigFormGroup.patchValue({
-                      selectedAPIInputs: selectedAPIInputs.value,
-                    });
+                    if(this.configuration.selectedAPIInputs.inputType !== 'FILE'){
+                        let selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
+                        this.processNodeConfigFormGroup.patchValue({
+                          selectedAPIInputs: selectedAPIInputs.value,
+                        });
+                    } else {
+                        let selectedAPIInputs = this.items.find(x => (x.value.inputType === this.configuration.apiInput.inputType) && (x.value.inputName === this.configuration.apiInput.inputName));
+                        this.processNodeConfigFormGroup.patchValue({
+                          selectedAPIInputs: selectedAPIInputs.value,
+                        });
+                    }
                   }
                   if(this.configuration.returnObject && this.configuration.returnObject.id && this.returnObject){
                     let returnObject = this.returnObject.find(x => (x.value.id === this.configuration.returnObject.id) && (x.value.inputType === this.configuration.returnObject.inputType) && (x.value.inputName === this.configuration.returnObject.inputName));
