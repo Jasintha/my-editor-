@@ -36,10 +36,23 @@
   margin-bottom: 1%;
 }
 
+.form-tile {
+  margin: inherit;
+  padding: 1%;
+  margin-bottom: 1%;
+  border-bottom: 1px solid darkgrey;
+}
+
 .tile:hover {
   background: #dedede;
   transform: scale(1.02);
 }
+
+.disabled-row {
+  background-color: #eff3f3;
+  color: #8f8f8f;
+}
+
 .modal-title-color {
   color: white;
 }
@@ -193,6 +206,20 @@
 
 .card {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+
+.card-page {
+  padding: 2%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 0.25rem;
 }
 
 .page-container {

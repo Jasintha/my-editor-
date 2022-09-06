@@ -1,4 +1,4 @@
-<div class="justify-content-center" style=" overflow-x: auto; padding-top: 1%; background-color: #f1f1f1">
+<div class="justify-content-center" style="padding-top: 1%; background-color: #f1f1f1">
     <form name="editForm" role="form" novalidate (ngSubmit)="validatePageSave()" [formGroup]="editForm">
         <div class="form-group" [hidden]="!editForm.get('id').value">
             <input type="hidden" class="form-control" id="id" name="id" formControlName="id"/>
@@ -14,9 +14,9 @@
 
         <div class="row">
             <div class="col-md-12 ">
-                <h6>Basic details</h6>
-                <div class="card">
-                    <div class=" card-body row">
+                <h6 style="margin-left: 5px;">Basic details</h6>
+                <div class="card-page">
+                    <div class="row">
                         <div class="col-md-7">
                             <div class="row">
                                 <div class="col-md-10">
@@ -68,19 +68,19 @@
                         <div style="margin-top: 1%" class="col-4">
                             <div class="ui-panel-content ui-widget-content justify-content-center" style="padding-top: 5px">
                                 <img *ngIf="editForm.value.pagetemplate == 'login-page'" class="pageTmpImgInPage"
-                                     src="../../../../../assets/images/pages/login.jpg"
+                                     src="../../../../../assets/images/new_pages/page_wireframes/Login.jpg"
                                      alt="Template" style="width: 100%">
                                 <img *ngIf="editForm.value.pagetemplate == 'aio-table'|| editForm.value.pagetemplate =='table-page'"
-                                     class="pageTmpImgInPage" src="../../../../../assets/images/pages/allinone.jpg"
+                                     class="pageTmpImgInPage" src="../../../../../assets/images/new_pages/page_wireframes/table.jpg"
                                      alt="Template" style="width: 100%">
                                 <img *ngIf="editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'static-page'  || editForm.value.pagetemplate == 'file-upload-page' || editForm.value.pagetemplate == 'form-wizard-page'"
-                                     class="pageTmpImgInPage" src="../../../../../assets/images/pages/form.jpg"
+                                     class="pageTmpImgInPage" src="../../../../../assets/images/new_pages/page_wireframes/form.jpg"
                                      alt="Template" style="width: 100%">
                                 <img *ngIf="editForm.value.pagetemplate == 'register-page'"
-                                     class="pageTmpImgInPage" src="../../../../../assets/images/pages/register.jpg"
+                                     class="pageTmpImgInPage" src="../../../../../assets/images/new_pages/page_wireframes/register.jpg"
                                      alt="Template" style="width: 100%">
                                 <img *ngIf="editForm.value.pagetemplate == 'aio-grid' || editForm.value.pagetemplate == 'tile-page'"
-                                     class="pageTmpImgInPage" src="../../../../../assets/images/pages/grid.jpg"
+                                     class="pageTmpImgInPage" src="../../../../../assets/images/new_pages/page_wireframes/Gridpage.jpg"
                                      alt="Template" style="width: 100%">
                             </div>
                         </div>
@@ -91,10 +91,10 @@
 
         <div style="margin-top: 1%" class="row">
             <div class="col-md-12 ">
-                <h6>Controller settings</h6>
-                <div class="card">
-                    <div class=" card-body row">
-                        <div class="col-md-12">
+                <h6 style="margin-left: 5px;">Controller settings</h6>
+                <div class="card-page">
+                    <div class="row">
+                        <div class="col-md-8">
                             <add-form-controllers [projectUid] ='projectUid' [pageId] ='pageId'></add-form-controllers>
                         </div>
                     </div>
@@ -104,10 +104,10 @@
 
         <div style="margin-top: 1%" class="row">
             <div class="col-md-12 ">
-                <h6>Page layout change</h6>
-                <div class="card">
-                    <div class=" card-body row">
-                        <div class="col-md-12">
+                <h6 style="margin-left: 5px;">Page layout change</h6>
+                <div class="card-page">
+                    <div class="   row">
+                        <div class="col-md-8">
                             <virtuan-view-model-config [projectUid] ='projectUid' [pageId] ='pageId'></virtuan-view-model-config>
                         </div>
                     </div>
@@ -117,10 +117,10 @@
 
         <div style="margin-top: 1%" class="row">
             <div class="col-md-12 ">
-                <h6>Page actions and events</h6>
-                <div class="card">
-                    <div class=" card-body row">
-                        <div class="col-md-12">
+                <h6 style="margin-left: 5px;">Page actions and events</h6>
+                <div class="card-page">
+                    <div class="   row">
+                        <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="submit"  value="Save" style="float: right" (click)="addActionButton()" class="btn savebtn">Add</button>
@@ -129,7 +129,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div *ngIf="BTN_ELEMENT_DATA.length > 0">
-                                        <table mat-table matSort  [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+                                        <table mat-table matSort  [dataSource]="dataSource" class="demo-table">
 
                                             <ng-container matColumnDef="caption">
                                                 <th mat-header-cell *matHeaderCellDef>Caption</th>
@@ -157,8 +157,18 @@
                                                 <th mat-header-cell *matHeaderCellDef>Tooltip</th>
                                                 <td mat-cell *matCellDef="let element">{{element.tooltip}}</td>
                                             </ng-container>
+                                            <ng-container matColumnDef="events">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header >Events</th>
+                                                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                                    <button (click)="editEvents(row.uuid)"
+                                                            mat-icon-button
+                                                            type="button">
+                                                        <mat-icon>edit</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
                                             <ng-container matColumnDef="actions">
-                                                <th *matHeaderCellDef mat-header-cell mat-sort-header >Action</th>
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header >Delete</th>
                                                 <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
                                                     <button (click)="deleteRow(row)"
                                                             mat-icon-button
@@ -185,9 +195,9 @@
 
         <div style="margin-top: 1%" class="row">
             <div class="col-md-12 ">
-                <h6>configuration change</h6>
-                <div class="card">
-                    <div class=" card-body row">
+                <h6 style="margin-left: 5px;">configuration change</h6>
+                <div class="card-page">
+                    <div class="   row">
                         <div class="col-md-7">
                         </div>
                     </div>
@@ -197,13 +207,13 @@
 
         <div style="margin-top: 1%" class="row">
             <div class="col-md-12 ">
-                <h6>Integration</h6>
-                <div class="card">
-                    <div class=" card-body row">
-                        <div class="col-md-12">
+                <h6 style="margin-left: 5px;">Integration</h6>
+                <div class="card-page">
+                    <div class="   row">
+                        <div class="col-md-8">
                             <div class="form-group">
-                                <div class="card">
-                                    <div class="card-body row">
+                                <div>
+                                    <div class="  row">
                                         <div class="row col-md-12">
                                             <div *ngIf="project?.apptypesID === 'task.ui'"
                                                  style=" padding-top: 5px; ">

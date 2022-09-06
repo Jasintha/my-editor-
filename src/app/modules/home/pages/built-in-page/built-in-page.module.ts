@@ -46,6 +46,7 @@ import {FilterPageComponent} from '@home/pages/built-in-page/filter-page.compone
 import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
 import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-save-confirm-dialog.component';
 import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-event.component';
+import {ButtonEventHandleComponent} from '@home/pages/built-in-page/button-event-handle.component';
 
 @NgModule({
     declarations:[
@@ -63,7 +64,8 @@ import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-ev
         CustomPageApiDialogComponent,
         FilterPageComponent,
         ModelChangeConfirmDialogComponent,
-        PageSaveConfirmDialogComponent
+        PageSaveConfirmDialogComponent,
+        ButtonEventHandleComponent
     ],
     imports: [
         CommonModule,
@@ -115,7 +117,8 @@ import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-ev
         CustomPageApiDialogComponent,
         FilterPageComponent,
         ModelChangeConfirmDialogComponent,
-        PageSaveConfirmDialogComponent
+        PageSaveConfirmDialogComponent,
+        ButtonEventHandleComponent
     ],
     providers: [ ]
 })

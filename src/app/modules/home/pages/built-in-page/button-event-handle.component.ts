@@ -1,7 +1,7 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import {MessageService, SelectItem} from 'primeng/api';
 
 import { IPageConfig, Config } from '@shared/models/model/page-config.model';
 import { IFormField, ISourceTargetFieldsRequest } from '@shared/models/model/form-field.model';
@@ -19,11 +19,11 @@ import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
     selector: 'virtuan-page-action-event',
-    templateUrl: './page-action-event.component.html',
+    templateUrl: './button-event-handle-component.html',
     providers: [MessageService],
     styleUrls: ['./built-in-page.component.scss'],
 })
-export class PageActionEventComponent implements OnInit {
+export class ButtonEventHandleComponent implements OnInit {
     configs: IPageConfig;
     eventSubscriber1: Subscription;
     eventSubscriber2: Subscription;
@@ -44,6 +44,22 @@ export class PageActionEventComponent implements OnInit {
     confirmationTypes = [];
     operationItems = [];
     BTN_ELEMENT_DATA = [];
+    currentButton: IButtonType;
+    pageEvents: SelectItem[] = [
+        { label: 'ON-LOAD', value: 'ON-LOAD' },
+        { label: 'ON-SUBMIT', value: 'ON-SUBMIT' },
+        { label: 'AFTER-SUBMIT', value: 'AFTER-SUBMIT' },
+    ];
+    resourcePathMethods: SelectItem[] = [
+        { label: 'GET', value: 'GET' },
+        { label: 'POST', value: 'POST' },
+        { label: 'PUT', value: 'PUT' },
+        { label: 'DELETE', value: 'DELETE' },
+    ];
+    pageEventsActions: SelectItem[] = [
+        { label: 'CALL_PAGE_ONLOAD', value: 'CALL_PAGE_ONLOAD' },
+        { label: 'CALL_API', value: 'CALL_API' },
+    ];
     constructor(
         protected eventManager: EventManagerService,
         protected accountService: AccountService,
@@ -51,7 +67,7 @@ export class PageActionEventComponent implements OnInit {
         protected pageService: BuiltInPageService,
         @Inject(MAT_DIALOG_DATA)  public data: any,
         private fb: FormBuilder,
-        public dialogRef: MatDialogRef<PageActionEventComponent>,
+        public dialogRef: MatDialogRef<ButtonEventHandleComponent>,
         private router: Router,
         private location: Location
     ) {
@@ -77,10 +93,12 @@ export class PageActionEventComponent implements OnInit {
 
 
     ngOnInit() {
+        this.currentButton = this.data.button;
         this.buildNewForm();
+        this.editForm.get(['btnCaption']).patchValue(this.currentButton.caption);
     }
 
-    saveAction() {
+    saveEvent() {
     }
 
 

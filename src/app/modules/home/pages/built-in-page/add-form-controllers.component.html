@@ -2,7 +2,7 @@
         <div formArrayName="formFieldsGroup">
             <div *ngFor="let emp of formFieldsGroup.controls; let i = index">
                 <div class="row-g-12" [formGroup]="emp">
-                    <div class="tile row" *ngIf="!isFieldSelected">
+                    <div class="form-tile row" *ngIf="!isFieldSelected">
                         <div class="col-md-4 form-group" *ngIf="!isFieldSelected">
                             <input class="form-control" readonly type="text" formControlName="propertyName"
                                    style=" width: 70%" >
@@ -12,24 +12,24 @@
 
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'"
                                      src="../../../../../assets/images/form_control/textbox.jpg"
-                                     style="width: 24%; height: 3%">
+                                     style="width: 40%; height: 3%">
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Radiobutton'"
                                      src="../../../../../assets/images/form_control/radio.jpg"
-                                     style="width: 24%; height: 3% ">
+                                     style="width: 40%; height: 3% ">
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Checkbox'"
                                      src="../../../../../assets/images/form_control/checkbox.jpg"
-                                     style="width: 24%; height: 3% ">
+                                     style="width: 40%; height: 3% ">
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Dropdown'"
                                      src="../../../../../assets/images/form_control/dropdown.jpg"
-                                     style="width: 24%; height: 3% ">
+                                     style="width: 40%; height: 3% ">
 
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'DATE_INPUT'"
                                      src="../../../../../assets/images/form_control/date.jpg"
-                                     style="width: 24%; height: 3% ">
+                                     style="width: 40%; height: 3% ">
 
                                 <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'TRUE_OR_FALSE_PICKER'"
                                      src="../../../../../assets/images/form_control/tureorfalse.jpg"
-                                     style="width: 24%; height: 3% ">
+                                     style="width: 40%; height: 3% ">
 
                                 <i *ngIf="this.form.value.formFieldsGroup[i].fieldcategory === 'object'"
                                    style="font-size:30px " class="fa fa-exchange" aria-hidden="true"></i>
