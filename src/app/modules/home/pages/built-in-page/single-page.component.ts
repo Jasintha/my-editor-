@@ -40,6 +40,7 @@ import {ChartDetails} from '@shared/models/model/chart-details.model';
 import {INavigationParam} from '@shared/models/model/page-navigation.model';
 import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-save-confirm-dialog.component';
 import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-event.component';
+import {ButtonEventHandleComponent} from '@home/pages/built-in-page/button-event-handle.component';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -94,7 +95,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   detailsHeadersList: SelectItem[] = [];
   stepIndexId = 1;
   headerIndexId = 1;
-  displayedColumns: string[] = ['caption', 'resourcepath', 'operation', 'page', 'color', 'tooltip', 'actions'];
+  displayedColumns: string[] = ['caption', 'resourcepath', 'operation', 'page', 'color', 'tooltip', 'events', 'actions'];
   eventDisplayedColumns: string[] = ['button', 'event', 'action', 'page', 'api', 'actions'];
   actions: IActions;
   BTN_ELEMENT_DATA: IButtonType[];
@@ -585,6 +586,22 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
   }
 
+  editEvents(button) {
+    const page = this.currentPage;
+    const dialogRef = this.dialog.open(ButtonEventHandleComponent, {
+      panelClass: ['virtuan-dialog'],
+      data: {
+        button,
+      }
+    });
+    dialogRef.afterClosed(
+    ).subscribe(result => {
+      if (result) {
+        this.BTN_ELEMENT_DATA.push(result);
+      }
+    });
+  }
+
   deleteEventRow(param) {
     const index = this.btnEventActionList.indexOf(param);
     this.btnEventActionList.splice(index, 1);
@@ -644,7 +661,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       dialogRef.afterClosed(
       ).subscribe(result => {
         if (result) {
-          this.checkPageNameExist();
+          this.BTN_ELEMENT_DATA.push(result);
         }
       });
   }

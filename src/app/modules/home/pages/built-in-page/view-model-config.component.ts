@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Inject, Input} from '@angular/core';
+import {Component, OnInit, OnDestroy, Inject, Input, ViewEncapsulation} from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
@@ -72,7 +72,7 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
     isWidgetView: boolean;
     sourceProperties: IFormField[];
     targetProperties: IFormField[];
-    pageViewModelFields: any[] = [];
+    pageViewModelFields: IFormField[] = [];
     fieldMapDisplayedColumns: string[] = ['field','group','visibility'];
     fieldDataSourceWizard = new MatTableDataSource(this.pageViewModelFields);
 
@@ -263,11 +263,7 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
     }
 
     saveFormOrder() {
-        if (this.isWidgetView) {
-            this.saveWidgetFormOrder();
-        } else {
-            this.savePageFormOrder();
-        }
+        this.savePageFormOrder();
     }
 
     savePageFormOrder() {

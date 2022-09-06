@@ -2,11 +2,23 @@ export interface IFormField {
   propertyName?: string;
   isLinkedProperty?: boolean;
   selectType?: string;
+  isVisible?: boolean;
   children?: string;
+  propertyType?: string;
+  fieldController?: string;
+  isrequired?: string;
+  placeholder?: string;
+  label?: string;
+  choiceUrl?: string;
+  defaultValue?: string;
+  fieldValueChoices?: any;
+  choiceType?: string;
+  dropdownMappings?: any;
 }
 
 export class FormField implements IFormField {
-  constructor(public propertyName?: string, public isLinkedProperty?: boolean, public selectType?: string, public children?: string) {}
+  constructor(public propertyName?: string, public isLinkedProperty?: boolean, public selectType?: string,
+              public isVisible?: boolean, public children?: string) {}
 }
 
 export interface ISourceTargetFieldsRequest {

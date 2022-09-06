@@ -1066,3 +1066,11 @@ mat-label {
     pointer-events: none !important;
   }
 }
+
+.virtuan-default .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #0d6efd;
+}
+
+.virtuan-default .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: rgb(73 59 153 / 54%);
+}
