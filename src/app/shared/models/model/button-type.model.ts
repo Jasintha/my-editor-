@@ -1,3 +1,5 @@
+import {INavigationParam} from '@shared/models/model/page-navigation.model';
+
 export interface IActions {
     buttons?: IButtons;
 }
@@ -28,7 +30,8 @@ export interface IButtonType {
     tooltip?: string;
     pageId?: string;
     pageName?: string;
-    buttonEvents?: IButtonEvent[]
+    buttonEvents?: IButtonEvent[],
+    navigationParams?: INavigationParam[];
 }
 
 export class ButtonType implements IButtonType {
@@ -40,7 +43,8 @@ export class ButtonType implements IButtonType {
                 public tooltip?: string,
                 public pageId?: string,
                 public pageName?: string,
-                public buttonEvents?: IButtonEvent[]
+                public buttonEvents?: IButtonEvent[],
+                public navigationParams?: INavigationParam[],
     ) {}
 }
 

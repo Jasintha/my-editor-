@@ -655,9 +655,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   addActionButton(){
-    const page = this.currentPage;
       const dialogRef = this.dialog.open(PageActionEventComponent, {
         panelClass: ['virtuan-dialog'],
+        data: {
+          currentPage: this.currentPage,
+        }
       });
       dialogRef.afterClosed(
       ).subscribe(result => {
@@ -1444,7 +1446,6 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         rowMappings: this.rowHeaderMappingArray,
         tabLayout: this.editForm.get(['wizardLayout']).value,
         chartDetails,
-        navigationParams: this.navigationParams,
         tileFields: this.TILE_DATA,
         tileFieldCount: this.editForm.get(['tileFieldCount']).value,
         buttonEvents: this.btnEventActionList
@@ -1859,24 +1860,24 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     });
   }
 
-  createPageNavigation(){
-    const dialogRef = this.dialog.open(PageNavigationComponent, {
-      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-      data: {
-        projectUid: this.projectUid,
-        createStatus: status,
-        uuid: this.currentPage.uuid,
-        currentPage: this.currentPage,
-        navigationParams: this.currentPage.navigationParams
-      }
-    });
-    dialogRef.afterClosed(
-    ).subscribe(result => {
-      if (result) {
-        this.navigationParams = result;
-        this.checkPageNameExist()
-      }
-      // console.log(`Dialog resurelt: ${result}`);
-    });
-  }
+  // createPageNavigation(){
+  //   const dialogRef = this.dialog.open(PageNavigationComponent, {
+  //     panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+  //     data: {
+  //       projectUid: this.projectUid,
+  //       createStatus: status,
+  //       uuid: this.currentPage.uuid,
+  //       currentPage: this.currentPage,
+  //       navigationParams: this.currentPage.navigationParams
+  //     }
+  //   });
+  //   dialogRef.afterClosed(
+  //   ).subscribe(result => {
+  //     if (result) {
+  //       this.navigationParams = result;
+  //       this.checkPageNameExist()
+  //     }
+  //     // console.log(`Dialog resurelt: ${result}`);
+  //   });
+  // }
 }
