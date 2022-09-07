@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, Input, OnChanges, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MessageService, SelectItem } from 'primeng/api';
@@ -33,7 +33,7 @@ interface ControllerItem {
   templateUrl: './add-form-controllers.component.html',
   styleUrls: ['./built-in-page.component.scss'],
 })
-export class AddFormControllersComponent implements OnInit {
+export class AddFormControllersComponent implements OnChanges {
 
   @Input('pageId') pageId: string;
   @Input('projectUid') projectUid: string;
@@ -93,7 +93,7 @@ export class AddFormControllersComponent implements OnInit {
     // this.activeModal.dismiss('cancel');
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.widgetId = '';
     this.isSaving = false;
     this.microserviceProjectItems = [];

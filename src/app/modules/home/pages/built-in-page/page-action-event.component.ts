@@ -1,7 +1,7 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import {MessageService, SelectItem} from 'primeng/api';
 
 import { IPageConfig, Config } from '@shared/models/model/page-config.model';
 import { IFormField, ISourceTargetFieldsRequest } from '@shared/models/model/form-field.model';
@@ -41,8 +41,19 @@ export class PageActionEventComponent implements OnInit {
     sourceProperties: IFormField[];
     targetProperties: IFormField[];
     pages = [];
-    confirmationTypes = [];
-    operationItems = [];
+    confirmationTypes: SelectItem[] = [
+        { label: 'Without-Confirm', value: 'Without-Confirm' },
+        { label: 'Basic-Confirm', value: 'Basic-Confirm' },
+        { label: 'Text-Confirm', value: 'Text-Confirm' },
+    ];
+    operationItems: SelectItem[] = [
+        { label: 'CREATE', value: 'CREATE' },
+        { label: 'FIND', value: 'FIND' },
+        { label: 'DELETE', value: 'DELETE' },
+        { label: 'UPDATE', value: 'UPDATE' },
+        { label: 'NAVIGATE', value: 'NAVIGATE' },
+        { label: 'SEARCH', value: 'SEARCH' },
+    ];
     BTN_ELEMENT_DATA = [];
     constructor(
         protected eventManager: EventManagerService,

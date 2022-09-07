@@ -15,6 +15,11 @@
   opacity: 1;
 }
 
+.addbtn {
+  background-color: #6D7F8B;
+  color: white;
+}
+
 .savebtn {
   background-color: #1a73e8;
   color: white;
@@ -731,4 +736,18 @@ p {
 
 ::ng-deep.mat-tab-body-content {
   overflow: hidden !important;
+}
+.controller-input {
+  margin-top: 2%;
+}
+
+.page-view tr.mat-header-row {
+  height: 56px;
+  background-color: #d9d9d9 !important;
+}
+
+.page-view .virtuan-default .mat-header-cell, .virtuan-dark .mat-header-cell {
+  height: 20px;
+  font-size: 14px;
+  color: whitesmoke;
 }

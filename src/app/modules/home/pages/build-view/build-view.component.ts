@@ -173,7 +173,7 @@ export class BuildViewComponent implements OnInit {
               this.cdr.detectChanges();
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
-              //this.dataSource.paginator.pageIndex = 1;
+             // this.dataSource.paginator.pageIndex = 1;
               this.isBuildLogAvailable = true;
             },
             (res: HttpErrorResponse) => this.onError(res.message)

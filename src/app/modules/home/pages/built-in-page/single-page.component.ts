@@ -517,7 +517,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       };
       this.BTN_ELEMENT_DATA.push(button);
       this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
-      this.checkPageNameExist();
+    //  this.checkPageNameExist();
     } else {
       // error message
     }
@@ -586,7 +586,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
   }
 
-  editEvents(button) {
+  editEvents(button, index) {
     const page = this.currentPage;
     const dialogRef = this.dialog.open(ButtonEventHandleComponent, {
       panelClass: ['virtuan-dialog'],
@@ -597,7 +597,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     dialogRef.afterClosed(
     ).subscribe(result => {
       if (result) {
-        this.BTN_ELEMENT_DATA.push(result);
+        this.BTN_ELEMENT_DATA[index].buttonEvents.push(result);
+        this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
       }
     });
   }
@@ -662,8 +663,16 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       ).subscribe(result => {
         if (result) {
           this.BTN_ELEMENT_DATA.push(result);
+          this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
         }
       });
+  }
+
+  savePageActions(){
+    const page = this.currentPage;
+    this.actions.buttons.child = this.BTN_ELEMENT_DATA;
+    page.actions = this.actions;
+    this.updatePageActions(page);
   }
 
   deleteParamMapping(param) {
@@ -1021,6 +1030,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
+  updateResourcePath() {
+      const page = this.currentPage;
+      page.resourcePath = this.editForm.get(['resourcePath']).value;
+      this.updatePageResourcePath(page);
+  }
+
   onChangeAioTableMicroserviceAPI() {
     const microservice = this.editForm.get(['aiomicroservice']).value;
     const api = this.editForm.get(['aioapi']).value;
@@ -1351,6 +1366,27 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
+  updatePageResourcePath(builtInPage: IPage) {
+    this.isSaving = true;
+    if (builtInPage.uuid && builtInPage.resourcePath) {
+      this.subscribeToSaveResponse(this.builtInPageService.updateResourcePath(builtInPage, this.projectUid));
+    }
+  }
+
+  updatePageBasicData(builtInPage: IPage) {
+    this.isSaving = true;
+    if (builtInPage.uuid && builtInPage.pagetitle) {
+      this.subscribeToSaveResponse(this.builtInPageService.updatePageBasicData(builtInPage, this.projectUid));
+    }
+  }
+
+  updatePageActions(builtInPage: IPage) {
+    this.isSaving = true;
+    if (builtInPage.uuid && builtInPage.actions) {
+      this.subscribeToSaveResponse(this.builtInPageService.updatePageActions(builtInPage, this.projectUid));
+    }
+  }
+
   private createFromForm(): IPage {
     let headersArray = [];
     let fieldMappingArray = [];
@@ -1442,7 +1478,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       this.eventManager.dispatch(
           new AppEvent(EventTypes.editorUITreeListModification, {
             name: 'editorUITreeListModification',
-            content: 'Deleted an built in page',
+            content: 'UI tree edited',
           })
       );
     }
@@ -1508,7 +1544,10 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   checkPageNameExist() {
-    const page = this.createFromForm();
+   // const page = this.createFromForm();
+    const page = this.currentPage;
+    page.pagetitle = this.editForm.get(['pagetitle']).value;
+    page.pageDescription = this.editForm.get(['pageDescription']).value;
     this.builtInPageService
         .findPageNameAvailability(page.pagetitle, this.currentPage.uuid, this.projectUid)
         .pipe(
@@ -1522,6 +1561,31 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
               } else {
                 this.consoleLogService.writeConsoleLog('Page saved successfully');
                 this.save(page);
+              }
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+  }
+
+
+  checkAndUpdatePageName() {
+    // const page = this.createFromForm();
+    const page = this.currentPage;
+    page.pagetitle = this.editForm.get(['pagetitle']).value;
+    page.pageDescription = this.editForm.get(['pageDescription']).value;
+    this.builtInPageService
+        .findPageNameAvailability(page.pagetitle, this.currentPage.uuid, this.projectUid)
+        .pipe(
+            filter((res: HttpResponse<any>) => res.ok),
+            map((res: HttpResponse<any>) => res.body)
+        )
+        .subscribe(
+            (res: any) => {
+              if (res.IsNameExist) {
+                this.consoleLogService.writeConsoleLog('Page name exists');
+              } else {
+                this.consoleLogService.writeConsoleLog('Page saved successfully');
+                this.updatePageBasicData(page);
               }
             },
             (res: HttpErrorResponse) => this.onError(res.message)

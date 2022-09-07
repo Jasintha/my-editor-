@@ -42,6 +42,9 @@ export class BuiltInPageService {
   public aggregateModelKeysResourceUrl =  '/api/editor/proj/aggregates/keys';
   public resourceAgrUrl =  '/api/editor/proj/aggregates';
   public designresourceUrl =  '/api/editor/proj/aggregates/design';
+  public updateResourcepathUrl =  '/api/editor/proj/pages/built-in/page-resource-path';
+  public updateBasicDataUrl =  '/api/editor/proj/pages/built-in/page-basic-data';
+  public updatePageActionsUrl =  '/api/editor/proj/pages/built-in/page-actions';
   public pageStyleUrl =  '/api/editor/proj/pages/pagestyle';
 
   constructor(protected http: HttpClient) {}
@@ -56,6 +59,18 @@ export class BuiltInPageService {
 
   update(builtInPage: IPage, uuid: string): Observable<EntityResponseType> {
     return this.http.put<IPage>(`${this.resourceUrl}/${uuid}`, builtInPage, { observe: 'response' });
+  }
+
+  updateResourcePath(builtInPage: IPage, uuid: string): Observable<EntityResponseType> {
+    return this.http.put<IPage>(`${this.updateResourcepathUrl}/${uuid}`, builtInPage, { observe: 'response' });
+  }
+
+  updatePageBasicData(builtInPage: IPage, uuid: string): Observable<EntityResponseType> {
+    return this.http.put<IPage>(`${this.updateBasicDataUrl}/${uuid}`, builtInPage, { observe: 'response' });
+  }
+
+  updatePageActions(builtInPage: IPage, uuid: string): Observable<EntityResponseType> {
+    return this.http.put<IPage>(`${this.updatePageActionsUrl}/${uuid}`, builtInPage, { observe: 'response' });
   }
 
   find(id: string, uuid: string): Observable<EntityResponseType> {
