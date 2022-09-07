@@ -55,6 +55,7 @@ export class ViewModelConfigComponent implements OnChanges, OnDestroy {
 
     @Input('pageId') pageId: string;
     @Input('projectUid') projectUid: string;
+    @Input('widgetUid') widgetUid: string;
     pageConfigs: IConfig[];
     pageActions: IPageAction[];
     configs: IPageConfig;
@@ -205,21 +206,15 @@ export class ViewModelConfigComponent implements OnChanges, OnDestroy {
         this.pageConfigs = [];
         this.sourceProperties = [];
         this.targetProperties = [];
-        // this.loadAll();
+        this.pageViewModelFields = [];
+        this.pageViewModelFields = this.targetProperties;
         this.activatedRoute.queryParams.subscribe(params => {
             //  this.pageId = params['pageId'];
         });
         // this.pageId = this.toolbarTrackerService.getPageID();
         //  this.widgetId = this.toolbarTrackerService.getWidgetID();
-        if (this.widgetId) {
-            this.isWidgetView = true;
-            this.loadPageConfigsByPageId(this.widgetId, this.projectUid);
-            this.loadAllSourceTargetFormFieldsForWidget(this.widgetId, this.projectUid);
-        } else {
-            this.loadPageConfigsByPageId(this.pageId, this.projectUid);
-            this.loadAllSourceTargetFormFieldsForPage(this.pageId, this.projectUid);
-        }
-
+        this.loadPageConfigsByPageId(this.pageId, this.projectUid);
+        this.loadAllSourceTargetFormFieldsForPage(this.pageId, this.projectUid);
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });

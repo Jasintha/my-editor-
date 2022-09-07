@@ -265,7 +265,7 @@
                                             </div>
                                         </div>
                                         <div style="margin-top: 5%">
-                                            <input type="button" (click)="backToChildFields()"  value="Save and Back" class="btn"
+                                            <input type="button" (click)="backToChildFields()"  value="Back" class="btn"
                                                    style="background-color: #4cc792; color: white;width: 20%; float:right">
                                         </div>
 
@@ -405,14 +405,15 @@
                                    class="btn"
                                    style="background-color: #4cc792; color: white; width: 5%; float:right">
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
-        <div  style="float: right; margin-top: 2%">
-            <button type="submit" *ngIf="!isFieldSelected" value="Save"  class="btn savebtn">Save</button>
-        </div>
+    <div  style="float: right; margin-top: 2%;" *ngIf="!isFieldSelected && formFieldsGroup.controls.length > 0">
+        <button type="submit"  value="Save"  class="btn savebtn">Save</button>
+    </div>
+    <div *ngIf="formFieldsGroup.controls.length === 0" style="float: right; margin-top: 2%; margin-right: 30%">
+        <span>No form controllers available</span>
+    </div>
 
 </form>

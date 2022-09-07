@@ -258,6 +258,20 @@
                     </div>
                 </div>
             </div>
+        <div style="padding-top: 50px" *ngIf="pageCreationStatus === 'modelSelection'">
+            <div class="row">
+                <div class="col-md-10">
+                    <mat-form-field  [style]="{'width':'100%'}">
+                        <mat-label>Model</mat-label>
+                        <mat-select  (selectionChange)="onChangePageModel($event)">
+                            <mat-option *ngFor="let option of aggregateItems" [value]="option.value">
+                                {{option.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
 
     </mat-dialog-content>
     <mat-dialog-actions align="end">
