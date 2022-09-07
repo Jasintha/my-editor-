@@ -75,19 +75,19 @@
                                            formControlName="fieldController"/>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="controller-input form-group">
                                 <label class="form-control-label">Label </label>
                                 <input class="form-control" type="text" formControlName="label">
                             </div>
-                            <div class="form-group">
+                            <div class="controller-input form-group">
                                 <label class="form-control-label">Default Value </label>
                                 <input class="form-control" type="text" formControlName="defaultvalue">
                             </div>
-                            <div class="form-group"
+                            <div class="controller-input form-group"
                                  *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'">
                                 <label class="form-control-label">Placeholder </label>
                                 <input class="form-control" type="text" formControlName="placeholder"></div>
-                            <div class="form-group">
+                            <div class="controller-input form-group">
                                 <p-checkbox name="isrequired"
                                             formControlName="isrequired" binary="true"></p-checkbox>
                                 <label class="form-control-label p-sm-2">Required </label>
@@ -175,19 +175,19 @@
                                                        formControlName="fieldController"/>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="controller-input form-group">
                                             <label class="form-control-label">Label </label>
                                             <input class="form-control" type="text" formControlName="label">
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-control-label">Default Value </label>
+                                            <label class="controller-input form-control-label">Default Value </label>
                                             <input class="form-control" type="text" formControlName="defaultvalue">
                                         </div>
-                                        <div class="form-group"
+                                        <div class="controller-input form-group"
                                              *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'">
                                             <label class="form-control-label">Placeholder </label>
                                             <input class="form-control" type="text" formControlName="placeholder"></div>
-                                        <div class="form-group">
+                                        <div class="controller-input form-group">
                                             <p-checkbox name="isrequired"
                                                         formControlName="isrequired" binary="true"></p-checkbox>
                                             <label class="form-control-label p-sm-2">Required </label>
@@ -265,8 +265,8 @@
                                             </div>
                                         </div>
                                         <div style="margin-top: 5%">
-                                            <input type="button" (click)="backToChildFields()" value="Save and Back" class="btn"
-                                                   style="background-color: #4cc792; color: white;width: 100%">
+                                            <input type="button" (click)="backToChildFields()"  value="Save and Back" class="btn"
+                                                   style="background-color: #4cc792; color: white;width: 20%; float:right">
                                         </div>
 
                                     </div>
@@ -401,9 +401,9 @@
                         </div>
                         <br>
                         <div style="margin-top: 2%">
-                            <input *ngIf="!isChildFieldSelected" type="button" (click)="backToFields()" value="Save and Back"
+                            <input *ngIf="!isChildFieldSelected" type="button" (click)="backToFields()" value="Back"
                                    class="btn"
-                                   style="background-color: #4cc792; color: white; width: 100%">
+                                   style="background-color: #4cc792; color: white; width: 5%; float:right">
                         </div>
 
                     </div>

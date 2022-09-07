@@ -1,21 +1,26 @@
-<div class="justify-content-center" style="padding-top: 1%; background-color: #f1f1f1">
-    <form name="editForm" role="form" novalidate (ngSubmit)="validatePageSave()" [formGroup]="editForm">
+<div class="page-view justify-content-center" style="padding-top: 1%; background-color: #f1f1f1">
+    <form name="editForm" role="form" novalidate [formGroup]="editForm">
         <div class="form-group" [hidden]="!editForm.get('id').value">
             <input type="hidden" class="form-control" id="id" name="id" formControlName="id"/>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <button style="float: right" type="button"
-                        (click)="enableToEdit()">
-                    <mat-icon>edit</mat-icon>
-                </button>
-            </div>
-        </div>
+
 
         <div class="row">
             <div class="col-md-12 ">
                 <h6 style="margin-left: 5px;">Basic details</h6>
                 <div class="card-page">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button style="float: right" type="button"
+                                    (click)="checkAndUpdatePageName()">
+                                <mat-icon>save</mat-icon>
+                            </button>
+                            <button style="float: right" type="button"
+                                    (click)="enableToEdit()">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-7">
                             <div class="row">
@@ -56,7 +61,7 @@
                                     <mat-form-field  [style]="{'width':'100%'}">
                                         <mat-label>Model</mat-label>
                                         <mat-select formControlName="selectedAggregate" (selectionChange)="onChangePageModel($event,false)"
-                                                    [disabled]="true">
+                                                    [disabled]="currentPage.model !== null && currentPage.model !== undefined">
                                             <mat-option *ngFor="let option of aggregateItems" [value]="option.value">
                                                 {{option.label}}
                                             </mat-option>
@@ -89,7 +94,7 @@
             </div>
         </div>
 
-        <div style="margin-top: 1%" class="row">
+        <div *ngIf="editForm.value.pagetemplate === 'aio-table' || editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'form-wizard-page' || editForm.value.pagetemplate == 'register-page' || editForm.value.pagetemplate == 'login-page'" style="margin-top: 1%" class="row">
             <div class="col-md-12 ">
                 <h6 style="margin-left: 5px;">Controller settings</h6>
                 <div class="card-page">
@@ -123,12 +128,12 @@
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit"  value="Save" style="float: right" (click)="addActionButton()" class="btn savebtn">Add</button>
+                                    <button type="submit"  value="Save" style="float: right; margin-bottom: 1%" (click)="addActionButton()" class="btn addbtn">Add</button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div *ngIf="BTN_ELEMENT_DATA.length > 0">
+                                    <div>
                                         <table mat-table matSort  [dataSource]="dataSource" class="demo-table">
 
                                             <ng-container matColumnDef="caption">
@@ -159,8 +164,8 @@
                                             </ng-container>
                                             <ng-container matColumnDef="events">
                                                 <th *matHeaderCellDef mat-header-cell mat-sort-header >Events</th>
-                                                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
-                                                    <button (click)="editEvents(row.uuid)"
+                                                <td *matCellDef="let row; let i = index" class="w-10 text-secondary" mat-cell>
+                                                    <button (click)="editEvents(row, i)"
                                                             mat-icon-button
                                                             type="button">
                                                         <mat-icon>edit</mat-icon>
@@ -182,9 +187,14 @@
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                         </table>
                                     </div>
-                                    <div *ngIf="BTN_ELEMENT_DATA.length === 0">
-                                        <div align="center">No actions/events available</div>
-                                    </div>
+<!--                                    <div *ngIf="BTN_ELEMENT_DATA.length === 0">-->
+<!--                                        <div align="center">No actions/events available</div>-->
+<!--                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit"  value="Save" style="float: right; margin-top: 1%" (click)="savePageActions()" class="btn savebtn">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -195,11 +205,311 @@
 
         <div style="margin-top: 1%" class="row">
             <div class="col-md-12 ">
-                <h6 style="margin-left: 5px;">configuration change</h6>
+                <h6 style="margin-left: 5px;">Configuration change</h6>
                 <div class="card-page">
                     <div class="   row">
                         <div class="col-md-7">
-                        </div>
+                            <div class="wiz-step" *ngIf="editForm.value.pagetemplate === 'form-wizard-page'"
+                                 formArrayName="wizardDetailsGroup">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <h6>Add wizard page steps</h6>
+                                    </div>
+                                    <div class="col-md-5" style='text-align: right'>
+                                        <button type="button" style="float: right;" mat-raised-button color="primary"
+                                                (click)="insertWizardDetailsGroup('')">
+                                            <mat-icon>add</mat-icon>
+                                            Add More
+                                        </button>
+                                    </div>
+                                </div>
+                                <div style="padding-top: 10px"
+                                     *ngFor="let step of wizardDetailsGroup.controls; let i = index">
+                                    <div [formGroup]="step">
+                                        <label class="form-control-label" for="field_pagetitle">Step Header</label>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <mat-form-field [style]="{'width':'100%'}">
+                                                    <!--                                                        <mat-label>Add authorized role</mat-label>-->
+                                                    <input type="text"
+                                                           formControlName="stepHeading" matInput name="stepHeading">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-2">
+                                            <span class="flex-auto">
+                                                <button type="button" mat-mini-fab
+                                                        aria-label="Example icon-button with a heart icon"
+                                                        (click)="removeWizardDetailsGroup(i)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="editForm.value.pagetemplate === 'form-wizard-page'">
+                                <div class="form-group">
+                                    <label class="form-control-label">Add form fields to steps</label>
+                                    <div class="card">
+                                        <div class="card-body row">
+                                            <div class="col-md-3" style="margin-right: 20px">
+                                                <mat-form-field [style]="{'width':'100%'}">
+                                                    <mat-label>Choose Model Property</mat-label>
+                                                    <mat-select formControlName="fieldName">
+                                                        <mat-option *ngFor="let option of modelPropertyList"
+                                                                    [value]="option.value">
+                                                            {{option.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field [style]="{'width':'100%'}">
+                                                    <mat-label>Choose the Step</mat-label>
+                                                    <mat-select formControlName="stepHeader">
+                                                        <mat-option *ngFor="let option of stepHeadersList"
+                                                                    [value]="option.value">
+                                                            {{option.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3" style='text-align: left'>
+                                                <button type="button" color="primary" mat-mini-fab
+                                                        aria-label="Example icon-button with a heart icon"
+                                                        (click)="saveAllWizardSteps()">
+                                                    <mat-icon>refresh</mat-icon>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-2" style='text-align: right'>
+                                                <button type="button" style="float: right;" mat-raised-button
+                                                        color="primary"
+                                                        (click)="addFieldsToSteps()">
+                                                    <mat-icon>add</mat-icon>
+                                                    Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="padding-top:20px;padding-bottom:20px;">
+                                        <table mat-table matSort [dataSource]="dataSourceWizard"
+                                               class="mat-elevation-z8 demo-table">
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="field">
+                                                <th mat-header-cell *matHeaderCellDef>Field</th>
+                                                <td mat-cell *matCellDef="let element">{{element.field}}</td>
+                                            </ng-container>
+
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="stepheader">
+                                                <th mat-header-cell *matHeaderCellDef>Step in wizard</th>
+                                                <td mat-cell *matCellDef="let element">{{element.stepHeader}}</td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="actions">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Action</th>
+                                                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                                    <button (click)="deleteFieldSteps(row)"
+                                                            mat-icon-button
+                                                            type="button">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedStepHeaderColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedStepHeaderColumns;"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="editForm.value.pagetemplate === 'static-page'">
+                                <div class="wiz-step" formArrayName="detailsHeaderGroup">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <h6>Add details page headers</h6>
+                                        </div>
+                                        <div class="col-md-5" style='text-align: right'>
+                                            <button type="button" style="float: right;" mat-raised-button color="primary"
+                                                    (click)="insertDetailsHeaderGroup('')">
+                                                <mat-icon>add</mat-icon>
+                                                Add More
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="padding-top: 10px"
+                                         *ngFor="let step of detailsHeaderGroup.controls; let i = index">
+                                        <div [formGroup]="step">
+                                            <label class="form-control-label" for="field_pagetitle">Header</label>
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <mat-form-field [style]="{'width':'100%'}">
+                                                        <!--                                                        <mat-label>Add authorized role</mat-label>-->
+                                                        <input type="text"
+                                                               formControlName="stepHeading" matInput name="stepHeading">
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-2">
+                                            <span class="flex-auto">
+                                                <button type="button" mat-mini-fab
+                                                        aria-label="Example icon-button with a heart icon"
+                                                        (click)="removeDetailsHeaderGroup(i)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Add attribute to headers</label>
+                                    <div class="card">
+                                        <div class="card-body row">
+                                            <div class="col-md-3" style="margin-right: 20px">
+                                                <mat-form-field [style]="{'width':'100%'}">
+                                                    <mat-label>Choose Model Property</mat-label>
+                                                    <mat-select formControlName="attributeName">
+                                                        <mat-option *ngFor="let option of modelPropertyList"
+                                                                    [value]="option.value">
+                                                            {{option.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <mat-form-field [style]="{'width':'100%'}">
+                                                    <mat-label>Choose the Header</mat-label>
+                                                    <mat-select formControlName="detailHeader">
+                                                        <mat-option *ngFor="let option of detailsHeadersList"
+                                                                    [value]="option.value">
+                                                            {{option.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3" style='text-align: left'>
+                                                <button type="button" color="primary" mat-mini-fab
+                                                        aria-label="Example icon-button with a heart icon"
+                                                        (click)="getAllDetailsHeaders()">
+                                                    <mat-icon>refresh</mat-icon>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-2" style='text-align: right'>
+                                                <button type="button" style="float: right;" mat-raised-button
+                                                        color="primary"
+                                                        (click)="addFieldsToHeaders()">
+                                                    <mat-icon>add</mat-icon>
+                                                    Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="padding-top:20px;padding-bottom:20px;">
+                                        <table mat-table matSort [dataSource]="dataSourceDetailsPage"
+                                               class="mat-elevation-z8 demo-table">
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="field">
+                                                <th mat-header-cell *matHeaderCellDef>Field</th>
+                                                <td mat-cell *matCellDef="let element">{{element.field}}</td>
+                                            </ng-container>
+
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="detailsHeader">
+                                                <th mat-header-cell *matHeaderCellDef>Headers</th>
+                                                <td mat-cell *matCellDef="let element">{{element.stepHeader}}</td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="actions">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Action</th>
+                                                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                                    <button (click)="deleteFieldHeaders(row)"
+                                                            mat-icon-button
+                                                            type="button">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedDetailHeaderColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedDetailHeaderColumns;"></tr>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <div class="form-group" *ngIf="editForm.value.pagetemplate === 'login-page'">
+                                <label class="form-control-label">Match properties for credentials input</label>
+                                <div class="card">
+                                    <div class="card-body row">
+                                        <div class="col-md-3">
+                                            <mat-form-field [style]="{'width':'100%'}">
+                                                <mat-label>Choose Param Type</mat-label>
+                                                <mat-select formControlName="inputValType">
+                                                    <mat-option *ngFor="let option of loginInputs" [value]="option.value">
+                                                        {{option.label}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field [style]="{'width':'100%'}">
+                                                <mat-label>Choose Model Property</mat-label>
+                                                <mat-select formControlName="matchedProperty">
+                                                    <mat-option *ngFor="let option of modelPropertyList"
+                                                                [value]="option.value">
+                                                        {{option.label}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="button" style="float: right;" mat-raised-button color="primary"
+                                                    (click)="addParamMapping()">
+                                                <mat-icon>add</mat-icon>
+                                                Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style=" :20px;padding-bottom:20px;">
+                                    <table mat-table matSort [dataSource]="dataSourceLogin"
+                                           class="mat-elevation-z8 demo-table">
+                                        <!-- Name Column -->
+                                        <ng-container matColumnDef="input">
+                                            <th mat-header-cell *matHeaderCellDef>Input</th>
+                                            <td mat-cell *matCellDef="let element">{{element.inputType}}</td>
+                                        </ng-container>
+
+                                        <!-- Weight Column -->
+                                        <ng-container matColumnDef="param">
+                                            <th mat-header-cell *matHeaderCellDef>Param</th>
+                                            <td mat-cell *matCellDef="let element">{{element.paramName}}</td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="actions">
+                                            <th *matHeaderCellDef mat-header-cell mat-sort-header>Action</th>
+                                            <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                                <button (click)="deleteParamMapping(row)"
+                                                        mat-icon-button
+                                                        type="button">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedLoginParamColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedLoginParamColumns;"></tr>
+                                    </table>
+
+                                </div>
+                            </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -209,7 +519,8 @@
             <div class="col-md-12 ">
                 <h6 style="margin-left: 5px;">Integration</h6>
                 <div class="card-page">
-                    <div class="   row">
+                    <div class="form-group" *ngIf="editForm.value.pagetemplate === 'aio-table'">
+                    <div class="row" >
                         <div class="col-md-8">
                             <div class="form-group">
                                 <div>
@@ -217,7 +528,7 @@
                                         <div class="row col-md-12">
                                             <div *ngIf="project?.apptypesID === 'task.ui'"
                                                  style=" padding-top: 5px; ">
-                                                <mat-checkbox [disabled]="formDisable" formControlName="aiosearch">
+                                                <mat-checkbox formControlName="aiosearch">
                                                     Search API from
                                                     Microservices
                                                 </mat-checkbox>
@@ -229,8 +540,7 @@
                                                 <mat-form-field [style]="{'width':'100%'}">
                                                     <mat-label>Microservice</mat-label>
                                                     <mat-select formControlName="aiomicroservice"
-                                                                (selectionChange)="onChangeAioTableMicroserviceProject()"
-                                                                [disabled]="formDisable">
+                                                                (selectionChange)="onChangeAioTableMicroserviceProject()">
                                                         <mat-option *ngFor="let option of microserviceProjectItems"
                                                                     [value]="option.value">
                                                             {{option.label}}
@@ -244,8 +554,7 @@
                                                 <mat-form-field [style]="{'width':'100%'}">
                                                     <mat-label>API</mat-label>
                                                     <mat-select formControlName="aiomicroservice"
-                                                                (selectionChange)="onChangeAioTableMicroserviceAPI()"
-                                                                [disabled]="formDisable">
+                                                                (selectionChange)="onChangeAioTableMicroserviceAPI()">
                                                         <mat-option *ngFor="let option of apiItems"
                                                                     [value]="option.value">
                                                             {{option.label}}
@@ -258,8 +567,7 @@
                                             <div class="col-md-4">
                                                 <mat-form-field [style]="{'width':'100%'}">
                                                     <mat-label>Choose Operation</mat-label>
-                                                    <mat-select  formControlName="apiOperation"
-                                                                 [disabled]="formDisable">
+                                                    <mat-select  formControlName="apiOperation">
                                                         <mat-option *ngFor="let option of crudItems"
                                                                     [value]="option.value">
                                                             {{option.label}}
@@ -270,14 +578,14 @@
                                             <div class="col-md-4">
                                                 <mat-form-field [style]="{'width':'100%'}">
                                                     <mat-label>Resource Path</mat-label>
-                                                    <input type="text" [readonly]="formDisable"
+                                                    <input type="text"
                                                            formControlName="apiResourcePath" matInput name="name">
                                                 </mat-form-field>
                                             </div>
                                             <div class="col-md-4">
                                                 <button type="button" style="float: right;" mat-raised-button
                                                         color="primary"
-                                                        (click)="addAIOTableRow()" [disabled]="formDisable">
+                                                        (click)="addAIOTableRow()">
                                                     <mat-icon>add</mat-icon>
                                                     Add
                                                 </button>
@@ -285,6 +593,80 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="form-group"
+                         *ngIf="editForm.value.pagetemplate === 'tile-page' || editForm.value.pagetemplate === 'table-page' || editForm.value.pagetemplate === 'form-page' || editForm.value.pagetemplate == 'static-page'|| editForm.value.pagetemplate === 'form-wizard-page' || editForm.value.pagetemplate === 'file-upload-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">
+                        <div class="row">
+                            <div class="col-12">
+                                <div *ngIf="project?.apptypesID === 'task.ui'" class="form-group"
+                                     style=" padding-top: 5px; ">
+                                    <mat-checkbox  formControlName="search">Search API from
+                                        Microservices
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div *ngIf="project?.apptypesID === 'task.ui' && editForm.value.search"
+                                     class="form-group">
+                                    <mat-form-field [style]="{'width':'100%'}">
+                                        <mat-label>Microservice</mat-label>
+                                        <mat-select formControlName="microservice"
+                                                    (selectionChange)="onChangeMicroserviceProject()">
+                                            <mat-option *ngFor="let option of microserviceProjectItems"
+                                                        [value]="option.value">
+                                                {{option.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div *ngIf="project?.apptypesID === 'task.ui' && editForm.value.search"
+                                     class="form-group col-md-6">
+                                    <mat-form-field [style]="{'width':'100%'}">
+                                        <mat-label>API</mat-label>
+                                        <mat-select formControlName="api"
+                                                    (selectionChange)="onChangeMicroserviceAPI()">
+                                            <mat-option *ngFor="let option of apiItems" [value]="option.value">
+                                                {{option.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field [style]="{'width':'100%'}">
+                                    <mat-label>Method</mat-label>
+                                    <mat-select formControlName="resPathMethod">
+                                        <mat-option *ngFor="let option of resourcePathMethods" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field [style]="{'width':'100%'}">
+                                    <mat-label>Resource Path</mat-label>
+                                    <input type="text" formControlName="resourcePath" matInput name="resourcepath"
+                                           id="field_resourcepath">
+                                    <mat-error *ngIf="editForm.controls.resourcePath.hasError('required')">This field is
+                                        required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" style="float: right;" mat-raised-button
+                                        color="primary"
+                                        (click)="updateResourcePath()">
+                                    Save
+                                </button>
                             </div>
                         </div>
                     </div>

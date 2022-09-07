@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Inject, Input, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, OnDestroy, Inject, Input, ViewEncapsulation, OnChanges} from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
@@ -51,11 +51,10 @@ import {MatTableDataSource} from '@angular/material/table';
         '::-webkit-scrollbar-thumb:hover {background: #002386;}',
     ],
 })
-export class ViewModelConfigComponent implements OnInit, OnDestroy {
+export class ViewModelConfigComponent implements OnChanges, OnDestroy {
 
     @Input('pageId') pageId: string;
     @Input('projectUid') projectUid: string;
-    @Input('widgetUid') widgetUid: string;
     pageConfigs: IConfig[];
     pageActions: IPageAction[];
     configs: IPageConfig;
@@ -202,19 +201,11 @@ export class ViewModelConfigComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnInit() {
+    ngOnChanges() {
         this.pageConfigs = [];
         this.sourceProperties = [];
         this.targetProperties = [];
         // this.loadAll();
-        this.pageId = this.pageId;
-        this.projectUid = this.projectUid;
-        this.widgetId = this.widgetUid;
-        this.activatedRoute.params.subscribe(params => {
-            // this.projectId = params['projId'];
-            // this.projectUid = params['projectUid'];
-            //  this.toolbarTrackerService.setProjectUUID(this.projectUid);
-        });
         this.activatedRoute.queryParams.subscribe(params => {
             //  this.pageId = params['pageId'];
         });

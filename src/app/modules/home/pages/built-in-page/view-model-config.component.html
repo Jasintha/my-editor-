@@ -13,7 +13,7 @@
 <!--            </p-pickList>-->
             <div>
                 <table mat-table matSort [dataSource]="pageViewModelFields"
-                       class="mat-elevation-z8 demo-table">
+                       class="page-view">
                     <ng-container matColumnDef="field">
                         <th mat-header-cell *matHeaderCellDef>Field Name</th>
                         <td [ngClass]="{'disabled-row': !element.isVisible}" mat-cell *matCellDef="let element"> {{element.propertyName}}</td>
