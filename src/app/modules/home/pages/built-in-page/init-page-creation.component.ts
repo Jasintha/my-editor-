@@ -21,6 +21,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {IProperty} from '@shared/models/model/property.model';
+import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
 
 interface Item {
   value: any;
@@ -60,6 +62,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   apiItems: Item[];
   panelItems: Item[];
   aggregates: IAggregate[];
+  selectedAggregate: IAggregate
   aggregateItems: Item[];
   apiParams: APIInput[];
   apiResourceDetails: any[];
@@ -72,6 +75,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   pageViewType = '';
   form: FormGroup;
   pageTemplateType = '';
+  pageTitle = '';
   pageCreationStatus = 'typeSelection';
   gridStyle = '';
   gridArray: IGrid[] = [];
@@ -271,6 +275,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
                 if (this.project.apptypesID === 'task.ui') {
                   this.aggregates = this.project.aggregates;
                   if (this.aggregates) {
+                    this.loadAggregates();
                   }
                 } else {
                   this.datamodels = this.project.datamodels;
@@ -290,9 +295,35 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     //   }
   }
 
+  loadAggregates(selectedAggregate? : IAggregate) {
+    let selectedAggr;
+    this.aggregateItems = []
+    for (let i = 0; i < this.aggregates.length; i++) {
+      if (this.aggregates[i].status === 'ENABLED') {
+        const dropdownLabel = this.aggregates[i].name;
+        this.aggregateItems.push({ label: dropdownLabel, value: this.aggregates[i] });
+      }
+      if (selectedAggregate && selectedAggregate.uuid === this.aggregates[i].uuid) {
+        selectedAggr = this.aggregates[i];
+      }
+      if (selectedAggr) {
+        this.editForm.patchValue({
+          selectedAggregate: selectedAggr,
+        });
+      }
+    }
+  }
+
   onchangePageTemplate() {
     this.apiItems = [];
     this.panelItems = [];
+  }
+  onChangePageModel(event) {
+    if (event) {
+      this.modelPropertyList = [];
+      this.selectedAggregate = event.value
+      this.createTemplatePage(this.pageTemplateType,this.pageTitle);
+    }
   }
 
   numOfPages(){
@@ -353,9 +384,11 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
         pagetitle: pageTitle + pageNumber,
         pageViewType,
         pageGrid: this.grid,
+        model: this.selectedAggregate,
         pagetemplate: pageTemplate,
         pagetype: pageType,
-        status: 'init',
+        resourcePath: '/',
+        status: 'ENABLED',
       };
     }
   }
@@ -434,6 +467,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   }
 
   pageTemplateTypeSelection(template: string, title) {
+    this.pageTitle = title;
     this.pageTemplateType = template;
     if (template === 'blank') {
       this.pageCreationStatus = 'gridSelection';
@@ -444,7 +478,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     } else if (template === 'filter-page'){
       this.createFilterPage(template, title);
     } else {
-      this.createTemplatePage(template,title);
+      this.pageCreationStatus = 'modelSelection';
     }
   }
 
