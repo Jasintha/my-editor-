@@ -16,6 +16,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {IButtonType} from '@shared/models/model/button-type.model';
 import {MatTableDataSource} from '@angular/material/table';
+import {IProperty} from '@shared/models/model/property.model';
+import {INavigationParam, NavigationParam} from '@shared/models/model/page-navigation.model';
 
 @Component({
     selector: 'virtuan-page-action-event',
@@ -40,6 +42,10 @@ export class PageActionEventComponent implements OnInit {
     isWidgetView: boolean;
     sourceProperties: IFormField[];
     targetProperties: IFormField[];
+    modelProperties: SelectItem[];
+    navigationParams: INavigationParam[] = [];
+    displayedColumns: string[] = ['name', 'property' ,'actions'];
+    dataSource = new MatTableDataSource(this.navigationParams);
     pages = [];
     confirmationTypes: SelectItem[] = [
         { label: 'Without-Confirm', value: 'Without-Confirm' },
@@ -83,17 +89,56 @@ export class PageActionEventComponent implements OnInit {
             pageEvent: '',
             pageActionButton: '',
             pageEventActionApi: '',
+            paramName: '',
+            paramProperty: '',
         });
     }
 
 
     ngOnInit() {
         this.buildNewForm();
+        this.setPageProperties();
     }
 
-    saveAction() {
+    setPageProperties() {
+        this.modelProperties = [];
+        const currentPage: IPage = this.data.currentPage;
+        let currentDatamodeProperties: IProperty[];
+        if (currentPage.pagetype === 'api-page') {
+            currentDatamodeProperties = currentPage.model.config.children;
+            for (let i = 0; i < currentDatamodeProperties.length; i++) {
+                if (currentDatamodeProperties[i].data.type === 'property') {
+                    const dropdownLabel = currentDatamodeProperties[i].label.toLowerCase( );
+                    this.modelProperties.push({ label: dropdownLabel, value: dropdownLabel });
+                }
+            }
+        }
     }
+    addNavParam() {
+        const paramName = this.editForm.get(['paramName']).value;
+        const paramProperty = this.editForm.get(['paramProperty']).value;
 
+        if (paramName === '' || paramName === null || paramProperty === null) {
+            // this.messageService.add({
+            //   severity: 'warn',
+            //   summary: 'Warn',
+            //   detail: 'Please fill all the fields',
+            // });
+        } else {
+            const param: NavigationParam = {
+                name: paramName,
+                value: paramProperty,
+            };
+
+            this.navigationParams.push(param);
+            this.dataSource = new MatTableDataSource(this.navigationParams);
+        }
+    }
+    deleteNavParam(param) {
+        const indexnum = this.navigationParams.indexOf(param);
+        this.navigationParams.splice(indexnum, 1);
+        this.dataSource = new MatTableDataSource(this.navigationParams);
+    }
 
     addRow(setDefaults, defButtonCaption?, defBtnResourcePath?, defBtnOperation?, defBtnColor?, defBtnTooltip?) {
 
@@ -134,7 +179,8 @@ export class PageActionEventComponent implements OnInit {
                 color: btnColor,
                 tooltip: btnTooltip,
                 pageId,
-                pageName
+                pageName,
+                navigationParams: this.navigationParams
             };
             this.dialogRef.close(button);
          //   this.BTN_ELEMENT_DATA.push();
