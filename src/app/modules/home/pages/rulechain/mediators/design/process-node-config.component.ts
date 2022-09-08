@@ -80,6 +80,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
   allMicroservices: any[];
 
   apiItems: any[];
+  filetargetItems: any[];
 
   nodeDefinitionValue: RuleNodeDefinition;
 
@@ -89,6 +90,24 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     inputType: APIInputType.FILE,
     inputName: 'file',
   };
+
+  frequencyItems: Item[] = [
+    { label: 'Single', value: 'SINGLE' },
+    { label: 'Multiple', value: 'MULTIPLE' },
+  ];
+
+  timeUnitItems: Item[] = [
+    { label: 'Seconds', value: 's' },
+    { label: 'Minutes', value: 'min' },
+    { label: 'Hours', value: 'h' },
+  ];
+
+  operationItems: Item[] = [
+    { label: 'General', value: 'GENERAL' },
+    { label: 'Message Subscriber', value: 'MESSAGE_SUBSCRIBER' },
+    { label: 'File Reader', value: 'FILE_READER' },
+    { label: 'Service Call', value: 'SERVICE_CALL' },
+  ];
 
   crudItems: any[] = ['CREATE','UPDATE','DELETE','FIND','FINDALL', 'EMPTY'];
 
@@ -156,7 +175,16 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
       selectedAPIInputs: null,
       existing: false,
       microservice: null,
-      microserviceApi: null
+      microserviceApi: null,
+      processType: '',
+      operation: '',
+      frequency: '',
+      timeUnit: '',
+      time: 0,
+      fileinput: null,
+      fileLocation: '',
+      subject: '',
+      url: '',
     });
   }
 
@@ -182,6 +210,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
           inputName: this.aggregates[i].name,
         };
         this.items.push({ label: dropdownLabel, value: input });
+        this.filetargetItems.push({ label: dropdownLabel, value: input });
         this.returnObject.push({ label: dropdownLabel, value: returnObj });
       } else if (this.aggregates[i].status === 'ENABLED' && this.aggregates[i].type === 'DTO') {
         const dropdownLabel = this.aggregates[i].name + ' : DTO';
@@ -199,6 +228,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
           inputName: this.aggregates[i].name,
         };
         this.items.push({ label: dropdownLabel, value: input });
+        this.filetargetItems.push({ label: dropdownLabel, value: input });
         this.returnObject.push({ label: dropdownLabel, value: returnObj });
       }
     }
@@ -270,6 +300,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
   ngOnInit(): void {
     this.isSaving = false;
     this.items = [];
+    this.filetargetItems = [];
     this.apiParams = [];
     this.aggregateItems = [];
     this.returnObject = [];
@@ -302,6 +333,10 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
     this.configuration.returnObject = this.processNodeConfigFormGroup.get(['returnObject']).value;
     this.updateModel(this.configuration);
   }
+  onFileInputObjChange(){
+    this.configuration.fileinput = this.processNodeConfigFormGroup.get(['fileinput']).value;
+    this.updateModel(this.configuration);
+  }
 
   loadServiceAndUpdateForm(){
      if (this.serviceUuid) {
@@ -315,20 +350,43 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
                 (res: IProject) => {
                   this.project = res;
                   this.aggregates = this.project.aggregates;
+                  this.items = [];
+                  this.filetargetItems = [];
+
                   if (this.aggregates) {
                     this.loadAggregates();
                   }
 
+                  if(this.items) {
+                    this.items.push({ label: 'FILE', value: this.fileinput });
+                  } else {
+                    this.items = [];
+                    this.items.push({ label: 'FILE', value: this.fileinput });
+                  }
+
                   if(this.configuration.apiInput && this.configuration.apiInput.id && this.items){
-                    let selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
-                    this.processNodeConfigFormGroup.patchValue({
-                      selectedAPIInputs: selectedAPIInputs.value,
-                    });
+                    if(this.configuration.selectedAPIInputs.inputType !== 'FILE'){
+                        let selectedAPIInputs = this.items.find(x => (x.value.id === this.configuration.apiInput.id) && (x.value.inputName === this.configuration.apiInput.inputName));
+                        this.processNodeConfigFormGroup.patchValue({
+                          selectedAPIInputs: selectedAPIInputs.value,
+                        });
+                    } else {
+                        let selectedAPIInputs = this.items.find(x => (x.value.inputType === this.configuration.apiInput.inputType) && (x.value.inputName === this.configuration.apiInput.inputName));
+                        this.processNodeConfigFormGroup.patchValue({
+                          selectedAPIInputs: selectedAPIInputs.value,
+                        });
+                    }
                   }
                   if(this.configuration.returnObject && this.configuration.returnObject.id && this.returnObject){
                     let returnObject = this.returnObject.find(x => (x.value.id === this.configuration.returnObject.id) && (x.value.inputType === this.configuration.returnObject.inputType) && (x.value.inputName === this.configuration.returnObject.inputName));
                     this.processNodeConfigFormGroup.patchValue({
                       returnObject: returnObject.value
+                    });
+                  }
+                  if(this.configuration.processType === 'TASK' && this.configuration.operation === 'FILE_READER' &&  this.configuration.fileinput){
+                    let fileinput = this.filetargetItems.find(x => (x.value.id === this.configuration.fileinput.id) && (x.value.inputType === this.configuration.fileinput.inputType) && (x.value.inputName === this.configuration.fileinput.inputName));
+                    this.processNodeConfigFormGroup.patchValue({
+                      fileinput: fileinput.value
                     });
                   }
                 },
@@ -438,6 +496,7 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
       let microserviceUuid = this.configuration.microserviceUuid;
       let microserviceResourcePath = this.configuration.apiresourcepath;
       let microserviceId = this.configuration.apiUuid;
+      this.apiItems = [];
       if (this.configuration.existing && microserviceUuid && this.allMicroservices){
         microservice = this.allMicroservices.find(x => x.masterUuid === microserviceUuid );
 
@@ -480,7 +539,23 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
 
       }
 
+      if (this.configuration.processType !== 'TASK') {
+        this.configuration.processType = 'API';
+      }
+
+      console.log("process type");
+      console.log(this.configuration.processType);
+
+
       this.processNodeConfigFormGroup.patchValue({
+        processType: this.configuration.processType,
+        operation: this.configuration.operation,
+        frequency: this.configuration.frequency,
+        timeUnit: this.configuration.timeUnit,
+        time: this.configuration.time,
+        subject: this.configuration.subject,
+        url: this.configuration.url,
+        fileLocation: this.configuration.fileLocation,
         processName: this.configuration.processName,
         apiTemplate: this.configuration.apiTemplate,
         apiMethod: this.configuration.apiMethod,
@@ -523,6 +598,57 @@ export class ProcessNodeConfigComponent implements ControlValueAccessor, OnInit,
           this.updateModel(this.configuration);
         }
     );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('processType').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.processType = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('operation').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.operation = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+
+    this.changeSubscription = this.processNodeConfigFormGroup.get('frequency').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.frequency = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('timeUnit').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.timeUnit = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('time').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.time = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+
+    this.changeSubscription = this.processNodeConfigFormGroup.get('subject').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.subject = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('url').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.url = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+    this.changeSubscription = this.processNodeConfigFormGroup.get('fileLocation').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.fileLocation = configuration;
+          this.updateModel(this.configuration);
+        }
+    );
+
     this.changeSubscription = this.processNodeConfigFormGroup.get('processName').valueChanges.subscribe(
         (configuration: any) => {
           this.configuration.processName = configuration;

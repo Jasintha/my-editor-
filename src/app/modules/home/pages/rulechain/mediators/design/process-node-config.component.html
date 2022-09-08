@@ -1,5 +1,13 @@
 <div [formGroup]="processNodeConfigFormGroup">
 
+    <mat-form-field class="mat-block">
+        <mat-label>Process Type</mat-label>
+        <mat-select formControlName="processType">
+            <mat-option value="API">API</mat-option>
+            <mat-option value="TASK">Task</mat-option>
+        </mat-select>
+    </mat-form-field>
+
     <mat-checkbox formControlName="existing">
         Existing process
     </mat-checkbox>
@@ -25,7 +33,7 @@
 
     </ng-container>
 
-    <ng-container *ngIf="!configuration.existing">
+    <ng-container *ngIf="!configuration.existing && configuration.processType !== 'TASK'">
         <mat-form-field style="width: 100%">
             <mat-label>Process Name</mat-label>
             <input type="text" formControlName="processName" matInput name="processName" id="screen_name">
@@ -34,7 +42,60 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex class="mat-block">
+        <mat-form-field class="flex-auto" *ngIf="configuration.processType === 'TASK'">
+            <mat-label>Operation</mat-label>
+            <mat-select formControlName="operation" (selectionChange)="workflowMapItemsOnOperationChange('operation')">
+                <mat-option *ngFor="let option of operationItems" [value]="option.value">
+                    {{option.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex class="mat-block"  *ngIf="configuration.processType === 'TASK' && configuration.operation !== 'MESSAGE_SUBSCRIBER'">
+            <mat-label>Frequency</mat-label>
+            <mat-select formControlName="frequency" >
+                <mat-option *ngFor="let option of frequencyItems" [value]="option.value">
+                    {{option.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <ng-container *ngIf="configuration.processType === 'TASK' && configuration.frequency === 'MULTIPLE' && configuration.operation !== 'MESSAGE_SUBSCRIBER'">
+            <mat-form-field class="flex-auto">
+                <mat-label>Unit of Time</mat-label>
+                <mat-select formControlName="timeUnit" >
+                    <mat-option *ngFor="let option of timeUnitItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Interval</mat-label>
+                <input type="number" formControlName="time" matInput name="time" id="field_time">
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="configuration.processType !== 'TASK' && processNodeConfigFormGroup.value.operation === 'FILE_READER'">
+            <mat-form-field class="flex-auto">
+                <mat-label>File Location</mat-label>
+                <input type="text" formControlName="fileLocation" matInput name="fileLocation" id="field_fileLocation">
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>File Input</mat-label>
+                <mat-select formControlName="fileinput" name="fileinput" (selectionChange)="onFileInputObjChange()">
+                    <mat-option *ngFor="let option of filetargetItems" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+
+        <mat-form-field class="mat-block" *ngIf="configuration.processType !== 'TASK' && processNodeConfigFormGroup.value.operation === 'SERVICE_CALL'">
+            <mat-label>Url</mat-label>
+            <input type="text" formControlName="url" matInput name="url" id="field_url" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex class="mat-block" *ngIf="configuration.processType !== 'TASK'">
             <mat-label>Template</mat-label>
             <mat-select formControlName="apiTemplate">
                 <mat-option *ngFor="let option of crudItems" [value]="option">
@@ -43,7 +104,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'" class="mat-block">
+        <mat-form-field *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY' || processNodeConfigFormGroup.value.operation === 'SERVICE_CALL'" class="mat-block">
             <mat-label>Method</mat-label>
             <mat-select formControlName="apiMethod">
                 <mat-option *ngFor="let option of apiMethod" [value]="option">
@@ -54,19 +115,18 @@
 
         <mat-form-field class="mat-block" *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'CREATE' || processNodeConfigFormGroup.value.apiTemplate === 'UPDATE' ||
  processNodeConfigFormGroup.value.apiTemplate === 'DELETE' || processNodeConfigFormGroup.value.apiTemplate === 'FIND' || processNodeConfigFormGroup.value.apiTemplate === 'FINDALL' ||
- (processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'  &&  (processNodeConfigFormGroup.value.apiMethod === 'POST' || processNodeConfigFormGroup.value.apiMethod === 'PUT'))">
+ (processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'  &&  (processNodeConfigFormGroup.value.apiMethod === 'POST' || processNodeConfigFormGroup.value.apiMethod === 'PUT')) ||
+ processNodeConfigFormGroup.value.operation === 'MESSAGE_SUBSCRIBER' ||
+ (processNodeConfigFormGroup.value.operation === 'SERVICE_CALL' &&  (processNodeConfigFormGroup.value.apiMethod === 'POST' || processNodeConfigFormGroup.value.apiMethod === 'PUT'))">
             <mat-label>Target Object</mat-label>
             <mat-select formControlName="selectedAPIInputs" (selectionChange)="onInputObjChange()">
                 <mat-option *ngFor="let option of items" [value]="option.value">
                     {{option.label}}
                 </mat-option>
-                <mat-option *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'" [value]="fileinput">
-                    FILE
-                </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'" class="mat-block">
+        <mat-form-field fxFlex *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY' || processNodeConfigFormGroup.value.operation === 'SERVICE_CALL' || processNodeConfigFormGroup.value.operation === 'FILE_READER'" class="mat-block">
             <mat-label>Return Record</mat-label>
             <mat-select formControlName="returnRecord">
                 <mat-option *ngFor="let option of returnRecord" [value]="option.value">
@@ -75,7 +135,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY'" class="mat-block">
+        <mat-form-field fxFlex *ngIf="processNodeConfigFormGroup.value.apiTemplate === 'EMPTY' || processNodeConfigFormGroup.value.operation === 'SERVICE_CALL'" class="mat-block">
             <mat-label>Return Object</mat-label>
             <mat-select formControlName="returnObject" (selectionChange)="onReturnObjChange()">
                 <mat-option *ngFor="let option of returnObject" [value]="option.value">
@@ -83,6 +143,18 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="!configuration.existing && configuration.processType === 'TASK'">
+
+
+        <ng-container *ngIf="processNodeConfigFormGroup.value.operation === 'MESSAGE_SUBSCRIBER'">
+            <mat-form-field class="flex-auto">
+                <mat-label>Subject</mat-label>
+                <input type="text" formControlName="subject" matInput name="subject" id="field_subject">
+            </mat-form-field>
+
+        </ng-container>
     </ng-container>
 </div>
 
