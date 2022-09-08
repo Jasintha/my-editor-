@@ -1,78 +1,40 @@
-<!--<div *ngIf="!viewEditor" class="fixed-position">-->
-<!--    <div class="row">-->
-<!--        <div class="wrapper option-1 option-1-1">-->
-<!--            <ol class="c-stepper">-->
-<!--                <li [ngClass]="currentLevel === 'requirement' || requirementLevel ? 'c-stepper__item_selected': 'c-stepper__item'">-->
-<!--                    <h6 class="c-stepper__title">Step 1</h6>-->
-<!--                </li>-->
-<!--                <li [ngClass]="currentLevel === 'epic' || epicLevel ? 'c-stepper__item_selected': 'c-stepper__item'">-->
-<!--                    <h6 class="c-stepper__title">Step 2</h6>-->
-<!--                </li>-->
-<!--                <li [ngClass]="currentLevel === 'story' || storyLevel ? 'c-stepper__item_selected': 'c-stepper__item'">-->
-<!--                    <h6 class="c-stepper__title">Step 3</h6>-->
-<!--                </li>-->
-<!--            </ol>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+
 <div class="row" *ngIf="!viewEditor">
     <div class="col-1">
-        <div class="vertical-stepper" style="padding: 96px 20px 20px 34px;">
-            <div class="wrapper">
-                <ol class="c-stepper">
-                    <li [ngClass]="currentLevel === 'requirement' || requirementLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
+        <div class="row">
+            <div class="col-md-6">
+                <div style="background-color: #924caa; height: 250px">
+                    <div style="padding-top: 100px">  <div style="transform: rotate(270deg);color: white; font-size: 16px; font-weight: 500"> Requirements</div> </div>
+                </div>
+            </div>
 
-                        <div class="c-stepper__content">
-                            <h3 class="c-stepper__title mt-0">Requirement</h3>
-                        </div>
-                    </li>
-                    <li [ngClass]="currentLevel === 'epic'  || epicLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
-                        <div class="c-stepper__content">
-                            <h3 class="c-stepper__title mt-0">Epic</h3>
-                        </div>
-                    </li>
-                    <li [ngClass]="currentLevel === 'story' || storyLevel ? 'c-stepper__item_selected': 'c-stepper__item'">
-                        <div class="c-stepper__content">
-                            <h3 class="c-stepper__title mt-0">Story</h3>
-                        </div>
-                    </li>
-                </ol>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+              <div style="background-color: #924caa"> <div style="background-color: #2980b9; height: 250px; margin-left: 10px">
+                <div style="padding-top: 100px">  <div style="transform: rotate(270deg);color: white; font-size: 16px; font-weight: 500"> Epics</div> </div></div>
+              </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div style="background-color: #924caa"> <div style="background-color: #2980b9; margin-left: 10px">  <div style="background-color: #34495e; height: 45vh; margin-left: 10px">
+                    <div style="padding-top: 100px">  <div style="transform: rotate(270deg);color: white; font-size: 16px; font-weight: 500">  Stories </div> </div> </div>
+                </div>
+            </div>
             </div>
         </div>
-
     </div>
     <div class="col-11">
-<div *ngIf="!viewEditor" class="container vertical" style="width: 1334px">
+<div *ngIf="!viewEditor" class="container vertical" style="width: 90vw; max-width: 90vw">
     <div style="position: relative">
-    <div id="requirements" class="row section border row-height create-req" style="height: 222px;width: 835px;">
-<!--        <div class="col-12 p-0">-->
-<!--            <div class="row">-->
-<!--                <div class="col-9 d-flex">-->
-<!--                    <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;">-->
-<!--                        <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">-->
-<!--                            <mat-icon style="font-size: 25px">add</mat-icon>-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-3 d-flex justify-content-center">-->
-<!--                    <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem">Requirements</h1>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="col-1">-->
+    <div id="requirements" class="row section border row-height create-req" style="height: 222px;width: 1400px;">
 
-<!--            <div class="wrap add-button add-req-block" (click)="createRequirement()">-->
-<!--                <mat-icon class="material-icons add-icons"-->
-<!--                          style="color: seagreen;margin-top: 18px">add-->
-<!--                </mat-icon>-->
-<!--            </div>-->
-<!--        </div>-->
-        <div class="col-7" style="padding-left: 0">
-            <!--            <div class="row" style="padding-bottom: 30px;">-->
-            <!--                <div class="col-11">-->
+        <div class="col-7" style="padding-left: 0; border-left: 40px solid #924caa; border-radius: 8px">
             <p-carousel class="req-carousel" [value]="reqArray" [numVisible]="1" [numScroll]="1" [circular]="true"  (onPage)="selectedReq($event)"  [ngClass]="{'carousel-next-hide': hideCarouselNext}" >
                 <ng-template let-req pTemplate="item">
-                    <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 200px;width: 331px;
+                    <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 200px;width: 314px;
 }" matTooltip="{{req?.name}}"  [matTooltipPosition]="'above'" (click)="clickReq(req)">
                         <div class="row">
                             <div class="col-3 d-flex justify-content-center align-items-center">
@@ -157,7 +119,7 @@
 
 
                 <div class="col-12" style="display: flex; justify-content: end;">
-                    <div reqCounter class="counter-container content-center" style="bottom: 75px;right: 295px; position: absolute">
+                    <div reqCounter class="counter-container content-center" style="bottom: 75px;right: 65px; position: absolute">
                         <p id="reqCounter" class="h2 text-secondary mb-0">{{reqCount}}</p>
                     </div>
                 </div>
@@ -185,17 +147,9 @@
     </div>
 
 
-    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0" @inOutAnimation style="margin-left: 37px;height: 190px;">
-<!--        <div class="col-12">-->
-<!--            <div class="row">-->
-<!--                <div class="col-9"></div>-->
-<!--                <div class="col-3 d-flex justify-content-center">-->
-<!--                    <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem;">Epics</h1>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0" @inOutAnimation style="margin-left: 37px;height: 207px; width: 1352px;">
 
-        <div class="col-9 pt-1">
+        <div class="col-9" style="border-left: 40px solid #2980b9; border-radius: 8px">
             <div class="row">
                 <div class="col-1">
                     <div *ngIf="isBtnPrevious" (click)="getData(false)" class="btns previous">
@@ -326,9 +280,11 @@
         </div>
     </div>
 
-    <div *ngIf="filteredStories.length != 0" @inOutAnimation>
+    <div *ngIf="filteredStories.length != 0" @inOutAnimation style="height: 46vh;
+    overflow-y: auto;
+    width: 1400px;">
         <ng-container *ngFor="let story of filteredStories" >
-            <div id="storiesText" class="row section border row-color wrap-text pb-0"  style="margin-left: 120px; margin-bottom: -8px;width: 1245px;" *ngIf="story.storyText">
+            <div id="storiesText" class="row section border row-color wrap-text pb-0"  style="margin-left: 120px; margin-bottom: -8px;width: 1245px; border-left: 20px solid #34495e !important;" *ngIf="story.storyText">
                 <div class="col-1 d-flex justify-content-center align-items-center">
                     <div class="story-text-editor-button" matTooltip="Text" [matTooltipPosition]="toolTipPosition" style="margin-right: 20px;">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -348,7 +304,7 @@
                     </p-editor>
                 </div>
             </div>
-            <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px; margin-top: 20px;height: 90px;width: 1245px;" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
+            <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px; margin-top: 20px;height: 90px;width: 1245px; border-left: 20px solid #34495e !important;" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
                 <div class="top-req">
                     <div class="col-12 d-flex justify-content-center add-req-top">
                         <button mat-raised-button style="top: -15px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
