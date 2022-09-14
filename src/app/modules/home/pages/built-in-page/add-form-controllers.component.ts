@@ -288,6 +288,7 @@ export class AddFormControllersComponent implements OnChanges {
     } else if (this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].choiceType.value === 'API') {
       this.choiceFormGroup.clear();
     }
+    this.addFormControllers();
   }
 
   onSelectChildController(value) {

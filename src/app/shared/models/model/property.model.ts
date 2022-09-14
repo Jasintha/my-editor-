@@ -16,6 +16,7 @@ export interface IProperty {
   validators?: string[];
   label?: string;
   data?: any;
+  isSelected?: boolean;
 }
 
 export class Property implements IProperty {
@@ -26,6 +27,7 @@ export class Property implements IProperty {
     public datamodel?: IDatamodel,
     public validators?: string[],
     public label?: string,
-    public data?: any
+    public data?: any,
+    public isSelected?: boolean,
   ) {}
 }

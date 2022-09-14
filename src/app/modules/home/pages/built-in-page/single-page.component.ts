@@ -41,6 +41,7 @@ import {INavigationParam} from '@shared/models/model/page-navigation.model';
 import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-save-confirm-dialog.component';
 import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-event.component';
 import {ButtonEventHandleComponent} from '@home/pages/built-in-page/button-event-handle.component';
+import {StepFieldMapperComponent} from '@home/pages/built-in-page/step-field-mapper.component';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -65,6 +66,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   microserviceProjectItems: SelectItem[];
   dashboardProjectItems: SelectItem[];
   modelPropertyList: SelectItem[];
+  modelAttributesList: IProperty[];
   apiItems: SelectItem[];
   panelItems: SelectItem[];
   aggregates: IAggregate[];
@@ -207,7 +209,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'CALL_API', value: 'CALL_API' },
   ];
   editForm: FormGroup;
-  formDisable: boolean;
+  isTitleEdit: boolean;
+  isDescEdit: boolean;
   buildNewForm() {
     this.editForm = this.fb.group({
       id: [],
@@ -408,11 +411,11 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   // }
 
   loadPage(isreaload: boolean){
-    if(!isreaload) {
-      this.formDisable = true;
-    } else {
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Page saved' });
-    }
+    // if(!isreaload) {
+    //   this.isTitleEdit = true;
+    // } else {
+    //   this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Page saved' });
+    // }
     this.buildNewForm();
     this.datamodels = [];
     this.pageTemplateItems = [];
@@ -707,15 +710,15 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
-  onChangePageModel(event, edit) {
-    if (event) {
-      this.modelPropertyList = [];
-      let currentDatamodel: IAggregate;
-      currentDatamodel = edit ? event : event.value;
-      this.loadModelPropertyList(event,edit);
-      this.changePageModel(currentDatamodel);
-    }
-  }
+  // onChangePageModel(event, edit) {
+  //   if (event) {
+  //     this.modelPropertyList = [];
+  //     let currentDatamodel: IAggregate;
+  //     currentDatamodel = edit ? event : event.value;
+  //     this.loadModelPropertyList(event,edit);
+  //     this.changePageModel(currentDatamodel);
+  //   }
+  // }
 
   validatePageSave() {
     const page = this.currentPage;
@@ -735,9 +738,10 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
-  loadModelPropertyList(event, edit){
+  loadModelPropertyList(){
     let currentDatamodeProperties: IProperty[];
-    currentDatamodeProperties = edit ? event.config.children : event.value.config.children;
+    currentDatamodeProperties = this.currentPage.model.config.children;
+    this.modelAttributesList = currentDatamodeProperties;
     for (let i = 0; i < currentDatamodeProperties.length; i++) {
       if (currentDatamodeProperties[i].data.type === 'property') {
         const dropdownLabel = currentDatamodeProperties[i].label;
@@ -1223,7 +1227,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   updateForm(builtInPage: IPage) {
     if (builtInPage.model && builtInPage.model.config) {
-      this.loadModelPropertyList(builtInPage.model, true);
+      this.loadModelPropertyList();
     }
     if (builtInPage.authority) {
       this.editForm.patchValue({
@@ -1508,8 +1512,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     // this.toolbarTrackerService.setIsPageLayout('no');
   }
 
-  enableToEdit() {
-    this.formDisable = !this.formDisable;
+  editPageTitle() {
+    this.isTitleEdit = !this.isTitleEdit;
+  }
+
+  editPageDesc() {
+    this.isDescEdit = !this.isDescEdit;
   }
 
 
@@ -1587,6 +1595,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
               } else {
                 this.consoleLogService.writeConsoleLog('Page saved successfully');
                 this.updatePageBasicData(page);
+                this.editPageTitle();
               }
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -1659,34 +1668,54 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
-  addFieldsToSteps() {
-    const field = this.editForm.get(['fieldName']).value;
-    let stepHeader = '';
-    let stepId = 0;
-    if (this.editForm.get(['stepHeader']).value) {
-      stepId = parseInt(this.editForm.get(['stepHeader']).value.split('-')[0]);
-      stepHeader = this.editForm.get(['stepHeader']).value.split('-')[1];
-    }
+  addFieldsToSteps(header, fields) {
+    const field = fields;
+    let stepHeader = header;
+    let stepId = this.stepFieldArr.length;
+    // if (this.editForm.get(['stepHeader']).value) {
+    //   stepId = parseInt(this.editForm.get(['stepHeader']).value.split('-')[0]);
+    //   stepHeader = this.editForm.get(['stepHeader']).value.split('-')[1];
+    // }
 
-    if (!field || !stepId) {
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Warn',
-        detail: 'Please fill all the fields',
-      });
-    } else {
-      const stepField = {
-        field,
-        stepHeader,
-        stepId,
-      };
-      if (this.stepFieldArr.indexOf(stepField) === -1) {
-        this.stepFieldArr.push(stepField);
-        //  this.ELEMENT_DATA.push(stepField);
-        this.dataSourceWizard = new MatTableDataSource(this.stepFieldArr);
-      }
+    const stepField = {
+      field,
+      stepHeader,
+      stepId,
+    };
+    if (this.stepFieldArr.indexOf(stepField) === -1) {
+      this.stepFieldArr.push(stepField);
+      //  this.ELEMENT_DATA.push(stepField);
+      this.dataSourceWizard = new MatTableDataSource(this.stepFieldArr);
     }
   }
+  // addFieldsToSteps() {
+  //   const field = this.editForm.get(['fieldName']).value;
+  //   let stepHeader = '';
+  //   let stepId = 0;
+  //   if (this.editForm.get(['stepHeader']).value) {
+  //     stepId = parseInt(this.editForm.get(['stepHeader']).value.split('-')[0]);
+  //     stepHeader = this.editForm.get(['stepHeader']).value.split('-')[1];
+  //   }
+  //
+  //   if (!field || !stepId) {
+  //     this.messageService.add({
+  //       severity: 'warn',
+  //       summary: 'Warn',
+  //       detail: 'Please fill all the fields',
+  //     });
+  //   } else {
+  //     const stepField = {
+  //       field,
+  //       stepHeader,
+  //       stepId,
+  //     };
+  //     if (this.stepFieldArr.indexOf(stepField) === -1) {
+  //       this.stepFieldArr.push(stepField);
+  //       //  this.ELEMENT_DATA.push(stepField);
+  //       this.dataSourceWizard = new MatTableDataSource(this.stepFieldArr);
+  //     }
+  //   }
+  // }
   removeWizardDetailsGroup(index: number) {
     this.wizardDetailsGroup.removeAt(index);
     this.saveAllWizardSteps();
@@ -1732,11 +1761,31 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     return this.editForm.get('wizardDetailsGroup') as FormArray;
   }
 
+  // insertWizardDetailsGroup(stepH) {
+  //   this.stepIndexId = this.wizardDetailsGroup.length + 1;
+  //   // this.stepIndexId++;
+  //   this.wizardDetailsGroup.push(this.addWizardDetailsGroup(stepH));
+  //   this.saveAllWizardSteps();
+  // }
+
   insertWizardDetailsGroup(stepH) {
-    this.stepIndexId = this.wizardDetailsGroup.length + 1;
-    // this.stepIndexId++;
-    this.wizardDetailsGroup.push(this.addWizardDetailsGroup(stepH));
-    this.saveAllWizardSteps();
+    const dialogRef = this.dialog.open(StepFieldMapperComponent, {
+      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+      data: {
+        projectUid: this.projectUid,
+        modelAttributes: this.modelAttributesList
+      }
+    });
+    dialogRef.afterClosed(
+    ).subscribe(result => {
+      if(result && result.header && result.attributes.length>0) {
+        let attrNameArray = [];
+        for(let attr of result.attributes) {
+          attrNameArray.push(attr.label);
+        }
+        this.addFieldsToSteps(result.header, attrNameArray.join(','))
+      }
+    });
   }
 
   addWizardDetailsGroup(stepH): FormGroup {
