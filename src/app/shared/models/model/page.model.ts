@@ -54,6 +54,7 @@ export interface IPage {
   rowMappings?: any[];
   tabLayout?: string;
   chartDetails?: IChartDetails;
+  navigationParams?: INavigationParam[];
   tileFieldCount?: number,
   tileFields?: any[],
   buttonEvents?: IButtonEvent[];
@@ -105,6 +106,7 @@ export class Page implements IPage {
     public rowMappings?: any[],
     public tabLayout?: string,
     public chartDetails?: IChartDetails,
+    public navigationParams?: INavigationParam[],
     public tileFields?: any[],
     public tileFieldCount?: number,
     public   buttonEvents?: IButtonEvent[]

@@ -1,11 +1,22 @@
 <form name="addSecretForm" [formGroup]="form" (ngSubmit)="addFormControllers()">
         <div formArrayName="formFieldsGroup">
+            <div class="row" style="padding-top: 20px; padding-bottom: 20px; background-color: #d1d1d1;">
+                <div class="col-md-4" style="padding-left: 21px;">
+                Field
+            </div>
+                <div class="col-md-5" style="padding-left: 145px;">
+                Controller
+                </div>
+                <div class="col-md-3" style="padding-left: 21px;">
+                Edit
+                </div>
+            </div>
             <div *ngFor="let emp of formFieldsGroup.controls; let i = index">
-                <div class="row-g-12" [formGroup]="emp">
+                <div class="row" [formGroup]="emp">
                     <div class="form-tile row" *ngIf="!isFieldSelected">
                         <div class="col-md-4 form-group" *ngIf="!isFieldSelected">
                             <input class="form-control" readonly type="text" formControlName="propertyName"
-                                   style=" width: 70%" >
+                                   style=" width: 70%; border: none" >
                         </div>
                         <div class="col-md-5" *ngIf="!isFieldSelected">
                             <div class="form-group" style="text-align: center">
@@ -37,12 +48,11 @@
                                 <br>
                             </div>
                         </div>
-                        <div class="col-md-3" style="text-align: end">
-                            <button *ngIf="!isFieldSelected" type="button" (click)="onSelectController(i)"
-                                    value="Edit Form Fields" class="btn"
-                                    style="background-color: #6D7F8B; color:white;border: none;">Edit
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
+                        <div class="col-md-3" style="text-align: end"  *ngIf="this.form.value.formFieldsGroup[i].propertyName !== 'Objectuuid'
+                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Created At'
+                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Updated At'
+                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Deleted At'">
+                                <i class="fa fa-pencil-square-o" *ngIf="!isFieldSelected" type="button" (click)="onSelectController(i)" aria-hidden="true"></i>
                         </div>
                     </div>
 
@@ -100,7 +110,7 @@
                                         <div class="col-md-4">
                                             <div *ngIf="!isChildFieldSelected" class="form-group">
                                                 <input class="form-control" readonly type="text"
-                                                       formControlName="propertyName">
+                                                       formControlName="propertyName" style="border: none">
                                             </div>
                                         </div>
                                         <div class="col-md-5" *ngIf="!isChildFieldSelected">
@@ -132,13 +142,12 @@
                                                 <br>
                                             </div>
                                         </div>
-                                        <div class="col-md-3" style="text-align: end">
-                                            <button *ngIf="!isChildFieldSelected" type="button"
-                                                    (click)="onSelectChildController(k)"
-                                                    value="Edit Form Fields" class="btn"
-                                                    style="background-color: #6D7F8B; color:white;border: none;">Edit
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </button>
+                                        <div class="col-md-3" style="text-align: end"  *ngIf="this.form.value.formFieldsGroup[i].propertyName !== 'Objectuuid'
+                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Created At'
+                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Updated At'
+                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Deleted At'">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true" *ngIf="!isChildFieldSelected" type="button"
+                                                   (click)="onSelectChildController(k)"></i>
                                         </div>
                                     </div>
 
@@ -265,8 +274,8 @@
                                             </div>
                                         </div>
                                         <div style="margin-top: 5%">
-                                            <input type="button" (click)="backToChildFields()"  value="Back" class="btn"
-                                                   style="background-color: #4cc792; color: white;width: 20%; float:right">
+                                            <input type="button" (click)="backToChildFields()"  value="Save" class="btn"
+                                                   style="background-color: #4cc792; color: white;width: 20%; float:right; padding: 5px">
                                         </div>
 
                                     </div>
@@ -401,17 +410,17 @@
                         </div>
                         <br>
                         <div style="margin-top: 2%">
-                            <input *ngIf="!isChildFieldSelected" type="button" (click)="backToFields()" value="Back"
+                            <input *ngIf="!isChildFieldSelected" type="button" (click)="backToFields()" value="Save"
                                    class="btn"
-                                   style="background-color: #4cc792; color: white; width: 5%; float:right">
+                                   style="background-color: #4cc792; color: white; width: 5%; float:right; padding: 5px">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    <div  style="float: right; margin-top: 2%;" *ngIf="!isFieldSelected && formFieldsGroup.controls.length > 0">
-        <button type="submit"  value="Save"  class="btn savebtn">Save</button>
-    </div>
+<!--    <div  style="float: right; margin-top: 2%;" *ngIf="!isFieldSelected && formFieldsGroup.controls.length > 0">-->
+<!--        <button type="submit"  value="Save"  class="btn savebtn">Save</button>-->
+<!--    </div>-->
     <div *ngIf="formFieldsGroup.controls.length === 0" style="float: right; margin-top: 2%; margin-right: 30%">
         <span>No form controllers available</span>
     </div>

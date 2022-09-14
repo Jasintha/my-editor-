@@ -47,6 +47,7 @@ import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model
 import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-save-confirm-dialog.component';
 import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-event.component';
 import {ButtonEventHandleComponent} from '@home/pages/built-in-page/button-event-handle.component';
+import {StepFieldMapperComponent} from '@home/pages/built-in-page/step-field-mapper.component';
 
 @NgModule({
     declarations:[
@@ -65,7 +66,8 @@ import {ButtonEventHandleComponent} from '@home/pages/built-in-page/button-event
         FilterPageComponent,
         ModelChangeConfirmDialogComponent,
         PageSaveConfirmDialogComponent,
-        ButtonEventHandleComponent
+        ButtonEventHandleComponent,
+        StepFieldMapperComponent
     ],
     imports: [
         CommonModule,
@@ -118,7 +120,8 @@ import {ButtonEventHandleComponent} from '@home/pages/built-in-page/button-event
         FilterPageComponent,
         ModelChangeConfirmDialogComponent,
         PageSaveConfirmDialogComponent,
-        ButtonEventHandleComponent
+        ButtonEventHandleComponent,
+        StepFieldMapperComponent
     ],
     providers: [ ]
 })
