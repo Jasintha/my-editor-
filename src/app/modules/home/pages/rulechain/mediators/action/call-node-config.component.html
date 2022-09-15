@@ -632,5 +632,90 @@
     </mat-expansion-panel>
   </div>
 
-</div>
+  <mat-checkbox formControlName="isRetry">
+    Retry
+  </mat-checkbox>
+  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.isRetry">
+    <mat-label>Retry Count</mat-label>
+    <input type="number" formControlName="retryCount" matInput/>
+  </mat-form-field>
+  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.isRetry">
+    <mat-label>Retry Delay(Seconds)</mat-label>
+    <input type="number" formControlName="retryDelay" matInput/>
+  </mat-form-field>
 
+  <mat-form-field fxFlex class="mat-block" *ngIf="configuration.isRetry">
+    <mat-label>Retry HTTP Response Status Code</mat-label>
+    <mat-select formControlName="retryCode">
+      <mat-option value="100">100 Continue</mat-option>
+      <mat-option value="101">101 Switching Protocols</mat-option>
+      <mat-option value="102">102 Processing</mat-option>
+      <mat-option value="103">102 Early Hints</mat-option>
+
+      <mat-option value="200">200 OK</mat-option>
+      <mat-option value="201">201 Created</mat-option>
+      <mat-option value="202">202 Accepted</mat-option>
+      <mat-option value="203">203 Non-Authoritative Information</mat-option>
+      <mat-option value="204">204 No Content</mat-option>
+      <mat-option value="205">205 Reset Content</mat-option>
+      <mat-option value="206">206 Partial Content</mat-option>
+      <mat-option value="207">207 Multi-Status</mat-option>
+      <mat-option value="208">208 Already Reported</mat-option>
+      <mat-option value="226">226 IM Used</mat-option>
+
+      <mat-option value="300">300 Multiple Choices</mat-option>
+      <mat-option value="301">301 Moved Permanently</mat-option>
+      <mat-option value="302">302 Found</mat-option>
+      <mat-option value="303">303 See Other</mat-option>
+      <mat-option value="304">304 Not Modified</mat-option>
+      <mat-option value="305">305 Use Proxy</mat-option>
+      <mat-option value="306">306 Switch Proxy</mat-option>
+      <mat-option value="307">307 Temporary Redirect</mat-option>
+      <mat-option value="308">308 Permanent Redirect</mat-option>
+
+      <mat-option value="400">400 Bad Request</mat-option>
+      <mat-option value="401">401 Unauthorized</mat-option>
+      <mat-option value="402">402 Payment Required</mat-option>
+      <mat-option value="403">403 Forbidden</mat-option>
+      <mat-option value="404">404 Not Found</mat-option>
+      <mat-option value="405">405 Method Not Allowed</mat-option>
+      <mat-option value="406">406 Not Acceptable</mat-option>
+      <mat-option value="407">407 Proxy Authentication Required</mat-option>
+      <mat-option value="408">408 Request Timeout</mat-option>
+      <mat-option value="409">409 Conflict</mat-option>
+      <mat-option value="410">410 Gone</mat-option>
+      <mat-option value="411">411 Length Required</mat-option>
+      <mat-option value="412">412 Precondition Failed</mat-option>
+      <mat-option value="413">413 Payload Too Large</mat-option>
+      <mat-option value="414">414 URI Too Long</mat-option>
+      <mat-option value="415">415 Unsupported Media Type</mat-option>
+      <mat-option value="416">416 Range Not Satisfiable</mat-option>
+      <mat-option value="417">417 Expectation Failed</mat-option>
+      <mat-option value="418">418 I'm a teapot</mat-option>
+      <mat-option value="421">421 Misdirected Request</mat-option>
+      <mat-option value="422">422 Unprocessable Entity</mat-option>
+      <mat-option value="423">423 Locked</mat-option>
+      <mat-option value="424">424 Failed Dependency</mat-option>
+      <mat-option value="425">425 Too Early</mat-option>
+      <mat-option value="426">426 Upgrade Required</mat-option>
+      <mat-option value="428">428 Precondition Required</mat-option>
+      <mat-option value="429">429 Too Many Requests</mat-option>
+      <mat-option value="431">431 Request Header Fields Too Large</mat-option>
+      <mat-option value="451">451 Unavailable For Legal Reasons</mat-option>
+
+      <mat-option value="500">500 Internal Server Error</mat-option>
+      <mat-option value="501">501 Not Implemented</mat-option>
+      <mat-option value="502">502 Bad Gateway</mat-option>
+      <mat-option value="503">503 Service Unavailable</mat-option>
+      <mat-option value="504">504 Gateway Timeout</mat-option>
+      <mat-option value="505">505 HTTP Version Not Supported</mat-option>
+      <mat-option value="506">506 Variant Also Negotiates (RFC 2295)</mat-option>
+      <mat-option value="507">507 Insufficient Storage</mat-option>
+      <mat-option value="508">508 Loop Detected</mat-option>
+      <mat-option value="510">510 Not Extended</mat-option>
+      <mat-option value="511">511 Network Authentication Required</mat-option>
+
+    </mat-select>
+  </mat-form-field>
+
+</div>

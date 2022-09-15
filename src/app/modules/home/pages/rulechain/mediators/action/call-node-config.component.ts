@@ -192,6 +192,10 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
       constant: null,
       property: null,
       branchparam: null,
+      isRetry: false,
+      retryCount: 1,
+      retryDelay: 0,
+      retryCode: "",
     });
   }
 
@@ -798,8 +802,45 @@ export class CallNodeConfigComponent implements ControlValueAccessor, OnInit, On
         param: p,
         constant: c,
         property: property,
-        branchparam: branchparam
+        branchparam: branchparam,
+        isRetry: this.configuration.isRetry,
+        retryCount: this.configuration.retryCount,
+        retryDelay: this.configuration.retryDelay,
+        retryCode: this.configuration.retryCode,
       });
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('isRetry').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.isRetry = configuration;
+          if (!configuration) {
+            this.configuration.retryCount = 1;
+            this.configuration.retryDelay = 0;
+            this.configuration.retryCode = "";
+          }
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('retryCount').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.retryCount = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('retryDelay').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.retryDelay = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
+
+      this.changeSubscription = this.callNodeConfigFormGroup.get('retryCode').valueChanges.subscribe(
+        (configuration: any) => {
+          this.configuration.retryCode = configuration;
+          this.updateModel(this.configuration);
+        }
+      );
 
       this.changeSubscription = this.callNodeConfigFormGroup.get('isReturn').valueChanges.subscribe(
         (configuration: any) => {
