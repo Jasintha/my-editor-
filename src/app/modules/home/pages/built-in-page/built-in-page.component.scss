@@ -751,3 +751,63 @@ p {
   font-size: 14px;
   color: whitesmoke;
 }
+
+.title-container {
+  margin-bottom: 25px;
+  padding: 0.2%;
+}
+
+body .ui-fieldset .ui-fieldset-legend a {
+  padding: 0.571em 1em;
+  border: 1px solid #2980b9;
+  color: white;
+  background-color: #2980b9;
+  border-radius: 4px;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+body .ui-fieldset .ui-fieldset-legend a:hover {
+  padding: 0.571em 1em;
+  border: 1px solid #2980b9;
+  color: white;
+  background-color: #2980b9;
+  border-radius: 4px;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.ui-fieldset-toggleable .ui-fieldset-legend a:hover {
+  padding: 0.5em 1em;
+  cursor: pointer;
+  white-space: nowrap;
+  display: block;
+}
+
+.pi-plus:before {
+  content: "\e90d";
+  color: white;
+  font-size: 0.7em;
+}
+
+.pi-minus:before {
+  content: "\e90f";
+  color: white;
+  font-size: 0.7em;
+}
+
+.pi-plus:before:hover{
+  content: "\e90d";
+  color: white;
+  font-size: 0.7em;
+}
+
+.pi-minus:before:hover{
+  content: "\e90f";
+  color: white;
+  font-size: 0.7em;
+}
+
+body .ui-fieldset {
+  border: none;
+  background-color: #ffffff;
+  color: #333333;
+}
