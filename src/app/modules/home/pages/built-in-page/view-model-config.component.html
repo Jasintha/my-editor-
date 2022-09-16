@@ -14,13 +14,13 @@
             <div>
                 <table mat-table matSort [dataSource]="pageViewModelFields"
                        class="page-view">
-                    <ng-container matColumnDef="field">
-                        <th mat-header-cell *matHeaderCellDef>Field Name</th>
-                        <td [ngClass]="{'disabled-row': !element.isVisible}" mat-cell *matCellDef="let element"> {{element.propertyName}}</td>
-                    </ng-container>
                     <ng-container matColumnDef="group">
                         <th mat-header-cell *matHeaderCellDef>Row index</th>
                         <td [ngClass]="{'disabled-row': !element.isVisible}" mat-cell *matCellDef="let element; let i = index">{{i}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="field">
+                        <th mat-header-cell *matHeaderCellDef>Field Name</th>
+                        <td [ngClass]="{'disabled-row': !element.isVisible}" mat-cell *matCellDef="let element"> {{element.propertyName}}</td>
                     </ng-container>
                     <ng-container matColumnDef="visibility">
                         <th mat-header-cell *matHeaderCellDef>Enable/Disable</th>

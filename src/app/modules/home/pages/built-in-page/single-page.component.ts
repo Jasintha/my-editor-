@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Input, SimpleChanges, OnChanges} from '@angular/core';
+import {Component, OnInit, OnDestroy, Input, SimpleChanges, OnChanges, ViewEncapsulation} from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -48,6 +48,7 @@ import {StepFieldMapperComponent} from '@home/pages/built-in-page/step-field-map
   templateUrl: './single-page.component.html',
   styleUrls: ['./built-in-page.component.scss'],
   providers: [MessageService],
+  encapsulation: ViewEncapsulation.None
 })
 export class SinglePageViewComponent implements OnDestroy , OnChanges{
   @Input() projectUid: string;
@@ -59,6 +60,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   pageTemplateItems: SelectItem[];
   datamodelItems: SelectItem[];
   currentPage: IPage;
+  currentModel: any;
   microservices: IInstalledMicroservice[];
   microserviceProjects: IProject[];
   dashboardProjects: IProject[];
@@ -740,7 +742,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   loadModelPropertyList(){
     let currentDatamodeProperties: IProperty[];
-    currentDatamodeProperties = this.currentPage.model.config.children;
+    this.currentModel  = this.currentPage.model;
+    currentDatamodeProperties = this.currentModel.config.children;
     this.modelAttributesList = currentDatamodeProperties;
     for (let i = 0; i < currentDatamodeProperties.length; i++) {
       if (currentDatamodeProperties[i].data.type === 'property') {
@@ -771,8 +774,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   changePageModel(selectedModel : IAggregate) {
-    const currentModel = this.currentPage.model;
-    if(currentModel) {
+    this.currentModel  = this.currentPage.model;
+    if(this.currentModel) {
       const dialogRef = this.dialog.open(ModelChangeConfirmDialogComponent, {
         panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
       });

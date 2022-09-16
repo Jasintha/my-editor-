@@ -1,3 +1,8 @@
+<!--<div class="row title-container">-->
+<!--    <div class="col-md-10">-->
+<!--        <h5  style="margin-left: 5px">Epic  > Story > {{pageTitle}}</h5>-->
+<!--    </div>-->
+<!--</div>-->
 <div class="page-view justify-content-center" style="padding-top: 1%;">
     <form name="editForm" role="form" novalidate [formGroup]="editForm">
         <div class="form-group" [hidden]="!editForm.get('id').value">
@@ -5,9 +10,10 @@
         </div>
 
 
-        <div class="row">
+        <div class="row" style="border-bottom: 1px solid; padding-bottom: 25px;">
             <div class="col-md-12 ">
-                <h4 style="margin-left: 5px;">Basic details</h4>
+                <p-fieldset [collapsed]="false"  [toggleable]="true">
+                    <p-header style="font-size: 18px">Page basic settings</p-header>
                 <div class="card-page">
                     <div class="row">
                         <div class="col-md-12">
@@ -16,8 +22,12 @@
                     </div>
                     <div class="row">
                         <div class="col-md-7">
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="row" style=" border: 1px solid lightgrey;">
+                                <div class="col-md-2" style="margin-top: 20px;">
+                                    <mat-icon style="margin-left: 20px; cursor: pointer" (click)="editPageTitle()">edit</mat-icon>
+                                    <mat-icon  style=" cursor: pointer" (click)="checkAndUpdatePageName()" *ngIf="isTitleEdit">save</mat-icon>
+                                </div>
+                                <div class="col-md-5" style="border-left: 1px solid lightgrey;">
                                     <h5 *ngIf="!isTitleEdit">{{pageTitle}}</h5>
                                     <mat-form-field *ngIf="isTitleEdit" [style]="{'width':'100%'}">
                                         <mat-label>Page Title</mat-label>
@@ -26,25 +36,49 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-2">
-                                        <mat-icon style="margin-left: 20px; cursor: pointer" (click)="editPageTitle()">edit</mat-icon>
-                                        <mat-icon  style=" cursor: pointer" (click)="checkAndUpdatePageName()" *ngIf="isTitleEdit">save</mat-icon>
-                                </div>
+
                             </div>
-                            <div class="row" style="margin-top: 20px">
-                                <div class="col-md-6">
+                            <div class="row" style=" border: 1px solid lightgrey;">
+                                <div class="col-md-2" style="padding: 12px">
+                                    <mat-icon style="margin-left: 20px; cursor: pointer"(click)="editPageDesc()">edit</mat-icon>
+                                    <mat-icon style="cursor: pointer" *ngIf="isDescEdit" (click)="checkAndUpdatePageName()">save</mat-icon>
+                                </div>
+                                <div class="col-md-5" style="border-left: 1px solid lightgrey;padding: 12px">
                                     <div *ngIf="!isDescEdit">Description of this page </div>
                                     <mat-form-field  *ngIf="isDescEdit" [style]="{'width':'100%'}">
                                         <mat-label>Description</mat-label>
                                         <textarea style="overflow: auto" [readonly]="isDescEdit" cdkTextareaAutosize formControlName="pageDescription" name="pageDescription" matInput placeholder="This page is about..."></textarea>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-2">
-                                        <mat-icon style="margin-left: 20px; cursor: pointer"(click)="editPageDesc()">edit</mat-icon>
-                                        <mat-icon style="cursor: pointer" *ngIf="isDescEdit" (click)="checkAndUpdatePageName()">save</mat-icon>
-                                </div>
+
                             </div>
-                            <div  class="row" style="margin-top: 20px;">
+
+                            <div class="row" style=" border: 1px solid lightgrey;">
+                                <div class="col-md-2" style="padding: 12px">
+                                    <mat-icon style="margin-left: 10px">perm_data_setting</mat-icon>
+                                </div>
+                                <div class="col-md-5" style="border-left: 1px solid lightgrey;padding: 12px">
+                                    <div>{{currentModel.name}} </div>
+                                </div>
+
+                            </div>
+
+
+<!--                            <div class="row" style="margin-top: 20px; border: 1px solid lightgrey">-->
+<!--                                <div class="col-md-2">-->
+<!--                                    <mat-icon style="margin-left: 20px; cursor: pointer"(click)="editPageDesc()">edit</mat-icon>-->
+<!--                                    <mat-icon style="cursor: pointer" *ngIf="isDescEdit" (click)="checkAndUpdatePageName()">save</mat-icon>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-5">-->
+<!--                                    <div *ngIf="!isDescEdit">Description of this page </div>-->
+<!--                                    <mat-form-field  *ngIf="isDescEdit" [style]="{'width':'100%'}">-->
+<!--                                        <mat-label>Description</mat-label>-->
+<!--                                        <textarea style="overflow: auto" [readonly]="isDescEdit" cdkTextareaAutosize formControlName="pageDescription" name="pageDescription" matInput placeholder="This page is about..."></textarea>-->
+<!--                                    </mat-form-field>-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+
 <!--                                <div class="col-md-5">-->
 <!--                                    <div class="form-group">-->
 <!--                                        <mat-form-field [style]="{'width':'100%'}">-->
@@ -58,16 +92,15 @@
 
 <!--                                    </div>-->
 <!--                                </div>-->
-                                <div class="col-md-7">
-                             <div *ngIf="currentPage.model && currentPage.model.name">
-                                 <div class="row">
-                                     <div class="col-md-7" style="font-size: 15px; font-weight: 500"><mat-icon style="margin-left: 5px">perm_data_setting</mat-icon> Page Model:</div>
-                                      <div class="col-md-5" style="margin-top: 5px">  {{currentPage.model.name}}</div>
-                                 </div>
 
-                             </div>
-                                </div>
-                            </div>
+<!--                             <div *ngIf="currentModel">-->
+<!--                                 <div class="row" style="border: 1px solid lightgrey; padding: 12px">-->
+<!--                                     <div class="col-md-2">-->
+<!--                                     </div>-->
+<!--                                     <div class="col-md-5" style="font-size: 15px; font-weight: 500; border-left: 1px solid lightgrey; padding: 12px">{{currentModel.name}}</div>-->
+<!--&lt;!&ndash;                                      <div class="col-md-5" style="margin-top: 5px">  {{currentPage.model.name}}</div>&ndash;&gt;-->
+<!--                                 </div>-->
+<!--                             </div>-->
                         </div>
 <!--                        <div style="margin-top: 1%" class="col-4">-->
 <!--                            <div class="ui-panel-content ui-widget-content justify-content-center" style="padding-top: 5px">-->
@@ -90,25 +123,29 @@
 <!--                        </div>-->
                     </div>
                 </div>
+                </p-fieldset>
             </div>
         </div>
 
-        <div *ngIf="editForm.value.pagetemplate === 'aio-table' || editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'form-wizard-page' || editForm.value.pagetemplate == 'register-page' || editForm.value.pagetemplate == 'login-page'" style="margin-top: 1%" class="row">
+        <div *ngIf="editForm.value.pagetemplate === 'aio-table' || editForm.value.pagetemplate == 'form-page' || editForm.value.pagetemplate == 'form-wizard-page' || editForm.value.pagetemplate == 'register-page' || editForm.value.pagetemplate == 'login-page'" style="margin-top: 1%;border-bottom: 1px solid; padding-bottom: 25px;" class="row">
             <div class="col-md-12 ">
-                <h4 style="margin-left: 5px;">Controller settings</h4>
-                <div class="card-page">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <add-form-controllers [projectUid] ='projectUid' [pageId] ='pageId'></add-form-controllers>
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                    <p-header style="font-size: 18px">  Page component settings</p-header>
+                    <div class="card-page">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <add-form-controllers [projectUid] ='projectUid' [pageId] ='pageId'></add-form-controllers>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </p-fieldset>
             </div>
         </div>
 
-        <div style="margin-top: 1%" class="row">
+        <div style="margin-top: 1%;border-bottom: 1px solid; padding-bottom: 25px;" class="row">
             <div class="col-md-12 ">
-                <h4 style="margin-left: 5px;">Page layout change</h4>
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                    <p-header style="font-size: 18px"> Page view settings</p-header>
                 <div class="card-page">
                     <div class="   row">
                         <div class="col-md-8">
@@ -116,12 +153,14 @@
                         </div>
                     </div>
                 </div>
+                </p-fieldset>
             </div>
         </div>
 
-        <div style="margin-top: 1%" class="row">
+        <div style="margin-top: 1%;border-bottom: 1px solid; padding-bottom: 25px;" class="row">
             <div class="col-md-12 ">
-                <h4 style="margin-left: 5px;">Page actions and events</h4>
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                    <p-header style="font-size: 18px">Page actions and event settings</p-header>
                 <div class="card-page">
                     <div class="   row">
                         <div class="col-md-8">
@@ -199,38 +238,17 @@
                         </div>
                     </div>
                 </div>
+                </p-fieldset>
             </div>
         </div>
 
-        <div style="margin-top: 1%" class="row">
+        <div style="margin-top: 1%" class="row" *ngIf="editForm.value.pagetemplate === 'form-wizard-page'">
             <div class="col-md-12 ">
-                <h4 style="margin-left: 5px;" *ngIf="editForm.value.pagetemplate === 'form-wizard-page'">Add wizard page steps</h4>
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                    <p-header style="font-size: 18px">Page stepper settings</p-header>
                 <div class="card-page">
                     <div class="   row">
                         <div class="col-md-7">
-<!--                            <div class="wiz-step"-->
-<!--                                 formArrayName="wizardDetailsGroup">-->
-<!--                                <div style="padding-top: 10px"-->
-<!--                                     *ngFor="let step of wizardDetailsGroup.controls; let i = index">-->
-<!--                                    <div [formGroup]="step">-->
-<!--                                        <label class="form-control-label" for="field_pagetitle">Step Header</label>-->
-<!--                                        <div class="row">-->
-<!--                                            <div class="col-md-10">-->
-<!--                                                <mat-form-field [style]="{'width':'100%'}">-->
-<!--                                                    &lt;!&ndash;                                                        <mat-label>Add authorized role</mat-label>&ndash;&gt;-->
-<!--                                                    <input type="text"-->
-<!--                                                           formControlName="stepHeading" matInput name="stepHeading">-->
-<!--                                                </mat-form-field>-->
-<!--                                            </div>-->
-<!--                                            <div class="col-md-2">-->
-<!--                                            <span class="flex-auto">-->
-<!--                                                  <mat-icon (click)="removeWizardDetailsGroup(i)">delete</mat-icon>-->
-<!--                                            </span>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
                             <ng-container *ngIf="editForm.value.pagetemplate === 'form-wizard-page'">
                                 <div class="row">
                                     <div class="col-md-12" style='text-align: right'>
@@ -243,47 +261,6 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Add form fields to steps</label>
-<!--                                    <div class="card">-->
-<!--                                        <div class="card-body row">-->
-<!--                                            <div class="col-md-3" style="margin-right: 20px">-->
-<!--                                                <mat-form-field [style]="{'width':'100%'}">-->
-<!--                                                    <mat-label>Choose Model Property</mat-label>-->
-<!--                                                    <mat-select formControlName="fieldName">-->
-<!--                                                        <mat-option *ngFor="let option of modelPropertyList"-->
-<!--                                                                    [value]="option.value">-->
-<!--                                                            {{option.label}}-->
-<!--                                                        </mat-option>-->
-<!--                                                    </mat-select>-->
-<!--                                                </mat-form-field>-->
-<!--                                            </div>-->
-<!--                                            <div class="col-md-3">-->
-<!--                                                <mat-form-field [style]="{'width':'100%'}">-->
-<!--                                                    <mat-label>Choose the Step</mat-label>-->
-<!--                                                    <mat-select formControlName="stepHeader">-->
-<!--                                                        <mat-option *ngFor="let option of stepHeadersList"-->
-<!--                                                                    [value]="option.value">-->
-<!--                                                            {{option.label}}-->
-<!--                                                        </mat-option>-->
-<!--                                                    </mat-select>-->
-<!--                                                </mat-form-field>-->
-<!--                                            </div>-->
-<!--                                            <div class="col-md-3" style='text-align: left'>-->
-<!--                                                <button type="button" color="primary" mat-mini-fab-->
-<!--                                                        aria-label="Example icon-button with a heart icon"-->
-<!--                                                        (click)="saveAllWizardSteps()">-->
-<!--                                                    <mat-icon>refresh</mat-icon>-->
-<!--                                                </button>-->
-<!--                                            </div>-->
-<!--                                            <div class="col-md-2" style='text-align: right'>-->
-<!--                                                <button type="button" style="float: right;" mat-raised-button-->
-<!--                                                        color="primary"-->
-<!--                                                        (click)="addFieldsToSteps()">-->
-<!--                                                    <mat-icon>add</mat-icon>-->
-<!--                                                    Add-->
-<!--                                                </button>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
 
                                     <div style="padding-top:20px;padding-bottom:20px;">
                                         <table mat-table matSort [dataSource]="dataSourceWizard"
@@ -503,17 +480,19 @@
                             </div>
                     </div>
                 </div>
+                </p-fieldset>
             </div>
         </div>
 
-        <div style="margin-top: 1%" class="row">
+        <div  style="margin-top: 1%;border-bottom: 1px solid; padding-bottom: 25px;" class="row">
             <div class="col-md-12 ">
-                <h4 style="margin-left: 5px;">Integration</h4>
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                    <p-header style="font-size: 18px">Page integration settings</p-header>
                 <div class="card-page">
                     <div class="form-group" *ngIf="editForm.value.pagetemplate === 'aio-table'">
                     <div class="row" >
                         <div class="col-md-8">
-                            <div class="form-group">
+                            <div class="form-group" >
                                 <div>
                                     <div class="  row">
                                         <div class="row col-md-12">
@@ -653,7 +632,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-md-3">
-                                <button type="button" style="float: right;" mat-raised-button
+                                <button type="button" style="float: left;" mat-raised-button
                                         color="primary"
                                         (click)="updateResourcePath()">
                                     Save
@@ -662,6 +641,7 @@
                         </div>
                     </div>
                 </div>
+                </p-fieldset>
             </div>
         </div>
     </form>

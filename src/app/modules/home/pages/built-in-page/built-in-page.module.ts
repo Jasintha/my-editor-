@@ -48,6 +48,7 @@ import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-sav
 import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-event.component';
 import {ButtonEventHandleComponent} from '@home/pages/built-in-page/button-event-handle.component';
 import {StepFieldMapperComponent} from '@home/pages/built-in-page/step-field-mapper.component';
+import {FieldsetModule} from 'primeng/fieldset';
 
 @NgModule({
     declarations:[
@@ -102,7 +103,8 @@ import {StepFieldMapperComponent} from '@home/pages/built-in-page/step-field-map
         NgxSpinnerModule,
         TableModule,
         InputTextModule,
-        PickListModule
+        PickListModule,
+        FieldsetModule
     ],
     exports:[
         BuiltInPageComponent,

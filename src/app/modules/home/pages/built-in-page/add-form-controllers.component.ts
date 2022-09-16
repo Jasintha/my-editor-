@@ -353,7 +353,7 @@ export class AddFormControllersComponent implements OnChanges {
   processFormControllerData(res: ISourceTargetFieldsRequest) {
     this.sourceTargetFieldsRequest = res;
     this.sourceProperties = this.sourceTargetFieldsRequest.sourceFormFields;
-    this.targetProperties = this.sourceTargetFieldsRequest.targetFormFields;
+    this.targetProperties = this.sourceTargetFieldsRequest.targetFormFields.concat(this.sourceProperties);
     if (this.targetProperties) {
       for (let i = 0; i < this.targetProperties.length; i++) {
         const hasChild = this.targetProperties[i].children && this.targetProperties[i].children.length > 0;
@@ -431,6 +431,18 @@ export class AddFormControllersComponent implements OnChanges {
   }
 
   addFormFieldsGroup(values: any, type: string): FormGroup {
+    if (values.fieldController === '' && values.propertyType) {
+      switch (values.propertyType) {
+        case 'TEXT': values.fieldController = 'Textbox';
+          break;
+        case 'NUMBER': values.fieldController = 'Textbox';
+          break;
+        case 'TRUE_OR_FALSE': values.fieldController = 'TRUE_OR_FALSE_PICKER';
+          break;
+        case 'DATE': values.fieldController = 'DATE_INPUT';
+          break;
+      }
+    }
     return new FormGroup({
       propertyType: new FormControl(values.propertyType),
       propertyId: new FormControl(values.propertyId),
@@ -471,6 +483,18 @@ export class AddFormControllersComponent implements OnChanges {
   }
 
   addChildFormFieldsGroup(values: any): FormGroup {
+    if (values.fieldController === '' && values.propertyType) {
+      switch (values.propertyType) {
+        case 'TEXT': values.fieldController = 'Textbox';
+        break;
+        case 'NUMBER': values.fieldController = 'Textbox';
+          break;
+        case 'TRUE_OR_FALSE': values.fieldController = 'TRUE_OR_FALSE_PICKER';
+          break;
+        case 'DATE': values.fieldController = 'DATE_INPUT';
+          break;
+      }
+    }
     return new FormGroup({
       propertyType: new FormControl(values.propertyType),
       propertyId: new FormControl(values.propertyId),
