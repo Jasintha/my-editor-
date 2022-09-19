@@ -73,7 +73,7 @@ export class ViewModelConfigComponent implements OnChanges, OnDestroy {
     sourceProperties: IFormField[];
     targetProperties: IFormField[];
     pageViewModelFields: IFormField[] = [];
-    fieldMapDisplayedColumns: string[] = ['field','group','visibility'];
+    fieldMapDisplayedColumns: string[] = ['group','field','visibility'];
     fieldDataSourceWizard = new MatTableDataSource(this.pageViewModelFields);
 
     constructor(
