@@ -183,13 +183,13 @@
 .box-ctrl {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
-.title {
-  //background: linear-gradient(to left, #a4bafd, #10458b);
-  background: #497bbf;
-  height: 100px;
-  text-align: center;
-  margin-bottom: 1px;
-}
+//.title {
+//  //background: linear-gradient(to left, #a4bafd, #10458b);
+//  background: #497bbf;
+//  height: 100px;
+//  text-align: center;
+//  margin-bottom: 1px;
+//}
 
 .back-save {
   padding-top: 20px;
@@ -743,7 +743,11 @@ p {
 
 .page-view tr.mat-header-row {
   height: 56px;
-  background-color: #d1d1d1 !important;
+  background-color: #34495e !important;
+}
+
+.page-view th.mat-header-cell {
+  color: white;
 }
 
 .page-view .virtuan-default .mat-header-cell, .virtuan-dark .mat-header-cell {

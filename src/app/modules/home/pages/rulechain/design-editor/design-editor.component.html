@@ -109,7 +109,6 @@
         <div class="col-5" style="justify-content: end; display: flex;padding-bottom: 26px;">
             <div class="row" style="display: flex; justify-content: end;">
 <!--                 <div class="col-12">-->
-                <button (click)="createRequirement()" mat-raised-button class="button-visible" style="background-color: #00A74E; color: white; cursor: pointer; margin-right: -9px; margin-bottom: 146px;"><mat-icon style="font-size: 25px;margin-left: 6px;">add</mat-icon></button>
 <!--                     <div class="new button-visible" (click)="createRequirement()" style="display: flex; justify-content: end;">-->
 <!--                         <button mat-flat-button disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer; margin-right: -17px; margin-bottom: 139px;">-->
 <!--                             <mat-icon style="font-size: 25px">add</mat-icon>-->
@@ -117,6 +116,7 @@
 <!--                     </div>-->
 <!--                </div>-->
 
+                <button (click)="createRequirement()" mat-raised-button class="button-visible" style="background-color: #924caa; color: white; cursor: pointer; margin-right: -9px; margin-bottom: 146px; width: 60px"><mat-icon style="font-size: 25px;margin-left: 4px;">add</mat-icon></button>
 
                 <div class="col-12" style="display: flex; justify-content: end;">
                     <div reqCounter class="counter-container content-center" style="bottom: 75px;right: 65px; position: absolute">
@@ -167,7 +167,7 @@
                             <div class="description" [ngClass]="{ 'active' : item.isActive == true }">
                                 <div matTooltip="{{item?.name}}"
                                      [matTooltipPosition]="toolTipPosition"
-                                     class="title epic-titledes-overflow">{{ item.name }}</div>
+                                     class="title epic-titledes-overflow">xxx</div>
                                 <p matTooltip="{{item?.description}}"
                                    [matTooltipPosition]="toolTipPosition"> {{ item.description }}</p>
                             </div>
