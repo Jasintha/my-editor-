@@ -81,6 +81,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   isLoginPageExist: string;
   isRegisterPageExist: string;
   pageTitle: string;
+  pageDescription: string;
   pageConfigs: IConfig[];
   clonedCars: { [s: string]: Config } = {};
   // pageId: string;
@@ -599,17 +600,23 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   editEvents(button, index) {
     const page = this.currentPage;
+    if(!this.BTN_ELEMENT_DATA[index].buttonEvents) {
+      this.BTN_ELEMENT_DATA[index].buttonEvents = [];
+    }
     const dialogRef = this.dialog.open(ButtonEventHandleComponent, {
       panelClass: ['virtuan-dialog'],
       data: {
         button,
+        btnEventActionList: this.BTN_ELEMENT_DATA[index].buttonEvents,
+        pages: this.pages,
       }
     });
     dialogRef.afterClosed(
     ).subscribe(result => {
       if (result) {
-        this.BTN_ELEMENT_DATA[index].buttonEvents.push(result);
+        this.BTN_ELEMENT_DATA[index].buttonEvents = result;
         this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
+        this.savePageActions();
       }
     });
   }
@@ -1326,6 +1333,7 @@ if(this.LOGIN_DATA.length === 0) {
         })
       }
       this.pageTitle = builtInPage.pagetitle;
+      this.pageDescription = builtInPage.pageDescription;
       if(builtInPage.actions && builtInPage.actions.buttons && builtInPage.actions.buttons.child ) {
         this.BTN_ELEMENT_DATA = builtInPage.actions.buttons.child;
         this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);

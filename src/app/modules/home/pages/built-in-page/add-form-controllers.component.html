@@ -1,58 +1,66 @@
 <form name="addSecretForm" [formGroup]="form" (ngSubmit)="addFormControllers()">
         <div formArrayName="formFieldsGroup">
             <div class="row" style="padding-top: 20px; padding-bottom: 20px; background-color: #34495e; color: white">
+                <div class="col-md-1" style="padding-left: 21px;">
+                    Row Index
+                </div>
                 <div class="col-md-4" style="padding-left: 21px;">
-                Field
+                Data Field
             </div>
-                <div class="col-md-5" style="padding-left: 145px;">
-                Component
+                <div class="col-md-4" style="padding-left: 32px;">
+                UI Component
                 </div>
                 <div class="col-md-3" style="padding-left: 200px;">
-                Edit
+                Visibility
                 </div>
             </div>
+
             <div *ngFor="let emp of formFieldsGroup.controls; let i = index">
-                <div class="row" [formGroup]="emp">
+
+                <div class="row" style="  border-bottom: 1px solid darkgrey;" [formGroup]="emp" *ngIf="this.form.value.formFieldsGroup[i].propertyName !== 'Objectuuid'
+                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Created At'
+                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Updated At'
+                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Deleted At'">
+
                     <div class="form-tile row" *ngIf="!isFieldSelected">
-                        <div class="col-md-4 form-group" *ngIf="!isFieldSelected">
+                        <div class="col-md-1">{{i}}</div>
+                        <div class="col-md-3 form-group" *ngIf="!isFieldSelected">
                             <input class="form-control" readonly type="text" formControlName="propertyName"
                                    style=" width: 70%; border: none" >
                         </div>
                         <div class="col-md-5" *ngIf="!isFieldSelected">
                             <div class="form-group" style="text-align: center">
 
-                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'"
-                                     src="../../../../../assets/images/form_control/textbox.jpg"
-                                     style="width: 40%; height: 3%">
-                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Radiobutton'"
-                                     src="../../../../../assets/images/form_control/radio.jpg"
-                                     style="width: 40%; height: 3% ">
-                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Checkbox'"
-                                     src="../../../../../assets/images/form_control/checkbox.jpg"
-                                     style="width: 40%; height: 3% ">
-                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Dropdown'"
-                                     src="../../../../../assets/images/form_control/dropdown.jpg"
-                                     style="width: 40%; height: 3% ">
+        <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'"
+             src="../../../../../assets/images/form_control/textbox.jpg"
+             style="width: 40%; height: 3%">
+        <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Radiobutton'"
+             src="../../../../../assets/images/form_control/radio.jpg"
+             style="width: 40%; height: 3% ">
+        <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Checkbox'"
+             src="../../../../../assets/images/form_control/checkbox.jpg"
+             style="width: 40%; height: 3% ">
+        <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Dropdown'"
+             src="../../../../../assets/images/form_control/dropdown.jpg"
+             style="width: 40%; height: 3% ">
 
-                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'DATE_INPUT'"
-                                     src="../../../../../assets/images/form_control/date.jpg"
-                                     style="width: 40%; height: 3% ">
+        <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'DATE_INPUT'"
+             src="../../../../../assets/images/form_control/date.jpg"
+             style="width: 40%; height: 3% ">
 
-                                <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'TRUE_OR_FALSE_PICKER'"
-                                     src="../../../../../assets/images/form_control/tureorfalse.jpg"
-                                     style="width: 40%; height: 3% ">
+        <img *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'TRUE_OR_FALSE_PICKER'"
+             src="../../../../../assets/images/form_control/tureorfalse.jpg"
+             style="width: 40%; height: 3% ">
 
-                                <i *ngIf="this.form.value.formFieldsGroup[i].fieldcategory === 'object'"
-                                   style="font-size:30px " class="fa fa-exchange" aria-hidden="true"></i>
-
+        <i *ngIf="this.form.value.formFieldsGroup[i].fieldcategory === 'object'"
+           style="font-size:30px " class="fa fa-exchange" aria-hidden="true"></i>
+            <i  style="text-align: end; display: inline; margin-left: 15px" class="fa fa-pencil-square-o" *ngIf="!isFieldSelected" type="button" (click)="onSelectController(i)" aria-hidden="true"></i>
                                 <br>
                             </div>
                         </div>
-                        <div class="col-md-3" style="text-align: end"  *ngIf="this.form.value.formFieldsGroup[i].propertyName !== 'Objectuuid'
-                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Created At'
-                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Updated At'
-                                        && this.form.value.formFieldsGroup[i].propertyName !== 'Deleted At'">
-                                <i class="fa fa-pencil-square-o" *ngIf="!isFieldSelected" type="button" (click)="onSelectController(i)" aria-hidden="true"></i>
+                        <div *ngIf="!isFieldSelected" class="col-md-3">
+                            <mat-slide-toggle style="float: right" formControlName="isVisible">
+                        </mat-slide-toggle>
                         </div>
                     </div>
 
@@ -418,6 +426,9 @@
                 </div>
             </div>
         </div>
+    <div  style="float: left; margin-top: 2%;" *ngIf="!isFieldSelected && formFieldsGroup.controls.length > 0">
+        <button type="submit"  value="Save"  class="btn savebtn">Save</button>
+    </div>
 <!--    <div  style="float: right; margin-top: 2%;" *ngIf="!isFieldSelected && formFieldsGroup.controls.length > 0">-->
 <!--        <button type="submit"  value="Save"  class="btn savebtn">Save</button>-->
 <!--    </div>-->
