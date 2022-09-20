@@ -36,13 +36,13 @@
            </span>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 build-view">
                 <mat-form-field style="float: right; margin-right: 50px">
                     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
                 </mat-form-field>
 
                 <div class="mat-elevation-z8">
-                    <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows  class="mat-elevation-z8 build-view">
+                    <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows  class="mat-elevation-z8">
                         <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
                             <th mat-header-cell *matHeaderCellDef> {{columnHeaders[column]}} </th>
                             <td mat-cell *matCellDef="let element"><span *ngIf="column ==='servicename'">

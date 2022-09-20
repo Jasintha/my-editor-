@@ -1,4 +1,4 @@
-.virtuan-default .mat-table, .virtuan-dark .mat-table {
+.virtuan-default .build-view .mat-table, .virtuan-dark .mat-table {
   width: 97%;
   max-width: 100%;
   display: table;
@@ -80,12 +80,6 @@ body .ui-multiselect {
 .build-view tr.mat-header-row {
   height: 56px;
   background-color: #4bc1b4 !important;
-}
-
-.build-view .virtuan-default .mat-header-cell, .virtuan-dark .mat-header-cell {
-  height: 20px;
-  font-size: 14px;
-  color: whitesmoke;
 }
 
 .build-view .yellow {

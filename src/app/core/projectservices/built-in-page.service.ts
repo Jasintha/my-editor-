@@ -47,6 +47,7 @@ export class BuiltInPageService {
   public updatePageActionsUrl =  '/api/editor/proj/pages/built-in/page-actions';
   public updatePageFieldMappings =  '/api/editor/proj/pages/built-in/page-field-mappings';
   public updatePageLoginInputsUrl =  '/api/editor/proj/pages/built-in/page-login-inputs';
+  public updateAIOPageResourceDataUrl =  '/api/editor/proj/pages/built-in/aio-page-resource';
   public pageStyleUrl =  '/api/editor/proj/pages/pagestyle';
 
   constructor(protected http: HttpClient) {}
@@ -77,6 +78,10 @@ export class BuiltInPageService {
 
   updatePageLoginInputs(builtInPage: IPage, uuid: string): Observable<EntityResponseType> {
     return this.http.put<IPage>(`${this.updatePageLoginInputsUrl}/${uuid}`, builtInPage, { observe: 'response' });
+  }
+
+  updateAIOPageResourceData(builtInPage: IPage, uuid: string): Observable<EntityResponseType> {
+    return this.http.put<IPage>(`${this.updateAIOPageResourceDataUrl}/${uuid}`, builtInPage, { observe: 'response' });
   }
 
   updatePageActions(builtInPage: IPage, uuid: string): Observable<EntityResponseType> {
