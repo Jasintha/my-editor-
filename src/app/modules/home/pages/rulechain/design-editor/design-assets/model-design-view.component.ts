@@ -677,7 +677,7 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
                         (res: HttpErrorResponse) => this.onError()
                     );
             }else{
-                this.checkNameAvailability();
+                this.checkNameAvailabilityNew();
                 stepper.next();
             }
         }
@@ -791,6 +791,26 @@ export class ModelDesignViewComponent implements ControlValueAccessor, OnInit, O
         const aggregate = this.createModelFromForm();
         this.aggregateService
             .findNameAvailability(aggregate.name, this.projectUid, aggregate.uuid)
+            .pipe(
+                filter((res: HttpResponse<any>) => res.ok),
+                map((res: HttpResponse<any>) => res.body)
+            )
+            .subscribe(
+                (res: any) => {
+                    if (res.IsNameExist) {
+                    } else {
+                        this.saveModel(aggregate);
+                    }
+                },
+                (res: HttpErrorResponse) => this.onError()
+            );
+    }
+
+    checkNameAvailabilityNew() {
+        this.modeldata = [];
+        const aggregate = this.createModelFromForm();
+        this.aggregateService
+            .findNameAvailabilityNew(aggregate.name, this.projectUid)
             .pipe(
                 filter((res: HttpResponse<any>) => res.ok),
                 map((res: HttpResponse<any>) => res.body)

@@ -268,21 +268,40 @@ export class CreateModelComponent implements OnInit {
 
   checkNameAvailability() {
     const aggregate = this.createFromForm();
-    this.aggregateService
-        .findNameAvailability(aggregate.name, this.projectUid, aggregate.uuid)
-        .pipe(
-            filter((res: HttpResponse<any>) => res.ok),
-            map((res: HttpResponse<any>) => res.body)
-        )
-        .subscribe(
-            (res: any) => {
-              if (res.IsNameExist) {
-              } else {
-                this.save(aggregate);
-              }
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+    if(aggregate.uuid) {
+      this.aggregateService
+          .findNameAvailability(aggregate.name, this.projectUid, aggregate.uuid)
+          .pipe(
+              filter((res: HttpResponse<any>) => res.ok),
+              map((res: HttpResponse<any>) => res.body)
+          )
+          .subscribe(
+              (res: any) => {
+                if (res.IsNameExist) {
+                } else {
+                  this.save(aggregate);
+                }
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );
+    } else {
+      this.aggregateService
+          .findNameAvailabilityNew(aggregate.name, this.projectUid)
+          .pipe(
+              filter((res: HttpResponse<any>) => res.ok),
+              map((res: HttpResponse<any>) => res.body)
+          )
+          .subscribe(
+              (res: any) => {
+                if (res.IsNameExist) {
+                } else {
+                  this.save(aggregate);
+                }
+              },
+              (res: HttpErrorResponse) => this.onError(res.message)
+          );
+    }
+
   }
 
 }
