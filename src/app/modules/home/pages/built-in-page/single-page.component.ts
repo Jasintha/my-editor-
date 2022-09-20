@@ -75,6 +75,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   aggregateItems: SelectItem[];
   apiParams: APIInput[];
   apiResourceDetails: any[];
+  removedAIOResourceData = false;
   dashboardPanelDetails: any[];
   // projectUid: string;
   loginParams: any[];
@@ -912,6 +913,10 @@ if(this.LOGIN_DATA.length === 0) {
   deleteaddAIOTableRow(apiDetail) {
     const index = this.apiResourceDetails.indexOf(apiDetail);
     this.apiResourceDetails.splice(index, 1);
+
+    if(this.apiResourceDetails.length) {
+      this.removedAIOResourceData = true;
+    }
     this.dataSourceAIOParam = new MatTableDataSource(this.apiResourceDetails);
   }
 
@@ -1270,7 +1275,7 @@ if(this.LOGIN_DATA.length === 0) {
         this.btnEventActionList = builtInPage.buttonEvents
         this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
       }
-      if (builtInPage.pagetemplate === 'aio-table' || (builtInPage.pagetemplate !== 'aio-grid' && builtInPage.apiResourceDetails)) {
+      if (builtInPage.pagetemplate === 'aio-table' || (builtInPage.pagetemplate === 'aio-grid' && builtInPage.apiResourceDetails)) {
         if (builtInPage.apiResourceDetails) {
           this.apiResourceDetails =[];
           this.apiResourceDetails = builtInPage.apiResourceDetails;
@@ -1426,6 +1431,13 @@ if(this.LOGIN_DATA.length === 0) {
     }
   }
 
+  updateAIOPageResourceData(builtInPage: IPage) {
+    this.isSaving = true;
+    if (builtInPage.uuid) {
+      this.subscribeToSaveResponse(this.builtInPageService.updateAIOPageResourceData(builtInPage, this.projectUid));
+    }
+  }
+
   // private createFromForm(): IPage {
   //   let headersArray = [];
   //   let fieldMappingArray = [];
@@ -1512,6 +1524,12 @@ if(this.LOGIN_DATA.length === 0) {
     const page = this.currentPage;
     page.stepMappings = fieldMappingArray;
     this.updatePageLoginInputs(page);
+  }
+
+  saveAIOPageResourceData() {
+    const page = this.currentPage;
+    page.apiResourceDetails = this.apiResourceDetails;
+    this.updateAIOPageResourceData(page);
   }
 
   getChangedPageModel(currentDatamodel){
