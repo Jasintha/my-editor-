@@ -94,6 +94,10 @@ export class AggregateService {
     return this.http.get(`${this.checkEntityNameAvailabilityURL}/${uuid}/${entityId}/${name}`, { observe: 'response' });
   }
 
+  findNameAvailabilityNew(name: string, uuid: string): Observable<HttpResponse<any>> {
+    return this.http.get(`${this.checkEntityNameAvailabilityURL}/${uuid}/${name}`, { observe: 'response' });
+  }
+
   findAllRetrieveValueObj(uuid: string): Observable<HttpResponse<IValueObject[]>> {
     return this.http.get<IValueObject[]>(`${this.retrieveAllValueObj}/${uuid}`, { observe: 'response' });
   }
