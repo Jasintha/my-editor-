@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {IButtonType} from '@shared/models/model/button-type.model';
+import {IButtonEvent, IButtonType} from '@shared/models/model/button-type.model';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
@@ -43,8 +43,10 @@ export class ButtonEventHandleComponent implements OnInit {
     pages = [];
     confirmationTypes = [];
     operationItems = [];
-    BTN_ELEMENT_DATA = [];
+    btnEventActionList: IButtonEvent[] = [];
+    eventDataSource = new MatTableDataSource(this.btnEventActionList);
     currentButton: IButtonType;
+    eventDisplayedColumns: string[] = ['button', 'event', 'action', 'page', 'api', 'actions'];
     pageEvents: SelectItem[] = [
         { label: 'ON-LOAD', value: 'ON-LOAD' },
         { label: 'ON-SUBMIT', value: 'ON-SUBMIT' },
@@ -94,61 +96,45 @@ export class ButtonEventHandleComponent implements OnInit {
 
     ngOnInit() {
         this.currentButton = this.data.button;
+        this.btnEventActionList = this.data.btnEventActionList;
+        this.pages = this.data.pages;
         this.buildNewForm();
         this.editForm.get(['btnCaption']).patchValue(this.currentButton.caption);
+        this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
     }
 
-    saveEvent() {
-    }
+    addRow() {
+        const btnCaption =  this.editForm.get(['btnCaption']).value;
+        const pageEvent = this.editForm.get(['pageEvent']).value;
+        const pageEventAction = this.editForm.get(['pageEventAction']).value;
+        const pageEventActionPage = this.editForm.get(['pageEventActionPage']).value;
+        const pageEventActionApi = this.editForm.get(['pageEventActionApi']).value;
 
-
-    addRow(setDefaults, defButtonCaption?, defBtnResourcePath?, defBtnOperation?, defBtnColor?, defBtnTooltip?) {
-
-        let btnCaption = '';
-        let btnResourcePath = '';
-        let btnOperation = '';
-        let btnColor = '';
-        let btnTooltip = '';
-        let navigatePage = new Page();
-        let   pageId = '';
-        let  pageName = '';
-        if(setDefaults) {
-            btnCaption = defButtonCaption;
-            btnResourcePath = defBtnResourcePath;
-            btnOperation = defBtnOperation;
-            btnColor = defBtnColor;
-            btnTooltip = defBtnTooltip;
-        }
-        else{
-            btnCaption = this.editForm.get(['btnCaption']).value;
-            btnResourcePath = this.getBtnResourcePath(this.editForm.get(['btnResourcePath']).value);
-            btnOperation = this.editForm.get(['btnOperation']).value;
-            btnColor = this.editForm.get(['btnColor']).value;
-            btnTooltip = this.editForm.get(['btnTooltip']).value;
-            navigatePage = this.editForm.get(['navigatePage']).value;
-            if(navigatePage) {
-                pageId = navigatePage.uuid;
-                pageName = navigatePage.pagetitle;
-            }
-        }
-
-
-        if (btnCaption !== null || btnResourcePath !== '' || btnOperation !== null) {
-            const button: IButtonType = {
-                caption: btnCaption ,
-                resourcePath: btnResourcePath,
-                operation: btnOperation,
-                color: btnColor,
-                tooltip: btnTooltip,
-                pageId,
-                pageName
+        if (btnCaption !== null || pageEvent !== '' || pageEventAction !== null) {
+            const button: IButtonEvent = {
+                btnCaption ,
+                event: pageEvent,
+                eventAction: pageEventAction,
+                pageId: pageEventActionPage,
+                resourcePath: this.getBtnResourcePath(pageEventActionApi),
             };
-            this.dialogRef.close(button);
-         //   this.BTN_ELEMENT_DATA.push();
+            this.btnEventActionList.push(button);
+            this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
         } else {
             // error message
         }
     }
+
+    deleteEventRow(param) {
+        const index = this.btnEventActionList.indexOf(param);
+        this.btnEventActionList.splice(index, 1);
+        this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
+    }
+
+    save() {
+        this.dialogRef.close(this.btnEventActionList);
+    }
+
 
     getBtnResourcePath(resourcePath) {
         if (resourcePath) {
