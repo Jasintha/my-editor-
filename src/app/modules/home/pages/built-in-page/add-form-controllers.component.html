@@ -1,16 +1,16 @@
 <form name="addSecretForm" [formGroup]="form" (ngSubmit)="addFormControllers()">
         <div formArrayName="formFieldsGroup">
-            <div class="row" style="padding-top: 20px; padding-bottom: 20px; background-color: #34495e; color: white">
-                <div class="col-md-1" style="padding-left: 21px;">
+            <div class="row comp-table-header">
+                <div class="col-md-2" style="padding-left: 21px;">
                     Row Index
                 </div>
-                <div class="col-md-4" style="padding-left: 21px;">
+                <div class="col-md-3" style="padding-left: 21px;">
                 Data Field
             </div>
-                <div class="col-md-4" style="padding-left: 32px;">
+                <div class="col-md-5" style="padding-left: 60px;">
                 UI Component
                 </div>
-                <div class="col-md-3" style="padding-left: 200px;">
+                <div class="col-md-2" style="padding-left: 110px;">
                 Visibility
                 </div>
             </div>
@@ -23,8 +23,8 @@
                                         && this.form.value.formFieldsGroup[i].propertyName !== 'Deleted At'">
 
                     <div class="form-tile row" *ngIf="!isFieldSelected">
-                        <div class="col-md-1">{{i}}</div>
-                        <div class="col-md-3 form-group" *ngIf="!isFieldSelected">
+                        <div class="col-md-2" style="padding-left: 40px">{{i}}</div>
+                        <div class="col-md-2 form-group" *ngIf="!isFieldSelected">
                             <input class="form-control" readonly type="text" formControlName="propertyName"
                                    style=" width: 70%; border: none" >
                         </div>
