@@ -167,7 +167,7 @@
                             <div class="description" [ngClass]="{ 'active' : item.isActive == true }">
                                 <div matTooltip="{{item?.name}}"
                                      [matTooltipPosition]="toolTipPosition"
-                                     class="title epic-titledes-overflow">xxx</div>
+                                     class="title epic-titledes-overflow">{{ item.name }}</div>
                                 <p matTooltip="{{item?.description}}"
                                    [matTooltipPosition]="toolTipPosition"> {{ item.description }}</p>
                             </div>
