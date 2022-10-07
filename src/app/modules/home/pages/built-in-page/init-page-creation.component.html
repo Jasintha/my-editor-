@@ -265,6 +265,12 @@
         <div style="padding-top: 50px" *ngIf="pageCreationStatus === 'modelSelection'">
             <div class="row">
                 <div class="col-md-10">
+                    <mat-form-field [style]="{'width':'100%'}">
+                        <mat-label>Page Title</mat-label>
+                        <input type="text" [(ngModel)]="pageTitle" [ngModelOptions]="{standalone: true}" matInput>
+                        <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required
+                        </mat-error>
+                    </mat-form-field>
                     <mat-form-field  [style]="{'width':'100%'}">
                         <mat-label>Model</mat-label>
                         <mat-select  (selectionChange)="onChangePageModel($event)">
