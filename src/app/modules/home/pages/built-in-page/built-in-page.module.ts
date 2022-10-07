@@ -49,6 +49,8 @@ import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-ev
 import {ButtonEventHandleComponent} from '@home/pages/built-in-page/button-event-handle.component';
 import {StepFieldMapperComponent} from '@home/pages/built-in-page/step-field-mapper.component';
 import {FieldsetModule} from 'primeng/fieldset';
+import {FlexGridHandlerComponent} from '@home/pages/built-in-page/flex-grid-handler.component';
+import {CreateGridComponent} from '@home/pages/built-in-page/create-grid.component';
 
 @NgModule({
     declarations:[
@@ -68,7 +70,9 @@ import {FieldsetModule} from 'primeng/fieldset';
         ModelChangeConfirmDialogComponent,
         PageSaveConfirmDialogComponent,
         ButtonEventHandleComponent,
-        StepFieldMapperComponent
+        StepFieldMapperComponent,
+        FlexGridHandlerComponent,
+        CreateGridComponent
     ],
     imports: [
         CommonModule,
@@ -123,7 +127,9 @@ import {FieldsetModule} from 'primeng/fieldset';
         ModelChangeConfirmDialogComponent,
         PageSaveConfirmDialogComponent,
         ButtonEventHandleComponent,
-        StepFieldMapperComponent
+        StepFieldMapperComponent,
+        FlexGridHandlerComponent,
+        CreateGridComponent
     ],
     providers: [ ]
 })

@@ -1,0 +1,246 @@
+<div style="padding: 20px;">
+<!--    <div class="row justify-content-center title-temp">-->
+<!--        <div class="col-md-8">-->
+<!--            <h3 *ngIf="editTitle">{{pageTitle}}</h3>-->
+<!--            <form name="editForm" role="form" novalidate  [formGroup]="editForm">-->
+<!--                <mat-form-field *ngIf="!editTitle" [style]="{'width':'100%'}">-->
+<!--                    <mat-label>Page Title</mat-label>-->
+<!--                    <input type="text" formControlName="pagetitle" matInput name="pagetitle">-->
+<!--                    <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required-->
+<!--                    </mat-error>-->
+<!--                </mat-form-field>-->
+<!--            </form>-->
+<!--        </div>-->
+
+<!--        <div class="col-md-4">-->
+<!--            <button type="button" mat-mini-fab aria-label=""-->
+<!--                    (click)="editPageTitle()">-->
+<!--                <mat-icon>edit</mat-icon>-->
+<!--            </button>-->
+<!--            <button style="background-color: #2b53d7; margin-left: 10px " *ngIf="!editTitle" type="button" mat-mini-fab aria-label=""-->
+<!--                    (click)="checkPageNameExistAndSave()">-->
+<!--                <mat-icon>save</mat-icon>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="row" style="border-bottom: 1px solid; padding-bottom: 25px;">
+        <div class="col-md-12 ">
+            <form name="editForm" role="form" novalidate [formGroup]="editForm">
+            <p-fieldset [collapsed]="false"  [toggleable]="true">
+                <p-header style="font-size: 18px">Layout Basic Settings</p-header>
+                <div class="card-page">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row" style="margin-top: 20px">
+
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <div class="col-md-1">  <mat-icon style="margin-right: 20px; font-size: 22px;">title</mat-icon> </div>
+                                        <div class="col-md-8"><div style="display: inline" *ngIf="!editTitle"><b> Title: </b>{{pageTitle}}</div>
+                                            <mat-form-field *ngIf="editTitle" [style]="{'width':'100%'}">
+                                                <mat-label>Page Title</mat-label>
+                                                <input type="text" formControlName="pagetitle" matInput name="pagetitle" id="field_pagetitle">
+                                                <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div>
+                                                <mat-icon style="margin-left: 20px; cursor: pointer" (click)="editPageTitle()">edit</mat-icon>
+                                                <mat-icon  style=" cursor: pointer" (click)="checkPageNameExistAndSave()" *ngIf="editTitle">save</mat-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row" style="margin-top: 25px">
+
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <div class="col-md-1">  <mat-icon style="margin-right: 20px; font-size: 22px;">description</mat-icon> </div>
+                                        <div class="col-md-8">      <div style="display: inline" *ngIf="!editDescription"><b> Description: </b>{{pageDescription}}</div>
+                                            <mat-form-field  *ngIf="editDescription" [style]="{'width':'100%'}">
+                                                <mat-label>Description</mat-label>
+                                                <textarea style="overflow: auto" cdkTextareaAutosize formControlName="pageDescription" name="pageDescription" matInput placeholder="This page is about..."></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div>
+                                                <mat-icon style="margin-left: 20px; cursor: pointer" (click)="editPageDesc()">edit</mat-icon>
+                                                <mat-icon  style=" cursor: pointer" (click)="checkPageNameExistAndSave()" *ngIf="editDescription">save</mat-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-fieldset>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12 ">
+                <p-fieldset [collapsed]="false"  [toggleable]="true">
+                    <p-header style="font-size: 18px">Layout Arrangement</p-header>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="container" style="padding: 1% 3% 1% 3%;">
+                                <div *ngFor="let raw of grid.rows; let i = index" style="max-height: 30vh" [attr.data-index]="i" class="row">
+                                    <div *ngFor="let col of raw.columns let j = index" [attr.data-index]="j"
+                                         class="grid-col col-{{col.columnSize}} {{col.id}}" align="center" >
+                                        <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col.isContainer" type="button" mat-mini-fab aria-label=""
+                                                (click)="addLayerOneChildGrid(i, j, 'row')">
+                                            <mat-icon>arrow_downward</mat-icon>
+                                        </button>
+                                        <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col.isContainer" type="button" mat-mini-fab aria-label=""
+                                                (click)="addLayerOneChildGrid(i, j, 'column')">
+                                            <mat-icon>arrow_forward</mat-icon>
+                                        </button>
+                                        <div style="font-size: 25px; padding: 10vh" *ngIf="!col.isContainer"> {{col.id}} </div>
+
+                                        <div *ngIf="col.isContainer">
+                                            <div  *ngFor="let row2 of col.grid.rows; let ii = index" style="max-height: 30vh" [attr.data-index]="ii" class="row">
+                                                <div *ngFor="let col2 of row2.columns  let jj = index" [attr.data-index]="jj"
+                                                     class="grid-col col-{{col2.columnSize}} {{col2.id}}"   align="center">
+                                                    <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col2.isContainer" type="button" mat-mini-fab aria-label=""
+                                                            (click)="addLayer2ChildGrid(i, j, ii, jj, 'row')">
+                                                        <mat-icon>arrow_downward</mat-icon>
+                                                    </button>
+                                                    <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col2.isContainer" type="button" mat-mini-fab aria-label=""
+                                                            (click)="addLayer2ChildGrid(i, j, ii, jj, 'column')">
+                                                        <mat-icon>arrow_forward</mat-icon>
+                                                    </button>
+                                                    <div style="font-size: 23px; padding: 7vh" *ngIf="!col2.isContainer"> {{col2.id}} </div>
+                                                    <div *ngIf="col2.isContainer">
+                                                        <div  *ngFor="let row3 of col2.grid.rows; let iii = index" style="max-height: 30vh" [attr.data-index]="iii" class="row">
+                                                            <div *ngFor="let col3 of row3.columns  let jjj = index" [attr.data-index]="jjj"
+                                                                 class="grid-col col-{{col3.columnSize}} {{col3.id}}" align="center">
+                                                                <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col3.isContainer" type="button" mat-mini-fab aria-label=""
+                                                                        (click)="addLayer3ChildGrid(i,j,ii, jj, iii, jjj, 'row')">
+                                                                    <mat-icon>arrow_downward</mat-icon>
+                                                                </button>
+                                                                <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col3.isContainer" type="button" mat-mini-fab aria-label=""
+                                                                        (click)="addLayer3ChildGrid(i,j,ii, jj, iii, jjj,'column')">
+                                                                    <mat-icon>arrow_forward</mat-icon>
+                                                                </button>
+                                                                <div style="font-size: 20px;  padding: 5vh" *ngIf="!col3.isContainer"> {{col3.id}} </div>
+
+                                                                <div *ngIf="col3.isContainer">
+                                                                    <div  *ngFor="let row4 of col3.grid.rows; let iiii = index" style="max-height: 30vh" [attr.data-index]="iiii" class="row">
+                                                                        <div *ngFor="let col4 of row4.columns  let jjjj = index" [attr.data-index]="jjjj"
+                                                                             class="grid-col col-{{col4.columnSize}} {{col4.id}}" align="center">
+                                                                            <div style="font-size: 15px;  padding: 3vh"> {{col4.id}} </div>
+<!--                                                                            <button style="background-color: #2b53d7; margin-left: 5px " *ngIf="!col4.isContainer" type="button" mat-mini-fab aria-label=""-->
+<!--                                                                                    (click)="addLayer3ChildGrid(i,j,ii, jj, iii, jjj)">-->
+<!--                                                                                <mat-icon>add</mat-icon>-->
+<!--                                                                            </button>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row" style="padding-bottom: 25px; margin-top: 2%">
+                                <div class="col-md-12 ">
+                                    <form name="editForm" role="form" novalidate [formGroup]="editForm">
+                                        <div style="box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;;margin-bottom: 8px">
+                                            <div class="form-group">
+                                                <div class="card card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <mat-form-field class="flex-auto" style="width: 100%">
+                                                                <mat-label>Container Id</mat-label>
+                                                                <mat-select formControlName="containerId">
+                                                                    <mat-option *ngFor="let id of usedIdArray" [value]="id">
+                                                                        {{id}}
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <mat-form-field  class="flex-auto" style="width: 100%">
+                                                                <mat-label>Page</mat-label>
+                                                                <mat-select formControlName="pageName">
+                                                                    <mat-option *ngFor="let option of pages" [value]="option.value">
+                                                                        {{option.label}}
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <button style="float: right;" type="button"  mat-raised-button (click)="saveMapping()"><mat-icon>add</mat-icon> ADD</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div  style="padding-top:20px;padding-bottom:20px;">
+                                                    <table mat-table matSort  [dataSource]="containerMappingsDataSource" class="mat-elevation-z8 demo-table">
+                                                        <!-- Name Column -->
+                                                        <ng-container matColumnDef="container">
+                                                            <th mat-header-cell *matHeaderCellDef>Container</th>
+                                                            <td mat-cell *matCellDef="let element">{{element.container}}</td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="page">
+                                                            <th mat-header-cell *matHeaderCellDef> Page</th>
+                                                            <td mat-cell *matCellDef="let element">{{element.page}}</td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="actions">
+                                                            <th *matHeaderCellDef mat-header-cell >Remove</th>
+                                                            <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                                                <button (click)="deleteContainerMappingRow(row)"
+                                                                        mat-icon-button
+                                                                        type="button">
+                                                                    <mat-icon>delete</mat-icon>
+                                                                </button>
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <tr mat-header-row *matHeaderRowDef="containerMappingDisplayedColumns"></tr>
+                                                        <tr mat-row *matRowDef="let row; columns: containerMappingDisplayedColumns;"></tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button style="float: right;" type="button" class="btn savebtn mat-primary"  mat-raised-button (click)="saveMapping()"> Save </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </p-fieldset>
+        </div>
+    </div>
+
+
+    <!--    <div style="display: flex; justify-content: end; padding-top: 25px">-->
+    <!--        <button type="submit"-->
+    <!--                (click)="previousState()"-->
+    <!--                class="btn " style="margin-right: 63px; background-color: #6D7F8B; color: white; float: left ">-->
+    <!--            <i class="fas fa-arrow-left"></i>&nbsp;<span> Back</span>-->
+    <!--        </button>-->
+    <!--    </div>-->
+
+</div>

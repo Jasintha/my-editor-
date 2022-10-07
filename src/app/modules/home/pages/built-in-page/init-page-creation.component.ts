@@ -23,6 +23,7 @@ import {EventTypes} from '@shared/events/event.queue';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {IProperty} from '@shared/models/model/property.model';
 import {ModelChangeConfirmDialogComponent} from '@home/pages/built-in-page/model-change-confirm-dialog.component';
+import {FlexGrid, IFlexGrid} from '@shared/models/model/flex.grid.model';
 
 interface Item {
   value: any;
@@ -78,7 +79,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   pageTitle = '';
   pageCreationStatus = 'typeSelection';
   gridStyle = '';
-  gridArray: IGrid[] = [];
+  gridArray: IFlexGrid[] = [];
   isSidebarVisible = false;
   selectedRowIndex: number;
   selectedContainerIndex: number;
@@ -86,7 +87,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   isSelected = false;
   widgetCreationStatus = 'widgetTypeSelection';
   totalPageCount: number;
-  grid: IGrid;
+  grid: IFlexGrid;
   selectedFieldIndex: number;
   selectedChildIndex: number;
 
@@ -196,37 +197,33 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
   //     this.getGridArray();
   //   }
   // }
+
   getGridArray() {
     this.gridArray = [
       {
+        name: 'grid0',
+        rows: [
+          { columns: [{ id: 'A', columnSize: 12, isContainer: false}] },
+        ],
+      },
+      {
         name: 'grid1',
         rows: [
-          { containers: [{ containerCols: 12, page: '' }] },
-          { containers: [{ containerCols: 12, page: '' }] },
+          { columns: [{id: 'A', columnSize: 12, isContainer: false}] },
+          { columns: [{id: 'B', columnSize: 12, isContainer: false}] },
         ],
       },
       {
         name: 'grid2',
         rows: [
-          {
-            containers: [
-              { containerCols: 6, page: '' },
-              { containerCols: 6, page: ''},
-            ],
-          },
-          { containers: [{ containerCols: 12, page: '' }] },
+          { columns: [{id: 'A', columnSize: 6, isContainer: false},{ id: 'B', columnSize: 6, isContainer: false}] },
         ],
       },
       {
         name: 'grid3',
         rows: [
-          {
-            containers: [
-              { containerCols: 9, page: '' },
-              { containerCols: 3, page: '' },
-            ],
-          },
-          { containers: [{ containerCols: 12, page: '' }] },
+          { columns: [{id: 'A', columnSize: 6, isContainer: false},{id: 'B', columnSize: 6, isContainer: false}] },
+          { columns: [{id: 'C', columnSize: 6, isContainer: false},{id: 'D', columnSize: 6, isContainer: false}] },
         ],
       },
     ];
@@ -505,8 +502,6 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
       this.grid = this.gridArray[ind];
     }
     this.save(this.pageViewType, 'untitled page', 'grid-page');
-    //  this.editForm.reset();
-    //   this.pageCreationStatus = 'basicDetails';
   }
 
   pageCreateViewHandler(action) {
@@ -536,10 +531,6 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.selectedContainerIndex = containerIndex;
   }
 
-  setWidgetType(widgetTemplate) {
-    this.grid.rows[this.selectedRowIndex].containers[this.selectedContainerIndex].page = widgetTemplate;
-    this.widgetCreationStatus = 'addWidgetDetails';
-  }
 
   backSidebar($event) {
     this.isSidebarVisible = $event;
@@ -585,7 +576,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     this.isSaving = true;
     const formData = this.createCustomGridFromForm();
     if (formData && formData.fieldList && formData.fieldList.length > 0) {
-      const customGrid = new Grid();
+      const customGrid = new FlexGrid();
       const rowArray = [];
       for (let i = 0; i < formData.fieldList.length; i++) {
         const row =  this.getRow(formData.fieldList[i].columns);

@@ -228,11 +228,11 @@
             </div>
 
             <div style="padding-top: 50px" *ngIf="pageTemplateType == 'blank' && pageCreationStatus === 'gridSelection'">
-                <button [disabled]="false" type="button" style="float: right; margin-top: -65px;" mat-raised-button color="primary"
-                        (click)="createCustomGrid()">
-                    <mat-icon>add</mat-icon>
-                    Custom grid
-                </button>
+<!--                <button [disabled]="false" type="button" style="float: right; margin-top: -65px;" mat-raised-button color="primary"-->
+<!--                        (click)="createCustomGrid()">-->
+<!--                    <mat-icon>add</mat-icon>-->
+<!--                    Custom grid-->
+<!--                </button>-->
 
                 <div class="row">
                     <div *ngFor="let grid of gridArray; let i = index" [attr.data-index]="i"
@@ -240,6 +240,10 @@
                         <div (click)="gridStyles(false, i)">
                             <div class="card m-auto box-card cyan">
                                 <div class=" card-body">
+                                    <div   *ngIf="grid.name === 'grid0'" class=" d-flex justify-content-center init-page-image">
+                                        <img class="pageTmpImg" src="../../../../../assets/images/pages/grid/grid1.png"
+                                             alt="Template">
+                                    </div>
                                     <div   *ngIf="grid.name === 'grid1'" class=" d-flex justify-content-center init-page-image">
                                         <img class="pageTmpImg" src="../../../../../assets/images/pages/grid/grid1.png"
                                              alt="Template">
@@ -276,93 +280,6 @@
     </mat-dialog-content>
     <mat-dialog-actions align="end">
 <!--        <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || isSaving" cdkFocusInitial>SAVE</button>-->
-        <button mat-button color="primary" mat-dialog-close>Cancel</button>
-    </mat-dialog-actions>
-</form>
-
-
-<form  *ngIf="pageCreationStatus === 'customGrid'" class="mat-form-dialog" (ngSubmit)="saveCustomGrid()" [formGroup]="form" >
-    <mat-toolbar color="primary" >
-        <h2 mat-dialog-title>Create custom grid page</h2>
-        <span fxFlex></span>
-        <button mat-icon-button
-                mat-dialog-close
-                type="button">
-            <mat-icon class="material-icons">close</mat-icon>
-        </button>
-    </mat-toolbar>
-
-    <mat-dialog-content>
-        <div class="row">
-
-            <div class="col-12">
-                <div class="scroll-choices">
-                        <button style="float: right; margin-top: 2%; margin-right: 6%" type="button" mat-raised-button color="primary" (click)="insertFormControllersGroup()">
-                            <mat-icon>add</mat-icon>
-                            Add Row
-                        </button>
-                    <br>
-                    <div style="padding-top: 50px"
-                         *ngFor="let choice of formFieldsGroup['controls']; let k = index">
-                        <div [formGroup]="choice">
-
-                            <label class="form-control-label">Row {{k + 1}} </label>
-<!--                            <div class="row">-->
-<!--                                <div class="col-4">-->
-<!--                                    <label class="form-control-label">Number of columns </label>-->
-<!--                                </div>-->
-<!--                                <div class="col-4">-->
-<!--                                    <mat-form-field class="flex-auto">-->
-<!--                                        <input type="number" name="columns" min="1" max="4" formControlName="columns" onKeyDown="return false" matInput>-->
-<!--                                    </mat-form-field>-->
-<!--&lt;!&ndash;                                    <input matInput  type="number" name="columns" min="1" max="4" formControlName="columns" onKeyDown="return false">&ndash;&gt;-->
-<!--                                </div>-->
-
-<!--                                <div class="col-4">-->
-<!--                                    <button type="button" mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="removeFormControllers(k)">-->
-<!--                                        <mat-icon>delete</mat-icon>-->
-<!--                                    </button>-->
-<!--                                </div>-->
-<!--                            </div>-->
-                            <div class="scroll-choices">
-                                <div style="float: right; margin-top: 2%; margin-right: 6%">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-                                    <input type="button"
-                                           (click)="insertColumnFormControllersGroup(k)"
-                                           value="Add column"  class="btn fa fa-plus"
-                                           style="background-color: #6D7F8B; color:white;border: none;">
-                                </div>
-                                <br>
-                                <div style="padding-top: 10px"
-                                     *ngFor="let choice of columnFormGroup(k)['controls']; let i = index">
-                                    <div [formGroup]="choice">
-                                        <label class="form-control-label">Column {{i + 1}} </label>
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <input class="form-control" type="number"
-                                                       formControlName="columnSize" min="1" max="{{getMaxCount(k,i)}}">
-                                            </div>
-                                            <div class="col-2">
-                                                <button pButton type="button"
-                                                        (click)="removeColumnFormController(i)"
-                                                        class="ui-button-danger ui-button-raised"
-                                                        icon="fa fa-trash-o">
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-        <button mat-raised-button color="primary" type="submit"  cdkFocusInitial>SAVE</button>
         <button mat-button color="primary" mat-dialog-close>Cancel</button>
     </mat-dialog-actions>
 </form>
