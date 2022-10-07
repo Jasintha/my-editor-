@@ -1,29 +1,29 @@
+<div class="row">
+    <div class="col-md-12" style="padding: 20px">
+        <mat-slide-toggle style="float: right; display: inline" [(ngModel)]="editPageAsJson" (ngModelChange)="onPageEditModeChanged()">
+        </mat-slide-toggle>  <div style="font-weight: 600; float: right; margin-top: 4px; margin-right: 12px;">Input Page as a Json:  </div>
+    </div>
+</div>
+
+<div *ngIf="editPageAsJson">
+    <p-fieldset [collapsed]="false"  [toggleable]="true">
+        <p-header style="font-size: 18px">Page Json Editor</p-header>
+        <div class="row col-md-12">
+            <div style="min-height: 200px; height:100% !important; width: 100%;">
+                <ngx-monaco-editor style=" height: 750px; width: 100%;" [options]="editorOptions" [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
+            </div>
+        </div>
+        <div  class="row col-md-12">
+            <button type="button" style="float: left; width: 50px; margin-left: 10px" mat-raised-button
+                    color="primary"
+                    (click)="savePageAsJson()">
+                Save
+            </button>
+        </div>
+    </p-fieldset>
+</div>
+
 <div style="padding: 20px;">
-<!--    <div class="row justify-content-center title-temp">-->
-<!--        <div class="col-md-8">-->
-<!--            <h3 *ngIf="editTitle">{{pageTitle}}</h3>-->
-<!--            <form name="editForm" role="form" novalidate  [formGroup]="editForm">-->
-<!--                <mat-form-field *ngIf="!editTitle" [style]="{'width':'100%'}">-->
-<!--                    <mat-label>Page Title</mat-label>-->
-<!--                    <input type="text" formControlName="pagetitle" matInput name="pagetitle">-->
-<!--                    <mat-error *ngIf="editForm.controls.pagetitle.hasError('required')">This field is required-->
-<!--                    </mat-error>-->
-<!--                </mat-form-field>-->
-<!--            </form>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-4">-->
-<!--            <button type="button" mat-mini-fab aria-label=""-->
-<!--                    (click)="editPageTitle()">-->
-<!--                <mat-icon>edit</mat-icon>-->
-<!--            </button>-->
-<!--            <button style="background-color: #2b53d7; margin-left: 10px " *ngIf="!editTitle" type="button" mat-mini-fab aria-label=""-->
-<!--                    (click)="checkPageNameExistAndSave()">-->
-<!--                <mat-icon>save</mat-icon>-->
-<!--            </button>-->
-<!--        </div>-->
-<!--    </div>-->
-
     <div class="row" style="border-bottom: 1px solid; padding-bottom: 25px;">
         <div class="col-md-12 ">
             <form name="editForm" role="form" novalidate [formGroup]="editForm">
@@ -94,13 +94,13 @@
                             <div class="container" style="padding: 1% 3% 1% 3%;">
                                 <div *ngFor="let raw of grid.rows; let i = index" style="max-height: 30vh" [attr.data-index]="i" class="row">
                                     <div *ngFor="let col of raw.columns let j = index" [attr.data-index]="j"
-                                         class="grid-col col-{{col.columnSize}} {{col.id}}" align="center" >
+                                         class="grid-col col-{{col.columnSize}} {{col.id}}" align="center">
                                         <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col.isContainer" type="button" mat-mini-fab aria-label=""
-                                                (click)="addLayerOneChildGrid(i, j, 'row')">
+                                                (click)="addLayerOneChildGrid(i, j, 'rows')">
                                             <mat-icon>arrow_downward</mat-icon>
                                         </button>
                                         <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col.isContainer" type="button" mat-mini-fab aria-label=""
-                                                (click)="addLayerOneChildGrid(i, j, 'column')">
+                                                (click)="addLayerOneChildGrid(i, j, 'columns')">
                                             <mat-icon>arrow_forward</mat-icon>
                                         </button>
                                         <div style="font-size: 25px; padding: 10vh" *ngIf="!col.isContainer"> {{col.id}} </div>
@@ -110,11 +110,11 @@
                                                 <div *ngFor="let col2 of row2.columns  let jj = index" [attr.data-index]="jj"
                                                      class="grid-col col-{{col2.columnSize}} {{col2.id}}"   align="center">
                                                     <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col2.isContainer" type="button" mat-mini-fab aria-label=""
-                                                            (click)="addLayer2ChildGrid(i, j, ii, jj, 'row')">
+                                                            (click)="addLayer2ChildGrid(i, j, ii, jj, 'rows')">
                                                         <mat-icon>arrow_downward</mat-icon>
                                                     </button>
                                                     <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col2.isContainer" type="button" mat-mini-fab aria-label=""
-                                                            (click)="addLayer2ChildGrid(i, j, ii, jj, 'column')">
+                                                            (click)="addLayer2ChildGrid(i, j, ii, jj, 'columns')">
                                                         <mat-icon>arrow_forward</mat-icon>
                                                     </button>
                                                     <div style="font-size: 23px; padding: 7vh" *ngIf="!col2.isContainer"> {{col2.id}} </div>
@@ -123,11 +123,11 @@
                                                             <div *ngFor="let col3 of row3.columns  let jjj = index" [attr.data-index]="jjj"
                                                                  class="grid-col col-{{col3.columnSize}} {{col3.id}}" align="center">
                                                                 <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col3.isContainer" type="button" mat-mini-fab aria-label=""
-                                                                        (click)="addLayer3ChildGrid(i,j,ii, jj, iii, jjj, 'row')">
+                                                                        (click)="addLayer3ChildGrid(i,j,ii, jj, iii, jjj, 'rows')">
                                                                     <mat-icon>arrow_downward</mat-icon>
                                                                 </button>
                                                                 <button style="background-color: #2b53d7; margin-left: 5px; float: right; border-radius: 10px; margin-top: 5px" *ngIf="!col3.isContainer" type="button" mat-mini-fab aria-label=""
-                                                                        (click)="addLayer3ChildGrid(i,j,ii, jj, iii, jjj,'column')">
+                                                                        (click)="addLayer3ChildGrid(i,j,ii, jj, iii, jjj,'columns')">
                                                                     <mat-icon>arrow_forward</mat-icon>
                                                                 </button>
                                                                 <div style="font-size: 20px;  padding: 5vh" *ngIf="!col3.isContainer"> {{col3.id}} </div>

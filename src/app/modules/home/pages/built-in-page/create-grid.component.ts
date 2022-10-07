@@ -272,26 +272,33 @@ export class CreateGridComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
     }
 
-    getGridObject(columns) {
+    getGridObject(gridSection) {
         let section: any;
         if(this.divideType === 'columns') {
             const row = new Row();
             row.columns = [];
-            for (let j = 0; j < columns.length ; j++) {
-                const container =  { ...new Column(),  columnSize: columns[j].columnSize, color:columns[j].color, id:columns[j].id};
+            for (let j = 0; j < gridSection.length ; j++) {
+                const container =  { ...new Column(),  columnSize: gridSection[j].sectionsize, color:gridSection[j].color,
+                    id:gridSection[j].id, isContainer: false};
                 row.columns.push(container);
             }
             section = row;
         } else if (this.divideType === 'rows') {
+            const rowArray = [];
             const column = new Column();
+            const row = new Row();
+            column.grid = new FlexGrid();
             column.grid.rows = [];
-            for (let j = 0; j < columns.length ; j++) {
-                const container =  { ...new Row()};
-                column.grid.rows.push(container);
+            for (let j = 0; j < gridSection.length ; j++) {
+                const columnData = { ...new Column(),  columnSize: 12, color:gridSection[j].color,
+                    id:gridSection[j].id, isContainer: false};
+                const columnDataList = [columnData];
+                const container =  { ...new Row(), columns : columnDataList};
+                rowArray.push(container);
             }
+            column.grid.rows = rowArray;
             section = column;
         }
-
         return section;
     }
 
@@ -327,7 +334,7 @@ export class CreateGridComponent implements OnInit, OnDestroy {
             const customGrid = new FlexGrid();
             const rowArray = [];
             if(formData.fieldList && formData.fieldList.length > 0) {
-                 containerObj =  this.getGridObject(formData.fieldList[0].sections);
+                 containerObj =  this.getGridObject(formData.fieldList);
             }
            this.dialogRef.close(containerObj)
         }

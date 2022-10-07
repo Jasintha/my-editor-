@@ -21,7 +21,7 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
 import {Grid, IGrid} from '@shared/models/model/grid.model';
-import {FlexGrid, IFlexGrid} from '@shared/models/model/flex.grid.model';
+import {FlexGrid, IFlexGrid, Row} from '@shared/models/model/flex.grid.model';
 import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
 import {CreateGridComponent} from '@home/pages/built-in-page/create-grid.component';
 import {IButtonEvent} from '@shared/models/model/button-type.model';
@@ -38,6 +38,9 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
     @Input() projectUid: string;
     @Input() pageId: string;
     currentPage: IPage;
+    editPageAsJson: boolean;
+    editorOptions: any = { language: 'json', readOnly: false, renderLineHighlight: 'none' };
+    code: string = '';
     pageTitle: string;
     pageDescription: string;
     editTitle = false;
@@ -125,6 +128,8 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
     loadUpdateForm(builtInPage) {
         this.currentPage = builtInPage;
         this.grid = builtInPage.pageGrid;
+        this.editPageAsJson = builtInPage.inputPageAsJson;
+        this.code = builtInPage.pageJson;
         this.pageTitle = builtInPage.pagetitle;
         this.pageDescription = builtInPage.pageDescription
         this.editForm.get('pagetitle').patchValue(this.pageTitle, { emitEvent: true });
@@ -175,6 +180,34 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
         this.pageContainerMappingsList.splice(index, 1);
         this.containerMappingsDataSource = new MatTableDataSource(this.pageContainerMappingsList);
     }
+    onPageEditModeChanged() {
+        if(this.editPageAsJson) {
+            this.savePageAsJson();
+        } else {
+            this.saveMapping();
+        }
+    }
+
+    savePageAsJson() {
+        const page = this.currentPage;
+        page.inputPageAsJson = this.editPageAsJson;
+        page.pageJson = this.code;
+        if(page.inputPageAsJson && page.pageJson) {
+            this.builtInPageService
+                .savePageAsJson(page, this.projectUid)
+                .pipe(
+                    filter((res: HttpResponse<any>) => res.ok),
+                    map((res: HttpResponse<any>) => res.body)
+                )
+                .subscribe(
+                    (res: any) => {
+                      //  this.consoleLogService.writeConsoleLog('Page json saved successfully');
+                        //this.save(page);
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        }
+    }
 
     addLayerOneChildGrid(rowIndex, columnIndex, type) {
             const dialogRef = this.dialog.open(CreateGridComponent, {
@@ -188,9 +221,17 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
             dialogRef.afterClosed(
             ).subscribe(result => {
                if(result){
+                   if(type === 'columns') {
+                       const row = new Row();
+                       row.columns = result.columns;
+                       const rows = [row];
+                       this.grid.rows[rowIndex].columns[columnIndex].grid.rows = rows;
+                       this.grid.rows[rowIndex].columns[columnIndex].isContainer = true;
+                   } else if(type === 'rows') {
+                       this.grid.rows[rowIndex].columns[columnIndex].grid = result.grid;
+                       this.grid.rows[rowIndex].columns[columnIndex].isContainer = true;
+                   }
                    this.getUsedIds(result);
-                   this.grid.rows[rowIndex].columns[columnIndex].grid = result;
-                   this.grid.rows[rowIndex].columns[columnIndex].isContainer = true;
                }
             });
     }
@@ -207,9 +248,17 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed(
         ).subscribe(result => {
             if(result){
+                if(type === 'columns') {
+                    const row = new Row();
+                    row.columns = result.columns;
+                    const rows = [row];
+                    this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].grid.rows = rows;
+                    this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].isContainer = true;
+                } else if(type === 'rows') {
+                    this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].grid = result.grid;
+                    this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].isContainer = true;
+                }
                 this.getUsedIds(result);
-                this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].grid = result;
-                this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].isContainer = true;
             }
         });
     }
