@@ -49,6 +49,7 @@ export class BuiltInPageService {
   public updatePageLoginInputsUrl =  '/api/editor/proj/pages/built-in/page-login-inputs';
   public updateAIOPageResourceDataUrl =  '/api/editor/proj/pages/built-in/aio-page-resource';
   public pageStyleUrl =  '/api/editor/proj/pages/pagestyle';
+  public savePageAsJsonURL =  '/api/editor/proj/pages/saveJson';
 
   constructor(protected http: HttpClient) {}
 
@@ -94,6 +95,10 @@ export class BuiltInPageService {
 
   findPageNameAvailability(name: string, pageId: string, uuid: string): Observable<HttpResponse<any>> {
     return this.http.get(`${this.checkPageNameAvailabilityURL}/${uuid}/${pageId}/${name}`, { observe: 'response' });
+  }
+
+  savePageAsJson(builtInPage: IPage, uuid: string): Observable<EntityResponseType> {
+    return this.http.put<IPage>(`${this.savePageAsJsonURL}/${uuid}`, builtInPage, { observe: 'response' });
   }
 
   findBuiltInPagesForProjectId(id: string, uuid: string): Observable<EntityArrayResponseType> {//

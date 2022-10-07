@@ -218,6 +218,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   editForm: FormGroup;
   isTitleEdit: boolean;
   isDescEdit: boolean;
+  editPageAsJson: boolean;
+  editorOptions: any = { language: 'json', readOnly: false, renderLineHighlight: 'none' };
+  code: string = '';
   buildNewForm() {
     this.editForm = this.fb.group({
       id: [],
@@ -530,6 +533,14 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     //  this.checkPageNameExist();
     } else {
       // error message
+    }
+  }
+
+  onPageEditModeChanged() {
+    if(this.editPageAsJson) {
+      this.savePageAsJson();
+    } else {
+      this.checkAndUpdatePageName();
     }
   }
 
@@ -1249,6 +1260,8 @@ if(this.LOGIN_DATA.length === 0) {
   }
 
   updateForm(builtInPage: IPage) {
+    this.editPageAsJson = builtInPage.inputPageAsJson;
+    this.code = builtInPage.pageJson;
     if (builtInPage.model && builtInPage.model.config) {
       this.loadModelPropertyList();
     }
@@ -1632,6 +1645,8 @@ if(this.LOGIN_DATA.length === 0) {
     const page = this.currentPage;
     page.pagetitle = this.editForm.get(['pagetitle']).value;
     page.pageDescription = this.editForm.get(['pageDescription']).value;
+    page.inputPageAsJson = this.editPageAsJson;
+    page.pageJson = this.code;
     this.builtInPageService
         .findPageNameAvailability(page.pagetitle, this.currentPage.uuid, this.projectUid)
         .pipe(
@@ -1652,9 +1667,32 @@ if(this.LOGIN_DATA.length === 0) {
   }
 
 
+  savePageAsJson() {
+    const page = this.currentPage;
+    page.inputPageAsJson = this.editPageAsJson;
+    page.pageJson = this.code;
+    if(page.inputPageAsJson && page.pageJson) {
+    this.builtInPageService
+        .savePageAsJson(page, this.projectUid)
+        .pipe(
+            filter((res: HttpResponse<any>) => res.ok),
+            map((res: HttpResponse<any>) => res.body)
+        )
+        .subscribe(
+            (res: any) => {
+              this.consoleLogService.writeConsoleLog('Page json saved successfully');
+                this.save(page);
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }
+  }
+
+
   checkAndUpdatePageName() {
     // const page = this.createFromForm();
     const page = this.currentPage;
+    page.inputPageAsJson = this.editPageAsJson;
     page.pagetitle = this.editForm.get(['pagetitle']).value;
     page.pageDescription = this.editForm.get(['pageDescription']).value;
     this.builtInPageService

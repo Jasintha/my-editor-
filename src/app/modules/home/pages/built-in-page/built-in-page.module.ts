@@ -51,6 +51,7 @@ import {StepFieldMapperComponent} from '@home/pages/built-in-page/step-field-map
 import {FieldsetModule} from 'primeng/fieldset';
 import {FlexGridHandlerComponent} from '@home/pages/built-in-page/flex-grid-handler.component';
 import {CreateGridComponent} from '@home/pages/built-in-page/create-grid.component';
+import {MonacoEditorModule} from 'ngx-monaco-editor';
 
 @NgModule({
     declarations:[
@@ -108,7 +109,8 @@ import {CreateGridComponent} from '@home/pages/built-in-page/create-grid.compone
         TableModule,
         InputTextModule,
         PickListModule,
-        FieldsetModule
+        FieldsetModule,
+        MonacoEditorModule
     ],
     exports:[
         BuiltInPageComponent,

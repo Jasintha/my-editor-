@@ -58,6 +58,8 @@ export interface IPage {
   tileFieldCount?: number,
   tileFields?: any[],
   buttonEvents?: IButtonEvent[];
+  inputPageAsJson?: boolean;
+  pageJson?: string;
 }
 
 export class Page implements IPage {
@@ -109,6 +111,8 @@ export class Page implements IPage {
     public navigationParams?: INavigationParam[],
     public tileFields?: any[],
     public tileFieldCount?: number,
-    public   buttonEvents?: IButtonEvent[]
+    public buttonEvents?: IButtonEvent[],
+    public inputPageAsJson?: boolean,
+    public pageJson?: string,
   ) {}
 }

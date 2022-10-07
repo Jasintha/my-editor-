@@ -3,7 +3,31 @@
 <!--        <h5  style="margin-left: 5px">Epic  > Story > {{pageTitle}}</h5>-->
 <!--    </div>-->
 <!--</div>-->
-<div class="page-view justify-content-center" style="padding-top: 1%;">
+<div class="row">
+    <div class="col-md-12" style="padding: 20px">
+        <mat-slide-toggle style="float: right; display: inline" [(ngModel)]="editPageAsJson" (ngModelChange)="onPageEditModeChanged()">
+        </mat-slide-toggle>  <div style="font-weight: 600; float: right; margin-top: 4px; margin-right: 12px;">Input Page as a Json:  </div>
+    </div>
+</div>
+
+<div *ngIf="editPageAsJson">
+    <p-fieldset [collapsed]="false"  [toggleable]="true">
+        <p-header style="font-size: 18px">Page Json Editor</p-header>
+        <div class="row col-md-12">
+            <div style="min-height: 200px; height:100% !important; width: 100%;">
+                <ngx-monaco-editor style=" height: 750px; width: 100%;" [options]="editorOptions" [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
+            </div>
+        </div>
+        <div  class="row col-md-12">
+            <button type="button" style="float: left; width: 50px; margin-left: 10px" mat-raised-button
+                    color="primary"
+                    (click)="savePageAsJson()">
+                Save
+            </button>
+        </div>
+    </p-fieldset>
+</div>
+<div *ngIf="!editPageAsJson" class="page-view justify-content-center" style="padding-top: 1%;">
     <form name="editForm" role="form" novalidate [formGroup]="editForm">
         <div class="form-group" [hidden]="!editForm.get('id').value">
             <input type="hidden" class="form-control" id="id" name="id" formControlName="id"/>
