@@ -12,6 +12,7 @@ export interface IMainMenu {
   submenus?: ISubMenu[];
   projectUuid?: string;
   status?: string;
+  position?: string;
 }
 
 export class MainMenu implements IMainMenu {
@@ -24,6 +25,7 @@ export class MainMenu implements IMainMenu {
     public submenus?: ISubMenu[],
     public datamodel?: IDatamodel,
     public projectUuid?: string,
-    public status?: string
+    public status?: string,
+    public position?: string,
   ) {}
 }

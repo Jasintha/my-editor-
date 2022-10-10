@@ -22,6 +22,11 @@
                 <input type="text" formControlName="name" matInput name="name" id="field_name">
                 <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
             </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Position</mat-label>
+                <input type="number" formControlName="position" matInput name="position" id="field_position">
+                <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
 
             <mat-form-field class="flex-auto">
                 <mat-label>Menutype</mat-label>
