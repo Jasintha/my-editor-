@@ -1,6 +1,6 @@
-<form class="mat-form-dialog" (ngSubmit)="saveCustomGrid()" [formGroup]="editForm" >
+<form  *ngIf="pageCreationStatus === 'customGrid'" class="mat-form-dialog" (ngSubmit)="saveCustomGrid()" [formGroup]="form" >
     <mat-toolbar color="primary" >
-        <h2 mat-dialog-title>Divide in to {{divideType}}</h2>
+        <h2 mat-dialog-title>Create custom grid page</h2>
         <span fxFlex></span>
         <button mat-icon-button
                 mat-dialog-close
@@ -14,34 +14,43 @@
 
             <div class="col-12">
                 <div class="scroll-choices">
-
+                    <button style="float: right; margin-top: 2%; margin-right: 6%" type="button" mat-raised-button color="primary" (click)="insertFormControllersGroup()">
+                        <mat-icon>add</mat-icon>
+                        Add Row
+                    </button>
                     <br>
-                    <label class="form-control-label">Add number of {{divideType}} to divide :</label>
-                    <div class="row">
-                        <div class="col-5">
-                            <input class="form-control" type="number"
-                                   formControlName="numberOfSections" min="1" max="4">
-                        </div>
-                        <div class="col-2">
-                            <button style="background-color: lightgrey" type="button" (click)="divideIntoSections()">
-                               Divide
-                            </button>                        </div>
-                    </div>
-                    <div style="padding-top: 10px"
-                         *ngFor="let choice of columnFormGroup()['controls']; let i = index">
+                    <div style="padding-top: 50px"
+                         *ngFor="let choice of formFieldsGroup['controls']; let k = index">
                         <div [formGroup]="choice">
-                            <label class="form-control-label">{{divideType}} {{i + 1}} Size :</label>
-                            <div class="row">
-                                <div class="col-5">
-                                    <input class="form-control" type="number"
-                                           formControlName="sectionsize" min="1" max="{{getMaxCount(0,i)}}">
+
+                            <label class="form-control-label">Row {{k + 1}} </label>
+                            <div class="scroll-choices">
+                                <div style="float: right; margin-top: 2%; margin-right: 6%">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                                    <input type="button"
+                                           (click)="insertColumnFormControllersGroup(k)"
+                                           value="Add columns"  class="btn fa fa-plus"
+                                           style="background-color: #6D7F8B; color:white;border: none;">
                                 </div>
-                                <div class="col-2">
-                                    <button pButton type="button"
-                                            (click)="removeColumnFormController(i)"
-                                            class="ui-button-danger ui-button-raised"
-                                            icon="fa fa-trash-o">
-                                    </button>
+                                <br>
+                                <div style="padding-top: 10px"
+                                     *ngFor="let choice of columnFormGroup(k)['controls']; let i = index">
+                                    <div [formGroup]="choice">
+                                        <label class="form-control-label">Column {{i + 1}} | Size (1 - 12) :</label>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <input class="form-control" type="number"
+                                                       formControlName="columnSize" min="1" max="{{getMaxCount(k,i)}}">
+                                            </div>
+                                            <div class="col-2">
+                                                <button pButton type="button"
+                                                        (click)="removeColumnFormController(i)"
+                                                        class="ui-button-danger ui-button-raised"
+                                                        icon="fa fa-trash-o">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -116,12 +116,48 @@ export class CreateGridComponent implements OnInit, OnDestroy {
     editForm: FormGroup;
     stepIndexId = 1;
     typeSelected: string;
-    divideType: string;
     buildNewForm() {
         this.editForm = this.fb.group({
             id: [],
-            numberOfSections: ['', [Validators.required]],
-            sections: this.fb.array([]),
+            selectedDatamodel: [],
+            pagetitle: ['', [Validators.required]],
+            pagetemplate: ['', [Validators.required]],
+            apiOperation: [],
+            apiResourcePath: [],
+            // operation: [],
+            resourcePath: [],
+            selectedAggregate: [],
+            paramType: [],
+            paramName: [],
+            paramDataType: [],
+            microservice: [],
+            api: [],
+            search: false,
+            aiosearch: false,
+            aiomicroservice: [],
+            dashboard: [],
+            dashboardsearch: false,
+            dashboardPanel: [],
+            panelType: '',
+            panelName: '',
+            dashboardUID: '',
+            dashboardTitle: '',
+            panelID: '',
+            authority: '',
+            aioapi: [],
+            inputValType: [],
+            matchedProperty: [],
+            fieldName: [],
+            stepHeader: [],
+            showTable: false,
+            isSecurePage: false,
+            isHomepage: false,
+            wizardDetailsGroup: this.fb.array([
+                new FormGroup({
+                    stepHeading: this.fb.control('Step 1'),
+                    stepId: this.fb.control(this.stepIndexId),
+                }),
+            ]),
         });
     }
 
@@ -182,7 +218,6 @@ export class CreateGridComponent implements OnInit, OnDestroy {
         this.selectedFieldIndex = 0;
         this.projectUid = this.data.projectUid;
         this.availableIds = this.data.availableIds;
-        this.divideType = this.data.type;
         this.pageCreationStatus = 'customGrid';
         this.pageViewType = '';
         this.gridStyle = '';
@@ -272,106 +307,105 @@ export class CreateGridComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
     }
 
-    getGridObject(gridSection) {
-        let section: any;
-        if(this.divideType === 'columns') {
-            const row = new Row();
-            row.columns = [];
-            for (let j = 0; j < gridSection.length ; j++) {
-                const container =  { ...new Column(),  columnSize: gridSection[j].sectionsize, color:gridSection[j].color,
-                    id:gridSection[j].id, isContainer: false};
-                row.columns.push(container);
-            }
-            section = row;
-        } else if (this.divideType === 'rows') {
-            const rowArray = [];
-            const column = new Column();
-            const row = new Row();
-            column.grid = new FlexGrid();
-            column.grid.rows = [];
-            for (let j = 0; j < gridSection.length ; j++) {
-                const columnData = { ...new Column(),  columnSize: 12, color:gridSection[j].color,
-                    id:gridSection[j].id, isContainer: false};
-                const columnDataList = [columnData];
-                const container =  { ...new Row(), columns : columnDataList};
-                rowArray.push(container);
-            }
-            column.grid.rows = rowArray;
-            section = column;
+    gridStyles(isCustom: boolean, ind: number) {
+        this.pageViewType = 'multiWidget';
+        this.pageCreationStatus = 'addWidgets';
+        if (!isCustom) {
+            this.gridStyle = this.gridArray[ind].name;
+            this.grid = this.gridArray[ind];
         }
-        return section;
+        this.save();
+        //  this.editForm.reset();
+        //   this.pageCreationStatus = 'basicDetails';
+    }
+
+    getRow(columns) {
+        const row = new Row();
+        row.columns = [];
+        for (let j = 0; j < columns.length ; j++) {
+            const container =  { ...new Column(),  columnSize: columns[j].columnSize, color:columns[j].color, id:columns[j].id};
+            row.columns.push(container);
+        }
+        return row;
     }
 
     //// ---- custom Grid ---- ////
 
     createCustomGridForm() {
-        // this.form = this.fb.group({
-        //     formFieldsGroup: this.fb.array([
-        //         new FormGroup({
-        //             columns: this.fb.array([]),
-        //         }),
-        //     ]),
-        // });
+        this.form = this.fb.group({
+            formFieldsGroup: this.fb.array([
+                new FormGroup({
+                    columns: this.fb.array([new FormGroup({
+                        columnSize: new FormControl(12),
+                        id: new FormControl(this.getNextId()),
+                        color: new FormControl(this.getColorForId(this.idIndex)),
+                    })]),
+                }),
+            ]),
+        });
     }
 
-    // insertFormControllersGroup() {
-    //     this.formFieldsGroup.push(this.addFormFieldsGroup());
-    //     this.insertColumnFormControllersGroup(this.formFieldsGroup.length -1);
-    // }
+    insertFormControllersGroup() {
+        this.formFieldsGroup.push(this.addFormFieldsGroup());
+        this.insertColumnFormControllersGroup(this.formFieldsGroup.length -1);
+    }
 
-    // addFormFieldsGroup(): FormGroup {
-    //     return new FormGroup({
-    //         columns: this.fb.array([]),
-    //     });
-    // }
+    addFormFieldsGroup(): FormGroup {
+        return new FormGroup({
+            columns: this.fb.array([]),
+        });
+    }
 
     saveCustomGrid() {
         // this.spinnerService.show();
-        let containerObj;
         this.isSaving = true;
         const formData = this.createCustomGridFromForm();
         if (formData && formData.fieldList && formData.fieldList.length > 0) {
             const customGrid = new FlexGrid();
             const rowArray = [];
-            if(formData.fieldList && formData.fieldList.length > 0) {
-                 containerObj =  this.getGridObject(formData.fieldList);
+            for (let i = 0; i < formData.fieldList.length; i++) {
+                const row =  this.getRow(formData.fieldList[i].columns);
+                rowArray.push(row);
             }
-           this.dialogRef.close(containerObj)
+            customGrid.name = 'custom';
+            customGrid.rows = rowArray;
+            this.grid = customGrid;
+            this.gridStyles(true, -1);
         }
     }
 
     private createCustomGridFromForm(): IFormControllers {
         return {
             ...new FormControllers(),
-           fieldList: this.editForm.get('sections').value
+            fieldList: this.formFieldsGroup.value,
         };
     }
 
-    // get formFieldsGroup() {
-    //     return this.form.get('formFieldsGroup') as FormArray;
-    // }
+    get formFieldsGroup() {
+        return this.form.get('formFieldsGroup') as FormArray;
+    }
 
-    columnFormGroup() {
-        return this.editForm.get('sections') as FormArray;
+    columnFormGroup(index) {
+        return this.formFieldsGroup.controls[index]['controls'].columns as FormArray;
     }
 
     removeColumnFormController(index: number) {
-        this.columnFormGroup().removeAt(index);
+        this.columnFormGroup(index).removeAt(index);
     }
 
     insertColumnFormControllersGroup(index) {
         this.selectedFieldIndex = index;
-        this.columnFormGroup().push(this.addColumnFormFieldsGroup());
+        this.columnFormGroup(index).push(this.addColumnFormFieldsGroup());
     }
 
 
     getMaxCount(rowIndex, columnIndex) {
-        const columnsInRow = this.columnFormGroup();
+        const columnsInRow = this.columnFormGroup(rowIndex);
         const selectedColumn = columnsInRow['controls'][columnIndex];
         let totalColumns = 0;
         for (let i = 0; i < columnsInRow.length; i++) {
             if(i !== columnIndex) {
-                totalColumns += columnsInRow.controls[i]['controls'].sectionsize.value
+                totalColumns += columnsInRow.controls[i]['controls'].columnSize.value
             }
         }
         if(totalColumns < 12) {
@@ -382,7 +416,7 @@ export class CreateGridComponent implements OnInit, OnDestroy {
 
     addColumnFormFieldsGroup(): FormGroup {
         return new FormGroup({
-            sectionsize: new FormControl(12),
+            columnSize: new FormControl(12),
             id: new FormControl(this.getNextId()),
             color: new FormControl(this.getColorForId(this.idIndex)),
         });
@@ -397,9 +431,9 @@ export class CreateGridComponent implements OnInit, OnDestroy {
         return this.colorMap.get(id);
     }
 
-    // removeFormControllers(index: number) {
-    //     this.formFieldsGroup.removeAt(index);
-    // }
+    removeFormControllers(index: number) {
+        this.formFieldsGroup.removeAt(index);
+    }
 
     showModelCreation($event) {
         // this.widgetCreationStatus === 'addNewModel';
@@ -408,16 +442,7 @@ export class CreateGridComponent implements OnInit, OnDestroy {
     clear() {
         // this.activeModal.dismiss('cancel');
     }
-
-    divideIntoSections() {
-            let numOfColumns = this.editForm.get('numberOfSections').value;
-            for (let i = 0; i < numOfColumns; i++) {
-                this.insertColumnFormControllersGroup(i);
-            }
-    }
 }
-
-
 
 export interface IPageApi {
     apiType?: string;

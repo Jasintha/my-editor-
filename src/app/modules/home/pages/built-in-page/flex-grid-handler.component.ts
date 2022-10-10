@@ -21,7 +21,7 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
 import {Grid, IGrid} from '@shared/models/model/grid.model';
-import {FlexGrid, IFlexGrid, Row} from '@shared/models/model/flex.grid.model';
+import {FlexGrid, IFlexGrid} from '@shared/models/model/flex.grid.model';
 import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
 import {CreateGridComponent} from '@home/pages/built-in-page/create-grid.component';
 import {IButtonEvent} from '@shared/models/model/button-type.model';
@@ -180,6 +180,7 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
         this.pageContainerMappingsList.splice(index, 1);
         this.containerMappingsDataSource = new MatTableDataSource(this.pageContainerMappingsList);
     }
+
     onPageEditModeChanged() {
         if(this.editPageAsJson) {
             this.savePageAsJson();
@@ -201,7 +202,7 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
                 )
                 .subscribe(
                     (res: any) => {
-                      //  this.consoleLogService.writeConsoleLog('Page json saved successfully');
+                        //  this.consoleLogService.writeConsoleLog('Page json saved successfully');
                         //this.save(page);
                     },
                     (res: HttpErrorResponse) => this.onError(res.message)
@@ -210,66 +211,47 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
     }
 
     addLayerOneChildGrid(rowIndex, columnIndex, type) {
-            const dialogRef = this.dialog.open(CreateGridComponent, {
-                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-                data: {
-                    projectUid: this.projectUid,
-                    availableIds: this.getAvailableIds(),
-                    type,
-                }
-            });
-            dialogRef.afterClosed(
-            ).subscribe(result => {
-               if(result){
-                   if(type === 'columns') {
-                       const row = new Row();
-                       row.columns = result.columns;
-                       const rows = [row];
-                       this.grid.rows[rowIndex].columns[columnIndex].grid.rows = rows;
-                       this.grid.rows[rowIndex].columns[columnIndex].isContainer = true;
-                   } else if(type === 'rows') {
-                       this.grid.rows[rowIndex].columns[columnIndex].grid = result.grid;
-                       this.grid.rows[rowIndex].columns[columnIndex].isContainer = true;
-                   }
-                   this.getUsedIds(result);
-               }
-            });
-    }
-
-    addLayer2ChildGrid(rowIndex, columnIndex, childRowIndex, childColumnIndex, type) {
         const dialogRef = this.dialog.open(CreateGridComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.projectUid,
                 availableIds: this.getAvailableIds(),
-                type
             }
         });
         dialogRef.afterClosed(
         ).subscribe(result => {
             if(result){
-                if(type === 'columns') {
-                    const row = new Row();
-                    row.columns = result.columns;
-                    const rows = [row];
-                    this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].grid.rows = rows;
-                    this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].isContainer = true;
-                } else if(type === 'rows') {
-                    this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].grid = result.grid;
-                    this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].isContainer = true;
-                }
                 this.getUsedIds(result);
+                this.grid.rows[rowIndex].columns[columnIndex].grid = result;
+                this.grid.rows[rowIndex].columns[columnIndex].isContainer = true;
             }
         });
     }
 
-    addLayer3ChildGrid(rowIndex, columnIndex, childRowIndex, childColumnIndex, layer3RowIndex, Layer3ColIndex, type) {
+    addLayer2ChildGrid(rowIndex, columnIndex, childRowIndex, childColumnIndex) {
         const dialogRef = this.dialog.open(CreateGridComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
                 projectUid: this.projectUid,
                 availableIds: this.getAvailableIds(),
-                type
+            }
+        });
+        dialogRef.afterClosed(
+        ).subscribe(result => {
+            if(result){
+                this.getUsedIds(result);
+                this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].grid = result;
+                this.grid.rows[rowIndex].columns[columnIndex].grid.rows[childRowIndex].columns[childColumnIndex].isContainer = true;
+            }
+        });
+    }
+
+    addLayer3ChildGrid(rowIndex, columnIndex, childRowIndex, childColumnIndex, layer3RowIndex, Layer3ColIndex) {
+        const dialogRef = this.dialog.open(CreateGridComponent, {
+            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+            data: {
+                projectUid: this.projectUid,
+                availableIds: this.getAvailableIds(),
             }
         });
         dialogRef.afterClosed(
@@ -317,7 +299,7 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
                         });
                     } else {
                         this.updatePage(page);
-                      //  this.updatePageGrid();
+                        //  this.updatePageGrid();
                     }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
@@ -346,8 +328,8 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: IPage) => {
                     if(res && res.pagetitle) {
-                     //   this.grid.rows[rowIndex].containers[columnIndex].pagetitle = res.pagetitle;
-                       // this.grid.rows[rowIndex].containers[columnIndex].pagetype = res.pagetemplate;
+                        //   this.grid.rows[rowIndex].containers[columnIndex].pagetitle = res.pagetitle;
+                        // this.grid.rows[rowIndex].containers[columnIndex].pagetype = res.pagetemplate;
                     }
                 }
             );
@@ -443,7 +425,7 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
 
 
     setWidgetType(page) {
-      //  this.grid.rows[this.selectedRowIndex].containers[this.selectedContainerIndex].page = page.uuid;
+        //  this.grid.rows[this.selectedRowIndex].containers[this.selectedContainerIndex].page = page.uuid;
         this.checkPageNameExistAndSave();
     }
 
@@ -469,5 +451,9 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
         } else {
             // error message
         }
+    }
+
+    savePageGrid() {
+
     }
 }
