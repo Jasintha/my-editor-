@@ -266,7 +266,7 @@ export class PageGridHandlerComponent implements OnInit, OnDestroy {
       projectUuid: this.projectUid,
       pagetitle: this.pageTitle,
       pageViewType: this.currentPage.pageViewType,
-      pageGrid: this.grid,
+     // pageGrid: this.grid,
       pagetemplate: this.currentPage.pagetemplate,
       status: 'ENABLED',
     };
