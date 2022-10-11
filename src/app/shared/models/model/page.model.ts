@@ -8,6 +8,7 @@ import { IAPIInput } from '@shared/models/model/api-input.model';
 import {IActions, IButtonEvent, IButtonType} from '@shared/models/model/button-type.model';
 import {IChartDetails} from '@shared/models/model/chart-details.model';
 import {INavigationParam} from '@shared/models/model/page-navigation.model';
+import {IFlexGrid, IGridPageMapping} from '@shared/models/model/flex.grid.model';
 
 export interface IPage {
   uuid?: string;
@@ -46,7 +47,8 @@ export interface IPage {
   pagestyle?: string;
   isHomepage?: boolean;
   pageViewType?: string;
-  pageGrid?: any;
+  pageGrid?: IFlexGrid;
+  gridPageMappings?: IGridPageMapping[];
   apiDataArray?: any;
   attachedPageLocation?: string;
   actions?: IActions;
@@ -100,7 +102,8 @@ export class Page implements IPage {
     public pagestyle?: string,
     public isHomepage?: boolean,
     public pageViewType?: string,
-    public pageGrid?: any,
+    public pageGrid?: IFlexGrid,
+    public gridPageMappings?: IGridPageMapping[],
     public apiDataArray? : any,
     public attachedPageLocation? : string,
     public actions? : IActions,

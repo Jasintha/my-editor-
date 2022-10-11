@@ -21,7 +21,7 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {EventManagerService} from '@shared/events/event.type';
 import {Grid, IGrid} from '@shared/models/model/grid.model';
-import {FlexGrid, IFlexGrid} from '@shared/models/model/flex.grid.model';
+import {FlexGrid, IFlexGrid, IGridPageMapping} from '@shared/models/model/flex.grid.model';
 import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-creation.component';
 import {CreateGridComponent} from '@home/pages/built-in-page/create-grid.component';
 import {IButtonEvent} from '@shared/models/model/button-type.model';
@@ -65,7 +65,7 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
     availableIds: string[] = [];
     pages = [];
     allpages = [];
-    pageContainerMappingsList: IButtonEvent[] = [];
+    pageContainerMappingsList: IGridPageMapping[] = [];
     containerMappingDisplayedColumns: string[] = ['container','page', 'actions'];
     containerMappingsDataSource = new MatTableDataSource(this.pageContainerMappingsList);
     protected ngbModalRef: NgbModalRef;
@@ -128,6 +128,10 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
     loadUpdateForm(builtInPage) {
         this.currentPage = builtInPage;
         this.grid = builtInPage.pageGrid;
+        if(builtInPage.gridPageMappings) {
+            this.pageContainerMappingsList = builtInPage.gridPageMappings;
+        }
+        this.containerMappingsDataSource = new MatTableDataSource(this.pageContainerMappingsList);
         this.editPageAsJson = builtInPage.inputPageAsJson;
         this.code = builtInPage.pageJson;
         this.pageTitle = builtInPage.pagetitle;
@@ -271,6 +275,20 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
             for (let j = 0; j < grid.rows[i].columns.length; j++) {
                 this.usedIdArray.push(grid.rows[i].columns[j].id);
                 // [TODO] extend for child steps
+                if(grid.rows[i].columns[j].grid && grid.rows[i].columns[j].grid.rows) {
+                    for (let k = 0; k < grid.rows[i].columns[j].grid.rows.length; k++) {
+                        for (let l = 0; l < grid.rows[i].columns[j].grid.rows[k].columns.length; l++) {
+                            this.usedIdArray.push(grid.rows[i].columns[j].grid.rows[k].columns[l].id);
+                            if(grid.rows[i].columns[j].grid.rows[k].columns[l].grid && grid.rows[i].columns[j].grid.rows[k].columns[l].grid.rows) {
+                                for (let m = 0; m < grid.rows[i].columns[j].grid.rows[k].columns[l].grid.rows.length; m++) {
+                                    for (let n = 0; n < grid.rows[i].columns[j].grid.rows[k].columns[l].grid.rows[m].columns.length; n++) {
+                                        this.usedIdArray.push(grid.rows[i].columns[j].grid.rows[k].columns[l].grid.rows[m].columns[n].id);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -298,12 +316,34 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
                             detail: 'Entered page name is already exist. please use another',
                         });
                     } else {
-                        this.updatePage(page);
+                        this.updatePageBasicData(page);
                         //  this.updatePageGrid();
                     }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
+    }
+
+    updatePageBasicData(builtInPage: IPage) {
+        this.isSaving = true;
+        const page = this.currentPage;
+        page.inputPageAsJson = this.editPageAsJson;
+        page.pagetitle = this.editForm.get(['pagetitle']).value;
+        page.pageDescription = this.editForm.get(['pageDescription']).value;
+        if (page.uuid && page.pagetitle) {
+            this.subscribeToSaveResponse(this.builtInPageService.updatePageBasicData(builtInPage, this.projectUid));
+        }
+    }
+
+    updatePageGrid() {
+        this.isSaving = true;
+        const page = this.currentPage;
+        page.pageGrid = this.grid;
+        page.gridPageMappings = this.pageContainerMappingsList;
+        this.isSaving = true;
+        if (page.uuid && page.pageGrid && page.gridPageMappings) {
+            this.subscribeToSaveResponse(this.builtInPageService.updatePageGridMappings(page, this.projectUid));
+        }
     }
 
     // updatePageGrid() {
@@ -333,15 +373,6 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
                     }
                 }
             );
-    }
-
-    updatePage(builtInPage) {
-        this.spinnerService.show();
-        this.isSaving = true;
-        if (builtInPage.uuid) {
-            builtInPage.status = this.currentPage.status;
-            this.subscribeToSaveResponse(this.builtInPageService.update(builtInPage, this.projectUid));
-        }
     }
 
     private createFromForm(): IPage {
@@ -408,26 +439,26 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
     }
 
-    openSelectPageDialog() {
-        const dialogRef = this.dialog.open(WidgetSelectDialogComponent, {
-            panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-            data: {
-                projectUid: this.projectUid,
-            }
-        });
-        dialogRef.afterClosed(
-        ).subscribe(result => {
-            if (result){
-                this.setWidgetType(result);
-            }
-        });
-    }
+    // openSelectPageDialog() {
+    //     const dialogRef = this.dialog.open(WidgetSelectDialogComponent, {
+    //         panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+    //         data: {
+    //             projectUid: this.projectUid,
+    //         }
+    //     });
+    //     dialogRef.afterClosed(
+    //     ).subscribe(result => {
+    //         if (result){
+    //             this.setWidgetType(result);
+    //         }
+    //     });
+    // }
 
 
-    setWidgetType(page) {
-        //  this.grid.rows[this.selectedRowIndex].containers[this.selectedContainerIndex].page = page.uuid;
-        this.checkPageNameExistAndSave();
-    }
+    // setWidgetType(page) {
+    //     //  this.grid.rows[this.selectedRowIndex].containers[this.selectedContainerIndex].page = page.uuid;
+    //     this.checkPageNameExistAndSave();
+    // }
 
     previousState() {
         window.history.back();
@@ -442,9 +473,10 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
         const container = this.editForm.get(['containerId']).value;
 
         if (page !== null || container !== '') {
-            const pageMapping: any = {
-                page ,
-                container,
+            const pageMapping: IGridPageMapping = {
+                pageName: page.pagetitle ,
+                pageId: page.uuid,
+                refId: container,
             };
             this.pageContainerMappingsList.push(pageMapping);
             this.containerMappingsDataSource = new MatTableDataSource(this.pageContainerMappingsList);

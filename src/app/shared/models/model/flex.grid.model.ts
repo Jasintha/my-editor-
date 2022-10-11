@@ -26,3 +26,15 @@ export class Column implements IColumn {
     constructor(public isContainer?: boolean, public id?: string,
                 public grid?: IFlexGrid, public columnSize?: number) {}
 }
+
+
+export interface IGridPageMapping {
+    pageId?: string;
+    pageName? : string;
+    refId?: string;
+}
+
+export class GridPageMapping implements IGridPageMapping {
+    constructor(public pageId?: string, public pageName?: string,
+                public refId?: string) {}
+}
