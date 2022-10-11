@@ -3,25 +3,11 @@
         <div class="justify-content-center " >
             <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
                 <div class="justify-content-center tit-bar1">
-                    <h4 id="theme-heading" style="padding: 10px 0 0 10px">Update Page Theme</h4>
+                    <h4 id="theme-heading" style="padding: 10px 0 0 10px">Update Page Themes</h4>
                 </div>
-
-                <div class="row" style="height: 700px; overflow-y: auto">
-
-                    <div class="col-md-2">
-
-                        <div class="tab">
-                            <button type="button" class="tablinksx" (click)="navigate('general')" #defaultOpen >General</button>
-                            <button type="button" class="tablinksx" (click)="navigate('color')">Color Themes</button>
-                            <button  type="button" class="tablinksx" (click)="navigate('button')">Button</button>
-                            <button type="button" class="tablinks" (click)="navigate('input')">Input</button>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-10">
-
-                        <div id='general' class="tab-contentx">
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                            <p-header style="font-size: 18px"> General settings </p-header>
+                        <div>
                             <div  class="form-group " [hidden]="!editForm.get('id').value">
                                 <!--<label for="id">ID</label>-->
                                 <input type="hidden" class="form-control" id="id" name="id" formControlName="id"/>
@@ -123,8 +109,10 @@
                                 </p-fileUpload>
                             </div>
                         </div>
-
-                        <div id='color' class="tab-contentx">
+                        </p-fieldset>
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                            <p-header style="font-size: 18px"> Color settings</p-header>
+                        <div>
                             <div class="row">
                                 <div class="col-md-4 color-card">
                                     <div class="form-group">
@@ -179,226 +167,482 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div id='button' class="tab-contentx">
-                            <div class='py-5'>
-                                <div class='container ml-0'>
-                                    <div class='row'>
-                                        <div class='col-md-3 my-auto text-center'>
-                                                <p-radioButton name="buttonTheme" value="themeStyle1" label="Button Style 1" formControlName="buttonTheme"></p-radioButton>
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <div class='card'>
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Primary Design</h5>
-                                                    <div class='margin-top-bottom-40 text-center'>
-                                                        <button disabled type="button" class='style1-button' id="style1-button" >
-                                                            <span>Button</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <div class='card'>
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Secondary Design</h5>
-                                                    <div class='margin-top-bottom-40 text-center'>
-                                                    <button disabled type="button" class='style1-sec-button' id="style1-sec-button" >
-                                                        <span>Button</span>
-                                                    </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <div class='card'>
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Ternary Design</h5>
-                                                    <div class='margin-top-bottom-40 text-center'>
-                                                        <button disabled type="button" class='style1-ter-button' id="style1-ter-button" >
-                                                            <span>Button</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><br>
-                                    <div class='row'>
-                                        <div class='col-md-3 my-auto text-center'>
-                                            <p-radioButton name="buttonTheme" value="themeStyle2" label="Button Style 2" formControlName="buttonTheme"></p-radioButton>
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <div class='card'>
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Primary Design</h5>
-                                                    <div class='margin-top-bottom-40 text-center' >
-                                                        <button disabled type="button" class='style2-button' id="style2-button" >
-                                                            <span>Button</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <div class='card'>
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Secondary Design</h5>
-                                                    <div class='margin-top-bottom-40 text-center' >
-                                                        <button disabled type="button" class='style2-sec-button' id="style2-sec-button" >
-                                                            <span>Button</span>
-                                                        </button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <div class='card'>
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Ternary Design </h5>
-                                                    <div class='margin-top-bottom-40 text-center' >
-                                                        <button disabled type="button" class='style2-ter-button' id="" >
-                                                            <span>Button</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div><br>
+                        </p-fieldset>
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                    <p-header style="font-size: 18px">App settings</p-header>
+                <div class="row">
+                    <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12" style="float: right">
+                                    <button type="button" id="add-row" class="btn btn-info" (click)="showDialogToAddApp()"
+                                            style="float: right; margin: 4px">
+                                       <span>Add</span>
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                            <div style="padding-top:20px;padding-bottom:20px;">
 
-                        <div id='input' class="tab-contentx">
-                            <div class='py-5'>
-                                <div class='container'>
-                                    <div class='row'>
-                                        <div class='col-md-4'>
-                                            <div class='card' style="padding: 20px">
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Material Design</h5>
-                                                    <div class='style1-group margin-top-bottom-40'>
-                                                        <input class='style1-input' placeholder="Input field" type="text" required="">
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer" >
-                                                    <div class='text-center'>
-                                                        <p-radioButton name="inputStyle" value="materialDesign" label="Material Design" formControlName="inputStyle"></p-radioButton>
-                                                    </div>
-                                                </div>
+                                <p-table [value]="appPropertyKeyMappings" selectionMode="single" [paginator]="true" [rowsPerPageOptions]="[5,10,25]" (onRowSelect)="onAppRowSelect($event)" [rows]="10">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th>Name<p-sortIcon field="name"></p-sortIcon></th>
+                                            <th>Value<p-sortIcon field="value"></p-sortIcon></th>
+                                            <th>Action<p-sortIcon field="action"></p-sortIcon></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData>
+                                        <tr [pSelectableRow]="rowData">
+                                            <td>{{rowData.name}}</td>
+                                            <td>{{rowData.value}}</td>
+                                            <td>
+                                                <button pButton type="button" (click)="deleteAppRow(rowData)"
+                                                        class="ui-button-danger ui-button-raised" icon="fa fa-trash-o">
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <p-dialog header="{{headerText}}" [(visible)]="displayAppDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '500px'}">
+                                    <div class="p-grid ui-fluid" >
+                                        <div class="form-group">
+                                            <label class="form-control-label">Key</label>
+                                            <input type="text" class="form-control" name="propkey"
+                                                   formControlName="propkey"/>
+                                            <div
+                                                    *ngIf="editForm.get('propkey').invalid && (editForm.get('propkey').dirty || editForm.get('propkey').touched)">
+                                                <small class="form-text text-danger">
+                                                    key is required.
+                                                </small>
                                             </div>
                                         </div>
-                                        <div class='col-md-4'>
-                                            <div class='card' style="padding: 20px">
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Material Design Fill</h5>
-                                                        <div class="style2-group margin-top-bottom-40">
-                                                            <input class='style2-input' type="text" required>
-                                                            <span class="highlight"></span>
-                                                            <span class="bar"></span>
-                                                            <label class='style2-label'>Input Field</label>
-                                                        </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <div class='text-center'>
-                                                        <p-radioButton name="inputStyle" value="fill" label="Fill" formControlName="inputStyle"></p-radioButton>
-                                                    </div>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Name</label>
+                                            <input type="text" class="form-control" name="propname"
+                                                   formControlName="propname"/>
+                                            <div
+                                                    *ngIf="editForm.get('propname').invalid && (editForm.get('propname').dirty || editForm.get('propname').touched)">
+                                                <small class="form-text text-danger">
+                                                    name Variable is required.
+                                                </small>
                                             </div>
                                         </div>
-                                        <div class='col-md-4'>
-                                            <div class='card'>
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Material Design Outline</h5>
-                                                    <div class="style3-group margin-top-bottom-40" >
-                                                    <p>
-                                                        <input class='style3-input'  type="text" required />
-                                                        <label class='style3-label' for="input"  placeholder="Input Field"></label>
-                                                    </p>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <div class='text-center'>
-                                                        <p-radioButton name="inputStyle" value="outline" label="Outline" formControlName="inputStyle"></p-radioButton>
-                                                    </div>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Value</label>
+                                            <input type="text" class="form-control" name="propvalue"
+                                                   formControlName="propvalue"/>
+                                            <div
+                                                    *ngIf="editForm.get('propvalue').invalid && (editForm.get('propvalue').dirty || editForm.get('propvalue').touched)">
+                                                <small class="form-text text-danger">
+                                                    value Variable is required.
+                                                </small>
                                             </div>
                                         </div>
-                                    </div><br>
-                                    <div class='row'>
-                                        <div class='col-md-4'>
-                                            <div class='card'>
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Primary Design</h5>
-                                                    <div class='style4-group margin-top-bottom-40'>
-                                                        <input class='style4-input' type="text" placeholder="Name" />
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer" style="padding-bottom: 32px;">
-                                                    <div class='text-center'>
-                                                        <p-radioButton name="inputStyle" value="primaryDesign" label="Primary Design" formControlName="inputStyle"></p-radioButton>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Description</label>
+                                            <input type="text" class="form-control" name="propdesc"
+                                                   formControlName="propdesc"/>
+                                        </div>
 
-                                        </div>
-                                        <div class='col-md-4'>
-                                            <div class='card'>
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Primary Design Outline</h5>
-                                                        <div class="style5-group margin-top-bottom-40">
-                                                            <input id="firstname" class='style5-input' type="text" placeholder=" " />
-                                                            <div class="style5-cutt"></div>
-                                                            <label for="firstname" class='style5-label'>First name</label>
-                                                        </div>
-                                                </div>
-                                                <div class="card-footer" style="padding-bottom: 32px;">
-                                                    <div class='text-center'>
-                                                        <p-radioButton name="inputStyle" value="primaryOutline" label="Primary Outline" formControlName="inputStyle"></p-radioButton>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class='col-md-4'>
-                                            <div class='card'>
-                                                <div class="card-body">
-                                                    <h5 class="card-title text-center">Primary placeholder </h5>
-                                                    <div class="style6-group margin-top-bottom-40">
-                                                        <input class='style6-input' type="text" placeholder="Name" />
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer" style="padding-bottom: 32px;">
-                                                    <div class='text-center'>
-                                                        <p-radioButton name="inputStyle" value="primaryPlaceholder" label="Placeholder" formControlName="inputStyle"></p-radioButton>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
                                     </div>
-                                </div>
+                                    <p-footer>
+                                        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                                            <button type="button" pButton icon="pi pi-check" (click)="addAppKey()" label="Save"></button>
+                                        </div>
+                                    </p-footer>
+                                </p-dialog>
                             </div>
-                        </div>
-
-
-
                     </div>
 
-
                 </div>
+                </p-fieldset>
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                    <p-header style="font-size: 18px">Page Settings</p-header>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12" style="float: right">
+                                    <button type="button" class="btn btn-info" (click)="showDialogToAddPage()"
+                                            style="float: right; margin: 4px">
+                                       &nbsp;<span>Add</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div style="padding-top:20px;padding-bottom:20px;">
+
+                                <p-table [value]="pagePropertyKeyMappings" selectionMode="single" [paginator]="true" [rowsPerPageOptions]="[5,10,25]" (onRowSelect)="onPageRowSelect($event)" [rows]="10">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th>Name<p-sortIcon field="name"></p-sortIcon></th>
+                                            <th>Value<p-sortIcon field="value"></p-sortIcon></th>
+                                            <th>Action<p-sortIcon field="action"></p-sortIcon></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData>
+                                        <tr [pSelectableRow]="rowData">
+                                            <td>{{rowData.name}}</td>
+                                            <td>{{rowData.value}}</td>
+                                            <td>
+                                                <button pButton type="button" (click)="deletePageRow(rowData)"
+                                                        class="ui-button-danger ui-button-raised" icon="fa fa-trash-o">
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <p-dialog header="{{headerText}}" [(visible)]="displayPageDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '500px'}">
+                                    <div class="p-grid ui-fluid" >
+                                        <div class="form-group">
+                                            <label class="form-control-label">Key</label>
+                                            <input type="text" class="form-control" name="pagepropkey" id="pagepropkey"
+                                                   formControlName="pagepropkey"/>
+                                            <div
+                                                    *ngIf="editForm.get('pagepropkey').invalid && (editForm.get('pagepropkey').dirty || editForm.get('pagepropkey').touched)">
+                                                <small class="form-text text-danger">
+                                                    key is required.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Name</label>
+                                            <input type="text" class="form-control" name="pagepropname" id="pagepropname"
+                                                   formControlName="pagepropname"/>
+                                            <div
+                                                    *ngIf="editForm.get('pagepropname').invalid && (editForm.get('pagepropname').dirty || editForm.get('pagepropname').touched)">
+                                                <small class="form-text text-danger">
+                                                    name Variable is required.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Value</label>
+                                            <input type="text" class="form-control" name="pagepropvalue" id="pagepropvalue"
+                                                   formControlName="pagepropvalue"/>
+                                            <div
+                                                    *ngIf="editForm.get('pagepropvalue').invalid && (editForm.get('pagepropvalue').dirty || editForm.get('pagepropvalue').touched)">
+                                                <small class="form-text text-danger">
+                                                    value Variable is required.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Description</label>
+                                            <input type="text" class="form-control" name="pagepropdesc" id="pagepropdesc"
+                                                   formControlName="pagepropdesc"/>
+                                        </div>
+
+                                    </div>
+                                    <p-footer>
+                                        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                                            <button type="button" pButton icon="pi pi-check" (click)="addPageKey()" label="Save"></button>
+                                        </div>
+                                    </p-footer>
+                                </p-dialog>
+                            </div>
+                        </div>
+
+                    </div>
+                </p-fieldset>
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                    <p-header style="font-size: 18px">Page Control Settings</p-header>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12" style="float: right">
+                                    <button type="button" class="btn btn-info" (click)="showDialogToAddPageControl()"
+                                            style="float: right; margin: 4px">
+                                       &nbsp;<span>Add</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div style="padding-top:20px;padding-bottom:20px;">
+
+                                <p-table [value]="pageControlPropertyKeyMappings" selectionMode="single" [paginator]="true" [rowsPerPageOptions]="[5,10,25]" (onRowSelect)="onPageControlRowSelect($event)" [rows]="10">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th>Name<p-sortIcon field="name"></p-sortIcon></th>
+                                            <th>Value<p-sortIcon field="value"></p-sortIcon></th>
+                                            <th>Action<p-sortIcon field="action"></p-sortIcon></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData>
+                                        <tr [pSelectableRow]="rowData">
+                                            <td>{{rowData.name}}</td>
+                                            <td>{{rowData.value}}</td>
+                                            <td>
+                                                <button pButton type="button" (click)="deletePageControlRow(rowData)"
+                                                        class="ui-button-danger ui-button-raised" icon="fa fa-trash-o">
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <p-dialog header="{{headerText}}" [(visible)]="displayPageControlDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '500px'}">
+                                    <div class="p-grid ui-fluid" >
+                                        <div class="form-group">
+                                            <label class="form-control-label">Key</label>
+                                            <input type="text" class="form-control" name="pagecontrolpropkey" id="pagecontrolpropkey"
+                                                   formControlName="pagecontrolpropkey"/>
+                                            <div
+                                                    *ngIf="editForm.get('pagecontrolpropkey').invalid && (editForm.get('pagecontrolpropkey').dirty || editForm.get('pagecontrolpropkey').touched)">
+                                                <small class="form-text text-danger">
+                                                    key is required.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Name</label>
+                                            <input type="text" class="form-control" name="pagecontrolpropname" id="pagecontrolpropname"
+                                                   formControlName="pagecontrolpropname"/>
+                                            <div
+                                                    *ngIf="editForm.get('pagecontrolpropname').invalid && (editForm.get('pagecontrolpropname').dirty || editForm.get('pagecontrolpropname').touched)">
+                                                <small class="form-text text-danger">
+                                                    name Variable is required.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Value</label>
+                                            <input type="text" class="form-control" name="pagecontrolpropvalue" id="pagecontrolpropvalue"
+                                                   formControlName="pagecontrolpropvalue"/>
+                                            <div
+                                                    *ngIf="editForm.get('pagecontrolpropvalue').invalid && (editForm.get('pagecontrolpropvalue').dirty || editForm.get('pagecontrolpropvalue').touched)">
+                                                <small class="form-text text-danger">
+                                                    value Variable is required.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Description</label>
+                                            <input type="text" class="form-control" name="pagecontrolpropdesc" id="pagecontrolpropdesc"
+                                                   formControlName="pagecontrolpropdesc"/>
+                                        </div>
+
+                                    </div>
+                                    <p-footer>
+                                        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                                            <button type="button" pButton icon="pi pi-check" (click)="addPageControlKey()" label="Save"></button>
+                                        </div>
+                                    </p-footer>
+                                </p-dialog>
+                            </div>
+                        </div>
+
+                    </div>
+                </p-fieldset>
+
+                <!--                        <div id='button' class="tab-contentx">-->
+                <!--                            <div class='py-5'>-->
+                <!--                                <div class='container ml-0'>-->
+                <!--                                    <div class='row'>-->
+                <!--                                        <div class='col-md-3 my-auto text-center'>-->
+                <!--                                                <p-radioButton name="buttonTheme" value="themeStyle1" label="Button Style 1" formControlName="buttonTheme"></p-radioButton>-->
+                <!--                                        </div>-->
+                <!--                                        <div class='col-md-3'>-->
+                <!--                                            <div class='card'>-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Primary Design</h5>-->
+                <!--                                                    <div class='margin-top-bottom-40 text-center'>-->
+                <!--                                                        <button disabled type="button" class='style1-button' id="style1-button" >-->
+                <!--                                                            <span>Button</span>-->
+                <!--                                                        </button>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+                <!--                                        </div>-->
+                <!--                                        <div class='col-md-3'>-->
+                <!--                                            <div class='card'>-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Secondary Design</h5>-->
+                <!--                                                    <div class='margin-top-bottom-40 text-center'>-->
+                <!--                                                    <button disabled type="button" class='style1-sec-button' id="style1-sec-button" >-->
+                <!--                                                        <span>Button</span>-->
+                <!--                                                    </button>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+                <!--                                        </div>-->
+                <!--                                        <div class='col-md-3'>-->
+                <!--                                            <div class='card'>-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Ternary Design</h5>-->
+                <!--                                                    <div class='margin-top-bottom-40 text-center'>-->
+                <!--                                                        <button disabled type="button" class='style1-ter-button' id="style1-ter-button" >-->
+                <!--                                                            <span>Button</span>-->
+                <!--                                                        </button>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+                <!--                                        </div>-->
+                <!--                                    </div><br>-->
+                <!--                                    <div class='row'>-->
+                <!--                                        <div class='col-md-3 my-auto text-center'>-->
+                <!--                                            <p-radioButton name="buttonTheme" value="themeStyle2" label="Button Style 2" formControlName="buttonTheme"></p-radioButton>-->
+                <!--                                        </div>-->
+                <!--                                        <div class='col-md-3'>-->
+                <!--                                            <div class='card'>-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Primary Design</h5>-->
+                <!--                                                    <div class='margin-top-bottom-40 text-center' >-->
+                <!--                                                        <button disabled type="button" class='style2-button' id="style2-button" >-->
+                <!--                                                            <span>Button</span>-->
+                <!--                                                        </button>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+
+                <!--                                        </div>-->
+                <!--                                        <div class='col-md-3'>-->
+                <!--                                            <div class='card'>-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Secondary Design</h5>-->
+                <!--                                                    <div class='margin-top-bottom-40 text-center' >-->
+                <!--                                                        <button disabled type="button" class='style2-sec-button' id="style2-sec-button" >-->
+                <!--                                                            <span>Button</span>-->
+                <!--                                                        </button>-->
+                <!--                                                    </div>-->
+
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+
+                <!--                                        </div>-->
+                <!--                                        <div class='col-md-3'>-->
+                <!--                                            <div class='card'>-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Ternary Design </h5>-->
+                <!--                                                    <div class='margin-top-bottom-40 text-center' >-->
+                <!--                                                        <button disabled type="button" class='style2-ter-button' id="" >-->
+                <!--                                                            <span>Button</span>-->
+                <!--                                                        </button>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+
+                <!--                                        </div>-->
+                <!--                                    </div><br>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+
+                <!--                        <div id='input' class="tab-contentx">-->
+                <!--                            <div class='py-5'>-->
+                <!--                                <div class='container'>-->
+                <!--                                    <div class='row'>-->
+                <!--                                        <div class='col-md-4'>-->
+                <!--                                            <div class='card' style="padding: 20px">-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Material Design</h5>-->
+                <!--                                                    <div class='style1-group margin-top-bottom-40'>-->
+                <!--                                                        <input class='style1-input' placeholder="Input field" type="text" required="">-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                                <div class="card-footer" >-->
+                <!--                                                    <div class='text-center'>-->
+                <!--                                                        <p-radioButton name="inputStyle" value="materialDesign" label="Material Design" formControlName="inputStyle"></p-radioButton>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+                <!--                                        </div>-->
+                <!--                                        <div class='col-md-4'>-->
+                <!--                                            <div class='card' style="padding: 20px">-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Material Design Fill</h5>-->
+                <!--                                                        <div class="style2-group margin-top-bottom-40">-->
+                <!--                                                            <input class='style2-input' type="text" required>-->
+                <!--                                                            <span class="highlight"></span>-->
+                <!--                                                            <span class="bar"></span>-->
+                <!--                                                            <label class='style2-label'>Input Field</label>-->
+                <!--                                                        </div>-->
+                <!--                                                </div>-->
+                <!--                                                <div class="card-footer">-->
+                <!--                                                    <div class='text-center'>-->
+                <!--                                                        <p-radioButton name="inputStyle" value="fill" label="Fill" formControlName="inputStyle"></p-radioButton>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+                <!--                                        </div>-->
+                <!--                                        <div class='col-md-4'>-->
+                <!--                                            <div class='card'>-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Material Design Outline</h5>-->
+                <!--                                                    <div class="style3-group margin-top-bottom-40" >-->
+                <!--                                                    <p>-->
+                <!--                                                        <input class='style3-input'  type="text" required />-->
+                <!--                                                        <label class='style3-label' for="input"  placeholder="Input Field"></label>-->
+                <!--                                                    </p>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                                <div class="card-footer">-->
+                <!--                                                    <div class='text-center'>-->
+                <!--                                                        <p-radioButton name="inputStyle" value="outline" label="Outline" formControlName="inputStyle"></p-radioButton>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+                <!--                                        </div>-->
+                <!--                                    </div><br>-->
+                <!--                                    <div class='row'>-->
+                <!--                                        <div class='col-md-4'>-->
+                <!--                                            <div class='card'>-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Primary Design</h5>-->
+                <!--                                                    <div class='style4-group margin-top-bottom-40'>-->
+                <!--                                                        <input class='style4-input' type="text" placeholder="Name" />-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                                <div class="card-footer" style="padding-bottom: 32px;">-->
+                <!--                                                    <div class='text-center'>-->
+                <!--                                                        <p-radioButton name="inputStyle" value="primaryDesign" label="Primary Design" formControlName="inputStyle"></p-radioButton>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+
+                <!--                                        </div>-->
+                <!--                                        <div class='col-md-4'>-->
+                <!--                                            <div class='card'>-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Primary Design Outline</h5>-->
+                <!--                                                        <div class="style5-group margin-top-bottom-40">-->
+                <!--                                                            <input id="firstname" class='style5-input' type="text" placeholder=" " />-->
+                <!--                                                            <div class="style5-cutt"></div>-->
+                <!--                                                            <label for="firstname" class='style5-label'>First name</label>-->
+                <!--                                                        </div>-->
+                <!--                                                </div>-->
+                <!--                                                <div class="card-footer" style="padding-bottom: 32px;">-->
+                <!--                                                    <div class='text-center'>-->
+                <!--                                                        <p-radioButton name="inputStyle" value="primaryOutline" label="Primary Outline" formControlName="inputStyle"></p-radioButton>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+
+                <!--                                        </div>-->
+                <!--                                        <div class='col-md-4'>-->
+                <!--                                            <div class='card'>-->
+                <!--                                                <div class="card-body">-->
+                <!--                                                    <h5 class="card-title text-center">Primary placeholder </h5>-->
+                <!--                                                    <div class="style6-group margin-top-bottom-40">-->
+                <!--                                                        <input class='style6-input' type="text" placeholder="Name" />-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                                <div class="card-footer" style="padding-bottom: 32px;">-->
+                <!--                                                    <div class='text-center'>-->
+                <!--                                                        <p-radioButton name="inputStyle" value="primaryPlaceholder" label="Placeholder" formControlName="inputStyle"></p-radioButton>-->
+                <!--                                                    </div>-->
+                <!--                                                </div>-->
+                <!--                                            </div>-->
+
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+
                 <div class="form-button-footer" style="float: right;">
 <!--                    <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()"-->
 <!--                            style="margin-right: 8px">-->
-<!--                        <i class="fas fa-ban"></i>&nbsp;<span>Cancel</span>-->
+<!--                       &nbsp;<span>Cancel</span>-->
 <!--                    </button>-->
                     <button style="margin: 30px" type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
                             class="btn btn-primary">
-                        <i class="fas fa-save"></i>&nbsp;<span>Save</span>
+                       <span>Save</span>
                     </button>
                 </div>
 

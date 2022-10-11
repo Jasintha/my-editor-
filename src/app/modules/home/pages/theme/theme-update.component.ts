@@ -24,6 +24,8 @@ import { ThemeService } from './theme.service';
 import { ProjectService } from '@core/projectservices/project.service';
 import { IProject } from '@shared/models/model/project.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {SelectItem} from 'primeng/api';
+import {IPropertyKeyValue} from '@shared/models/model/property-key-value.model';
 
 @Component({
   selector: 'virtuan-theme-update',
@@ -63,7 +65,20 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
     secondaryColor: '#5c77ff',
     secondaryMediumColor: '#5c77ff',
   };
-
+  displayAppDialog = false;
+  displayPageDialog = false;
+  displayPageControlDialog = false;
+  headerText: string;
+  keytypes: SelectItem[];
+  public appPropertyKeyMappings: IPropertyKeyValue[] = [];
+  public pagePropertyKeyMappings: IPropertyKeyValue[] = [];
+  public pageControlPropertyKeyMappings: IPropertyKeyValue[] = [];
+  selectedAppIndex = -1;
+  selectedPageIndex = -1;
+  selectedPageControlIndex = -1;
+  newAppMapping = true;
+  newPageMapping = true;
+  newPageControlMapping = true;
   // projectId: number;
   project: IProject;
   // projectUid: string;
@@ -82,6 +97,20 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
     primaryMediumColor: [],
     secondaryColor: [],
     secondaryMediumColor: [],
+    propkey: [],
+    propname: [],
+    propvalue: [],
+    propdesc: [],
+
+    pagepropkey: [],
+    pagepropname: [],
+    pagepropvalue: [],
+    pagepropdesc: [],
+
+    pagecontrolpropkey: [],
+    pagecontrolpropname: [],
+    pagecontrolpropvalue: [],
+    pagecontrolpropdesc: [],
   });
 
   constructor(
@@ -97,7 +126,6 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.navigate('general');
     this.getThemeData();
 
   }
@@ -186,6 +214,9 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
       secondaryColor: this.editForm.get(['secondaryColor']).value,
       secondaryMediumColor: this.editForm.get(['secondaryMediumColor']).value,
       projectUuid: this.projectUid,
+      app: this.appPropertyKeyMappings,
+      page: this.appPropertyKeyMappings,
+      pageController: this.appPropertyKeyMappings,
     };
   }
 
@@ -225,12 +256,190 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ITheme>>) {
     result.subscribe(
       (res: any) => {
-        let savedTheme: ITheme = res.body;
+        const savedTheme: ITheme = res.body;
         this.uploadLogo(savedTheme.uuid);
         this.onSaveSuccess();
       },
       () => this.onSaveError()
     );
+  }
+
+  onAppRowSelect(event) {
+    const formValues = event.data;
+    this.editForm.patchValue({
+      propkey: formValues.key,
+      propname: formValues.name,
+      propvalue: formValues.value,
+      propdesc: formValues.desc,
+    });
+    this.headerText = 'Update an Environment Variable';
+    this.selectedAppIndex = this.appPropertyKeyMappings.indexOf(event.data);
+    this.displayAppDialog = true;
+    this.newAppMapping = false;
+  }
+
+  apptable() {
+    this.displayAppDialog = true;
+  }
+
+  deleteAppRow(param) {
+    const index = this.appPropertyKeyMappings.indexOf(param);
+    this.appPropertyKeyMappings.splice(index, 1);
+  }
+  showDialogToAddApp() {
+    this.editForm.patchValue({
+      propkey: '',
+      propname: '',
+      propvalue: '',
+      propdesc: '',
+    });
+    this.headerText = 'Add property values';
+    this.selectedAppIndex = -1;
+    this.newAppMapping = true;
+    this.displayAppDialog = true;
+  }
+  addAppKey() {
+    const key = this.editForm.get(['propkey']).value;
+    const name = this.editForm.get(['propname']).value;
+    const value = this.editForm.get(['propvalue']).value;
+    const desc = this.editForm.get(['propdesc']).value;
+
+    if (!key || !name || !desc) {
+    } else {
+      const param: IPropertyKeyValue = {
+        key,
+        name,
+        value,
+        description: desc,
+      };
+      if (this.newAppMapping) {
+        this.appPropertyKeyMappings.push(param);
+      } else if (this.selectedAppIndex != -1) {
+        this.appPropertyKeyMappings[this.selectedAppIndex] = param;
+      }
+      this.displayAppDialog = false;
+    }
+  }
+
+  //////
+
+
+  onPageRowSelect(event) {
+    const formValues = event.data;
+    this.editForm.patchValue({
+      pagepropkey: formValues.key,
+      pagepropname: formValues.name,
+      pagepropvalue: formValues.value,
+      pagepropdesc: formValues.desc,
+    });
+    this.headerText = 'Update an Environment Variable';
+    this.selectedAppIndex = this.appPropertyKeyMappings.indexOf(event.data);
+    this.displayPageDialog = true;
+    this.newAppMapping = false;
+  }
+
+  appPagetable() {
+    this.displayPageDialog = true;
+  }
+
+  deletePageRow(param) {
+    const index = this.pagePropertyKeyMappings.indexOf(param);
+    this.pagePropertyKeyMappings.splice(index, 1);
+  }
+  showDialogToAddPage() {
+    this.editForm.patchValue({
+      pagepropkey: '',
+      pagepropname: '',
+      pagepropvalue: '',
+      pagepropdesc: '',
+    });
+    this.headerText = 'Add property values';
+    this.selectedAppIndex = -1;
+    this.newAppMapping = true;
+    this.displayPageDialog = true;
+  }
+  addPageKey() {
+    const key = this.editForm.get(['pagepropkey']).value;
+    const name = this.editForm.get(['pagepropname']).value;
+    const value = this.editForm.get(['pagepropvalue']).value;
+    const desc = this.editForm.get(['pagepropdesc']).value;
+
+    if (!key || !name || !desc) {
+    } else {
+      const param: IPropertyKeyValue = {
+        key,
+        name,
+        value,
+        description: desc,
+      };
+      if (this.newAppMapping) {
+        this.pagePropertyKeyMappings.push(param);
+      } else if (this.selectedAppIndex != -1) {
+        this.pagePropertyKeyMappings[this.selectedAppIndex] = param;
+      }
+      this.displayPageDialog = false;
+    }
+  }
+
+
+  ////////
+
+
+  onPageControlRowSelect(event) {
+    const formValues = event.data;
+    this.editForm.patchValue({
+      pagecontrolpropkey: formValues.key,
+      pagecontrolpropname: formValues.name,
+      pagecontrolpropvalue: formValues.value,
+      pagecontrolpropdesc: formValues.desc,
+    });
+    this.headerText = 'Update an Environment Variable';
+    this.selectedAppIndex = this.appPropertyKeyMappings.indexOf(event.data);
+    this.displayPageControlDialog = true;
+    this.newAppMapping = false;
+  }
+
+  pageControltable() {
+    this.displayPageControlDialog = true;
+  }
+
+  deletePageControlRow(param) {
+    const index = this.pageControlPropertyKeyMappings.indexOf(param);
+    this.pageControlPropertyKeyMappings.splice(index, 1);
+  }
+  showDialogToAddPageControl() {
+    this.editForm.patchValue({
+      pagecontrolpropkey: '',
+      pagecontrolpropname: '',
+      pagecontrolpropvalue: '',
+      pagecontrolpropdesc: '',
+    });
+    this.headerText = 'Add property values';
+    this.selectedAppIndex = -1;
+    this.newAppMapping = true;
+    this.displayPageControlDialog = true;
+  }
+  addPageControlKey() {
+    const key = this.editForm.get(['pagecontrolpropkey']).value;
+    const name = this.editForm.get(['pagecontrolpropname']).value;
+    const value = this.editForm.get(['pagecontrolpropvalue']).value;
+    const desc = this.editForm.get(['pagecontrolpropdesc']).value;
+
+    if (!key || !name || !desc) {
+    } else {
+      const param: IPropertyKeyValue = {
+        key,
+        name,
+        value,
+        description: desc,
+      };
+      if (this.newAppMapping) {
+        this.pageControlPropertyKeyMappings.push(param);
+      } else if (this.selectedAppIndex != -1) {
+        this.pageControlPropertyKeyMappings[this.selectedAppIndex] = param;
+      }
+      this.displayPageControlDialog = false;
+    }
   }
 
   uploadLogo(themeId) {
@@ -271,22 +480,5 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
   ngOnDestroy() {
     // this.toolbarTrackerService.setProjectUUID('');
     // this.toolbarTrackerService.setIsEntityPage('no');
-  }
-
-  navigate(tabName) {
-    let i;
-    const tabcontent = document.querySelectorAll('.tab-contentx');
-    for (i = 0; i < tabcontent.length; i++) {
-      const tabContent = tabcontent[i] as HTMLElement;
-      tabContent.style.display = 'none';
-    }
-
-    const tablinks = document.querySelectorAll('.tablinksx');
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(' active', '');
-    }
-    this.element = document.getElementById(tabName) as HTMLElement;
-    this.element.style.display = 'block';
-    this.element.classList.add('active');
   }
 }

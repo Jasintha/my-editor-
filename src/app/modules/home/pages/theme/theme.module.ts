@@ -22,6 +22,8 @@ import {
   themePopupRoute,
 } from './';
 import {ReactiveFormsModule} from '@angular/forms';
+import {DialogModule} from 'primeng/dialog';
+import {FieldsetModule} from 'primeng/fieldset';
 
 const ENTITY_STATES = [...themeRoute, ...themePopupRoute];
 
@@ -41,6 +43,8 @@ const ENTITY_STATES = [...themeRoute, ...themePopupRoute];
         RouterModule.forChild(ENTITY_STATES),
         SidebarModule,
         ReactiveFormsModule,
+        DialogModule,
+        FieldsetModule,
     ],
     declarations: [ThemeComponent, ThemeDetailComponent, ThemeUpdateComponent, ThemeDeleteDialogComponent, ThemeDeletePopupComponent],
 

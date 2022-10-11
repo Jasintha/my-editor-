@@ -1,3 +1,4 @@
+import {IPropertyKeyValue} from '@shared/models/model/property-key-value.model';
 
 export interface ITheme {
   uuid?: string;
@@ -17,6 +18,9 @@ export interface ITheme {
   primaryMediumColor?: string;
   secondaryColor?: string;
   secondaryMediumColor?: string;
+  app?: IPropertyKeyValue[];
+  page?: IPropertyKeyValue[];
+  pageController?: IPropertyKeyValue[];
 }
 
 export class Theme implements ITheme {
@@ -37,6 +41,9 @@ export class Theme implements ITheme {
     public primaryLightColor?: string,
     public primaryMediumColor?: string,
     public secondaryColor?: string,
-    public secondaryMediumColor?: string
+    public secondaryMediumColor?: string,
+    public app?: IPropertyKeyValue[],
+    public page?: IPropertyKeyValue[],
+    public pageController?: IPropertyKeyValue[],
   ) {}
 }
