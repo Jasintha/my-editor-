@@ -81,6 +81,11 @@ export class MainMenuService {
     return this.http.get<ISubMenu>(`${this.resourceUrlSubMenus}/${uuid}/${mainmenuid}/${id}`, { observe: 'response' });
   }
 
+  deleteSubMenu(id: string, uuid: string, mainmenuid: string): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`${this.resourceUrlSubMenus}/${uuid}/${mainmenuid}/${id}`, { observe: 'response' });
+  }
+
+
   findSubMenusForMainMenuId(id: string, uuid: string): Observable<EntityArrayResponseType> {
     return this.http.get<ISubMenu[]>(`${this.subMenusForMainMenuResourceUrl}/${uuid}/${id}`, { observe: 'response' });
   }

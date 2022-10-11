@@ -29,8 +29,8 @@ export class SubMenuDeleteDialogComponent {
     this.dialogRef.close(null);
   }
 
-  confirmDelete(projectUid: string, id: string) {
-    this.mainmenuService.delete(id, projectUid).subscribe(response => {
+  confirmDelete(projectUid: string, mainmenuid:string, id: string) {
+    this.mainmenuService.deleteSubMenu(id, projectUid, mainmenuid).subscribe(response => {
       // this.eventManager.broadcast({
       //   name: 'mainmenuListModification',
       //   content: 'Deleted an mainmenu'
