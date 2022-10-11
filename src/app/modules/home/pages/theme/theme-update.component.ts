@@ -127,21 +127,41 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.getThemeData();
-
   }
 
   getThemeData() {
-    if(this.rowValues) {
-      const obj = JSON.parse(this.rowValues);
-      this.currentTheme = obj;
-      this.useDefaults = obj.default;
-      this.isSaving = false;
-      this.updateForm(obj);
-    }
+    const page = this.createFromForm();
+    this.themeService
+        .findThemesForProjectId(this.projectUid)
+        .pipe(
+            filter((res: HttpResponse<any>) => res.ok),
+            map((res: HttpResponse<any>) => res.body)
+        )
+        .subscribe(
+            (res: ITheme) => {
+              if (res) {
+                this.currentTheme = res;
+                this.useDefaults = res.default;
+                this.isSaving = false;
+                this.updateForm(res);
+              } else {
+              }
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
   }
 
   updateForm(theme: ITheme) {
     this.useDefaults = theme.default;
+    if(theme.app) {
+      this.appPropertyKeyMappings = theme.app;
+    }
+    if(theme.page) {
+      this.pagePropertyKeyMappings = theme.page;
+    }
+    if(theme.pageController) {
+      this.pageControlPropertyKeyMappings = theme.pageController;
+    }
     if (theme.footervisibility) {
       this.editForm.patchValue({
         id: theme.uuid,
@@ -215,8 +235,8 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
       secondaryMediumColor: this.editForm.get(['secondaryMediumColor']).value,
       projectUuid: this.projectUid,
       app: this.appPropertyKeyMappings,
-      page: this.appPropertyKeyMappings,
-      pageController: this.appPropertyKeyMappings,
+      page: this.pagePropertyKeyMappings,
+      pageController: this.pageControlPropertyKeyMappings,
     };
   }
 

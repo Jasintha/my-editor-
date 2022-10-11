@@ -77,7 +77,7 @@ export class ThemeComponent implements OnInit, OnDestroy {
     } else {
       this.spinnerService.show();
       this.themeService
-        .findThemesForProjectId(projId, projId)
+        .findThemesForProjectId(projId)
         .pipe(
           filter((res: HttpResponse<ITheme[]>) => res.ok),
           map((res: HttpResponse<ITheme[]>) => res.body)

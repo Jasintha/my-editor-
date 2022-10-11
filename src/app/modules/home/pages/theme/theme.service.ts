@@ -29,8 +29,8 @@ export class ThemeService {
     return this.http.get<ITheme>(`${this.resourceUrl}/${uuid}/${id}`, { observe: 'response' });
   }
 
-  findThemesForProjectId(id: string, uuid: string): Observable<EntityArrayResponseType> {
-    return this.http.get<ITheme[]>(`${this.themesForProjectResourceUrl}/${uuid}/${id}`, { observe: 'response' });
+  findThemesForProjectId(uuid: string): Observable<EntityArrayResponseType> {
+    return this.http.get<ITheme[]>(`${this.themesForProjectResourceUrl}/${uuid}`, { observe: 'response' });
   }
 
   query(req?: any, uuid?: string): Observable<EntityArrayResponseType> {
