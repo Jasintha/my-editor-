@@ -236,7 +236,7 @@
                                         {{node.name}}
                                     </div>
 
-                                    <button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
+                                    <button *ngIf="!node.data.isParent || node.data.type === 'PARENT_UI_SUB_MENU'" (click)="$event.stopPropagation()"
                                             [matMenuTriggerData]="{ item: node.data }"
                                             [matMenuTriggerFor]="actionsMenu"
                                             mat-icon-button

@@ -23,17 +23,14 @@
                                     readonly />-->
                                 <input type="hidden" class="form-control" id="id" name="id" formControlName="id" />
                             </div>
-
-                            <div class="form-group">
-                                <label class="form-control-label" for="field_name">Name</label>
-                                <input type="text" class="form-control" omitSpecialChar="noSpecialChars" name="name" id="field_name"
-                                       formControlName="name"/>
-                                <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
-                                    <small class="form-text text-danger" >
-                                        Name is required.
-                                    </small>
-                                </div>
+                            <div class="row col-md-12">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Name</mat-label>
+                                <input type="text" formControlName="name" matInput name="name" id="field_name">
+                                <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
+                            </mat-form-field>
                             </div>
+
                             <div class="row col-md-12">
                             <mat-form-field class="flex-auto">
                                 <mat-label>Icon</mat-label>

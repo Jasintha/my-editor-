@@ -34,7 +34,7 @@ export class DeleteOperationService {
             this.deleteTask(item, projectUid);
         }else if (item.type === 'UI_PAGE'){
             this.deleteUIPages(item, projectUid);
-        } else if (item.type === 'UI_MAIN_MENU'){
+        } else if (item.type === 'UI_MAIN_MENU' || item.type === 'PARENT_UI_SUB_MENU'){
             this.deleteMainMenu(item, projectUid);
         } else if (item.type === 'UI_SUB_MENU'){
             this.deleteSubMenu(item, projectUid);
@@ -81,7 +81,7 @@ export class DeleteOperationService {
             data: {
                 projectUid: projectUid,
                 uuid: item.uuid,
-                mainMenuId: item.mainMenuId,
+                mainMenuId: item.parentUUID,
                 name: item.name
             }
         });
