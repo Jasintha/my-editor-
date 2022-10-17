@@ -385,12 +385,12 @@ export class CreateGridComponent implements OnInit, OnDestroy {
         return this.form.get('formFieldsGroup') as FormArray;
     }
 
-    columnFormGroup(index) {
-        return this.formFieldsGroup.controls[index]['controls'].columns as FormArray;
+    columnFormGroup(rowIndex) {
+        return this.formFieldsGroup.controls[rowIndex]['controls'].columns as FormArray;
     }
 
-    removeColumnFormController(index: number) {
-        this.columnFormGroup(index).removeAt(index);
+    removeColumnFormController(rowIndex: number, index: number) {
+        this.columnFormGroup(rowIndex).removeAt(index);
     }
 
     insertColumnFormControllersGroup(index) {
