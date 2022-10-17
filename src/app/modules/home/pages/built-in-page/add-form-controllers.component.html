@@ -325,7 +325,7 @@
                                 </div>
                                 <input type="text" class="form-control" name="choiceUrl"
                                        formControlName="choiceUrl"/>
-                                <div class="row">
+                                <div class="row" *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Dropdown'">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <h6 style="margin-top: 15px">Select dropdown attributes</h6>
