@@ -46,12 +46,15 @@ export class ButtonEventHandleComponent implements OnInit {
     btnEventActionList: IButtonEvent[] = [];
     eventDataSource = new MatTableDataSource(this.btnEventActionList);
     currentButton: IButtonType;
+    onValChangeActionDataList: IButtonEvent[] = [];
     eventDisplayedColumns: string[] = ['button', 'event', 'action', 'page', 'api', 'actions'];
-    pageEvents: SelectItem[] = [
-        { label: 'ON-LOAD', value: 'ON-LOAD' },
-        { label: 'ON-SUBMIT', value: 'ON-SUBMIT' },
-        { label: 'AFTER-SUBMIT', value: 'AFTER-SUBMIT' },
+    pageEvents: SelectItem[] = [];
+
+    visibilityOptions: SelectItem[] = [
+        { label: 'Visible', value: 'Visible' },
+        { label: 'Hide', value: 'Hide' },
     ];
+    formControllers: SelectItem[] = [];
     resourcePathMethods: SelectItem[] = [
         { label: 'GET', value: 'GET' },
         { label: 'POST', value: 'POST' },
@@ -59,8 +62,7 @@ export class ButtonEventHandleComponent implements OnInit {
         { label: 'DELETE', value: 'DELETE' },
     ];
     pageEventsActions: SelectItem[] = [
-        { label: 'CALL_PAGE_ONLOAD', value: 'CALL_PAGE_ONLOAD' },
-        { label: 'CALL_API', value: 'CALL_API' },
+
     ];
     constructor(
         protected eventManager: EventManagerService,
@@ -90,49 +92,102 @@ export class ButtonEventHandleComponent implements OnInit {
             pageEvent: '',
             pageActionButton: '',
             pageEventActionApi: '',
+            visibilityOption: '',
+            taregetFieldController: '',
         });
     }
 
 
     ngOnInit() {
-        this.currentButton = this.data.button;
-        this.btnEventActionList = this.data.btnEventActionList;
-        this.pages = this.data.pages;
         this.buildNewForm();
-        this.editForm.get(['btnCaption']).patchValue(this.currentButton.caption);
-        this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
+        if(this.data.fieldController === 'Button') {
+            this.pageEvents.push({ label: 'ON-LOAD', value: 'ON-LOAD' });
+            this.pageEvents.push({ label: 'ON-SUBMIT', value: 'ON-SUBMIT' });
+            this.pageEvents.push({ label: 'AFTER-SUBMIT', value: 'AFTER-SUBMIT' });
+            this.pageEventsActions.push({ label: 'CALL_PAGE_ONLOAD', value: 'CALL_PAGE_ONLOAD' });
+            this.pageEventsActions.push({ label: 'CALL_API', value: 'CALL_API' });
+            this.currentButton = this.data.button;
+            this.btnEventActionList = this.data.btnEventActionList;
+            this.pages = this.data.pages;
+            this.editForm.get(['btnCaption']).patchValue(this.currentButton.caption);
+            this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
+        } else if (this.data.fieldController === 'Dropdown' || this.data.fieldController === 'Radiobutton') {
+            this.editForm.get(['pageEventAction']).patchValue('CHANGE_FORM_FIELD_VISIBILITY');
+            this.pageEventsActions.push({ label: 'CHANGE_FORM_FIELD_VISIBILITY', value: 'CHANGE_FORM_FIELD_VISIBILITY' });
+            this.eventDisplayedColumns = ['action', 'visibility', 'target', 'actions'];
+            this.pageEvents.push({ label: 'ON-VALUE-CHANGE', value: 'ON-VALUE-CHANGE' });
+            this.editForm.get(['pageEvent']).patchValue('ON-VALUE-CHANGE');
+            if(this.data.events) {
+                this.onValChangeActionDataList = this.data.events;
+                this.eventDataSource = new MatTableDataSource(this.onValChangeActionDataList);
+            }
+        }
+            for (let i = 0; i < this.data.formControllers.length; i++) {
+                const controllerItem = {label: this.data.formControllers[i].propertyName, value: this.data.formControllers[i].propertyName};
+                this.formControllers.push(controllerItem);
+            }
     }
 
     addRow() {
-        const btnCaption =  this.editForm.get(['btnCaption']).value;
-        const pageEvent = this.editForm.get(['pageEvent']).value;
-        const pageEventAction = this.editForm.get(['pageEventAction']).value;
-        const pageEventActionPage = this.editForm.get(['pageEventActionPage']).value;
-        const pageEventActionApi = this.editForm.get(['pageEventActionApi']).value;
+        if(this.data.fieldController === 'Button') {
+            const btnCaption =  this.editForm.get(['btnCaption']).value;
+            const pageEvent = this.editForm.get(['pageEvent']).value;
+            const pageEventAction = this.editForm.get(['pageEventAction']).value;
+            const pageEventActionPage = this.editForm.get(['pageEventActionPage']).value;
+            const pageEventActionApi = this.editForm.get(['pageEventActionApi']).value;
 
-        if (btnCaption !== null || pageEvent !== '' || pageEventAction !== null) {
-            const button: IButtonEvent = {
-                btnCaption ,
-                event: pageEvent,
-                eventAction: pageEventAction,
-                pageId: pageEventActionPage,
-                resourcePath: this.getBtnResourcePath(pageEventActionApi),
-            };
-            this.btnEventActionList.push(button);
-            this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
-        } else {
-            // error message
+            if (btnCaption !== null || pageEvent !== '' || pageEventAction !== null) {
+                const button: IButtonEvent = {
+                    btnCaption ,
+                    event: pageEvent,
+                    eventAction: pageEventAction,
+                    pageId: pageEventActionPage,
+                    resourcePath: this.getBtnResourcePath(pageEventActionApi),
+                };
+                this.btnEventActionList.push(button);
+                this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
+            } else {
+                // error message
+            }
+        } else if (this.data.fieldController === 'Radiobutton' || this.data.fieldController === 'Dropdown') {
+            const pageEvent = 'OnChangedValue';
+            const pageEventAction = this.editForm.get(['pageEventAction']).value;
+            const visibilityType =  this.editForm.get(['visibilityOption']).value;
+            const visibilityTarget =  this.editForm.get(['taregetFieldController']).value;
+            if (pageEventAction && visibilityType && visibilityTarget) {
+                const actionData: any = {
+                    actionId: pageEventAction,
+                    value: visibilityType,
+                    target: visibilityTarget ,
+                };
+                this.onValChangeActionDataList.push(actionData);
+                this.eventDataSource = new MatTableDataSource(this.onValChangeActionDataList);
+            } else {
+                // error message
+            }
         }
+
     }
 
     deleteEventRow(param) {
-        const index = this.btnEventActionList.indexOf(param);
-        this.btnEventActionList.splice(index, 1);
-        this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
+        if(this.data.fieldController === 'Button') {
+            const index = this.btnEventActionList.indexOf(param);
+            this.btnEventActionList.splice(index, 1);
+            this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
+        } else if (this.data.fieldController === 'Radiobutton') {
+            const index = this.onValChangeActionDataList.indexOf(param);
+            this.onValChangeActionDataList.splice(index, 1);
+            this.eventDataSource = new MatTableDataSource(this.onValChangeActionDataList);
+        }
+
     }
 
     save() {
-        this.dialogRef.close(this.btnEventActionList);
+        if(this.data.fieldController === 'Button') {
+            this.dialogRef.close(this.btnEventActionList);
+        } else if (this.data.fieldController === 'Radiobutton') {
+            this.dialogRef.close(this.onValChangeActionDataList);
+        }
     }
 
 

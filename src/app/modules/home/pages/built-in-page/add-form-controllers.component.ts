@@ -19,6 +19,9 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {BuiltInWidgetService} from '@core/projectservices/built-in-widget.service';
 import {MatTableDataSource} from '@angular/material/table';
+import {ButtonEventHandleComponent} from '@home/pages/built-in-page/button-event-handle.component';
+import {IButtonType} from '@shared/models/model/button-type.model';
+import {MatDialog} from '@angular/material/dialog';
 
 
 interface ControllerItem {
@@ -58,7 +61,6 @@ export class AddFormControllersComponent implements OnChanges {
   selectedFieldIndex: number;
   selectedChildIndex: number;
   choiceindex: number;
-
   sourceProperties: IFormField[];
   targetProperties: IFormField[];
   controllerTypeItems: ControllerItem[] = [
@@ -87,6 +89,7 @@ export class AddFormControllersComponent implements OnChanges {
       protected builtInPageService: BuiltInPageService,
       protected builtInWidgetService: BuiltInWidgetService,
       protected projectService: ProjectService,
+      public dialog: MatDialog,
   ) {}
 
   clear() {
@@ -291,6 +294,10 @@ export class AddFormControllersComponent implements OnChanges {
     this.addFormControllers();
   }
 
+  calcelEdit() {
+    this.isFieldSelected = false;
+  }
+
   onSelectChildController(value) {
     this.isChildFieldSelected = true;
     this.selectedChildIndex = value;
@@ -480,7 +487,19 @@ export class AddFormControllersComponent implements OnChanges {
   getChoiceGroup(choice) {
     return new FormGroup({
       choiceLabel: this.fb.control(choice.choiceLabel),
+      event: this.fb.control('OnChangedValue'),
+      events: this.fb.array(this.getEventsGroup(choice.events))
     });
+  }
+
+  getEventsGroup(eventsArray) {
+    const events = [];
+    if (eventsArray) {
+      for (let i = 0; i < eventsArray.length; i++) {
+        events.push(this.getEvents(eventsArray[i]));
+      }
+    }
+    return events;
   }
 
   addChildFormFieldsGroup(values: any): FormGroup {
@@ -518,6 +537,8 @@ export class AddFormControllersComponent implements OnChanges {
   addChoiceFormFieldsGroup(): FormGroup {
     return new FormGroup({
       choiceLabel: new FormControl(),
+      event: this.fb.control('OnChangedValue'),
+      events: this.fb.array([])
     });
   }
 
@@ -549,6 +570,11 @@ export class AddFormControllersComponent implements OnChanges {
     }
   }
 
+   dropDownEvents(index) {
+    return  this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].fieldValueChoices['controls'][index]
+        ['controls'].events as FormArray;
+  }
+
   get childFormGroup() {
     return this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].children as FormArray;
   }
@@ -561,6 +587,35 @@ export class AddFormControllersComponent implements OnChanges {
     this.childChoiceFormGroup.removeAt(index);
   }
 
+
+  addEvents(index: number) {
+    const dialogRef = this.dialog.open(ButtonEventHandleComponent, {
+      panelClass: ['virtuan-dialog'],
+      data: {
+        fieldController: 'Radiobutton',
+        formControllers: this.targetProperties,
+        events: this.dropDownEvents(index).value
+      }
+    });
+    dialogRef.afterClosed(
+    ).subscribe(result => {
+      if (result) {
+        for (let i = 0; i < result.length; i++) {
+          this.dropDownEvents(index).push(this.getEvents(result[i]));
+        }
+        // this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
+        // this.savePageActions();
+      }
+    });
+  }
+
+  getEvents(event) {
+    return new FormGroup({
+      actionId: this.fb.control(event.actionId),
+      value: this.fb.control(event.value),
+      target: this.fb.control(event.target),
+    });
+  }
   insertChoiceFormControllersGroup(index) {
     this.selectedFieldIndex = index;
     this.choiceFormGroup.push(this.addChoiceFormFieldsGroup());

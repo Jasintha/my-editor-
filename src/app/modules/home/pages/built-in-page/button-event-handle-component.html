@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-    <h2 mat-dialog-title>Add button events</h2>
+    <h2 mat-dialog-title>Add events</h2>
     <span fxFlex></span>
     <button mat-icon-button
             mat-dialog-close
@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <div class="card card-body">
                         <div class="row">
-                                <mat-form-field class="flex-auto" >
+                                <mat-form-field  *ngIf="data.fieldController == 'Button'" class="flex-auto" >
                                     <mat-label>Button</mat-label>
                                     <input  type="text" [disabled]="true" formControlName="btnCaption" matInput>
                                 </mat-form-field>
@@ -29,7 +29,7 @@
                             </mat-form-field>
 
 
-                            <mat-form-field class="flex-auto">
+                            <mat-form-field  class="flex-auto">
                                 <mat-label>Action</mat-label>
                                 <mat-select formControlName="pageEventAction">
                                     <mat-option *ngFor="let option of pageEventsActions" [value]="option.value">
@@ -37,6 +37,28 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
+                            <div class="col-md-3" *ngIf="editForm.value.pageEventAction == 'CHANGE_FORM_FIELD_VISIBILITY'">
+                                <mat-form-field  class="flex-auto" style="width: 100%">
+                                    <mat-label>Visibility</mat-label>
+                                    <mat-select formControlName="visibilityOption">
+                                        <mat-option *ngFor="let option of visibilityOptions" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-3" *ngIf="editForm.value.pageEventAction == 'CHANGE_FORM_FIELD_VISIBILITY'">
+                                <mat-form-field  class="flex-auto" style="width: 100%">
+                                    <mat-label>Target field</mat-label>
+                                    <mat-select formControlName="taregetFieldController">
+                                        <mat-option *ngFor="let option of formControllers" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
 
                             <div class="col-md-3" *ngIf="editForm.value.pageEventAction == 'CALL_PAGE_ONLOAD'">
                                 <mat-form-field  class="flex-auto" style="width: 100%">
@@ -56,12 +78,12 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button style="float: right;" type="button"  mat-raised-button (click)="addRow(false)"><mat-icon>add</mat-icon> ADD</button>
+                                <button style="float: right;" type="button"  mat-raised-button (click)="addRow()"><mat-icon>add</mat-icon> ADD</button>
                             </div>
                         </div>
                     </div>
                     <div  style="padding-top:20px;padding-bottom:20px;">
-                        <table mat-table matSort  [dataSource]="eventDataSource" class="mat-elevation-z8 demo-table">
+                        <table mat-table matSort *ngIf="data.fieldController === 'Button'"  [dataSource]="eventDataSource" class="mat-elevation-z8 demo-table">
                             <!-- Name Column -->
                             <ng-container matColumnDef="button">
                                 <th mat-header-cell *matHeaderCellDef>Button</th>
@@ -99,7 +121,34 @@
                             <tr mat-row *matRowDef="let row; columns: eventDisplayedColumns;"></tr>
                         </table>
 
+                        <table mat-table matSort *ngIf="data.fieldController === 'Radiobutton'"  [dataSource]="eventDataSource" class="mat-elevation-z8 demo-table">
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef>Action</th>
+                                <td mat-cell *matCellDef="let element">{{element.actionId}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="visibility">
+                                <th mat-header-cell *matHeaderCellDef>Visibility</th>
+                                <td mat-cell *matCellDef="let element">{{element.value}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="target">
+                                <th mat-header-cell *matHeaderCellDef>Target Field</th>
+                                <td mat-cell *matCellDef="let element">{{element.target}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th *matHeaderCellDef mat-header-cell >Remove</th>
+                                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                    <button (click)="deleteEventRow(row)"
+                                            mat-icon-button
+                                            type="button">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
 
+                            <tr mat-header-row *matHeaderRowDef="eventDisplayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: eventDisplayedColumns;"></tr>
+                        </table>
                     </div>
                 </div>
         </div>

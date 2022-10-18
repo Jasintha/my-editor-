@@ -260,7 +260,7 @@
                                                            style="background-color: #6D7F8B; color:white;border: none;">
                                                 </div>
                                                 <br>
-                                                <div style="padding-top: 10px"
+                                                <div style="padding-top: 20px"
                                                      *ngFor="let choice of childChoiceFormGroup['controls']; let k = index">
                                                     <div [formGroup]="choice">
                                                         <label class="form-control-label">Choice {{k + 1}} </label>
@@ -269,7 +269,7 @@
                                                                 <input class="form-control" type="text"
                                                                        formControlName="choiceLabel">
                                                             </div>
-                                                            <div class="col-2">
+                                                            <div class="col-1">
                                                                 <button pButton type="button"
                                                                         (click)="removeChildChoiceFormController(k)"
                                                                         class="ui-button-danger ui-button-raised"
@@ -395,7 +395,7 @@
                                            style="background-color: #6D7F8B; color:white;border: none;">
                                 </div>
                                 <br>
-                                <div style="padding-top: 10px"
+                                <div style="padding-top: 20px"
                                      *ngFor="let choice of choiceFormGroup['controls']; let k = index">
                                     <div [formGroup]="choice">
 
@@ -404,8 +404,14 @@
                                             <div class="col-10">
                                                 <input class="form-control" type="text" formControlName="choiceLabel">
                                             </div>
-
-                                            <div class="col-2">
+                                            <div class="col-1">
+                                                <button pButton style="float: right" type="button"
+                                                        (click)="addEvents(k)"
+                                                        class=" ui-button-raised"
+                                                        icon="fa fa-object-group">
+                                                </button>
+                                            </div>
+                                            <div class="col-1">
                                                 <button pButton type="button" (click)="removeChoiceFormControllers(k)" class="ui-button-danger ui-button-raised"
                                                         icon="fa fa-trash-o">
                                                 </button>
@@ -418,10 +424,16 @@
                         </div>
                         <br>
                         <div style="margin-top: 2%">
+                            <input *ngIf="!isChildFieldSelected" type="button" (click)="calcelEdit()" value="Cancel"
+                                   class="btn"
+                                   style="width: 5%; float:right; padding: 5px">
+                        </div>
+                        <div style="margin-top: 2%">
                             <input *ngIf="!isChildFieldSelected" type="button" (click)="backToFields()" value="Save"
                                    class="btn"
                                    style="background-color: #4cc792; color: white; width: 5%; float:right; padding: 5px">
                         </div>
+
                     </div>
                 </div>
             </div>

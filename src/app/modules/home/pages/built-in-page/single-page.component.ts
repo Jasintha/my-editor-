@@ -621,6 +621,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         button,
         btnEventActionList: this.BTN_ELEMENT_DATA[index].buttonEvents,
         pages: this.pages,
+        fieldController: 'Button',
       }
     });
     dialogRef.afterClosed(
