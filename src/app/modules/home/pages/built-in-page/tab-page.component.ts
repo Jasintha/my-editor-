@@ -114,7 +114,9 @@ export class TabPageComponent implements OnDestroy, OnInit {
     }
 
     updatePage(page: ITabbedPage) {
-        this.tabPages = page.tabPages
+        if(page.tabPages) {
+            this.tabPages = page.tabPages
+        }
     }
 
     addTab() {
