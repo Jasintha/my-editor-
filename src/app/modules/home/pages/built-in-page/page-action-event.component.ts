@@ -47,6 +47,10 @@ export class PageActionEventComponent implements OnInit {
     displayedColumns: string[] = ['name', 'property' ,'actions'];
     dataSource = new MatTableDataSource(this.navigationParams);
     pages = [];
+    methodTypes: SelectItem[] = [
+        { label: 'GET', value: 'GET' },
+        { label: 'POST', value: 'POST' },
+    ];
     confirmationTypes: SelectItem[] = [
         { label: 'Without-Confirm', value: 'Without-Confirm' },
         { label: 'Basic-Confirm', value: 'Basic-Confirm' },
@@ -59,6 +63,7 @@ export class PageActionEventComponent implements OnInit {
         { label: 'UPDATE', value: 'UPDATE' },
         { label: 'NAVIGATE', value: 'NAVIGATE' },
         { label: 'SEARCH', value: 'SEARCH' },
+        { label: 'DOWNLOAD', value: 'DOWNLOAD' },
     ];
     BTN_ELEMENT_DATA = [];
     constructor(
@@ -86,6 +91,7 @@ export class PageActionEventComponent implements OnInit {
             btnConfirmationType: '',
             pageEventActionPage: '',
             pageEventAction: '',
+            method: '',
             pageEvent: '',
             pageActionButton: '',
             pageEventActionApi: '',
@@ -147,6 +153,7 @@ export class PageActionEventComponent implements OnInit {
         let btnOperation = '';
         let btnColor = '';
         let btnTooltip = '';
+        let method = '';
         let navigatePage = new Page();
         let   pageId = '';
         let  pageName = '';
@@ -162,6 +169,7 @@ export class PageActionEventComponent implements OnInit {
             btnResourcePath = this.getBtnResourcePath(this.editForm.get(['btnResourcePath']).value);
             btnOperation = this.editForm.get(['btnOperation']).value;
             btnColor = this.editForm.get(['btnColor']).value;
+            method = this.editForm.get(['method']).value;
             btnTooltip = this.editForm.get(['btnTooltip']).value;
             navigatePage = this.editForm.get(['navigatePage']).value;
             if(navigatePage) {
@@ -178,6 +186,7 @@ export class PageActionEventComponent implements OnInit {
                 operation: btnOperation,
                 color: btnColor,
                 tooltip: btnTooltip,
+                method,
                 pageId,
                 pageName,
                 navigationParams: this.navigationParams

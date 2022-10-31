@@ -103,7 +103,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   detailsHeadersList: SelectItem[] = [];
   stepIndexId = 1;
   headerIndexId = 1;
-  displayedColumns: string[] = ['caption', 'resourcepath', 'operation', 'page', 'color', 'tooltip', 'events', 'actions'];
+  displayedColumns: string[] = ['caption', 'resourcepath', 'operation','method', 'page', 'color', 'tooltip', 'events', 'actions'];
   eventDisplayedColumns: string[] = ['button', 'event', 'action', 'page', 'api', 'actions'];
   actions: IActions;
   BTN_ELEMENT_DATA: IButtonType[];

@@ -27,6 +27,7 @@ export interface IButtonType {
     resourcePath?: string;
     operation?: string;
     color?: string;
+    method?: string;
     tooltip?: string;
     pageId?: string;
     pageName?: string;
@@ -41,6 +42,7 @@ export class ButtonType implements IButtonType {
                 public operation?: string,
                 public color?: string,
                 public tooltip?: string,
+                public method?: string,
                 public pageId?: string,
                 public pageName?: string,
                 public buttonEvents?: IButtonEvent[],

@@ -34,6 +34,17 @@
                                 <input type="text" formControlName="btnResourcePath" matInput>
                             </mat-form-field>
 
+                            <div *ngIf="editForm.value.btnOperation == 'DOWNLOAD'">
+                                <mat-form-field  class="flex-auto" style="width: 100%">
+                                    <mat-label>Method</mat-label>
+                                    <mat-select formControlName="method">
+                                        <mat-option *ngFor="let option of methodTypes" [value]="option.value">
+                                            {{option.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
                             <div *ngIf="editForm.value.btnOperation == 'NAVIGATE'">
                                 <mat-form-field  class="flex-auto" style="width: 100%">
                                     <mat-label>To Page</mat-label>
