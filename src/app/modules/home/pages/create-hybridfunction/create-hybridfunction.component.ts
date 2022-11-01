@@ -58,6 +58,7 @@ export class CreateHybridfunctionComponent implements OnInit {
     { label: 'FLOAT', value: 'FLOAT' },
     { label: 'TRUE_OR_FALSE', value: 'TRUE_OR_FALSE' },
     { label: 'DATE', value: 'DATE' },
+    { label: 'FILE', value: 'FILE' },
     { label: 'ANY', value: 'ANY' },
   ];
 

@@ -111,6 +111,11 @@ export class MicroserviceAddModelConstraintsDialogComponent implements OnInit {
             fieldController: 'DATE_INPUT',
           });
           break;
+        case 'FILE':
+          this.constraintForm.patchValue({
+            fieldController: 'FILE',
+          });
+          break;
         default:
           this.constraintForm.patchValue({
             fieldController: 'Textbox',

@@ -37,6 +37,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     { label: 'EMAIL', value: 'EMAIL' },
     { label: 'TRUE_OR_FALSE', value: 'TRUE_OR_FALSE' },
     { label: 'DATE', value: 'DATE' },
+    { label: 'FILE', value: 'FILE' },
   ];
 
   typeItems: SelectItem[] = [
@@ -496,6 +497,9 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
           break;
         case 'DATE':
           fieldController = 'DATE_INPUT';
+          break;
+        case 'FILE':
+          fieldController = 'FILE';
           break;
         default:
           fieldController = 'Textbox';

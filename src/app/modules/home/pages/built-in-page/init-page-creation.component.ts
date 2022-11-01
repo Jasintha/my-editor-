@@ -120,6 +120,7 @@ export class InitPageCreationComponent implements OnInit, OnDestroy {
     { label: 'FLOAT', value: 'FLOAT' },
     { label: 'TRUE_OR_FALSE', value: 'TRUE_OR_FALSE' },
     { label: 'DATE', value: 'DATE' },
+    { label: 'FILE', value: 'FILE' },
   ];
   stepHeadersList: Item[] = [];
   editForm: FormGroup;

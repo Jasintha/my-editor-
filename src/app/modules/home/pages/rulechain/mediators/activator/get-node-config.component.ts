@@ -112,6 +112,7 @@ export class GetNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     { label: 'NUMBER', value: 'NUMBER' },
     { label: 'FLOAT', value: 'FLOAT' },
     { label: 'TRUE_OR_FALSE', value: 'TRUE_OR_FALSE' },
+    { label: 'FILE', value: 'FILE' },
     { label: 'DATE', value: 'DATE' },
   ];
 
