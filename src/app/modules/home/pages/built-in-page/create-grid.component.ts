@@ -322,11 +322,13 @@ export class CreateGridComponent implements OnInit, OnDestroy {
         //   this.pageCreationStatus = 'basicDetails';
     }
 
-    getRow(columns) {
+    getRow(rowData) {
         const row = new Row();
         row.columns = [];
-        for (let j = 0; j < columns.length ; j++) {
-            const container =  { ...new Column(),  columnSize: columns[j].columnSize, color:columns[j].color, id:columns[j].id};
+        for (let j = 0; j < rowData.columns.length ; j++) {
+            const container =  { ...new Column(),  columnSize: rowData.columns[j].columnSize,
+                color: rowData.columns[j].color, id: rowData.columns[j].id};
+            row.height = rowData.height;
             row.columns.push(container);
         }
         return row;
@@ -338,7 +340,7 @@ export class CreateGridComponent implements OnInit, OnDestroy {
         this.form = this.fb.group({
             formFieldsGroup: this.fb.array([
                 new FormGroup({
-                    rowHeight: this.fb.control(1),
+                    height: this.fb.control(1),
                     columns: this.fb.array([new FormGroup({
                         columnSize: new FormControl(12),
                         id: new FormControl(this.getNextId()),
@@ -356,6 +358,7 @@ export class CreateGridComponent implements OnInit, OnDestroy {
 
     addFormFieldsGroup(): FormGroup {
         return new FormGroup({
+            height: this.fb.control(1),
             columns: this.fb.array([]),
         });
     }
@@ -368,7 +371,7 @@ export class CreateGridComponent implements OnInit, OnDestroy {
             const customGrid = new FlexGrid();
             const rowArray = [];
             for (let i = 0; i < formData.fieldList.length; i++) {
-                const row =  this.getRow(formData.fieldList[i].columns);
+                const row =  this.getRow(formData.fieldList[i]);
                 rowArray.push(row);
             }
             customGrid.name = 'custom';
