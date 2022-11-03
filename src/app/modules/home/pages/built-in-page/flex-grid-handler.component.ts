@@ -472,13 +472,13 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
     }
 
     saveMapping() {
-        const page =  this.editForm.get(['pagetitle']).value;
+        const page =  this.editForm.get(['pageName']).value;
         const container = this.editForm.get(['containerId']).value;
 
         if (page !== null || container !== '') {
             const pageMapping: IGridPageMapping = {
-                pageName: page ,
-                pageId: this.currentPage.uuid,
+                pageName: page.pagetitle ,
+                pageId: page.uuid,
                 refId: container,
             };
             this.pageContainerMappingsList.push(pageMapping);
