@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div *ngIf="!isFieldSelected" class="col-md-3">
-                            <mat-slide-toggle style="float: right" formControlName="isVisible">
+                        <mat-slide-toggle style="float: right" formControlName="isVisible">
                         </mat-slide-toggle>
                         </div>
                     </div>
@@ -67,6 +67,13 @@
 
                     <div *ngIf="selectedFieldIndex === i && isFieldSelected" style="width: 100%; padding: 3%">
                         <div *ngIf="this.form.value.formFieldsGroup[i].fieldcategory === 'property'">
+                            <div class="controller-input form-group">
+                                <div class="row col-md-12">
+                                 <div align="right"> Initial Visibility
+                                     <mat-slide-toggle  formControlName="initialVisible">
+                                     </mat-slide-toggle></div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div *ngIf="this.form.value.formFieldsGroup[i].propertyType === 'TEXT' || this.form.value.formFieldsGroup[i].propertyType === 'NUMBER'||
                                  this.form.value.formFieldsGroup[i].propertyType === 'FLOAT'">

@@ -471,7 +471,8 @@ export class AddFormControllersComponent implements OnChanges {
       fieldValueChoices: this.fb.array(this.getChoicesGroups(values.fieldValueChoices ? values.fieldValueChoices : [])),
       children: this.fb.array([]),
       choiceType: new FormControl(values.choiceType),
-      isVisible: new FormControl((values.isVisible))
+      isVisible: new FormControl((values.isVisible)),
+      initialVisible: new FormControl((values.initialVisible))
     });
   }
   getChoicesGroups(array) {
@@ -530,7 +531,8 @@ export class AddFormControllersComponent implements OnChanges {
       search: new FormControl(''),
       fieldValueChoices: this.fb.array(this.getChoicesGroups(values.fieldValueChoices)),
       choiceType: new FormControl(values.choiceType),
-      isVisible: new FormControl((values.isVisible))
+      isVisible: new FormControl((values.isVisible)),
+      initialVisible: new FormControl((values.initialVisible))
     });
   }
 
