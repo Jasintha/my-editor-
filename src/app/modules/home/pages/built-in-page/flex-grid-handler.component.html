@@ -24,7 +24,7 @@
     </p-fieldset>
 </div>
 
-<div style="padding: 20px;">
+<div *ngIf="!editPageAsJson" style="padding: 20px;">
     <div class="row" style="border-bottom: 1px solid; padding-bottom: 25px;">
         <div class="col-md-12 ">
             <form name="editForm" role="form" novalidate [formGroup]="editForm">

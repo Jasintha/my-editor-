@@ -132,7 +132,9 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
             this.pageContainerMappingsList = builtInPage.gridPageMappings;
         }
         this.containerMappingsDataSource = new MatTableDataSource(this.pageContainerMappingsList);
-        this.editPageAsJson = builtInPage.inputPageAsJson;
+        if(builtInPage.inputPageAsJson) {
+            this.editPageAsJson = true;
+        }
         this.code = builtInPage.pageJson;
         this.pageTitle = builtInPage.pagetitle;
         this.pageDescription = builtInPage.pageDescription
@@ -189,7 +191,7 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
         if(this.editPageAsJson) {
             this.savePageAsJson();
         } else {
-            this.saveMapping();
+            this.updatePageGrid();
         }
     }
 
@@ -339,6 +341,7 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
         this.isSaving = true;
         const page = this.currentPage;
         page.pageGrid = this.grid;
+        page.inputPageAsJson = this.editPageAsJson;
         page.gridPageMappings = this.pageContainerMappingsList;
         this.isSaving = true;
         if (page.uuid && page.pageGrid && page.gridPageMappings) {
@@ -469,13 +472,13 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
     }
 
     saveMapping() {
-        const page =  this.editForm.get(['pageName']).value;
+        const page =  this.editForm.get(['pagetitle']).value;
         const container = this.editForm.get(['containerId']).value;
 
         if (page !== null || container !== '') {
             const pageMapping: IGridPageMapping = {
-                pageName: page.pagetitle ,
-                pageId: page.uuid,
+                pageName: page ,
+                pageId: this.currentPage.uuid,
                 refId: container,
             };
             this.pageContainerMappingsList.push(pageMapping);
