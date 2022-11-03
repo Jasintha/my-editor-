@@ -22,8 +22,10 @@
                     <div style="padding-top: 50px"
                          *ngFor="let choice of formFieldsGroup['controls']; let k = index">
                         <div [formGroup]="choice">
-
-                            <label class="form-control-label">Row {{k + 1}} </label>
+                            <h5> Row {{k + 1}}  </h5>
+                            <label class="form-control-label"> Height</label>
+                            <div class="col-5">   <input class="form-control" type="number"
+                                                         formControlName="rowHeight" min="1"> </div>
                             <div class="scroll-choices">
                                 <div style="float: right; margin-top: 2%; margin-right: 6%">
                                     <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
@@ -32,11 +34,12 @@
                                            value="Add columns"  class="btn fa fa-plus"
                                            style="background-color: #6D7F8B; color:white;border: none;">
                                 </div>
-                                <br>
+                                <br><h6> Columns</h6>
+
                                 <div style="padding-top: 10px"
                                      *ngFor="let choice of columnFormGroup(k)['controls']; let i = index">
                                     <div [formGroup]="choice">
-                                        <label class="form-control-label">Column {{i + 1}} | Size (1 - 12) :</label>
+                                        <label class="form-control-label">Column {{i + 1}}</label>
                                         <div class="row">
                                             <div class="col-5">
                                                 <input class="form-control" type="number"

@@ -214,7 +214,7 @@ export class FlexGridHandlerComponent implements OnInit, OnDestroy {
         }
     }
 
-    addLayerOneChildGrid(rowIndex, columnIndex, type) {
+    addLayerOneChildGrid(rowIndex, columnIndex) {
         const dialogRef = this.dialog.open(CreateGridComponent, {
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {

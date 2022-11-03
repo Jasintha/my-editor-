@@ -179,14 +179,17 @@ export class CreateGridComponent implements OnInit, OnDestroy {
             {
                 name: 'grid1',
                 rows: [
-                    { columns: [{ columnSize: 12, isContainer: false}] },
-                    { columns: [{ columnSize: 12, isContainer: false}] },
+                    { height: 1,
+                        columns: [{ columnSize: 12, isContainer: false}] },
+                    { height: 1,
+                        columns: [{ columnSize: 12, isContainer: false}] },
                 ],
             },
             {
                 name: 'grid2',
                 rows: [
-                    { columns: [{ columnSize: 6, isContainer: false},{ columnSize: 6, isContainer: false}] },
+                    { height: 1,
+                        columns: [{ columnSize: 6, isContainer: false},{ columnSize: 6, isContainer: false}] },
                 ],
             },
         ];
@@ -335,6 +338,7 @@ export class CreateGridComponent implements OnInit, OnDestroy {
         this.form = this.fb.group({
             formFieldsGroup: this.fb.array([
                 new FormGroup({
+                    rowHeight: this.fb.control(1),
                     columns: this.fb.array([new FormGroup({
                         columnSize: new FormControl(12),
                         id: new FormControl(this.getNextId()),

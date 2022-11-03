@@ -8,11 +8,12 @@ export class FlexGrid implements IFlexGrid {
 }
 
 export interface IRow {
+    height?: number,
     columns?: IColumn[];
 }
 
 export class Row implements IRow {
-    constructor(public columns?: IColumn[]) {}
+    constructor(public height?: number, public columns?: IColumn[]) {}
 }
 
 export interface IColumn {
