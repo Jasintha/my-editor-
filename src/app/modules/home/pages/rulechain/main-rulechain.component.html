@@ -244,6 +244,7 @@
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_PORTAL' && node.data.type != 'PARENT_PAGE_THEMES'"  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
+                                    <button title="import model" mat-icon-button  class="top-node-import" *ngIf="node.data.isParent && node.data.type === 'PARENT_UI_MODEL '"  (click)="importModel(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>import_export</mat-icon></button>
                                 </mat-tree-node>
                                 <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
                                     <button mat-icon-button
@@ -261,6 +262,7 @@
 
 
                                     <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_PORTAL' && node.data.type != 'PARENT_PAGE_THEMES'"  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon >add</mat-icon></button>
+                                    <button title="import model" mat-icon-button  class="top-node-import" *ngIf="node.data.isParent && node.data.type === 'PARENT_UI_MODEL'"  (click)="importModel(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>import_export</mat-icon></button>
                                     <mat-progress-bar *ngIf="node.isLoading"
                                                       mode="indeterminate"
                                                       class="example-tree-progress-bar"></mat-progress-bar>
