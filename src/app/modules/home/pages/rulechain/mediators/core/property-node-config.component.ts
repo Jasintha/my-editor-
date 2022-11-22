@@ -322,7 +322,7 @@ export class PropertyNodeConfigComponent implements ControlValueAccessor, OnInit
 
     let name : string = this.domainModelVariableNodeConfigFormGroup.get('propertyName').value;
     name = name.replace(/\s/g, "");
-    name = this.lowerCaseWord(name);
+    name = this.titleCaseWord(name);
     let propertyDataType : string = '';
     let type: string = '';
     let record: string = '';
