@@ -320,22 +320,25 @@ export class PropertyNodeConfigComponent implements ControlValueAccessor, OnInit
         };
     }
 
-    let name : string = this.domainModelVariableNodeConfigFormGroup.get('propertyName').value;
-    name = name.replace(/\s/g, '');
-    name = this.lowerCaseWord(name);
-    let propertyDataType : string = '';
-    let type: string = '';
-    let record: string = '';
-    let modelproperty: DomainModelProperty;
-    let selectedInput: string = '';
+      let name : string = this.domainModelVariableNodeConfigFormGroup.get('propertyName').value;
+      if(name[0] === ' ') {
+          name = name.substr(1);
+      }
+      name = name.replace(/\s/g, '_');
+      name = this.titleCaseWord(name);
+      let propertyDataType : string = '';
+      let type: string = '';
+      let record: string = '';
+      let modelproperty: DomainModelProperty;
+      let selectedInput: string = '';
 
-    let mapKey: string = '';
-    let mapKeyType: string = '';
-    let mapValue: string = '';
-    let mapValueType: string = '';
-    let mapValueRecord: string = '';
-    let propertyScope: string = '';
-    let defaultValue: string = '';
+      let mapKey: string = '';
+      let mapKeyType: string = '';
+      let mapValue: string = '';
+      let mapValueType: string = '';
+      let mapValueRecord: string = '';
+      let propertyScope: string = '';
+      let defaultValue: string = '';
 
     //let modelTitleName = '';
     let modelName = '';

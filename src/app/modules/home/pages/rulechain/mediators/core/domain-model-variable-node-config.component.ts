@@ -337,6 +337,10 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
         let pkg = this.domainModelVariableNodeConfigFormGroup.get('modelpropertyruleInput').value.inputType;
 
         if(selectedNode.data.type === 'collection' || selectedNode.data.type === 'list'){
+            if(name[0] === ' ') {
+                name = name.substr(1);
+            }
+            name = name.replace(/\s/g, '_');
             let modelNameTrimmed = selectedNode.data.name.replace(/\s/g, "");
             let modelNameLowerCase = modelNameTrimmed.toLowerCase();
             let modelTitleName = this.titleCaseWord(modelNameLowerCase);
