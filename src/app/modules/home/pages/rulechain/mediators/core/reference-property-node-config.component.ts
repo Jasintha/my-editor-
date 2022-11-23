@@ -241,8 +241,11 @@ export class ReferencePropertyNodeConfigComponent implements ControlValueAccesso
     }
 
     let name : string = this.referencePropertyNodeConfigFormGroup.get('propertyName').value;
-    name = name.replace(/\s/g, "");
-    name = this.lowerCaseWord(name);
+    if(name[0] === ' ') {
+          name = name.substr(1);
+    }
+    name = name.replace(/\s/g, '_');
+    name = this.titleCaseWord(name);
     let propertyDataType : string = '';
     let type: string = '';
     let record: string = '';
