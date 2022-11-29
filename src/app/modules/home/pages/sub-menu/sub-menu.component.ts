@@ -61,6 +61,7 @@ export class SubMenuComponent implements OnInit {
       name: ['', [Validators.required]],
       icon: ['', [Validators.required]],
       page: [],
+      authority: [''],
     });
   }
 
@@ -221,6 +222,13 @@ export class SubMenuComponent implements OnInit {
         page: this.editForm.get(['page']).value,
         projectUuid: this.projectUid,
       };
+  }
+
+  onPageChange(event) {
+    const page = this.editForm.get(['page']).value;
+    this.editForm.patchValue({
+      authority:  page.authority.join(),
+    });
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IMainMenu>>) {

@@ -102,6 +102,7 @@ export class PageActionEventComponent implements OnInit {
 
 
     ngOnInit() {
+        this.pages = this.data.pages
         this.buildNewForm();
         this.setPageProperties();
     }

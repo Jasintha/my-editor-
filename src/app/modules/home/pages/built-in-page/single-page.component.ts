@@ -691,6 +691,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         panelClass: ['virtuan-dialog'],
         data: {
           currentPage: this.currentPage,
+          pages: this.pages
         }
       });
       dialogRef.afterClosed(

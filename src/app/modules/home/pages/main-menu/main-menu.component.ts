@@ -58,6 +58,7 @@ export class MainMenuComponent implements OnInit {
       name: ['', [Validators.required]],
       menuType: ['', [Validators.required]],
       position: ['', [Validators.required]],
+      authority: [''],
       icon: ['', [Validators.required]],
       datamodel: [],
       page: [],
@@ -158,6 +159,13 @@ export class MainMenuComponent implements OnInit {
         page:  this.data.page,
       });
     }
+  }
+
+  onPageChange(event) {
+    const page = this.editForm.get(['page']).value;
+    this.editForm.patchValue({
+      authority:  page.authority.join(),
+    });
   }
 
   updateForm(mainmenu: IMainMenu) {

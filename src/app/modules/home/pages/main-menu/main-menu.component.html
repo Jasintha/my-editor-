@@ -48,11 +48,16 @@
 
             <mat-form-field class="flex-auto" *ngIf="editForm.value.menuType === 'link' && data.formTree">
                 <mat-label>Page</mat-label>
-                <mat-select formControlName="page" >
+                <mat-select formControlName="page" (selectionChange)="onPageChange($event)">
                     <mat-option *ngFor="let option of pageItems" [value]="option.value">
                         {{option.label}}
                     </mat-option>
                 </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto" *ngIf="editForm.value.menuType === 'link'">
+                <mat-label>Roles</mat-label>
+                <input type="text" readonly formControlName="authority" matInput name="authority" id="field_autority">
             </mat-form-field>
         </div>
 
