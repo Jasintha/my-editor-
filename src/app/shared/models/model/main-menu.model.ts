@@ -13,6 +13,7 @@ export interface IMainMenu {
   projectUuid?: string;
   status?: string;
   position?: string;
+  customRoles?: string;
 }
 
 export class MainMenu implements IMainMenu {
@@ -27,5 +28,6 @@ export class MainMenu implements IMainMenu {
     public projectUuid?: string,
     public status?: string,
     public position?: string,
+    public customRoles?: string,
   ) {}
 }

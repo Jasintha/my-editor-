@@ -10,6 +10,7 @@ export interface ISubMenu {
   projectUuid?: string;
   status?: string;
   position?: string;
+  customRoles?: string;
 }
 
 export class SubMenu implements ISubMenu {
@@ -22,5 +23,6 @@ export class SubMenu implements ISubMenu {
     public projectUuid?: string,
     public status?: string,
     public position?: string,
+    public customRoles?: string,
   ) {}
 }

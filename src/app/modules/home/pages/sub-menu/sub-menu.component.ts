@@ -68,6 +68,7 @@ export class SubMenuComponent implements OnInit {
       name: ['', [Validators.required]],
       icon: ['', [Validators.required]],
       position: ['', [Validators.required]],
+      customRoles: [''],
       page: [],
       authority: [''],
     });
@@ -201,6 +202,7 @@ export class SubMenuComponent implements OnInit {
       name: subMenu.name,
       icon: subMenu.icon,
       position: subMenu.position,
+      customRoles: subMenu.customRoles,
       page: this.pages.find(item => item.uuid === subMenu.page.uuid),
     });
   }
@@ -228,6 +230,7 @@ export class SubMenuComponent implements OnInit {
         name: this.editForm.get(['name']).value,
         icon: this.editForm.get(['icon']).value,
         position:this.editForm.get(['position']).value,
+        customRoles:this.editForm.get(['customRoles']).value,
         mainmenu: this.currentmainmenu,
         page: this.editForm.get(['page']).value,
         projectUuid: this.projectUid,

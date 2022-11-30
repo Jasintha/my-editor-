@@ -59,6 +59,12 @@
                 <mat-label>Roles</mat-label>
                 <input type="text" readonly formControlName="authority" matInput name="authority" id="field_autority">
             </mat-form-field>
+
+            <mat-form-field class="flex-auto" *ngIf="editForm.value.menuType === 'link'">
+                <mat-label>Custom Roles</mat-label>
+                <input type="text" formControlName="customRoles" matInput name="customRoles" id="field_customRoles">
+            </mat-form-field>
+
         </div>
 
     </mat-dialog-content>
