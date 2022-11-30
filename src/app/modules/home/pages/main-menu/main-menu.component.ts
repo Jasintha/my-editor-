@@ -48,6 +48,15 @@ export class MainMenuComponent implements OnInit {
     { label: 'Chat', value: 'icChat' },
     { label: 'DateRange', value: 'icDateRange' },
     { label: 'Contacts', value: 'icContacts' },
+    { label: 'dashboard', value: 'dashboard' },
+    { label: 'account_balance', value: 'account_balance' },
+    { label: 'currency_exchange', value: 'currency_exchange' },
+    { label: 'receipt_long', value: 'receipt_long' },
+    { label: 'event', value: 'event' },
+    { label: 'settings', value: 'settings' },
+    { label: 'settings_phone', value: 'settings_phone' },
+
+
   ];
   editForm: FormGroup;
   typeSelected: string;
