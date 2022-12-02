@@ -69,24 +69,6 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <div class="row" *ngIf="domainModelVariableNodeConfigFormGroup.value.propinputType === 'DB'">
-            <div class="col-md-4">
-                <mat-form-field fxFlex class="mat-block">
-                    <mat-label>DB Dialect</mat-label>
-                    <mat-select formControlName="dbdialect">
-                        <mat-option *ngFor="let dbdialect of dbDialects" [value]="dbdialect">
-                            {{dbdialect}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-md-8">
-                <mat-form-field  fxFlex class="mat-block">
-                    <mat-label>Connection string (Format: username:password:host:port:default_db_name) </mat-label>
-                    <input matInput formControlName="connectionString"/>
-                </mat-form-field>
-            </div>
-        </div>
         <mat-form-field *ngIf="domainModelVariableNodeConfigFormGroup.value.propinputType === 'DTO'" fxFlex class="mat-block">
             <mat-label>DTO</mat-label>
             <mat-select formControlName="propcustomObject">
