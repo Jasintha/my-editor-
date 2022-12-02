@@ -135,7 +135,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
   private definedConfigComponent: IRuleNodeConfigurationComponent;
 
   configuration: RuleNodeConfiguration;
-
+  dbDialects: string[] = ['MYSQL', 'SQLLITE', 'MONGO']
   private propagateChange = (v: any) => { };
   
   private _transformer = (node: DomainModelNode, level: number) => {
@@ -191,7 +191,9 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valuecustomObject: [],
       valueprimitive: '',
       valuerecord: '',
-      propertyScope:''
+      propertyScope:'',
+      dbdialect: [],
+      connectionString: [],
     });
   }
 
@@ -239,7 +241,9 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valuecustomObject: [],
       valueprimitive: '',
       valuerecord: '',
-      propertyScope: ''
+      propertyScope: '',
+      dbdialect: [],
+      connectionString: [],
     });
 
     } else if (modelpropertyType === 'PROPERTY'){
@@ -265,7 +269,9 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valuecustomObject: [],
       valueprimitive: '',
       valuerecord: '',
-      propertyScope: ''
+      propertyScope: '',
+      dbdialect: [],
+      connectionString: [],
     });
 
     } else if (modelpropertyType === 'BRANCH_PARAM'){
@@ -291,7 +297,9 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       valuecustomObject: [],
       valueprimitive: '',
       valuerecord: '',
-      propertyScope: ''
+      propertyScope: '',
+      dbdialect: [],
+      connectionString: [],
     });
 
     } else if (modelpropertyType === 'NEW'){
@@ -331,7 +339,8 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
     let mapValueType: string = '';
     let mapValueRecord: string = '';
     let propertyScope: string = '';
-
+    let dbDialect: string = '';
+    let connectionString: string = '';
     //let modelTitleName = '';
     let modelName = '';
     if(propertyType === 'RULE_INPUT'){
@@ -458,9 +467,10 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
             } else if(mapValueType === 'PRIMITIVE'){
                 mapValue = this.domainModelVariableNodeConfigFormGroup.get('valueprimitive').value;
             }
-
             mapValueRecord = this.domainModelVariableNodeConfigFormGroup.get('valuerecord').value;
-
+        } else if( propertyDataType === 'DB') {
+            dbDialect = this.domainModelVariableNodeConfigFormGroup.get('dbdialect').value;
+            connectionString = this.domainModelVariableNodeConfigFormGroup.get('connectionString').value;
         }
     }
 
@@ -477,7 +487,9 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       mapValue: mapValue,
       mapValueType: mapValueType,
       mapValueRecord: mapValueRecord,
-      propertyScope: propertyScope
+      propertyScope: propertyScope,
+      dbDialect:dbDialect,
+      connectionString: connectionString
     };
     this.configuration.modelproperties.push(property);
     this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
@@ -748,6 +760,8 @@ export interface Property {
   mapValueType: string;
   mapValueRecord: string;
   propertyScope: string;
+  dbDialect: string;
+  connectionString: string;
 }
 
 /*
