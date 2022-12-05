@@ -488,8 +488,7 @@ export class DomainModelVariableNodeConfigComponent implements ControlValueAcces
       mapValueType: mapValueType,
       mapValueRecord: mapValueRecord,
       propertyScope: propertyScope,
-      dbDialect:dbDialect,
-      connectionString: connectionString
+      defaultValue: dbDialect + connectionString,
     };
     this.configuration.modelproperties.push(property);
     this.propertydatasource = new MatTableDataSource(this.configuration.modelproperties);
@@ -760,8 +759,7 @@ export interface Property {
   mapValueType: string;
   mapValueRecord: string;
   propertyScope: string;
-  dbDialect: string;
-  connectionString: string;
+  defaultValue: string;
 }
 
 /*
