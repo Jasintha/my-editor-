@@ -62,6 +62,7 @@ export interface IPage {
   buttonEvents?: IButtonEvent[];
   inputPageAsJson?: boolean;
   pageJson?: string;
+  landingPageRoleMappings?: any[];
 }
 
 export class Page implements IPage {
@@ -117,5 +118,6 @@ export class Page implements IPage {
     public buttonEvents?: IButtonEvent[],
     public inputPageAsJson?: boolean,
     public pageJson?: string,
+    public landingPageRoleMappings?: string[]
   ) {}
 }

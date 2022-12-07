@@ -79,7 +79,7 @@ export class BuiltInPageService {
   }
 
   updatePageLoginInputs(builtInPage: IPage, uuid: string): Observable<EntityResponseType> {
-    return this.http.put<IPage>(`${this.updatePageGridMappingsUrl}/${uuid}`, builtInPage, { observe: 'response' });
+    return this.http.put<IPage>(`${this.updatePageLoginInputsUrl}/${uuid}`, builtInPage, { observe: 'response' });
   }
 
   updatePageGridMappings(builtInPage: IPage, uuid: string): Observable<EntityResponseType> {

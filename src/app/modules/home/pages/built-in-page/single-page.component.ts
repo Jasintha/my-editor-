@@ -42,6 +42,7 @@ import {PageSaveConfirmDialogComponent} from '@home/pages/built-in-page/page-sav
 import {PageActionEventComponent} from '@home/pages/built-in-page/page-action-event.component';
 import {ButtonEventHandleComponent} from '@home/pages/built-in-page/button-event-handle.component';
 import {StepFieldMapperComponent} from '@home/pages/built-in-page/step-field-mapper.component';
+import {RequirementService} from '@core/projectservices/requirement.service';
 
 @Component({
   selector: 'virtuan-single-page-view',
@@ -139,7 +140,10 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   displayedAioParamColumns: string[] = ['operation', 'path', 'actions'];
   PARAM_DATA = [];
   dataSourceAIOParam = new MatTableDataSource(this.PARAM_DATA);
-
+  landingPageMapping = [];
+  dataSourceLandingPageMapping = new MatTableDataSource(this.landingPageMapping);
+  displayedLandingPageColumns: string[] = ['page', 'roles', 'remove'];
+  removedAllLangingPageMappingData = false
   panelTypeItems: SelectItem[] = [
     { label: 'Graph', value: 'graph' },
     { label: 'Gauge', value: 'gauge' },
@@ -271,6 +275,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       btnTooltip: [],
       rowId: [],
       rowHeader: [],
+      landingPage: [],
+      rolesList: [],
       chartType: '',
       wizardLayout: '',
       barChartAxis: '',
@@ -640,6 +646,53 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.btnEventActionList.splice(index, 1);
     this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
   }
+
+
+  selectlandingPagesForRoles() {
+    const page = this.editForm.get(['landingPage']).value;
+    const roleString = this.editForm.get(['rolesList']).value;
+
+    if (page === null || roleString === '') {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warn',
+        detail: 'Please fill all the fields',
+      });
+    } else {
+      const param = {
+        pageId: page.uuid,
+        pageName: page.pagetitle,
+        roleList: roleString.split(','),
+      };
+      if (this.landingPageMapping.indexOf(param) === -1) {
+        this.landingPageMapping.push(param);
+        this.dataSourceLandingPageMapping = new MatTableDataSource(this.landingPageMapping);
+      }
+    }
+  }
+
+  deleteLandinPageMapping(param) {
+    const indexnum = this.landingPageMapping.indexOf(param);
+    this.landingPageMapping.splice(indexnum, 1);
+    this.dataSourceLandingPageMapping = new MatTableDataSource(this.landingPageMapping);
+    if(this.landingPageMapping.length === 0) {
+      this.removedAllLangingPageMappingData = true;
+    }
+  }
+
+  saveLandingPageMappings() {
+    const page = this.currentPage;
+    page.landingPageRoleMappings = this.landingPageMapping;
+    this.updateLandingPageRoleMappings(page);
+  }
+
+  updateLandingPageRoleMappings(builtInPage: IPage) {
+    this.isSaving = true;
+    if (builtInPage.uuid) {
+      this.subscribeToSaveResponse(this.builtInPageService.updatePageLoginInputs(builtInPage, this.projectUid));
+    }
+  }
+
 
   addParamMapping() {
     const inputType = this.editForm.get(['inputValType']).value;
@@ -1280,6 +1333,10 @@ if(this.LOGIN_DATA.length === 0) {
         this.pageTemplateItems.push({ label: 'Login Page', value: 'login-page' });
         if (builtInPage.loginParams) {
           this.loginParams = builtInPage.loginParams;
+        }
+        if(builtInPage.landingPageRoleMappings) {
+          this.landingPageMapping = builtInPage.landingPageRoleMappings
+          this.dataSourceLandingPageMapping = new MatTableDataSource(this.landingPageMapping);
         }
       }
       if (builtInPage.pagetemplate !== 'aio-table' && builtInPage.pagetemplate !== 'aio-grid' && builtInPage.params) {
