@@ -2,9 +2,9 @@ name: virtuan-studio-ui
 
 on:
   push:
-    branches: [ vd-dev3 ]
+    branches: [ vd-dev4 ]
   pull_request:
-    branches: [ vd-dev3 ]
+    branches: [ vd-dev4 ]
 
 jobs:
 
