@@ -891,17 +891,17 @@
     }
 
     .open-ui{
-        width: 21px;
+        width: 28px;
         text-align: center;
-        height: 19px;
+        height: 25px;
         left: 26px;
         top: 51px;
-        position: absolute;
         font-size: 13px;
-        padding: 2px 5px;
+        padding: 5px 9px;
         background: #2a8f30;
         color: white;
         border-radius: 5px;
+        cursor: pointer;
         //visibility: hidden;
         //opacity: 0;
     }
