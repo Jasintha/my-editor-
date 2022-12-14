@@ -39,13 +39,13 @@ export class CreateStoryComponent implements OnInit {
   descriptions: string;
   existingStory: IStory;
   selectedTemp :string;
-
+ selectedStoryCategory = 'custom'
   buildEventForm() {
     this.editForm = this.fb.group({
       id: [],
       name: ['', [Validators.required]],
       description:  '',
-      storyTemplate: ['', [Validators.required]],
+      storyTemplate: [''],
     });
   }
 
@@ -65,6 +65,7 @@ export class CreateStoryComponent implements OnInit {
     this.descriptions = this.epic.requirements[0].description;
     if (this.data.createStatus !== 'Update'){
       this.selectedTemp = 'custom'
+      this.selectedStoryCategory = 'custom'
       this.editForm.patchValue({
         description:  this.descriptions,
       })
@@ -76,6 +77,12 @@ export class CreateStoryComponent implements OnInit {
   //     this.getEventData();
   //   }
   // }
+  changeStory(storyCategory) {
+    this.selectedStoryCategory = storyCategory;
+  }
+  changeSelectedTemp(selectedTemp) {
+        this.selectedTemp = selectedTemp;
+    }
 
   storyTemplates(){
     this.stories = [
