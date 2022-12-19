@@ -379,7 +379,7 @@ export class AssignNodeConfigComponent implements ControlValueAccessor, OnInit, 
       }
 
 
-      this.assignNodeConfigFormGroup.patchValue({
+      this.deepAssignNodeConfigFormGroup.patchValue({
         inputType: this.configuration.inputType,
         referenceProperty: referenceProperty,
         property: property,

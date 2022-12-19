@@ -599,12 +599,14 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
 
   addDefaultBtns() {
     if(this.currentPage.pagetemplate === 'form-page') {
-      const btnCaption = 'Add';
-      const btnResourcePath = this.editForm.get(['resourcePath']).value;
-      const btnOperation = 'CREATE';
-      const btnColor = '#0f6ab4';
-      const btnTooltip = 'Add';
-      this.addRow(true, btnCaption, btnResourcePath, btnOperation, btnColor, btnTooltip);
+      if(this.BTN_ELEMENT_DATA.length === 0) {
+        const btnCaption = 'Add';
+        const btnResourcePath = this.editForm.get(['resourcePath']).value;
+        const btnOperation = 'CREATE';
+        const btnColor = '#0f6ab4';
+        const btnTooltip = 'Add';
+        this.addRow(true, btnCaption, btnResourcePath, btnOperation, btnColor, btnTooltip);
+      }
     }
   }
 
