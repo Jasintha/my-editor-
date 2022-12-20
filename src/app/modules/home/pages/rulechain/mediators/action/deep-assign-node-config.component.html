@@ -11,8 +11,6 @@
                     <mat-option value="RETURN">Rule Respond</mat-option>
                 </mat-select>
             </mat-form-field>
-        </section>
-        <section class="mat-block" fxFlex>
             <mat-form-field *ngIf="configuration.propertyinputType === 'PROPERTY'" fxFlex class="mat-block">
                 <mat-label>Property</mat-label>
                 <mat-select formControlName="propertyproperty">
@@ -29,9 +27,30 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-tree [dataSource]="dataSourceProp" [treeControl]="treeControlProp">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                    <button mat-icon-button disabled></button>
+                    <mat-checkbox class="checklist-leaf-node"
+                                  [checked]="checklistSelectionProp.isSelected(node)"
+                                  (change)="checkboxClickProp(node)">{{node.name}}</mat-checkbox>
+                </mat-tree-node>
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChildProp" matTreeNodePadding>
+                    <button mat-icon-button matTreeNodeToggle
+                            [attr.aria-label]="'toggle ' + node.name">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControlProp.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </button>
+                    <mat-checkbox [checked]="checklistSelectionProp.isSelected(node)"
+                                  (change)="checkboxClickProp(node)">{{node.name}}</mat-checkbox>
+                </mat-tree-node>
+            </mat-tree>
         </section>
-    </section>
 
+
+    </section>
+    </div>
+    <div class="col-6">
     <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <section class="mat-block" fxFlex>
             <mat-form-field fxFlex class="mat-block">
@@ -44,6 +63,7 @@
                 </mat-select>
             </mat-form-field>
         </section>
+    </section>
 
         <section class="mat-block" fxFlex>
 
@@ -82,10 +102,26 @@
                 </mat-select>
             </mat-form-field>
 
+            <mat-tree [dataSource]="dataSourceVal" [treeControl]="treeControlVal">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                    <button mat-icon-button disabled></button>
+                    <mat-checkbox class="checklist-leaf-node"
+                                  [checked]="checklistSelectionVal.isSelected(node)"
+                                  (change)="checkboxClickVal(node)">{{node.name}}</mat-checkbox>
+                </mat-tree-node>
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                    <button mat-icon-button matTreeNodeToggle
+                            [attr.aria-label]="'toggle ' + node.name">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControlVal.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </button>
+                    <mat-checkbox [checked]="checklistSelectionVal.isSelected(node)"
+                                  (change)="checkboxClickVal(node)">{{node.name}}</mat-checkbox>
+                </mat-tree-node>
+            </mat-tree>
         </section>
-
-    </section>
-</div>
+    </div>
 </div>
     <div fxFlex fxLayout="row" fxLayoutAlign="end center">
         <button mat-icon-button class="virtuan-fullscreen-button-style"
@@ -109,6 +145,17 @@
                 <td mat-cell *matCellDef="let element"> {{element.propertyName}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="propertyAttribute">
+                <th mat-header-cell *matHeaderCellDef> Property Attribute </th>
+                <td mat-cell *matCellDef="let element"> {{element.propertyAttribute}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="propertyAttributeType">
+                <th mat-header-cell *matHeaderCellDef> Prop. Attr. Type </th>
+                <td mat-cell *matCellDef="let element"> {{element.propertyAttributeType}} </td>
+            </ng-container>
+
             <ng-container matColumnDef="valueinputType">
                 <th mat-header-cell *matHeaderCellDef> Value type </th>
                 <td mat-cell *matCellDef="let element"> {{element.valueinputType}} </td>
@@ -117,6 +164,16 @@
             <ng-container matColumnDef="valueName">
                 <th mat-header-cell *matHeaderCellDef> Value Name </th>
                 <td mat-cell *matCellDef="let element"> {{element.valueName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="valueAttribute">
+                <th mat-header-cell *matHeaderCellDef> Value Attribute </th>
+                <td mat-cell *matCellDef="let element"> {{element.valueAttribute}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="valueAttributeType">
+                <th mat-header-cell *matHeaderCellDef> Value Attr. Type </th>
+                <td mat-cell *matCellDef="let element"> {{element.valueAttributeType}} </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">

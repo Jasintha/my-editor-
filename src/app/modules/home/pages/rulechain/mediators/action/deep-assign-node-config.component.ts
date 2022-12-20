@@ -30,6 +30,8 @@ import { AppState } from '@core/core.state';
 import {MatTableDataSource} from '@angular/material/table';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+import {SelectionModel} from '@angular/cdk/collections';
+import {DomainModelProperty} from '@home/pages/rulechain/mediators/core/reference-property-node-config.component';
 
 interface ExampleFlatNode {
     expandable: boolean;
@@ -98,6 +100,12 @@ export class DeepAssignNodeConfigComponent implements ControlValueAccessor, OnIn
     viewModelProperties: any[];
 
     @Input()
+    allDomainModelsWithSub: any[];
+
+    @Input()
+    allViewModelsWithSub: any[];
+
+    @Input()
     disabled: boolean;
 
     @Input()
@@ -121,27 +129,61 @@ export class DeepAssignNodeConfigComponent implements ControlValueAccessor, OnIn
     get nodeDefinition(): RuleNodeDefinition {
         return this.nodeDefinitionValue;
     }
-    // treeControl = new FlatTreeControl<ExampleFlatNode>(
-    //     node => node.level, node => node.expandable);
+    private _transformer = (node: DomainModelNode, level: number) => {
+        return {
+            expandable: !!node.children && node.children.length > 0,
+            name: node.label,
+            level,
+            data: node.data
+        };
+    }
 
-    // private _transformer = (node: DomainModelNode, level: number) => {
-    //     return {
-    //         expandable: !!node.children && node.children.length > 0,
-    //         name: node.label,
-    //         level,
-    //         data: node.data
-    //     };
-    // }
-    // treeFlattener = new MatTreeFlattener(
-    //     this._transformer, node => node.level, node => node.expandable, node => node.children);
-    //
-    // dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    treeControlVal = new FlatTreeControl<ExampleFlatNode>(
+        node => node.level, node => node.expandable);
+    treeFlattenerVal = new MatTreeFlattener(
+        this._transformer, node => node.level, node => node.expandable, node => node.children);
+
+    dataSourceVal = new MatTreeFlatDataSource(this.treeControlVal, this.treeFlattenerVal);
+
+
+    hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+    getLevel = (node: ExampleFlatNode) => node.level;
+
+    /** The selection for checklist */
+    checklistSelectionVal = new SelectionModel<ExampleFlatNode>(false /* multiple */); // &&&&
+
+//////////////////////////////////////////////////////////////////////////////
+    private _transformer1 = (node: DomainModelNode, level: number) => {
+        return {
+            expandable: !!node.children && node.children.length > 0,
+            name: node.label,
+            level,
+            data: node.data
+        };
+    }
+
+    treeControlProp = new FlatTreeControl<ExampleFlatNode>(
+        node => node.level, node => node.expandable);
+    treeFlattenerProp = new MatTreeFlattener(
+        this._transformer, node => node.level, node => node.expandable, node => node.children);
+
+    dataSourceProp = new MatTreeFlatDataSource(this.treeControlProp, this.treeFlattenerProp);
+
+
+    hasChildProp = (_: number, node: ExampleFlatNode) => node.expandable;
+
+    getLevelProp = (node: ExampleFlatNode) => node.level;
+
+    /** The selection for checklist */
+    checklistSelectionProp = new SelectionModel<ExampleFlatNode>(false /* multiple */); // &&&&
+
     definedDirectiveError: string;
 
     deepAssignNodeConfigFormGroup: FormGroup;
 
     changeSubscription: Subscription;
-
+    changeSubscriptionProp: Subscription;
     private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
     private definedConfigComponent: IRuleNodeConfigurationComponent;
 
@@ -156,7 +198,8 @@ export class DeepAssignNodeConfigComponent implements ControlValueAccessor, OnIn
 
     datasource: MatTableDataSource<Assignment>;
 
-    displayedColumns: string[] = ['propertyinputType', 'propertyName', 'valueinputType', 'valueName', 'actions'];
+    displayedColumns: string[] = ['propertyinputType', 'propertyName','propertyAttribute', 'propertyAttributeType',  'valueinputType', 'valueName','valueAttribute',
+        'valueAttributeType', 'actions'];
 
     private propagateChange = (v: any) => { };
 
@@ -261,7 +304,23 @@ export class DeepAssignNodeConfigComponent implements ControlValueAccessor, OnIn
     }
 
     addAssignment(): void{
+        const checklistSelectionProp = this.checklistSelectionProp.selected[0];
+        let selectedProperty : DomainModelProperty;
+        if(checklistSelectionProp){
+            selectedProperty = {
+                name: checklistSelectionProp.name,
+                data: checklistSelectionProp.data
+            };
+        }
 
+        const checklistSelectionVal = this.checklistSelectionVal.selected[0];
+        let selectedValue : DomainModelProperty;
+        if(checklistSelectionVal){
+            selectedValue = {
+                name: checklistSelectionVal.name,
+                data: checklistSelectionVal.data
+            };
+        }
         let propinputType: string = this.deepAssignNodeConfigFormGroup.get('propertyinputType').value;
         let valueinputType: string = this.deepAssignNodeConfigFormGroup.get('valueinputType').value;
 
@@ -304,8 +363,12 @@ export class DeepAssignNodeConfigComponent implements ControlValueAccessor, OnIn
         let assignment = {
             'propertyinputType': propinputType,
             'propertyName': propertyName,
+            'propertyAttributeType': selectedProperty.data.propertytype,
+            'propertyAttribute': selectedProperty.name,
             'propertyScope':propertyScope,
             'valueinputType': valueinputType,
+            'valueAttributeType': selectedValue.data.propertytype,
+            'valueAttribute': selectedValue.name,
             'valueName': valueName,
             'valueScope': valueScope
         };
@@ -417,8 +480,66 @@ export class DeepAssignNodeConfigComponent implements ControlValueAccessor, OnIn
             );
 
         }
+// &&&&
+        this.changeSubscription = this.deepAssignNodeConfigFormGroup.get('valueproperty').valueChanges.subscribe(
+            (configuration: any) => {
+                // this.configuration.modelpropertyproperty = configuration;
+
+                if(configuration.propertyDataType === 'MODEL' && configuration.record === 's'){
+                    const selectedbranchparamdomainModel = this.allDomainModelsWithSub.find(x => x.nameTitleCase === configuration.type );
+                    if(selectedbranchparamdomainModel){
+                        const designtree : any[] = [];
+                        designtree.push(selectedbranchparamdomainModel.design);
+                        this.dataSourceVal.data = designtree;
+                    }
+                } else if (configuration.propertyDataType === 'DTO' && configuration.record === 's'){
+                    const selectedbranchparamviewModel = this.allViewModelsWithSub.find(x => x.nameTitleCase === configuration.type );
+                    if(selectedbranchparamviewModel){
+                        const designtree : any[] = [];
+                        designtree.push(selectedbranchparamviewModel.design);
+                        this.dataSourceVal.data = designtree;
+                    }
+                } else {
+                    this.dataSourceVal = new MatTreeFlatDataSource(this.treeControlVal, this.treeFlattenerVal);
+                }
+                // this.updateModel(this.configuration);
+            }
+        );
+
+        this.changeSubscriptionProp = this.deepAssignNodeConfigFormGroup.get('propertyproperty').valueChanges.subscribe(
+            (configuration: any) => {
+                // this.configuration.modelpropertyproperty = configuration;
+
+                if(configuration.propertyDataType === 'MODEL' && configuration.record === 's'){
+                    const selectedbranchparamdomainModel = this.allDomainModelsWithSub.find(x => x.nameTitleCase === configuration.type );
+                    if(selectedbranchparamdomainModel){
+                        const designtree : any[] = [];
+                        designtree.push(selectedbranchparamdomainModel.design);
+                        this.dataSourceProp.data = designtree;
+                    }
+                } else if (configuration.propertyDataType === 'DTO' && configuration.record === 's'){
+                    const selectedbranchparamviewModel = this.allViewModelsWithSub.find(x => x.nameTitleCase === configuration.type );
+                    if(selectedbranchparamviewModel){
+                        const designtree : any[] = [];
+                        designtree.push(selectedbranchparamviewModel.design);
+                        this.dataSourceProp.data = designtree;
+                    }
+                } else {
+                    this.dataSourceProp = new MatTreeFlatDataSource(this.treeControlProp, this.treeFlattenerProp);
+                }
+                // this.updateModel(this.configuration);
+            }
+        );
+
     }
 
+
+    checkboxClickProp(node){
+        this.checklistSelectionProp.toggle(node);
+    }
+    checkboxClickVal(node){
+        this.checklistSelectionVal.toggle(node);
+    }
     private updateModel(configuration: RuleNodeConfiguration) {
         if (this.definedConfigComponent || this.deepAssignNodeConfigFormGroup.valid) {
             this.propagateChange(configuration);

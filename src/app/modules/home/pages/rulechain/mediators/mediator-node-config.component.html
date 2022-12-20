@@ -498,20 +498,22 @@
 
     <ng-container *ngIf="nodeClazz === 'xiDeepAssignNode'">
         <virtuan-deep-assign-node-config #deepAssignNodeConfigComponent
-                                    formControlName="configuration"
-                                    [ruleNodeId]="ruleNodeId"
-                                    [allConstants]=" allConstants"
-                                    [inputEntities]=" inputEntities"
-                                    [inputCustomobjects]="inputCustomobjects"
-                                    [allRuleInputs]="allRuleInputs"
-                                    [allVariables]="allVariables"
-                                    [inputProperties]="inputProperties"
-                                    [apptype]="apptype"
-                                    [allModelProperties]="allModelProperties"
-                                    [branchAvailability]="branchAvailability"
-                                    [allRoots]="allRoots"
-                                    [allReferenceProperties]="allReferenceProperties"
-                                    [nodeDefinition]="nodeDefinitionValue">
+                                         formControlName="configuration"
+                                         [ruleNodeId]="ruleNodeId"
+                                         [allConstants]=" allConstants"
+                                         [inputEntities]=" inputEntities"
+                                         [inputCustomobjects]="inputCustomobjects"
+                                         [allDomainModelsWithSub]="allDomainModelsWithSub"
+                                         [allViewModelsWithSub]="allViewModelsWithSub"
+                                         [allRuleInputs]="allRuleInputs"
+                                         [allVariables]="allVariables"
+                                         [inputProperties]="inputProperties"
+                                         [apptype]="apptype"
+                                         [allModelProperties]="allModelProperties"
+                                         [branchAvailability]="branchAvailability"
+                                         [allRoots]="allRoots"
+                                         [allReferenceProperties]="allReferenceProperties"
+                                         [nodeDefinition]="nodeDefinitionValue">
         </virtuan-deep-assign-node-config>
     </ng-container>
 
