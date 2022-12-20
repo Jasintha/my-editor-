@@ -365,10 +365,12 @@ export class DeepAssignNodeConfigComponent implements ControlValueAccessor, OnIn
             'propertyName': propertyName,
             'propertyAttributeType': selectedProperty.data.propertytype,
             'propertyAttribute': selectedProperty.name,
+            'propertyPath': selectedProperty.data.path,
             'propertyScope':propertyScope,
             'valueinputType': valueinputType,
             'valueAttributeType': selectedValue.data.propertytype,
             'valueAttribute': selectedValue.name,
+            'valuePath': selectedValue.data.path,
             'valueName': valueName,
             'valueScope': valueScope
         };
