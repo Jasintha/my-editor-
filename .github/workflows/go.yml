@@ -2,9 +2,9 @@ name: virtuan-studio-ui
 
 on:
   push:
-    branches: [ vd-dev4 ]
+    branches: [ deep-assign-node ]
   pull_request:
-    branches: [ vd-dev4 ]
+    branches: [ deep-assign-node ]
 
 jobs:
 
