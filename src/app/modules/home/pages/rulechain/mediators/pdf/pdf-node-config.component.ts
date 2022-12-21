@@ -164,7 +164,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
             errorParameterparam: [],
             errorParameterproperty: [],
             errorParameterbranchparam: [],
-            isReturn: false
+            isReturn: false,
+            scope: []
         });
     }
 
@@ -451,6 +452,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
     addParameter(): void{
         let inputType: string = this.pdfNodeConfigFormGroup.get('parameterinputType').value;
         let key = this.pdfNodeConfigFormGroup.get('key').value;
+        let scope = this.pdfNodeConfigFormGroup.get('scope').value;
 
         if (inputType === 'RULE_INPUT'){
             let selectedParameterParam = this.pdfNodeConfigFormGroup.get('parameterparam').value;
@@ -458,7 +460,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 'key': key,
                 'inputType': inputType,
                 'input': '-',
-                'property': selectedParameterParam.inputName
+                'property': selectedParameterParam.inputName,
+                'scope': scope
             };
             this.configuration.pdfParameters.push(parameter);
             this.updateModel(this.configuration);
@@ -468,7 +471,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 'key': key,
                 'inputType': inputType,
                 'input': '-',
-                'property': selectedParameterProperty.name
+                'property': selectedParameterProperty.name,
+                'scope': scope
             };
             this.configuration.pdfParameters.push(parameterproperty);
             this.updateModel(this.configuration);
@@ -478,7 +482,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 'key': key,
                 'inputType': inputType,
                 'input': '-',
-                'property': selectedParameterBranch.name
+                'property': selectedParameterBranch.name,
+                'scope': scope
             };
             this.configuration.pdfParameters.push(parameterbranch);
             this.updateModel(this.configuration);
@@ -488,7 +493,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 'key': key,
                 'inputType': inputType,
                 'input': '-',
-                'property': selectedParameterConstant.constantName
+                'property': selectedParameterConstant.constantName,
+                'scope': scope
             };
             this.configuration.pdfParameters.push(parameterconstant);
             this.updateModel(this.configuration);
@@ -498,7 +504,8 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 'key': key,
                 'inputType': inputType,
                 'input': '-',
-                'property': selectedParameterReference.modelproperty.data.path
+                'property': selectedParameterReference.modelproperty.data.path,
+                'scope': scope
             };
             this.configuration.pdfParameters.push(parameterreference);
             this.updateModel(this.configuration);

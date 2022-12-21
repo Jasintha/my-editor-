@@ -8,6 +8,13 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label>Scope</mat-label>
+        <mat-select formControlName="scope">
+            <mat-option value="RULE">Rule</mat-option>
+            <mat-option value="GLOBAL">Global</mat-option>
+        </mat-select>
+    </mat-form-field>
 
     <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" style="padding: 10px;">
         <mat-form-field fxFlex class="mat-block">
