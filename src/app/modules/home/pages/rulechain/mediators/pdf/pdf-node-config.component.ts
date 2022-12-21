@@ -140,7 +140,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
                 private ruleChainService: RuleChainService,
                 private fb: FormBuilder) {
         this.pdfNodeConfigFormGroup = this.fb.group({
-            key: [],
+            key: '',
             inputType: [],
             //record: [],
             //customObject: [],
@@ -512,7 +512,7 @@ export class PdfNodeConfigComponent implements ControlValueAccessor, OnInit, OnD
         this.configuration.parameterparam= {};
         this.configuration.parameterconstant= {};
         this.configuration.parameterreference= {};
-        this.configuration.key= {};
+        this.configuration.key= '';
 
         this.pdfNodeConfigFormGroup.get('parameterinputType').patchValue([], {emitEvent: false});
         this.pdfNodeConfigFormGroup.get('parameterparam').patchValue([], {emitEvent: false});
