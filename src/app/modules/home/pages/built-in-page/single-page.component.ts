@@ -686,6 +686,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.updateLandingPageRoleMappings(page);
   }
 
+  saveGridPageMappings() {
+    const page = this.currentPage;
+    page.tileFields = this.TILE_DATA;
+    this.updatePageTileMappings(page);
+  }
+
   updateLandingPageRoleMappings(builtInPage: IPage) {
     this.isSaving = true;
     if (builtInPage.uuid) {
@@ -693,6 +699,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
+  updatePageTileMappings(builtInPage: IPage) {
+    this.isSaving = true;
+    if (builtInPage.uuid) {
+      this.subscribeToSaveResponse(this.builtInPageService.updatePageTileMappings(builtInPage, this.projectUid));
+    }
+  }
 
   addParamMapping() {
     const inputType = this.editForm.get(['inputValType']).value;
@@ -736,6 +748,15 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         this.dataSourceTile = new MatTableDataSource(this.TILE_DATA);
       }
     }
+  }
+
+  deleteTilePageMapping(param) {
+    const indexnum = this.TILE_DATA.indexOf(param);
+    this.TILE_DATA.splice(indexnum, 1);
+    this.dataSourceLogin = new MatTableDataSource(this.TILE_DATA);
+
+    const index = this.TILE_DATA.indexOf(param);
+    this.TILE_DATA.splice(index, 1);
   }
 
   addActionButton(){

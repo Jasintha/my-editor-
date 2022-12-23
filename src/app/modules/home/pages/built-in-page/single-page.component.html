@@ -550,8 +550,80 @@
                 </div>
             </p-fieldset>
         </div>
+        <div class="form-group" *ngIf="editForm.value.pagetemplate === 'tile-page' || editForm.value.pagetemplate === 'aio-grid'">
+        <p-fieldset [collapsed]="true"  [toggleable]="true">
+            <p-header style="font-size: 18px">Tile page mappings</p-header>
+            <label class="form-control-label">Map tile page attributes</label>
+            <h6 style="margin-top: 15px">Match attributes for tile fields</h6>
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-md-3">
+                        <mat-form-field [style]="{'width':'100%'}">
+                            <mat-label>Choose Param Type</mat-label>
+                            <mat-select formControlName="fieldType">
+                                <mat-option *ngFor="let option of tilePageFields" [value]="option.value">
+                                    {{option.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field [style]="{'width':'100%'}">
+                            <mat-label>Choose Model Property</mat-label>
+                            <mat-select formControlName="matchedAttribute">
+                                <mat-option *ngFor="let option of modelPropertyList"
+                                            [value]="option.value">
+                                    {{option.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" style="float: right;" mat-raised-button color="primary"
+                                (click)="addTileFieldMapping()">
+                            <mat-icon>add</mat-icon>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div style=" :20px;padding-bottom:20px;">
+                <table mat-table matSort [dataSource]="dataSourceTile"
+                       class="mat-elevation-z8 demo-table">
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="tileField">
+                        <th mat-header-cell *matHeaderCellDef>Field</th>
+                        <td mat-cell *matCellDef="let element">{{element.tileField}}</td>
+                    </ng-container>
 
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="attribute">
+                        <th mat-header-cell *matHeaderCellDef>Attribute</th>
+                        <td mat-cell *matCellDef="let element">{{element.attribute}}</td>
+                    </ng-container>
 
+                    <ng-container matColumnDef="actions">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Action</th>
+                        <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                            <button (click)="deleteTilePageMapping(row)"
+                                    mat-icon-button
+                                    type="button">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedtileParamColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedtileParamColumns;"></tr>
+                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit"  value="Save" style="float: left; margin-top: 1%;" (click)="saveGridPageMappings()" class="btn savebtn">Save</button>
+                    </div>
+                </div>
+            </div>
+        </p-fieldset>
+        </div>
         <div  style="margin-top: 1%;border-bottom: 1px solid; padding-bottom: 25px;" class="row">
             <div class="col-md-12 ">
                 <p-fieldset [collapsed]="true"  [toggleable]="true">
