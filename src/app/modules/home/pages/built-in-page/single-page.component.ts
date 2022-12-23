@@ -1365,6 +1365,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
           this.apiParams = builtInPage.params;
         }
       }
+      if (builtInPage.pagetemplate === 'tile-page' || builtInPage.pagetemplate === 'aio-grid') {
+        if (builtInPage.tileFields) {
+          this.TILE_DATA = builtInPage.tileFields;
+          this.dataSourceTile = new MatTableDataSource(this.TILE_DATA);
+        }
+      }
       if(builtInPage.buttonEvents) {
         this.btnEventActionList = builtInPage.buttonEvents
         this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
