@@ -629,7 +629,7 @@
                 <p-fieldset [collapsed]="true"  [toggleable]="true">
                     <p-header style="font-size: 18px">Page Integration Settings</p-header>
                     <div class="card-page">
-                        <div class="form-group" *ngIf="editForm.value.pagetemplate === 'aio-table'">
+                        <div class="form-group" *ngIf="editForm.value.pagetemplate === 'aio-table' || editForm.value.pagetemplate === 'aio-grid'">
                             <div class="row" >
                                 <div class="col-md-8">
                                     <div class="form-group" >
