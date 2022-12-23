@@ -711,8 +711,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       };
       if (this.loginParams.indexOf(param) === -1) {
         this.loginParams.push(param);
-        this.LOGIN_DATA.push(param);
-        this.dataSourceLogin = new MatTableDataSource(this.LOGIN_DATA);
+        this.dataSourceLogin = new MatTableDataSource(this.loginParams);
       }
     }
   }
@@ -764,12 +763,12 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   }
 
   deleteParamMapping(param) {
-    const indexnum = this.LOGIN_DATA.indexOf(param);
-    this.LOGIN_DATA.splice(indexnum, 1);
-    this.dataSourceLogin = new MatTableDataSource(this.LOGIN_DATA);
-if(this.LOGIN_DATA.length === 0) {
-  this.removedAllLoginData = true;
-}
+    const indexnum = this.loginParams.indexOf(param);
+    this.loginParams.splice(indexnum, 1);
+    this.dataSourceLogin = new MatTableDataSource(this.loginParams);
+    if(this.loginParams.length === 0) {
+      this.removedAllLoginData = true;
+    }
     const index = this.loginParams.indexOf(param);
     this.loginParams.splice(index, 1);
   }
@@ -1333,6 +1332,7 @@ if(this.LOGIN_DATA.length === 0) {
         this.pageTemplateItems.push({ label: 'Login Page', value: 'login-page' });
         if (builtInPage.loginParams) {
           this.loginParams = builtInPage.loginParams;
+          this.dataSourceLogin = new MatTableDataSource(this.loginParams);
         }
         if(builtInPage.landingPageRoleMappings) {
           this.landingPageMapping = builtInPage.landingPageRoleMappings
