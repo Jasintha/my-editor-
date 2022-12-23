@@ -473,7 +473,7 @@
                         <tr mat-row *matRowDef="let row; columns: displayedLoginParamColumns;"></tr>
                     </table>
                     <div class="row">
-                        <div *ngIf="LOGIN_DATA.length > 0 || removedAllLoginData " class="col-md-12">
+                        <div *ngIf="loginParams.length > 0 || removedAllLoginData " class="col-md-12">
                             <button type="submit"  value="Save" style="float: left; margin-top: 1%;" (click)="savePageLoginInputs()" class="btn savebtn">Save</button>
                         </div>
                     </div>
