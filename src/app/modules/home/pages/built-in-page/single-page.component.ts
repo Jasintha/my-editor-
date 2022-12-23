@@ -1588,14 +1588,12 @@ if(this.LOGIN_DATA.length === 0) {
   }
 
   savePageLoginInputs() {
-    let fieldMappingArray = [];
-    if(this.currentPage.pagetemplate === 'static-page') {
-      fieldMappingArray = this.headerFieldArr;
-    } else {
-      fieldMappingArray = this.stepFieldArr;
+    let loginParams = [];
+    if(this.currentPage.pagetemplate === 'login-page' && this.loginParams.length > 0) {
+      loginParams = this.loginParams;
     }
     const page = this.currentPage;
-    page.stepMappings = fieldMappingArray;
+    page.loginParams = loginParams;
     this.updatePageLoginInputs(page);
   }
 
