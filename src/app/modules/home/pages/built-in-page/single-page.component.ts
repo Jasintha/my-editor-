@@ -84,6 +84,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   isRegisterPageExist: string;
   pageTitle: string;
   pageDescription: string;
+  backgroundImage: string;
   pageConfigs: IConfig[];
   clonedCars: { [s: string]: Config } = {};
   // pageId: string;
@@ -160,6 +161,19 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'Field', value: 'Field'},
     { label: 'Image', value: 'Image'},
   ];
+
+  titleAlignments: SelectItem[] = [
+    { label: ':Left', value: 'Left'},
+    { label: 'Right', value: 'Right'},
+    { label: 'Center', value: 'Center'},
+  ];
+
+  fontSizes: SelectItem[] = [
+    { label: 'Small', value: 'Small'},
+    { label: 'Medium', value: 'Medium'},
+    { label: 'Large', value: 'Large'},
+  ];
+
   crudItems: SelectItem[] = [
     { label: 'CREATE', value: 'CREATE' },
     { label: 'UPDATE', value: 'UPDATE' },
@@ -223,6 +237,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   editForm: FormGroup;
   isTitleEdit: boolean;
   isDescEdit: boolean;
+  isBGUrlEdit: boolean;
   editPageAsJson: boolean;
   editorOptions: any = { language: 'json', readOnly: false, renderLineHighlight: 'none' };
   code: string = '';
@@ -290,6 +305,15 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       pageEvent: '',
       pageActionButton: '',
       pageEventActionApi: '',
+      backgroundUrl: '',
+      keyFontSize: '',
+      valueFontSize: '',
+      titleFontSize: '',
+      titleAlignment: '',
+      titleColor: '',
+      titleBackgroundColor: '',
+      imageWidth: '',
+      imageHeight: '',
       wizardDetailsGroup: this.fb.array([
         new FormGroup({
           stepHeading: this.fb.control('Step 1'),
@@ -732,6 +756,20 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     const tileField = this.editForm.get(['fieldType']).value;
     const attribute = this.editForm.get(['matchedAttribute']).value;
 
+    const titleFontSizeVal = this.editForm.get(['titleFontSize']).value;
+    const titleAlignment = this.editForm.get(['titleAlignment']).value;
+    const titleColor = this.editForm.get(['titleColor']).value;
+    const titleBackgroundColor = this.editForm.get(['titleBackgroundColor']).value;
+    const keyFontSizeVal = this.editForm.get(['keyFontSize']).value;
+    const valueFontSizeVal = this.editForm.get(['valueFontSize']).value;
+    let imageHeight = this.editForm.get(['imageHeight']).value;
+    let imageWidth = this.editForm.get(['imageWidth']).value;
+    if( !(imageHeight > 0)) {
+      imageHeight = 140;
+    }
+    if (!(imageWidth > 0)) {
+      imageWidth = 170;
+    }
     if (tileField === null || attribute === '' || attribute === null) {
       this.messageService.add({
         severity: 'warn',
@@ -742,6 +780,14 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       const param = {
         tileField,
         attribute,
+        titleFontSize : this.calculateFonts(titleFontSizeVal),
+        titleAlignment,
+        titleColor,
+        titleBackgroundColor,
+        keyFontSize : this.calculateFonts(keyFontSizeVal),
+        valueFontSize: this.calculateFonts(valueFontSizeVal),
+        imageHeight,
+        imageWidth
       };
       if (this.TILE_DATA.indexOf(param) === -1) {
         this.TILE_DATA.push(param);
@@ -750,13 +796,21 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
+  calculateFonts(val) {
+    switch (val) {
+      case 'small' : return 17;
+      case 'medium' : return 20;
+      case 'large' : return 25;
+      default: return 20;
+    }
+  }
+
   deleteTilePageMapping(param) {
     const indexnum = this.TILE_DATA.indexOf(param);
-    this.TILE_DATA.splice(indexnum, 1);
-    this.dataSourceLogin = new MatTableDataSource(this.TILE_DATA);
-
-    const index = this.TILE_DATA.indexOf(param);
-    this.TILE_DATA.splice(index, 1);
+    if(indexnum !== -1) {
+      this.TILE_DATA.splice(indexnum, 1);
+      this.dataSourceTile = new MatTableDataSource(this.TILE_DATA);
+    }
   }
 
   addActionButton(){
@@ -851,7 +905,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     for (let i = 0; i < currentDatamodeProperties.length; i++) {
       if (currentDatamodeProperties[i].data.type === 'property') {
         const dropdownLabel = currentDatamodeProperties[i].label;
-        this.modelPropertyList.push({ label: dropdownLabel, value: dropdownLabel });
+        this.modelPropertyList.push({ label: dropdownLabel, value: dropdownLabel, title: currentDatamodeProperties[i].name });
       }
     }
   }
@@ -1391,6 +1445,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         resPathMethod: builtInPage.resourcePathMethod,
         resourcePath: builtInPage.resourcePath,
         pageDescription: builtInPage.pageDescription,
+        backgroundUrl: builtInPage.backgroundImageURL,
         //  operation: builtInPage.operation,
         pagetitle: builtInPage.pagetitle,
         pagetemplate: builtInPage.pagetemplate,
@@ -1439,6 +1494,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       }
       this.pageTitle = builtInPage.pagetitle;
       this.pageDescription = builtInPage.pageDescription;
+      this.backgroundImage = builtInPage.backgroundImageURL;
       if(builtInPage.actions && builtInPage.actions.buttons && builtInPage.actions.buttons.child ) {
         this.BTN_ELEMENT_DATA = builtInPage.actions.buttons.child;
         this.dataSource = new MatTableDataSource(this.BTN_ELEMENT_DATA);
@@ -1451,6 +1507,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
     this.pagestyle = builtInPage.pagestyle;
     this.loadAggregates(builtInPage.model);
+    this.isBGUrlEdit = false;
+    this.isDescEdit = false;
+    this.isTitleEdit = false;
   }
 
   getPageTemplates() {
@@ -1692,7 +1751,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   editPageDesc() {
     this.isDescEdit = !this.isDescEdit;
   }
-
+  editBGUrl() {
+    this.isBGUrlEdit = !this.isBGUrlEdit;
+  }
 
   createModel() {
     const dialogRef = this.dialog.open(CreateModelComponent, {
@@ -1779,6 +1840,7 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     const page = this.currentPage;
     page.inputPageAsJson = this.editPageAsJson;
     page.pagetitle = this.editForm.get(['pagetitle']).value;
+    page.backgroundImageURL = this.editForm.get(['backgroundUrl']).value;
     page.pageDescription = this.editForm.get(['pageDescription']).value;
     this.builtInPageService
         .findPageNameAvailability(page.pagetitle, this.currentPage.uuid, this.projectUid)

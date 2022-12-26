@@ -14,6 +14,7 @@ export interface IPage {
   uuid?: string;
   pagetitle?: string;
   pageDescription?: string;
+  backgroundImageURL?: string;
   pageRefId?: string;
   pagetype?: string;
   attachedPage?: string;
@@ -70,6 +71,7 @@ export class Page implements IPage {
     public uuid?: string,
     public pagetitle?: string,
     public pageDescription?: string,
+    public backgroundImageURL?: string,
     public pageRefId?: string,
     public pagetype?: string,
     public pagetemplate?: string,
