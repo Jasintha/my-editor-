@@ -100,11 +100,11 @@
                                            formControlName="fieldController"/>
                                 </div>
                             </div>
-                            <div class="controller-input form-group">
+                            <div class="controller-input form-group"  *ngIf="this.form.value.formFieldsGroup[i].fieldController !== 'Label'">
                                 <label class="form-control-label">Label </label>
                                 <input class="form-control" type="text" formControlName="label">
                             </div>
-                            <div class="controller-input form-group">
+                            <div class="controller-input form-group"  *ngIf="this.form.value.formFieldsGroup[i].fieldController !== 'Label'">
                                 <label class="form-control-label">Default Value </label>
                                 <input class="form-control" type="text" formControlName="defaultvalue">
                             </div>
