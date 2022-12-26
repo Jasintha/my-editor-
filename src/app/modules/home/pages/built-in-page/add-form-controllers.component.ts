@@ -68,6 +68,7 @@ export class AddFormControllersComponent implements OnChanges {
     { label: 'Radiobutton', value: 'Radiobutton' },
     { label: 'Checkbox', value: 'Checkbox' },
     { label: 'Dropdown', value: 'Dropdown' },
+    { label: 'Label', value: 'Label' },
   ];
   displayedDrpParamColumns: string[] = ['dropdownField', 'attribute', 'actions'];
   choiceType: SelectItem[] = [
