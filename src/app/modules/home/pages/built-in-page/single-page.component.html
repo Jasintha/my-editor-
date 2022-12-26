@@ -832,6 +832,7 @@
                         </div>
                         <div class="form-group"
                              *ngIf="editForm.value.pagetemplate === 'tile-page' || editForm.value.pagetemplate === 'table-page' || editForm.value.pagetemplate === 'form-page' || editForm.value.pagetemplate == 'static-page'|| editForm.value.pagetemplate === 'form-wizard-page' || editForm.value.pagetemplate === 'file-upload-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">
+                            <h6>Page On-Submit API:</h6>
                             <div class="row">
                                 <div class="col-12">
                                     <div *ngIf="project?.apptypesID === 'task.ui'" class="form-group"
@@ -889,6 +890,81 @@
                                         <mat-label>Resource Path</mat-label>
                                         <input type="text" formControlName="resourcePath" matInput name="resourcepath"
                                                id="field_resourcepath">
+                                        <mat-error *ngIf="editForm.controls.resourcePath.hasError('required')">This field is
+                                            required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" style="float: left;" mat-raised-button
+                                            color="primary"
+                                            (click)="updateResourcePath()">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group"
+                             *ngIf="editForm.value.pagetemplate === 'form-page' || editForm.value.pagetemplate === 'form-wizard-page' || editForm.value.pagetemplate === 'login-page' || editForm.value.pagetemplate === 'register-page' ">
+                            <h6>Page On-Load API:</h6>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div *ngIf="project?.apptypesID === 'task.ui'" class="form-group"
+                                         style=" padding-top: 5px; ">
+                                        <mat-checkbox  formControlName="search2">Search API from
+                                            Microservices
+                                        </mat-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div *ngIf="project?.apptypesID === 'task.ui' && editForm.value.search2"
+                                         class="form-group">
+                                        <mat-form-field [style]="{'width':'100%'}">
+                                            <mat-label>Microservice</mat-label>
+                                            <mat-select formControlName="microservice2"
+                                                        (selectionChange)="onChangeMicroserviceProject2()">
+                                                <mat-option *ngFor="let option of microserviceProjectItems"
+                                                            [value]="option.value">
+                                                    {{option.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div *ngIf="project?.apptypesID === 'task.ui' && editForm.value.search2"
+                                         class="form-group col-md-6">
+                                        <mat-form-field [style]="{'width':'100%'}">
+                                            <mat-label>API</mat-label>
+                                            <mat-select formControlName="api2"
+                                                        (selectionChange)="onChangeMicroserviceAPI2()">
+                                                <mat-option *ngFor="let option of apiItems" [value]="option.value">
+                                                    {{option.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field [style]="{'width':'100%'}">
+                                        <mat-label>Method</mat-label>
+                                        <mat-select formControlName="resPathMethod2">
+                                            <mat-option *ngFor="let option of resourcePathMethods" [value]="option.value">
+                                                {{option.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field [style]="{'width':'100%'}">
+                                        <mat-label>Resource Path</mat-label>
+                                        <input type="text" formControlName="resourcePath2" matInput name="resourcepath2">
                                         <mat-error *ngIf="editForm.controls.resourcePath.hasError('required')">This field is
                                             required
                                         </mat-error>

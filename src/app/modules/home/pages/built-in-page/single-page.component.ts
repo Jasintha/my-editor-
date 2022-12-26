@@ -254,13 +254,18 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       isHomepage: false,
       resPathMethod: [],
       resourcePath: [],
+      resPathMethod2: [],
+      resourcePath2: [],
       selectedAggregate: [],
       paramType: [],
       paramName: [],
       paramDataType: [],
       microservice: [],
+      microservice2: [],
       api: [],
       search: false,
+      api2: [],
+      search2: false,
       aiosearch: false,
       aiomicroservice: [],
       dashboard: [],
@@ -879,23 +884,23 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
   //   }
   // }
 
-  validatePageSave() {
-    const page = this.currentPage;
-    if(page.model && page.resourcePath && page.actions && page.actions.buttons && page.actions.buttons.child
-        && page.actions.buttons.child.length > 0) {
-      const dialogRef = this.dialog.open(PageSaveConfirmDialogComponent, {
-        panelClass: ['virtuan-dialog'],
-      });
-      dialogRef.afterClosed(
-      ).subscribe(result => {
-        if (result) {
-          this.checkPageNameExist();
-        }
-      });
-    } else {
-      this.checkPageNameExist();
-    }
-  }
+  // validatePageSave() {
+  //   const page = this.currentPage;
+  //   if(page.model && page.resourcePath && page.actions && page.actions.buttons && page.actions.buttons.child
+  //       && page.actions.buttons.child.length > 0) {
+  //     const dialogRef = this.dialog.open(PageSaveConfirmDialogComponent, {
+  //       panelClass: ['virtuan-dialog'],
+  //     });
+  //     dialogRef.afterClosed(
+  //     ).subscribe(result => {
+  //       if (result) {
+  //         this.checkPageNameExist();
+  //       }
+  //     });
+  //   } else {
+  //     this.checkPageNameExist();
+  //   }
+  // }
 
   loadModelPropertyList(){
     let currentDatamodeProperties: IProperty[];
@@ -1200,9 +1205,32 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     }
   }
 
+  onChangeMicroserviceAPI2() {
+    const microservice = this.editForm.get(['microservice2']).value;
+    const api = this.editForm.get(['api2']).value;
+    if (api && api.api) {
+      const apiStart: boolean = api.api.resourcePath.startsWith('/');
+      let suggestedPath = '';
+      if (apiStart) {
+        suggestedPath = '/' + microservice.name + '/api' + api.api.resourcePath;
+      } else {
+        suggestedPath = '/' + microservice.name + '/api/' + api.api.resourcePath;
+      }
+      if (api.api.apiJson && api.api.apiJson.operation) {
+        const op = api.api.apiJson.operation;
+        if (op === 'CREATE' || op === 'UPDATE' || op === 'FIND' || op === 'DELETE') {
+          this.editForm.get('apiOperation2').patchValue(op, { emitEvent: true });
+          this.editForm.get('resPathMethod2').patchValue(op === 'CREATE' ? 'POST' : op === 'UPDATE' ? 'PUT' : op === 'FIND' ? 'GET' : op === 'DELETE' ? 'DELETE' : '', { emitEvent: true });
+        }
+      }
+      this.editForm.get('resourcePath2').patchValue(suggestedPath, { emitEvent: true });
+    }
+  }
+
   updateResourcePath() {
       const page = this.currentPage;
       page.resourcePath = this.editForm.get(['resourcePath']).value;
+      page.onLoadResourcePath = this.editForm.get(['resourcePath2']).value;
       this.updatePageResourcePath(page);
   }
 
@@ -1239,6 +1267,48 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.editForm.get('resourcePath').patchValue('', { emitEvent: true });
     this.editForm.get('resPathMethod').patchValue('', { emitEvent: true });
     this.editForm.get('api').patchValue([], { emitEvent: true });
+
+    if (microservice.microserviceApis) {
+      for (let i = 0; i < microservice.microserviceApis.length; i++) {
+        const apiObj: IPageApi = {
+          apiType: 'API',
+          api: microservice.microserviceApis[i],
+        };
+        const dropdownLabel = microservice.microserviceApis[i].name;
+        this.apiItems.push({ label: dropdownLabel, value: apiObj });
+      }
+    }
+
+    if (microservice.commands) {
+      for (let i = 0; i < microservice.commands.length; i++) {
+        const commandObj: IPageApi = {
+          apiType: 'COMMAND',
+          api: microservice.commands[i],
+        };
+        const dropdownLabel = microservice.commands[i].name;
+        this.apiItems.push({ label: dropdownLabel, value: commandObj });
+      }
+    }
+
+    if (microservice.queries) {
+      for (let i = 0; i < microservice.queries.length; i++) {
+        const queryObj: IPageApi = {
+          apiType: 'QUERY',
+          api: microservice.queries[i],
+        };
+        const dropdownLabel = microservice.queries[i].name;
+        this.apiItems.push({ label: dropdownLabel, value: queryObj });
+      }
+    }
+  }
+
+
+  onChangeMicroserviceProject2() {
+    this.apiItems = [];
+    const microservice = this.editForm.get(['microservice2']).value;
+    this.editForm.get('resourcePath2').patchValue('', { emitEvent: true });
+    this.editForm.get('resPathMethod2').patchValue('', { emitEvent: true });
+    this.editForm.get('api2').patchValue([], { emitEvent: true });
 
     if (microservice.microserviceApis) {
       for (let i = 0; i < microservice.microserviceApis.length; i++) {
@@ -1429,21 +1499,22 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         this.btnEventActionList = builtInPage.buttonEvents
         this.eventDataSource = new MatTableDataSource(this.btnEventActionList);
       }
-      if (builtInPage.pagetemplate === 'aio-table' || (builtInPage.pagetemplate === 'aio-grid' && builtInPage.apiResourceDetails)) {
+     // if (builtInPage.pagetemplate === 'aio-table' || (builtInPage.pagetemplate === 'aio-grid' && builtInPage.apiResourceDetails)) {
         if (builtInPage.apiResourceDetails) {
           this.apiResourceDetails =[];
           this.apiResourceDetails = builtInPage.apiResourceDetails;
           this.dataSourceAIOParam = new MatTableDataSource(this.apiResourceDetails);
         }
-      } else if (builtInPage.pagetemplate === 'dashboard-page' && builtInPage.dashboardPanelDetails) {
-        this.dashboardPanelDetails = builtInPage.dashboardPanelDetails;
-      }
+      // } else if (builtInPage.pagetemplate === 'dashboard-page' && builtInPage.dashboardPanelDetails) {
+      //   this.dashboardPanelDetails = builtInPage.dashboardPanelDetails;
+      // }
       this.editForm.patchValue({
         id: builtInPage.uuid,
         apiType: builtInPage.apiType,
         selectedAggregate: builtInPage.model,
         resPathMethod: builtInPage.resourcePathMethod,
         resourcePath: builtInPage.resourcePath,
+        resourcePath2: builtInPage.onLoadResourcePath,
         pageDescription: builtInPage.pageDescription,
         backgroundUrl: builtInPage.backgroundImageURL,
         //  operation: builtInPage.operation,

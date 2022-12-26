@@ -37,6 +37,7 @@ export interface IPage {
   params?: IAPIInput[];
   resourcePathMethod?: string;
   resourcePath?: string;
+  onLoadResourcePath?: string;
   model?: any;
   apiResourceDetails?: any[];
   dashboardPanelDetails?: any[];
@@ -94,6 +95,7 @@ export class Page implements IPage {
     public params?: IAPIInput[],
     public resourcePathMethod?: string,
     public resourcePath?: string,
+    public onLoadResourcePath?: string,
     public model?: IAggregate,
     public apiResourceDetails?: any[],
     public dashboardPanelDetails?: any[],
