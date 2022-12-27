@@ -144,7 +144,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { EditorModule } from 'primeng/editor';
 import { MenubarModule } from 'primeng/menubar';
 import { TabViewModule } from 'primeng/tabview';
-
+import {DeepAssignNodeConfigComponent} from '@home/pages/rulechain/mediators/action/deep-assign-node-config.component';
 
 @NgModule({
   declarations: [
@@ -187,6 +187,7 @@ import { TabViewModule } from 'primeng/tabview';
     CallNodeConfigComponent,
     AggregateNodeConfigComponent,
     AssignNodeConfigComponent,
+    DeepAssignNodeConfigComponent,
     CPGetterNodeConfigComponent,
     FileReadNodeConfigComponent,
     FileWriteNodeConfigComponent,
@@ -300,6 +301,7 @@ import { TabViewModule } from 'primeng/tabview';
     CallNodeConfigComponent,
     AggregateNodeConfigComponent,
     AssignNodeConfigComponent,
+    DeepAssignNodeConfigComponent,
     CPGetterNodeConfigComponent,
     FileReadNodeConfigComponent,
     FileWriteNodeConfigComponent,
