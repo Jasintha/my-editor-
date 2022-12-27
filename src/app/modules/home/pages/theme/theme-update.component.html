@@ -76,8 +76,31 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="form-group" style="margin-top: 10px">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" style="font-weight: bold">Portal display name: </label>
+                                        <div class="ui-g">
+                                            <input type="text" class="fullInput" formControlName="portalDisplayName">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
                             <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group" style="margin-top: 20px">
+                                            <label class="form-control-label" style="font-weight: bold">Main logo URL: </label>
+                                            <div class="ui-g">
+                                                <input type="text" class="fullInput" formControlName="mainLogoUrl">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 10px">
                                 <label class="form-control-label">Footer Visibility</label>
                                 <div class="ui-g" style="width:250px;margin-bottom:10px">
                                     <div class="ui-g-12">
@@ -104,7 +127,7 @@
                             </div>
                             <input type="hidden" formControlName="themeselected" name="themeselected">
                             <div class="form-group col-md-4">
-                                <h5 class="form-control-label">Upload logo</h5>
+                                <h5 class="form-control-label">Mobile app icon</h5>
                                 <p-fileUpload #fileInput name="file" [showUploadButton]="false" [showCancelButton]="false" maxFileSize="1000000" accept="image/*" styleClass="theme-fileupload">
                                 </p-fileUpload>
                             </div>

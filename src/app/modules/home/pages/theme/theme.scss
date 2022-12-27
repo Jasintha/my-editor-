@@ -954,3 +954,19 @@
 .style5-ter-button:focus {
   opacity: 0.75;
 }
+
+.fullInput {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid darkgrey;
+  margin-top: 20px;
+  height: 30px;
+}
+
+.fullInput:focus {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid gray;
+  margin-top: 20px;
+  height: 30px;
+}

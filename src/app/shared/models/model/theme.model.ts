@@ -6,6 +6,8 @@ export interface ITheme {
   name?: string;
   themestyle?: string;
   inputStyle?: string;
+  portalDisplayName?: string;
+  mainLogoUrl?: string;
   buttonTheme?: string;
   layoutorientationRTL?: boolean;
   toolbarposition?: string;
@@ -30,6 +32,8 @@ export class Theme implements ITheme {
     public useDefaultTheme?: boolean,
     public themestyle?: string,
     public inputStyle?: string,
+    public portalDisplayName?: string,
+    public mainLogoUrl?: string,
     public buttonTheme?: string,
     public layoutorientationRTL?: boolean,
     public toolbarposition?: string,
