@@ -141,7 +141,7 @@
             </div>
         </div>
 
-        <div *ngIf="editForm.value.pagetemplate === 'aio-table' || editForm.value.pagetemplate == 'table-page'" style="margin-top: 1%;border-bottom: 1px solid; padding-bottom: 25px;" class="row">
+        <div *ngIf="editForm.value.pagetemplate === 'aio-table' || editForm.value.pagetemplate === 'aio-grid' || editForm.value.pagetemplate === 'tile-page' ||editForm.value.pagetemplate == 'table-page'" style="margin-top: 1%;border-bottom: 1px solid; padding-bottom: 25px;" class="row">
             <div class="col-md-12 ">
                 <p-fieldset [collapsed]="true"  [toggleable]="true">
                     <p-header style="font-size: 18px"> Page view settings</p-header>
