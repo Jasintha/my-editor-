@@ -154,6 +154,17 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     { label: 'Table', value: 'table' },
   ];
 
+  pageAlignmentList: SelectItem[] = [
+    { label: 'bottomCenter', value: 'bottomCenter' },
+    { label: 'bottomLeft', value: 'bottomLeft' },
+    { label: 'bottomRight', value: 'bottomRight' },
+    { label: 'center', value: 'center' },
+    { label: 'centerLeft', value: 'centerLeft' },
+    { label: 'topCenter', value: 'topCenter' },
+    { label: 'topLeft', value: 'topLeft' },
+    { label: 'topRight', value: 'topRight' },
+  ];
+
   tilePageFields: SelectItem[] = [
     { label: 'Title', value: 'Title'},
     { label: 'Subtitle', value: 'Subtitle'},
@@ -317,6 +328,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
       titleAlignment: '',
       titleColor: '',
       titleBackgroundColor: '',
+      widgetAlignment: '',
+      pageBackgroundColor: '',
       imageWidth: '',
       imageHeight: '',
       wizardDetailsGroup: this.fb.array([
@@ -1517,6 +1530,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
         resourcePath2: builtInPage.onLoadResourcePath,
         pageDescription: builtInPage.pageDescription,
         backgroundUrl: builtInPage.backgroundImageURL,
+        pageBackgroundColor: builtInPage.pageBackgroundColor,
+        widgetAlignment: builtInPage.widgetAlignment,
         //  operation: builtInPage.operation,
         pagetitle: builtInPage.pagetitle,
         pagetemplate: builtInPage.pagetemplate,
@@ -1912,6 +1927,8 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     page.inputPageAsJson = this.editPageAsJson;
     page.pagetitle = this.editForm.get(['pagetitle']).value;
     page.backgroundImageURL = this.editForm.get(['backgroundUrl']).value;
+    page.pageBackgroundColor = this.editForm.get(['pageBackgroundColor']).value;
+    page.widgetAlignment = this.editForm.get(['widgetAlignment']).value;
     page.pageDescription = this.editForm.get(['pageDescription']).value;
     this.builtInPageService
         .findPageNameAvailability(page.pagetitle, this.currentPage.uuid, this.projectUid)
