@@ -111,26 +111,27 @@
                                     <div class="row" style="margin-top: 25px">
                                         <div class="col-md-5">
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-1">
                                                     <mat-icon style="margin-right: 20px; font-size: 22px;">description</mat-icon>
-                                                    <label style="font-weight: bold">Background Color </label></div>
-
-                                                <div class="col-md-4">
-                                                    <input type="color" formControlName="pageBackgroundColor">
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <mat-icon  style=" cursor: pointer" (click)="checkAndUpdatePageName()">save</mat-icon>
-                                                </div>
+                                                    <div class="col-md-8">
+                                                        <label style="font-weight: bold">Background Color: </label>
+                                                        <input style="margin-left: 60px" type="color" formControlName="pageBackgroundColor">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <mat-icon  style=" cursor: pointer" (click)="checkAndUpdatePageName()">save</mat-icon>
+                                                    </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 25px">
                                         <div class="col-md-5">
                                             <div class="row">
-                                                <div class="col-md-4">
-                                                    <mat-icon style="margin-right: 20px; font-size: 22px;">description</mat-icon> </div>
-                                                    <label style="font-weight: bold">Widget alignment </label>
-                                                <div class="col-md-4">
+                                                <div class="col-md-1">
+                                                    <mat-icon style="margin-right: 20px; font-size: 22px;">description</mat-icon>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <label style="font-weight: bold">Widget alignment: </label>
                                                     <mat-select formControlName="widgetAlignment">
                                                         <mat-option *ngFor="let option of pageAlignmentList"
                                                                     [value]="option.value">
@@ -138,7 +139,7 @@
                                                         </mat-option>
                                                     </mat-select>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-1">
                                                     <mat-icon  style=" cursor: pointer" (click)="checkAndUpdatePageName()">save</mat-icon>
                                                 </div>
                                             </div>
