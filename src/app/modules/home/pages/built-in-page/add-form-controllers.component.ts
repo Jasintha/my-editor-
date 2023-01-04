@@ -40,7 +40,7 @@ export class AddFormControllersComponent implements OnChanges {
 
   @Input('pageId') pageId: string;
   @Input('projectUid') projectUid: string;
-  @Input('widgetUid') widgetUid: string;
+  @Input('modelPropertyList') modelPropertyList: SelectItem[];
   keyValPairs: IKeyData[];
   isSaving: boolean;
   cols: any[];
@@ -54,6 +54,11 @@ export class AddFormControllersComponent implements OnChanges {
   dropdownMappings = [];
   dataSourceDropdownMapp = new MatTableDataSource(this.dropdownMappings);
   dataSourceDropdownMapping : any [];
+
+  eventactionMappings = [];
+  eventActionMappDataSource = new MatTableDataSource(this.eventactionMappings);
+  dataSourceEventActionMapping : any [];
+
   // cars2: Car[];
   clonedCars: { [s: string]: Config } = {};
   isFieldSelected: boolean;
@@ -74,6 +79,17 @@ export class AddFormControllersComponent implements OnChanges {
   choiceType: SelectItem[] = [
     { label: 'API', value: 'API' },
     { label: 'Static', value: 'Static' },
+  ];
+  displayEventMappingColumns: string[] = ['event', 'target', 'reference', 'actions'];
+  componentEventType: SelectItem[] = [
+    { label: 'API Call', value: 'API' },
+    { label: 'Change Visibility', value: 'VISIBLE' },
+  ];
+
+  actionTypes: SelectItem[] = [
+    { label: 'Assign', value: 'Assign'},
+    { label: 'Visible', value: 'Visible'},
+    { label: 'Hide', value: 'Hide'},
   ];
 
   dropdownFields: SelectItem[] = [
@@ -105,6 +121,7 @@ export class AddFormControllersComponent implements OnChanges {
     this.apiItems = [];
     this.selectedFieldIndex = 0;
     this.dataSourceDropdownMapping = [];
+    this.dataSourceEventActionMapping = [];
     this.createForm();
     // if(this.data.widgetUid) {
     //   this.loadAllSourceTargetFormFieldsForWidget(this.data.widgetUid, this.data.projectUid);
@@ -127,6 +144,14 @@ export class AddFormControllersComponent implements OnChanges {
     this.dataSourceDropdownMapp = new MatTableDataSource(dropdownMap);
     this.dataSourceDropdownMapping[this.selectedFieldIndex] =  this.dataSourceDropdownMapp;
   }
+
+  deleteEventActionMapping(param) {
+    const indexnum = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].eventActions.value.indexOf(param);
+    const eventmap = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].eventActions.value.splice(indexnum, 1);
+    this.eventActionMappDataSource = new MatTableDataSource(eventmap);
+    this.dataSourceEventActionMapping[this.selectedFieldIndex] =  this.dataSourceDropdownMapp;
+  }
+
 
   loadMicroserviceProjects() {
     this.projectService
@@ -159,6 +184,13 @@ export class AddFormControllersComponent implements OnChanges {
     const api = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].api.value;
     const suggestedPath = this.getAPIPath(microservice, api);
     this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].choiceUrl.patchValue(suggestedPath, { emitEvent: true });
+  }
+
+  onChangeMicroserviceAPI2() {
+    const microservice = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].microservice2.value;
+    const api = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].api2.value;
+    const suggestedPath = this.getAPIPath(microservice, api);
+    this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].url.patchValue(suggestedPath, { emitEvent: true });
   }
 
   getAPIPath(microservice, api) {
@@ -199,6 +231,33 @@ export class AddFormControllersComponent implements OnChanges {
     }
   }
 
+
+  addEventActionMapping() {
+    const actionId = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].eventType.value;
+    const target = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].eventTarget.value;
+    const serviceReference = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].eventServiceReference.value;
+
+    if (!actionId || !target) {
+      // this.messageService.add({
+      //   severity: 'warn',
+      //   summary: 'Warn',
+      //   detail: 'Please fill all the fields',
+      // });
+    } else {
+      const param = {
+        actionId,
+        target,
+        serviceReference
+      };
+      if (this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].eventActions.value.indexOf(param) === -1) {
+        this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].eventActions.value.push(param);
+        this.eventActionMappDataSource = new MatTableDataSource(this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].eventActions.value);
+        this.dataSourceEventActionMapping[this.selectedFieldIndex] =  this.eventActionMappDataSource;
+      }
+      this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].eventActions.patchValue(this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].eventActions.value,
+          { emitEvent: true });
+    }
+  }
 
   loadMicroserviceProjectDropdownItems() {
     for (let i = 0; i < this.microserviceProjects.length; i++) {
@@ -241,6 +300,14 @@ export class AddFormControllersComponent implements OnChanges {
     const microservice = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].microservice.value;
     this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].choiceUrl.patchValue('', { emitEvent: true });
     this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].api.patchValue([], { emitEvent: true });
+    this.loadAPISforMS(microservice);
+  }
+
+
+  onChangeMicroserviceProject2() {
+    const microservice = this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].microservice2.value;
+    this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].url.patchValue('', { emitEvent: true });
+    this.formFieldsGroup.controls[this.selectedFieldIndex]['controls'].api2.patchValue([], { emitEvent: true });
     this.loadAPISforMS(microservice);
   }
 
@@ -461,6 +528,7 @@ export class AddFormControllersComponent implements OnChanges {
       fieldcategory: new FormControl(type),
       choiceUrl: new FormControl(values.choiceUrl),
       dropdownMappings: new FormControl(values.dropdownMappings ? values.dropdownMappings: []),
+      eventActions: new FormControl(values.eventActions ? values.eventActions: []),
       selectType: new FormControl(values.selectType),
       isrequired: new FormControl(values.isrequired),
       defaultvalue: new FormControl(values.defaultValue),
@@ -472,6 +540,12 @@ export class AddFormControllersComponent implements OnChanges {
       fieldValueChoices: this.fb.array(this.getChoicesGroups(values.fieldValueChoices ? values.fieldValueChoices : [])),
       children: this.fb.array([]),
       choiceType: new FormControl(values.choiceType),
+      addUIEvents: new FormControl(values.addUIEvents),
+      operation: new FormControl(values.operation),
+      eventType: new FormControl(values.eventType),
+      eventTarget: new FormControl(values.eventTarget),
+      eventServiceReference: new FormControl(values.eventServiceReference),
+      url: new FormControl(values.url),
       isVisible: new FormControl((values.isVisible)),
       initialVisible: new FormControl((values.initialVisible))
     });
@@ -522,6 +596,7 @@ export class AddFormControllersComponent implements OnChanges {
       propertyId: new FormControl(values.propertyId),
       propertyName: new FormControl(values.propertyName),
       fieldController: new FormControl(values.fieldController),
+      eventActions: new FormControl(values.eventActions ? values.eventActions: []),
       choiceUrl: new FormControl(values.choiceUrl),
       isrequired: new FormControl(values.isrequired),
       defaultvalue: new FormControl(values.defaultValue),
@@ -531,6 +606,12 @@ export class AddFormControllersComponent implements OnChanges {
       api: new FormControl(''),
       search: new FormControl(''),
       fieldValueChoices: this.fb.array(this.getChoicesGroups(values.fieldValueChoices)),
+      addUIEvents: new FormControl(values.addUIEvents),
+      operation: new FormControl(values.operation),
+      eventType: new FormControl(values.eventType),
+      eventTarget: new FormControl(values.eventTarget),
+      eventServiceReference: new FormControl(values.eventServiceReference),
+      url: new FormControl(values.url),
       choiceType: new FormControl(values.choiceType),
       isVisible: new FormControl((values.isVisible)),
       initialVisible: new FormControl((values.initialVisible))

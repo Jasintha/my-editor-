@@ -112,10 +112,21 @@
                                  *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'">
                                 <label class="form-control-label">Placeholder </label>
                                 <input class="form-control" type="text" formControlName="placeholder"></div>
-                            <div class="controller-input form-group">
-                                <p-checkbox name="isrequired"
-                                            formControlName="isrequired" binary="true"></p-checkbox>
-                                <label class="form-control-label p-sm-2">Required </label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="controller-input form-group">
+                                        <p-checkbox name="isrequired"
+                                                    formControlName="isrequired" binary="true"></p-checkbox>
+                                        <label class="form-control-label p-sm-2">Required </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div *ngIf="this.form.value.formFieldsGroup[i].fieldController !== 'Dropdown'" class="controller-input form-group">
+                                        <p-checkbox name="addUIEvents"
+                                                    formControlName="addUIEvents" binary="true"></p-checkbox>
+                                        <label class="form-control-label p-sm-2">Load data from API </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div *ngIf="this.form.value.formFieldsGroup[i].fieldcategory === 'object'">
@@ -211,10 +222,21 @@
                                              *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Textbox'">
                                             <label class="form-control-label">Placeholder </label>
                                             <input class="form-control" type="text" formControlName="placeholder"></div>
-                                        <div class="controller-input form-group">
-                                            <p-checkbox name="isrequired"
-                                                        formControlName="isrequired" binary="true"></p-checkbox>
-                                            <label class="form-control-label p-sm-2">Required </label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="controller-input form-group">
+                                                    <p-checkbox name="isrequired"
+                                                                formControlName="isrequired" binary="true"></p-checkbox>
+                                                    <label class="form-control-label p-sm-2">Required </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController !== 'Dropdown'" class="controller-input form-group">
+                                                    <p-checkbox name="addUIEvents"
+                                                                formControlName="addUIEvents" binary="true"></p-checkbox>
+                                                    <label class="form-control-label p-sm-2">Load data from API </label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div
                                                 *ngIf="this.form.value.formFieldsGroup[i].children[k].fieldController === 'Dropdown'|| this.form.value.formFieldsGroup[i].children[k].fieldController === 'Radiobutton'">
@@ -297,6 +319,106 @@
                                 </div>
                             </div>
                         </div>
+                        <div *ngIf="this.form.value.formFieldsGroup[i].addUIEvents">
+                            <div class="form-group" style=" padding-top: 5px;">
+                                <label class="form-control-label">Event type</label>
+                                <p-dropdown placeholder="select type" name="operation"
+                                            [options]="componentEventType" formControlName="operation"
+                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" filter="true"></p-dropdown>
+                            </div>
+                            <div class="form-group"
+                                 style=" padding-top: 5px; ">
+                                <p-checkbox formControlName="search" binary="true"></p-checkbox>
+                                <label class="form-control-label p-sm-2">Search API from Microservices</label>
+                            </div>
+                            <div class="row">
+                                <div *ngIf="this.form.value.formFieldsGroup[i].search" class="form-group col-md-6">
+                                    <label class="form-control-label">Microservice</label>
+                                    <p-dropdown placeholder="Choose" [options]="microserviceProjectItems"
+                                                formControlName="microservice2" filter="true"
+                                                [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"
+                                                (onChange)="onChangeMicroserviceProject2()"></p-dropdown>
+                                </div>
+                                <div *ngIf="this.form.value.formFieldsGroup[i].search" class="form-group col-md-6">
+                                    <label class="form-control-label">API</label>
+                                    <p-dropdown placeholder="Choose" [options]="apiItems" formControlName="api2"
+                                                filter="true" (onChange)="onChangeMicroserviceAPI2()"
+                                                [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" name="choiceUrl"
+                                   formControlName="url"/>
+
+                            <div class="row" *ngIf="this.form.value.formFieldsGroup[i].addUIEvents">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h6 style="margin-top: 15px">Add Event Actions</h6>
+                                        <div class="card">
+                                            <div class="card-body row">
+                                                <div class="col-md-3">
+
+                                                    <p-dropdown placeholder="select action" name="eventType"
+                                                                [options]="actionTypes" formControlName="eventType"
+                                                                [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" filter="true"></p-dropdown>
+
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                    <p-dropdown placeholder="select target" name="fieldType"
+                                                                [options]="modelPropertyList" formControlName="eventTarget"
+                                                                [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" filter="true"></p-dropdown>
+
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" type="text" placeholder="attribute" formControlName="eventServiceReference">
+                                                </div>
+                                                <div class="offset-md-1 col-md-2">
+                                                    <button type="button" style="float: right;" mat-raised-button color="primary"
+                                                            (click)="addEventActionMapping()">
+                                                        <mat-icon>add</mat-icon>
+                                                        Add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style=" :20px;padding-bottom:20px;">
+                                            <table mat-table matSort [dataSource]="dataSourceEventActionMapping[i]"
+                                                   class="mat-elevation-z8 demo-table">
+                                                <!-- Name Column -->
+                                                <ng-container matColumnDef="event">
+                                                    <th mat-header-cell *matHeaderCellDef>Event Action</th>
+                                                    <td mat-cell *matCellDef="let element">{{element.actionId}}</td>
+                                                </ng-container>
+
+                                                <!-- Weight Column -->
+                                                <ng-container matColumnDef="target">
+                                                    <th mat-header-cell *matHeaderCellDef>Target</th>
+                                                    <td mat-cell *matCellDef="let element">{{element.target}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="reference">
+                                                    <th mat-header-cell *matHeaderCellDef>Reference</th>
+                                                    <td mat-cell *matCellDef="let element">{{element.serviceReference}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="actions">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Action</th>
+                                                    <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                                                        <button (click)="deleteParamMapping(row)"
+                                                                mat-icon-button
+                                                                type="button">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="displayEventMappingColumns"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayEventMappingColumns;"></tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div
                                 *ngIf="this.form.value.formFieldsGroup[i].fieldController === 'Dropdown'|| this.form.value.formFieldsGroup[i].fieldController === 'Radiobutton'">
                             <h5>{{this.form.value.formFieldsGroup[i].fieldController}} Choices</h5>
@@ -307,7 +429,6 @@
                                             [options]="choiceType" formControlName="choiceType"
                                             [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" filter="true"></p-dropdown>
                             </div>
-
                             <div *ngIf="this.form.value.formFieldsGroup[i].choiceType === 'API'">
                                 <div class="form-group"
                                      style=" padding-top: 5px; ">
