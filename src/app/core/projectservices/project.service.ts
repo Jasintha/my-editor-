@@ -234,4 +234,16 @@ export class ProjectService {
       observe: 'response',
     });
   }
+
+  getFEPreviewStatusData(): Observable<HttpResponse<any>> {
+    return this.http.get<any>(`${this.genResourceUrl}/status/getbackendpreviewstatus`, {
+      observe: 'response',
+    });
+  }
+
+  getBEPreviewStatusData(): Observable<HttpResponse<any>> {
+    return this.http.get<any>(`${this.genResourceUrl}/status/getfrontendpreviewstatus`, {
+      observe: 'response',
+    });
+  }
 }

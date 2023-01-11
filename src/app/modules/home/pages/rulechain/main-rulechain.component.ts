@@ -147,6 +147,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     theme: string = 'vs-dark';
     editorOptions: any = { language: 'json', readOnly: true, renderLineHighlight: 'none' };
     code: string = '';
+    fEStatus: string = '';
+    bEStatus: string = '';
     generatorList: { [key: number]: string } = {};
     generatorChain: IGenerator[];
     selectedTab = 0;
@@ -185,9 +187,9 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     uiTreeDaSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     constructor(private route: ActivatedRoute, private router: Router, private ruleChainService: RuleChainService, private requirementService: RequirementService,
-    private projectService: ProjectService,private deleteOperationService: DeleteOperationService,private addOperationService:AddOperationService, public dialog: MatDialog,
-    private eventManager: EventManagerService, private socket: WebsocketService, private breakpointService: BreakpointTrackerService, private themeService: ThemeTrackerService,
-    protected appTypeService: ApptypesService, protected aggregateService: AggregateService, private consoleLogService: ConsoleLogService,private loginService: LoginService) {
+                private projectService: ProjectService,private deleteOperationService: DeleteOperationService,private addOperationService:AddOperationService, public dialog: MatDialog,
+                private eventManager: EventManagerService, private socket: WebsocketService, private breakpointService: BreakpointTrackerService, private themeService: ThemeTrackerService,
+                protected appTypeService: ApptypesService, protected aggregateService: AggregateService, private consoleLogService: ConsoleLogService,private loginService: LoginService) {
 
     }
 
@@ -210,7 +212,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     refreshTree() {
         this.loadTreeData();
         this.loadUITreeData();
-      //  this.loadDesignTreeData();
+        //  this.loadDesignTreeData();
     }
 
 //   viewRule(item){
@@ -221,11 +223,11 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 // //     this.router.navigate([url], {relativeTo:this.route});
 //     this.router.navigate([url]);
 //   }
-  registerChangeEditorTree() {
-    this.eventSubscriber = this.eventManager
-      .on(EventTypes.editorTreeListModification)
-      .subscribe(event => this.loadTreeData());
-  }
+    registerChangeEditorTree() {
+        this.eventSubscriber = this.eventManager
+            .on(EventTypes.editorTreeListModification)
+            .subscribe(event => this.loadTreeData());
+    }
 
     registerChangeUIEditor() {
         this.eventSubscriberUi = this.eventManager
@@ -256,8 +258,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     // }
 
     delete(item){
-      this.projectUid = item.projectuuid;
-      this.deleteOperationService.delete(item, this.projectUid);
+        this.projectUid = item.projectuuid;
+        this.deleteOperationService.delete(item, this.projectUid);
     }
 
     add(node){
@@ -592,6 +594,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.registerChangeUIEditor();
         this.onEditMultiWidgetPage();
         this.registerChangeDesignEditor();
+        this.loadPreviewStatus();
 //         this.appTypeService.getDevChainByAppType(this.projectUid)
 //           .pipe(
 //             filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
@@ -607,6 +610,11 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 //               }
 //             });
 //         this.loadChatbox(this.projectUid);
+    }
+
+    loadPreviewStatus(){
+        this.getFEPrevStatus();
+        this.getBEPrevStatus();
     }
 
     loadTreeData(){
@@ -637,27 +645,27 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 
     loadDesignTreeData(){
 
-      this.requirementService
-          .findAllDesignTreeData()
-          .pipe(
-              filter((mayBeOk: HttpResponse<any[]>) => mayBeOk.ok),
-              map((response: HttpResponse<any[]>) => response.body)
-          )
-          .subscribe(
-              (res: any[]) => {
-                  this.requirementCount = res[0].children.length;
-                  if(this.requirementCount > 0) {
-                      this.populateReqIDArray( res[0].children)
-                  }
-                this.designdataSource.data = res;
-                  if(res && res[0] && res[0].children.length > 0) {
-                      this.viewReqEditor(res[0].children[0]);
-                      this.treeControl.expand(this.treeControl.dataNodes[0]);
-                  } else {
-                      this.viewReqEditor();
-                  }
-              }
-          );
+        this.requirementService
+            .findAllDesignTreeData()
+            .pipe(
+                filter((mayBeOk: HttpResponse<any[]>) => mayBeOk.ok),
+                map((response: HttpResponse<any[]>) => response.body)
+            )
+            .subscribe(
+                (res: any[]) => {
+                    this.requirementCount = res[0].children.length;
+                    if(this.requirementCount > 0) {
+                        this.populateReqIDArray( res[0].children)
+                    }
+                    this.designdataSource.data = res;
+                    if(res && res[0] && res[0].children.length > 0) {
+                        this.viewReqEditor(res[0].children[0]);
+                        this.treeControl.expand(this.treeControl.dataNodes[0]);
+                    } else {
+                        this.viewReqEditor();
+                    }
+                }
+            );
     }
 
     populateReqIDArray(requirements) {
@@ -731,34 +739,34 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.router.navigate(['']);
     }
 
-  protected onSaveSuccess() {
+    protected onSaveSuccess() {
 //     this.messageService.add({
 //       severity: 'success',
 //       summary: 'Generation Started',
 //       detail: 'Generation process started successfully.',
 //     });
-    if(this.code != '') {
-        this.code = this.code + ",\n";
-    }
-    this.code = this.code + '{"status": "Success", "detail": "Generation process started successfully"}';
+        if(this.code != '') {
+            this.code = this.code + ",\n";
+        }
+        this.code = this.code + '{"status": "Success", "detail": "Generation process started successfully"}';
 //     this.code = this.code + '{"status": "Success", "detail": "Generation process started successfully"},' + "/n";
-    setTimeout(() => {
-      this.isGenerating = false;
-    }, 10000);
-  }
+        setTimeout(() => {
+            this.isGenerating = false;
+        }, 10000);
+    }
 
-  protected onSaveError() {
+    protected onSaveError() {
 //     this.messageService.add({
 //       severity: 'error',
 //       summary: 'Generation failed',
 //       detail: 'Generation request failed.',
 //     });
-    if(this.code != '') {
-        this.code = this.code + ",\n";
+        if(this.code != '') {
+            this.code = this.code + ",\n";
+        }
+        this.code = this.code + '{"status": "Error", "detail": "Generation request failed"}';
+        this.isGenerating = false;
     }
-    this.code = this.code + '{"status": "Error", "detail": "Generation request failed"}';
-    this.isGenerating = false;
-  }
 
     listenConsoleLogChange() {
         this.consoleEventSubscriber = this.eventManager
@@ -779,50 +787,68 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     }
 
 
-  loadChatbox(uuid) {
-    this.socket.getEventListener().subscribe(event => {
-      if (event.type === 'message') {
-        let topic = event.data.topic;
-        if (topic === 'generator') {
-          let data = event.data.content;
+    getFEPrevStatus() {
+        this.projectService.getFEPreviewStatusData().pipe(
+            filter((res: HttpResponse<any>) => res.ok),
+            map((res: HttpResponse<any>) => res.body)
+        ).subscribe( event => {
+            this.fEStatus = event;
+        })
+    }
 
-          let projectUUID = '';
-          let status = '';
-          let time = '';
-          let position = -1;
+    getBEPrevStatus() {
+        this.projectService.getBEPreviewStatusData().pipe(
+            filter((res: HttpResponse<any>) => res.ok),
+            map((res: HttpResponse<any>) => res.body)
+        ).subscribe( event => {
+            this.bEStatus = event;
+        })
+    }
 
-          let allKeyValuePairs = data.split(',');
-          if (allKeyValuePairs) {
-            allKeyValuePairs.forEach(keyval => {
-              let keyAndValArr = keyval.split('=', 2);
-              let key = '';
-              let val = '';
+    loadChatbox(uuid) {
+        this.socket.getEventListener().subscribe(event => {
+            if (event.type === 'message') {
+                let topic = event.data.topic;
+                if (topic === 'generator') {
+                    let data = event.data.content;
 
-              if (keyAndValArr) {
-                for (let i = 0; i < keyAndValArr.length; i++) {
-                  if (i === 0) {
-                    key = keyAndValArr[i];
-                  } else {
-                    val = keyAndValArr[i];
-                  }
-                }
-              }
+                    let projectUUID = '';
+                    let status = '';
+                    let time = '';
+                    let position = -1;
 
-              if (key === 'projectuuid') {
-                projectUUID = val;
-              } else if (key === 'status') {
-                status = val;
-              } else if (key === 'time') {
-                time = val;
-              } else if (key === 'position') {
-                position = +val;
-              }
-            });
-          }
+                    let allKeyValuePairs = data.split(',');
+                    if (allKeyValuePairs) {
+                        allKeyValuePairs.forEach(keyval => {
+                            let keyAndValArr = keyval.split('=', 2);
+                            let key = '';
+                            let val = '';
 
-          if (uuid === projectUUID) {
-            if (status) {
-              if (status.trim() === 'didnot') {
+                            if (keyAndValArr) {
+                                for (let i = 0; i < keyAndValArr.length; i++) {
+                                    if (i === 0) {
+                                        key = keyAndValArr[i];
+                                    } else {
+                                        val = keyAndValArr[i];
+                                    }
+                                }
+                            }
+
+                            if (key === 'projectuuid') {
+                                projectUUID = val;
+                            } else if (key === 'status') {
+                                status = val;
+                            } else if (key === 'time') {
+                                time = val;
+                            } else if (key === 'position') {
+                                position = +val;
+                            }
+                        });
+                    }
+
+                    if (uuid === projectUUID) {
+                        if (status) {
+                            if (status.trim() === 'didnot') {
 //                 if (this.generatorList[position] === 'Compiler') {
 //                   this.messageService.add({
 //                     severity: 'error',
@@ -834,12 +860,12 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 //                     summary: 'Generation Failed at ' + this.generatorList[position],
 //                   });
 //                 }
-                  if(this.code != '') {
-                    this.code = this.code + ",\n";
-                  }
-                  this.code = this.code + '{"status": "Error", "detail": "Generation failed at '+ this.generatorList[position] + '"}';
+                                if(this.code != '') {
+                                    this.code = this.code + ",\n";
+                                }
+                                this.code = this.code + '{"status": "Error", "detail": "Generation failed at '+ this.generatorList[position] + '"}';
 
-              } else if (status.trim() === 'done') {
+                            } else if (status.trim() === 'done') {
 //                 if (this.generatorList[position] === 'Compiler') {
 //                   this.messageService.add({
 //                     severity: 'success',
@@ -851,51 +877,51 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 //                     summary: 'Generation is Successful at ' + this.generatorList[position],
 //                   });
 //                 }
-                  if(this.code != '') {
-                    this.code = this.code + ",\n";
-                  }
-                  this.code = this.code + '{"status": "Success", "detail": "Generation successful at '+ this.generatorList[position] + '"}';
+                                if(this.code != '') {
+                                    this.code = this.code + ",\n";
+                                }
+                                this.code = this.code + '{"status": "Success", "detail": "Generation successful at '+ this.generatorList[position] + '"}';
 
-                } else if (status.trim() === 'done') {
-                  if(this.code != '') {
-                    this.code = this.code + ",\n";
-                  }
-                  this.code = this.code + '{"status": "In progress", "detail": "Generation started at '+ this.generatorList[position] + '"}';
+                            } else if (status.trim() === 'done') {
+                                if(this.code != '') {
+                                    this.code = this.code + ",\n";
+                                }
+                                this.code = this.code + '{"status": "In progress", "detail": "Generation started at '+ this.generatorList[position] + '"}';
+                            }
+                        }
+                    }
                 }
             }
-          }
-        }
-      }
-    });
-  }
+        });
+    }
 
-  exportAggregateFile(node) {
-    this.aggregateService.getModelDownloader(node.uuid, node.projectuuid).subscribe(data => this.downloadFile(data)),
-      error => this.onError('Error got while exporting'),
-      () => {
-        console.log('OK');
-      };
-  }
+    exportAggregateFile(node) {
+        this.aggregateService.getModelDownloader(node.uuid, node.projectuuid).subscribe(data => this.downloadFile(data)),
+            error => this.onError('Error got while exporting'),
+            () => {
+                console.log('OK');
+            };
+    }
 
-  downloadFile(data: any) {
-    const blob = new Blob([data.body], { type: 'application/json' });
-    const url = window.URL.createObjectURL(blob);
-    //window.open(url);
+    downloadFile(data: any) {
+        const blob = new Blob([data.body], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        //window.open(url);
 
-    let filename = this.getFileNameFromHttpResponse(data);
-    var anchor = document.createElement('a');
-    anchor.download = filename;
-    anchor.href = url;
-    anchor.click();
-  }
+        let filename = this.getFileNameFromHttpResponse(data);
+        var anchor = document.createElement('a');
+        anchor.download = filename;
+        anchor.href = url;
+        anchor.click();
+    }
 
-  protected onError(errorMessage: string) {
-  }
+    protected onError(errorMessage: string) {
+    }
 
-  getFileNameFromHttpResponse(data) {
-    var contentDispositionHeader = data.headers.get('content-disposition');
-    var result = contentDispositionHeader.split(';')[1].trim().split('=')[1];
-    return result.replace(/"/g, '');
-  }
+    getFileNameFromHttpResponse(data) {
+        var contentDispositionHeader = data.headers.get('content-disposition');
+        var result = contentDispositionHeader.split(';')[1].trim().split('=')[1];
+        return result.replace(/"/g, '');
+    }
 
 }
