@@ -319,7 +319,7 @@
                 <!--<mat-icon [icIcon]="icEdit"></mat-icon>-->
                 <span>View</span>
             </button>
-            <button *ngIf="item.type !== 'MAIN_TASK' && item.type !== 'UI_PAGE' && item.type !== 'UI_MAIN_MENU' " (click)="edit(item)" mat-menu-item>
+            <button *ngIf="item.type !== 'MAIN_TASK' && item.type !== 'UI_PAGE' && item.type !== 'PARENT_UI_SUB_MENU'" (click)="edit(item)" mat-menu-item>
                 <!--<mat-icon [icIcon]="icDelete"></mat-icon>-->
                 <span>Edit</span>
             </button>

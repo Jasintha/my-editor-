@@ -71,6 +71,10 @@ export class AddOperationService {
             this.createTask(item,projectUid , status);
         } else if (item.type === 'UI_NAVIGATION'){
             this.createNavigation(item,projectUid , status);
+        } else if (item.type === 'UI_MAIN_MENU'){
+            this.createMainMenu(item,projectUid , status);
+        } else if (item.type === 'UI_SUB_MENU'){
+            this.addASubMenu(item,projectUid , status);
         }
     }
 
@@ -126,7 +130,8 @@ export class AddOperationService {
             data: {
                 projectUid: projectUId,
                 createStatus: status,
-                mainMenuId: item.uuid,
+                mainMenuId: item.parentUUID,
+                uuid: item.uuid,
                 formTree: true
             }
         });
