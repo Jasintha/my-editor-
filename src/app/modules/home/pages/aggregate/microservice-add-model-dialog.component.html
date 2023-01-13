@@ -86,6 +86,26 @@
                             <mat-label>Property Name</mat-label>
                             <input type="text" formControlName="fieldName" matInput>
                         </mat-form-field>
+
+
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Input Type</mat-label>
+                            <mat-select formControlName="textInputMask">
+                                <mat-option *ngFor="let option of textInputTypes" [value]="option.value">
+                                    {{option.label}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="editForm.controls.dataType.hasError('required')">This field is required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto" *ngIf="editForm.value.textInputMask === 'CURRENCY'" >
+                            <mat-label>Currency Symbols</mat-label>
+                            <mat-select formControlName="currencyType">
+                                <mat-option *ngFor="let option of currencysymbols" [value]="option.value">
+                                    {{option.label}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="editForm.controls.dataType.hasError('required')">This field is required</mat-error>
+                        </mat-form-field>
                     </div>
 
 
@@ -208,7 +228,6 @@
                     </mat-select>
                     <mat-error *ngIf="editForm.controls.dataType.hasError('required')">This field is required</mat-error>
                 </mat-form-field>
-
                 <mat-form-field class="flex-auto" >
                     <mat-label>Domain</mat-label>
                     <input type="text" formControlName="domain" matInput>

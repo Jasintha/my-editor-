@@ -17,6 +17,7 @@ type StatusChangeRequestArrayResponseType = HttpResponse<IStatusChangeRequest[]>
 @Injectable({ providedIn: 'root' })
 export class AggregateService {
   public resourceUrl =  '/api/editor/proj/aggregates';
+  public currencyURL =  '/api/editor/proj/currencysymbols';
   public projectresourceUrl =  '/api/editor/proj/aggregates/project';
   public projserviceresourceUrl = '/api/editor/projects';
   public designresourceUrl =  '/api/editor/proj/aggregates/design';
@@ -108,5 +109,9 @@ export class AggregateService {
 
   findValueObj(uuid: string,id: string): Observable<HttpResponse<IValueObject[]>> {
     return this.http.get<IValueObject[]>(`${this.createValueObject}/${uuid}/${id}`, { observe: 'response' });
+  }
+
+  getCurrencySymbols(): Observable<HttpResponse<IValueObject[]>> {
+    return this.http.get<IValueObject[]>(`${this.currencyURL}`, { observe: 'response' });
   }
 }

@@ -40,6 +40,15 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     { label: 'FILE', value: 'FILE' },
   ];
 
+  textInputTypes: SelectItem[] = [
+    { label: 'PASSWORD', value: 'PASSWORD' },
+    { label: 'CURRENCY', value: 'CURRENCY' },
+    { label: 'EMAIL', value: 'EMAIL' },
+    { label: 'TELEPHONE', value: 'TELEPHONE' },
+  ];
+
+  currencysymbols: SelectItem[] = [];
+
   typeItems: SelectItem[] = [
     { label: 'PROPERTY', value: 'property' },
     { label: 'COLLECTION', value: 'collection' },
@@ -89,8 +98,22 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       unique: [],
       encript:[],
       required:[],
-      datatype:[]
+      datatype:[],
+      textInputMask: [],
+      currencyType: [],
     });
+  }
+
+  getCurrencySymbols() {
+    this.aggregateService.getCurrencySymbols().pipe(
+        filter((mayBeOk: HttpResponse<any>) => mayBeOk.ok),
+        map((response: HttpResponse<any>) => response.body)
+    ).subscribe(
+        (res: any) => {
+          // this.loadUpdateForm(res);
+        }
+    ); {
+    }
   }
 
   setPropertyTypeValidators() {
@@ -136,39 +159,40 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.propdata)
-    this.editForm = this.fb.group({
-      type: [],
-      name: [],
-      propertytype: [],
-      selectedEntity: [],
-      selectedPropGroup: [],
-      isNotPersist: [],
-      alphabeticChar: [],
-      specialChar: [],
-      numericChar:[],
-      whiteSpaces:[],
-      casSensitivity:[],
-      requiredChar: [],
-      allowedAlphabeticChar:[],
-      format: [],
-      length: [],
-      range: [],
-      dataType: [],
-      domain: [],
-      encrypt: [],
-      fieldName: [],
-      selectedValidateType:[],
-      regexString: [],
-      validations: [],
-      unique: [],
-      encript:[],
-      required:[],
-      datatype:[]
-    });
+    // this.editForm = this.fb.group({
+    //   type: [],
+    //   name: [],
+    //   propertytype: [],
+    //   selectedEntity: [],
+    //   selectedPropGroup: [],
+    //   isNotPersist: [],
+    //   alphabeticChar: [],
+    //   specialChar: [],
+    //   numericChar:[],
+    //   whiteSpaces:[],
+    //   casSensitivity:[],
+    //   requiredChar: [],
+    //   allowedAlphabeticChar:[],
+    //   format: [],
+    //   length: [],
+    //   range: [],
+    //   dataType: [],
+    //   domain: [],
+    //   encrypt: [],
+    //   fieldName: [],
+    //   selectedValidateType:[],
+    //   regexString: [],
+    //   validations: [],
+    //   unique: [],
+    //   encript:[],
+    //   required:[],
+    //   datatype:[]
+    // });
     this.buildForm();
     this.setPropertyTypeValidators();
     this.isSaving = false;
     this.loadAllAggregates();
+    this.getCurrencySymbols();
     if (this.propdata.edit) {
       this.editForm.patchValue({
         type: this.propdata.type,
@@ -176,6 +200,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
         propertytype: this.propdata.propertytype,
         selectedEntity: this.propdata.selectedEntity,
         selectedPropGroup: this.propdata.selectedPropGroup,
+        textInputMask: this.propdata.textInputMask,
         isNotPersist: this.propdata.isNotPersist,
       });
       this.updateModel();
@@ -225,6 +250,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       range: value.range,
       unique: value.isUnique,
       allowedAlphabeticChar: value.allowedAlphabeticChar,
+      textInputMask: value.textInputMask,
       encript: value.isEncrypted,
       required: value.isrequired,
       regexString : value.regexString,
@@ -284,6 +310,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       range: validation.range,
       unique: val.unique,
       allowedAlphabeticChar: validation.allowedAlphabeticChar,
+      textInputMask: validation.textInputMask,
       encript: val.encrypt,
       required: val.required,
       regexString : val.regexString,
@@ -321,6 +348,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
     this.editForm.get('encript').reset();
     this.editForm.get('allowedAlphabeticChar').reset();
     this.editForm.get('regexString').reset();
+    this.editForm.get('textInputMask').reset();
   }
 
   save() {
@@ -353,6 +381,7 @@ export class MicroserviceAddModelDialogComponent implements OnInit {
       hasNumericChar: model.hasNumericChar,
       allowedAlphabeticChar: model.allowedAlphabeticChar,
       valueObjectReference: model.valueObjectReference,
+      inputMaskType: model.inputMaskType,
       validationType: model.validationType,
     };
     this.dialogRef.close(data);
@@ -566,6 +595,7 @@ export interface IMicroserviceModel {
   isrequired?: boolean;
   hasNumericChar?: boolean;
   validationType?:string;
+  inputMaskType?: string;
 }
 
 export class MicroserviceModel implements IMicroserviceModel {
