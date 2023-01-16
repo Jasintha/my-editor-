@@ -82,7 +82,20 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
   // projectId: number;
   project: IProject;
   // projectUid: string;
+  fontSizes: SelectItem[] = [
+    { label: 'Small', value: 'Small'},
+    { label: 'Medium', value: 'Medium'},
+    { label: 'Large', value: 'Large'},
+  ];
 
+  fontWeights: SelectItem[] = [
+    { label: 'bold', value: 'bold'},
+    { label: '500', value: '500'},
+    { label: '400', value: '400'},
+    { label: '300', value: '300'},
+    { label: '200', value: '200'},
+    { label: '100', value: '100'},
+  ];
   editForm = this.fb.group({
     id: [],
     themestyle: [],
@@ -113,6 +126,15 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
     pagecontrolpropname: [],
     pagecontrolpropvalue: [],
     pagecontrolpropdesc: [],
+    canvasbackgroundcolor: [],
+    generalfontsize: [],
+    generalfontcolor: [],
+    generalfontweight: [],
+    generalpagewidth: [],
+
+    sidebarfontsize: [],
+    sidebarfontcolor: [],
+    sidebarfontweight: [],
   });
 
   constructor(
@@ -164,7 +186,6 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
     if(theme.pageController) {
       this.pageControlPropertyKeyMappings = theme.pageController;
     }
-    if (theme.footervisibility) {
       this.editForm.patchValue({
         id: theme.uuid,
         default: theme.default,
@@ -175,6 +196,14 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
         mainLogoUrl: theme.mainLogoUrl,
         toolbarposition: theme.toolbarposition,
         footerposition: theme.footerposition,
+        canvasbackgroundcolor: theme.canvasbackgroundcolor,
+        generalfontsize: theme.generalfontsize,
+        generalfontcolor: theme.generalfontcolor,
+        generalfontweight: theme.generalfontweight,
+        generalpagewidth: theme.generalpagewidth,
+        sidebarfontsize: theme.sidebarfontsize,
+        sidebarfontweight: theme.sidebarfontweight,
+        sidebarfontcolor: theme.sidebarfontcolor,
         themeselected: theme.themeselected,
         footervisibility: theme.footervisibility,
         primaryColor: theme.primaryColor,
@@ -183,28 +212,8 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
         secondaryColor: theme.secondaryColor,
         secondaryMediumColor: theme.secondaryMediumColor,
       });
-    } else {
-      this.editForm.patchValue({
-        id: theme.uuid,
-        themestyle: theme.themestyle,
-        inputStyle: theme.inputStyle,
-        buttonTheme: theme.buttonTheme,
-        toolbarposition: theme.toolbarposition,
-        portalDisplayName: theme.portalDisplayName,
-        mainLogoUrl: theme.mainLogoUrl,
-        footerposition: theme.footerposition,
-        themeselected: theme.themeselected,
-        footervisibility: false,
-        primaryColor: theme.primaryColor,
-        primaryLightColor: theme.primaryLightColor,
-        primaryMediumColor: theme.primaryMediumColor,
-        secondaryColor: theme.secondaryColor,
-        secondaryMediumColor: theme.secondaryMediumColor,
-      });
-    }
     this.enableDisableForm(false);
   }
-
   previousState() {
     this.isVisibleEvent.emit(false);
   }
@@ -241,6 +250,14 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
       primaryMediumColor: this.editForm.get(['primaryMediumColor']).value,
       secondaryColor: this.editForm.get(['secondaryColor']).value,
       secondaryMediumColor: this.editForm.get(['secondaryMediumColor']).value,
+      canvasbackgroundcolor: this.editForm.get(['canvasbackgroundcolor']).value,
+      generalfontsize: this.calculateFontSize(this.editForm.get(['generalfontsize']).value),
+      generalfontcolor: this.editForm.get(['generalfontcolor']).value,
+      generalfontweight: this.calculateFontWeight(this.editForm.get(['generalfontweight']).value),
+      generalpagewidth: this.editForm.get(['generalpagewidth']).value,
+      sidebarfontsize: this.calculateFontSize(this.editForm.get(['sidebarfontsize']).value),
+      sidebarfontweight: this.calculateFontWeight(this.editForm.get(['sidebarfontweight']).value),
+      sidebarfontcolor: this.editForm.get(['sidebarfontcolor']).value,
       projectUuid: this.projectUid,
       app: this.appPropertyKeyMappings,
       page: this.pagePropertyKeyMappings,
@@ -248,6 +265,26 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
     };
   }
 
+  calculateFontSize(val) {
+    switch (val) {
+      case 'small' : return 17;
+      case 'medium' : return 20;
+      case 'large' : return 25;
+      default: return 20;
+    }
+  }
+
+  calculateFontWeight(val) {
+    switch (val) {
+      case 'bold' : return 600;
+      case '500' : return 500;
+      case '400' : return 400;
+      case '300' : return 300;
+      case '200' : return 200;
+      case '100' : return 100;
+      default: return 100;
+    }
+  }
   changeDefaults(event) {
     this.useDefaults = event;
     this.enableDisableForm(true);

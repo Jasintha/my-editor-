@@ -19,6 +19,14 @@ export interface ITheme {
   primaryLightColor?: string;
   primaryMediumColor?: string;
   secondaryColor?: string;
+  canvasbackgroundcolor?: string,
+  generalfontsize?: number,
+  generalfontcolor?: string,
+  generalfontweight?: number,
+  generalpagewidth?: string,
+  sidebarfontsize?: number,
+  sidebarfontcolor?: string,
+  sidebarfontweight?: number,
   secondaryMediumColor?: string;
   app?: IPropertyKeyValue[];
   page?: IPropertyKeyValue[];
@@ -46,6 +54,14 @@ export class Theme implements ITheme {
     public primaryMediumColor?: string,
     public secondaryColor?: string,
     public secondaryMediumColor?: string,
+    public canvasbackgroundcolor?: string,
+    public generalfontsize?: number,
+    public generalfontcolor?: string,
+    public generalfontweight?: number,
+    public generalpagewidth?: string,
+    public sidebarfontsize?: number,
+    public sidebarfontcolor?: string,
+    public sidebarfontweight?: number,
     public app?: IPropertyKeyValue[],
     public page?: IPropertyKeyValue[],
     public pageController?: IPropertyKeyValue[],

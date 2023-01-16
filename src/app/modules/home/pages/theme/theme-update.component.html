@@ -125,7 +125,42 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" formControlName="themeselected" name="themeselected">
+
+                            <div class="form-group" style="margin-top: 10px">
+                                <label class="form-control-label">Page Width</label>
+                                <div class="ui-g" style="width:250px;margin-bottom:10px">
+                                    <div class="ui-g-12">
+                                        <p-radioButton name="generalpagewidth" value="fixed" label="Boxed"
+                                                       formControlName="generalpagewidth"></p-radioButton>
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <p-radioButton name="generalpagewidth" value="static" label="Full-Width"
+                                                       formControlName="generalpagewidth"></p-radioButton>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="margin-top: 10px">
+                                <label style="margin-right: 5px">Canvas Background Color: </label>
+                                <input type="color" value="#4735d3" matInput name="canvasbackgroundcolor" formControlName="canvasbackgroundcolor">
+                            </div>
+                            <div class="form-group" style="margin-top: 10px">
+                                <label class="form-control-label">General Font size</label>
+                                <p-dropdown placeholder="Choose" name="generalfontsize"
+                                            [options]="fontSizes" formControlName="generalfontsize"
+                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" ></p-dropdown>
+                            </div>
+                            <div class="form-group" style="margin-top: 10px">
+                                <label class="form-control-label">General Font weight</label>
+                                <p-dropdown placeholder="Choose" name="generalfontweight"
+                                            [options]="fontWeights" formControlName="generalfontweight"
+                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                            </div>
+                            <div class="col-md-3" style="margin-top: 10px">
+                                    <label style="margin-right: 5px">General Font Color: </label>
+                                    <input type="color" value="#4735d3"  name="generalfontcolor" formControlName="generalfontcolor">
+                            </div>
+
+                            <input type="hidden" style="margin-top: 10px" formControlName="themeselected" name="themeselected">
                             <div class="form-group col-md-4">
                                 <h5 class="form-control-label">Mobile app icon</h5>
                                 <p-fileUpload #fileInput name="file" [showUploadButton]="false" [showCancelButton]="false" maxFileSize="1000000" accept="image/*" styleClass="theme-fileupload">
@@ -133,6 +168,29 @@
                             </div>
                         </div>
                         </p-fieldset>
+                <p-fieldset [collapsed]="true"  [toggleable]="true">
+                    <p-header style="font-size: 18px"> Sidebar settings</p-header>
+                    <div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="form-control-label" style="margin-top: 10px"> Font Size</label>
+                                <p-dropdown placeholder="Choose" name="sidebarfontsize"
+                                            [options]="fontSizes" formControlName="sidebarfontsize"
+                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}" ></p-dropdown>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" style="margin-top: 10px"> Font Weight</label>
+                                <p-dropdown placeholder="Choose" name="sidebarfontweight"
+                                            [options]="fontWeights" formControlName="sidebarfontweight"
+                                            [style]="{'width':'100%', 'margin-top': '3px', 'border': '1px solid rgb(66, 66, 66)'}"></p-dropdown>
+                            </div>
+                            <div class="col-md-3" style="margin-top: 10px">
+                                <label style="margin-right: 5px"> Font Color:</label>
+                                <input type="color" value="#4735d3"  name="sidebarfontcolor" formControlName="sidebarfontcolor">
+                            </div>
+                        </div>
+                    </div>
+                </p-fieldset>
                 <p-fieldset [collapsed]="true"  [toggleable]="true">
                             <p-header style="font-size: 18px"> Color settings</p-header>
                         <div>
