@@ -1,5 +1,21 @@
 <form name="editForm" role="form" novalidate  [formGroup]="editForm">
     <div class="row">
+        <div style="padding: 20px" class="col-1" *ngFor="let generator of generatorsDataList">
+         <div class="gen-container">
+             <div class="genTitle">
+               <span>  <mat-icon [ngClass]="{'green': generator.active, 'red' : !generator.active}">brightness_1</mat-icon>  {{generator.name}} </span>
+             </div>
+             <div class="gen-body">
+                 <div class="row"><div class="col-12">{{generator.id}}</div> </div>
+                 <div class="row" style="margin-top: 5px"><div class="col-6">  <button type="button" mat-raised-button color="primary">
+                     Restart
+                 </button>
+                 </div> </div>
+             </div>
+         </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-5">
             <div style="margin-top: 8px">
                 <div>
@@ -15,8 +31,7 @@
     </div>
 
 
-
-    <div *ngIf="isBuildLogAvailable">
+    <div *ngIf="false">
         <div class="row" style="margin-top: 50px">
             <div class="col-md-12 build-view">
                 <span>

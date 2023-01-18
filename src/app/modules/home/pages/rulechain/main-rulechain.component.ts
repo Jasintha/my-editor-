@@ -147,8 +147,10 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     theme: string = 'vs-dark';
     editorOptions: any = { language: 'json', readOnly: true, renderLineHighlight: 'none' };
     code: string = '';
-    fEStatus: string = '';
-    bEStatus: string = '';
+    fEBuildStatus: string = '';
+    bEBuildStatus: string = '';
+    fEGenStatus: string = '';
+    bEGenStatus: string = '';
     generatorList: { [key: number]: string } = {};
     generatorChain: IGenerator[];
     selectedTab = 0;
@@ -702,7 +704,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             setTimeout(() => {
                 this.isGenerating = false;
             }, 16000);
-            //console.log(this.socket.socket);
+            // console.log(this.socket.socket);
             this.socket.logSocket();
             let genType = 'Dev';
             const projectUUID: string = this.projectUid;
@@ -792,7 +794,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             filter((res: HttpResponse<any>) => res.ok),
             map((res: HttpResponse<any>) => res.body)
         ).subscribe( event => {
-            this.fEStatus = event;
+            this.fEBuildStatus = event;
         })
     }
 
@@ -801,7 +803,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             filter((res: HttpResponse<any>) => res.ok),
             map((res: HttpResponse<any>) => res.body)
         ).subscribe( event => {
-            this.bEStatus = event;
+            this.bEBuildStatus = event;
         })
     }
 

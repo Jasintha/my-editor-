@@ -98,6 +98,34 @@ body .ui-multiselect {
   margin-right: 5px;
 }
 
+.genTitle .red {
+  color: #ee4e6f !important;
+  font-size: 30px;
+  margin-right: 5px;
+}
+.genTitle .green {
+  color: #51d05c !important;
+  font-size: 30px;
+  margin-right: 5px;
+}
+
+.genTitle {
+  font-weight: bold;
+  padding: 3px;
+  padding-bottom: 12px;
+  border: 1px solid darkgrey;
+}
+
+.gen-container {
+  padding: 3px;
+  border: 1px solid #888282;
+}
+
+.gen-body{
+  padding: 5px;
+  background-color: #ebebeb;
+}
+
 .build-view th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   padding-left: 24px;
   color: white;

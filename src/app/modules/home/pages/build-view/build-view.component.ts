@@ -28,7 +28,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {WebsocketService} from '@core/tracker/websocket.service';
 import {BreakpointTrackerService} from '@core/tracker/breakpoint.service';
-import {IGenerator} from '@shared/models/model/generator-chain.model';
+import {GeneratorComponents, IGenerator} from '@shared/models/model/generator-chain.model';
+import {GeneratorChainService} from './generator-chain.service';
 
 @Component({
   selector: 'virtuan-build-view',
@@ -71,6 +72,10 @@ export class BuildViewComponent implements OnInit {
   typeSelected: string;
   sourceProperties: IEpicService[] = [];
   targetProperties: IEpicService[] = [];
+  generatorsDataList: GeneratorComponents[] = [{name: 'gen 1', id: '1', active:true, type: 'ui'},
+    {name: 'gen 2', id: '2', active:true, type: 'ui'},
+    {name: 'gen 2', id: '2', active:false, type: 'be'},
+    {name: 'gen 2', id: '2', active:true, type: 'ui'}]
   buildGenForm() {
     this.editForm = this.fb.group({
       id: [],
@@ -91,6 +96,7 @@ export class BuildViewComponent implements OnInit {
       private spinnerService: NgxSpinnerService,
       private socket: WebsocketService,
       private breakpointService: BreakpointTrackerService,
+      private generatorService: GeneratorChainService,
       private cdr: ChangeDetectorRef,
   ) {
     this.typeSelected = 'square-jelly-box';
@@ -221,6 +227,33 @@ export class BuildViewComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+  }
+
+  getGeneratorType(generator) {
+    let generatorType = '';
+    switch (generator) {
+      case 'Resource Generator':
+        generatorType = 'virtuan-studio';
+        break;
+      case 'Skeleton Generator':
+        generatorType = 'virtuan-ms-generator';
+        break;
+      case 'Task UI Generator':
+        generatorType = 'virtuan-ui-generator';
+        break;
+      case 'Rule Generator':
+        generatorType = 'virtuan-rule-generator';
+        break;
+      case 'gRPC Generator':
+        generatorType = 'virtuan-grpc-generator';
+        break;
+      case 'Builder':
+        generatorType = 'virtuan-studio-builder';
+        break;
+      default:
+        generatorType = 'other';
+    }
+    return generatorType;
   }
 
 
