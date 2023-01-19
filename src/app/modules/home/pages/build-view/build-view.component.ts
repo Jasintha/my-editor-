@@ -72,10 +72,18 @@ export class BuildViewComponent implements OnInit {
   typeSelected: string;
   sourceProperties: IEpicService[] = [];
   targetProperties: IEpicService[] = [];
-  generatorsDataList: GeneratorComponents[] = [{name: 'gen 1', id: '1', active:true, type: 'ui'},
-    {name: 'gen 2', id: '2', active:true, type: 'ui'},
-    {name: 'gen 2', id: '2', active:false, type: 'be'},
-    {name: 'gen 2', id: '2', active:true, type: 'ui'}]
+  generatorsDataList: GeneratorComponents[] = [{name: 'Resource', id: '1', active:true, type: 'General'},
+    {name: 'Skeleton', id: '2', active:true, type: 'Service'},
+    {name: 'Rule', id: '3', active:false, type: 'Service'},
+    {name: 'gRPC', id: '4', active:true, type: 'Service'},
+    {name: 'UI', id: '5', active:true, type: 'ui'},
+    {name: 'Build', id: '6', active:true, type: 'Service'}
+  ]
+  servicesList: any[] = [
+      {name: 'Service 1', uuid:'', active:true, status: 'done', time: '20S'},
+    {name: 'Service 2', uuid:'', active:true, status: 'done', time: '10S'},
+    {name: 'Service 3', uuid:'', active:true, status: 'doing', time: '50S'},
+  ]
   buildGenForm() {
     this.editForm = this.fb.group({
       id: [],

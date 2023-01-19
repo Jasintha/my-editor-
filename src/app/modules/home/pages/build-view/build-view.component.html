@@ -1,39 +1,41 @@
-<form name="editForm" role="form" novalidate  [formGroup]="editForm">
-    <div class="row">
-        <div style="padding: 20px" class="col-1" *ngFor="let generator of generatorsDataList">
-         <div class="gen-container">
-             <div class="genTitle">
-               <span>  <mat-icon [ngClass]="{'green': generator.active, 'red' : !generator.active}">brightness_1</mat-icon>  {{generator.name}} </span>
-             </div>
-             <div class="gen-body">
-                 <div class="row"><div class="col-12">{{generator.id}}</div> </div>
-                 <div class="row" style="margin-top: 5px"><div class="col-6">  <button type="button" mat-raised-button color="primary">
-                     Restart
-                 </button>
-                 </div> </div>
-             </div>
-         </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
-            <div style="margin-top: 8px">
-                <div>
-                    <p-multiSelect [options]="servicesToGenerate" formControlName="selectedServices" optionLabel="name"  [panelStyle]="{'width':'700px'}" [filter]="true"></p-multiSelect>
+<div class="row">
+<div class="col-10" style="border-right: 1px solid darkgrey">
+    <form name="editForm" role="form" novalidate  [formGroup]="editForm">
+        <div class="row">
+            <div style="padding: 10px" class="col-1" *ngFor="let generator of generatorsDataList">
+                <div class="gen-container">
+                    <div class="genTitle">
+                        <span>  <mat-icon [ngClass]="{'green': generator.active, 'red' : !generator.active}">brightness_1</mat-icon>  {{generator.name}} </span>
+                    </div>
+                    <div class="gen-body">
+                        <div class="row"><div class="col-12">{{generator.type}}</div> </div>
+                        <div class="row" style="margin-top: 5px"><div class="col-6">  <button type="button" class="restartBtn">
+                            <mat-icon>settings_backup_restore</mat-icon>
+                        </button>
+                        </div> </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-1">
-            <button [disabled]="isGenerating" mat-raised-button type="button" style="float:right; background-color: #2980b9; color: white;margin-top: 5px; " (click)="generate()" cdkFocusInitial>
-                <mat-icon style="font-size: 30px; margin-bottom: 6px">play_arrow</mat-icon></button>
+        <div class="row" style="margin-top: 8px">
+            <div class="col-md-5">
+                <div style="margin-top: 8px">
+                    <div>
+                        <p-multiSelect [options]="servicesToGenerate" formControlName="selectedServices" optionLabel="name"  [panelStyle]="{'width':'650px'}" [filter]="true"></p-multiSelect>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button [disabled]="isGenerating" mat-raised-button type="button" style="float:right; background-color: #2980b9; color: white;margin-top: 5px; " (click)="generate()" cdkFocusInitial>
+                    <mat-icon style="font-size: 30px; margin-bottom: 6px">play_arrow</mat-icon></button>
+            </div>
+            <div class="col-md-5"><span  *ngIf="isGenerating"><mat-progress-bar style="margin-top: 21px;" mode="indeterminate"></mat-progress-bar></span></div>
         </div>
-        <div class="col-md-5"><span  *ngIf="isGenerating"><mat-progress-bar style="margin-top: 21px;" mode="indeterminate"></mat-progress-bar></span></div>
-    </div>
 
 
-    <div *ngIf="false">
-        <div class="row" style="margin-top: 50px">
-            <div class="col-md-12 build-view">
+        <div *ngIf="false">
+            <div class="row" style="margin-top: 50px">
+                <div class="col-md-12 build-view">
                 <span>
                                 <mat-form-field style="float: right; margin-right: 50px; display: inline">
                     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -43,47 +45,91 @@
                   <mat-icon>refresh</mat-icon>
                         </button>
                 </span>
-                <div class="mat-elevation-z8">
-                    <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows  class="mat-elevation-z8">
-                        <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
-                            <th mat-header-cell *matHeaderCellDef> {{columnHeaders[column]}} </th>
-                            <td mat-cell *matCellDef="let element"><span *ngIf="column ==='servicename'">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows  class="mat-elevation-z8">
+                            <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+                                <th mat-header-cell *matHeaderCellDef> {{columnHeaders[column]}} </th>
+                                <td mat-cell *matCellDef="let element"><span *ngIf="column ==='servicename'">
                                 <mat-icon [ngClass]="{'yellow': element['lastbuildstatus'] === 'DOING', 'red' : element['lastbuildstatus'] === 'DIDNOT' , 'green' : element['lastbuildstatus'] === 'DONE' }">brightness_1</mat-icon> {{element[column]}}</span>
-                                <span *ngIf="column!=='servicename'"> {{element[column]}}</span> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="expand">
-                            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-                            <td mat-cell *matCellDef="let element">
-                                <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
-                                    <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
-                                    <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="expandedDetail">
-                            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-                                <div class="example-element-detail"
-                                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                    <ngx-monaco-editor style=" height: 100px;!important; width: 100%;" [options]="editorOptions" [(ngModel)]="element.statusinfo"  [ngModelOptions]="{standalone: true}" ngDefaultControl></ngx-monaco-editor>
-                                    <div class="example-element-description">
-                                        {{element.servicename}}
-                                        <span class="example-element-description-attribution"> -- Build Log </span>
+                                    <span *ngIf="column!=='servicename'"> {{element[column]}}</span> </td>
+                            </ng-container>
+                            <ng-container matColumnDef="expand">
+                                <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                                        <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                                        <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="expandedDetail">
+                                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                                    <div class="example-element-detail"
+                                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                        <ngx-monaco-editor style=" height: 100px;!important; width: 100%;" [options]="editorOptions" [(ngModel)]="element.statusinfo"  [ngModelOptions]="{standalone: true}" ngDefaultControl></ngx-monaco-editor>
+                                        <div class="example-element-description">
+                                            {{element.servicename}}
+                                            <span class="example-element-description-attribution"> -- Build Log </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
-                        <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
-                            class="example-element-row"
-                            [class.example-expanded-row]="expandedElement === element"
-                            (click)="expandedElement = expandedElement === element ? null : element">
-                        </tr>
-                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-                    </table>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+                            <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+                                class="example-element-row"
+                                [class.example-expanded-row]="expandedElement === element"
+                                (click)="expandedElement = expandedElement === element ? null : element">
+                            </tr>
+                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                        </table>
 
-                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="col-2">
+    <div class="row">
+        <div class="col-md-10" *ngFor="let service of servicesList; let i = index" [attr.data-index]="i">
+            <div class="application-resource-tree__node"
+                 style="top: 10px; height: 52px; padding-bottom: 50px">
+                <div title="{{service.name}}">
+                    <div
+                            class="application-resource-tree__node-kind-icon application-resource-tree__node-kind-icon--big">
+                        <img class="gen-icon" src="../assets/images/story/gen-old.png" width="25"
+                             height="25"
+                             alt="">
+                    </div>
+                    <div class="application-resource-tree__node-content">
+                        <span class="application-resource-tree__node-title">{{service.name}}</span>
+                        <span
+                                class="application-resource-tree__node-status-icon application-resource-tree__node-status-icon--offset">
+                                          <span style="margin-left: 10px; float: right">
+                                        <i class="fa fa-chain-broken" aria-hidden="true"></i>
+                                      </span>
+                                    <span *ngIf="service && service.status === 'done'" style="float: right">
+                                            <i title="Generator Success" class="fa fa-check-circle"
+                                               style="color: rgb(24, 190, 148);"></i>
+                                        </span>
+                                        <span *ngIf="service && service.status === 'didnot'" style="float: right">
+                                            <i title="Generator Failed" class="fa fa-exclamation-triangle"
+                                               style="color: rgb(255, 0, 0);"></i>
+                                        </span>
+                                    </span>
+                        <div *ngIf="service && service.status === 'doing'" style="padding-top: 10px">
+                            <p-progressBar mode="indeterminate"
+                                           [style]="{'height': '2px'}"></p-progressBar>
+                        </div>
+                    </div>
+                    <div class="application-resource-tree__node-labels">
+                        <time datetime="1625291982000"
+                              class="application-resource-tree__node-label">{{service.time}}</time>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</form>
+</div>
+</div>
