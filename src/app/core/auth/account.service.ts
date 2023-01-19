@@ -91,6 +91,7 @@ export class AccountService {
           this.authenticated = true;
           this.themeService.setDefaultTheme(1);
           this.ws.connect(account.email);
+          this.ws.connectGenStatusSockets(account.email);
           this.ps.setBreakpoint(-1);
         } else {
           this.userIdentity = null;

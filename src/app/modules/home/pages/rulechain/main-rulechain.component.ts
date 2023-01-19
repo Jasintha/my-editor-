@@ -684,7 +684,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
 
     generateProject() {
         if(this.projectUid){
-            this.loadChatbox(this.projectUid);
+            // this.loadChatbox(this.projectUid);
             this.appTypeService.getDevChainByAppType(this.projectUid)
                 .pipe(
                     filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
@@ -704,8 +704,6 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             setTimeout(() => {
                 this.isGenerating = false;
             }, 16000);
-            // console.log(this.socket.socket);
-            this.socket.logSocket();
             let genType = 'Dev';
             const projectUUID: string = this.projectUid;
             let project: Project = new Project();
@@ -715,7 +713,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
                 this.projectService.generateFromProjectId(projectUUID, -1, 1, genType, project, projectUUID).subscribe(
                     (res: any) => {
                         let project: IProject = res.body;
-                        this.socket.send('generator');
+                        this.socket.sendFE('generator');
+                        this.socket.sendBE('generator');
                         this.onSaveSuccess();
                     },
                     (res: HttpErrorResponse) => this.onSaveError());
@@ -851,34 +850,12 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
                     if (uuid === projectUUID) {
                         if (status) {
                             if (status.trim() === 'didnot') {
-//                 if (this.generatorList[position] === 'Compiler') {
-//                   this.messageService.add({
-//                     severity: 'error',
-//                     summary: 'Compilation Failed',
-//                   });
-//                 } else {
-//                   this.messageService.add({
-//                     severity: 'error',
-//                     summary: 'Generation Failed at ' + this.generatorList[position],
-//                   });
-//                 }
                                 if(this.code != '') {
                                     this.code = this.code + ",\n";
                                 }
                                 this.code = this.code + '{"status": "Error", "detail": "Generation failed at '+ this.generatorList[position] + '"}';
 
                             } else if (status.trim() === 'done') {
-//                 if (this.generatorList[position] === 'Compiler') {
-//                   this.messageService.add({
-//                     severity: 'success',
-//                     summary: 'Successfully Compiled',
-//                   });
-//                 } else {
-//                   this.messageService.add({
-//                     severity: 'success',
-//                     summary: 'Generation is Successful at ' + this.generatorList[position],
-//                   });
-//                 }
                                 if(this.code != '') {
                                     this.code = this.code + ",\n";
                                 }
@@ -889,6 +866,144 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
                                     this.code = this.code + ",\n";
                                 }
                                 this.code = this.code + '{"status": "In progress", "detail": "Generation started at '+ this.generatorList[position] + '"}';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+    loadBEGenData(uuid) {
+        this.socket.getBEEventListener().subscribe(event => {
+            if (event.type === 'message') {
+                let topic = event.data.topic;
+                if (topic === 'generator') {
+                    let data = event.data.content;
+
+                    let projectUUID = '';
+                    let status = '';
+                    let time = '';
+                    let position = -1;
+
+                    let allKeyValuePairs = data.split(',');
+                    if (allKeyValuePairs) {
+                        allKeyValuePairs.forEach(keyval => {
+                            let keyAndValArr = keyval.split('=', 2);
+                            let key = '';
+                            let val = '';
+
+                            if (keyAndValArr) {
+                                for (let i = 0; i < keyAndValArr.length; i++) {
+                                    if (i === 0) {
+                                        key = keyAndValArr[i];
+                                    } else {
+                                        val = keyAndValArr[i];
+                                    }
+                                }
+                            }
+
+                            if (key === 'projectuuid') {
+                                projectUUID = val;
+                            } else if (key === 'status') {
+                                status = val;
+                            } else if (key === 'time') {
+                                time = val;
+                            } else if (key === 'position') {
+                                position = +val;
+                            }
+                        });
+                    }
+
+                    if (uuid === projectUUID) {
+                        if (status) {
+                            if (status.trim() === 'didnot') {
+                                if(this.bEBuildStatus != '') {
+                                    this.bEBuildStatus = this.bEBuildStatus + ",\n";
+                                }
+                                this.bEBuildStatus = this.bEBuildStatus + '{"status": "Error", "detail": "Generation failed at '+ this.generatorList[position] + '"}';
+
+                            } else if (status.trim() === 'done') {
+                                if(this.bEBuildStatus != '') {
+                                    this.bEBuildStatus = this.bEBuildStatus + ",\n";
+                                }
+                                this.bEBuildStatus = this.bEBuildStatus + '{"status": "Success", "detail": "Generation successful at '+ this.generatorList[position] + '"}';
+
+                            } else if (status.trim() === 'done') {
+                                if(this.bEBuildStatus != '') {
+                                    this.bEBuildStatus = this.bEBuildStatus + ",\n";
+                                }
+                                this.bEBuildStatus = this.bEBuildStatus + '{"status": "In progress", "detail": "Generation started at '+ this.generatorList[position] + '"}';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+    loadFEGenData(uuid) {
+        this.socket.getFEEventListener().subscribe(event => {
+            if (event.type === 'message') {
+                let topic = event.data.topic;
+                if (topic === 'generator') {
+                    let data = event.data.content;
+
+                    let projectUUID = '';
+                    let status = '';
+                    let time = '';
+                    let position = -1;
+
+                    let allKeyValuePairs = data.split(',');
+                    if (allKeyValuePairs) {
+                        allKeyValuePairs.forEach(keyval => {
+                            let keyAndValArr = keyval.split('=', 2);
+                            let key = '';
+                            let val = '';
+
+                            if (keyAndValArr) {
+                                for (let i = 0; i < keyAndValArr.length; i++) {
+                                    if (i === 0) {
+                                        key = keyAndValArr[i];
+                                    } else {
+                                        val = keyAndValArr[i];
+                                    }
+                                }
+                            }
+
+                            if (key === 'projectuuid') {
+                                projectUUID = val;
+                            } else if (key === 'status') {
+                                status = val;
+                            } else if (key === 'time') {
+                                time = val;
+                            } else if (key === 'position') {
+                                position = +val;
+                            }
+                        });
+                    }
+
+                    if (uuid === projectUUID) {
+                        if (status) {
+                            if (status.trim() === 'didnot') {
+                                if(this.fEBuildStatus != '') {
+                                    this.fEBuildStatus = this.fEBuildStatus + ",\n";
+                                }
+                                this.fEBuildStatus = this.fEBuildStatus + '{"status": "Error", "detail": "Generation failed at '+ this.generatorList[position] + '"}';
+
+                            } else if (status.trim() === 'done') {
+                                if(this.fEBuildStatus != '') {
+                                    this.fEBuildStatus = this.fEBuildStatus + ",\n";
+                                }
+                                this.fEBuildStatus = this.fEBuildStatus + '{"status": "Success", "detail": "Generation successful at '+ this.generatorList[position] + '"}';
+
+                            } else if (status.trim() === 'done') {
+                                if(this.fEBuildStatus != '') {
+                                    this.fEBuildStatus = this.fEBuildStatus + ",\n";
+                                }
+                                this.fEBuildStatus = this.fEBuildStatus + '{"status": "In progress", "detail": "Generation started at '+ this.generatorList[position] + '"}';
                             }
                         }
                     }

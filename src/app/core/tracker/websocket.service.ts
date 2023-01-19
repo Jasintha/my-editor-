@@ -22,6 +22,22 @@ export class WebsocketService {
       */
   }
 
+  public sendFE(data: string) {
+    WebsocketService.socket.send(data);
+  }
+
+  public closeFE() {
+    WebsocketService.socket.close();
+  }
+
+  public sendBE(data: string) {
+    WebsocketService.socket.send(data);
+  }
+
+  public closeBE() {
+    WebsocketService.socket.close();
+  }
+
   public send(data: string) {
     WebsocketService.socket.send(data);
   }
@@ -68,14 +84,14 @@ export class WebsocketService {
   }
 
   connectFESocket(email, protocol){
-    WebsocketService.socketFE = new WebSocket(protocol + '://' + window.location.hostname + '/ws/' + email);
+    WebsocketService.socketFE = new WebSocket(protocol + '://' + window.location.hostname + '/ws/f/' + email);
     WebsocketService.socketFE.onopen = event => {
       WebsocketService.listenerFE.emit({ type: 'open', data: event });
     };
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     WebsocketService.socketFE.onclose = event => {
       setTimeout(() => {
-        this.connect(email);
+        this.connectFESocket(email, protocol);
       }, 1000);
     };
     WebsocketService.socketFE.onmessage = event => {
@@ -83,14 +99,14 @@ export class WebsocketService {
     };
   }
   connectBESocket(email, protocol) {
-    WebsocketService.socketBE = new WebSocket(protocol + '://' + window.location.hostname + '/ws/' + email);
+    WebsocketService.socketBE = new WebSocket(protocol + '://' + window.location.hostname + '/ws/b/' + email);
     WebsocketService.socketBE.onopen = event => {
       WebsocketService.listenerBE.emit({ type: 'open', data: event });
     };
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     WebsocketService.socketBE.onclose = event => {
       setTimeout(() => {
-        this.connect(email);
+        this.connectBESocket(email,protocol);
       }, 1000);
     };
     WebsocketService.socketBE.onmessage = event => {
