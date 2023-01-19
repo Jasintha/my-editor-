@@ -78,7 +78,8 @@ import {InitPageCreationComponent} from '@home/pages/built-in-page/init-page-cre
 import { MainMenuModule } from '../main-menu/main-menu.module';
 import {PageNavigationModule} from '@home/pages/page-navigation/page-navigation.module';
 import {CreateTextComponent} from '@home/pages/rulechain/design-editor/create-text.component';
-
+import {UiHomeComponent} from '@home/pages/ui-home/ui-home.component';
+import {ServiceHomeComponent} from '@home/pages/service-home/service-home.component';
 import {
   AddDesignRuleNodeDialogComponent,
   AddDesignRuleNodeLinkDialogComponent,
@@ -136,7 +137,9 @@ import {BuildViewModule} from '@home/pages/build-view/build-view.module';
     ModelDesignViewComponent,
     ProcessDesignViewComponent,
     ScreenDesignViewComponent,
-    DesignWarningComponent
+    DesignWarningComponent,
+    UiHomeComponent,
+    ServiceHomeComponent,
   ],
   providers: [
     {
@@ -203,7 +206,7 @@ import {BuildViewModule} from '@home/pages/build-view/build-view.module';
     PickListModule,
     ListboxModule,
     TreeModule,
-    ContextMenuModule
+    ContextMenuModule,
   ]
 })
 export class RuleChainModule { }

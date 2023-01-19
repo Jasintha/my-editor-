@@ -22,7 +22,8 @@
             <as-split-area [size]="splitPartOneSize">
                 <as-split direction="vertical">
                     <as-split-area [size]="splitConsoleSizeOne">
-
+                        <virtuan-ui-home *ngIf="loadUIHome"> </virtuan-ui-home>
+                        <virtuan-service-home *ngIf="loadServiceHome"> </virtuan-service-home>
                         <!-- <router-outlet></router-outlet>-->
                         <virtuan-design-editor-new *ngIf="loadDesignRequirement" [requirementUid]="requirementUid" [reqArray]="requirementArray" [reload]="reload" [desprojectUid]="desprojectUid"></virtuan-design-editor-new>
                         <virtuan-microservice-model *ngIf="loadModelView" [projectUid]="projectUid" [modelUid]="modelUid"></virtuan-microservice-model>

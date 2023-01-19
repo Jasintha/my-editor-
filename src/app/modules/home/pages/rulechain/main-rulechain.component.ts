@@ -2,7 +2,8 @@ import {Component, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@a
 import { filter, map } from 'rxjs/operators';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-
+import {UiHomeComponent} from '@home/pages/ui-home/ui-home.component';
+import {ServiceHomeComponent} from '@home/pages/service-home/service-home.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
     inputNodeComponent,
@@ -119,6 +120,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     ruleChainMetaDataLoaded: boolean;
     ruleNodeComponentsLoaded: boolean;
     loadFunctionEditor: boolean;
+    loadUIHome: boolean;
+    loadServiceHome: boolean;
     loadDesignRequirement: boolean;
     connectionPropertyTemplatesLoaded: boolean;
     loadModelView: boolean;
@@ -333,6 +336,58 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadTabPageEditor = false;
         this.loadThemeEditor = true;
         this.loadBuildWindow = false;
+        this.loadUIHome = false;
+        this.loadServiceHome = false;
+    }
+
+    viewUIHome() {
+        this.ruleChainLoaded = false;
+        this.ruleChainMetaDataLoaded = false;
+        this.connectionPropertyTemplatesLoaded = false;
+        this.ruleNodeComponentsLoaded = false;
+        this.ruleChain = null;
+        this.ruleChainMetaData = null;
+        this.connectionPropertyTemplates = null;
+        this.ruleNodeComponents = null;
+        this.lambdauid = "";
+        this.loadFunctionEditor = false;
+        this.loadModelView = false;
+        this.loadDesignRequirement = false;
+        this.requirementUid = "";
+        this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
+        this.loadCustomPageEditor = false;
+        this.loadFilterPageEditor = false;
+        this.loadTabPageEditor = false;
+        this.loadThemeEditor = false;
+        this.loadBuildWindow = false;
+        this.loadUIHome = true;
+        this.loadServiceHome = false;
+    }
+
+    viewServiceHome() {
+        this.ruleChainLoaded = false;
+        this.ruleChainMetaDataLoaded = false;
+        this.connectionPropertyTemplatesLoaded = false;
+        this.ruleNodeComponentsLoaded = false;
+        this.ruleChain = null;
+        this.ruleChainMetaData = null;
+        this.connectionPropertyTemplates = null;
+        this.ruleNodeComponents = null;
+        this.lambdauid = "";
+        this.loadFunctionEditor = false;
+        this.loadModelView = false;
+        this.loadDesignRequirement = false;
+        this.requirementUid = "";
+        this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
+        this.loadCustomPageEditor = false;
+        this.loadFilterPageEditor = false;
+        this.loadTabPageEditor = false;
+        this.loadThemeEditor = false;
+        this.loadBuildWindow = false;
+        this.loadUIHome = false;
+        this.loadServiceHome = true;
     }
 
     viewPageEditor(item){
@@ -385,6 +440,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadWidgetEditor = false;
         this.loadThemeEditor = false;
         this.loadBuildWindow = false;
+        this.loadUIHome = false;
+        this.loadServiceHome = false;
     }
 
     // viewSingleWidget(item){
@@ -435,6 +492,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadWidgetEditor = false;
         this.loadThemeEditor = false;
         this.loadBuildWindow = false;
+        this.loadUIHome = false;
+        this.loadServiceHome = false;
     }
 
     viewReqEditor(item?){
@@ -469,6 +528,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadDesignRequirement = true;
         this.loadThemeEditor = false;
         this.loadBuildWindow = false;
+        this.loadUIHome = false;
+        this.loadServiceHome = false;
     }
 
     viewBuildWindow(){
@@ -499,6 +560,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadDesignRequirement = false;
         this.loadThemeEditor = false;
         this.loadBuildWindow = true;
+        this.loadUIHome = false;
+        this.loadServiceHome = false;
     }
 
     viewRule(item) {
@@ -550,6 +613,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             this.ruleNodeComponents = ruleNodeComponents;
         });
         this.loadBuildWindow = false;
+        this.loadUIHome = false;
+        this.loadServiceHome = false;
     }
     viewModel(item){
         this.ruleChainLoaded = false;
@@ -573,6 +638,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.loadTabPageEditor = false;
         this.loadThemeEditor = false;
         this.loadBuildWindow = false;
+        this.loadUIHome = false;
+        this.loadServiceHome = false;
     }
 
     ngOnInit(): void {
@@ -630,11 +697,17 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         if (val !== 'design' &&  val !== 'build' ){
             this.splitPartOneSize = 84;
             this.splitPartTwoSize = 16;
+            if(val === 'portal') {
+                this.viewUIHome()
+            }
+            if (val === 'service') {
+                this.viewServiceHome()
+            }
         } else if (val === 'design'){
             this.splitPartOneSize = 100;
             this.splitPartTwoSize = 0;
             this.loadDesignTreeData();
-        }else if ( val === 'build') {
+        } else if ( val === 'build') {
             this.splitPartOneSize = 100;
             this.splitPartTwoSize = 0;
             this.loadBuildView();
