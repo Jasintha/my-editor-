@@ -5,12 +5,12 @@
             <div style="padding: 10px" class="col-1" *ngFor="let generator of generatorsDataList">
                 <div class="gen-container">
                     <div class="genTitle">
-                        <span>  <mat-icon [ngClass]="{'green': generator['Health'] === 'Healthy', 'yellow' : generator['Health'] === 'Progressing', 'red' : generator['Health'] === 'Degraded'}">brightness_1</mat-icon>  {{generator['Degraded']}} </span>
+                        <span>  <mat-icon [ngClass]="{'green': generator['health'] === 'Healthy', 'yellow' : generator['health'] === 'Progressing', 'red' : generator['health'] === 'Degraded'}">brightness_1</mat-icon> <span style="font-size: 10px"> {{generator['name']}}</span> </span>
                     </div>
                     <div class="gen-body">
-                        <div class="row"><div class="col-12">Health: {{generator['SyncStatus']}}</div> </div>
-                        <div class="row"><div class="col-12">Sync: {{generator['SyncStatus']}}</div> </div>
-                        <div class="row"><div class="col-12">Synced: {{generator['LastSyncedAt']}}</div> </div>
+                        <div class="row"><div class="col-12">Health: {{generator['health']}}</div> </div>
+                        <div class="row"><div class="col-12">Sync: {{generator['sync_status']}}</div> </div>
+                        <div class="row"><div class="col-12">Synced: {{generator['last_synced_at']}}</div> </div>
                         <div class="row" style="margin-top: 5px"><div class="col-6">  <button type="button" class="restartBtn">
                             <mat-icon>settings_backup_restore</mat-icon>
                         </button>
