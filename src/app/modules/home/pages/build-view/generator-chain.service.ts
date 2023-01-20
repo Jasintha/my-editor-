@@ -10,6 +10,7 @@ export class GeneratorChainService {
     public resourceUrl =  'upapi/uws/genchain/log';
     public statusUrl = 'upapi/genchain/chainstatus';
     public generatorSearchLogs = ' /api/logs/generators';
+    public generatorStatusDataURL = '/status/service/getservicestatus';
     constructor(protected http: HttpClient) {}
 
     genConsolelog(projId: string, debugRows?: any, uuid?: string): any {
@@ -22,5 +23,9 @@ export class GeneratorChainService {
 
     getReloadGenStatus(projId: string, uuid: string): any {
         return this.http.get(`${this.statusUrl}/${uuid}/${projId}`, { observe: 'response' });
+    }
+
+    getGeneratorStatusData(): any {
+        return this.http.get(`${this.generatorStatusDataURL}`, { observe: 'response' });
     }
 }

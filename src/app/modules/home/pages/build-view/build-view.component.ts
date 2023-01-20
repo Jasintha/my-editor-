@@ -72,13 +72,7 @@ export class BuildViewComponent implements OnInit {
   typeSelected: string;
   sourceProperties: IEpicService[] = [];
   targetProperties: IEpicService[] = [];
-  generatorsDataList: GeneratorComponents[] = [{name: 'Resource', id: '1', active:true, type: 'General'},
-    {name: 'Skeleton', id: '2', active:true, type: 'Service'},
-    {name: 'Rule', id: '3', active:false, type: 'Service'},
-    {name: 'gRPC', id: '4', active:true, type: 'Service'},
-    {name: 'UI', id: '5', active:true, type: 'ui'},
-    {name: 'Build', id: '6', active:true, type: 'Service'}
-  ]
+  generatorsDataList: GeneratorComponents[] = []
   servicesList: any[] = [
       {name: 'Service 1', uuid:'', active:true, status: 'done', time: '20S'},
     {name: 'Service 2', uuid:'', active:true, status: 'done', time: '10S'},
@@ -111,7 +105,6 @@ export class BuildViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.spinnerService.hide();
     this.buildGenForm();
     this.sourceProperties = [];
@@ -122,6 +115,7 @@ export class BuildViewComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.buildStatusData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.getGeneratorStatusData();
   }
 
   applyFilter(filterValue: string) {
@@ -232,6 +226,21 @@ export class BuildViewComponent implements OnInit {
               this.servicesToGenerate = [];
               this.servicesToGenerate = res;
               this.sourceProperties = this.servicesToGenerate;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+  }
+
+  getGeneratorStatusData () {
+    this.generatorService
+        .getGeneratorStatusData()
+        .pipe(
+            filter((mayBeOk: HttpResponse<any[]>) => mayBeOk.ok),
+            map((response: HttpResponse<any[]>) => response.body)
+        )
+        .subscribe(
+            (res: any[]) => {
+              this.generatorsDataList = res;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );

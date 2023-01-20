@@ -5,10 +5,12 @@
             <div style="padding: 10px" class="col-1" *ngFor="let generator of generatorsDataList">
                 <div class="gen-container">
                     <div class="genTitle">
-                        <span>  <mat-icon [ngClass]="{'green': generator.active, 'red' : !generator.active}">brightness_1</mat-icon>  {{generator.name}} </span>
+                        <span>  <mat-icon [ngClass]="{'green': generator['Health'] === 'Healthy', 'yellow' : generator['Health'] === 'Progressing', 'red' : generator['Health'] === 'Degraded'}">brightness_1</mat-icon>  {{generator['Degraded']}} </span>
                     </div>
                     <div class="gen-body">
-                        <div class="row"><div class="col-12">{{generator.type}}</div> </div>
+                        <div class="row"><div class="col-12">Health: {{generator['SyncStatus']}}</div> </div>
+                        <div class="row"><div class="col-12">Sync: {{generator['SyncStatus']}}</div> </div>
+                        <div class="row"><div class="col-12">Synced: {{generator['LastSyncedAt']}}</div> </div>
                         <div class="row" style="margin-top: 5px"><div class="col-6">  <button type="button" class="restartBtn">
                             <mat-icon>settings_backup_restore</mat-icon>
                         </button>
