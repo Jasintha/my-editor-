@@ -73,11 +73,7 @@ export class BuildViewComponent implements OnInit {
   sourceProperties: IEpicService[] = [];
   targetProperties: IEpicService[] = [];
   generatorsDataList: GeneratorComponents[] = []
-  servicesList: any[] = [
-      {name: 'Service 1', uuid:'', active:true, status: 'done', time: '20S'},
-    {name: 'Service 2', uuid:'', active:true, status: 'done', time: '10S'},
-    {name: 'Service 3', uuid:'', active:true, status: 'doing', time: '50S'},
-  ]
+  servicesList: any[] = []
   buildGenForm() {
     this.editForm = this.fb.group({
       id: [],
@@ -116,6 +112,7 @@ export class BuildViewComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.getGeneratorStatusData();
+    this.getServiceGenStatus();
   }
 
   applyFilter(filterValue: string) {
@@ -241,6 +238,21 @@ export class BuildViewComponent implements OnInit {
         .subscribe(
             (res: any[]) => {
               this.generatorsDataList = res;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+  }
+
+  getServiceGenStatus () {
+    this.generatorService
+        .getServiceGenStatus()
+        .pipe(
+            filter((mayBeOk: HttpResponse<any[]>) => mayBeOk.ok),
+            map((response: HttpResponse<any[]>) => response.body)
+        )
+        .subscribe(
+            (res: any[]) => {
+              this.servicesList = res;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );

@@ -11,6 +11,7 @@ export class GeneratorChainService {
     public statusUrl = 'upapi/genchain/chainstatus';
     public generatorSearchLogs = ' /api/logs/generators';
     public generatorStatusDataURL = '/status/service/getservicestatus';
+    public serviceGenStatusDataURL = '/status/service/getservicesgenstatus';
     constructor(protected http: HttpClient) {}
 
     genConsolelog(projId: string, debugRows?: any, uuid?: string): any {
@@ -27,5 +28,9 @@ export class GeneratorChainService {
 
     getGeneratorStatusData(): any {
         return this.http.get(`${this.generatorStatusDataURL}`, { observe: 'response' });
+    }
+
+    getServiceGenStatus(): any {
+        return this.http.get(`${this.serviceGenStatusDataURL}`, { observe: 'response' });
     }
 }

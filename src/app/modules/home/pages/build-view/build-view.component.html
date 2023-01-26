@@ -96,6 +96,7 @@
 </div>
 <div class="col-2">
     <div class="row">
+        <button mat-icon-button  class="top-node" style="float: right; margin-right: 30px" (click)="getServiceGenStatus()"><mat-icon>refresh</mat-icon></button>
         <div class="col-md-10" *ngFor="let service of servicesList; let i = index" [attr.data-index]="i">
             <div class="application-resource-tree__node"
                  style="top: 10px; height: 52px; padding-bottom: 50px">

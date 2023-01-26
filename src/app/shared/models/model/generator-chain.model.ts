@@ -26,3 +26,22 @@ export interface IGenerator {
 export class Generator implements IGenerator {
   constructor(public position?: number, public generator?: IGeneratorComponents) {}
 }
+
+
+export interface IServiceGenStatus {
+  status?: string;
+  name?: string;
+  serviceid?: string;
+  buildid?: string;
+  logs?: string;
+}
+
+export class ServiceGenStatus implements IServiceGenStatus {
+  constructor(
+      public status?: string,
+      public name?: string,
+      public serviceid?: string,
+      public buildid?: string,
+      public logs?: string,
+  ) {}
+}

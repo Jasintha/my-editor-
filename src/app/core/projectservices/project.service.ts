@@ -236,13 +236,13 @@ export class ProjectService {
   }
 
   getFEPreviewStatusData(): Observable<HttpResponse<any>> {
-    return this.http.get<any>(`${this.genResourceUrl}/status/getbackendpreviewstatus`, {
+    return this.http.get<any>(`/status/getbackendpreviewstatus`, {
       observe: 'response',
     });
   }
 
   getBEPreviewStatusData(): Observable<HttpResponse<any>> {
-    return this.http.get<any>(`${this.genResourceUrl}/status/getfrontendpreviewstatus`, {
+    return this.http.get<any>(`/status/getfrontendpreviewstatus`, {
       observe: 'response',
     });
   }
