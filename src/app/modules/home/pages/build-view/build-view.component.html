@@ -9,8 +9,6 @@
                         <span>  <mat-icon [ngClass]="{'green': generator['health'] === 'Healthy', 'yellow' : generator['health'] === 'Progressing', 'red' : generator['health'] === 'Degraded'}">brightness_1</mat-icon> <span style="font-size: 14px"> {{generator['name']}}</span> </span>
                     </div>
                     <div class="gen-body">
-                        <div class="row" style="padding: 5px"><div class="col-12"><span style="font-weight: 500">Health :</span> {{generator['health']}}</div> </div>
-                        <div class="row" style="padding: 5px"><div class="col-12"><span style="font-weight: 500">Sync :</span> {{generator['sync_status']}}</div> </div>
                         <div class="row" style="padding: 5px"><div class="col-12"><span style="font-weight: 500">Synced :</span> {{generator['last_synced_at']}}</div> </div>
                         <div class="row" style="margin-top: 5px"><div class="col-6">  <button type="button" class="restartBtn">
                             <mat-icon>settings_backup_restore</mat-icon>

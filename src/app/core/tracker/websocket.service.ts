@@ -23,19 +23,19 @@ export class WebsocketService {
   }
 
   public sendFE(data: string) {
-    WebsocketService.socket.send(data);
+    WebsocketService.socketFE.send(data);
   }
 
   public closeFE() {
-    WebsocketService.socket.close();
+    WebsocketService.socketFE.close();
   }
 
   public sendBE(data: string) {
-    WebsocketService.socket.send(data);
+    WebsocketService.socketBE.send(data);
   }
 
   public closeBE() {
-    WebsocketService.socket.close();
+    WebsocketService.socketBE.close();
   }
 
   public send(data: string) {

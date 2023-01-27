@@ -45,3 +45,24 @@ export class ServiceGenStatus implements IServiceGenStatus {
       public logs?: string,
   ) {}
 }
+
+export interface IRestartServiceData {
+  name?: string;
+  namespace?: string;
+  resourceName?: string;
+  version?: string;
+  kind?: string;
+  group?: string;
+}
+
+export class RestartServiceData implements IRestartServiceData {
+  constructor(
+      public name?: string,
+      public namespace?: string,
+      public resourceName?: string,
+      public version?: string,
+      public kind?: string,
+      public group?: string,
+  ) {
+  }
+}

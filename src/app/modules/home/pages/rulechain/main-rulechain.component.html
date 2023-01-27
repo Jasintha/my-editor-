@@ -48,7 +48,7 @@
                     <as-split-area [size]="splitConsoleSizeTwo">
                         <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
                             <button mat-raised-button type="button" style=" background-color: #a8554f; color: white; margin-left: 5px;" (click)="clearLog()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">not_interested</mat-icon></button>
-                            <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">play_circle_outline</mat-icon></button>
+<!--                            <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">play_circle_outline</mat-icon></button>-->
 
                         </div>
 
@@ -73,7 +73,7 @@
                             <mat-tab label="Console">
                                 <ng-template mat-tab-label>
                                     <mat-icon class="example-tab-icon">receipt</mat-icon>
-                                    FE Build
+                                    UI Build
                                 </ng-template>
                                 <ng-template matTabContent>
                                     <div style="min-height: 200px; height:100% !important; width: 100%;">
@@ -87,7 +87,7 @@
                             <mat-tab label="Console">
                                 <ng-template mat-tab-label>
                                     <mat-icon class="example-tab-icon">cloud</mat-icon>
-                                    BE Build
+                                    Service Build
                                 </ng-template>
                                 <ng-template matTabContent>
                                     <div style="min-height: 200px; height:100% !important; width: 100%;">
@@ -101,7 +101,7 @@
                             <mat-tab label="Console">
                                 <ng-template mat-tab-label>
                                     <mat-icon class="example-tab-icon">receipt</mat-icon>
-                                    FE Gen
+                                    UI Gen
                                 </ng-template>
                                 <ng-template matTabContent>
                                     <div style="min-height: 200px; height:100% !important; width: 100%;">
@@ -115,7 +115,7 @@
                             <mat-tab label="Console">
                                 <ng-template mat-tab-label>
                                     <mat-icon class="example-tab-icon">cloud</mat-icon>
-                                    BE Gen
+                                    Service Gen
                                 </ng-template>
                                 <ng-template matTabContent>
                                     <div style="min-height: 200px; height:100% !important; width: 100%;">
