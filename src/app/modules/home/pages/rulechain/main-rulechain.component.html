@@ -14,14 +14,14 @@
 
 </div>-->
 
-<div style="height: 100%;">
+<div style="height: 100%;" class="rulechain-page-custom-scroll">
     <div style="width: 100%; height: 100%; background: #ffffff;">
 
         <as-split direction="horizontal">
             <!--<as-split-area [size]="15">TOP</as-split-area>-->
             <as-split-area [size]="splitPartOneSize">
                 <as-split direction="vertical">
-                    <as-split-area [size]="splitConsoleSizeOne">
+                    <as-split-area [size]="splitConsoleSizeOne" [ngClass]="{'build-in-page-custom-scroll': loadPageEditor}">
 
                         <!-- <router-outlet></router-outlet>-->
                         <virtuan-design-editor-new *ngIf="loadDesignRequirement" [requirementUid]="requirementUid" [reqArray]="requirementArray" [reload]="reload" [desprojectUid]="desprojectUid"></virtuan-design-editor-new>
@@ -44,7 +44,7 @@
                         <virtuan-theme-update *ngIf="loadThemeEditor" [projectUid]="projectUid" [pageId]="pageId"></virtuan-theme-update>
                         <virtuan-build-view *ngIf="loadBuildWindow"></virtuan-build-view>
                     </as-split-area>
-                    <as-split-area [size]="splitConsoleSizeTwo">
+                    <as-split-area [size]="splitConsoleSizeTwo"  [ngClass]="{'build-in-page-custom-scroll': loadPageEditor, 'rulechain-page-custom-scroll': !loadPageEditor}">
                         <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
                             <button mat-raised-button type="button" style=" background-color: #a8554f; color: white; margin-left: 5px;" (click)="clearLog()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">not_interested</mat-icon></button>
                             <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">play_circle_outline</mat-icon></button>
@@ -229,7 +229,7 @@
                                 </mat-tree-node>
                             </mat-tree>
                         </div>
-                        <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'service'}" role="tabpanel"
+                        <div class="tab-pane fade size-limit rulechain-page-custom-scroll" [ngClass]="{'show active': currentTab == 'service'}" role="tabpanel"
                              aria-labelledby="profile-tab">
                             <button mat-icon-button  class="top-node" style="float: right; margin-right: 30px" (click)="refreshTree()"><mat-icon>refresh</mat-icon></button>
                             <!--                            <button mat-icon-button  class="top-node" style="float: right; margin-right: 20px" (click)="add('PARENT_SERVICE')"><mat-icon >add</mat-icon></button>-->
@@ -280,7 +280,7 @@
                                 </mat-tree-node>
                             </mat-tree>
                         </div>
-                        <div class="tab-pane fade size-limit" [ngClass]="{'show active': currentTab == 'portal'}" role="tabpanel"
+                        <div class="tab-pane fade size-limit build-in-page-custom-scroll" [ngClass]="{'show active': currentTab == 'portal'}" role="tabpanel"
                              aria-labelledby="contact-tab">
                             <button mat-icon-button  class="top-node" style="float: right; margin-right: 30px" (click)="refreshTree()"><mat-icon>refresh</mat-icon></button>
                             <mat-tree [dataSource]="uiTreeDaSource" [treeControl]="treeControl" style="margin-top: 25px;">

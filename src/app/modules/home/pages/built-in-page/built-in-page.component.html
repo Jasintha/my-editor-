@@ -3,7 +3,7 @@
         <span>Data Pages</span>
     </h2>
     <br/>
-    <div class="scroll-bar" *ngIf="builtInPages?.length > 0">
+    <div class="scroll-bar build-in-page-custom-scroll" *ngIf="builtInPages?.length > 0">
         <p-dataView #dv [value]="builtInPages" [paginator]="true" [rows]="20" paginatorPosition="top"
                     filterBy="name"
                     [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
