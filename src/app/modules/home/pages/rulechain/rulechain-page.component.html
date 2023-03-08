@@ -19,7 +19,7 @@
      [cheatSheet]="cheatSheetComponent"
   fxLayout="column" class="virtuan-rulechain">
   <virtuan-hotkeys-cheatsheet #cheatSheetComponent></virtuan-hotkeys-cheatsheet>
-  <section class="virtuan-rulechain-container" fxFlex fxLayout="column">
+  <section class="virtuan-rulechain-container rulechain-page-custom-scroll" fxFlex fxLayout="column">
     <div class="virtuan-rulechain-layout" fxFlex fxLayout="row">
       <section fxLayout="row"
                class="virtuan-header-buttons virtuan-library-open" [fxShow]="!isLibraryOpen">
@@ -66,7 +66,7 @@
               </button>
             </div>
           </mat-toolbar>
-          <div class="virtuan-rulechain-library-panel-group">
+          <div class="virtuan-rulechain-library-panel-group rulechain-page-custom-scroll">
             <mat-expansion-panel #ruleNodeTypeExpansionPanels
                                  class="mat-elevation-z2"
                                  [expanded]="true" *ngFor="let ruleNodeType of ruleNodeTypesLibraryArray">
@@ -92,7 +92,7 @@
             </mat-expansion-panel>
           </div>
         </mat-drawer>
-        <mat-drawer class="virtuan-details-drawer"
+        <mat-drawer class="virtuan-details-drawer rulechain-page-custom-scroll"
                     [opened]="isEditingRuleNode || isEditingRuleNodeLink"
                     (closed)="onDetailsDrawerClosed()"
                     mode="over"
@@ -197,7 +197,7 @@
         </mat-drawer>
         <mat-drawer-content class="virtuan-rulechain-graph-content">
 
-          <div class="virtuan-absolute-fill virtuan-rulechain-graph" (contextmenu)="openRuleChainContextMenu($event)">
+          <div class="virtuan-absolute-fill virtuan-rulechain-graph rulechain-page-custom-scroll" (contextmenu)="openRuleChainContextMenu($event)">
             <div #ruleChainMenuTrigger="matMenuTrigger" style="visibility: hidden; position: fixed"
                  [style.left]="ruleChainMenuPosition.x"
                  [style.top]="ruleChainMenuPosition.y"
