@@ -94,17 +94,28 @@
   overflow-x: hidden;
 }
 
+.build-in-page-custom-scroll{
+  scrollbar-color: #d3d3d3 #d3d3d3;
+  scrollbar-shadow-color: grey;
+  scrollbar-width: 5px;
+}
+
 .build-in-page-custom-scroll::-webkit-scrollbar {
   width: 4px;
 }
 
+.build-in-page-custom-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey !important;
+  border-radius: 5px;
+}
+
 .build-in-page-custom-scroll::-webkit-scrollbar-thumb {
-    background: #257bff !important;
+    background: #d3d3d3 !important;
     border-radius: 5px;
   }
 
 .build-in-page-custom-scroll::-webkit-scrollbar-thumb:hover {
-    background: #002386 !important;
+    background: #d3d3d3 !important;
 }
 
 ::-webkit-scrollbar {
