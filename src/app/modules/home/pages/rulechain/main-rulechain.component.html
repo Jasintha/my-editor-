@@ -21,7 +21,7 @@
             <!--<as-split-area [size]="15">TOP</as-split-area>-->
             <as-split-area [size]="splitPartOneSize">
                 <as-split direction="vertical">
-                    <as-split-area [size]="splitConsoleSizeOne" [ngClass]="{'build-in-page-custom-scroll': loadPageEditor}">
+                    <as-split-area [size]="splitConsoleSizeOne" [ngClass]="{'build-in-page-custom-scroll': loadPageEditor, 'rulechain-page-custom-scroll': !loadPageEditor}">
                         <virtuan-ui-home *ngIf="loadUIHome"> </virtuan-ui-home>
                         <virtuan-service-home *ngIf="loadServiceHome"> </virtuan-service-home>
                         <!-- <router-outlet></router-outlet>-->
