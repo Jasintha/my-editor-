@@ -391,7 +391,6 @@ export class DesignEditorComponent implements OnInit, OnChanges {
     addStory(selectedEpic){
         if (selectedEpic){
             const dialogRef = this.dialog.open(CreateStoryComponent, {
-                panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
                 data: {
                     projectUid: this.desprojectUid,
                     epic: selectedEpic

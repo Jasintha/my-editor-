@@ -109,6 +109,8 @@ import {ContextMenuModule} from 'primeng/contextmenu';
 import {DesignWarningComponent} from '@home/pages/rulechain/design-editor/design-warning.component';
 import {SubMenuModule} from '@home/pages/sub-menu/sub-menu.module';
 import {BuildViewModule} from '@home/pages/build-view/build-view.module';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
 @NgModule({
   declarations: [
     RuleChainPageComponent,
@@ -207,6 +209,7 @@ import {BuildViewModule} from '@home/pages/build-view/build-view.module';
     ListboxModule,
     TreeModule,
     ContextMenuModule,
+    MatButtonToggleModule
   ]
 })
 export class RuleChainModule { }

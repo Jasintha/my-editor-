@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AggregateService} from '@core/projectservices/microservice-aggregate.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import { IRequirement, Requirement, IEpic, IStory } from '@shared/models/model/requirement.model';
 import {StoryService} from '@core/projectservices/story-technical-view.service';
@@ -26,6 +26,11 @@ interface Item {
   styleUrls: ['./design-editor.component.scss']
 })
 export class CreateStoryComponent implements OnInit {
+  isStarting: boolean;
+  isTemplate: boolean;
+  isCustom: boolean;
+  templateOptions: any[];
+  templateFeatures: any[]
 
   isSaving: boolean;
   project: IProject;
@@ -44,6 +49,8 @@ export class CreateStoryComponent implements OnInit {
     this.editForm = this.fb.group({
       id: [],
       name: ['', [Validators.required]],
+      options: [],
+      features: [],
       description:  '',
       storyTemplate: [''],
     });
@@ -59,6 +66,10 @@ export class CreateStoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isStarting = true;
+    this.isTemplate = false;
+    this.isCustom = false;
+
     this.existingStory = this.data.story;
     this.getStoryData();
     this.epic = this.data.epic;
@@ -206,5 +217,20 @@ export class CreateStoryComponent implements OnInit {
   changeEvent(val){
     this.selectedTemp = val;
   }
+
+  selectType(group:any)
+  {
+    this.isTemplate = (group.value === 'template') ? true : false;
+    this.isCustom = (group.value === 'custom') ? true : false;
+  }
+
+  selectTemplateType(){
+    this.isStarting = false
+  }
+
+  // test(group: any){
+  //   console.log(group.value)
+  //   console.log(this.editForm.get(['options']).value)
+  // }
 
 }

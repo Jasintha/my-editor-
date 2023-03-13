@@ -1,0 +1,75 @@
+.mat-dialog-title{
+    font-size: x-large;
+    display: flex;
+    justify-content: center;
+}
+
+.mat-dialog-actions{
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.mat-button{
+  background-color: #1e8764;
+  color: white;
+  width: 100px;
+  height: 48px;
+}
+
+.mat-button-toggle-group {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    width: 100%;
+}
+
+.mat-button-toggle-group-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.color-text{
+  color: #441e87;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: rgb(124, 149, 240);
+}
+
+.create-story-dialog-container{
+   width: 400px;
+   color: #1e8764
+}
+
+:host ::ng-deep .mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle{
+  border: 1px solid rgb(164, 223, 204);;
+}
+
+.story-form-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-toggle-button{
+  width: 100px;
+  height: 48px;
+  border: 1px solid rgb(164, 223, 204);
+  border-radius: 10px;
+}
+
+
+:host ::ng-deep .mat-button-toggle-checked.mat-button-toggle-appearance-standard{
+  color: white;
+  background-color: #1e8764;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick{
+  background-color: white;
+  color: #1e8764;
+}
+:host ::ng-deep .mat-button-toggle-appearance-standard {
+  color: #1e8764;
+}
