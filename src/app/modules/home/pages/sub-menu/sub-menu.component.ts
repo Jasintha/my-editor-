@@ -156,17 +156,19 @@ export class SubMenuComponent implements OnInit {
 
   loadUpdateForm() {
     // const obj = JSON.parse(this.rowData);
+   if(this.data.uuid){
     this.mainmenuService
-        .findSubMenu(this.data.uuid, this.data.mainMenuId, this.data.projectUid)
-        .pipe(
-            filter((mayBeOk: HttpResponse<ISubMenu>) => mayBeOk.ok),
-            map((response: HttpResponse<ISubMenu>) => response.body)
-        )
-        .subscribe(
-            (res: ISubMenu) => {
-              this.updateForm(res);
-            }
-        );
+    .findSubMenu(this.data.uuid, this.data.mainMenuId, this.data.projectUid)
+    .pipe(
+        filter((mayBeOk: HttpResponse<ISubMenu>) => mayBeOk.ok),
+        map((response: HttpResponse<ISubMenu>) => response.body)
+    )
+    .subscribe(
+        (res: ISubMenu) => {
+          this.updateForm(res);
+        }
+    );
+   }
   }
 
   loadPage() {

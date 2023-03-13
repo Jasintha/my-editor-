@@ -130,8 +130,8 @@ export class AddOperationService {
             data: {
                 projectUid: projectUId,
                 createStatus: status,
-                mainMenuId: item.parentUUID,
-                uuid: item.uuid,
+                mainMenuId: item.isParent === false ? item.parentUUID : item.uuid,
+                uuid: item.isParent === false ? item.uuid : null,
                 formTree: true
             }
         });

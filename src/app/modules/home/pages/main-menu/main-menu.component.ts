@@ -139,18 +139,20 @@ export class MainMenuComponent implements OnInit {
 
   loadUpdateForm() {
     // const obj = JSON.parse(this.rowData);
-    this.mainmenuService
-        .find(this.data.uuid ,this.projectUid)
-        .pipe(
-            filter((mayBeOk: HttpResponse<IMainMenu>) => mayBeOk.ok),
-            map((response: HttpResponse<IMainMenu>) => response.body)
-        )
-        .subscribe(
-            (res: IMainMenu) => {
-              this.currentmainmenu = res;
-              this.updateForm(res);
-            }
-        );
+    if(this.data.uuid){
+      this.mainmenuService
+      .find(this.data.uuid ,this.projectUid)
+      .pipe(
+          filter((mayBeOk: HttpResponse<IMainMenu>) => mayBeOk.ok),
+          map((response: HttpResponse<IMainMenu>) => response.body)
+      )
+      .subscribe(
+          (res: IMainMenu) => {
+            this.currentmainmenu = res;
+            this.updateForm(res);
+          }
+      );
+    }
   }
 
   loadPage() {
