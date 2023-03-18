@@ -38,9 +38,10 @@ const screenfull = _screenfull as _screenfull.Screenfull;
 @Component({
   selector: 'virtuan-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss', './pages/rulechain/rulechain-page.component.scss']
 })
 export class HomeComponent extends PageComponent implements AfterViewInit, OnInit {
+  @ViewChild('drawer') drawer: MatSidenav;
 
   authState: AuthState = getCurrentAuthState(this.store);
 
@@ -70,6 +71,9 @@ export class HomeComponent extends PageComponent implements AfterViewInit, OnIni
   searchEnabled = false;
   showSearch = false;
   searchText = '';
+
+  loadUIHome = false;
+  loadServiceHome = false;
 
   constructor(protected store: Store<AppState>,
               @Inject(WINDOW) private window: Window,
@@ -181,6 +185,18 @@ export class HomeComponent extends PageComponent implements AfterViewInit, OnIni
       this.searchableComponent.onSearchTextUpdated(this.searchText);
     }
   }
+
+  changeSplit(val){
+    if(val === 'portal') {
+      this.router.navigate([`ui`])    
+    } else if (val === 'service') {
+      this.router.navigate([`service`])    
+    } else if (val === 'design'){
+      this.router.navigate([`design`])    
+    } else if ( val === 'build') {
+      this.router.navigate([`build`])    
+    }
+}
 
   logout(){
     this.loginService.logout();

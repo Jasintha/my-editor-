@@ -95,6 +95,7 @@ import {DesignWarningComponent} from '@home/pages/rulechain/design-editor/design
 import {SubMenuModule} from '@home/pages/sub-menu/sub-menu.module';
 import {BuildViewModule} from '@home/pages/build-view/build-view.module';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { DesignViewComponent } from '../design-view/design-view.component';
 
 @NgModule({
   declarations: [
@@ -127,6 +128,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     DesignWarningComponent,
     UiHomeComponent,
     ServiceHomeComponent,
+    DesignViewComponent
   ],
   providers: [
     {

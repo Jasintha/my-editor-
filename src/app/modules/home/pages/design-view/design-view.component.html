@@ -1,0 +1,112 @@
+<div style="height: 100%;" class="rulechain-page-custom-scroll">
+    <div style="width: 100%; height: 100%; background: #ffffff;">
+
+      
+                <as-split direction="vertical">
+                    <as-split-area [size]="95" [ngClass]="{'build-in-page-custom-scroll': loadPageEditor, 'rulechain-page-custom-scroll': !loadPageEditor}">
+                        <virtuan-design-editor-new *ngIf="loadDesignRequirement" [requirementUid]="requirementUid" [reqArray]="requirementArray" [reload]="reload" [desprojectUid]="desprojectUid"></virtuan-design-editor-new>
+                   <router-outlet></router-outlet>
+
+                    </as-split-area>
+                    <as-split-area [size]="5"  [ngClass]="{'build-in-page-custom-scroll': loadPageEditor, 'rulechain-page-custom-scroll': !loadPageEditor}">
+                        <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
+                            <button mat-raised-button type="button" style=" background-color: #a8554f; color: white; margin-left: 5px;" (click)="clearLog()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">not_interested</mat-icon></button>
+
+                        </div>
+
+                        <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 1 || selectedTab === 2">
+                            <button mat-raised-button type="button" style=" background-color: darkgray; color: white; margin-right: 35px; height: 25px; margin-top: 3px" (click)="loadPreviewStatus()" cdkFocusInitial><mat-icon style="font-size: 22px; margin-bottom: 9px" class="example-tab-icon">refresh</mat-icon></button>
+                        </div>
+                        <mat-tab-group dynamicHeight (selectedTabChange)="tabChanged($event)">
+                            <mat-tab label="Console">
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">receipt</mat-icon>
+                                    Events
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
+                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab label="Console">
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">receipt</mat-icon>
+                                    UI Build
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
+                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="fEBuildStatus" ngDefaultControl></ngx-monaco-editor>
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab label="Console">
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">cloud</mat-icon>
+                                    Service Build
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
+                                        <!--                                        <div style="min-height: 40px;margin: 5px;">-->
+                                        <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
+
+                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="bEBuildStatus" ngDefaultControl></ngx-monaco-editor>
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab label="Console">
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">receipt</mat-icon>
+                                    UI Gen
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
+                                        <!--                                        <div style="min-height: 40px;margin: 5px;">-->
+                                        <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
+
+                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="fEBuildStatus" ngDefaultControl></ngx-monaco-editor>
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab label="Console">
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">cloud</mat-icon>
+                                    Service Gen
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
+                                        <!--                                        <div style="min-height: 40px;margin: 5px;">-->
+                                        <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
+
+                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="bEBuildStatus" ngDefaultControl></ngx-monaco-editor>
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+                        </mat-tab-group>
+
+            </as-split-area>
+        </as-split>
+    </div>
+
+
+    <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+        <ng-template let-item="item" matMenuContent>
+            <button *ngIf="item.type === 'MODEL'" (click)="exportAggregateFile(item)" mat-menu-item>
+                <!--<mat-icon [icIcon]="icDelete"></mat-icon>-->
+                <span>Export</span>
+            </button>
+            <button *ngIf="item.type !== 'HYBRID' && item.type !== 'EVENT'" (click)="viewComponent(item)" mat-menu-item>
+                <!--<mat-icon [icIcon]="icEdit"></mat-icon>-->
+                <span>View</span>
+            </button>
+            <button *ngIf="item.type !== 'MAIN_TASK' && item.type !== 'UI_PAGE' && item.type !== 'PARENT_UI_SUB_MENU'" (click)="edit(item)" mat-menu-item>
+                <!--<mat-icon [icIcon]="icDelete"></mat-icon>-->
+                <span>Edit</span>
+            </button>
+            <button *ngIf="item.type !== 'MAIN_TASK'" (click)="delete(item)" mat-menu-item>
+                <!--<mat-icon [icIcon]="icDelete"></mat-icon>-->
+                <span>Delete</span>
+            </button>
+        </ng-template>
+    </mat-menu>
+</div>

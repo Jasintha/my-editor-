@@ -20,6 +20,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
 // import { AuthGuard } from '@core/guards/auth.guard';
 import { StoreModule } from '@ngrx/store';
+import { Authority } from '@app/shared/public-api';
 
 const routes: Routes = [
   { path: '',
@@ -28,10 +29,9 @@ const routes: Routes = [
       title: 'home.home',
       breadcrumb: {
         skip: true
-      }
+      },
+      auth: [Authority.TENANT_ADMIN],
     },
-    // canActivate: [AuthGuard],
-    // canActivateChild: [AuthGuard],
     loadChildren: () => import('./pages/home-pages.module').then(m => m.HomePagesModule)
   }
 ];

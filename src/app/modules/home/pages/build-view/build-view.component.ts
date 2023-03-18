@@ -74,6 +74,10 @@ export class BuildViewComponent implements OnInit {
   targetProperties: IEpicService[] = [];
   generatorsDataList: GeneratorComponents[] = []
   servicesList: any[] = []
+
+  splitConsoleSizeOne = 90;
+  splitConsoleSizeTwo = 5;
+  
   buildGenForm() {
     this.editForm = this.fb.group({
       id: [],
