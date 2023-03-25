@@ -87,7 +87,7 @@ import { LoginService } from "@core/services/login.services";
 
 declare const SystemJS;
 
-const ruleNodeConfigResourcesModulesMap = {
+export const ruleNodeConfigResourcesModulesMap = {
   "@angular/core": SystemJS.newModule(AngularCore),
   "@angular/common": SystemJS.newModule(AngularCommon),
   "@angular/forms": SystemJS.newModule(AngularForms),
@@ -615,51 +615,17 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
     } else {
       this.editorType = "default";
     }
-
     this.username = item.username;
-
-    combineLatest(
-      this.ruleChainService
-      .getRuleNodeComponents(
-        ruleNodeConfigResourcesModulesMap,
-        this.ruleprojectUid,
-        this.editorType
-      ),
-      this.ruleChainService
-      .getConnectionPropertyTemplates(),
-      this.ruleChainService
-      .getResolvedRuleChainMetadata(
-        item.ruleid,
-        item.username,
-        this.ruleprojectUid
-      ),
-      this.ruleChainService
-      .getRuleChainWithUsernameAndUID(
-        item.ruleid,
-        item.username,
-        this.ruleprojectUid
-      )
-    ).subscribe(
-     ([
-        ruleChainNodeComponent, 
-        connectionPropertyTemplates,
-        ruleChainMetaData,
-         ruleChain
-      ]
-      ) => {
-       this.router.navigate(["service/rulechain"], {
-        queryParams: {
-          ruleChain: JSON.stringify(ruleChain),
-          ruleChainMetaData: JSON.stringify(ruleChainMetaData),
-          connectionPropertyTemplates: JSON.stringify(connectionPropertyTemplates),
-          username: this.username,
-          ruleprojectUid: this.ruleprojectUid,
-          editorType: this.editorType,
-          ruleNodeComponents: JSON.stringify(ruleChainNodeComponent)
-          }
-      });
-    })
+    this.router.navigate(["service/rulechain"], {
+      queryParams: {
+        ruleId: item.uuid,
+        username: this.username,
+        ruleprojectUid: this.ruleprojectUid,
+        editorType: this.editorType,
+      },
+    });
   }
+
   viewModel(item) {
     this.ruleChainLoaded = false;
     this.ruleChainMetaDataLoaded = false;
@@ -687,13 +653,9 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.splitPartOneSize = 100;
-    this.splitPartTwoSize = 0;
-    this.splitConsoleSizeOne = 100;
-    this.splitConsoleSizeTwo = 0;
     this.requirementArray = [];
     this.currentReqIndex = 0;
-    this.currentTab = "design";
+    this.currentTab = "service";
     this.route.params.subscribe((params) => {
       this.projectUid = params["projectUid"];
     });
@@ -738,24 +700,15 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
 
   changeSplit(val) {
     this.currentTab = val;
-    if (val !== "design" && val !== "build") {
-      this.splitPartOneSize = 84;
-      this.splitPartTwoSize = 16;
-      if (val === "portal") {
-        this.viewUIHome();
-      }
-      if (val === "service") {
-        this.viewServiceHome();
-      }
-    } else if (val === "design") {
-      this.splitPartOneSize = 100;
-      this.splitPartTwoSize = 0;
-      this.loadDesignTreeData();
-    } else if (val === "build") {
-      this.splitPartOneSize = 100;
-      this.splitPartTwoSize = 0;
-      this.loadBuildView();
-    }
+      if(val === 'portal') {
+        this.router.navigate([`ui`])    
+      } else if (val === 'service') {
+        this.router.navigate([`service`])    
+      } else if (val === 'design'){
+        this.router.navigate([`design`])    
+      } else if ( val === 'build') {
+        this.router.navigate([`build`])    
+      }  
   }
 
   loadBuildView() {

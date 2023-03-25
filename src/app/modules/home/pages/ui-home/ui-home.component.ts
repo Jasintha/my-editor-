@@ -48,6 +48,7 @@ import { IProject, Project } from "@shared/models/model/project.model";
 import { IGenerator } from "@shared/models/model/generator-chain.model";
 import { EventManagerService } from "@shared/events/event.type";
 import { EventTypes } from "@shared/events/event.queue";
+import { Location } from '@angular/common';
 import { Subscription } from "rxjs";
 import * as AngularCommon from "@angular/common";
 import * as AngularForms from "@angular/forms";
@@ -154,6 +155,7 @@ export class UiHomeComponent implements OnInit, OnChanges {
   loadGridPageEditor: boolean;
   loadCustomPageEditor: boolean;
   loadFilterPageEditor: boolean;
+  routeEnable: boolean;
   isGenerating: boolean;
   reload: boolean;
   theme: string = "vs-dark";
@@ -226,7 +228,8 @@ export class UiHomeComponent implements OnInit, OnChanges {
     protected appTypeService: ApptypesService,
     protected aggregateService: AggregateService,
     private consoleLogService: ConsoleLogService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private location: Location
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -350,7 +353,14 @@ export class UiHomeComponent implements OnInit, OnChanges {
     }
   }
   viewPageTheme(item) {
-    this.router.navigate(['ui/page-theme'], {queryParams: {projectUid: item.projectuuid, modelUid: item.uuid}});
+    this.routeEnable = true;
+    this.loadPageEditor = false;
+    this.loadWidgetEditor = false;
+    this.loadCustomPageEditor = false;
+    this.loadGridPageEditor = false;
+    this.loadTabPageEditor = false;
+    this.loadFilterPageEditor = false;
+    this.router.navigate(['ui/page-theme'], {queryParams: {projectUid: item.projectuuid, pageUid: item.uuid}});
   }
 
   viewUIHome() {
@@ -403,19 +413,75 @@ export class UiHomeComponent implements OnInit, OnChanges {
     this.loadServiceHome = true;
   }
 
-  viewPageEditor(item) {
-    if (item.subtype === "multiWidget") {
-      this.router.navigate(['ui/page/multiWidget'], {queryParams: {projectUid: item.projectuuid, pageId: item.uuid}});
-    } else if (item.subtype === "tabbed") {
-      this.router.navigate(['ui/page/tabbed'], {queryParams: {projectUid: item.projectuuid, pageId: item.uuid}});
-    } else if (item.subtype === "customPage") {
-      this.router.navigate(['ui/page/customPage'], {queryParams: {projectUid: item.projectuuid, pageId: item.uuid}});
-    } else if (item.subtype === "filterPage") {
-      this.router.navigate(['ui/page/filterPage'], {queryParams: {projectUid: item.projectuuid, pageId: item.uuid}});
+  viewPageEditor(item){
+    this.routeEnable = false;
+    this.location.replaceState(`ui`)
+    if(item.subtype === 'multiWidget') {
+        this.loadGridPageEditor = true;
+        this.loadPageEditor = false;
+        this.loadCustomPageEditor = false;
+        this.loadTabPageEditor = false;
+        this.loadFilterPageEditor = false;
+    }  else if (item.subtype === 'tabbed'){
+        this.loadTabPageEditor = true;
+        this.loadGridPageEditor = false;
+        this.loadPageEditor = false;
+        this.loadCustomPageEditor = false;
+        this.loadFilterPageEditor = false;
+    } else if (item.subtype === 'customPage') {
+        this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
+        this.loadCustomPageEditor = true;
+        this.loadTabPageEditor = false;
+        this.loadFilterPageEditor = false;
+    } else if (item.subtype === 'filterPage') {
+        this.loadPageEditor = false;
+        this.loadGridPageEditor = false;
+        this.loadCustomPageEditor = false;
+        this.loadTabPageEditor = false;
+        this.loadFilterPageEditor = true;
     } else {
-      this.router.navigate(['ui/page/singleWidget'], {queryParams: {projectUid: item.projectuuid, pageId: item.uuid}});
+        this.loadPageEditor = true;
+        this.loadGridPageEditor = false;
+        this.loadCustomPageEditor = false;
+        this.loadTabPageEditor = false;
+        this.loadFilterPageEditor = false;
     }
-  }
+    this.ruleChainLoaded = false;
+    this.ruleChainMetaDataLoaded = false;
+    this.connectionPropertyTemplatesLoaded = false;
+    this.ruleNodeComponentsLoaded = false;
+    this.ruleChain = null;
+    this.ruleChainMetaData = null;
+    this.connectionPropertyTemplates = null;
+    this.ruleNodeComponents = null;
+    this.loadDesignRequirement = false;
+    this.requirementUid = "";
+    this.lambdauid = "";
+    this.loadFunctionEditor = false;
+    this.loadModelView = false;
+    this.projectUid = item.projectuuid;
+    this.pageId = item.uuid
+    this.loadWidgetEditor = false;
+    this.loadThemeEditor = false;
+    this.loadBuildWindow = false;
+    this.loadUIHome = false;
+    this.loadServiceHome = false;
+}
+
+  // viewPageEditor(item) {
+  //   if (item.subtype === "multiWidget") {
+  //     this.router.navigate(['ui/page/multiWidget'], {queryParams: {projectUid: item.projectuuid, pageId: item.uuid}});
+  //   } else if (item.subtype === "tabbed") {
+  //     this.router.navigate(['ui/page/tabbed'], {queryParams: {projectUid: item.projectuuid, pageId: item.uuid}});
+  //   } else if (item.subtype === "customPage") {
+  //     this.router.navigate(['ui/page/customPage'], {queryParams: {projectUid: item.projectuuid, pageId: item.uuid}});
+  //   } else if (item.subtype === "filterPage") {
+  //     this.router.navigate(['ui/page/filterPage'], {queryParams: {projectUid: item.projectuuid, pageId: item.uuid}});
+  //   } else {
+  //     this.router.navigate(['ui/page/singleWidget'], {queryParams: {projectUid: item.projectuuid, pageId: item.uuid}});
+  //   }
+  // }
 
   // viewSingleWidget(item){
   //     this.loadWidgetEditor = true;
@@ -610,14 +676,17 @@ export class UiHomeComponent implements OnInit, OnChanges {
     this.loadServiceHome = false;
   }
   viewModel(item) {
+    this.routeEnable = true;
+    this.loadPageEditor = false;
+    this.loadWidgetEditor = false;
+    this.loadCustomPageEditor = false;
+    this.loadGridPageEditor = false;
+    this.loadTabPageEditor = false;
+    this.loadFilterPageEditor = false;
      this.router.navigate(['ui/model'], {queryParams: {projectUid: item.projectuuid, modelUid: item.uuid}});
   }
 
   ngOnInit(): void {
-    this.splitPartOneSize = 100;
-    this.splitPartTwoSize = 0;
-    this.splitConsoleSizeOne = 100;
-    this.splitConsoleSizeTwo = 0;
     this.requirementArray = [];
     this.currentReqIndex = 0;
     this.currentTab = "design";
@@ -635,6 +704,7 @@ export class UiHomeComponent implements OnInit, OnChanges {
     this.onEditMultiWidgetPage();
     this.registerChangeDesignEditor();
     this.loadPreviewStatus();
+    this.currentTab = 'portal';
     //         this.appTypeService.getDevChainByAppType(this.projectUid)
     //           .pipe(
     //             filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
@@ -665,24 +735,15 @@ export class UiHomeComponent implements OnInit, OnChanges {
 
   changeSplit(val) {
     this.currentTab = val;
-    if (val !== "design" && val !== "build") {
-      this.splitPartOneSize = 84;
-      this.splitPartTwoSize = 16;
-      if (val === "portal") {
-        this.viewUIHome();
-      }
-      if (val === "service") {
-        this.viewServiceHome();
-      }
-    } else if (val === "design") {
-      this.splitPartOneSize = 100;
-      this.splitPartTwoSize = 0;
-      this.loadDesignTreeData();
-    } else if (val === "build") {
-      this.splitPartOneSize = 100;
-      this.splitPartTwoSize = 0;
-      this.loadBuildView();
-    }
+    if(val === 'portal') {
+      this.router.navigate([`ui`])    
+    } else if (val === 'service') {
+      this.router.navigate([`service`])    
+    } else if (val === 'design'){
+      this.router.navigate([`design`])    
+    } else if ( val === 'build') {
+      this.router.navigate([`build`])    
+    }  
   }
 
   loadBuildView() {

@@ -186,18 +186,6 @@ export class HomeComponent extends PageComponent implements AfterViewInit, OnIni
     }
   }
 
-  changeSplit(val){
-    if(val === 'portal') {
-      this.router.navigate([`ui`])    
-    } else if (val === 'service') {
-      this.router.navigate([`service`])    
-    } else if (val === 'design'){
-      this.router.navigate([`design`])    
-    } else if ( val === 'build') {
-      this.router.navigate([`build`])    
-    }
-}
-
   logout(){
     this.loginService.logout();
     this.router.navigate(['']);

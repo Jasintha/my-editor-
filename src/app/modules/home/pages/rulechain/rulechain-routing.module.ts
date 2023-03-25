@@ -267,49 +267,6 @@ const routes: Routes = [
     },
     children: [
       {
-        path: "page",
-        data: {
-          auth: [Authority.TENANT_ADMIN],
-        },
-        children: [
-          {
-            path: "multiWidget",
-            component: FlexGridHandlerComponent,
-            data: {
-              auth: [Authority.TENANT_ADMIN],
-            },
-          },
-          {
-            path: "tabbed",
-            component: TabPageComponent,
-            data: {
-              auth: [Authority.TENANT_ADMIN],
-            },
-          },
-          {
-            path: "customPage",
-            component: CustomPageViewComponent,
-            data: {
-              auth: [Authority.TENANT_ADMIN],
-            },
-          },
-          {
-            path: "filterPage",
-            component: FilterPageComponent,
-            data: {
-              auth: [Authority.TENANT_ADMIN],
-            },
-          },
-          {
-            path: "singleWidget",
-            component: SinglePageViewComponent,
-            data: {
-              auth: [Authority.TENANT_ADMIN],
-            },
-          },
-        ]
-      },
-      {
         path: "model",
         component: MicroserviceModelComponent,
         data: {

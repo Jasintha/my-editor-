@@ -155,10 +155,10 @@ export class DesignViewComponent implements OnInit, OnChanges {
     generatorList: { [key: number]: string } = {};
     generatorChain: IGenerator[];
     selectedTab = 0;
-    splitPartOneSize = 90;
-    splitPartTwoSize = 10;
-    splitConsoleSizeOne = 90;
-    splitConsoleSizeTwo = 5;
+    splitPartOneSize = 100;
+    splitPartTwoSize = 0;
+    splitConsoleSizeOne = 100;
+    splitConsoleSizeTwo = 0;
     loadTabPageEditor: boolean;
     loadThemeEditor: boolean;
     loadBuildWindow: boolean;
@@ -641,10 +641,6 @@ export class DesignViewComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.splitPartOneSize = 100;
-        this.splitPartTwoSize = 0;
-        this.splitConsoleSizeOne = 100;
-        this.splitConsoleSizeTwo = 0;
         this.requirementArray = [];
         this.currentReqIndex = 0;
         this.currentTab = 'design'
@@ -692,24 +688,15 @@ export class DesignViewComponent implements OnInit, OnChanges {
 
     changeSplit(val){
         this.currentTab = val;
-        if (val !== 'design' &&  val !== 'build' ){
-            this.splitPartOneSize = 84;
-            this.splitPartTwoSize = 16;
-            if(val === 'portal') {
-                this.viewUIHome()
-            }
-            if (val === 'service') {
-                this.viewServiceHome()
-            }
-        } else if (val === 'design'){
-            this.splitPartOneSize = 100;
-            this.splitPartTwoSize = 0;
-            this.loadDesignTreeData();
-        } else if ( val === 'build') {
-            this.splitPartOneSize = 100;
-            this.splitPartTwoSize = 0;
-            this.loadBuildView();
-        }
+        if(val === 'portal') {
+            this.router.navigate([`ui`])    
+          } else if (val === 'service') {
+            this.router.navigate([`service`])    
+          } else if (val === 'design'){
+            this.router.navigate([`design`])    
+          } else if ( val === 'build') {
+            this.router.navigate([`build`])    
+          }  
     }
 
     loadBuildView(){

@@ -95,7 +95,14 @@ import {
   RuleChainMenuContextInfo,
 } from "./rulechain-page.models";
 import { RuleChainService } from "@core/http/rule-chain.service";
-import { fromEvent, NEVER, Observable, of } from "rxjs";
+import {
+  combineLatest,
+  forkJoin,
+  fromEvent,
+  NEVER,
+  Observable,
+  of,
+} from "rxjs";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -118,6 +125,7 @@ import { DebugEventType, EventType } from "@shared/models/event.models";
 import Timeout = NodeJS.Timeout;
 import { ConOperationBase } from "@shared/models/ConnectorOperation.models";
 import { EventService } from "@core/projectservices/microservice-event.service";
+import { ruleNodeConfigResourcesModulesMap } from "../service-home/service-home.component";
 
 @Component({
   selector: "virtuan-rulechain-page",
@@ -238,6 +246,7 @@ export class RuleChainPageComponent extends PageComponent
   uid: string;
 
   serviceUuid: string;
+  ruleId: string;
 
   branchAvailability: any;
 
@@ -414,45 +423,49 @@ export class RuleChainPageComponent extends PageComponent
     public fb: FormBuilder
   ) {
     super(store);
-    // this.route.params.subscribe(params => {
-    //   this.routerType = params['routerType'];
-    //   this.username = params['username'];
-    //   this.uid = params['uid'];
-    //   this.editorType = params['editorType'];
-
-    // });
-    //   this.isImport = false;
-    //   this.route.data.subscribe(({ ruleNodeComponents }) => {
-    //     this.ruleNodeComponents = ruleNodeComponents;
-    //   });
-    //   this.route.data.subscribe(({ ruleChain }) => {
-    //     this.ruleChain = ruleChain;
-    //   });
-    //   this.route.data.subscribe(({ ruleChainMetaData }) => {
-    //     this.ruleChainMetaData = ruleChainMetaData;
-    //   });
-    //   this.route.data.subscribe(
-    //   ({ connectionPropertyTemplates }) => {
-    //     this.connectionPropertyTemplates = connectionPropertyTemplates;
-    //   });
-    //     const routerType = this.route.snapshot.params.routerType;
-    if (this.routerType == "R") {
-      this.init();
-    }
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      this.username = params.username;
+      this.uid = params.ruleprojectUid;
+      this.editorType = params.editorType;
+      this.ruleId = params.ruleId;
+      this.loadInitialData();
+    });
   }
 
-  ngOnInit() {
-    this.activatedRoute.queryParams.subscribe((params: any)=> {
-      this.username = params.username;
-      this.uid = params.ruleprojectUid
-      this.ruleNodeComponents = JSON.parse(params.ruleNodeComponents); 
-      this.ruleChain = JSON.parse(params.ruleChain);
-      this.editorType = params.editorType
-      this.ruleChainMetaData = JSON.parse(params.ruleChainMetaData); 
-      this.connectionPropertyTemplates = JSON.parse(params.connectionPropertyTemplates);
+  ngOnInit() {}
 
-      this.init()
-    })
+  loadInitialData(){
+    combineLatest(
+      this.ruleChainService.getRuleNodeComponents(
+        ruleNodeConfigResourcesModulesMap,
+        this.uid,
+        this.editorType
+      ).pipe(),
+      this.ruleChainService.getConnectionPropertyTemplates().pipe(),
+      this.ruleChainService.getResolvedRuleChainMetadata(
+        this.ruleId,
+        this.username,
+        this.uid
+      ).pipe(),
+      this.ruleChainService.getRuleChainWithUsernameAndUID(
+        this.ruleId,
+        this.username,
+        this.uid
+      ).pipe()
+    ).subscribe(
+      ([
+        ruleChainNodeComponent,
+        connectionPropertyTemplates,
+        ruleChainMetaData,
+        ruleChain,
+      ]) => {
+        this.ruleNodeComponents = ruleChainNodeComponent;
+        this.ruleChain = ruleChain;
+        this.ruleChainMetaData = ruleChainMetaData;
+        this.connectionPropertyTemplates = connectionPropertyTemplates;
+        this.init();
+      }
+    );
   }
 
   ngAfterViewInit() {

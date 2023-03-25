@@ -487,8 +487,9 @@
 
 .sideways-tabs.right-tabs .nav-link.active {
   border: none;
-  border-top: 8px solid #1a73e8;
+  border-top: 15px solid #1a73e8;
   font-weight: bold;
+  margin-top: 20px !important;
 }
 
 .sideways-tabs.right-tabs .nav-link{
@@ -500,6 +501,7 @@
   background-color: lightgrey;
   border-color: lightgrey;
   border: none;
+  margin-top: 28px !important;
 }
 
 .sideways-tabs.right-tabs .nav-link:hover{
