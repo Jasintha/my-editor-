@@ -195,11 +195,13 @@
                 <div class="tab-content" style="display: flex;
                 width: 100%;
                 flex-direction: column;">
-                    <button mat-icon-button class="top-node" style="display: flex; flex-direction: row; width: 80%; justify-content: flex-end;"
+                    <button mat-icon-button class="top-node"
+                        style="display: flex; flex-direction: row; width: 75%; justify-content: flex-end;"
                         (click)="refreshTree()"><mat-icon>refresh</mat-icon></button>
                     <mat-tree [dataSource]="uiTreeDaSource" [treeControl]="treeControl">
                         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)"
-                            [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
+                            [ngClass]="{ 'background-highlight': activeNode === node }"
+                            style="cursor: pointer; height: 40px;">
                             <mat-icon class="mat-icon-rtl-mirror" style="margin-left: 28px" color="primary"
                                 [ngClass]="{ 'background-highlight': activeNode === node }">
                                 {{node.data.isParent ? 'folder' : 'description'}}
@@ -208,23 +210,25 @@
                                 {{node.name}}
                             </div>
 
-                            <button *ngIf="!node.data.isParent || node.data.type === 'PARENT_UI_SUB_MENU'"
-                                (click)="$event.stopPropagation()" [matMenuTriggerData]="{ item: node.data }"
-                                [matMenuTriggerFor]="actionsMenu" mat-icon-button type="button">
-                                <mat-icon>more_vert</mat-icon>
+                            <button *ngIf="!node.data.isParent || node.data.type === 'PARENT_UI_SUB_MENU'" style="margin-right: 20px;" (click)="$event.stopPropagation()"
+                                [matMenuTriggerData]="{ item: node.data }" [matMenuTriggerFor]="actionsMenu"
+                                mat-icon-button type="button">
+                                <mat-icon style="padding-top: 7px">more_vert</mat-icon>
                             </button>
-                            <button mat-icon-button class="top-node"
+                            <button mat-icon-button class="top-node" style="margin-right: 20px;"
                                 *ngIf="node.data.isParent && node.data.type != 'PARENT_PORTAL' && node.data.type != 'PARENT_PAGE_THEMES'"
                                 (click)="add(node.data)"
-                                [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
-                            <button title="import model" mat-icon-button class="top-node-import"
+                                [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon
+                                    style="padding-top: 7px;">add</mat-icon></button>
+                            <button title="import model" mat-icon-button class="top-node-import" style="margin-right: 20px;"
                                 *ngIf="node.data.isParent && node.data.type === 'PARENT_UI_MODEL '"
                                 (click)="importModel(node.data)"
-                                [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>import_export</mat-icon></button>
+                                [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon
+                                    style="padding-top: 7px;">import_export</mat-icon></button>
                         </mat-tree-node>
                         <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding
                             (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }"
-                            style="cursor: pointer">
+                            style="cursor: pointer;height: 40px;">
                             <button mat-icon-button [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
                                 <mat-icon class="mat-icon-rtl-mirror">
                                     {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
@@ -238,14 +242,16 @@
                             </div>
 
 
-                            <button mat-icon-button class="top-node"
+                            <button mat-icon-button class="top-node" style="margin-right: 20px;"
                                 *ngIf="node.data.isParent && node.data.type != 'PARENT_PORTAL' && node.data.type != 'PARENT_PAGE_THEMES'"
                                 (click)="add(node.data)"
-                                [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
-                            <button title="import model" mat-icon-button class="top-node-import"
+                                [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon
+                                    style="padding-top: 7px">add</mat-icon></button>
+                            <button title="import model" mat-icon-button class="top-node-import" style="margin-right: 20px;"
                                 *ngIf="node.data.isParent && node.data.type === 'PARENT_UI_MODEL'"
                                 (click)="importModel(node.data)"
-                                [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>import_export</mat-icon></button>
+                                [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon
+                                    style="padding-top: 7px;">import_export</mat-icon></button>
                             <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate"
                                 class="example-tree-progress-bar"></mat-progress-bar>
 

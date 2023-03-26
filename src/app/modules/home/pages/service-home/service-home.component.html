@@ -184,54 +184,68 @@
                 <div class="tab-content" style="display: flex;
                 width: 100%;
                 flex-direction: column;">
-                    <button mat-icon-button class="top-node" style="display: flex; flex-direction: row; width: 80%; justify-content: flex-end;"
+                    <button mat-icon-button class="top-node"
+                        style="display: flex; flex-direction: row; width: 75%; justify-content: flex-end;"
                         (click)="refreshTree()"><mat-icon>refresh</mat-icon></button>
-                              <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
-<!--                                    <button mat-icon-button disabled></button>-->
-                                <mat-icon class="mat-icon-rtl-mirror" color="primary" style="margin-left: 28px" [ngClass]="{ 'background-highlight': activeNode === node }">
-                                    {{node.data.isParent ? 'folder' : 'description'}}
+                    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)"
+                            [ngClass]="{ 'background-highlight': activeNode === node }"
+                            style="cursor: pointer; height: 40px;">
+                            <mat-icon class="mat-icon-rtl-mirror" color="primary" style="margin-left: 28px"
+                                [ngClass]="{ 'background-highlight': activeNode === node }">
+                                {{node.data.isParent ? 'folder' : 'description'}}
+                            </mat-icon>
+                            <div style="margin-left: 3px">
+                                {{node.name}}
+                            </div>
+
+                            <button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
+                                [matMenuTriggerData]="{ item: node.data }" [matMenuTriggerFor]="actionsMenu"
+                                mat-icon-button type="button" style="margin-right: 20px;">
+                                <mat-icon style="padding-top: 7px;">more_vert</mat-icon>
+                            </button>
+                            <button mat-icon-button class="top-node"
+                                *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "
+                                (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"
+                                style="margin-right: 20px;"><mat-icon
+                                    style="padding-top: 7px;">add</mat-icon></button>
+                            <button mat-icon-button class="top-node-import"
+                                *ngIf="node.data.isParent && node.data.type == 'PARENT_MODEL'"
+                                (click)="importModel(node.data)"
+                                [ngClass]="{ 'background-highlight': activeNode === node }" style="margin-right: 20px;"><mat-icon
+                                    style="padding-top: 7px;">import_export</mat-icon></button>
+                        </mat-tree-node>
+                        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding
+                            (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }"
+                            style="cursor: pointer; height: 40px;">
+                            <button mat-icon-button [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
+                                <mat-icon class="mat-icon-rtl-mirror">
+                                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                 </mat-icon>
-                                <!--                                            <mat-icon class="mat-icon-rtl-mirror" color="primary" >-->
-                                <!--                                                description-->
-                                <!--                                            </mat-icon>-->
-                                <div style="margin-left: 3px">
-                                    {{node.name}}
-                                </div>
-
-                                <button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
-                                        [matMenuTriggerData]="{ item: node.data }"
-                                        [matMenuTriggerFor]="actionsMenu"
-                                        mat-icon-button
-                                        type="button">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-                                <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
-                                <button mat-icon-button  class="top-node-import" *ngIf="node.data.isParent && node.data.type == 'PARENT_MODEL'"  (click)="importModel(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>import_export</mat-icon></button>
-                            </mat-tree-node>
-                            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
-                                <button mat-icon-button
-                                        [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
-                                    <mat-icon class="mat-icon-rtl-mirror">
-                                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                                    </mat-icon>
-                                    <mat-icon class="mat-icon-rtl-mirror" color="primary">
-                                        {{ treeControl.isExpanded(node) ?  "folder_open" :"folder"  }}
-                                    </mat-icon>
-                                </button>
-                                <div style="margin-left: 15px">
-                                    {{node.name}}
-                                </div>
+                                <mat-icon class="mat-icon-rtl-mirror" color="primary">
+                                    {{ treeControl.isExpanded(node) ? "folder_open" :"folder" }}
+                                </mat-icon>
+                            </button>
+                            <div style="margin-left: 15px">
+                                {{node.name}}
+                            </div>
 
 
-                                <button mat-icon-button  title="add model" class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon >add</mat-icon></button>
-                                <button title="import model" mat-icon-button  class="top-node-import" *ngIf="node.data.isParent && node.data.type == 'PARENT_MODEL'"  (click)="importModel(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>import_export</mat-icon></button>
-                                <mat-progress-bar *ngIf="node.isLoading"
-                                                  mode="indeterminate"
-                                                  class="example-tree-progress-bar"></mat-progress-bar>
+                            <button mat-icon-button title="add model" class="top-node"
+                                *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "
+                                (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"
+                                style="margin-right: 20px;"><mat-icon
+                                    style="padding-top: 7px;">add</mat-icon></button>
+                            <button title="import model" mat-icon-button class="top-node-import"
+                                *ngIf="node.data.isParent && node.data.type == 'PARENT_MODEL'"
+                                (click)="importModel(node.data)"
+                                [ngClass]="{ 'background-highlight': activeNode === node }" style="margin-right: 20px;"><mat-icon
+                                    style="padding-top: 7px;">import_export</mat-icon></button>
+                            <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate"
+                                class="example-tree-progress-bar"></mat-progress-bar>
 
-                            </mat-tree-node>
-                        </mat-tree>
+                        </mat-tree-node>
+                    </mat-tree>
                 </div>
             </as-split-area>
         </as-split>

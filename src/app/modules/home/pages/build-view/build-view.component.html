@@ -5,10 +5,7 @@
       <as-split-area [size]="100">
    
           <as-split direction="vertical">
-            <as-split-area [size]="100" [ngClass]="{
-    'build-in-page-custom-scroll': loadPageEditor,
-    'rulechain-page-custom-scroll': !loadPageEditor
-  }">
+            <as-split-area [size]="100">
               <h4 class="buildSubtitle" *ngIf="generatorsDataList.length > 0">
                 Generator status
               </h4>
@@ -23,7 +20,7 @@
                   yellow: generator['health'] === 'Progressing',
                   red: generator['health'] === 'Degraded'
                 }">brightness_1</mat-icon>
-                          <span style="font-size: 14px;">
+                        <span style="font-size: 14px;">
                             {{ generator["name"] }}</span>
                         </span>
                       </div>
@@ -48,11 +45,10 @@
                 <div style="display: flex; flex-direction: column; margin-top: 8px; width: 100%;">
                   <h4 class="buildSubtitle">Build Service</h4>
                   <div style="display: flex; flex-direction: row; width: 100%; gap:20px">
-                      <div style="margin-top: 8px; width: 40%;">
+                      <div style="margin-top: 8px; width: 40%; margin-left: 15px;">
                         <div>
                           <p-multiSelect [options]="servicesToGenerate" formControlName="selectedServices"
-                            optionLabel="name" [panelStyle]="{ width: '100%' }" [filter]="true" style="display: flex;
-                            padding-left: 15px;">
+                            optionLabel="name" [panelStyle]="{ width: '100%' }" [filter]="true" >
                           </p-multiSelect>
                         </div>
                       </div>
@@ -172,7 +168,6 @@
                   cdkFocusInitial>
                   <mat-icon style="font-size: 25px;" class="example-tab-icon">not_interested</mat-icon>
                 </button>
-                <!--                            <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">play_circle_outline</mat-icon></button>-->
               </div>
 
               <div class="button-row" style="float: right; margin: 5px;" *ngIf="selectedTab === 1 || selectedTab === 2">
@@ -254,32 +249,11 @@
                   </ng-template>
                   <ng-template matTabContent>
                     <div style="min-height: 200px; height: 100% !important; width: 100%;">
-                      <!--                                        <div style="min-height: 40px;margin: 5px;">-->
-                      <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
-
                       <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions"
                         [(ngModel)]="bEBuildStatus" ngDefaultControl></ngx-monaco-editor>
                     </div>
                   </ng-template>
                 </mat-tab>
-                <!--                            <mat-tab label="Debugger">-->
-                <!--                                <ng-template mat-tab-label>-->
-                <!--                                    <mat-icon class="example-tab-icon">bug_report</mat-icon>-->
-                <!--                                    Debugger-->
-                <!--                                </ng-template>-->
-                <!--                                <ng-template matTabContent>-->
-                <!--                                    Debugger-->
-                <!--                                </ng-template>-->
-                <!--                            </mat-tab>-->
-                <!--                            <mat-tab label="Run">-->
-                <!--                                <ng-template mat-tab-label>-->
-                <!--                                    <mat-icon class="example-tab-icon">developer_mode</mat-icon>-->
-                <!--                                    Run-->
-                <!--                                </ng-template>-->
-                <!--                                <ng-template matTabContent>-->
-                <!--                                    Run-->
-                <!--                                </ng-template>-->
-                <!--                            </mat-tab>-->
               </mat-tab-group>
             </as-split-area>
           </as-split>
