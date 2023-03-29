@@ -51,7 +51,7 @@ import {RequirementService} from '@core/projectservices/requirement.service';
   providers: [MessageService],
   encapsulation: ViewEncapsulation.None
 })
-export class SinglePageViewComponent implements OnDestroy , OnChanges{
+export class SinglePageViewComponent implements OnInit, OnDestroy , OnChanges{
   @Input() projectUid: string;
   @Input() pageId: string;
   isSaving: boolean;
@@ -465,9 +465,9 @@ export class SinglePageViewComponent implements OnDestroy , OnChanges{
     this.loadPage(false)
   }
 
-  // ngOnInit() {
-  //   this.loadPage();
-  // }
+  ngOnInit() {
+    this.editPageAsJson = false
+  }
 
   loadPage(isreaload: boolean){
     // if(!isreaload) {

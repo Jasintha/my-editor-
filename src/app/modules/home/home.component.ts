@@ -38,9 +38,10 @@ const screenfull = _screenfull as _screenfull.Screenfull;
 @Component({
   selector: 'virtuan-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss', './pages/rulechain/rulechain-page.component.scss']
 })
 export class HomeComponent extends PageComponent implements AfterViewInit, OnInit {
+  @ViewChild('drawer') drawer: MatSidenav;
 
   authState: AuthState = getCurrentAuthState(this.store);
 
@@ -70,6 +71,9 @@ export class HomeComponent extends PageComponent implements AfterViewInit, OnIni
   searchEnabled = false;
   showSearch = false;
   searchText = '';
+
+  loadUIHome = false;
+  loadServiceHome = false;
 
   constructor(protected store: Store<AppState>,
               @Inject(WINDOW) private window: Window,

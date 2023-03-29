@@ -1,514 +1,608 @@
-
 <div class="row" *ngIf="!viewEditor">
     <div class="col-1">
         <div class="row">
             <div class="col-md-6">
                 <div style="background-color: #924caa; height: 250px">
-                    <div style="padding-top: 100px">  <div style="transform: rotate(270deg);color: white; font-size: 16px; font-weight: 500"> Requirements</div> </div>
+                    <div style="padding-top: 100px">
+                        <div style="transform: rotate(270deg);color: white; font-size: 16px; font-weight: 500">
+                            Requirements</div>
+                    </div>
                 </div>
             </div>
 
         </div>
         <div class="row">
             <div class="col-md-6">
-              <div style="background-color: #924caa"> <div style="background-color: #2980b9; height: 250px; margin-left: 10px">
-                <div style="padding-top: 100px">  <div style="transform: rotate(270deg);color: white; font-size: 16px; font-weight: 500"> Epics</div> </div></div>
-              </div>
+                <div style="background-color: #924caa">
+                    <div style="background-color: #2980b9; height: 250px; margin-left: 10px">
+                        <div style="padding-top: 100px">
+                            <div style="transform: rotate(270deg);color: white; font-size: 16px; font-weight: 500">
+                                Epics</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
         <div class="row">
             <div class="col-md-6">
-                <div style="background-color: #924caa"> <div style="background-color: #2980b9; margin-left: 10px">  <div style="background-color: #34495e; height: 45vh; margin-left: 10px">
-                    <div style="padding-top: 100px">  <div style="transform: rotate(270deg);color: white; font-size: 16px; font-weight: 500">  Stories </div> </div> </div>
+                <div style="background-color: #924caa">
+                    <div style="background-color: #2980b9; margin-left: 10px">
+                        <div style="background-color: #34495e; height: 45vh; margin-left: 10px">
+                            <div style="padding-top: 100px">
+                                <div style="transform: rotate(270deg);color: white; font-size: 16px; font-weight: 500">
+                                    Stories </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>
     <div class="col-11">
-<div *ngIf="!viewEditor" class="container vertical" style="width: 90vw; max-width: 90vw">
-    <div style="position: relative">
-    <div id="requirements" class="row section border row-height create-req" style="height: 222px;width: 1400px;">
+        <div *ngIf="!viewEditor" class="container vertical" style="width: 90vw; max-width: 90vw">
+            <div style="position: relative">
+                <div id="requirements" class="row section border row-height create-req"
+                    style="height: 222px;width: 1400px;">
 
-        <div class="col-7" style="padding-left: 0; border-left: 40px solid #924caa; border-radius: 8px">
-            <p-carousel class="req-carousel" [value]="reqArray" [numVisible]="1" [numScroll]="1" [circular]="true"  (onPage)="selectedReq($event)"  [ngClass]="{'carousel-next-hide': hideCarouselNext}" >
-                <ng-template let-req pTemplate="item">
-                    <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }" [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 200px;width: 314px;
-}" matTooltip="{{req?.name}}"  [matTooltipPosition]="'above'" (click)="clickReq(req)">
+                    <div class="col-7" style="padding-left: 0; border-left: 40px solid #924caa; border-radius: 8px">
+                        <p-carousel class="req-carousel" [value]="reqArray" [numVisible]="1" [numScroll]="1"
+                            [circular]="true" (onPage)="selectedReq($event)"
+                            [ngClass]="{'carousel-next-hide': hideCarouselNext}">
+                            <ng-template let-req pTemplate="item">
+                                <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }"
+                                    [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 200px;width: 314px;
+}" matTooltip="{{req?.name}}" [matTooltipPosition]="'above'" (click)="clickReq(req)">
+                                    <div style="display: flex; flex-direction: column; width: 100%;">
+                                        <div
+                                            style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;">
+                                            <div class="d-flex justify-content-center align-items-center"
+                                                style="width: 50px;">
+                                                <i class="fa fa-cogs" style="font-size: 25px; color: orange"
+                                                    aria-hidden="true"></i>
+                                            </div>
+                                            <div style="display: flex; justify-content: start">
+                                                <h5 class="req-txt-overflow"
+                                                    style="font-weight: 500; padding-left: 10px;">{{req?.name}}</h5>
+                                                <a class="edit" (click)="editRequirement(req?.uuid)"><i
+                                                        class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                <div class="inner-wrap">
+                                                    <input type="text" placeholder="Title">
+                                                    <textarea name="descripton" cols="" rows=""></textarea>
+                                                    <button>Submit</button>
+                                                </div>
+                                                <a virtuan-click-stop-propagation class="delete" matTooltip="Delete"
+                                                    [matTooltipPosition]="toolTipPosition"
+                                                    (click)="deleteDesign(req?.uuid,'requirement')"><i
+                                                        class="fa fa-trash" aria-hidden="true"></i></a>
+                                                <a virtuan-click-stop-propagation class="assign" matTooltip="Assign"
+                                                    [matTooltipPosition]="toolTipPosition"
+                                                    (click)="assignRequirementToEpic(currentReq)"><i class="fa fa-link"
+                                                        aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+
+                                        <div style="display:flex; width: 100%; height: 65px;">
+                                            <div style="padding-left: 25px;
+                                padding-right: 25px;">
+                                                <h5 class="txt-description" style="font-weight: 100; font-size: medium;">{{req.summary}}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-around;
+                            height: 20px;">
+                                            <div tags-overflow *ngFor="let tag of req.tags">
+                                                <h6 [matTooltipPosition]="'below'" matTooltip="{{tag}}"
+                                                    style="padding-left: 15px">{{tag}}</h6>
+                                            </div>
+                                        </div>
+
+                                        <div style="display: flex; flex-direction: row;height: 20px;
+                            margin-top: 10px;">
+                                            <h6
+                                                style="justify-content: start; display: flex; font-weight: 400; padding-left: 10px;">
+                                                {{reqCreatedAt}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--                    <div class="d-flex justify-content-center py-1" *ngIf="req.uuid === currentReq.uuid">-->
+                                <!--                        <img src="/assets/images/arrow-up-black.png" class="epics-arrow">-->
+                                <!--                    </div>-->
+                                <!--                    <div class="add-icon">-->
+                                <!--                        <mat-icon class="material-icons"-->
+                                <!--                                  style="color: mediumseagreen; font-size: 50px;transform: rotate(180deg);"-->
+                                <!--                                  (click)="assignRequirementToEpic(req)">publish-->
+                                <!--                        </mat-icon>-->
+                                <!--                    </div>-->
+                            </ng-template>
+                        </p-carousel>
+                        <!--                </div>-->
+                        <!--            </div>-->
+                        <!--                    <div class="col-1">-->
+                        <!--&lt;!&ndash;                        <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">&ndash;&gt;-->
+                        <!--&lt;!&ndash;                            <mat-icon class="material-icons" (click)="nextReq()" style="color: #6C6C6C; font-size: 30px">last_page&ndash;&gt;-->
+                        <!--&lt;!&ndash;                            </mat-icon>&ndash;&gt;-->
+                        <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+                        <!--                                            <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;">-->
+                        <!--                                                <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">-->
+                        <!--                                                    <mat-icon style="font-size: 25px">add</mat-icon>-->
+                        <!--                                                </button>-->
+                        <!--                                            </div>-->
+                        <!--                    </div>-->
+                    </div>
+                    <div class="col-5" style="justify-content: end; display: flex;padding-bottom: 26px;">
+                        <div class="row" style="display: flex; justify-content: end;">
+                            <!--                 <div class="col-12">-->
+                            <!--                     <div class="new button-visible" (click)="createRequirement()" style="display: flex; justify-content: end;">-->
+                            <!--                         <button mat-flat-button disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer; margin-right: -17px; margin-bottom: 139px;">-->
+                            <!--                             <mat-icon style="font-size: 25px">add</mat-icon>-->
+                            <!--                         </button>-->
+                            <!--                     </div>-->
+                            <!--                </div>-->
+
+                            <button (click)="createRequirement()" mat-raised-button class="button-visible"
+                                style="background-color: #924caa; color: white; cursor: pointer; margin-right: -9px; margin-bottom: 146px; width: 60px"><mat-icon
+                                    style="font-size: 25px;margin-left: 4px;">add</mat-icon></button>
+
+                            <div class="col-12" style="display: flex; justify-content: end;">
+                                <div reqCounter class="counter-container content-center"
+                                    style="bottom: 75px;right: 65px; position: absolute">
+                                    <p id="reqCounter" class="h2 text-secondary mb-0">{{reqCount}}</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <!--        <div class="col-12 d-flex justify-content-start">-->
+                    <!--            &lt;!&ndash;            <div class="pb-1">&ndash;&gt;-->
+                    <!--            &lt;!&ndash;                <img src="/assets/images/curved-up-arrow-green.png" style="width: 25px; height: 25px; margin-left: 95px;" >&ndash;&gt;-->
+                    <!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+                    <!--        </div>-->
+                </div>
+
+                <div *ngIf="existingEpics.length === 0" @inOutAnimation>
+                    <hr>
+
+                    <div style="text-align: center;">
+                        <!--        <mat-icon class="material-icons"-->
+                        <!--                  style="color: slateblue; font-size: 50px;transform: rotate(180deg);">add-->
+                        <!--        </mat-icon>-->
+                        <button mat-raised-button style="top: -32px"
+                            (click)="assignRequirementToEpic(currentReq)"><mat-icon>add</mat-icon>Epic</button>
+                    </div>
+
+                </div>
+
+
+                <div id="epics" class="row section border" *ngIf="existingEpics.length != 0" @inOutAnimation
+                    style="margin-left: 37px;height: 207px; width: 1352px;">
+
+                    <div class="col-9" style="border-left: 40px solid #2980b9; border-radius: 8px">
                         <div class="row">
-                            <div class="col-3 d-flex justify-content-center align-items-center">
-                                <i class="fa fa-cogs" style="font-size: 25px; color: orange" aria-hidden="true"></i>
-                            </div>
-                            <div class="col-9" style="display: flex; justify-content: start">
-                                <h5 class="req-txt-overflow" style="font-weight: 500;">{{req?.name}}</h5>
-                                <a class="edit" (click)="editRequirement(req?.uuid)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                <div class="inner-wrap">
-                                    <input type="text" placeholder="Title">
-                                    <textarea name="descripton" cols="" rows=""></textarea>
-                                    <button>Submit</button>
-                                </div>
-                                <a virtuan-click-stop-propagation class="delete" matTooltip="Delete" [matTooltipPosition]="toolTipPosition" (click)="deleteDesign(req?.uuid,'requirement')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                <a virtuan-click-stop-propagation class="assign" matTooltip="Assign" [matTooltipPosition]="toolTipPosition" (click)="assignRequirementToEpic(currentReq)"><i class="fa fa-link" aria-hidden="true"></i></a>
-                            </div>
-                            <div class="col-12" style="display:flex; justify-content: center">
-                                <div style="height: 78px; width: 257px;" >
-                                    <h5 class="txt-description" style="font-weight: 100;">{{req.summary}}</h5>
+                            <div class="col-1">
+                                <div *ngIf="isBtnPrevious" (click)="getData(false)" class="btns previous">
+                                    <mat-icon style="font-size: 30px">keyboard_arrow_left</mat-icon>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-3 tags-overflow" *ngFor="let tag of req.tags">
-                                        <h6 [matTooltipPosition]="'below'"  matTooltip="{{tag}}" style="padding-left: 15px">{{tag}}</h6>
+
+
+                            <div class="col-10">
+                                <div class="content">
+                                    <div class="flex wrap-epic" id="{{ 'flexParent'+item.uuid }}"
+                                        *ngFor="let item of ListData">
+                                        <div (click)="setState(item)" class="outer"
+                                            [ngClass]="{ 'active' : item.isActive == true }">
+                                            <div class="inner rotate epic-title-overflow">{{ item.name }}</div>
+                                        </div>
+                                        <div class="description" [ngClass]="{ 'active' : item.isActive == true }">
+                                            <div matTooltip="{{item?.name}}" [matTooltipPosition]="toolTipPosition"
+                                                class="title epic-titledes-overflow">{{ item.name }}</div>
+                                            <p matTooltip="{{item?.description}}"
+                                                [matTooltipPosition]="toolTipPosition"> {{ item.description }}</p>
+                                        </div>
+                                        <div *ngIf="currentLevel=== 'epic'">
+                                            <a class="edit" matTooltip="Edit" [matTooltipPosition]="toolTipPosition"
+                                                (click)="editEpics(item)"><i class="fa fa-pencil"
+                                                    aria-hidden="true"></i></a>
+                                            <a virtuan-click-stop-propagation matTooltip="Delete"
+                                                [matTooltipPosition]="toolTipPosition" class="delete"
+                                                (click)="deleteDesign(item?.uuid, 'epic')"><i class="fa fa-trash"
+                                                    aria-hidden="true"></i></a>
+                                            <a virtuan-click-stop-propagation matTooltip="Assign/Create Story"
+                                                [matTooltipPosition]="toolTipPosition" class="assign"
+                                                (click)="addStory(selectedEpic)"><i class="fa fa-link"
+                                                    aria-hidden="true"></i></a>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h6 style="justify-content: start; display: flex; font-weight: 400; padding-left: 10px;">{{reqCreatedAt}}</h6>
-                                    </div>
-<!--                                    <div class="col-6">-->
-<!--                                        <div class="row">-->
-<!--                                            <div class="col-3 tags-overflow" *ngFor="let tag of req.tags">-->
-<!--                                                <h6 [matTooltipPosition]="'below'"  matTooltip="{{tag}}" style="padding-left: 15px">{{tag}}</h6>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
+
+                            <div class="col-1">
+                                <div *ngIf="isBtnNext" (click)="getData(true)" class="btns next">
+                                    <mat-icon style="font-size: 30px">keyboard_arrow_right</mat-icon>
                                 </div>
-
                             </div>
+
+
                         </div>
+                        <!--            <p-carousel  [value]="existingEpics" [numVisible]="4" [numScroll]="4" [circular]="true"  [ngClass]="{'carousel-next-hide-epic': hideCarouselEpicNext}" class="">-->
+                        <!--                <ng-template ngFor  let-epic [ngForOf]="existingEpics" pTemplate="body" let-index="index" >-->
+                        <!--                    <div class="wrap-epic"  (click)="filterEpic(epic, index)" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }" style="height: 72px" matTooltip="{{epic?.name}}">-->
+                        <!--                        <a class="edit" (click)="editEpics(epic)"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
+                        <!--                        <div class="d-flex justify-content-center">-->
+                        <!--                            <h5 class="txt-overflow-epic">{{epic?.name}}</h5>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="inner-wrap">-->
+                        <!--                            <input type="text" placeholder="Title">-->
+                        <!--                            <textarea name="descripton" cols="" rows=""></textarea>-->
+                        <!--                            <button>Submit</button>-->
+                        <!--                        </div>-->
+                        <!--                        <a virtuan-click-stop-propagation class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
+                        <!--                        <a virtuan-click-stop-propagation class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>-->
+                        <!--&lt;!&ndash;                        <a class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash" aria-hidden="true"></i></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;                        <a class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>&ndash;&gt;-->
+                        <!--                    </div>-->
+                        <!--                </ng-template>-->
+                        <!--            </p-carousel>-->
+                        <!--            <div class="row">-->
+                        <!--                <ng-container *ngFor="let epic of existingEpics; let j = index">-->
+                        <!--                    <div class="col-4" (click)="filterEpic(epic, j)">-->
+                        <!--                        <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }"-->
+                        <!--                             matTooltip="{{epic?.name}}"-->
+                        <!--                             [matTooltipPosition]="toolTipPosition" style="height: 50px">-->
+                        <!--                            <h5 class="txt-overflow">{{epic?.name}}</h5>-->
+                        <!--                            &lt;!&ndash;                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>&ndash;&gt;-->
+                        <!--                            <div class="inner-wrap">-->
+                        <!--                                <input type="text" placeholder="Title">-->
+                        <!--                                <textarea name="descripton" cols="" rows=""></textarea>-->
+                        <!--                                <button>Submit</button>-->
+                        <!--                            </div>-->
+                        <!--                            <a class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash"-->
+                        <!--                                                                                            aria-hidden="true"></i></a>-->
+                        <!--                            <a class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>-->
+                        <!--                        </div>-->
+                        <!--                        &lt;!&ndash; <div *ngIf="epic.selected" class="add-icon">-->
+                        <!--                            <mat-icon class="material-icons"-->
+                        <!--                                    style="color: slateblue; font-size: 50px;transform: rotate(180deg);"-->
+                        <!--                                    (click)="addStory(selectedEpic)">publish-->
+                        <!--                            </mat-icon>-->
+                        <!--                        </div> &ndash;&gt;-->
+                        <!--                    </div>-->
+                        <!--                </ng-container>-->
+                        <!--            </div>-->
                     </div>
-<!--                    <div class="d-flex justify-content-center py-1" *ngIf="req.uuid === currentReq.uuid">-->
-<!--                        <img src="/assets/images/arrow-up-black.png" class="epics-arrow">-->
-<!--                    </div>-->
-                    <!--                    <div class="add-icon">-->
-                    <!--                        <mat-icon class="material-icons"-->
-                    <!--                                  style="color: mediumseagreen; font-size: 50px;transform: rotate(180deg);"-->
-                    <!--                                  (click)="assignRequirementToEpic(req)">publish-->
-                    <!--                        </mat-icon>-->
-                    <!--                    </div>-->
-                </ng-template>
-            </p-carousel>
-            <!--                </div>-->
-            <!--            </div>-->
-<!--                    <div class="col-1">-->
-<!--&lt;!&ndash;                        <div style="margin-left: 25px; margin-bottom: 56px; cursor: pointer">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <mat-icon class="material-icons" (click)="nextReq()" style="color: #6C6C6C; font-size: 30px">last_page&ndash;&gt;-->
-<!--&lt;!&ndash;                            </mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--                                            <div class="new" (click)="createRequirement()" style="display: flex; justify-content: start;">-->
-<!--                                                <button mat-fab disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer ">-->
-<!--                                                    <mat-icon style="font-size: 25px">add</mat-icon>-->
-<!--                                                </button>-->
-<!--                                            </div>-->
-<!--                    </div>-->
-        </div>
-        <div class="col-5" style="justify-content: end; display: flex;padding-bottom: 26px;">
-            <div class="row" style="display: flex; justify-content: end;">
-<!--                 <div class="col-12">-->
-<!--                     <div class="new button-visible" (click)="createRequirement()" style="display: flex; justify-content: end;">-->
-<!--                         <button mat-flat-button disabled aria-label="Example icon button with a heart icon" style="background-color: #00A74E; color: white; cursor: pointer; margin-right: -17px; margin-bottom: 139px;">-->
-<!--                             <mat-icon style="font-size: 25px">add</mat-icon>-->
-<!--                         </button>-->
-<!--                     </div>-->
-<!--                </div>-->
-
-                <button (click)="createRequirement()" mat-raised-button class="button-visible" style="background-color: #924caa; color: white; cursor: pointer; margin-right: -9px; margin-bottom: 146px; width: 60px"><mat-icon style="font-size: 25px;margin-left: 4px;">add</mat-icon></button>
-
-                <div class="col-12" style="display: flex; justify-content: end;">
-                    <div reqCounter class="counter-container content-center" style="bottom: 75px;right: 65px; position: absolute">
-                        <p id="reqCounter" class="h2 text-secondary mb-0">{{reqCount}}</p>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-<!--        <div class="col-12 d-flex justify-content-start">-->
-<!--            &lt;!&ndash;            <div class="pb-1">&ndash;&gt;-->
-<!--            &lt;!&ndash;                <img src="/assets/images/curved-up-arrow-green.png" style="width: 25px; height: 25px; margin-left: 95px;" >&ndash;&gt;-->
-<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
-<!--        </div>-->
-    </div>
-
-    <div  *ngIf="existingEpics.length === 0" @inOutAnimation>
-        <hr>
-
-        <div style="text-align: center;" >
-            <!--        <mat-icon class="material-icons"-->
-            <!--                  style="color: slateblue; font-size: 50px;transform: rotate(180deg);">add-->
-            <!--        </mat-icon>-->
-            <button mat-raised-button style="top: -32px" (click)="assignRequirementToEpic(currentReq)"><mat-icon>add</mat-icon>Epic</button>
-        </div>
-
-    </div>
-
-
-    <div id="epics" class="row section border" *ngIf="existingEpics.length != 0" @inOutAnimation style="margin-left: 37px;height: 207px; width: 1352px;">
-
-        <div class="col-9" style="border-left: 40px solid #2980b9; border-radius: 8px">
-            <div class="row">
-                <div class="col-1">
-                    <div *ngIf="isBtnPrevious" (click)="getData(false)" class="btns previous">
-                        <mat-icon style="font-size: 30px">keyboard_arrow_left</mat-icon>
-                    </div>
-                </div>
-
-
-                <div class="col-10">
-                    <div class="content">
-                        <div class="flex wrap-epic" id="{{ 'flexParent'+item.uuid }}" *ngFor="let item of ListData">
-                            <div (click)="setState(item)" class="outer" [ngClass]="{ 'active' : item.isActive == true }">
-                                <div class="inner rotate epic-title-overflow">{{ item.name }}</div>
-                            </div>
-                            <div class="description" [ngClass]="{ 'active' : item.isActive == true }">
-                                <div matTooltip="{{item?.name}}"
-                                     [matTooltipPosition]="toolTipPosition"
-                                     class="title epic-titledes-overflow">{{ item.name }}</div>
-                                <p matTooltip="{{item?.description}}"
-                                   [matTooltipPosition]="toolTipPosition"> {{ item.description }}</p>
-                            </div>
-                            <div *ngIf="currentLevel=== 'epic'">
-                                <a class="edit" matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editEpics(item)"><i class="fa fa-pencil"
-                                                                                                                                     aria-hidden="true"></i></a>
-                                <a virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" class="delete" (click)="deleteDesign(item?.uuid, 'epic')"><i
-                                  class="fa fa-trash" aria-hidden="true"></i></a>
-                                <a virtuan-click-stop-propagation matTooltip="Assign/Create Story" [matTooltipPosition]="toolTipPosition" class="assign" (click)="addStory(selectedEpic)"><i
-                                  class="fa fa-link" aria-hidden="true"></i></a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-1">
-                    <div *ngIf="isBtnNext" (click)="getData(true)" class="btns next">
-                        <mat-icon style="font-size: 30px">keyboard_arrow_right</mat-icon>
-                    </div>
-                </div>
-
-
-            </div>
-                                    <!--            <p-carousel  [value]="existingEpics" [numVisible]="4" [numScroll]="4" [circular]="true"  [ngClass]="{'carousel-next-hide-epic': hideCarouselEpicNext}" class="">-->
-<!--                <ng-template ngFor  let-epic [ngForOf]="existingEpics" pTemplate="body" let-index="index" >-->
-<!--                    <div class="wrap-epic"  (click)="filterEpic(epic, index)" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }" style="height: 72px" matTooltip="{{epic?.name}}">-->
-<!--                        <a class="edit" (click)="editEpics(epic)"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
-<!--                        <div class="d-flex justify-content-center">-->
-<!--                            <h5 class="txt-overflow-epic">{{epic?.name}}</h5>-->
-<!--                        </div>-->
-<!--                        <div class="inner-wrap">-->
-<!--                            <input type="text" placeholder="Title">-->
-<!--                            <textarea name="descripton" cols="" rows=""></textarea>-->
-<!--                            <button>Submit</button>-->
-<!--                        </div>-->
-<!--                        <a virtuan-click-stop-propagation class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
-<!--                        <a virtuan-click-stop-propagation class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>-->
-<!--&lt;!&ndash;                        <a class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash" aria-hidden="true"></i></a>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <a class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>&ndash;&gt;-->
-<!--                    </div>-->
-<!--                </ng-template>-->
-<!--            </p-carousel>-->
-<!--            <div class="row">-->
-<!--                <ng-container *ngFor="let epic of existingEpics; let j = index">-->
-<!--                    <div class="col-4" (click)="filterEpic(epic, j)">-->
-<!--                        <div class="wrap" [ngClass]="epic.selected ? 'selected' : ''"  [ngStyle]="{'border-style' : epic.selected  ? '' : 'dashed' }"-->
-<!--                             matTooltip="{{epic?.name}}"-->
-<!--                             [matTooltipPosition]="toolTipPosition" style="height: 50px">-->
-<!--                            <h5 class="txt-overflow">{{epic?.name}}</h5>-->
-<!--                            &lt;!&ndash;                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>&ndash;&gt;-->
-<!--                            <div class="inner-wrap">-->
-<!--                                <input type="text" placeholder="Title">-->
-<!--                                <textarea name="descripton" cols="" rows=""></textarea>-->
-<!--                                <button>Submit</button>-->
-<!--                            </div>-->
-<!--                            <a class="delete" (click)="deleteDesign(epic?.uuid, 'epic')"><i class="fa fa-trash"-->
-<!--                                                                                            aria-hidden="true"></i></a>-->
-<!--                            <a class="assign" (click)="addStory(selectedEpic)"><i class="fa fa-link" aria-hidden="true"></i></a>-->
-<!--                        </div>-->
-<!--                        &lt;!&ndash; <div *ngIf="epic.selected" class="add-icon">-->
-<!--                            <mat-icon class="material-icons"-->
-<!--                                    style="color: slateblue; font-size: 50px;transform: rotate(180deg);"-->
-<!--                                    (click)="addStory(selectedEpic)">publish-->
-<!--                            </mat-icon>-->
-<!--                        </div> &ndash;&gt;-->
-<!--                    </div>-->
-<!--                </ng-container>-->
-<!--            </div>-->
-        </div>
-        <!-- <div class="watermark" style="left: 88%;">
+                    <!-- <div class="watermark" style="left: 88%;">
             Epics
         </div>
         <div> -->
-        <div class="col-3">
-            <!--            <div class="col-12">-->
-            <!--                <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem">Epics</h1>-->
-            <!--            </div>-->
-            <div class="col-12 d-flex justify-content-center" style="padding-bottom: 20px">
-                <div class="chart-wrapper" style="height: 150px; width: 300px; padding-bottom: 20px; ">
-                    <canvas baseChart
-                            [data]="pieChartData"
-                            [labels]="pieChartLabels"
-                            [chartType]="pieChartType"
-                            [options]="pieChartOptions"
-                            [plugins]="pieChartPlugins"
-                            [legend]="pieChartLegend">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-
-        <!--        <div class="col-1" *ngIf="selectedEpicId">-->
-        <!--            <a class="new" (click)="addStory(selectedEpic)">-->
-        <!--                <div class="wrap add">-->
-        <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
-        <!--                </div>-->
-        <!--            </a>-->
-        <!--        </div>-->
-    </div>
-
-    <div *ngIf="existingEpics.length != 0 && filteredStories.length == 0 && selectedEpic" @inOutAnimation style="margin-left: 50px;">
-        <hr>
-        <div class="col-12 d-flex justify-content-center">
-            <button mat-raised-button style="top: -32px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
-<!--            <button mat-raised-button style="top: -32px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>-->
-<!--            <a class="add-req" virtuan-click-stop-propagation (click)="addStory(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Story</a>-->
-<!--            <a class="add-text" virtuan-click-stop-propagation (click)="addText(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Text</a>-->
-        </div>
-    </div>
-
-    <div *ngIf="filteredStories.length != 0" @inOutAnimation style="height: 46vh;
-    overflow-y: auto;
-    width: 1400px;">
-        <ng-container *ngFor="let story of filteredStories" >
-            <div id="storiesText" class="row section border row-color wrap-text pb-0"  style="margin-left: 120px; margin-bottom: -8px;width: 1245px; border-left: 20px solid #34495e !important;" *ngIf="story.storyText">
-                <div class="col-1 d-flex justify-content-center align-items-center">
-                    <div class="story-text-editor-button" matTooltip="Text" [matTooltipPosition]="toolTipPosition" style="margin-right: 20px;">
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                    <div class="col-3">
+                        <!--            <div class="col-12">-->
+                        <!--                <h1 class="d-flex justify-content-center" style="color: #CDCDCD; font-size: 2rem">Epics</h1>-->
+                        <!--            </div>-->
+                        <div class="col-12 d-flex justify-content-center" style="padding-bottom: 20px">
+                            <div class="chart-wrapper" style="height: 150px; width: 300px; padding-bottom: 20px; ">
+                                <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
+                                    [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins"
+                                    [legend]="pieChartLegend">
+                                </canvas>
+                            </div>
+                        </div>
                     </div>
+
+                    <!--        <div class="col-1" *ngIf="selectedEpicId">-->
+                    <!--            <a class="new" (click)="addStory(selectedEpic)">-->
+                    <!--                <div class="wrap add">-->
+                    <!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
+                    <!--                </div>-->
+                    <!--            </a>-->
+                    <!--        </div>-->
                 </div>
-                <div style="border-right: 1px solid #b2a9a9; position: absolute; height: 101px; right: 1159px; width: 1px;top: 0px;"></div>
-                <div class="col-11">
-                    <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
-                        <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign(story,'story-text')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                        <a class="edit-icon-text" virtuan-click-stop-propagation (click)="editStoryText(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    </div>
-                    <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.storyText"
-                              [style]="{'height':'90px', 'border': 'none','width' : '1050px'}" [readonly]="true">
-                        <p-header hidden>
-                            <span class="ql-formats"></span>
-                        </p-header>
-                    </p-editor>
-                </div>
-            </div>
-            <div  id="stories"  class="row section border row-color wrap-story p-0"  style="margin-left: 120px; margin-top: 20px;height: 90px;width: 1245px; border-left: 20px solid #34495e !important;" *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
-                <div class="top-req">
-                    <div class="col-12 d-flex justify-content-center add-req-top">
-                        <button mat-raised-button style="top: -15px; margin-right: 10px" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
-                        <button mat-raised-button style="top: -15px" (click)="addText(selectedEpic , story.uuid)" *ngIf="!story.storyText"><mat-icon>add</mat-icon>Text</button>
+
+                <div *ngIf="existingEpics.length != 0 && filteredStories.length == 0 && selectedEpic" @inOutAnimation
+                    style="margin-left: 50px;">
+                    <hr>
+                    <div class="col-12 d-flex justify-content-center">
+                        <button mat-raised-button style="top: -32px; margin-right: 10px"
+                            (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
+                        <!--            <button mat-raised-button style="top: -32px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>-->
                         <!--            <a class="add-req" virtuan-click-stop-propagation (click)="addStory(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Story</a>-->
                         <!--            <a class="add-text" virtuan-click-stop-propagation (click)="addText(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Text</a>-->
                     </div>
                 </div>
-<!--                <div class="col-12 d-flex justify-content-center" style="height: 20px;" matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">-->
-<!--                  <h5 style="margin: 0" class="txt-overflow">{{story.name}}</h5>-->
-<!--                            <div>-->
-<!--                                <a class="delete" virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" (click)="deleteDesign(story.uuid,'story')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
-<!--                                <a class="edit-icon" virtuan-click-stop-propagation matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editStory(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
-<!--                            </div>-->
-<!--                </div>-->
 
-                <!--                <div class="col-2 wrap" matTooltip="{{story?.name}}" style="margin-right: 50px"-->
-                <!--                     >-->
-                <!--                    <h5 class="txt-overflow">{{story.name}}</h5>-->
-                <!--                    <a class="edit" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil"-->
-                <!--                                                                             aria-hidden="true"></i></a>-->
-                <!--                    &lt;!&ndash;                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>&ndash;&gt;-->
-                <!--                    <div class="inner-wrap">-->
-                <!--                        <input type="text" placeholder="Title">-->
-                <!--                        <textarea name="descripton" cols="" rows=""></textarea>-->
-                <!--                        &lt;!&ndash;                        <select name="" >&ndash;&gt;-->
-                <!--                        &lt;!&ndash;                            <option value="" selected>Epic 1</option>&ndash;&gt;-->
-                <!--                        &lt;!&ndash;                            <option value="">Epic 2</option>&ndash;&gt;-->
-                <!--                        &lt;!&ndash;                            <option value="">Epic 3</option>&ndash;&gt;-->
-                <!--                        &lt;!&ndash;                        </select>&ndash;&gt;-->
-                <!--                        <button>Submit</button>-->
-                <!--                    </div>-->
-                <!--                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i-->
-                <!--                            class="fa fa-trash" aria-hidden="true"></i></a>-->
-                <!--                </div>-->
-                <div class="col-12" style="padding-bottom: 10px;">
-                    <div class="row">
-                        <div class="col-1 d-flex justify-content-start align-items-center" style="padding-left: 20px ;">
-                                <div id="generate">
-                                    <div *ngIf="spinnerButtonEnable || currentStory !== story.uuid" [ngClass]="spinnerButton && currentStory === story.uuid ? 'spinner spinner-load' : 'spinner'"  (click)="generateStory(story)" matTooltip="Generate" [matTooltipPosition]="toolTipPosition">
-                                        <i class="fa fa-play" aria-hidden="true" style="color: #009579;"></i>
-                                    </div>
-                                    <div *ngIf="!spinnerButtonEnable && currentStory === story.uuid">
-<!--                                        <a class="swagger-link" virtuan-click-stop-propagation matTooltip="Swagger link" [matTooltipPosition]="toolTipPosition" (click)="openNewTab()"><i class="fa fa-external-link" aria-hidden="true"></i></a>-->
-                                        <a class="open-ui" virtuan-click-stop-propagation matTooltip="Open UI" [matTooltipPosition]="toolTipPosition" (click)="OpenUI(story)"><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
-                                    </div>
+                <div *ngIf="filteredStories.length != 0" @inOutAnimation style="height: 46vh;
+    overflow-y: auto;
+    width: 1400px;">
+                    <ng-container *ngFor="let story of filteredStories">
+                        <div id="storiesText" class="row section border row-color wrap-text pb-0"
+                            style="margin-left: 120px; margin-bottom: -8px;width: 1245px; border-left: 20px solid #34495e !important;"
+                            *ngIf="story.storyText">
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                <div class="story-text-editor-button" matTooltip="Text"
+                                    [matTooltipPosition]="toolTipPosition" style="margin-right: 20px;">
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                 </div>
+                            </div>
+                            <div
+                                style="border-right: 1px solid #b2a9a9; position: absolute; height: 101px; right: 1159px; width: 1px;top: 0px;">
+                            </div>
+                            <div class="col-11">
+                                <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">
+                                    <a class="delete" virtuan-click-stop-propagation
+                                        (click)="deleteDesign(story,'story-text')"><i class="fa fa-trash"
+                                            aria-hidden="true"></i></a>
+                                    <a class="edit-icon-text" virtuan-click-stop-propagation
+                                        (click)="editStoryText(story)"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></a>
+                                </div>
+                                <p-editor class="story-text" name="text-pane" id="field_reqdescription"
+                                    [(ngModel)]="story.storyText"
+                                    [style]="{'height':'90px', 'border': 'none','width' : '1050px'}" [readonly]="true">
+                                    <p-header hidden>
+                                        <span class="ql-formats"></span>
+                                    </p-header>
+                                </p-editor>
+                            </div>
                         </div>
-                        <div class="col-11">
-                            <div class="row p-0 m-0">
-                                <div class="col-6 d-flex new justify-content-start align-items-center p-0 m-0" style="margin-right: 10px;display: flex;padding-bottom: 20px; justify-content: center; ">
-<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('actor')">person</mat-icon>-->
-<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
-<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('model')">chrome_reader_mode</mat-icon>-->
-<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
-<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('screen')">personal_video</mat-icon>-->
-<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
-<!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('process')">settings</mat-icon>-->
-                                    <div class="story-pane-icon">
-                                        <img *ngIf="story.storyActors" src="/assets/images/story/actor.png" class="icon" (click)="createDesign('actor', story)" matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
-                                        <img *ngIf="!story.storyActors" src="/assets/images/story/actor-un.png" class="icon" (click)="createDesign('actor', story)" matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
-                                        <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img *ngIf="story.modelUUID" src="/assets/images/story/model.png" class="icon" (click)="createDesign('model', story)" matTooltip="Model" [matTooltipPosition]="toolTipPosition">
-                                        <img *ngIf="!story.modelUUID" src="/assets/images/story/model-un.png" class="icon" (click)="createDesign('model', story)" matTooltip="Model" [matTooltipPosition]="toolTipPosition">
-                                        <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img *ngIf="story.screenUUID" src="/assets/images/story/screen.png" class="icon" (click)="createDesign('screen', story)" matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
-                                        <img *ngIf="!story.screenUUID" src="/assets/images/story/screen-un.png" class="icon" (click)="createDesign('screen', story)" matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
-                                        <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
-                                        <img *ngIf="story.processApiUUID" src="/assets/images/story/gen.png" class="icon" (click)="createDesign('process', story)" matTooltip="Process" [matTooltipPosition]="toolTipPosition">
-                                        <img *ngIf="!story.processApiUUID" src="/assets/images/story/gen-un.png" class="icon" (click)="createDesign('process', story)" matTooltip="Process" [matTooltipPosition]="toolTipPosition">
-                                    </div>
+                        <div id="stories" class="row section border row-color wrap-story p-0"
+                            style="margin-left: 120px; margin-top: 20px;height: 90px;width: 1245px; border-left: 20px solid #34495e !important;"
+                            *ngIf="story.storyTemplate != 'CREATE-TEXT' ">
+                            <div class="top-req">
+                                <div class="col-12 d-flex justify-content-center add-req-top">
+                                    <button mat-raised-button style="top: -15px; margin-right: 10px"
+                                        (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
+                                    <button mat-raised-button style="top: -15px"
+                                        (click)="addText(selectedEpic , story.uuid)"
+                                        *ngIf="!story.storyText"><mat-icon>add</mat-icon>Text</button>
+                                    <!--            <a class="add-req" virtuan-click-stop-propagation (click)="addStory(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Story</a>-->
+                                    <!--            <a class="add-text" virtuan-click-stop-propagation (click)="addText(selectedEpic)"><i style="padding-right: 6px;" class="fa fa-plus" aria-hidden="true"></i>Text</a>-->
                                 </div>
-                                <div class="col-1 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
-                                    <div class="new" style="display: flex; justify-content: center;">
-                                        <!--                                        <button  mat-button disabled aria-label="Example icon button with a heart icon"  style="background-color: #40a2dc; color: white; cursor: pointer;width: 36px; height: 36px">-->
-                                        <!--                                            &lt;!&ndash;                            <i class="material-icons">edit_note</i>&ndash;&gt;-->
-                                        <!--                                            <mat-icon  style="font-size: 16px">tune</mat-icon>-->
-                                        <!--                                        </button>-->
-                                        <div class="story-editor-button" matTooltip="Rule Editor" [matTooltipPosition]="toolTipPosition" (click)="loadStoryDesignEditor(story)">
-                                            <i class="fa fa-external-link" aria-hidden="true"></i>
+                            </div>
+                            <!--                <div class="col-12 d-flex justify-content-center" style="height: 20px;" matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">-->
+                            <!--                  <h5 style="margin: 0" class="txt-overflow">{{story.name}}</h5>-->
+                            <!--                            <div>-->
+                            <!--                                <a class="delete" virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" (click)="deleteDesign(story.uuid,'story')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
+                            <!--                                <a class="edit-icon" virtuan-click-stop-propagation matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editStory(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
+                            <!--                            </div>-->
+                            <!--                </div>-->
+
+                            <!--                <div class="col-2 wrap" matTooltip="{{story?.name}}" style="margin-right: 50px"-->
+                            <!--                     >-->
+                            <!--                    <h5 class="txt-overflow">{{story.name}}</h5>-->
+                            <!--                    <a class="edit" (click)="editStory(currentReq?.uuid)"><i class="fa fa-pencil"-->
+                            <!--                                                                             aria-hidden="true"></i></a>-->
+                            <!--                    &lt;!&ndash;                    <a class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>&ndash;&gt;-->
+                            <!--                    <div class="inner-wrap">-->
+                            <!--                        <input type="text" placeholder="Title">-->
+                            <!--                        <textarea name="descripton" cols="" rows=""></textarea>-->
+                            <!--                        &lt;!&ndash;                        <select name="" >&ndash;&gt;-->
+                            <!--                        &lt;!&ndash;                            <option value="" selected>Epic 1</option>&ndash;&gt;-->
+                            <!--                        &lt;!&ndash;                            <option value="">Epic 2</option>&ndash;&gt;-->
+                            <!--                        &lt;!&ndash;                            <option value="">Epic 3</option>&ndash;&gt;-->
+                            <!--                        &lt;!&ndash;                        </select>&ndash;&gt;-->
+                            <!--                        <button>Submit</button>-->
+                            <!--                    </div>-->
+                            <!--                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i-->
+                            <!--                            class="fa fa-trash" aria-hidden="true"></i></a>-->
+                            <!--                </div>-->
+                            <div class="col-12" style="padding-bottom: 10px;">
+                                <div class="row">
+                                    <div class="col-1 d-flex justify-content-start align-items-center"
+                                        style="padding-left: 20px ;">
+                                        <div id="generate">
+                                            <div *ngIf="spinnerButtonEnable || currentStory !== story.uuid"
+                                                [ngClass]="spinnerButton && currentStory === story.uuid ? 'spinner spinner-load' : 'spinner'"
+                                                (click)="generateStory(story)" matTooltip="Generate"
+                                                [matTooltipPosition]="toolTipPosition">
+                                                <i class="fa fa-play" aria-hidden="true" style="color: #009579;"></i>
+                                            </div>
+                                            <div *ngIf="!spinnerButtonEnable && currentStory === story.uuid">
+                                                <!--                                        <a class="swagger-link" virtuan-click-stop-propagation matTooltip="Swagger link" [matTooltipPosition]="toolTipPosition" (click)="openNewTab()"><i class="fa fa-external-link" aria-hidden="true"></i></a>-->
+                                                <a class="open-ui" virtuan-click-stop-propagation matTooltip="Open UI"
+                                                    [matTooltipPosition]="toolTipPosition" (click)="OpenUI(story)"><i
+                                                        class="fa fa-external-link-square" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-11">
+                                        <div class="row p-0 m-0">
+                                            <div class="col-6 d-flex new justify-content-start align-items-center p-0 m-0"
+                                                style="margin-right: 10px;display: flex;padding-bottom: 20px; justify-content: center; ">
+                                                <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('actor')">person</mat-icon>-->
+                                                <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
+                                                <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('model')">chrome_reader_mode</mat-icon>-->
+                                                <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
+                                                <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('screen')">personal_video</mat-icon>-->
+                                                <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon">arrow_forward</mat-icon>-->
+                                                <!--                                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="story-pane-icon" (click)="createDesign('process')">settings</mat-icon>-->
+                                                <div class="story-pane-icon">
+                                                    <img *ngIf="story.storyActors" src="/assets/images/story/actor.png"
+                                                        class="icon" (click)="createDesign('actor', story)"
+                                                        matTooltip="Actor" [matTooltipPosition]="toolTipPosition">
+                                                    <img *ngIf="!story.storyActors"
+                                                        src="/assets/images/story/actor-un.png" class="icon"
+                                                        (click)="createDesign('actor', story)" matTooltip="Actor"
+                                                        [matTooltipPosition]="toolTipPosition">
+                                                    <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
+                                                    <img *ngIf="story.modelUUID" src="/assets/images/story/model.png"
+                                                        class="icon" (click)="createDesign('model', story)"
+                                                        matTooltip="Model" [matTooltipPosition]="toolTipPosition">
+                                                    <img *ngIf="!story.modelUUID"
+                                                        src="/assets/images/story/model-un.png" class="icon"
+                                                        (click)="createDesign('model', story)" matTooltip="Model"
+                                                        [matTooltipPosition]="toolTipPosition">
+                                                    <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
+                                                    <img *ngIf="story.screenUUID" src="/assets/images/story/screen.png"
+                                                        class="icon" (click)="createDesign('screen', story)"
+                                                        matTooltip="Screen" [matTooltipPosition]="toolTipPosition">
+                                                    <img *ngIf="!story.screenUUID"
+                                                        src="/assets/images/story/screen-un.png" class="icon"
+                                                        (click)="createDesign('screen', story)" matTooltip="Screen"
+                                                        [matTooltipPosition]="toolTipPosition">
+                                                    <img src="/assets/images/story/right-arrow.png" class="arrow-icon">
+                                                    <img *ngIf="story.processApiUUID" src="/assets/images/story/gen.png"
+                                                        class="icon" (click)="createDesign('process', story)"
+                                                        matTooltip="Process" [matTooltipPosition]="toolTipPosition">
+                                                    <img *ngIf="!story.processApiUUID"
+                                                        src="/assets/images/story/gen-un.png" class="icon"
+                                                        (click)="createDesign('process', story)" matTooltip="Process"
+                                                        [matTooltipPosition]="toolTipPosition">
+                                                </div>
+                                            </div>
+                                            <div class="col-1 d-flex justify-content-center align-items-center p-0 m-0"
+                                                style="margin-right: 10px; ">
+                                                <div class="new" style="display: flex; justify-content: center;">
+                                                    <!--                                        <button  mat-button disabled aria-label="Example icon button with a heart icon"  style="background-color: #40a2dc; color: white; cursor: pointer;width: 36px; height: 36px">-->
+                                                    <!--                                            &lt;!&ndash;                            <i class="material-icons">edit_note</i>&ndash;&gt;-->
+                                                    <!--                                            <mat-icon  style="font-size: 16px">tune</mat-icon>-->
+                                                    <!--                                        </button>-->
+                                                    <div class="story-editor-button" matTooltip="Rule Editor"
+                                                        [matTooltipPosition]="toolTipPosition"
+                                                        (click)="loadStoryDesignEditor(story)">
+                                                        <i class="fa fa-external-link" aria-hidden="true"></i>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div
+                                                style="border-right: 1px solid #b2a9a9; position: absolute; height: 88px; right: 1160px; width: 1px;top: 0px;">
+                                            </div>
+                                            <div class="col-3 d-flex justify-content-center align-items-center p-0 m-0"
+                                                style="margin-right: 10px; ">
+                                                <h5 style="margin: 0;padding-top: 9px;" class="txt-overflow"
+                                                    matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">
+                                                    {{story.name}}</h5>
+                                                <div>
+                                                    <a class="delete" virtuan-click-stop-propagation matTooltip="Delete"
+                                                        [matTooltipPosition]="toolTipPosition"
+                                                        (click)="deleteDesign(story.uuid,'story')"><i
+                                                            class="fa fa-trash" aria-hidden="true"></i></a>
+                                                    <a class="edit-icon" virtuan-click-stop-propagation
+                                                        matTooltip="Edit" [matTooltipPosition]="toolTipPosition"
+                                                        (click)="editStory(story)"><i class="fa fa-pencil"
+                                                            aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-2 d-flex justify-content-end align-items-center p-0 m-0"
+                                                style="margin-right: 10px; ">
+                                                <mat-radio-group aria-labelledby="example-radio-group-label"
+                                                    class="example-radio-group" [ngModel]="story.status">
+                                                    <div style=" display: flex; flex-direction: column;">
+
+                                                        <mat-radio-button value="NEW"></mat-radio-button>
+                                                        <mat-radio-button style="margin-top: 3px" color="primary"
+                                                            value="IN_PROGRESS"></mat-radio-button>
+                                                        <mat-radio-button style="margin-top: 3px;" color="warn"
+                                                            value="COMPLETED"></mat-radio-button>
+                                                        <!--                                        <mat-radio-button style="padding-bottom: 5px;" class="example-radio-button" *ngFor="let progress of progressRadio" [value]="progress">-->
+
+                                                        <!--                                                &lt;!&ndash;                                            {{progress}}&ndash;&gt;-->
+                                                        <!--                                            </mat-radio-button>-->
+                                                    </div>
+                                                </mat-radio-group>
+                                            </div>
+                                            <!--                                <div class="col-2 d-flex justify-content-center align-items-center p-0 m-0">-->
+                                            <!--                                    <mat-form-field class="flex-auto" style="width: 250px;">-->
+                                            <!--                                        &lt;!&ndash;                        <mat-label>Progress</mat-label>&ndash;&gt;-->
+                                            <!--                                        <mat-select [ngModel]="story.status" (selectionChange)="handleProgress($event.value, story.uuid)">-->
+                                            <!--                                            <mat-option value="NEW">New</mat-option>-->
+                                            <!--                                            <mat-option value="IN_PROGRESS">In Progress</mat-option>-->
+                                            <!--                                            <mat-option value="COMPLETED">Completed</mat-option>-->
+                                            <!--                                        </mat-select>-->
+                                            <!--                                    </mat-form-field>-->
+                                            <!--                                </div>-->
+                                            <!--                                <div class="col-3 d-flex justify-content-center align-items-center p-0 m-0">-->
+                                            <!--                                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{story.statusCompletedValue}}' style="width: 250px;"></mat-progress-bar>-->
+                                            <!--                                                        <div class="line" style="position: absolute;bottom: 35px;right: 265px;"></div>-->
+                                            <!--                                                        <h6 class="mt-0" style="position: absolute; right: 261px; bottom: 8px; font-size: 11px">0</h6>-->
+                                            <!--                                                        <div class="line" style="position: absolute; top: 65px; right: 22px"></div>-->
+                                            <!--                                                        <h6 class="mt-0" style="position: absolute; right: 18px; bottom: 8px; font-size: 11px">100</h6>-->
+                                            <!--                                </div>-->
                                         </div>
 
                                     </div>
                                 </div>
-                                <div style="border-right: 1px solid #b2a9a9; position: absolute; height: 88px; right: 1160px; width: 1px;top: 0px;"></div>
-                                <div class="col-3 d-flex justify-content-center align-items-center p-0 m-0" style="margin-right: 10px; ">
-                                    <h5 style="margin: 0;padding-top: 9px;" class="txt-overflow" matTooltip="{{story.name}}" [matTooltipPosition]="toolTipPosition">{{story.name}}</h5>
-                                    <div>
-                                        <a class="delete" virtuan-click-stop-propagation matTooltip="Delete" [matTooltipPosition]="toolTipPosition" (click)="deleteDesign(story.uuid,'story')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                        <a class="edit-icon" virtuan-click-stop-propagation matTooltip="Edit" [matTooltipPosition]="toolTipPosition" (click)="editStory(story)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="col-2 d-flex justify-content-end align-items-center p-0 m-0" style="margin-right: 10px; ">
-                                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [ngModel]="story.status">
-                                        <div style=" display: flex; flex-direction: column;">
-
-                                            <mat-radio-button value="NEW"></mat-radio-button>
-                                            <mat-radio-button style="margin-top: 3px" color="primary" value="IN_PROGRESS"></mat-radio-button>
-                                            <mat-radio-button  style="margin-top: 3px;" color="warn" value="COMPLETED"></mat-radio-button>
-<!--                                        <mat-radio-button style="padding-bottom: 5px;" class="example-radio-button" *ngFor="let progress of progressRadio" [value]="progress">-->
-
-<!--                                                &lt;!&ndash;                                            {{progress}}&ndash;&gt;-->
-<!--                                            </mat-radio-button>-->
-                                        </div>
-                                    </mat-radio-group>
-                                </div>
-<!--                                <div class="col-2 d-flex justify-content-center align-items-center p-0 m-0">-->
-<!--                                    <mat-form-field class="flex-auto" style="width: 250px;">-->
-<!--                                        &lt;!&ndash;                        <mat-label>Progress</mat-label>&ndash;&gt;-->
-<!--                                        <mat-select [ngModel]="story.status" (selectionChange)="handleProgress($event.value, story.uuid)">-->
-<!--                                            <mat-option value="NEW">New</mat-option>-->
-<!--                                            <mat-option value="IN_PROGRESS">In Progress</mat-option>-->
-<!--                                            <mat-option value="COMPLETED">Completed</mat-option>-->
-<!--                                        </mat-select>-->
-<!--                                    </mat-form-field>-->
-<!--                                </div>-->
-<!--                                <div class="col-3 d-flex justify-content-center align-items-center p-0 m-0">-->
-<!--                                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{story.statusCompletedValue}}' style="width: 250px;"></mat-progress-bar>-->
-<!--                                                        <div class="line" style="position: absolute;bottom: 35px;right: 265px;"></div>-->
-<!--                                                        <h6 class="mt-0" style="position: absolute; right: 261px; bottom: 8px; font-size: 11px">0</h6>-->
-<!--                                                        <div class="line" style="position: absolute; top: 65px; right: 22px"></div>-->
-<!--                                                        <h6 class="mt-0" style="position: absolute; right: 18px; bottom: 8px; font-size: 11px">100</h6>-->
-<!--                                </div>-->
                             </div>
+                            <!--                <div class="col-2 d-flex justify-content-center" style="margin-right: 10px">-->
+                            <!--                    -->
+                            <!--                </div>-->
+                            <!--                <div class="col-3 justify-content-center">-->
+                            <!--                    <mat-form-field class="flex-auto" style="width: 100%">-->
+                            <!--&lt;!&ndash;                        <mat-label>Progress</mat-label>&ndash;&gt;-->
+                            <!--                        <mat-select [ngModel]="story.status" (selectionChange)="handleProgress($event.value, story.uuid)">-->
+                            <!--                            <mat-option value="NEW">New</mat-option>-->
+                            <!--                            <mat-option value="IN_PROGRESS">In Progress</mat-option>-->
+                            <!--                            <mat-option value="COMPLETED">Completed</mat-option>-->
+                            <!--                        </mat-select>-->
+                            <!--                    </mat-form-field>-->
+                            <!--                </div>-->
+                            <!--                <div class="col-3 justify-content-center">-->
+                            <!--                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{story.statusCompletedValue}}' style="width: 300px; margin-left: 42px;"></mat-progress-bar>-->
+                            <!--                    <div class="line" style="margin-left: 47px; margin-top: 5px;"></div>-->
+                            <!--                    <h6 class="mt-0" style="position: absolute; right: 354px; font-size: 11px">New</h6>-->
+                            <!--                    <div class="line" style="position: absolute;margin-left: 183px; margin-top: -4px;"></div>-->
+                            <!--                    <h6 class="mt-0" style="position: absolute; right: 207px; font-size: 11px">Progress</h6>-->
+                            <!--                    <div class="line" style="position: absolute;margin-left: 325px;margin-top: -4px;"></div>-->
+                            <!--                    <h6 class="mt-0" style="position: absolute; right: 66px; font-size: 11px">Completed</h6>-->
+                            <!--                </div>-->
+                            <!--                <div class="col-1 justify-content-end">-->
+                            <!--                    <button mat-mini-fab disabled aria-label="Example icon button with a heart icon"-->
+                            <!--                            style="background-color: rgba(108,64,220,0.83); color: white; cursor: pointer; right: -110px; bottom: -20px">-->
+                            <!--                        <mat-icon class="material-icons"  style="font-size: 18px">link</mat-icon>-->
+                            <!--                    </button>-->
 
+                            <!--                    <div class="col-12 d-flex justify-content-end" >-->
+                            <!--&lt;!&ndash;                        <a class="swagger-link" virtuan-click-stop-propagation><i class="fa fa-trash" aria-hidden="true"></i></a>&ndash;&gt;-->
+                            <!--                        <mat-icon class="material-icons swagger-link" (click)="openNewTab()" style="font-size: 25px">link</mat-icon>-->
+                            <!--                    </div>-->
+
+
+                            <!--                    <div style="right: -110px; bottom: -20px">-->
+                            <!--                        <mat-icon class="material-icons"  style="font-size: 18px">skip_next</mat-icon>-->
+                            <!--                    </div>-->
+
+
+                            <!--                </div>-->
+                            <div class="bottom-req">
+                                <div class="col-12 d-flex justify-content-center add-req-bottom">
+                                    <button mat-raised-button style="top: -3px; margin-right: 10px;z-index: 1000"
+                                        (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
+                                    <!--                        <button mat-raised-button style="top: -1px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>-->
+                                </div>
                             </div>
-                    </div>
-                </div>
-<!--                <div class="col-2 d-flex justify-content-center" style="margin-right: 10px">-->
-<!--                    -->
-<!--                </div>-->
-<!--                <div class="col-3 justify-content-center">-->
-<!--                    <mat-form-field class="flex-auto" style="width: 100%">-->
-<!--&lt;!&ndash;                        <mat-label>Progress</mat-label>&ndash;&gt;-->
-<!--                        <mat-select [ngModel]="story.status" (selectionChange)="handleProgress($event.value, story.uuid)">-->
-<!--                            <mat-option value="NEW">New</mat-option>-->
-<!--                            <mat-option value="IN_PROGRESS">In Progress</mat-option>-->
-<!--                            <mat-option value="COMPLETED">Completed</mat-option>-->
-<!--                        </mat-select>-->
-<!--                    </mat-form-field>-->
-<!--                </div>-->
-<!--                <div class="col-3 justify-content-center">-->
-<!--                    <mat-progress-bar mode="determinate" class="audio-progress-bar" value='{{story.statusCompletedValue}}' style="width: 300px; margin-left: 42px;"></mat-progress-bar>-->
-<!--                    <div class="line" style="margin-left: 47px; margin-top: 5px;"></div>-->
-<!--                    <h6 class="mt-0" style="position: absolute; right: 354px; font-size: 11px">New</h6>-->
-<!--                    <div class="line" style="position: absolute;margin-left: 183px; margin-top: -4px;"></div>-->
-<!--                    <h6 class="mt-0" style="position: absolute; right: 207px; font-size: 11px">Progress</h6>-->
-<!--                    <div class="line" style="position: absolute;margin-left: 325px;margin-top: -4px;"></div>-->
-<!--                    <h6 class="mt-0" style="position: absolute; right: 66px; font-size: 11px">Completed</h6>-->
-<!--                </div>-->
-<!--                <div class="col-1 justify-content-end">-->
-<!--                    <button mat-mini-fab disabled aria-label="Example icon button with a heart icon"-->
-<!--                            style="background-color: rgba(108,64,220,0.83); color: white; cursor: pointer; right: -110px; bottom: -20px">-->
-<!--                        <mat-icon class="material-icons"  style="font-size: 18px">link</mat-icon>-->
-<!--                    </button>-->
+                        </div>
+                        <!--            <div id="stories" class="row section border row-color wrap-text"  style="margin-left: 120px" *ngIf="story.storyTemplate === 'CREATE-TEXT' ">-->
+                        <!--                <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">-->
+                        <!--                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
+                        <!--                </div>-->
+                        <!--                <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.description"-->
+                        <!--                          [style]="{'height':'120px', 'margin-top':'10px', 'border' : 0}" [readonly]="true">-->
+                        <!--                    <p-header hidden>-->
+                        <!--                        <span class="ql-formats"></span>-->
+                        <!--                    </p-header>-->
+                        <!--                </p-editor>-->
 
-<!--                    <div class="col-12 d-flex justify-content-end" >-->
-<!--&lt;!&ndash;                        <a class="swagger-link" virtuan-click-stop-propagation><i class="fa fa-trash" aria-hidden="true"></i></a>&ndash;&gt;-->
-<!--                        <mat-icon class="material-icons swagger-link" (click)="openNewTab()" style="font-size: 25px">link</mat-icon>-->
-<!--                    </div>-->
+                        <!--            </div>-->
+                    </ng-container>
+                    <!--        <div class="watermark" style="left: 88%;">-->
+                    <!--            Stories-->
+                    <!--        </div>-->
 
 
-<!--                    <div style="right: -110px; bottom: -20px">-->
-<!--                        <mat-icon class="material-icons"  style="font-size: 18px">skip_next</mat-icon>-->
-<!--                    </div>-->
-
-
-<!--                </div>-->
-                <div class="bottom-req" >
-                    <div class="col-12 d-flex justify-content-center add-req-bottom">
-                        <button mat-raised-button style="top: -3px; margin-right: 10px;z-index: 1000" (click)="addStory(selectedEpic)"><mat-icon>add</mat-icon>Story</button>
-<!--                        <button mat-raised-button style="top: -1px" (click)="addText(selectedEpic)"><mat-icon>add</mat-icon>Text</button>-->
-                 </div>
-                </div>
-            </div>
-<!--            <div id="stories" class="row section border row-color wrap-text"  style="margin-left: 120px" *ngIf="story.storyTemplate === 'CREATE-TEXT' ">-->
-<!--                <div class="col-12 d-flex justify-content-center" style="padding-top: 10px">-->
-<!--                    <a class="delete" virtuan-click-stop-propagation (click)="deleteDesign('story')"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
-<!--                </div>-->
-<!--                <p-editor class="story-text" name="text-pane" id="field_reqdescription" [(ngModel)]="story.description"-->
-<!--                          [style]="{'height':'120px', 'margin-top':'10px', 'border' : 0}" [readonly]="true">-->
-<!--                    <p-header hidden>-->
-<!--                        <span class="ql-formats"></span>-->
-<!--                    </p-header>-->
-<!--                </p-editor>-->
-
-<!--            </div>-->
-        </ng-container>
-        <!--        <div class="watermark" style="left: 88%;">-->
-        <!--            Stories-->
-        <!--        </div>-->
-
-
-        <!--<div class="col-3">
+                    <!--<div class="col-3">
             <a href="" class="new">
                 <div class="wrap add">
                     <fa-icon [icon]="faPlus"></fa-icon>
                 </div>
             </a>
         </div>-->
-    </div>
+                </div>
 
 
-    <!--<div id="story-details" class="row section border" >
+                <!--<div id="story-details" class="row section border" >
         <div class="col-12">
             <div class="row">
                 <div class="col-3 sub-sec">
@@ -604,19 +698,14 @@
             </div>
         </div>
     </div>-->
-    </div>
-</div>
+            </div>
+        </div>
     </div>
 </div>
 
 <virtuan-story-design-page
-  *ngIf="viewEditor && ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded"
-  [ruleChain]="ruleChain"
-  [ruleChainMetaData]="ruleChainMetaData"
-  [connectionPropertyTemplates]="connectionPropertyTemplates"
-  [username]="username"
-  [uid]="desprojectUid"
-  [ruleNodeComponents]="ruleNodeComponents"
-  [serviceUuid]="storyserviceUuid"
-  [projectUid]="desprojectUid"
-  [storyuuid]="storyuuid"></virtuan-story-design-page>
+    *ngIf="viewEditor && ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded"
+    [ruleChain]="ruleChain" [ruleChainMetaData]="ruleChainMetaData"
+    [connectionPropertyTemplates]="connectionPropertyTemplates" [username]="username" [uid]="desprojectUid"
+    [ruleNodeComponents]="ruleNodeComponents" [serviceUuid]="storyserviceUuid" [projectUid]="desprojectUid"
+    [storyuuid]="storyuuid"></virtuan-story-design-page>
