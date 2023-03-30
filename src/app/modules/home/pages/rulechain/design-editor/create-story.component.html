@@ -1,88 +1,88 @@
 <form class="mat-form-dialog" [formGroup]="editForm" (ngSubmit)="save()">
-  <mat-toolbar color="primary">
-      <h2 mat-dialog-title *ngIf="data.createStatus === 'Update'">Update Story</h2>
-      <h2 mat-dialog-title *ngIf="data.createStatus !== 'Update'">Create Story</h2>
-      <span fxFlex></span>
-      <button mat-icon-button
-              mat-dialog-close
-              type="button">
-          <mat-icon class="material-icons">close</mat-icon>
-      </button>
-  </mat-toolbar>
+    <mat-toolbar color="primary">
+        <h2 mat-dialog-title *ngIf="data.createStatus === 'Update'">Update Story</h2>
+        <h2 mat-dialog-title *ngIf="data.createStatus !== 'Update'">Create Story</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                mat-dialog-close
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
 
-  <mat-dialog-content>
-      <div class="row">
-          <div style="text-align: left; margin-bottom: 10px">
-              <mat-form-field class="flex-auto" style="width: 97%;align-content: center ">
-                  <mat-label>Title</mat-label>
-                  <input type="text" formControlName="name" matInput>
-                  <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
-              </mat-form-field>
-          </div>
+    <mat-dialog-content>
+        <div class="row">
+            <div style="text-align: left; margin-bottom: 10px">
+                <mat-form-field class="flex-auto" style="width: 97%;align-content: center ">
+                    <mat-label>Title</mat-label>
+                    <input type="text" formControlName="name" matInput>
+                    <mat-error *ngIf="editForm.controls.name.hasError('required')">This field is required</mat-error>
+                </mat-form-field>
+            </div>
 
-          <div class="row">
-              <div class="col-12">
-                  <div class="row">
-                      <div class="col-3">
-                          <p-listbox filter="true" [style]="{'height':'349px','width':'200px', 'margin-top':'2px','overflow':'auto'}" [options]="stories" formControlName="storyTemplate" [(ngModel)]="selectedTemp">
-                              <ng-template let-story let-i="index" pTemplate="item">
-                                  <div class="ui-helper-clearfix">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-3">
+                            <p-listbox filter="true" [style]="{'height':'349px','width':'200px', 'margin-top':'2px','overflow':'auto'}" [options]="stories" formControlName="storyTemplate" [(ngModel)]="selectedTemp">
+                                <ng-template let-story let-i="index" pTemplate="item">
+                                    <div class="ui-helper-clearfix">
 
-                                      <p style="font-size: 14px;margin:6px 10px 0 0;border-bottom: 1px solid #e9e9e9; padding: 10px" *ngIf="story.value === 'custom'" (click)="changeStory(story.value)">
-                                          <img src="../../../../../../assets/images/story/category/custom-category.png" height="25">
-                                          <span style="margin:6px 10px 0 10px"> Custom </span>
-                                      </p>
-                                      <p style="font-size: 14px;margin:6px 10px 0 0; border-bottom: 1px solid #e9e9e9; padding: 10px " *ngIf="story.value === 'login'" (click)="changeStory(story.value)">
-                                          <img src="../../../../../../assets/images/story/team.png" height="25">
-                                          <span style="margin:6px 10px 0 10px"> User </span>
-                                      </p>
-                                      <p style="font-size: 14px;margin:6px 10px 0 0; border-bottom: 1px solid #e9e9e9; padding: 10px " *ngIf="story.value === 'email'" (click)="changeStory(story.value)">
-                                          <img src="../../../../../../assets/images/story/category/email-category.png"  height="25">
-                                      <!--                                <img src="assets/showcase/images/demo/car/{{story.label}}.png" style="display:inline-block;margin:5px 0 0 5px" width="48">-->
-                                      <span style="margin:6px 10px 0 10px"> Email </span>
-
-
-                                      </p>
-                                  </div>
-                              </ng-template>
-                              <!--                        <p-footer>-->
-                              <!--                            Selected: {{selectedCar||'none'}}-->
-                              <!--                        </p-footer>-->
-                          </p-listbox>
-                      </div>
-
-                      <div class="col-9">
-                          <div style="border: 1px solid darkgray; height: 100%">
-                              <div class="row">
-                                  <div class="col-4" style="margin: 10px" *ngIf="selectedStoryCategory === 'custom'">
-                                      <div style="font-size: 14px; font-weight: bold; margin:6px 10px 0 0;border: 2px solid #7189ee; padding: 10px; background-color: #b6c6ff; cursor: pointer" (click)="changeSelectedTemp('custom')">
-                                          <img src="../../../../../../assets/images/story/category/custom-story.png" height="25">
-                                          <span style="margin:6px 10px 0 10px">Custom</span>
-                                      </div>
-                                  </div>
-                                  <div class="col-4" style="margin: 10px" *ngIf="selectedStoryCategory === 'login'">
-                                      <div style="font-size: 14px;font-weight: bold; margin:6px 10px 0 0;border: 2px solid #89e558; padding: 10px; background-color: #ceffb6; cursor: pointer" (click)="changeSelectedTemp('custom')">
-                                          <img src="../../../../../../assets/images/story/category/user-story.png" height="25">
-                                          <span style="margin:6px 10px 0 10px">Login</span>
-                                      </div>
-                                  </div>
-                                  <div class="col-4" style="margin: 10px" *ngIf="selectedStoryCategory === 'email'">
-                                      <div style="font-size: 14px;margin:6px 10px 0 0;font-weight: bold; border: 2px solid #c96ce5; padding: 10px; background-color: #eec8f8; cursor: pointer" (click)="changeSelectedTemp('custom')">
-                                          <img src="../../../../../../assets/images/story/category/email-story.png" height="25">
-                                          <span style="margin:6px 10px 0 10px">Email</span>
-                                      </div>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </div>
-                  </div>
+                                        <p style="font-size: 14px;margin:6px 10px 0 0;border-bottom: 1px solid #e9e9e9; padding: 10px" *ngIf="story.value === 'custom'" (click)="changeStory(story.value)">
+                                            <img src="../../../../../../assets/images/story/category/custom-category.png" height="25">
+                                            <span style="margin:6px 10px 0 10px"> Custom </span>
+                                        </p>
+                                        <p style="font-size: 14px;margin:6px 10px 0 0; border-bottom: 1px solid #e9e9e9; padding: 10px " *ngIf="story.value === 'login'" (click)="changeStory(story.value)">
+                                            <img src="../../../../../../assets/images/story/team.png" height="25">
+                                            <span style="margin:6px 10px 0 10px"> User </span>
+                                        </p>
+                                        <p style="font-size: 14px;margin:6px 10px 0 0; border-bottom: 1px solid #e9e9e9; padding: 10px " *ngIf="story.value === 'email'" (click)="changeStory(story.value)">
+                                            <img src="../../../../../../assets/images/story/category/email-category.png"  height="25">
+                                        <!--                                <img src="assets/showcase/images/demo/car/{{story.label}}.png" style="display:inline-block;margin:5px 0 0 5px" width="48">-->
+                                        <span style="margin:6px 10px 0 10px"> Email </span>
 
 
+                                        </p>
+                                    </div>
+                                </ng-template>
+                                <!--                        <p-footer>-->
+                                <!--                            Selected: {{selectedCar||'none'}}-->
+                                <!--                        </p-footer>-->
+                            </p-listbox>
+                        </div>
+
+                        <div class="col-9">
+                            <div style="border: 1px solid darkgray; height: 100%">
+                                <div class="row">
+                                    <div class="col-4" style="margin: 10px" *ngIf="selectedStoryCategory === 'custom'">
+                                        <div style="font-size: 14px; font-weight: bold; margin:6px 10px 0 0;border: 2px solid #7189ee; padding: 10px; background-color: #b6c6ff; cursor: pointer" (click)="changeSelectedTemp('custom')">
+                                            <img src="../../../../../../assets/images/story/category/custom-story.png" height="25">
+                                            <span style="margin:6px 10px 0 10px">Custom</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" style="margin: 10px" *ngIf="selectedStoryCategory === 'login'">
+                                        <div style="font-size: 14px;font-weight: bold; margin:6px 10px 0 0;border: 2px solid #89e558; padding: 10px; background-color: #ceffb6; cursor: pointer" (click)="changeSelectedTemp('custom')">
+                                            <img src="../../../../../../assets/images/story/category/user-story.png" height="25">
+                                            <span style="margin:6px 10px 0 10px">Login</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" style="margin: 10px" *ngIf="selectedStoryCategory === 'email'">
+                                        <div style="font-size: 14px;margin:6px 10px 0 0;font-weight: bold; border: 2px solid #c96ce5; padding: 10px; background-color: #eec8f8; cursor: pointer" (click)="changeSelectedTemp('custom')">
+                                            <img src="../../../../../../assets/images/story/category/email-story.png" height="25">
+                                            <span style="margin:6px 10px 0 10px">Email</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
 
 
-              </div>
-              <div class="col-5">
+
+
+                </div>
+                <div class="col-5">
 <!--                    <h6 class="card-title">Epic - {{epic.name}}</h6>-->
 <!--                    <p-editor class="story-text epic-des" name="text-pane" id="field_reqdescription" formControlName="description"-->
 <!--                              [style]="{'height':'310px', 'margin-top':'10px','font-size':'2px','background-color':'#ffffff'}" [readonly]="true">-->
@@ -94,8 +94,8 @@
 <!--                            </div>-->
 <!--                        </div>-->
 
-              </div>
-          </div>
+                </div>
+            </div>
 
 
 <!--            <div class="row">-->
@@ -146,140 +146,28 @@
 
 
 
-          <div class="form-group" [hidden]="!editForm.get('id').value">
-              <input type="hidden" class="form-control" id="id" name="id" formControlName="id"/>
-          </div>
+            <div class="form-group" [hidden]="!editForm.get('id').value">
+                <input type="hidden" class="form-control" id="id" name="id" formControlName="id"/>
+            </div>
 
 
 
 
-      </div>
-  </mat-dialog-content>
-  <div mat-dialog-actions fxLayoutAlign="end center">
-      <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving" *ngIf="data.createStatus !== 'Update'"
-              type="submit" cdkFocusInitial>
-          Create
-      </button>
-      <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving" *ngIf="data.createStatus === 'Update'"
-              type="submit" cdkFocusInitial>
-          Update
-      </button>
-      <button mat-button color="primary"
-              type="button"
-              mat-dialog-close>
-          Cancel
-      </button>
-  </div>
-</form>
-
-<!-- 
-<div class="create-story-dialog-container">
-  <form [formGroup]="editForm" (ngSubmit)="save()">
-    <div *ngIf="isStarting">
-      <h1 mat-dialog-title>
-        Create Story
-      </h1>
-      <div mat-dialog-content>
-        <section class="story-form-container">
-        <mat-form-field appearance="outline">
-          <mat-label>Title</mat-label>
-          <input type="text" formControlName="name" matInput />
-          <mat-error *ngIf="editForm.controls.name.hasError('required')"
-            >This field is required</mat-error
-          >
-        </mat-form-field>
-        <div class="mat-button-toggle-group-container">
-          <mat-button-toggle-group  #group="matButtonToggleGroup" (change)="selectType(group)">
-            <mat-button-toggle value="custom" class="custom-toggle-button">Custom</mat-button-toggle>
-            <mat-button-toggle value="template" class="custom-toggle-button">Template</mat-button-toggle>
-          </mat-button-toggle-group>
         </div>
-        </section>
-      </div>  
+    </mat-dialog-content>
+    <div mat-dialog-actions fxLayoutAlign="end center">
+        <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving" *ngIf="data.createStatus !== 'Update'"
+                type="submit" cdkFocusInitial>
+            Create
+        </button>
+        <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving" *ngIf="data.createStatus === 'Update'"
+                type="submit" cdkFocusInitial>
+            Update
+        </button>
+        <button mat-button color="primary"
+                type="button"
+                mat-dialog-close>
+            Cancel
+        </button>
     </div>
-
-  <div mat-dialog-actions class="story-form-actions">
-    <button mat-button mat-dialog-close disabled="!isCustom" *ngIf="!isTemplate">Get Start</button>
-    <button mat-button mat-dialog-close *ngIf="isTemplate">Next</button>
-    <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
-  </div>
 </form>
-</div> -->
-
-
-<!-- 
-<div class="create-story-dialog-container">
-  <form [formGroup]="editForm">
-    <div>
-      <h1 mat-dialog-title *ngIf="isStarting">
-        Create Story
-      </h1>
-      <h1 mat-dialog-title *ngIf="!isStarting">
-        What are you looking to <span class="color-text">Create</span>
-      </h1>
-      <div mat-dialog-content>
-        <section class="story-form-container" *ngIf="isStarting">
-          <mat-form-field appearance="outline">
-            <mat-label>Title</mat-label>
-            <input type="text" formControlName="name" matInput />
-            <mat-error *ngIf="editForm.controls.name.hasError('required')"
-              >This field is required</mat-error
-            >
-          </mat-form-field>
-          <div class="mat-button-toggle-group-container">
-            <mat-button-toggle-group
-              #group1="matButtonToggleGroup"
-              (change)="selectType(group1)"
-            >
-              <mat-button-toggle value="custom" class="custom-toggle-button"
-                >Custom</mat-button-toggle
-              >
-              <mat-button-toggle value="template" class="custom-toggle-button"
-                >Template</mat-button-toggle
-              >
-            </mat-button-toggle-group>
-          </div>
-        </section>
-        <section class="story-form-container" *ngIf="!isStarting">
-          <div class="mat-button-toggle-group-container">
-            <mat-button-toggle-group
-            #group2="matButtonToggleGroup"
-            formControlName="options"
-            (change)="test(group2)" multiple
-          >
-            <mat-button-toggle *ngFor="let option of ['1', '2']" [value]="option" class="custom-toggle-button">{{option}}</mat-button-toggle
-            >
-          </mat-button-toggle-group>
-
-          <mat-button-toggle-group
-          #group3="matButtonToggleGroup"
-          formControlName="options"
-          (change)="test(group3)" multiple
-        >
-          <mat-button-toggle *ngFor="let option of ['1', '2']" value=option class="custom-toggle-button">{{option}}</mat-button-toggle
-          >
-        </mat-button-toggle-group>
-          </div>
-        </section>
-      </div>
-    </div>
-    <div mat-dialog-actions class="story-form-actions">
-      <button
-        mat-button
-        disabled="!isCustom"
-        *ngIf="!isTemplate"
-        (click)="save()"
-      >
-        Get Start
-      </button>
-      <button
-        mat-button
-        *ngIf="isTemplate"
-        (click)="selectTemplateType()"
-      >
-        Next
-      </button>
-      <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
-    </div>
-  </form>
-</div> -->

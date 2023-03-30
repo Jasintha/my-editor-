@@ -12,7 +12,10 @@ import { LamdafunctionService } from '@core/projectservices/function.service';
 })
 export class LamdafunctionEditorComponent implements OnInit, OnChanges, OnDestroy {
 
+  @Input()
   lamdafunctionUuid: string;
+
+  @Input()
   projectUid: string;
 
   lamdafunction: ILamdafunction;
@@ -56,11 +59,15 @@ export class LamdafunctionEditorComponent implements OnInit, OnChanges, OnDestro
   }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe((params)=> {
-      this.projectUid = params.projectUid;
-      this.lamdafunctionUuid = params.lamdafunctionUuid;
-      this.loadCode();
-    })
+//     this.activatedRoute.data.subscribe(({ lamdafunction }) => {
+//       this.lamdafunction = lamdafunction;
+//       this.editorOptions = { theme: this.theme, language: this.lamdafunction.language };
+//       this.code = this.lamdafunction.code;
+//     });
+//     this.activatedRoute.params.subscribe(params => {
+//       //this.projectId = params['projId'];
+//       this.projectUid = params['projectUid'];
+//     });
   }
 
   ngOnDestroy() {

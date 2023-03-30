@@ -7,7 +7,7 @@ import {IMainMenu, MainMenu} from '@shared/models/model/main-menu.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BuiltInPageService} from '@core/projectservices/built-in-page.service';
 import {ProjectService} from '@core/projectservices/project.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {MainMenuService} from '@core/projectservices/main-menu.service';
 import {CustomPageService} from '@core/projectservices/custom-page.service';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
@@ -30,12 +30,12 @@ import {WebsocketService} from '@core/tracker/websocket.service';
 import {BreakpointTrackerService} from '@core/tracker/breakpoint.service';
 import {GeneratorComponents, IGenerator} from '@shared/models/model/generator-chain.model';
 import {GeneratorChainService} from './generator-chain.service';
-import { LoginService } from '@app/core/services/login.services';
 
 @Component({
   selector: 'virtuan-build-view',
   templateUrl: './build-view.component.html',
-  styleUrls: ['./build-view.component.scss',  '../rulechain/rulechain-page.component.scss'],
+  styleUrls: ['./build-view.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -74,13 +74,6 @@ export class BuildViewComponent implements OnInit {
   targetProperties: IEpicService[] = [];
   generatorsDataList: GeneratorComponents[] = []
   servicesList: any[] = []
-
-  splitPartOneSize = 100;
-  splitPartTwoSize = 0;
-  splitConsoleSizeOne = 100;
-  splitConsoleSizeTwo = 0;
-  currentTab = 'build';
-  
   buildGenForm() {
     this.editForm = this.fb.group({
       id: [],
@@ -90,7 +83,6 @@ export class BuildViewComponent implements OnInit {
     this.editForm.get('genType').patchValue('All', {emitEvent: true});
   }
   constructor(
-      private router: Router,
       protected builtInPageService: BuiltInPageService,
       protected mainmenuService: MainMenuService,
       protected custompageService: CustomPageService,
@@ -104,7 +96,6 @@ export class BuildViewComponent implements OnInit {
       private breakpointService: BreakpointTrackerService,
       private generatorService: GeneratorChainService,
       private cdr: ChangeDetectorRef,
-      private loginService: LoginService
   ) {
     this.typeSelected = 'square-jelly-box';
   }
@@ -122,7 +113,6 @@ export class BuildViewComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.getGeneratorStatusData();
     this.getServiceGenStatus();
-    this.currentTab = 'build';
   }
 
   applyFilter(filterValue: string) {
@@ -266,24 +256,6 @@ export class BuildViewComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
-  }
-
-  logout(){
-    this.loginService.logout();
-    this.router.navigate(['']);
-}
-
-  changeSplit(val) {
-    this.currentTab = 'build';
-      if(val === 'portal') {
-        this.router.navigate([`ui`])    
-      } else if (val === 'service') {
-        this.router.navigate([`service`])    
-      } else if (val === 'design'){
-        this.router.navigate([`design`])    
-      } else if ( val === 'build') {
-        this.router.navigate([`build`])    
-      }  
   }
 
   getGeneratorType(generator) {

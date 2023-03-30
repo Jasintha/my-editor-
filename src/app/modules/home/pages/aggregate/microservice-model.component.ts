@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { Observable } from 'rxjs';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
@@ -24,9 +24,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./microservice-model.component.scss'],
   //  encapsulation: ViewEncapsulation.None
 })
-export class MicroserviceModelComponent implements OnInit {
+export class MicroserviceModelComponent implements OnInit, OnChanges {
 
+  @Input()
   modelUid: string;
+  @Input()
   projectUid: string;
 
   project: IProject;
@@ -50,7 +52,10 @@ export class MicroserviceModelComponent implements OnInit {
   ) {
     // this.toolbarTrackerService.setIsEntityPage('yes');
   }
-  
+  ngOnChanges(changes: SimpleChanges) {
+    this.loadDesign()
+  }
+
   loadDesign() {
     this.aggregateService
         .findDesignById(this.modelUid,this.projectUid)
@@ -123,13 +128,17 @@ export class MicroserviceModelComponent implements OnInit {
     }
   }
 
-  ngOnInit() {    
-      this.activatedRoute.queryParams.subscribe((params)=> {
-        this.projectUid = params.projectUid;
-        this.modelUid = params.modelUid
-        this.getProjectType(); 
-        this.loadDesign();
-      })
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(params => {
+      //this.aggregateId = params['id'];
+      //this.projectId = params['projId'];
+      //this.projectUid = params['projectUid'];
+      this.getProjectType();
+      // this.toolbarTrackerService.setProjectUUID(this.projectUid);
+    });
+
+    this.loadDesign();
+    //console.log(this.data);
   }
 
 

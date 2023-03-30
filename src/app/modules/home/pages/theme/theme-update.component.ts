@@ -35,8 +35,13 @@ import {IPropertyKeyValue} from '@shared/models/model/property-key-value.model';
 export class ThemeUpdateComponent implements OnDestroy, OnInit {
   @ViewChild('fileInput') fileInput: FileUpload;
 
-  projectUid: string;
-  pageId: string;
+  // @Input('projectUid') projectUid: string;
+  // @Input('themeId') themeId: string;
+  // @Input('rowValues') rowValues: string;
+  // @Input('creatStatus') creatStatus: string;
+  // @Input('isVisible') isVisible: boolean;
+  @Input() projectUid: string;
+  @Input() pageId: string;
   @Output() isVisibleEvent = new EventEmitter<boolean>();
 
   @ViewChild('defaultOpen') defaultOpen: ElementRef;
@@ -145,11 +150,7 @@ export class ThemeUpdateComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe((params)=> {
-      this.projectUid = params.projectUid;
-      this.pageId = params.pageUid
-      this.getThemeData();
-    })   
+    this.getThemeData();
   }
 
   getThemeData() {

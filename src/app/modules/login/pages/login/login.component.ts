@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
     this.eventSubscriber = this.eventManager.on(EventTypes.authenticationSuccess).subscribe(event =>
         this.accountService.identity().then(account => {
           this.account = account;
-          this.router.navigate(['design']);
+          this.router.navigate(['home']);
         })
     );
   }
