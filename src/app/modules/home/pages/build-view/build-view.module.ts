@@ -21,7 +21,7 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import {BuildViewComponent} from '@home/pages/build-view/build-view.component';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {MonacoEditorModule} from 'ngx-monaco-editor';
-import { AngularSplitModule } from 'angular-split';
+
 
 @NgModule({
     declarations:[
@@ -51,8 +51,7 @@ import { AngularSplitModule } from 'angular-split';
         SharedModule,
         NgxSpinnerModule,
         MultiSelectModule,
-        MonacoEditorModule,
-        AngularSplitModule
+        MonacoEditorModule
     ],
     exports:[
         BuildViewComponent
