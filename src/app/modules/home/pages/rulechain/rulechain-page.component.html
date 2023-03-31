@@ -196,7 +196,11 @@
           </virtuan-details-panel>
         </mat-drawer>
         <mat-drawer-content class="virtuan-rulechain-graph-content">
-
+          <div>
+              <mat-progress-bar color="primary" style="z-index: 10;width: 100%;" mode="indeterminate"
+              *ngIf="isSpinnerEnable">
+</mat-progress-bar>
+          </div>
           <div class="virtuan-absolute-fill virtuan-rulechain-graph rulechain-page-custom-scroll" (contextmenu)="openRuleChainContextMenu($event)">
             <div #ruleChainMenuTrigger="matMenuTrigger" style="visibility: hidden; position: fixed"
                  [style.left]="ruleChainMenuPosition.x"

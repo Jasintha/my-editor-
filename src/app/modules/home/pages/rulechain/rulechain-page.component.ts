@@ -131,7 +131,6 @@ import { ruleNodeConfigResourcesModulesMap } from "../service-home/service-home.
   selector: "virtuan-rulechain-page",
   templateUrl: "./rulechain-page.component.html",
   styleUrls: ["./rulechain-page.component.scss"],
-  encapsulation: ViewEncapsulation.None,
 })
 export class RuleChainPageComponent extends PageComponent
   implements AfterViewInit, OnInit, HasDirtyFlag, ISearchableComponent {
@@ -247,7 +246,7 @@ export class RuleChainPageComponent extends PageComponent
 
   serviceUuid: string;
   ruleId: string;
-
+  isSpinnerEnable: boolean;
   branchAvailability: any;
 
   ruleChainModel: FcRuleNodeModel = {
@@ -424,6 +423,7 @@ export class RuleChainPageComponent extends PageComponent
   ) {
     super(store);
     this.activatedRoute.queryParams.subscribe((params: any) => {
+      this.isSpinnerEnable = true;
       this.username = params.username;
       this.uid = params.ruleprojectUid;
       this.editorType = params.editorType;
@@ -1010,6 +1010,7 @@ export class RuleChainPageComponent extends PageComponent
     this.isDirtyValue = false;
     this.updateRuleNodesHighlight();
     this.validate();
+    this.isSpinnerEnable = false;
   }
 
   openRuleChainContextMenu($event: MouseEvent) {

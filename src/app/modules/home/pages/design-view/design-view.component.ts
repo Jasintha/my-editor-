@@ -644,9 +644,6 @@ export class DesignViewComponent implements OnInit, OnChanges {
         this.requirementArray = [];
         this.currentReqIndex = 0;
         this.currentTab = 'design'
-        this.route.params.subscribe(params => {
-            this.projectUid = params['projectUid'];
-        });
         this.ruleprojectUid = "";
         this.editorType = "";
         this.listenConsoleLogChange();

@@ -87,9 +87,9 @@ export class RuleChainResolver implements Resolve<RuleChain> {
   constructor(private ruleChainService: RuleChainService) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<RuleChain> {
-    const ruleChainId = route.params.ruleChainId;
-    const username = route.params.username;
-    const uid = route.params.uid;
+    const ruleChainId = route.queryParams.ruleId;
+    const username = route.queryParams.username;
+    const uid = route.queryParams.ruleprojectUid;
     return this.ruleChainService.getRuleChainWithUsernameAndUID(
       ruleChainId,
       username,
@@ -118,9 +118,9 @@ export class ResolvedRuleChainMetaDataResolver
   resolve(
     route: ActivatedRouteSnapshot
   ): Observable<ResolvedRuleChainMetaData> {
-    const ruleChainId = route.params.ruleChainId;
-    const username = route.params.username;
-    const uid = route.params.uid;
+    const ruleChainId = route.queryParams.ruleId;
+    const username = route.queryParams.username;
+    const uid = route.queryParams.ruleprojectUid;
     return this.ruleChainService.getResolvedRuleChainMetadata(
       ruleChainId,
       username,
@@ -137,8 +137,8 @@ export class RuleNodeComponentsResolver
   resolve(
     route: ActivatedRouteSnapshot
   ): Observable<Array<RuleNodeComponentDescriptor>> {
-    const editorType = route.params.editorType;
-    const uid = route.params.uid;
+    const editorType = route.queryParams.editorType;
+    const uid = route.queryParams.ruleprojectUid;
     return this.ruleChainService.getRuleNodeComponents(
       ruleNodeConfigResourcesModulesMap,
       uid,
@@ -253,6 +253,7 @@ const routes: Routes = [
       {
         path: "rulechain",
         component: RuleChainPageComponent,
+        canDeactivate: [ConfirmOnExitGuard],
         data: {
           auth: [Authority.TENANT_ADMIN],
         },

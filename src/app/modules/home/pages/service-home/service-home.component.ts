@@ -114,7 +114,7 @@ export const ruleNodeConfigResourcesModulesMap = {
   templateUrl: "./service-home.component.html",
   styleUrls: [
     "./service-home.component.scss",
-    "../rulechain/rulechain-page.component.scss",
+     "../rulechain/rulechain-page.component.scss",
   ],
 })
 export class ServiceHomeComponent implements OnInit, OnChanges {
@@ -618,7 +618,7 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
     this.username = item.username;
     this.router.navigate(["service/rulechain"], {
       queryParams: {
-        ruleId: item.uuid,
+        ruleId: item.ruleid,
         username: this.username,
         ruleprojectUid: this.ruleprojectUid,
         editorType: this.editorType,

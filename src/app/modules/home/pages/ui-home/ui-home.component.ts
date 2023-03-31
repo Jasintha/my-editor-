@@ -689,10 +689,7 @@ export class UiHomeComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.requirementArray = [];
     this.currentReqIndex = 0;
-    this.currentTab = "design";
-    this.route.params.subscribe((params) => {
-      this.projectUid = params["projectUid"];
-    });
+    this.currentTab = "portal";
     this.ruleprojectUid = "";
     this.editorType = "";
     this.listenConsoleLogChange();
@@ -704,7 +701,6 @@ export class UiHomeComponent implements OnInit, OnChanges {
     this.onEditMultiWidgetPage();
     this.registerChangeDesignEditor();
     this.loadPreviewStatus();
-    this.currentTab = 'portal';
     //         this.appTypeService.getDevChainByAppType(this.projectUid)
     //           .pipe(
     //             filter((mayBeOk: HttpResponse<IGenerator[]>) => mayBeOk.ok),
