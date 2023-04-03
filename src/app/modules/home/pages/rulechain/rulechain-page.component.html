@@ -1,26 +1,9 @@
-<!--
-
-
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
--->
-<div class="mat-content" fxFlex virtuan-fullscreen [fullscreen]="isFullscreen" virtuan-hotkeys [hotkeys]="hotKeys"
+<div class="virtuan-rulechain mat-content" fxFlex virtuan-fullscreen [fullscreen]="isFullscreen" virtuan-hotkeys [hotkeys]="hotKeys"
      [cheatSheet]="cheatSheetComponent"
-  fxLayout="column" class="virtuan-rulechain">
+  fxLayout="column">
   <virtuan-hotkeys-cheatsheet #cheatSheetComponent></virtuan-hotkeys-cheatsheet>
-  <section class="virtuan-rulechain-container rulechain-page-custom-scroll" fxFlex fxLayout="column">
-    <div class="virtuan-rulechain-layout" fxFlex fxLayout="row">
+  <section fxFlex fxLayout="column">
+    <div fxFlex fxLayout="row">
       <section fxLayout="row"
                class="virtuan-header-buttons virtuan-library-open" [fxShow]="!isLibraryOpen">
         <button mat-button mat-icon-button color="primary"

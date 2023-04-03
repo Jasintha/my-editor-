@@ -242,6 +242,125 @@
   }
 }
 
+:host ::ng-deep .fc-canvas {
+  .fc-node {
+    border-radius: 8px;
+    &.fc-selected {
+      &:not(.fc-edit) {
+        margin: -3px;
+        border: solid 3px #f00;
+      }
+    }
+  }
+
+  .fc-edit {
+    .fc-nodeedit,
+    .fc-nodedelete {
+      box-sizing: content-box;
+      border: solid 2px #fff;
+      background: #f83e05;
+      outline: none;
+    }
+  }
+
+  .fc-arrow-marker {
+    polygon {
+      fill: #808080;
+      stroke: #808080;
+    }
+  }
+
+  .fc-arrow-marker-selected {
+    polygon {
+      fill: #f00;
+      stroke: #f00;
+    }
+  }
+
+  .fc-edge {
+    outline: none;
+    stroke: #808080;
+
+    &.fc-selected {
+      stroke: #f00;
+    }
+
+    &.fc-hover {
+      stroke: #808080;
+    }
+  }
+
+  .edge-endpoint {
+    fill: #808080;
+  }
+
+  .fc-edge-label {
+    opacity: 1 !important;
+    &:focus {
+      outline: 0;
+    }
+
+    &.fc-selected {
+      .fc-edge-label-text {
+        span {
+          color: #fff !important;
+          background-color: #f00 !important;
+          border: solid #f00 !important;
+        }
+      }
+    }
+
+    .fc-edge-label-text {
+      font-size: 14px !important;
+      font-weight: 600 !important;
+
+      span {
+        background-color: #fff !important;
+        color: #003a79 !important;
+        border: solid 2px #003a79 !important;
+      }
+    }
+  }
+}
+
+:host ::ng-deep .mat-expansion-panel-body{
+  padding: 0px
+}
+
+.virtuan-context-menu-header {
+  display: flex;
+  box-sizing: content-box;
+  flex-direction: row;
+  height: 36px;
+  min-height: 36px;
+  padding: 8px 5px 5px;
+  font-size: 14px;
+
+  @include rule-node-colors();
+
+  &.virtuan-rulechain-header {
+    background-color: #aac7e4;
+  }
+
+  &.virtuan-link-header {
+    background-color: #aac7e4;
+  }
+
+  .mat-icon {
+    padding-right: 10px;
+    padding-left: 2px;
+    margin: auto;
+  }
+
+  .virtuan-context-menu-title {
+    font-weight: 500;
+  }
+
+  .virtuan-context-menu-subtitle {
+    font-size: 12px;
+  }
+}
+
 .virtuan-rule-node-tooltip,
 .virtuan-rule-node-help {
   color: #333;
