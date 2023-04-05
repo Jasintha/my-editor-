@@ -86,7 +86,6 @@ import {ConOperationBase} from "@shared/models/ConnectorOperation.models";
   selector: 'virtuan-story-design-page',
   templateUrl: './story-design-page.component.html',
   styleUrls: ['./rulechain-page.component.scss'],
-  encapsulation: ViewEncapsulation.None
 })
 export class StoryDesignPageComponent extends PageComponent
   implements AfterViewInit, OnInit, HasDirtyFlag, ISearchableComponent {

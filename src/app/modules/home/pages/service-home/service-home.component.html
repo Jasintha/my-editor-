@@ -126,59 +126,70 @@
                 </as-split>
             </as-split-area>
             <as-split-area [size]="20">
-
                 <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist"
-                style="width:105px; position: fixed; background-color: lightgrey; margin-top: 0; padding-top: 55px">
-                 <div style="display:flex; flex-direction: column;height: 90%;
-                 justify-content: space-evenly;">
+                    style="position: fixed; background-color: lightgrey; margin-top: 0;">
+                    <div style="display:flex; flex-direction: column;height: 100%; width: 75%;
+                     justify-content: space-between;">
 
-                    <div role="presentation" style="display: flex; margin-bottom: 110px;">
-                        <h1 class="display-4" style="transform: rotate(90deg);">
-                            <img src="../assets/images/apps_icon.png"
-                                style="width: 38px;margin-bottom: 8px;transform: rotate(270deg);"></h1>
-                    </div>
-                    <div style="display: flex; flex-direction: column;">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('design')"
-                                data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button"
-                                role="tab" aria-selected="false">Design</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('service')"
-                                data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button"
-                                role="tab" aria-selected="true">Service</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('portal')"
-                                data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button"
-                                role="tab" aria-selected="false">UI</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('build')"
-                                data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'build'}" type="button"
-                                role="tab" aria-selected="false">Build</button>
-                        </li>
-                    </div>
-                    <span class="logout" style="width: 40px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;">
-                        <button mat-mini-fab matTooltip="Logout" [matMenuTriggerFor]="menu"
-                            style="width: 34px; height: 34px;margin-left: 5px;margin-bottom: 15px" color="primary">
-                            <mat-icon>perm_identity</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="logout()">
-                                <mat-icon>power_settings_new</mat-icon>
-                                <span>Logout</span>
+                        <div role="presentation" style="
+                            display: flex;
+                            width: 50%;
+                            height: 7%;
+                            justify-content: center;
+                            align-items: center;">
+                            <h1 class="display-4" style="transform: rotate(90deg);"><img
+                                    src="../assets/images/apps_icon.png" style="width: 38px;transform: rotate(270deg);">
+                            </h1>
+                        </div>
+                        <div style="
+                            display: flex;
+                            flex-direction: column;
+                            width: 50%;
+                            height: 50%;
+                            justify-content: flex-start;
+                            align-items: flex-start;
+                            ">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" (click)="changeSplit('design')" data-bs-toggle="tab"
+                                    [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"
+                                    aria-selected="false">Design</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" (click)="changeSplit('service')" data-bs-toggle="tab"
+                                    [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab"
+                                    aria-selected="true">Service</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" (click)="changeSplit('portal')" data-bs-toggle="tab"
+                                    [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"
+                                    aria-selected="false">UI</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" (click)="changeSplit('build')" data-bs-toggle="tab"
+                                    [ngClass]="{'active': currentTab == 'build'}" type="button" role="tab"
+                                    aria-selected="false">Build</button>
+                            </li>
+                        </div>
+                        <span class="logout" style="width: 50%;
+                            display: flex;
+                            justify-content: center;
+                            margin-bottom: 10px;
+                            align-items: center;">
+                            <button mat-mini-fab matTooltip="Logout" [matMenuTriggerFor]="menu"
+                                style="width: 34px; height: 34px;margin-left: -2px;" color="primary">
+                                <mat-icon>perm_identity</mat-icon>
                             </button>
-                        </mat-menu>
-                    </span>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="logout()">
+                                    <mat-icon>power_settings_new</mat-icon>
+                                    <span>Logout</span>
+                                </button>
+                            </mat-menu>
+                        </span>
 
-                </div>
+                    </div>
 
-            </ul>
-
+                </ul>
                 <div class="tab-content" style="display: flex;
                 width: 100%;
                 flex-direction: column;">

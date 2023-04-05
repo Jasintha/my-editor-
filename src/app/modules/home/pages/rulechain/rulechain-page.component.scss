@@ -591,7 +591,7 @@
   height: 100%;
   -ms-flex-direction: column;
   flex-direction: column;
-  margin-right: -113px;
+  margin-right: -135px;
   margin-top: 55px;
   background-color: white;
   z-index: 1;
@@ -606,9 +606,8 @@
 
 .sideways-tabs.right-tabs .nav-link.active {
   border: none;
-  border-top: 15px solid #1a73e8;
+  border-top: 7px solid #1a73e8;
   font-weight: bold;
-  margin-top: 20px !important;
 }
 
 .sideways-tabs.right-tabs .nav-link{

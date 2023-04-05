@@ -3,80 +3,80 @@
 
     <as-split direction="horizontal">
       <as-split-area [size]="100">
-   
-          <as-split direction="vertical">
-            <as-split-area [size]="100">
-              <h4 class="buildSubtitle" *ngIf="generatorsDataList.length > 0">
-                Generator status
-              </h4>
-              <form name="editForm" role="form" novalidate [formGroup]="editForm">
-                <div class="row">
-                  <div style="padding: 10px;" class="col-2" *ngFor="let generator of generatorsDataList">
-                    <div class="gen-container">
-                      <div class="genTitle">
-                        <span>
-                          <mat-icon [ngClass]="{
+
+        <as-split direction="vertical">
+          <as-split-area [size]="100">
+            <h4 class="buildSubtitle" *ngIf="generatorsDataList.length > 0">
+              Generator status
+            </h4>
+            <form name="editForm" role="form" novalidate [formGroup]="editForm">
+              <div class="row">
+                <div style="padding: 10px;" class="col-2" *ngFor="let generator of generatorsDataList">
+                  <div class="gen-container">
+                    <div class="genTitle">
+                      <span>
+                        <mat-icon [ngClass]="{
                   green: generator['health'] === 'Healthy',
                   yellow: generator['health'] === 'Progressing',
                   red: generator['health'] === 'Degraded'
                 }">brightness_1</mat-icon>
                         <span style="font-size: 14px;">
-                            {{ generator["name"] }}</span>
-                        </span>
-                      </div>
-                      <div class="gen-body">
-                        <div class="row" style="padding: 5px;">
-                          <div class="col-12">
-                            <span style="font-weight: 500;">Synced :</span>
-                            {{ generator["last_synced_at"] }}
-                          </div>
+                          {{ generator["name"] }}</span>
+                      </span>
+                    </div>
+                    <div class="gen-body">
+                      <div class="row" style="padding: 5px;">
+                        <div class="col-12">
+                          <span style="font-weight: 500;">Synced :</span>
+                          {{ generator["last_synced_at"] }}
                         </div>
-                        <div class="row" style="margin-top: 5px;">
-                          <div class="col-6">
-                            <button type="button" class="restartBtn">
-                              <mat-icon>settings_backup_restore</mat-icon>
-                            </button>
-                          </div>
+                      </div>
+                      <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">
+                          <button type="button" class="restartBtn">
+                            <mat-icon>settings_backup_restore</mat-icon>
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div style="display: flex; flex-direction: column; margin-top: 8px; width: 100%;">
-                  <h4 class="buildSubtitle">Build Service</h4>
-                  <div style="display: flex; flex-direction: row; width: 100%; gap:20px">
-                      <div style="margin-top: 8px; width: 40%; margin-left: 15px;">
-                        <div>
-                          <p-multiSelect [options]="servicesToGenerate" formControlName="selectedServices"
-                            optionLabel="name" [panelStyle]="{ width: '100%' }" [filter]="true" >
-                          </p-multiSelect>
-                        </div>
-                      </div>
-                      <button [disabled]="isGenerating" mat-raised-button type="button" style="
+              </div>
+              <div style="display: flex; flex-direction: column; margin-top: 8px; width: 100%;">
+                <h4 class="buildSubtitle">Build Service</h4>
+                <div style="display: flex; flex-direction: row; width: 100%; gap:20px">
+                  <div style="margin-top: 8px; width: 40%; margin-left: 15px;">
+                    <div>
+                      <p-multiSelect [options]="servicesToGenerate" formControlName="selectedServices"
+                        optionLabel="name" [panelStyle]="{ width: '100%' }" [filter]="true">
+                      </p-multiSelect>
+                    </div>
+                  </div>
+                  <button [disabled]="isGenerating" mat-raised-button type="button" style="
               float: right;
               background-color: #2980b9;
               color: white;
               margin-top: 5px;
             " (click)="generate()" cdkFocusInitial>
-                        <mat-icon style="font-size: 30px; margin-bottom: 6px;">play_arrow</mat-icon>
-                      </button>
-                      <div style="width: 50%;">
-                        <span *ngIf="isGenerating"><mat-progress-bar style="margin-top: 21px;"
-                          mode="indeterminate"></mat-progress-bar></span>
-              
-                      </div>
-                    </div>
-              
+                    <mat-icon style="font-size: 30px; margin-bottom: 6px;">play_arrow</mat-icon>
+                  </button>
+                  <div style="width: 50%;">
+                    <span *ngIf="isGenerating"><mat-progress-bar style="margin-top: 21px;"
+                        mode="indeterminate"></mat-progress-bar></span>
+
+                  </div>
                 </div>
 
-                <div *ngIf="isBuildLogAvailable">
-                  <div class="row" style="margin-top: 50px;">
-                    <div class="col-md-12 build-view">
-                      <span>
-                        <mat-form-field style="float: right; margin-right: 50px; display: inline;">
-                          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
-                        </mat-form-field>
-                        <button type="button" style="
+              </div>
+
+              <div *ngIf="isBuildLogAvailable">
+                <div class="row" style="margin-top: 50px;">
+                  <div class="col-md-12 build-view">
+                    <span>
+                      <mat-form-field style="float: right; margin-right: 50px; display: inline;">
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
+                      </mat-form-field>
+                      <button type="button" style="
                 color: grey;
                 background-color: white;
                 border: none;
@@ -84,234 +84,247 @@
                 float: right;
                 margin-right: 30px;
               " (click)="refreshLogs()" class="ui-button-danger ui-button-raised">
-                          <mat-icon>refresh</mat-icon>
-                        </button>
-                      </span>
-                      <div class="mat-elevation-z8">
-                        <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows
-                          class="mat-elevation-z8">
-                          <ng-container matColumnDef="{{ column }}" *ngFor="let column of displayedColumns">
-                            <th mat-header-cell *matHeaderCellDef>
-                              {{ columnHeaders[column] }}
-                            </th>
-                            <td mat-cell *matCellDef="let element" style="color: black;">
-                              <span *ngIf="column === 'servicename'">
-                                <mat-icon [ngClass]="{
+                        <mat-icon>refresh</mat-icon>
+                      </button>
+                    </span>
+                    <div class="mat-elevation-z8">
+                      <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="mat-elevation-z8">
+                        <ng-container matColumnDef="{{ column }}" *ngFor="let column of displayedColumns">
+                          <th mat-header-cell *matHeaderCellDef>
+                            {{ columnHeaders[column] }}
+                          </th>
+                          <td mat-cell *matCellDef="let element" style="color: black;">
+                            <span *ngIf="column === 'servicename'">
+                              <mat-icon [ngClass]="{
                         yellow: element['lastbuildstatus'] === 'DOING',
                         red: element['lastbuildstatus'] === 'DIDNOT',
                         green: element['lastbuildstatus'] === 'DONE'
                       }">brightness_1</mat-icon>
-                                {{ element[column] }}</span>
-                              <span *ngIf="column !== 'servicename'">
-                                {{ element[column] }}</span>
-                            </td>
-                          </ng-container>
-                          <ng-container matColumnDef="expand">
-                            <th mat-header-cell *matHeaderCellDef aria-label="row actions">
-                              &nbsp;
-                            </th>
-                            <td mat-cell *matCellDef="let element" style="color: black;">
-                              <button mat-icon-button aria-label="expand row" (click)="
+                              {{ element[column] }}</span>
+                            <span *ngIf="column !== 'servicename'">
+                              {{ element[column] }}</span>
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="expand">
+                          <th mat-header-cell *matHeaderCellDef aria-label="row actions">
+                            &nbsp;
+                          </th>
+                          <td mat-cell *matCellDef="let element" style="color: black;">
+                            <button mat-icon-button aria-label="expand row" (click)="
                       expandedElement =
                         expandedElement === element ? null : element;
                       $event.stopPropagation()
                     ">
-                                <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
-                                <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
-                              </button>
-                            </td>
-                          </ng-container>
-                          <ng-container matColumnDef="expandedDetail">
-                            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" style="color: black;">
-                              <div class="example-element-detail" [@detailExpand]="
+                              <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                              <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                            </button>
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="expandedDetail">
+                          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length"
+                            style="color: black;">
+                            <div class="example-element-detail" [@detailExpand]="
                       element == expandedElement
                         ? 'expanded'
                         : 'collapsed'
                     ">
-                                <ngx-monaco-editor style="height: 100px important; width: 100%;"
-                                  [options]="editorOptions" [(ngModel)]="element.statusinfo"
-                                  [ngModelOptions]="{ standalone: true }" ngDefaultControl></ngx-monaco-editor>
-                                <div class="example-element-description">
-                                  {{ element.servicename }}
-                                  <span class="example-element-description-attribution">
-                                    -- Build Log
-                                  </span>
-                                </div>
+                              <ngx-monaco-editor style="height: 100px important; width: 100%;" [options]="editorOptions"
+                                [(ngModel)]="element.statusinfo" [ngModelOptions]="{ standalone: true }"
+                                ngDefaultControl></ngx-monaco-editor>
+                              <div class="example-element-description">
+                                {{ element.servicename }}
+                                <span class="example-element-description-attribution">
+                                  -- Build Log
+                                </span>
                               </div>
-                            </td>
-                          </ng-container>
-                          <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
-                          <tr mat-row *matRowDef="
+                            </div>
+                          </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+                        <tr mat-row *matRowDef="
                   let element;
                   columns: columnsToDisplayWithExpand
                 " class="example-element-row" [class.example-expanded-row]="expandedElement === element" (click)="
                   expandedElement =
                     expandedElement === element ? null : element
                 "></tr>
-                          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-                        </table>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                      </table>
 
-                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-                      </div>
+                      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                     </div>
                   </div>
                 </div>
-              </form>
-            </as-split-area>
-            <as-split-area [size]="0" [ngClass]="{
+              </div>
+            </form>
+          </as-split-area>
+          <as-split-area [size]="0" [ngClass]="{
     'build-in-page-custom-scroll': loadPageEditor,
     'rulechain-page-custom-scroll': !loadPageEditor
   }">
-              <div class="button-row" style="float: right; margin: 5px;" *ngIf="selectedTab === 0">
-                <button mat-raised-button type="button"
-                  style="background-color: #a8554f; color: white; margin-left: 5px;" (click)="clearLog()"
-                  cdkFocusInitial>
-                  <mat-icon style="font-size: 25px;" class="example-tab-icon">not_interested</mat-icon>
-                </button>
-              </div>
+            <div class="button-row" style="float: right; margin: 5px;" *ngIf="selectedTab === 0">
+              <button mat-raised-button type="button" style="background-color: #a8554f; color: white; margin-left: 5px;"
+                (click)="clearLog()" cdkFocusInitial>
+                <mat-icon style="font-size: 25px;" class="example-tab-icon">not_interested</mat-icon>
+              </button>
+            </div>
 
-              <div class="button-row" style="float: right; margin: 5px;" *ngIf="selectedTab === 1 || selectedTab === 2">
-                <button mat-raised-button type="button" style="
+            <div class="button-row" style="float: right; margin: 5px;" *ngIf="selectedTab === 1 || selectedTab === 2">
+              <button mat-raised-button type="button" style="
         background-color: darkgray;
         color: white;
         margin-right: 35px;
         height: 25px;
         margin-top: 3px;
       " (click)="loadPreviewStatus()" cdkFocusInitial>
-                  <mat-icon style="font-size: 22px; margin-bottom: 9px;" class="example-tab-icon">refresh</mat-icon>
+                <mat-icon style="font-size: 22px; margin-bottom: 9px;" class="example-tab-icon">refresh</mat-icon>
+              </button>
+            </div>
+            <mat-tab-group dynamicHeight (selectedTabChange)="tabChanged($event)">
+              <mat-tab label="Console">
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon">receipt</mat-icon>
+                  Events
+                </ng-template>
+                <ng-template matTabContent>
+                  <div style="min-height: 200px; height: 100% !important; width: 100%;">
+                    <!--                                        <div style="min-height: 40px;margin: 5px;">-->
+                    <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
+
+                    <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="code"
+                      ngDefaultControl></ngx-monaco-editor>
+                  </div>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Console">
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon">receipt</mat-icon>
+                  UI Build
+                </ng-template>
+                <ng-template matTabContent>
+                  <div style="min-height: 200px; height: 100% !important; width: 100%;">
+                    <!--                                        <div style="min-height: 40px;margin: 5px;">-->
+                    <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
+
+                    <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions"
+                      [(ngModel)]="fEBuildStatus" ngDefaultControl></ngx-monaco-editor>
+                  </div>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Console">
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon">cloud</mat-icon>
+                  Service Build
+                </ng-template>
+                <ng-template matTabContent>
+                  <div style="min-height: 200px; height: 100% !important; width: 100%;">
+                    <!--                                        <div style="min-height: 40px;margin: 5px;">-->
+                    <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
+
+                    <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions"
+                      [(ngModel)]="bEBuildStatus" ngDefaultControl></ngx-monaco-editor>
+                  </div>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Console">
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon">receipt</mat-icon>
+                  UI Gen
+                </ng-template>
+                <ng-template matTabContent>
+                  <div style="min-height: 200px; height: 100% !important; width: 100%;">
+                    <!--                                        <div style="min-height: 40px;margin: 5px;">-->
+                    <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
+
+                    <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions"
+                      [(ngModel)]="fEBuildStatus" ngDefaultControl></ngx-monaco-editor>
+                  </div>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Console">
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon">cloud</mat-icon>
+                  Service Gen
+                </ng-template>
+                <ng-template matTabContent>
+                  <div style="min-height: 200px; height: 100% !important; width: 100%;">
+                    <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions"
+                      [(ngModel)]="bEBuildStatus" ngDefaultControl></ngx-monaco-editor>
+                  </div>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+          </as-split-area>
+        </as-split>
+      </as-split-area>
+      <as-split-area [size]="0">
+        <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist"
+        style="position: fixed; background-color: lightgrey; margin-top: 0;">
+        <div style="display:flex; flex-direction: column;height: 100%; width: 75%;
+         justify-content: space-between;">
+
+            <div role="presentation" style="
+                display: flex;
+                width: 50%;
+                height: 7%;
+                justify-content: center;
+                align-items: center;">
+                <h1 class="display-4" style="transform: rotate(90deg);"><img
+                        src="../assets/images/apps_icon.png" style="width: 38px;transform: rotate(270deg);">
+                </h1>
+            </div>
+            <div style="
+                display: flex;
+                flex-direction: column;
+                width: 50%;
+                height: 50%;
+                justify-content: flex-start;
+                align-items: flex-start;
+                ">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" (click)="changeSplit('design')" data-bs-toggle="tab"
+                        [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"
+                        aria-selected="false">Design</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" (click)="changeSplit('service')" data-bs-toggle="tab"
+                        [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab"
+                        aria-selected="true">Service</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" (click)="changeSplit('portal')" data-bs-toggle="tab"
+                        [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"
+                        aria-selected="false">UI</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" (click)="changeSplit('build')" data-bs-toggle="tab"
+                        [ngClass]="{'active': currentTab == 'build'}" type="button" role="tab"
+                        aria-selected="false">Build</button>
+                </li>
+            </div>
+            <span class="logout" style="width: 50%;
+                display: flex;
+                justify-content: center;
+                margin-bottom: 10px;
+                align-items: center;">
+                <button mat-mini-fab matTooltip="Logout" [matMenuTriggerFor]="menu"
+                    style="width: 34px; height: 34px;margin-left: -2px;" color="primary">
+                    <mat-icon>perm_identity</mat-icon>
                 </button>
-              </div>
-              <mat-tab-group dynamicHeight (selectedTabChange)="tabChanged($event)">
-                <mat-tab label="Console">
-                  <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">receipt</mat-icon>
-                    Events
-                  </ng-template>
-                  <ng-template matTabContent>
-                    <div style="min-height: 200px; height: 100% !important; width: 100%;">
-                      <!--                                        <div style="min-height: 40px;margin: 5px;">-->
-                      <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="logout()">
+                        <mat-icon>power_settings_new</mat-icon>
+                        <span>Logout</span>
+                    </button>
+                </mat-menu>
+            </span>
 
-                      <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions" [(ngModel)]="code"
-                        ngDefaultControl></ngx-monaco-editor>
-                    </div>
-                  </ng-template>
-                </mat-tab>
-                <mat-tab label="Console">
-                  <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">receipt</mat-icon>
-                    UI Build
-                  </ng-template>
-                  <ng-template matTabContent>
-                    <div style="min-height: 200px; height: 100% !important; width: 100%;">
-                      <!--                                        <div style="min-height: 40px;margin: 5px;">-->
-                      <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
+        </div>
 
-                      <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions"
-                        [(ngModel)]="fEBuildStatus" ngDefaultControl></ngx-monaco-editor>
-                    </div>
-                  </ng-template>
-                </mat-tab>
-                <mat-tab label="Console">
-                  <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">cloud</mat-icon>
-                    Service Build
-                  </ng-template>
-                  <ng-template matTabContent>
-                    <div style="min-height: 200px; height: 100% !important; width: 100%;">
-                      <!--                                        <div style="min-height: 40px;margin: 5px;">-->
-                      <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
-
-                      <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions"
-                        [(ngModel)]="bEBuildStatus" ngDefaultControl></ngx-monaco-editor>
-                    </div>
-                  </ng-template>
-                </mat-tab>
-                <mat-tab label="Console">
-                  <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">receipt</mat-icon>
-                    UI Gen
-                  </ng-template>
-                  <ng-template matTabContent>
-                    <div style="min-height: 200px; height: 100% !important; width: 100%;">
-                      <!--                                        <div style="min-height: 40px;margin: 5px;">-->
-                      <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
-
-                      <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions"
-                        [(ngModel)]="fEBuildStatus" ngDefaultControl></ngx-monaco-editor>
-                    </div>
-                  </ng-template>
-                </mat-tab>
-                <mat-tab label="Console">
-                  <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">cloud</mat-icon>
-                    Service Gen
-                  </ng-template>
-                  <ng-template matTabContent>
-                    <div style="min-height: 200px; height: 100% !important; width: 100%;">
-                      <ngx-monaco-editor style="height: 100%; width: 100%;" [options]="editorOptions"
-                        [(ngModel)]="bEBuildStatus" ngDefaultControl></ngx-monaco-editor>
-                    </div>
-                  </ng-template>
-                </mat-tab>
-              </mat-tab-group>
-            </as-split-area>
-          </as-split>
-        </as-split-area>
-        <as-split-area [size]="0">
-             <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist"
-                style="width:105px; position: fixed; background-color: lightgrey; margin-top: 0; padding-top: 55px">
-                 <div style="display:flex; flex-direction: column;height: 90%;
-                 justify-content: space-evenly;">
-
-                    <div role="presentation" style="display: flex; margin-bottom: 110px;">
-                        <h1 class="display-4" style="transform: rotate(90deg);"><img src="../assets/images/apps_icon.png"
-                                style="width: 38px;margin-bottom: 8px;transform: rotate(270deg);"></h1>
-                    </div>
-                    <div style="display: flex; flex-direction: column;">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('design')"
-                                data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button"
-                                role="tab" aria-selected="false">Design</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('service')"
-                                data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button"
-                                role="tab" aria-selected="true">Service</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('portal')"
-                                data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button"
-                                role="tab" aria-selected="false">UI</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('build')"
-                                data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'build'}" type="button"
-                                role="tab" aria-selected="false">Build</button>
-                        </li>
-                    </div>
-                    <span class="logout" style="width: 40px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;">
-                        <button mat-mini-fab matTooltip="Logout" [matMenuTriggerFor]="menu"
-                            style="width: 34px; height: 34px;margin-left: 5px;margin-bottom: 15px" color="primary">
-                            <mat-icon>perm_identity</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="logout()">
-                                <mat-icon>power_settings_new</mat-icon>
-                                <span>Logout</span>
-                            </button>
-                        </mat-menu>
-                    </span>
-
-                </div>
-
-            </ul>
-        </as-split-area>
+    </ul>
+      </as-split-area>
     </as-split>
-      
+
   </div>
 
 </div>

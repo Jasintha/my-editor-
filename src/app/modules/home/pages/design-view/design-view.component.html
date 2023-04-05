@@ -6,8 +6,8 @@
                 <as-split direction="vertical">
                     <as-split-area [size]="splitConsoleSizeOne"
                         [ngClass]="{'build-in-page-custom-scroll': loadPageEditor, 'rulechain-page-custom-scroll': !loadPageEditor}">
-                        <virtuan-design-editor-new *ngIf="loadDesignRequirement" [requirementUid]="requirementUid"
-                            [reqArray]="requirementArray" [reload]="reload"
+                        <virtuan-design-editor-new style="width: 100%;" *ngIf="loadDesignRequirement"
+                            [requirementUid]="requirementUid" [reqArray]="requirementArray" [reload]="reload"
                             [desprojectUid]="desprojectUid"></virtuan-design-editor-new>
                     </as-split-area>
                     <as-split-area [size]="splitConsoleSizeTwo"
@@ -106,43 +106,57 @@
                 </as-split>
             </as-split-area>
             <as-split-area [size]="splitPartTwoSize">
-                 <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist"
-                    style="width:105px; position: fixed; background-color: lightgrey; margin-top: 0; padding-top: 55px">
-                     <div style="display:flex; flex-direction: column;height: 90%;
-                     justify-content: space-evenly;">
+                <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist"
+                    style="position: fixed; background-color: lightgrey; margin-top: 0;">
+                    <div style="display:flex; flex-direction: column;height: 100%; width: 75%;
+                     justify-content: space-between;">
 
-                        <div role="presentation" style="display: flex; margin-bottom: 110px;">
-                            <h1 class="display-4" style="transform: rotate(90deg);"><img src="../assets/images/apps_icon.png"
-                                    style="width: 38px;margin-bottom: 8px;transform: rotate(270deg);"></h1>
-                        </div>
-                        <div style="display: flex; flex-direction: column;">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('design')"
-                                    data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'design'}" type="button"
-                                    role="tab" aria-selected="false">Design</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('service')"
-                                    data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'service'}" type="button"
-                                    role="tab" aria-selected="true">Service</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('portal')"
-                                    data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'portal'}" type="button"
-                                    role="tab" aria-selected="false">UI</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" style="margin-top: 21px" (click)="changeSplit('build')"
-                                    data-bs-toggle="tab" [ngClass]="{'active': currentTab == 'build'}" type="button"
-                                    role="tab" aria-selected="false">Build</button>
-                            </li>
-                        </div>
-                        <span class="logout" style="width: 40px;
+                        <div role="presentation" style="
                             display: flex;
+                            width: 50%;
+                            height: 7%;
                             justify-content: center;
                             align-items: center;">
+                            <h1 class="display-4" style="transform: rotate(90deg);"><img
+                                    src="../assets/images/apps_icon.png" style="width: 38px;transform: rotate(270deg);">
+                            </h1>
+                        </div>
+                        <div style="
+                            display: flex;
+                            flex-direction: column;
+                            width: 50%;
+                            height: 50%;
+                            justify-content: flex-start;
+                            align-items: flex-start;
+                            ">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" (click)="changeSplit('design')" data-bs-toggle="tab"
+                                    [ngClass]="{'active': currentTab == 'design'}" type="button" role="tab"
+                                    aria-selected="false">Design</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" (click)="changeSplit('service')" data-bs-toggle="tab"
+                                    [ngClass]="{'active': currentTab == 'service'}" type="button" role="tab"
+                                    aria-selected="true">Service</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" (click)="changeSplit('portal')" data-bs-toggle="tab"
+                                    [ngClass]="{'active': currentTab == 'portal'}" type="button" role="tab"
+                                    aria-selected="false">UI</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" (click)="changeSplit('build')" data-bs-toggle="tab"
+                                    [ngClass]="{'active': currentTab == 'build'}" type="button" role="tab"
+                                    aria-selected="false">Build</button>
+                            </li>
+                        </div>
+                        <span class="logout" style="width: 50%;
+                            display: flex;
+                            justify-content: center;
+                            margin-bottom: 10px;
+                            align-items: center;">
                             <button mat-mini-fab matTooltip="Logout" [matMenuTriggerFor]="menu"
-                                style="width: 34px; height: 34px;margin-left: 5px;margin-bottom: 15px" color="primary">
+                                style="width: 34px; height: 34px;margin-left: -2px;" color="primary">
                                 <mat-icon>perm_identity</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">

@@ -703,9 +703,11 @@
     </div>
 </div>
 
-<virtuan-story-design-page
+<div style="width: 100%; height: 100%;">
+    <virtuan-story-design-page
     *ngIf="viewEditor && ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded"
     [ruleChain]="ruleChain" [ruleChainMetaData]="ruleChainMetaData"
     [connectionPropertyTemplates]="connectionPropertyTemplates" [username]="username" [uid]="desprojectUid"
     [ruleNodeComponents]="ruleNodeComponents" [serviceUuid]="storyserviceUuid" [projectUid]="desprojectUid"
     [storyuuid]="storyuuid"></virtuan-story-design-page>
+</div>

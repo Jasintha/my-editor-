@@ -100,8 +100,7 @@ const ruleNodeConfigResourcesModulesMap = {
 @Component({
     selector: 'virtuan-design-editor-new',
     templateUrl: './design-editor.component.html',
-    styleUrls: ['./design-editor.component.scss'],
-    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./design-editor.component.scss', '../rulechain-page.component.scss'],
     animations: [
         trigger(
             'inOutAnimation',
