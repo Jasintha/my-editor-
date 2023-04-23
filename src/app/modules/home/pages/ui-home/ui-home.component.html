@@ -111,10 +111,10 @@
                         <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
                             <button mat-icon-button
                                     [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
-                                <mat-icon class="mat-icon-rtl-mirror" [ngStyle]="{'color': getColor(node)}">
+                                <mat-icon class="mat-icon-rtl-mirror" [ngStyle]="{'color': getColor(node)}" color="primary">
                                     {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                 </mat-icon>
-                                <mat-icon class="mat-icon-rtl-mirror" [ngStyle]="{'color': getColor(node)}">
+                                <mat-icon class="mat-icon-rtl-mirror" [ngStyle]="{'color': getColor(node)}" color="primary">
                                     {{ treeControl.isExpanded(node) ?  "folder_open" :"folder"  }}
                                 </mat-icon>
                             </button>

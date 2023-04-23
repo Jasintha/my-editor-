@@ -779,37 +779,37 @@ export class UiHomeComponent implements OnInit, OnChanges {
 
   loadUITreeData() {
     this.projectService.findAllUIComponents().subscribe((comps) => {
-      if (comps[0].isParent) {
-        comps[0].color = "red";
-        comps[0].icon = "backup";
-        comps[0].children.map((i) => {
-          if (i.isParent) {
-            i.color = "green";
-            i.icon = "backup";
-            if (i.children) {
-              i.children?.map((j) => {
-                j.color = "blue";
-                j.icon = "description";
-                if(j.isParent){
-                  j.children?.map((k) => {
-                    k.color = "green";
-                    k.icon = "backup";
-                  })
-                }
-              });
-            } else {
-              i.color = "red";
-              i.icon = "backup";
-            }
-          } else {
-            i.color = "green";
-            i.icon = "backup";
-          }
-        });
-      } else {
-        comps[0].color = "red";
-        comps[0].icon = "backup";
-      }
+      // if (comps[0].isParent) {
+      //   comps[0].color = "red";
+      //   comps[0].icon = "backup";
+      //   comps[0].children.map((i) => {
+      //     if (i.isParent) {
+      //       i.color = "green";
+      //       i.icon = "backup";
+      //       if (i.children) {
+      //         i.children?.map((j) => {
+      //           j.color = "blue";
+      //           j.icon = "description";
+      //           if(j.isParent){
+      //             j.children?.map((k) => {
+      //               k.color = "green";
+      //               k.icon = "backup";
+      //             })
+      //           }
+      //         });
+      //       } else {
+      //         i.color = "red";
+      //         i.icon = "backup";
+      //       }
+      //     } else {
+      //       i.color = "green";
+      //       i.icon = "backup";
+      //     }
+      //   });
+      // } else {
+      //   comps[0].color = "red";
+      //   comps[0].icon = "backup";
+      // }
       this.uiTreeDaSource.data = comps;
       this.treeControl.expand(this.treeControl.dataNodes[0]);
       this.treeControl.expand(this.treeControl.dataNodes[1]);

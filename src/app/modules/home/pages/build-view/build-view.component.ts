@@ -48,7 +48,7 @@ import { webSocket } from 'rxjs/webSocket';
 export class BuildViewComponent implements OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild('div') div: ElementRef;
+  @ViewChild('buildNodes') div: ElementRef;
   
   isSaving: boolean;
   isGenerated = false;
@@ -120,6 +120,18 @@ export class BuildViewComponent implements OnInit {
       private renderer: Renderer2
   ) {
     this.typeSelected = 'square-jelly-box';
+
+    // window.addEventListener(
+    //   "message",
+    //   (event) => {
+    //     if (event.origin !== "http://localhost:3000") return;
+    //     if(event.data) {
+    //       this.addBuildNode(event.data)
+    //     }
+    //   },
+    //   false
+    // );
+    
   }
 
   ngOnInit(): void {
@@ -154,6 +166,7 @@ export class BuildViewComponent implements OnInit {
     this.spinnerService.show();
     this.isSaving = true;
     this.isGenerating = true;
+    // window.postMessage('Start', "http://localhost:3000")
     setTimeout(()=>{
       this.isGenerating = false;
       this.cdr.detectChanges();
@@ -189,6 +202,7 @@ export class BuildViewComponent implements OnInit {
   }
 
   getBuildstatusData () {
+   // window.postMessage('Processing', "http://localhost:3000")
     this.projectService
         .getBuildStatusData()
         .pipe(
@@ -204,7 +218,8 @@ export class BuildViewComponent implements OnInit {
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
              // this.dataSource.paginator.pageIndex = 1;
-              this.isBuildLogAvailable = true;
+            // window.postMessage('Completed', "http://localhost:3000")
+             this.isBuildLogAvailable = true;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -398,18 +413,25 @@ export class BuildViewComponent implements OnInit {
     });
   }
 
-addElement() {
-  this.index = this.index + 1;
-  if(this.index === 5){
-    this.next(0)
-  } else {
-    const p: HTMLDivElement = this.renderer.createElement('div');
-    p.className = 'build-progress-step'
-    p.textContent = 'Sample'
-    p.id = 'step'+ this.index;
-    this.renderer.appendChild(this.div.nativeElement, p)
-    this.stepperList.push(document.getElementById(p.id) as HTMLElement)
-    this.next(p.id)
+addBuildNode(title) {
+  if(this.isGenerating){
+    this.index = this.index + 1;
+    if(title === 'Completed'){
+      const p: HTMLDivElement = this.renderer.createElement('div');
+      p.className = 'build-progress-step is-complete'
+      p.textContent = title
+      p.id = 'step'+ this.index;
+      this.renderer.appendChild(this.div.nativeElement, p)
+      this.next(0)
+    } else {
+      const p: HTMLDivElement = this.renderer.createElement('div');
+      p.className = 'build-progress-step'
+      p.textContent = title
+      p.id = 'step'+ this.index;
+      this.renderer.appendChild(this.div.nativeElement, p)
+      this.stepperList.push(document.getElementById(p.id) as HTMLElement)
+      this.next(p.id)
+    }
   }
 }
 
