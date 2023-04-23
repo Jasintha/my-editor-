@@ -3,6 +3,7 @@ export interface IEpicServiceBuildStatus {
     referenceName?: string;
     apptype?: string;
     serviceuuid?: string;
+    lastbuildid?: string;
     lastbuildstatus?: string;
     lastrungenerator?: string;
     lastrungenid?: string;

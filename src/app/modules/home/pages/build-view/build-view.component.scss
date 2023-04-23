@@ -161,7 +161,7 @@ body .ui-multiselect {
 }
 
 ::ng-deep body .ui-multiselect {
-  width: 600px !important;
+  width: 505px !important;
   height: 35px;
 }
 
@@ -252,4 +252,150 @@ border-radius: 5px;
   margin-left: 12px;
   font-size: 1px;
   color: #adadad !important;
+}
+
+$grey: #777;
+$grey2: #dfe3e4;
+$blue: #2183dd;
+$green: #048c7f;
+$white: #fff;
+
+.build-progress {
+  position: relative;
+  display: flex;
+  z-index: 0;
+  margin-top: 30px;
+}
+
+.build-progress-track {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 18px;
+  width: 100%;
+  height: 5px;
+  z-index: -1;
+}
+
+.build-progress-step {
+  position: relative;
+  width: 5%;
+  margin-right: 20px;
+  font-size: 18px;
+  text-align: center;
+
+  // Hide the final step's progress bar
+  &:last-child:after {
+    display: none;
+  }
+
+  // Step's circle in default state
+  &:before {
+    content: '';
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    width: 40px;
+    height: 40px;
+    background: $white;
+    border: 4px solid $grey2;
+    border-radius: 100%;
+    color: $white;
+  }
+
+  // Step's progress bar in default state
+  &:after {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    width: 0%;
+    transition: width 1s ease-in;
+    height: 5px;
+    background: $grey2;
+    z-index: -1;
+  }
+  &.is-active {
+    color: $green;
+
+    &:before {
+      border: 4px solid $grey;
+      animation: pulse 2s infinite;
+    }
+  }
+
+  // Step's complete state
+  &.is-complete {
+    color: $green;
+
+    // Step's circle in complete state
+    &:before {
+      font-family: FontAwesome;
+      font-size: 10px;
+      color: $white;
+      background: $green;
+      border: 4px solid transparent;
+    }
+
+    // Step's progress bar in complete state
+    &:after {
+      background: $green;
+      animation: nextStep 1s;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+// Pulse animation for Step's circle in active state
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(33, 131, 221, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(33, 131, 221, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(33, 131, 221, 0);
+  }
+}
+
+// Progressing to next step animation for Step's progress bar
+@keyframes nextStep {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+:host ::ng-deep .mat-tab-body-wrapper{
+  width:  100%;
+}
+
+:host ::ng-deep .mat-tab-label-active{
+  color: #2980b9 !important;
+} 
+
+.custom-mat-drawer-container {
+  width: 80%;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.custom-mat-drawer-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-mat-drawer-sidenav {
+  padding: 20px;
+}
+
+.buildStep {
+  display: flex;
+  flex-direction: column;
 }

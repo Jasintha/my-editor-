@@ -156,6 +156,7 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
   loadCustomPageEditor: boolean;
   loadFilterPageEditor: boolean;
   isGenerating: boolean;
+  isLoading = true;
   reload: boolean;
   theme: string = "vs-dark";
   editorOptions: any = {
@@ -663,8 +664,6 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
     this.editorType = "";
     this.listenConsoleLogChange();
     this.loadTreeData();
-    this.loadDesignTreeData();
-    this.loadUITreeData();
     this.registerChangeEditorTree();
     this.registerChangeUIEditor();
     this.onEditMultiWidgetPage();
@@ -695,6 +694,9 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
   loadTreeData() {
     this.projectService.findAllProjectComponents().subscribe((comps) => {
       this.dataSource.data = comps;
+      // if(comps){
+      //   this.isLoading = false
+      // }
     });
   }
 
@@ -1153,5 +1155,17 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
     var contentDispositionHeader = data.headers.get("content-disposition");
     var result = contentDispositionHeader.split(";")[1].trim().split("=")[1];
     return result.replace(/"/g, "");
+  }
+
+  getColor(node){
+    return (node.data.color) ?? 'primary'
+  }
+
+  getFontSize(node){
+    return (node.data.fontsize) ?? ''
+  }
+
+  getFontFamily(node){
+    return (node.data.fontfamily) ?? ''
   }
 }

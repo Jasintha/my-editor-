@@ -133,6 +133,7 @@ import { JsonObjectEditDialogComponent } from '@shared/components/dialog/json-ob
 import { HistorySelectorComponent } from './components/time/history-selector/history-selector.component';
 import { EntityGatewaySelectComponent } from '@shared/components/entity/entity-gateway-select.component';
 import { QueueTypeListComponent } from '@shared/components/queue/queue-type-list.component';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   providers: [
@@ -228,6 +229,7 @@ import { QueueTypeListComponent } from '@shared/components/queue/queue-type-list
     MatCheckboxModule,
     MatIconModule,
     MatCardModule,
+    MatRippleModule,
     MatProgressBarModule,
     MatInputModule,
     MatSnackBarModule,
@@ -315,6 +317,7 @@ import { QueueTypeListComponent } from '@shared/components/queue/queue-type-list
     MatCheckboxModule,
     MatIconModule,
     MatCardModule,
+    MatRippleModule,
     MatProgressBarModule,
     MatInputModule,
     MatSnackBarModule,

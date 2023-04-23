@@ -1613,6 +1613,8 @@ export class StoryDesignPageComponent extends PageComponent
             id: node.ruleNodeId,
             type: node.component.clazz,
             name: node.name,
+            status: node.status,
+            nodeUUID: node.ruleNodeUUId,
             configuration: node.configuration,
             additionalInfo: node.additionalInfo ? node.additionalInfo : {},
             debugMode: node.debugMode

@@ -48,7 +48,7 @@ import { IProject, Project } from "@shared/models/model/project.model";
 import { IGenerator } from "@shared/models/model/generator-chain.model";
 import { EventManagerService } from "@shared/events/event.type";
 import { EventTypes } from "@shared/events/event.queue";
-import { Location } from '@angular/common';
+import { Location } from "@angular/common";
 import { Subscription } from "rxjs";
 import * as AngularCommon from "@angular/common";
 import * as AngularForms from "@angular/forms";
@@ -84,6 +84,7 @@ import { EnvSelectComponent } from "@home/pages/rulechain/env-select.component";
 import { ConsoleLogService } from "@core/projectservices/console-logs.service";
 import { AggregateService } from "@core/projectservices/microservice-aggregate.service";
 import { LoginService } from "@core/services/login.services";
+import { node } from "prop-types";
 
 declare const SystemJS;
 
@@ -360,7 +361,9 @@ export class UiHomeComponent implements OnInit, OnChanges {
     this.loadGridPageEditor = false;
     this.loadTabPageEditor = false;
     this.loadFilterPageEditor = false;
-    this.router.navigate(['ui/page-theme'], {queryParams: {projectUid: item.projectuuid, pageUid: item.uuid}});
+    this.router.navigate(["ui/page-theme"], {
+      queryParams: { projectUid: item.projectuuid, pageUid: item.uuid },
+    });
   }
 
   viewUIHome() {
@@ -413,39 +416,39 @@ export class UiHomeComponent implements OnInit, OnChanges {
     this.loadServiceHome = true;
   }
 
-  viewPageEditor(item){
+  viewPageEditor(item) {
     this.routeEnable = false;
-    this.location.replaceState(`ui`)
-    if(item.subtype === 'multiWidget') {
-        this.loadGridPageEditor = true;
-        this.loadPageEditor = false;
-        this.loadCustomPageEditor = false;
-        this.loadTabPageEditor = false;
-        this.loadFilterPageEditor = false;
-    }  else if (item.subtype === 'tabbed'){
-        this.loadTabPageEditor = true;
-        this.loadGridPageEditor = false;
-        this.loadPageEditor = false;
-        this.loadCustomPageEditor = false;
-        this.loadFilterPageEditor = false;
-    } else if (item.subtype === 'customPage') {
-        this.loadPageEditor = false;
-        this.loadGridPageEditor = false;
-        this.loadCustomPageEditor = true;
-        this.loadTabPageEditor = false;
-        this.loadFilterPageEditor = false;
-    } else if (item.subtype === 'filterPage') {
-        this.loadPageEditor = false;
-        this.loadGridPageEditor = false;
-        this.loadCustomPageEditor = false;
-        this.loadTabPageEditor = false;
-        this.loadFilterPageEditor = true;
+    this.location.replaceState(`ui`);
+    if (item.subtype === "multiWidget") {
+      this.loadGridPageEditor = true;
+      this.loadPageEditor = false;
+      this.loadCustomPageEditor = false;
+      this.loadTabPageEditor = false;
+      this.loadFilterPageEditor = false;
+    } else if (item.subtype === "tabbed") {
+      this.loadTabPageEditor = true;
+      this.loadGridPageEditor = false;
+      this.loadPageEditor = false;
+      this.loadCustomPageEditor = false;
+      this.loadFilterPageEditor = false;
+    } else if (item.subtype === "customPage") {
+      this.loadPageEditor = false;
+      this.loadGridPageEditor = false;
+      this.loadCustomPageEditor = true;
+      this.loadTabPageEditor = false;
+      this.loadFilterPageEditor = false;
+    } else if (item.subtype === "filterPage") {
+      this.loadPageEditor = false;
+      this.loadGridPageEditor = false;
+      this.loadCustomPageEditor = false;
+      this.loadTabPageEditor = false;
+      this.loadFilterPageEditor = true;
     } else {
-        this.loadPageEditor = true;
-        this.loadGridPageEditor = false;
-        this.loadCustomPageEditor = false;
-        this.loadTabPageEditor = false;
-        this.loadFilterPageEditor = false;
+      this.loadPageEditor = true;
+      this.loadGridPageEditor = false;
+      this.loadCustomPageEditor = false;
+      this.loadTabPageEditor = false;
+      this.loadFilterPageEditor = false;
     }
     this.ruleChainLoaded = false;
     this.ruleChainMetaDataLoaded = false;
@@ -461,13 +464,13 @@ export class UiHomeComponent implements OnInit, OnChanges {
     this.loadFunctionEditor = false;
     this.loadModelView = false;
     this.projectUid = item.projectuuid;
-    this.pageId = item.uuid
+    this.pageId = item.uuid;
     this.loadWidgetEditor = false;
     this.loadThemeEditor = false;
     this.loadBuildWindow = false;
     this.loadUIHome = false;
     this.loadServiceHome = false;
-}
+  }
 
   // viewPageEditor(item) {
   //   if (item.subtype === "multiWidget") {
@@ -683,7 +686,9 @@ export class UiHomeComponent implements OnInit, OnChanges {
     this.loadGridPageEditor = false;
     this.loadTabPageEditor = false;
     this.loadFilterPageEditor = false;
-     this.router.navigate(['ui/model'], {queryParams: {projectUid: item.projectuuid, modelUid: item.uuid}});
+    this.router.navigate(["ui/model"], {
+      queryParams: { projectUid: item.projectuuid, modelUid: item.uuid },
+    });
   }
 
   ngOnInit(): void {
@@ -731,15 +736,15 @@ export class UiHomeComponent implements OnInit, OnChanges {
 
   changeSplit(val) {
     this.currentTab = val;
-    if(val === 'portal') {
-      this.router.navigate([`ui`])    
-    } else if (val === 'service') {
-      this.router.navigate([`service`])    
-    } else if (val === 'design'){
-      this.router.navigate([`design`])    
-    } else if ( val === 'build') {
-      this.router.navigate([`build`])    
-    }  
+    if (val === "portal") {
+      this.router.navigate([`ui`]);
+    } else if (val === "service") {
+      this.router.navigate([`service`]);
+    } else if (val === "design") {
+      this.router.navigate([`design`]);
+    } else if (val === "build") {
+      this.router.navigate([`build`]);
+    }
   }
 
   loadBuildView() {
@@ -774,6 +779,37 @@ export class UiHomeComponent implements OnInit, OnChanges {
 
   loadUITreeData() {
     this.projectService.findAllUIComponents().subscribe((comps) => {
+      if (comps[0].isParent) {
+        comps[0].color = "red";
+        comps[0].icon = "backup";
+        comps[0].children.map((i) => {
+          if (i.isParent) {
+            i.color = "green";
+            i.icon = "backup";
+            if (i.children) {
+              i.children?.map((j) => {
+                j.color = "blue";
+                j.icon = "description";
+                if(j.isParent){
+                  j.children?.map((k) => {
+                    k.color = "green";
+                    k.icon = "backup";
+                  })
+                }
+              });
+            } else {
+              i.color = "red";
+              i.icon = "backup";
+            }
+          } else {
+            i.color = "green";
+            i.icon = "backup";
+          }
+        });
+      } else {
+        comps[0].color = "red";
+        comps[0].icon = "backup";
+      }
       this.uiTreeDaSource.data = comps;
       this.treeControl.expand(this.treeControl.dataNodes[0]);
       this.treeControl.expand(this.treeControl.dataNodes[1]);
@@ -1184,5 +1220,17 @@ export class UiHomeComponent implements OnInit, OnChanges {
     var contentDispositionHeader = data.headers.get("content-disposition");
     var result = contentDispositionHeader.split(";")[1].trim().split("=")[1];
     return result.replace(/"/g, "");
+  }
+
+  getColor(node){
+    return (node.data.color) ?? 'primary'
+  }
+
+  getFontSize(node){
+    return (node.data.fontsize) ?? ''
+  }
+
+  getFontFamily(node){
+    return (node.data.fontfamily) ?? ''
   }
 }

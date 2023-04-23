@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Inject, Input, OnInit, Renderer2, ViewChild, ViewEncapsulation} from '@angular/core';
 import { IPage } from '@app/shared/models/model/page.model';
 import {IDatamodel} from '@shared/models/model/datamodel.model';
 import {IProject} from '@shared/models/model/project.model';
@@ -31,10 +31,11 @@ import {BreakpointTrackerService} from '@core/tracker/breakpoint.service';
 import {GeneratorComponents, IGenerator} from '@shared/models/model/generator-chain.model';
 import {GeneratorChainService} from './generator-chain.service';
 import { LoginService } from '@app/core/services/login.services';
+import { webSocket } from 'rxjs/webSocket';
 
 @Component({
   selector: 'virtuan-build-view',
-  templateUrl: './build-view.component.html',
+  templateUrl: './build-view-new.component.html',
   styleUrls: ['./build-view.component.scss',  '../rulechain/rulechain-page.component.scss'],
   animations: [
     trigger('detailExpand', [
@@ -47,6 +48,8 @@ import { LoginService } from '@app/core/services/login.services';
 export class BuildViewComponent implements OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild('div') div: ElementRef;
+  
   isSaving: boolean;
   isGenerated = false;
   displayedColumns: string[] = [  'servicename','referenceName','lastrungenerator', 'generatortime'];
@@ -80,7 +83,16 @@ export class BuildViewComponent implements OnInit {
   splitConsoleSizeOne = 100;
   splitConsoleSizeTwo = 0;
   currentTab = 'build';
-  
+  isLoading = true;
+  step = 'step1';
+  isTabVisible = true;
+  selectedExecutionData: any;
+  selectedLogData: any;
+  selectedStep: number
+  bEBuildStatus: string;
+  index = 0
+  stepperList = [];
+
   buildGenForm() {
     this.editForm = this.fb.group({
       id: [],
@@ -104,7 +116,8 @@ export class BuildViewComponent implements OnInit {
       private breakpointService: BreakpointTrackerService,
       private generatorService: GeneratorChainService,
       private cdr: ChangeDetectorRef,
-      private loginService: LoginService
+      private loginService: LoginService,
+      private renderer: Renderer2
   ) {
     this.typeSelected = 'square-jelly-box';
   }
@@ -123,6 +136,7 @@ export class BuildViewComponent implements OnInit {
     this.getGeneratorStatusData();
     this.getServiceGenStatus();
     this.currentTab = 'build';
+    this.isLoading = false;
   }
 
   applyFilter(filterValue: string) {
@@ -184,6 +198,7 @@ export class BuildViewComponent implements OnInit {
         .subscribe(
             (res: IEpicServiceBuildStatus[]) => {
               this.buildStatusData = res;
+              this.loadTabSpace(0)
               this.dataSource = new MatTableDataSource(this.buildStatusData);
               this.cdr.detectChanges();
               this.dataSource.paginator = this.paginator;
@@ -381,5 +396,55 @@ export class BuildViewComponent implements OnInit {
         }
      // }
     });
+  }
+
+addElement() {
+  this.index = this.index + 1;
+  if(this.index === 5){
+    this.next(0)
+  } else {
+    const p: HTMLDivElement = this.renderer.createElement('div');
+    p.className = 'build-progress-step'
+    p.textContent = 'Sample'
+    p.id = 'step'+ this.index;
+    this.renderer.appendChild(this.div.nativeElement, p)
+    this.stepperList.push(document.getElementById(p.id) as HTMLElement)
+    this.next(p.id)
+  }
+}
+
+  //build-progress bar action
+  next(step) {
+    if(step !== 0){
+      this.stepperList.forEach((item)=> {
+        if(step === item.id){
+            item.classList.add('is-active');
+        } else {
+            item.classList.remove('is-active');
+            item.classList.add('is-complete');
+        }
+      })
+    } else {
+      this.stepperList.forEach((item)=> {
+        if(item.classList.contains('is-active')){
+            item.classList.remove('is-active');
+            item.classList.add('is-complete');
+        }
+      })
+    }
+  }
+
+  loadTabSpace(index: number){
+    this.selectedStep = index;
+    this.selectedLogData = this.buildStatusData[index].lastbuildid;
+    this.selectedExecutionData = this.buildStatusData[index].statusinfo;
+  }
+
+  getStepBackgroundColor(index: number){
+    if(this.selectedStep === index) {
+      return `#89b8d7`;
+    } else {
+      return '';
+    }
   }
 }

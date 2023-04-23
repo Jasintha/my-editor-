@@ -39,6 +39,7 @@ import {FlexModule} from '@angular/flex-layout';
 import { SharedModule } from '@shared/shared.module';
 import {ListboxModule} from 'primeng/listbox';
 import {OrderListModule} from 'primeng/orderlist';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [MicroserviceModelComponent, MicroserviceAddModelDialogComponent, MicroserviceAddModelConstraintsDialogComponent],
@@ -74,6 +75,7 @@ import {OrderListModule} from 'primeng/orderlist';
         MatTableModule,
         MatSnackBarModule,
         MatCardModule,
+        MatRippleModule,
         MatTooltipModule,
         MatToolbarModule,
         FlexModule,

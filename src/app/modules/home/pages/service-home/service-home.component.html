@@ -1,129 +1,16 @@
 <div style="height: 100%;">
     <div style="width: 100%; height: 100%; background: #ffffff;">
-
+        <!-- <mat-spinner *ngIf="isLoading" style="position: fixed;
+        z-index: 0;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        background: #7470708c;
+        justify-content: center;
+        align-items: center;"></mat-spinner> -->
         <as-split direction="horizontal">
             <as-split-area [size]="80">
-                <as-split direction="vertical">
-                    <as-split-area [size]="100">
-                        <router-outlet></router-outlet>
-                    </as-split-area>
-                    <as-split-area [size]="0"
-                        [ngClass]="{'build-in-page-custom-scroll': loadPageEditor, 'rulechain-page-custom-scroll': !loadPageEditor}">
-                        <div class="button-row" style="float:right; margin: 5px" *ngIf="selectedTab === 0">
-                            <button mat-raised-button type="button"
-                                style=" background-color: #a8554f; color: white; margin-left: 5px;" (click)="clearLog()"
-                                cdkFocusInitial><mat-icon style="font-size: 25px"
-                                    class="example-tab-icon">not_interested</mat-icon></button>
-                            <!--                            <button mat-raised-button type="button" style="float:left; background-color: #4CAF50; color: white; " [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial><mat-icon style="font-size: 25px" class="example-tab-icon">play_circle_outline</mat-icon></button>-->
-
-                        </div>
-
-                        <div class="button-row" style="float:right; margin: 5px"
-                            *ngIf="selectedTab === 1 || selectedTab === 2">
-                            <button mat-raised-button type="button"
-                                style=" background-color: darkgray; color: white; margin-right: 35px; height: 25px; margin-top: 3px"
-                                (click)="loadPreviewStatus()" cdkFocusInitial><mat-icon
-                                    style="font-size: 22px; margin-bottom: 9px"
-                                    class="example-tab-icon">refresh</mat-icon></button>
-                        </div>
-                        <mat-tab-group dynamicHeight (selectedTabChange)="tabChanged($event)">
-                            <mat-tab label="Console">
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="example-tab-icon">receipt</mat-icon>
-                                    Events
-                                </ng-template>
-                                <ng-template matTabContent>
-                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
-                                        <!--                                        <div style="min-height: 40px;margin: 5px;">-->
-                                        <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
-
-                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions"
-                                            [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
-                                    </div>
-                                </ng-template>
-                            </mat-tab>
-                            <mat-tab label="Console">
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="example-tab-icon">receipt</mat-icon>
-                                    UI Build
-                                </ng-template>
-                                <ng-template matTabContent>
-                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
-                                        <!--                                        <div style="min-height: 40px;margin: 5px;">-->
-                                        <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
-
-                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions"
-                                            [(ngModel)]="fEBuildStatus" ngDefaultControl></ngx-monaco-editor>
-                                    </div>
-                                </ng-template>
-                            </mat-tab>
-                            <mat-tab label="Console">
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="example-tab-icon">cloud</mat-icon>
-                                    Service Build
-                                </ng-template>
-                                <ng-template matTabContent>
-                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
-                                        <!--                                        <div style="min-height: 40px;margin: 5px;">-->
-                                        <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
-
-                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions"
-                                            [(ngModel)]="bEBuildStatus" ngDefaultControl></ngx-monaco-editor>
-                                    </div>
-                                </ng-template>
-                            </mat-tab>
-                            <mat-tab label="Console">
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="example-tab-icon">receipt</mat-icon>
-                                    UI Gen
-                                </ng-template>
-                                <ng-template matTabContent>
-                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
-                                        <!--                                        <div style="min-height: 40px;margin: 5px;">-->
-                                        <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
-
-                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions"
-                                            [(ngModel)]="fEBuildStatus" ngDefaultControl></ngx-monaco-editor>
-                                    </div>
-                                </ng-template>
-                            </mat-tab>
-                            <mat-tab label="Console">
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="example-tab-icon">cloud</mat-icon>
-                                    Service Gen
-                                </ng-template>
-                                <ng-template matTabContent>
-                                    <div style="min-height: 200px; height:100% !important; width: 100%;">
-                                        <!--                                        <div style="min-height: 40px;margin: 5px;">-->
-                                        <!--                                            <button mat-raised-button type="button" style="float:right; background-color: #4CAF50; color: white" [disabled]="isGenerating && projectUid != ''" (click)="generateProject()" cdkFocusInitial>Generate</button></div>-->
-
-                                        <ngx-monaco-editor style=" height: 100%; width: 100%;" [options]="editorOptions"
-                                            [(ngModel)]="bEBuildStatus" ngDefaultControl></ngx-monaco-editor>
-                                    </div>
-                                </ng-template>
-                            </mat-tab>
-                            <!--                            <mat-tab label="Debugger">-->
-                            <!--                                <ng-template mat-tab-label>-->
-                            <!--                                    <mat-icon class="example-tab-icon">bug_report</mat-icon>-->
-                            <!--                                    Debugger-->
-                            <!--                                </ng-template>-->
-                            <!--                                <ng-template matTabContent>-->
-                            <!--                                    Debugger-->
-                            <!--                                </ng-template>-->
-                            <!--                            </mat-tab>-->
-                            <!--                            <mat-tab label="Run">-->
-                            <!--                                <ng-template mat-tab-label>-->
-                            <!--                                    <mat-icon class="example-tab-icon">developer_mode</mat-icon>-->
-                            <!--                                    Run-->
-                            <!--                                </ng-template>-->
-                            <!--                                <ng-template matTabContent>-->
-                            <!--                                    Run-->
-                            <!--                                </ng-template>-->
-                            <!--                            </mat-tab>-->
-                        </mat-tab-group>
-
-                    </as-split-area>
-                </as-split>
+                <router-outlet></router-outlet>
             </as-split-area>
             <as-split-area [size]="20">
                 <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist"
@@ -190,71 +77,55 @@
                     </div>
 
                 </ul>
-                <div class="tab-content" style="display: flex;
-                width: 100%;
-                flex-direction: column;">
-                    <button mat-icon-button class="top-node"
-                        style="display: flex; flex-direction: row; width: 75%; justify-content: flex-end;"
-                        (click)="refreshTree()"><mat-icon>refresh</mat-icon></button>
-                    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)"
-                            [ngClass]="{ 'background-highlight': activeNode === node }"
-                            style="cursor: pointer; height: 40px;">
-                            <mat-icon class="mat-icon-rtl-mirror" color="primary" style="margin-left: 28px"
-                                [ngClass]="{ 'background-highlight': activeNode === node }">
-                                {{node.data.isParent ? 'folder' : 'description'}}
+                <div class="tab-content">
+                    <div class="tab-pane fade size-limit rulechain-page-custom-scroll" [ngClass]="{'show active': currentTab == 'service'}" role="tabpanel"
+                         aria-labelledby="profile-tab">
+                        <button mat-icon-button  class="top-node" style="float: right; margin-right: 30px" (click)="refreshTree()"><mat-icon>refresh</mat-icon></button>
+                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" style="margin-top: 25px;">
+                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
+                                <mat-icon class="mat-icon-rtl-mirror" color="primary" [ngStyle]="{'color': getColor(node)}"
+                                style="margin-left: 28px" [ngClass]="{ 'background-highlight': activeNode === node }">
+                                {{(node.data.icon == '' || node.data.icon == undefined) ? node.data.isParent ? 'folder' : 'description' : node.data.icon}}
                             </mat-icon>
-                            <div style="margin-left: 3px">
-                                {{node.name}}
-                            </div>
+    
+                                <div style="margin-left: 3px" [ngStyle]="{'color': getColor(node), 'font-size': getFontSize(node), 'font-family': getFontFamily(node)}">
+                                    {{node.name}}
+                                </div>
 
-                            <button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
-                                [matMenuTriggerData]="{ item: node.data }" [matMenuTriggerFor]="actionsMenu"
-                                mat-icon-button type="button" style="margin-right: 20px;">
-                                <mat-icon style="padding-top: 7px;">more_vert</mat-icon>
-                            </button>
-                            <button mat-icon-button class="top-node"
-                                *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "
-                                (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"
-                                style="margin-right: 20px;"><mat-icon
-                                    style="padding-top: 7px;">add</mat-icon></button>
-                            <button mat-icon-button class="top-node-import"
-                                *ngIf="node.data.isParent && node.data.type == 'PARENT_MODEL'"
-                                (click)="importModel(node.data)"
-                                [ngClass]="{ 'background-highlight': activeNode === node }" style="margin-right: 20px;"><mat-icon
-                                    style="padding-top: 7px;">import_export</mat-icon></button>
-                        </mat-tree-node>
-                        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding
-                            (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }"
-                            style="cursor: pointer; height: 40px;">
-                            <button mat-icon-button [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
-                                <mat-icon class="mat-icon-rtl-mirror">
-                                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                                </mat-icon>
-                                <mat-icon class="mat-icon-rtl-mirror" color="primary">
-                                    {{ treeControl.isExpanded(node) ? "folder_open" :"folder" }}
-                                </mat-icon>
-                            </button>
-                            <div style="margin-left: 15px">
-                                {{node.name}}
-                            </div>
+                                <button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
+                                        [matMenuTriggerData]="{ item: node.data }"
+                                        [matMenuTriggerFor]="actionsMenu"
+                                        mat-icon-button
+                                        type="button">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <button mat-icon-button  class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>add</mat-icon></button>
+                                <button mat-icon-button  class="top-node-import" *ngIf="node.data.isParent && node.data.type == 'PARENT_MODEL'"  (click)="importModel(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>import_export</mat-icon></button>
+                            </mat-tree-node>
+                            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
+                                <button mat-icon-button
+                                        [attr.aria-label]="'Toggle ' + node.name" matTreeNodeToggle>
+                                    <mat-icon [ngStyle]="{'color': getColor(node)}" class="mat-icon-rtl-mirror">
+                                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                    </mat-icon>
+                                    <mat-icon [ngStyle]="{'color': getColor(node)}" class="mat-icon-rtl-mirror" color="primary">
+                                        {{ treeControl.isExpanded(node) ?  "folder_open" :"folder"  }}
+                                    </mat-icon>
+                                </button>
+                                <div style="margin-left: 15px" [ngStyle]="{'color': getColor(node), 'font-size': getFontSize(node), 'font-family': getFontFamily(node)}">
+                                    {{node.name}}
+                                </div>
 
 
-                            <button mat-icon-button title="add model" class="top-node"
-                                *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "
-                                (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"
-                                style="margin-right: 20px;"><mat-icon
-                                    style="padding-top: 7px;">add</mat-icon></button>
-                            <button title="import model" mat-icon-button class="top-node-import"
-                                *ngIf="node.data.isParent && node.data.type == 'PARENT_MODEL'"
-                                (click)="importModel(node.data)"
-                                [ngClass]="{ 'background-highlight': activeNode === node }" style="margin-right: 20px;"><mat-icon
-                                    style="padding-top: 7px;">import_export</mat-icon></button>
-                            <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate"
-                                class="example-tree-progress-bar"></mat-progress-bar>
+                                <button mat-icon-button  title="add model" class="top-node" *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' "  (click)="add(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon >add</mat-icon></button>
+                                <button title="import model" mat-icon-button  class="top-node-import" *ngIf="node.data.isParent && node.data.type == 'PARENT_MODEL'"  (click)="importModel(node.data)" [ngClass]="{ 'background-highlight': activeNode === node }"><mat-icon>import_export</mat-icon></button>
+                                <mat-progress-bar *ngIf="node.isLoading"
+                                                  mode="indeterminate"
+                                                  class="example-tree-progress-bar"></mat-progress-bar>
 
-                        </mat-tree-node>
-                    </mat-tree>
+                            </mat-tree-node>
+                        </mat-tree>
+                    </div>
                 </div>
             </as-split-area>
         </as-split>

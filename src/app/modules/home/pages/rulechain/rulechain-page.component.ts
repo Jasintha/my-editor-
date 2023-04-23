@@ -126,6 +126,7 @@ import Timeout = NodeJS.Timeout;
 import { ConOperationBase } from "@shared/models/ConnectorOperation.models";
 import { EventService } from "@core/projectservices/microservice-event.service";
 import { ruleNodeConfigResourcesModulesMap } from "../service-home/service-home.component";
+import {v4 as uuidv4} from 'uuid';
 
 @Component({
   selector: "virtuan-rulechain-page",
@@ -2216,6 +2217,8 @@ export class RuleChainPageComponent extends PageComponent
             id: node.ruleNodeId,
             type: node.component.clazz,
             name: node.name,
+            status: node.status,
+            nodeUUID: node.ruleNodeUUId,
             configuration: node.configuration,
             additionalInfo: node.additionalInfo ? node.additionalInfo : {},
             debugMode: node.debugMode,
@@ -2800,9 +2803,7 @@ export class AddRuleNodeDialogComponent
 
   add(): void {
     this.submitted = true;
-    //this.ruleNodeDetailsComponent.validate();
-    //if (this.ruleNodeDetailsComponent.ruleNodeFormGroup.valid) {
+    this.ruleNode.ruleNodeUUId = uuidv4();
     this.dialogRef.close(this.ruleNode);
-    //}
   }
 }

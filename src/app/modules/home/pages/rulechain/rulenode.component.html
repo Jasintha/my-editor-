@@ -67,6 +67,7 @@
     </div>
   </div>
   <div *ngIf="verticaledgeenabled" class="virtuan-servicefile-rule-node"
+       [ngStyle]="{'border': setCustomBorder(node.status)}" 
        [ngClass]="{'virtuan-rule-node-highlighted' : node.highlighted,
                    'virtuan-rule-node-invalid': node.error }">s
 

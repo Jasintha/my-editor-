@@ -34,6 +34,8 @@ export interface RuleNode extends BaseData<RuleNodeId> {
   ruleChainId?: RuleChainId;
   type: string;
   name: string;
+  status: string;
+  nodeUUID: string;
   debugMode: boolean;
   configuration: RuleNodeConfiguration;
   additionalInfo?: any;
@@ -441,6 +443,7 @@ export interface FcRuleNodeType extends FcNode {
 }
 
 export interface FcRuleNode extends FcRuleNodeType {
+  ruleNodeUUId?: string;
   ruleNodeId?: RuleNodeId;
   additionalInfo?: any;
   configuration?: RuleNodeConfiguration;
@@ -449,6 +452,7 @@ export interface FcRuleNode extends FcRuleNodeType {
   error?: string;
   highlighted?: boolean;
   componentClazz?: string;
+  status?:string;
 }
 
 export interface FcRuleEdge extends FcEdge {

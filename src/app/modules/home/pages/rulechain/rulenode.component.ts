@@ -39,4 +39,8 @@ export class RuleNodeComponent extends FcNodeComponent implements OnInit {
     }
   }
 
+  setCustomBorder(status: string){
+    return (status === '') ? '1px solid #333' : '2px solid '+ status
+  }
+
 }
