@@ -1,0 +1,81 @@
+{
+  "name": "Sample Node",
+  "description": "Test Dynamic Node",
+  "nodeClazz": "xiDynamic",
+  "allConnectorControlClasses": "xiDynamicNode",
+  "allConnectorControls": [
+    {
+      "name": "Sample Node",
+      "description": "Test Dynamic Node",
+      "nodeClazz": "xiDynamic",
+      "return": true,
+      "fields": [
+        {
+          "controlType": "text-input-field-form-ctrl",
+          "key": "propertyName",
+          "value": {},
+          "label": "Property Name Test",
+          "required": "true"
+        },
+        {
+          "controlType": "form-table-ctrl",
+          "form": {
+            "fields": [
+              {
+                "controlType": "select-premitve-data-type-form-ctrl",
+                "key": "",
+                "value": {},
+                "label": "",
+                "required": "true"
+              },
+              {
+                "controlType": "select-property-type-form-ctr",
+                "key": "",
+                "value": {},
+                "label": "",
+                "required": "true"
+              },
+              {
+                "controlType": "select-value-type-form-ctr",
+                "key": "",
+                "value": {},
+                "label": "",
+                "required": "true"
+              },
+              {
+                "controlType": "select-type-PRC-ctr",
+                "key": "",
+                "value": {},
+                "label": "",
+                "required": "true"
+              }
+            ]
+          },
+          "table": {
+            "source": "datasource",
+            "col": ["propertyinputType", "propertyName","propertyAttribute", "propertyAttributeType",  "valueinputType",
+             "valueName","valueAttribute", "valueAttributeType", "actions"]
+          },
+          "key": "",
+          "value": {},
+          "label": "",
+          "required": "true"
+        },
+        {
+          "controlType": "checkbox-setRetun-form-ctrl",
+          "key": "",
+          "value": {},
+          "label": "",
+          "required": "true"
+        },
+        {
+          "controlType": "form-errorhandler-ctrl",
+          "key": "",
+          "value": {},
+          "label": "",
+          "required": "true" 
+        }
+      ]
+    }
+  ]
+}

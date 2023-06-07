@@ -145,10 +145,12 @@ import { EditorModule } from 'primeng/editor';
 import { MenubarModule } from 'primeng/menubar';
 import { TabViewModule } from 'primeng/tabview';
 import {DeepAssignNodeConfigComponent} from '@home/pages/rulechain/mediators/action/deep-assign-node-config.component';
+import { CommonNodeConfigComponent } from './core/common-node-config.component';
 
 @NgModule({
   declarations: [
     MediatorNodeConfigComponent,
+    CommonNodeConfigComponent,
     RootNodeConfigComponent,
     ErrorBranchNodeConfigComponent,
     PayloadNodeConfigComponent,
@@ -264,6 +266,7 @@ import {DeepAssignNodeConfigComponent} from '@home/pages/rulechain/mediators/act
   ],
   exports: [
     MediatorNodeConfigComponent,
+    CommonNodeConfigComponent,
     RootNodeConfigComponent,
     ErrorBranchNodeConfigComponent,
     PayloadNodeConfigComponent,

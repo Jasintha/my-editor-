@@ -16,10 +16,12 @@
 
 import {
   AfterViewInit,
+  Compiler,
   Component,
   ComponentRef,
   forwardRef,
   Input,
+  NgModule,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -39,7 +41,8 @@ import { JsonObjectEditComponent } from '@shared/components/json-object-edit.com
 import { deepClone } from '@core/utils';
 import {ConOperationBase} from "@shared/models/ConnectorOperation.models";
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
+import * as PropertyNode from "./core/property-node.json";
 
 @Component({
   selector: 'virtuan-mediator-node-config',
@@ -51,7 +54,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   }]
 })
 export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterViewInit {
-
   @Input()
   ruleNodeId: string;
 
@@ -169,6 +171,8 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   @Input()
   serviceUuid: string;
 
+  nodeGuide: string;
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
@@ -215,6 +219,9 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   }
 
   ngOnInit(): void {
+    if(this.nodeClazz == 'xiDynamic'){
+      this.nodeGuide = JSON.stringify(PropertyNode)
+    }
   }
 
   ngOnDestroy(): void {

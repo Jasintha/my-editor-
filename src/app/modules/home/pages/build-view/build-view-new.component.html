@@ -11,10 +11,16 @@
     justify-content: flex-start;
     margin-left: 20px;
     gap: 10px;">
-     <form name="editForm" role="form" novalidate [formGroup]="editForm">
-            <p-multiSelect [options]="servicesToGenerate" formControlName="selectedServices" optionLabel="name"
+     <form name="editForm" role="form" novalidate [formGroup]="editForm" style="display: flex;
+     width: 38.75%;">
+            <mat-form-field appearance="outline" style="width: 100%">
+              <mat-select formControlName="selectedServices" placeholder="Choose" multiple>
+                <mat-option *ngFor="let service of servicesToGenerate" [value]="service">{{service.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>      
+            <!-- <p-multiSelect [options]="servicesToGenerate" formControlName="selectedServices" optionLabel="name"
               [panelStyle]="{ width: '100%' }" [filter]="true">
-            </p-multiSelect>
+            </p-multiSelect> -->
             <button mat-fab color="accent" (click)="generate()" style="margin-left: 20px; background-color: #2980b9;">
               <mat-icon>build</mat-icon>
             </button>
