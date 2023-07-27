@@ -30,7 +30,8 @@ export enum ComponentType {
   MESSAGING = 'MESSAGING',
   MIDDLEWARE = 'MIDDLEWARE',
   DESIGN = 'DESIGN',
-  OPERATION = 'OPERATION'
+  OPERATION = 'OPERATION',
+  UIB = 'UIB'
 }
 
 export enum ComponentScope {

@@ -344,6 +344,17 @@ export class RuleChainService {
             return ruleNodeComponents;
           })
       );
+    } else if(editorType === 'uib') {
+      const ruleNodeDesignComponent: ComponentType[] = [ComponentType.UIB];
+      return this.componentDescriptorService.getComponentDescriptorsByTypes(ruleNodeDesignComponent, uid, editorType, config).pipe(
+          map((components) => {
+            const ruleNodeComponents: RuleNodeComponentDescriptor[] = [];
+            components.forEach((component) => {
+              ruleNodeComponents.push(component as RuleNodeComponentDescriptor);
+            });
+            return ruleNodeComponents;
+          })
+      );
     } else {
       return this.componentDescriptorService.getComponentDescriptorsByTypes(ruleNodeTypeComponentTypes, uid, editorType, config).pipe(
           map((components) => {
