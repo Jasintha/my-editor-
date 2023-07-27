@@ -212,11 +212,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         this.activeNode = node;
         this.projectUid = this.activeNode.data.projectuuid;
         if(node.name.toLowerCase().includes('.uib')){
-            const updatedNode = {
-                ...node,
-                type: 'UIB'
-            }
-            this.viewComponent(updatedNode);
+            node.data.type = 'UIB'
+            this.viewComponent(node.data);
         }else{
             this.viewComponent(node.data);
         }
