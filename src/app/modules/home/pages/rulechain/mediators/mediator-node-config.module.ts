@@ -145,6 +145,7 @@ import { EditorModule } from 'primeng/editor';
 import { MenubarModule } from 'primeng/menubar';
 import { TabViewModule } from 'primeng/tabview';
 import {DeepAssignNodeConfigComponent} from '@home/pages/rulechain/mediators/action/deep-assign-node-config.component';
+import { UIBNodeConfigComponent } from './action/uib-node-config.component';
 
 @NgModule({
   declarations: [
@@ -178,6 +179,7 @@ import {DeepAssignNodeConfigComponent} from '@home/pages/rulechain/mediators/act
     ShopifyOrderNodeConfigComponent,
     BranchNodeConfigComponent,
     LogNodeConfigComponent,
+    UIBNodeConfigComponent,
     IteratorNodeConfigComponent,
     LambdaFunctionNodeConfigComponent,
     ValidatorNodeConfigComponent,
@@ -287,6 +289,7 @@ import {DeepAssignNodeConfigComponent} from '@home/pages/rulechain/mediators/act
     BranchNodeConfigComponent,
     HybridFunctionNodeConfigComponent,
     LogNodeConfigComponent,
+    UIBNodeConfigComponent,
     IteratorNodeConfigComponent,
     SmsSendNodeConfigComponent,
     ShopifyInitNodeConfigComponent,

@@ -211,7 +211,15 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
     selectActiveNode(node) {
         this.activeNode = node;
         this.projectUid = this.activeNode.data.projectuuid;
-        this.viewComponent(node.data);
+        if(node.name.toLowerCase().includes('.uib')){
+            const updatedNode = {
+                ...node,
+                type: 'UIB'
+            }
+            this.viewComponent(updatedNode);
+        }else{
+            this.viewComponent(node.data);
+        }
     }
 
     refreshTree() {
@@ -308,7 +316,7 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
         } else if(item.type === 'PARENT_PAGE_THEMES'){
             this.viewPageTheme(item);
         }else if(item.type === 'API' || item.type === 'COMMAND' || item.type === 'QUERY' || item.type === 'TASK' ||
-            item.type === 'MAIN_TASK' || item.type === 'SERVICEFILE' || item.type === 'WORKFLOW' ) {
+            item.type === 'MAIN_TASK' || item.type === 'SERVICEFILE' || item.type === 'WORKFLOW' || item.type === 'UIB'  ) {
             this.viewRule(item);
         }else {
 
@@ -588,6 +596,8 @@ export class MainRuleChainComponent implements OnInit, OnChanges {
             this.editorType = "servicefile";
         } else if(item.type === "MAIN_TASK"){
             this.editorType = "maintask";
+        } else if(item.type === "UIB"){
+            this.editorType = "uib";
         } else {
             this.editorType = "default";
         }
