@@ -420,6 +420,22 @@
                             [nodeDefinition]="nodeDefinitionValue">
         </virtuan-log-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiUibNode'">
+        <virtuan-uib-node-config #uibNodeConfigComponent
+                            formControlName="configuration"
+                            [ruleNodeId]="ruleNodeId"
+                            [allConstants]=" allConstants"
+                            [allRuleInputs]="allRuleInputs"
+                            [inputEntities]=" inputEntities"
+                            [inputCustomobjects]="inputCustomobjects"
+                            [allVariables]="allVariables"
+                            [inputProperties]="inputProperties"
+                            [apptype]="apptype"
+                            [branchAvailability]="branchAvailability"
+                            [allModelProperties]="allModelProperties"
+                            [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-uib-node-config>
+    </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiFileUploadNode'">
         <virtuan-file-upload-node-config #fileUploadNodeConfigComponent
                                     formControlName="configuration"
