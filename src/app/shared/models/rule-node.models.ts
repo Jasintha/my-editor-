@@ -427,7 +427,7 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         name: 'rulenode.type-uib',
         details: 'rulenode.type-uib-details',
         nodeClass: 'virtuan-uib-type',
-        icon: 'code_blocks'
+        icon: 'screen_share'
       }
     ],
     [
