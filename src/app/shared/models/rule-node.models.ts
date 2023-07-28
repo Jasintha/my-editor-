@@ -194,7 +194,8 @@ export enum RuleNodeType {
   MESSAGING = 'MESSAGING',
   MIDDLEWARE = 'MIDDLEWARE',
   DESIGN = 'DESIGN',
-  OPERATION = 'OPERATION'
+  OPERATION = 'OPERATION',
+  UIB = 'UIB'
 }
 
 export const ruleNodeTypesLibrary = [
@@ -208,6 +209,10 @@ export const ruleNodeTypesLibrary = [
   RuleNodeType.MESSAGING,
   RuleNodeType.CONNECTOR
 ];
+
+export const uibruleNodeTypesLibrary = [
+  RuleNodeType.UIB
+]
 
 export const serviceruleNodeTypesLibrary = [
   RuleNodeType.ROOTING,
@@ -413,6 +418,16 @@ export const ruleNodeTypeDescriptors = new Map<RuleNodeType, RuleNodeTypeDescrip
         nodeClass: 'virtuan-input-type',
         icon: 'settings_ethernet',
         special: true
+      }
+    ],
+    [
+      RuleNodeType.UIB,
+      {
+        value: RuleNodeType.UIB,
+        name: 'rulenode.type-uib',
+        details: 'rulenode.type-uib-details',
+        nodeClass: 'virtuan-uib-type',
+        icon: 'code_blocks'
       }
     ],
     [

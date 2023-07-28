@@ -67,7 +67,8 @@ import {
   RuleNodeType,
   ruleNodeTypeDescriptors,
   ruleNodeTypesLibrary,
-  serviceruleNodeTypesLibrary
+  serviceruleNodeTypesLibrary,
+  uibruleNodeTypesLibrary
 } from '@shared/models/rule-node.models';
 import { QuestionBase,ValueProperty } from '@shared/models/question-base.models';
 import { FcRuleNodeModel, FcRuleNodeTypeModel, RuleChainMenuContextInfo } from './rulechain-page.models';
@@ -425,6 +426,8 @@ export class RuleChainPageComponent extends PageComponent
 
     if(this.editorType === "servicefile"){
         this.ruleNodeTypesLibraryArray= serviceruleNodeTypesLibrary;
+    } else if(this.editorType === 'uib'){
+      this.ruleNodeTypesLibraryArray = uibruleNodeTypesLibrary;
     } else {
         this.ruleNodeTypesLibraryArray= ruleNodeTypesLibrary;
     }
@@ -509,7 +512,20 @@ export class RuleChainPageComponent extends PageComponent
             };
           }
         }
-    } else {
+    }else if (this.editorType === "uib"){
+      for (const type of uibruleNodeTypesLibrary) {
+        const desc = ruleNodeTypeDescriptors.get(type);
+        if (!desc.special) {
+          this.ruleNodeTypesModel[type] = {
+            model: {
+              nodes: [],
+              edges: []
+            },
+            selectedObjects: []
+          };
+        }
+      }
+  } else {
         for (const type of ruleNodeTypesLibrary) {
           const desc = ruleNodeTypeDescriptors.get(type);
           if (!desc.special) {
@@ -677,7 +693,22 @@ export class RuleChainPageComponent extends PageComponent
               }
             }
           }
-        } else {
+        } else if(this.editorType === "uib"){
+          for (let i = 0; i < uibruleNodeTypesLibrary.length; i++) {
+            const panel = this.expansionPanels.find((item, index) => {
+              return index === i;
+            });
+            if (panel) {
+              const type = uibruleNodeTypesLibrary[i];
+              if (!this.ruleNodeTypesModel[type].model.nodes.length) {
+                panel.close();
+              } else {
+                panel.open();
+              }
+            }
+          }
+        }
+        else {
           for (let i = 0; i < ruleNodeTypesLibrary.length; i++) {
             const panel = this.expansionPanels.find((item, index) => {
               return index === i;
@@ -704,7 +735,7 @@ export class RuleChainPageComponent extends PageComponent
     this.ruleChainModel.edges = [];
 
     this.inputConnectorId = this.nextConnectorID++;
-    if(this.editorType === 'servicefile'){
+    if(this.editorType === 'servicefile' || this.editorType === 'uib'){
 
     } else {
         this.ruleChainModel.nodes.push(
