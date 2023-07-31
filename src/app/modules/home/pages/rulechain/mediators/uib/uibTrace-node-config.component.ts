@@ -30,15 +30,15 @@ import {
   import {MatTableDataSource} from '@angular/material/table';
   
   @Component({
-    selector: 'virtuan-uib-node-config',
-    templateUrl: './uib-node-config.component.html',
+    selector: 'virtuan-uibTrace-node-config',
+    templateUrl: './uibTrace-node-config.component.html',
     providers: [{
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => UIBNodeConfigComponent),
+      useExisting: forwardRef(() => UibTraceNodeConfigComponent),
       multi: true
     }]
   })
-  export class UIBNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
+  export class UibTraceNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
   
     @ViewChild('definedConfigContent', {read: ViewContainerRef, static: true}) definedConfigContainer: ViewContainerRef;
   
@@ -107,7 +107,7 @@ import {
   
     changeSubscription: Subscription;
   
-    displayedColumns: string[] = ['uibInputName', 'uibInputValue', 'actions'];
+    displayedColumns: string[] = ['name', 'value', 'actions'];
   
     private definedConfigComponentRef: ComponentRef<IRuleNodeConfigurationComponent>;
     private definedConfigComponent: IRuleNodeConfigurationComponent;
@@ -120,8 +120,8 @@ import {
                 private ruleChainService: RuleChainService,
                 private fb: FormBuilder) {
       this.uibNodeConfigFormGroup = this.fb.group({
-        uibInputName: [],
-        uibInputValue: [],
+        name: [],
+        value: [],
       });
     }
   
@@ -146,30 +146,30 @@ import {
   
     addUIBFields(): void{
     
-      let inputValue: string = this.uibNodeConfigFormGroup.get('uibInputValue').value;
-      let inputName: string = this.uibNodeConfigFormGroup.get('uibInputName').value;
+      let inputValue: string = this.uibNodeConfigFormGroup.get('value').value;
+      let inputName: string = this.uibNodeConfigFormGroup.get('name').value;
   
        let uibparameter = {
-          'uibInputName': inputName,
-          'uibInputValue': inputValue,
+          'name': inputName,
+          'value': inputValue,
         };
-        this.configuration.uibFieldProperties.push(uibparameter);
+        this.configuration.callProperties.push(uibparameter);
         this.updateModel(this.configuration);
       
-      this.datasource = new MatTableDataSource(this.configuration.uibFieldProperties);
-      this.configuration.uibInputValue = {};
-      this.configuration.uibInputName= {};
+      this.datasource = new MatTableDataSource(this.configuration.callProperties);
+      this.configuration.value = {};
+      this.configuration.name= {};
     
       this.uibNodeConfigFormGroup.patchValue({
-        uibInputName: '',
-        uibInputValue: '',
+        name: '',
+        value: '',
       });
   
     }
   
     deleteRow(index: number): void{
-      this.configuration.uibFieldProperties.splice(index, 1);
-      this.datasource = new MatTableDataSource(this.configuration.uibFieldProperties);
+      this.configuration.callProperties.splice(index, 1);
+      this.datasource = new MatTableDataSource(this.configuration.callProperties);
       this.updateModel(this.configuration);
     }
   
@@ -185,10 +185,10 @@ import {
     writeValue(value: RuleNodeConfiguration): void {
   
       this.configuration = deepClone(value);
-      if(this.configuration.uibFieldProperties === null || this.configuration.uibFieldProperties === undefined){
-          this.configuration.uibFieldProperties = [];
+      if(this.configuration.callProperties === null || this.configuration.callProperties === undefined){
+          this.configuration.callProperties = [];
       }
-      this.datasource = new MatTableDataSource(this.configuration.uibFieldProperties);
+      this.datasource = new MatTableDataSource(this.configuration.callProperties);
   
       if (this.changeSubscription) {
         this.changeSubscription.unsubscribe();
@@ -204,20 +204,20 @@ import {
       } else {
   
         this.uibNodeConfigFormGroup.patchValue({
-          uibInputName: this.configuration.uibInputName,
-          uibInputValue: this.configuration.uibInputValue,
+          name: this.configuration.name,
+          value: this.configuration.value,
         });
   
-        this.changeSubscription = this.uibNodeConfigFormGroup.get('uibInputName').valueChanges.subscribe(
+        this.changeSubscription = this.uibNodeConfigFormGroup.get('name').valueChanges.subscribe(
           (configuration: RuleNodeConfiguration) => {
-            this.configuration.uibInputName = configuration;
+            this.configuration.name = configuration;
             this.updateModel(this.configuration);
           }
         );
 
-        this.changeSubscription = this.uibNodeConfigFormGroup.get('uibInputValue').valueChanges.subscribe(
+        this.changeSubscription = this.uibNodeConfigFormGroup.get('value').valueChanges.subscribe(
             (configuration: RuleNodeConfiguration) => {
-              this.configuration.uibInputValue = configuration;
+              this.configuration.value = configuration;
               this.updateModel(this.configuration);
             }
           );
@@ -238,7 +238,7 @@ import {
   }
   
   export interface uibField {
-    uibInputName: string;
-    uibInputValue: string;
+    name: string;
+    value: string;
   }
   

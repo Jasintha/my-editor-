@@ -145,7 +145,9 @@ import { EditorModule } from 'primeng/editor';
 import { MenubarModule } from 'primeng/menubar';
 import { TabViewModule } from 'primeng/tabview';
 import {DeepAssignNodeConfigComponent} from '@home/pages/rulechain/mediators/action/deep-assign-node-config.component';
-import { UIBNodeConfigComponent } from './action/uib-node-config.component';
+import { UibHTTPReplyNodeConfigComponent } from './uib/uibHTTPReply-node-config.component';
+import { UibHTTPInputNodeConfigComponent } from './uib/uibHTTPInput-node-config.component';
+import { UibTraceNodeConfigComponent } from './uib/uibTrace-node-config.component';
 
 @NgModule({
   declarations: [
@@ -179,7 +181,9 @@ import { UIBNodeConfigComponent } from './action/uib-node-config.component';
     ShopifyOrderNodeConfigComponent,
     BranchNodeConfigComponent,
     LogNodeConfigComponent,
-    UIBNodeConfigComponent,
+    UibHTTPInputNodeConfigComponent,
+    UibHTTPReplyNodeConfigComponent,
+    UibTraceNodeConfigComponent,
     IteratorNodeConfigComponent,
     LambdaFunctionNodeConfigComponent,
     ValidatorNodeConfigComponent,
@@ -289,7 +293,9 @@ import { UIBNodeConfigComponent } from './action/uib-node-config.component';
     BranchNodeConfigComponent,
     HybridFunctionNodeConfigComponent,
     LogNodeConfigComponent,
-    UIBNodeConfigComponent,
+    UibHTTPInputNodeConfigComponent,
+    UibHTTPReplyNodeConfigComponent,
+    UibTraceNodeConfigComponent,
     IteratorNodeConfigComponent,
     SmsSendNodeConfigComponent,
     ShopifyInitNodeConfigComponent,
