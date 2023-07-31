@@ -420,8 +420,8 @@
                             [nodeDefinition]="nodeDefinitionValue">
         </virtuan-log-node-config>
     </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiUibNode'">
-        <virtuan-uib-node-config #uibNodeConfigComponent
+    <ng-container *ngIf="nodeClazz === 'xiUibHTTPReply'">
+        <virtuan-uibHTTPReply-node-config #UibHTTPReplyNodeConfigComponent
                             formControlName="configuration"
                             [ruleNodeId]="ruleNodeId"
                             [allConstants]=" allConstants"
@@ -434,7 +434,39 @@
                             [branchAvailability]="branchAvailability"
                             [allModelProperties]="allModelProperties"
                             [nodeDefinition]="nodeDefinitionValue">
-        </virtuan-uib-node-config>
+        </virtuan-uibHTTPReply-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiUibHTTPInput'">
+        <virtuan-uibHTTPInput-node-config #UibHTTPInputNodeConfigComponent
+                            formControlName="configuration"
+                            [ruleNodeId]="ruleNodeId"
+                            [allConstants]=" allConstants"
+                            [allRuleInputs]="allRuleInputs"
+                            [inputEntities]=" inputEntities"
+                            [inputCustomobjects]="inputCustomobjects"
+                            [allVariables]="allVariables"
+                            [inputProperties]="inputProperties"
+                            [apptype]="apptype"
+                            [branchAvailability]="branchAvailability"
+                            [allModelProperties]="allModelProperties"
+                            [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-uibHTTPInput-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiUibTrace'">
+        <virtuan-uibTrace-node-config #UibTraceNodeConfigComponent
+                            formControlName="configuration"
+                            [ruleNodeId]="ruleNodeId"
+                            [allConstants]=" allConstants"
+                            [allRuleInputs]="allRuleInputs"
+                            [inputEntities]=" inputEntities"
+                            [inputCustomobjects]="inputCustomobjects"
+                            [allVariables]="allVariables"
+                            [inputProperties]="inputProperties"
+                            [apptype]="apptype"
+                            [branchAvailability]="branchAvailability"
+                            [allModelProperties]="allModelProperties"
+                            [nodeDefinition]="nodeDefinitionValue">
+        </virtuan-uibTrace-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiFileUploadNode'">
         <virtuan-file-upload-node-config #fileUploadNodeConfigComponent
