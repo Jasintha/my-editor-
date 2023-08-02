@@ -30,15 +30,15 @@ import {
   import {MatTableDataSource} from '@angular/material/table';
   
   @Component({
-    selector: 'virtuan-uibHttpReply-node-config',
-    templateUrl: './uibHTTPReply-node-config.component.html',
+    selector: 'virtuan-uibHttpInput-node-config',
+    templateUrl: './uibHttpInput-node-config.component.html',
     providers: [{
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => UibHTTPReplyNodeConfigComponent),
+      useExisting: forwardRef(() => UibHttpInputNodeConfigComponent),
       multi: true
     }]
   })
-  export class UibHTTPReplyNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
+  export class UibHttpInputNodeConfigComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
   
     @ViewChild('definedConfigContent', {read: ViewContainerRef, static: true}) definedConfigContainer: ViewContainerRef;
   
@@ -103,7 +103,7 @@ import {
   
     definedDirectiveError: string;
   
-    uibNodeConfigFormGroup: FormGroup;
+    uibHttpInputNodeConfigFormGroup: FormGroup;
   
     changeSubscription: Subscription;
   
@@ -119,7 +119,7 @@ import {
     constructor(private translate: TranslateService,
                 private ruleChainService: RuleChainService,
                 private fb: FormBuilder) {
-      this.uibNodeConfigFormGroup = this.fb.group({
+      this.uibHttpInputNodeConfigFormGroup = this.fb.group({
         name: [],
         value: [],
       });
@@ -146,8 +146,8 @@ import {
   
     addUIBFields(): void{
     
-      let inputValue: string = this.uibNodeConfigFormGroup.get('value').value;
-      let inputName: string = this.uibNodeConfigFormGroup.get('name').value;
+      let inputValue: string = this.uibHttpInputNodeConfigFormGroup.get('value').value;
+      let inputName: string = this.uibHttpInputNodeConfigFormGroup.get('name').value;
   
        let uibparameter = {
           'name': inputName,
@@ -160,7 +160,7 @@ import {
       this.configuration.value = {};
       this.configuration.name= {};
     
-      this.uibNodeConfigFormGroup.patchValue({
+      this.uibHttpInputNodeConfigFormGroup.patchValue({
         name: '',
         value: '',
       });
@@ -176,9 +176,9 @@ import {
     setDisabledState(isDisabled: boolean): void {
       this.disabled = isDisabled;
       if (this.disabled) {
-        this.uibNodeConfigFormGroup.disable({emitEvent: false});
+        this.uibHttpInputNodeConfigFormGroup.disable({emitEvent: false});
       } else {
-        this.uibNodeConfigFormGroup.enable({emitEvent: false});
+        this.uibHttpInputNodeConfigFormGroup.enable({emitEvent: false});
       }
     }
   
@@ -203,19 +203,19 @@ import {
         });
       } else {
   
-        this.uibNodeConfigFormGroup.patchValue({
+        this.uibHttpInputNodeConfigFormGroup.patchValue({
           name: this.configuration.name,
           value: this.configuration.value,
         });
   
-        this.changeSubscription = this.uibNodeConfigFormGroup.get('name').valueChanges.subscribe(
+        this.changeSubscription = this.uibHttpInputNodeConfigFormGroup.get('name').valueChanges.subscribe(
           (configuration: RuleNodeConfiguration) => {
             this.configuration.name = configuration;
             this.updateModel(this.configuration);
           }
         );
 
-        this.changeSubscription = this.uibNodeConfigFormGroup.get('value').valueChanges.subscribe(
+        this.changeSubscription = this.uibHttpInputNodeConfigFormGroup.get('value').valueChanges.subscribe(
             (configuration: RuleNodeConfiguration) => {
               this.configuration.value = configuration;
               this.updateModel(this.configuration);
@@ -227,7 +227,7 @@ import {
   
     private updateModel(configuration: RuleNodeConfiguration) {
   
-      if (this.definedConfigComponent || this.uibNodeConfigFormGroup.valid) {
+      if (this.definedConfigComponent || this.uibHttpInputNodeConfigFormGroup.valid) {
         this.propagateChange(configuration);
       } else {
   

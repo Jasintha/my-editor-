@@ -145,8 +145,8 @@ import { EditorModule } from 'primeng/editor';
 import { MenubarModule } from 'primeng/menubar';
 import { TabViewModule } from 'primeng/tabview';
 import {DeepAssignNodeConfigComponent} from '@home/pages/rulechain/mediators/action/deep-assign-node-config.component';
-import { UibHTTPReplyNodeConfigComponent } from './uib/uibHTTPReply-node-config.component';
-import { UibHTTPInputNodeConfigComponent } from './uib/uibHTTPInput-node-config.component';
+import { UibHttpReplyNodeConfigComponent } from './uib/uibHttpReply-node-config.component';
+import { UibHttpInputNodeConfigComponent } from './uib/uibHttpInput-node-config.component';
 import { UibTraceNodeConfigComponent } from './uib/uibTrace-node-config.component';
 
 @NgModule({
@@ -181,8 +181,8 @@ import { UibTraceNodeConfigComponent } from './uib/uibTrace-node-config.componen
     ShopifyOrderNodeConfigComponent,
     BranchNodeConfigComponent,
     LogNodeConfigComponent,
-    UibHTTPInputNodeConfigComponent,
-    UibHTTPReplyNodeConfigComponent,
+    UibHttpInputNodeConfigComponent,
+    UibHttpReplyNodeConfigComponent,
     UibTraceNodeConfigComponent,
     IteratorNodeConfigComponent,
     LambdaFunctionNodeConfigComponent,
@@ -293,8 +293,8 @@ import { UibTraceNodeConfigComponent } from './uib/uibTrace-node-config.componen
     BranchNodeConfigComponent,
     HybridFunctionNodeConfigComponent,
     LogNodeConfigComponent,
-    UibHTTPInputNodeConfigComponent,
-    UibHTTPReplyNodeConfigComponent,
+    UibHttpInputNodeConfigComponent,
+    UibHttpReplyNodeConfigComponent,
     UibTraceNodeConfigComponent,
     IteratorNodeConfigComponent,
     SmsSendNodeConfigComponent,

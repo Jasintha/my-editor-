@@ -421,7 +421,7 @@
         </virtuan-log-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiUibHTTPReply'">
-        <virtuan-uibHTTPReply-node-config #UibHTTPReplyNodeConfigComponent
+        <virtuan-uibHttpReply-node-config #uibHttpReplyNodeConfigComponent
                             formControlName="configuration"
                             [ruleNodeId]="ruleNodeId"
                             [allConstants]=" allConstants"
@@ -434,10 +434,10 @@
                             [branchAvailability]="branchAvailability"
                             [allModelProperties]="allModelProperties"
                             [nodeDefinition]="nodeDefinitionValue">
-        </virtuan-uibHTTPReply-node-config>
+        </virtuan-uibHttpReply-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiUibHTTPInput'">
-        <virtuan-uibHTTPInput-node-config #UibHTTPInputNodeConfigComponent
+        <virtuan-uibHttpInput-node-config #uibHttpInputNodeConfigComponent
                             formControlName="configuration"
                             [ruleNodeId]="ruleNodeId"
                             [allConstants]=" allConstants"
@@ -450,10 +450,10 @@
                             [branchAvailability]="branchAvailability"
                             [allModelProperties]="allModelProperties"
                             [nodeDefinition]="nodeDefinitionValue">
-        </virtuan-uibHTTPInput-node-config>
+        </virtuan-uibHttpInput-node-config>
     </ng-container>
     <ng-container *ngIf="nodeClazz === 'xiUibTrace'">
-        <virtuan-uibTrace-node-config #UibTraceNodeConfigComponent
+        <virtuan-uibTrace-node-config #uibTraceNodeConfigComponent
                             formControlName="configuration"
                             [ruleNodeId]="ruleNodeId"
                             [allConstants]=" allConstants"
