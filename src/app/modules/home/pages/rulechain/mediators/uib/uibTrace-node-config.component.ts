@@ -103,7 +103,7 @@ import {
   
     definedDirectiveError: string;
   
-    uibNodeConfigFormGroup: FormGroup;
+    uibTraceNodeConfigFormGroup: FormGroup;
   
     changeSubscription: Subscription;
   
@@ -119,7 +119,7 @@ import {
     constructor(private translate: TranslateService,
                 private ruleChainService: RuleChainService,
                 private fb: FormBuilder) {
-      this.uibNodeConfigFormGroup = this.fb.group({
+      this.uibTraceNodeConfigFormGroup = this.fb.group({
         name: [],
         value: [],
       });
@@ -146,8 +146,8 @@ import {
   
     addUIBFields(): void{
     
-      let inputValue: string = this.uibNodeConfigFormGroup.get('value').value;
-      let inputName: string = this.uibNodeConfigFormGroup.get('name').value;
+      let inputValue: string = this.uibTraceNodeConfigFormGroup.get('value').value;
+      let inputName: string = this.uibTraceNodeConfigFormGroup.get('name').value;
   
        let uibparameter = {
           'name': inputName,
@@ -160,7 +160,7 @@ import {
       this.configuration.value = {};
       this.configuration.name= {};
     
-      this.uibNodeConfigFormGroup.patchValue({
+      this.uibTraceNodeConfigFormGroup.patchValue({
         name: '',
         value: '',
       });
@@ -176,9 +176,9 @@ import {
     setDisabledState(isDisabled: boolean): void {
       this.disabled = isDisabled;
       if (this.disabled) {
-        this.uibNodeConfigFormGroup.disable({emitEvent: false});
+        this.uibTraceNodeConfigFormGroup.disable({emitEvent: false});
       } else {
-        this.uibNodeConfigFormGroup.enable({emitEvent: false});
+        this.uibTraceNodeConfigFormGroup.enable({emitEvent: false});
       }
     }
   
@@ -203,19 +203,19 @@ import {
         });
       } else {
   
-        this.uibNodeConfigFormGroup.patchValue({
+        this.uibTraceNodeConfigFormGroup.patchValue({
           name: this.configuration.name,
           value: this.configuration.value,
         });
   
-        this.changeSubscription = this.uibNodeConfigFormGroup.get('name').valueChanges.subscribe(
+        this.changeSubscription = this.uibTraceNodeConfigFormGroup.get('name').valueChanges.subscribe(
           (configuration: RuleNodeConfiguration) => {
             this.configuration.name = configuration;
             this.updateModel(this.configuration);
           }
         );
 
-        this.changeSubscription = this.uibNodeConfigFormGroup.get('value').valueChanges.subscribe(
+        this.changeSubscription = this.uibTraceNodeConfigFormGroup.get('value').valueChanges.subscribe(
             (configuration: RuleNodeConfiguration) => {
               this.configuration.value = configuration;
               this.updateModel(this.configuration);
@@ -227,7 +227,7 @@ import {
   
     private updateModel(configuration: RuleNodeConfiguration) {
   
-      if (this.definedConfigComponent || this.uibNodeConfigFormGroup.valid) {
+      if (this.definedConfigComponent || this.uibTraceNodeConfigFormGroup.valid) {
         this.propagateChange(configuration);
       } else {
   
