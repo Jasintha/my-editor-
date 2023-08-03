@@ -48,7 +48,7 @@ import { CommonModule } from "@angular/common";
 import { SharedModule } from "@app/shared/shared.module";
 import { RuleChainModule } from "../../rulechain.module";
 import { MediatorNodeConfigModule } from "../mediator-node-config.module";
-import * as PropertyNode from "../core/property-node.json";
+// import * as PropertyNode from "../core/property-node.json";
 
 export enum VirtuanControlType {
   TEXT_INPUT_FIELD = "text-input-field-form-ctrl",
@@ -1075,13 +1075,13 @@ checkboxClickVal(node){
   }
 
   createComponent() {
-    PropertyNode.allConnectorControls.forEach((item) => {
-      if (item.fields) {
-        item.fields.forEach((field) => {
-          this.element = this.element + this.getTemplate(field);
-        });
-      }
-    });
+    // PropertyNode.allConnectorControls.forEach((item) => {
+    //   if (item.fields) {
+    //     item.fields.forEach((field) => {
+    //       this.element = this.element + this.getTemplate(field);
+    //     });
+    //   }
+    // });
 
     this.output = `<div [formGroup]="commonNodeConfigFormGroup"> ${this.element} </div> `;
 
