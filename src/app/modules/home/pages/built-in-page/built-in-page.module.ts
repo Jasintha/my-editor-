@@ -52,8 +52,8 @@ import {FieldsetModule} from 'primeng/fieldset';
 import {FlexGridHandlerComponent} from '@home/pages/built-in-page/flex-grid-handler.component';
 import {CreateGridComponent} from '@home/pages/built-in-page/create-grid.component';
 import {MonacoEditorModule} from 'ngx-monaco-editor';
-import { LayoutBasicSettingsComponent } from './flex-grid-handler/layout-basic-settings.component';
-import { LayoutArrangementComponent } from './flex-grid-handler/layout-arrangement.component';
+// import { LayoutBasicSettingsComponent } from './flex-grid-handler/layout-basic-settings.component';
+// import { LayoutArrangementComponent } from './flex-grid-handler/layout-arrangement.component';
 
 @NgModule({
     declarations:[
@@ -75,8 +75,8 @@ import { LayoutArrangementComponent } from './flex-grid-handler/layout-arrangeme
         ButtonEventHandleComponent,
         StepFieldMapperComponent,
         FlexGridHandlerComponent,
-        LayoutBasicSettingsComponent,
-        LayoutArrangementComponent,
+        // LayoutBasicSettingsComponent,
+        // LayoutArrangementComponent,
         CreateGridComponent
     ],
     imports: [
@@ -135,8 +135,8 @@ import { LayoutArrangementComponent } from './flex-grid-handler/layout-arrangeme
         ButtonEventHandleComponent,
         StepFieldMapperComponent,
         FlexGridHandlerComponent,
-        LayoutBasicSettingsComponent,
-        LayoutArrangementComponent,
+        // LayoutBasicSettingsComponent,
+        // LayoutArrangementComponent,
         CreateGridComponent
     ],
     providers: [ ]

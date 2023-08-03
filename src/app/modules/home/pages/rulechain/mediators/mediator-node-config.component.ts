@@ -42,7 +42,7 @@ import { deepClone } from '@core/utils';
 import {ConOperationBase} from "@shared/models/ConnectorOperation.models";
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import * as PropertyNode from "./core/property-node.json";
+// import * as PropertyNode from "./core/property-node.json";
 
 @Component({
   selector: 'virtuan-mediator-node-config',
