@@ -1,19 +1,3 @@
-///
-///
-///
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///     http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
-
 import {
   AfterViewInit,
   Component,
@@ -26,23 +10,34 @@ import {
   SkipSelf,
   ViewChild,
   ViewChildren,
-  ViewEncapsulation
-} from '@angular/core';
-import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {filter, map} from 'rxjs/operators';
+  ViewEncapsulation,
+} from "@angular/core";
+import { HttpErrorResponse, HttpResponse } from "@angular/common/http";
+import { filter, map } from "rxjs/operators";
 
-import { PageComponent } from '@shared/components/page.component';
-import { Store } from '@ngrx/store';
-import { AppState } from '@core/core.state';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { HasDirtyFlag } from '@core/guards/confirm-on-exit.guard';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatExpansionPanel } from '@angular/material/expansion';
-import { DialogService } from '@core/services/dialog.service';
+import { PageComponent } from "@shared/components/page.component";
+import { Store } from "@ngrx/store";
+import { AppState } from "@core/core.state";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+} from "@angular/forms";
+import { HasDirtyFlag } from "@core/guards/confirm-on-exit.guard";
+import { TranslateService } from "@ngx-translate/core";
+import { ErrorStateMatcher } from "@angular/material/core";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
+import { MatExpansionPanel } from "@angular/material/expansion";
+import { DialogService } from "@core/services/dialog.service";
 // import { AuthService } from '@core/auth/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   inputNodeComponent,
   serviceNodeComponent,
@@ -53,9 +48,14 @@ import {
   RuleChainConnectionInfo,
   RuleChainImport,
   RuleChainMetaData,
-  ruleChainNodeComponent
-} from '@shared/models/rule-chain.models';
-import { FcItemInfo, FlowchartConstants, NgxFlowchartComponent, UserCallbacks } from 'ngx-flowchart/dist/ngx-flowchart';
+  ruleChainNodeComponent,
+} from "@shared/models/rule-chain.models";
+import {
+  FcItemInfo,
+  FlowchartConstants,
+  NgxFlowchartComponent,
+  UserCallbacks,
+} from "ngx-flowchart/dist/ngx-flowchart";
 import {
   FcRuleEdge,
   FcRuleNode,
@@ -114,48 +114,49 @@ import { ruleNodeConfigResourcesModulesMap } from "../service-home/service-home.
 import {v4 as uuidv4} from 'uuid';
 
 @Component({
-  selector: 'virtuan-rulechain-page',
-  templateUrl: './rulechain-page.component.html',
-  styleUrls: ['./rulechain-page.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "virtuan-rulechain-page",
+  templateUrl: "./rulechain-page.component.html",
+  styleUrls: ["./rulechain-page.component.scss"],
 })
 export class RuleChainPageComponent extends PageComponent
-  implements AfterViewInit, OnInit, HasDirtyFlag, ISearchableComponent 
-  {
-
+  implements AfterViewInit, OnInit, HasDirtyFlag, ISearchableComponent {
   get isDirty(): boolean {
     return this.isDirtyValue || this.isImport;
   }
 
-  @HostBinding('style.width') width = '100%';
-  @HostBinding('style.height') height = '100%';
+  @HostBinding("style.width") width = "100%";
+  @HostBinding("style.height") height = "100%";
 
-  @ViewChild('ruleNodeSearchInput') ruleNodeSearchInputField: ElementRef;
+  @ViewChild("ruleNodeSearchInput") ruleNodeSearchInputField: ElementRef;
 
-  @ViewChild('ruleChainCanvas', {static: true}) ruleChainCanvas: NgxFlowchartComponent;
+  @ViewChild("ruleChainCanvas", { static: true })
+  ruleChainCanvas: NgxFlowchartComponent;
 
-  @ViewChildren('ruleNodeTypeExpansionPanels',
-    {read: MatExpansionPanel}) expansionPanels: QueryList<MatExpansionPanel>;
+  @ViewChildren("ruleNodeTypeExpansionPanels", { read: MatExpansionPanel })
+  expansionPanels: QueryList<MatExpansionPanel>;
 
-  @ViewChild('ruleChainMenuTrigger', {static: true}) ruleChainMenuTrigger: MatMenuTrigger;
+  @ViewChild("ruleChainMenuTrigger", { static: true })
+  ruleChainMenuTrigger: MatMenuTrigger;
 
   eventTypes = EventType;
 
   debugEventTypes = DebugEventType;
 
-  ruleChainMenuPosition = { x: '0px', y: '0px' };
+  ruleChainMenuPosition = { x: "0px", y: "0px" };
 
   contextMenuEvent: MouseEvent;
 
   ruleNodeTypeDescriptorsMap = ruleNodeTypeDescriptors;
-//   ruleNodeTypesLibraryArray = ruleNodeTypesLibrary;
-  ruleNodeTypesLibraryArray : any[];
+  //   ruleNodeTypesLibraryArray = ruleNodeTypesLibrary;
+  ruleNodeTypesLibraryArray: any[];
 
   isImport: boolean;
   isDirtyValue: boolean;
   isInvalid = false;
 
-  errorTooltips: {[nodeId: string]: JQueryTooltipster.ITooltipsterInstance} = {};
+  errorTooltips: {
+    [nodeId: string]: JQueryTooltipster.ITooltipsterInstance;
+  } = {};
   isFullscreen = false;
 
   selectedRuleNodeTabIndex = 0;
@@ -163,10 +164,11 @@ export class RuleChainPageComponent extends PageComponent
   isEditingRuleNode = false;
   editingRuleNodeIndex = -1;
   editingRuleNodeAllowCustomLabels = false;
-  editingRuleNodeLinkLabels: {[label: string]: LinkLabel};
+  editingRuleNodeLinkLabels: { [label: string]: LinkLabel };
 
-  @ViewChild('virtuanRuleNode') ruleNodeComponent: RuleNodeDetailsComponent;
-  @ViewChild('virtuanRuleNodeLink') ruleNodeLinkComponent: RuleNodeLinkComponent;
+  @ViewChild("virtuanRuleNode") ruleNodeComponent: RuleNodeDetailsComponent;
+  @ViewChild("virtuanRuleNodeLink")
+  ruleNodeLinkComponent: RuleNodeLinkComponent;
 
   editingRuleNodeLink: FcRuleEdge = null;
   isEditingRuleNodeLink = false;
@@ -177,19 +179,12 @@ export class RuleChainPageComponent extends PageComponent
   enableHotKeys = true;
   isLibraryOpen = true;
 
-  ruleNodeSearch = '';
-  ruleNodeTypeSearch = '';
+  ruleNodeSearch = "";
+  ruleNodeTypeSearch = "";
 
-  @Input()
   ruleChain: RuleChain;
-
-  @Input()
   editorType: string;
-
-  @Input()
   ruleChainMetaData: ResolvedRuleChainMetaData;
-
-  @Input()
   connectionPropertyTemplates: ConnectionPropertyTemplate[];
 
   ruleType: string;
@@ -222,7 +217,7 @@ export class RuleChainPageComponent extends PageComponent
   queryDb: string;
   commandDb: string;
   connectorData: any[];
-  allApis:any[];
+  allApis: any[];
   apptype: string;
   connectorfields: QuestionBase[];
   connectorOperations: ConOperationBase[];
@@ -232,10 +227,7 @@ export class RuleChainPageComponent extends PageComponent
   allMicroservices: any[];
   editorEdgeStyle: string;
 
-  @Input()
   username: string;
-
-  @Input()
   uid: string;
 
   serviceUuid: string;
@@ -245,7 +237,7 @@ export class RuleChainPageComponent extends PageComponent
 
   ruleChainModel: FcRuleNodeModel = {
     nodes: [],
-    edges: []
+    edges: [],
   };
   selectedObjects = [];
 
@@ -265,19 +257,28 @@ export class RuleChainPageComponent extends PageComponent
       },
       mouseEnter: this.displayNodeDescriptionTooltip.bind(this),
       mouseLeave: this.destroyTooltips.bind(this),
-      mouseDown: this.destroyTooltips.bind(this)
+      mouseDown: this.destroyTooltips.bind(this),
     },
     isValidEdge: (source, destination) => {
-      return source.type === FlowchartConstants.rightConnectorType && destination.type === FlowchartConstants.leftConnectorType;
+      return (
+        source.type === FlowchartConstants.rightConnectorType &&
+        destination.type === FlowchartConstants.leftConnectorType
+      );
     },
     createEdge: (event, edge: FcRuleEdge) => {
-      const sourceNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.source) as FcRuleNode;
+      const sourceNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+        edge.source
+      ) as FcRuleNode;
       if (sourceNode.component.type === RuleNodeType.INPUT) {
-        const destNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.destination) as FcRuleNode;
+        const destNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+          edge.destination
+        ) as FcRuleNode;
         if (destNode.component.type === RuleNodeType.RULE_CHAIN) {
           return NEVER;
         } else {
-          const found = this.ruleChainModel.edges.find(theEdge => theEdge.source === (this.inputConnectorId + ''));
+          const found = this.ruleChainModel.edges.find(
+            (theEdge) => theEdge.source === this.inputConnectorId + ""
+          );
           if (found) {
             this.ruleChainCanvas.modelService.edges.delete(found);
           }
@@ -286,31 +287,46 @@ export class RuleChainPageComponent extends PageComponent
       } else {
         if (edge.label) {
           if (!edge.labels) {
-            edge.labels = edge.label.split(' / ');
+            edge.labels = edge.label.split(" / ");
           }
           return of(edge);
         } else {
-          const labels = this.ruleChainService.getRuleNodeSupportedLinks(sourceNode);
-          const allowCustomLabels = this.ruleChainService.ruleNodeAllowCustomLinks(sourceNode.component);
+          const labels = this.ruleChainService.getRuleNodeSupportedLinks(
+            sourceNode
+          );
+          const allowCustomLabels = this.ruleChainService.ruleNodeAllowCustomLinks(
+            sourceNode.component
+          );
           this.enableHotKeys = false;
-          if(sourceNode.component.clazz == 'xiBranchNode' || sourceNode.component.clazz == 'xiErrBrNode'){
+          if (
+            sourceNode.component.clazz == "xiBranchNode" ||
+            sourceNode.component.clazz == "xiErrBrNode"
+          ) {
             let sourcename = sourceNode.name.replace(/\s/g, "");
-            let label = '';
-            if (sourceNode.component.clazz == 'xiErrBrNode'){
-                label = 'ERROR_BRANCH_' +this.lowerCaseWord(sourcename);
+            let label = "";
+            if (sourceNode.component.clazz == "xiErrBrNode") {
+              label = "ERROR_BRANCH_" + this.lowerCaseWord(sourcename);
             } else {
-                label = 'BRANCH_' +this.lowerCaseWord(sourcename);
+              label = "BRANCH_" + this.lowerCaseWord(sourcename);
             }
             let rootlabels = [label];
-            let rootLink = {source: edge.source, destination: edge.destination, label : label, labels: rootlabels};
+            let rootLink = {
+              source: edge.source,
+              destination: edge.destination,
+              label: label,
+              labels: rootlabels,
+            };
             this.enableHotKeys = true;
             return of(rootLink);
-          } else if(sourceNode.component.clazz == 'xiValidatorNode' || sourceNode.component.clazz == 'xiIteratorNode' || sourceNode.component.clazz == 'xiFilterNode' ||
-            sourceNode.component.clazz == 'xiSwitchNode'){
-
+          } else if (
+            sourceNode.component.clazz == "xiValidatorNode" ||
+            sourceNode.component.clazz == "xiIteratorNode" ||
+            sourceNode.component.clazz == "xiFilterNode" ||
+            sourceNode.component.clazz == "xiSwitchNode"
+          ) {
             return this.addRuleNodeLink(edge, labels, allowCustomLabels).pipe(
               tap(() => {
-                  this.enableHotKeys = true;
+                this.enableHotKeys = true;
               }),
               mergeMap((res) => {
                 if (res) {
@@ -320,11 +336,15 @@ export class RuleChainPageComponent extends PageComponent
                 }
               })
             );
-
-          }else {
-            let label = 'Next';
+          } else {
+            let label = "Next";
             let rootlabels = [label];
-            let rootLink = {source: edge.source, destination: edge.destination, label : label, labels: rootlabels};
+            let rootLink = {
+              source: edge.source,
+              destination: edge.destination,
+              label: label,
+              labels: rootlabels,
+            };
             this.enableHotKeys = true;
             return of(rootLink);
             /*
@@ -347,24 +367,25 @@ export class RuleChainPageComponent extends PageComponent
     },
     dropNode: (event, node: FcRuleNode) => {
       this.addRuleNode(node);
-    }
+    },
   };
 
   nextNodeID: number;
   nextConnectorID: number;
   inputConnectorId: number;
 
-  ruleNodeTypesModel: {[type: string]: {model: FcRuleNodeTypeModel, selectedObjects: any[]}} = {};
+  ruleNodeTypesModel: {
+    [type: string]: { model: FcRuleNodeTypeModel; selectedObjects: any[] };
+  } = {};
 
   nodeLibCallbacks: UserCallbacks = {
     nodeCallbacks: {
       mouseEnter: this.displayLibNodeDescriptionTooltip.bind(this),
       mouseLeave: this.destroyTooltips.bind(this),
-      mouseDown: this.destroyTooltips.bind(this)
-    }
+      mouseDown: this.destroyTooltips.bind(this),
+    },
   };
 
-  @Input()
   ruleNodeComponents: Array<RuleNodeComponentDescriptor>;
 
   flowchartConstants = FlowchartConstants;
@@ -373,17 +394,19 @@ export class RuleChainPageComponent extends PageComponent
 
   routerType: string;
 
-  constructor(protected store: Store<AppState>,
-              private route: ActivatedRoute,
-              private router: Router,
-              private ruleChainService: RuleChainService,
-              // private authService: AuthService,
-              private translate: TranslateService,
-              private itembuffer: ItemBufferService,
-              public dialog: MatDialog,
-              public dialogService: DialogService,
-              protected eventService: EventService,
-              public fb: FormBuilder) {
+  constructor(
+    protected store: Store<AppState>,
+    protected activatedRoute: ActivatedRoute,
+    private router: Router,
+    private ruleChainService: RuleChainService,
+    // private authService: AuthService,
+    private translate: TranslateService,
+    private itembuffer: ItemBufferService,
+    public dialog: MatDialog,
+    public dialogService: DialogService,
+    protected eventService: EventService,
+    public fb: FormBuilder
+  ) {
     super(store);
     this.activatedRoute.queryParams.subscribe((params: any) => {
       this.isSpinnerEnable = true;
@@ -393,37 +416,46 @@ export class RuleChainPageComponent extends PageComponent
       this.ruleId = params.ruleId;
       this.loadInitialData();
     });
-      this.isImport = false;
-      this.route.data.subscribe(({ ruleNodeComponents }) => {
-        this.ruleNodeComponents = ruleNodeComponents;
-      });
-      this.route.data.subscribe(({ ruleChain }) => {
-        this.ruleChain = ruleChain;
-      });
-      this.route.data.subscribe(({ ruleChainMetaData }) => {
-        this.ruleChainMetaData = ruleChainMetaData;
-      });
-      this.route.data.subscribe(
-      ({ connectionPropertyTemplates }) => {
-        this.connectionPropertyTemplates = connectionPropertyTemplates;
-      });
-//     const routerType = this.route.snapshot.params.routerType;
-    if (this.routerType == "R") {
-        this.init();
-    }
-
   }
 
-  ngOnInit() {
-//     const routerType = this.route.snapshot.params.routerType;
-    if (this.routerType != "R") {
+  ngOnInit() {}
+
+  loadInitialData(){
+    combineLatest(
+      this.ruleChainService.getRuleNodeComponents(
+        ruleNodeConfigResourcesModulesMap,
+        this.uid,
+        this.editorType
+      ).pipe(),
+      this.ruleChainService.getConnectionPropertyTemplates().pipe(),
+      this.ruleChainService.getResolvedRuleChainMetadata(
+        this.ruleId,
+        this.username,
+        this.uid
+      ).pipe(),
+      this.ruleChainService.getRuleChainWithUsernameAndUID(
+        this.ruleId,
+        this.username,
+        this.uid
+      ).pipe()
+    ).subscribe(
+      ([
+        ruleChainNodeComponent,
+        connectionPropertyTemplates,
+        ruleChainMetaData,
+        ruleChain,
+      ]) => {
+        this.ruleNodeComponents = ruleChainNodeComponent;
+        this.ruleChain = ruleChain;
+        this.ruleChainMetaData = ruleChainMetaData;
+        this.connectionPropertyTemplates = connectionPropertyTemplates;
         this.init();
-    }
-//      this.init();
+      }
+    );
   }
 
   ngAfterViewInit() {
-    fromEvent(this.ruleNodeSearchInputField.nativeElement, 'keyup')
+    fromEvent(this.ruleNodeSearchInputField.nativeElement, "keyup")
       .pipe(
         debounceTime(150),
         distinctUntilChanged(),
@@ -446,9 +478,8 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   private init() {
-
-    if(this.editorType === "servicefile" || this.editorType === "maintask"){
-        this.editorEdgeStyle = "curved";
+    if (this.editorType === "servicefile" || this.editorType === "maintask") {
+      this.editorEdgeStyle = "curved";
     }
 
     if (this.editorType === "servicefile") {
@@ -456,88 +487,86 @@ export class RuleChainPageComponent extends PageComponent
     } else if (this.editorType === "uib") {
       this.ruleNodeTypesLibraryArray = uibruleNodeTypesLibrary;
     } else {
-        this.ruleNodeTypesLibraryArray= ruleNodeTypesLibrary;
+      this.ruleNodeTypesLibraryArray = ruleNodeTypesLibrary;
     }
 
     this.initHotKeys();
-//     const routerType = this.route.snapshot.params.routerType;
+    //     const routerType = this.route.snapshot.params.routerType;
     this.serviceUuid = this.uid;
     if (this.routerType == "R") {
-
     } else {
-        this.isImport = false;
+      this.isImport = false;
     }
     if (this.isImport) {
       const ruleChainImport: RuleChainImport = this.itembuffer.getRuleChainImport();
       this.ruleChain = ruleChainImport.ruleChain;
       this.ruleChainMetaData = ruleChainImport.resolvedMetadata;
-
     } else {
-
-//       this.ruleChain = this.route.snapshot.data.ruleChain;
-//       this.ruleChainMetaData = this.route.snapshot.data.ruleChainMetaData;
-//       this.connectionPropertyTemplates = this.route.snapshot.data.connectionPropertyTemplates;
-//       this.username = this.route.snapshot.params.username;
-//       this.uid = this.route.snapshot.params.uid;
-      this.ruleChainService.getRuleChainMicroserviceData(this.username).subscribe((microservices) => {
-        if (microservices){
+      //       this.ruleChain = this.route.snapshot.data.ruleChain;
+      //       this.ruleChainMetaData = this.route.snapshot.data.ruleChainMetaData;
+      //       this.connectionPropertyTemplates = this.route.snapshot.data.connectionPropertyTemplates;
+      //       this.username = this.route.snapshot.params.username;
+      //       this.uid = this.route.snapshot.params.uid;
+      this.ruleChainService
+        .getRuleChainMicroserviceData(this.username)
+        .subscribe((microservices) => {
+          if (microservices) {
             this.allMicroservices = microservices;
-        } else {
+          } else {
             this.allMicroservices = [];
-        }
-      });
-    }
-
-    if(this.ruleChainMetaData){
-    this.ruleType = this.ruleChainMetaData.ruleType;
-    this.ruleInputs = this.ruleChainMetaData.ruleInputs;
-    this.ruleReturn = this.ruleChainMetaData.ruleReturn;
-    this.name = this.ruleChainMetaData.name;
-
-    this.dataModels = this.ruleChainMetaData.dataModels;
-    this.inputDataModels = this.ruleChainMetaData.inputDataModels;
-    this.allDomainModels = this.ruleChainMetaData.allDomainModels;
-    this.allRuleInputs = this.ruleChainMetaData.allRuleInputs
-    this.allViewModels = this.ruleChainMetaData.allViewModels;
-    this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
-    this.allPdfs = this.ruleChainMetaData.allPdfs;
-    this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
-    this.allSubRules = this.ruleChainMetaData.allSubRules;
-    this.allApis = this.ruleChainMetaData.allApis;
-    this.allRoots = this.ruleChainMetaData.allRoots;
-    this.allErrorBranches = this.ruleChainMetaData.allErrorBranches;
-    this.allEvents = this.ruleChainMetaData.allEvents;
-    this.queryDb = this.ruleChainMetaData.queryDb;
-    this.commandDb = this.ruleChainMetaData.commandDb;
-    this.apptype = this.ruleChainMetaData.apptype;
-    this.allModelProperties = this.ruleChainMetaData.allModelProperties;
-    this.allGlobalProperties = this.ruleChainMetaData.allGlobalProperties;
-    this.allGlobalConstants = this.ruleChainMetaData.allGlobalConstants;
-    this.allGlobalConnectionProperties = this.ruleChainMetaData.allGlobalConnectionProperties;
-    this.connectorData = this.ruleChainMetaData.connectors;
-    this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
-    this.inputProperties = this.ruleChainMetaData.inputProperties;
-    this.allFields = this.ruleChainMetaData.allFields;
-    this.allConstants = this.ruleChainMetaData.allConstants;
-    this.allVariables = this.ruleChainMetaData.allVariables;
-    this.allSavedObjects = this.ruleChainMetaData.allSavedObjects;
-    this.allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
-    this.allDomainModelsWithSub = this.ruleChainMetaData.allDomainModelsWithSub;
-    this.allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
-    }
-
-    if(this.editorType === "servicefile"){
-        for (const type of serviceruleNodeTypesLibrary) {
-          const desc = ruleNodeTypeDescriptors.get(type);
-          if (!desc.special) {
-            this.ruleNodeTypesModel[type] = {
-              model: {
-                nodes: [],
-                edges: []
-              },
-              selectedObjects: []
-            };
           }
+        });
+    }
+
+    if (this.ruleChainMetaData) {
+      this.ruleType = this.ruleChainMetaData.ruleType;
+      this.ruleInputs = this.ruleChainMetaData.ruleInputs;
+      this.ruleReturn = this.ruleChainMetaData.ruleReturn;
+      this.name = this.ruleChainMetaData.name;
+
+      this.dataModels = this.ruleChainMetaData.dataModels;
+      this.inputDataModels = this.ruleChainMetaData.inputDataModels;
+      this.allDomainModels = this.ruleChainMetaData.allDomainModels;
+      this.allRuleInputs = this.ruleChainMetaData.allRuleInputs;
+      this.allViewModels = this.ruleChainMetaData.allViewModels;
+      this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+      this.allPdfs = this.ruleChainMetaData.allPdfs;
+      this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
+      this.allSubRules = this.ruleChainMetaData.allSubRules;
+      this.allApis = this.ruleChainMetaData.allApis;
+      this.allRoots = this.ruleChainMetaData.allRoots;
+      this.allErrorBranches = this.ruleChainMetaData.allErrorBranches;
+      this.allEvents = this.ruleChainMetaData.allEvents;
+      this.queryDb = this.ruleChainMetaData.queryDb;
+      this.commandDb = this.ruleChainMetaData.commandDb;
+      this.apptype = this.ruleChainMetaData.apptype;
+      this.allModelProperties = this.ruleChainMetaData.allModelProperties;
+      this.allGlobalProperties = this.ruleChainMetaData.allGlobalProperties;
+      this.allGlobalConstants = this.ruleChainMetaData.allGlobalConstants;
+      this.allGlobalConnectionProperties = this.ruleChainMetaData.allGlobalConnectionProperties;
+      this.connectorData = this.ruleChainMetaData.connectors;
+      this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
+      this.inputProperties = this.ruleChainMetaData.inputProperties;
+      this.allFields = this.ruleChainMetaData.allFields;
+      this.allConstants = this.ruleChainMetaData.allConstants;
+      this.allVariables = this.ruleChainMetaData.allVariables;
+      this.allSavedObjects = this.ruleChainMetaData.allSavedObjects;
+      this.allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
+      this.allDomainModelsWithSub = this.ruleChainMetaData.allDomainModelsWithSub;
+      this.allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
+    }
+
+    if (this.editorType === "servicefile") {
+      for (const type of serviceruleNodeTypesLibrary) {
+        const desc = ruleNodeTypeDescriptors.get(type);
+        if (!desc.special) {
+          this.ruleNodeTypesModel[type] = {
+            model: {
+              nodes: [],
+              edges: [],
+            },
+            selectedObjects: [],
+          };
         }
       }
     } else if (this.editorType === "uib") {
@@ -554,18 +583,18 @@ export class RuleChainPageComponent extends PageComponent
         }
       }
     } else {
-        for (const type of ruleNodeTypesLibrary) {
-          const desc = ruleNodeTypeDescriptors.get(type);
-          if (!desc.special) {
-            this.ruleNodeTypesModel[type] = {
-              model: {
-                nodes: [],
-                edges: []
-              },
-              selectedObjects: []
-            };
-          }
+      for (const type of ruleNodeTypesLibrary) {
+        const desc = ruleNodeTypeDescriptors.get(type);
+        if (!desc.special) {
+          this.ruleNodeTypesModel[type] = {
+            model: {
+              nodes: [],
+              edges: [],
+            },
+            selectedObjects: [],
+          };
         }
+      }
     }
     this.updateRuleChainLibrary();
     this.createRuleChainModel();
@@ -573,29 +602,39 @@ export class RuleChainPageComponent extends PageComponent
 
   private initHotKeys(): void {
     this.hotKeys.push(
-      new Hotkey('ctrl+a', (event: KeyboardEvent) => {
+      new Hotkey(
+        "ctrl+a",
+        (event: KeyboardEvent) => {
           if (this.enableHotKeys) {
             event.preventDefault();
             this.ruleChainCanvas.modelService.selectAll();
             return false;
           }
           return true;
-        }, ['INPUT', 'SELECT', 'TEXTAREA'],
-        this.translate.instant('rulenode.select-all-objects'))
+        },
+        ["INPUT", "SELECT", "TEXTAREA"],
+        this.translate.instant("rulenode.select-all-objects")
+      )
     );
     this.hotKeys.push(
-      new Hotkey('ctrl+c', (event: KeyboardEvent) => {
+      new Hotkey(
+        "ctrl+c",
+        (event: KeyboardEvent) => {
           if (this.enableHotKeys) {
             event.preventDefault();
             this.copyRuleNodes();
             return false;
           }
           return true;
-        }, ['INPUT', 'SELECT', 'TEXTAREA'],
-        this.translate.instant('rulenode.copy-selected'))
+        },
+        ["INPUT", "SELECT", "TEXTAREA"],
+        this.translate.instant("rulenode.copy-selected")
+      )
     );
     this.hotKeys.push(
-      new Hotkey('ctrl+v', (event: KeyboardEvent) => {
+      new Hotkey(
+        "ctrl+v",
+        (event: KeyboardEvent) => {
           if (this.enableHotKeys) {
             event.preventDefault();
             if (this.itembuffer.hasRuleNodes()) {
@@ -604,11 +643,15 @@ export class RuleChainPageComponent extends PageComponent
             return false;
           }
           return true;
-        }, ['INPUT', 'SELECT', 'TEXTAREA'],
-        this.translate.instant('action.paste'))
+        },
+        ["INPUT", "SELECT", "TEXTAREA"],
+        this.translate.instant("action.paste")
+      )
     );
     this.hotKeys.push(
-      new Hotkey('esc', (event: KeyboardEvent) => {
+      new Hotkey(
+        "esc",
+        (event: KeyboardEvent) => {
           if (this.enableHotKeys) {
             event.preventDefault();
             event.stopPropagation();
@@ -616,52 +659,69 @@ export class RuleChainPageComponent extends PageComponent
             return false;
           }
           return true;
-        }, ['INPUT', 'SELECT', 'TEXTAREA'],
-        this.translate.instant('rulenode.deselect-all-objects'))
+        },
+        ["INPUT", "SELECT", "TEXTAREA"],
+        this.translate.instant("rulenode.deselect-all-objects")
+      )
     );
     this.hotKeys.push(
-      new Hotkey('ctrl+s', (event: KeyboardEvent) => {
+      new Hotkey(
+        "ctrl+s",
+        (event: KeyboardEvent) => {
           if (this.enableHotKeys) {
             event.preventDefault();
             this.saveRuleChain();
             return false;
           }
           return true;
-        }, ['INPUT', 'SELECT', 'TEXTAREA'],
-        this.translate.instant('action.apply'))
+        },
+        ["INPUT", "SELECT", "TEXTAREA"],
+        this.translate.instant("action.apply")
+      )
     );
     this.hotKeys.push(
-      new Hotkey('ctrl+z', (event: KeyboardEvent) => {
+      new Hotkey(
+        "ctrl+z",
+        (event: KeyboardEvent) => {
           if (this.enableHotKeys) {
             event.preventDefault();
             this.revertRuleChain();
             return false;
           }
           return true;
-        }, ['INPUT', 'SELECT', 'TEXTAREA'],
-        this.translate.instant('action.decline-changes'))
+        },
+        ["INPUT", "SELECT", "TEXTAREA"],
+        this.translate.instant("action.decline-changes")
+      )
     );
     this.hotKeys.push(
-      new Hotkey('del', (event: KeyboardEvent) => {
+      new Hotkey(
+        "del",
+        (event: KeyboardEvent) => {
           if (this.enableHotKeys) {
             event.preventDefault();
             this.ruleChainCanvas.modelService.deleteSelected();
             return false;
           }
           return true;
-        }, ['INPUT', 'SELECT', 'TEXTAREA'],
-        this.translate.instant('rulenode.delete-selected-objects'))
+        },
+        ["INPUT", "SELECT", "TEXTAREA"],
+        this.translate.instant("rulenode.delete-selected-objects")
+      )
     );
   }
 
   updateRuleChainLibrary() {
     const search = this.ruleNodeTypeSearch.toUpperCase();
-    const res = this.ruleNodeComponents.filter(
-      (ruleNodeComponent) => ruleNodeComponent.name.toUpperCase().includes(search));
+    const res = this.ruleNodeComponents.filter((ruleNodeComponent) =>
+      ruleNodeComponent.name.toUpperCase().includes(search)
+    );
     this.loadRuleChainLibrary(res);
   }
 
-  private loadRuleChainLibrary(ruleNodeComponents: Array<RuleNodeComponentDescriptor>) {
+  private loadRuleChainLibrary(
+    ruleNodeComponents: Array<RuleNodeComponentDescriptor>
+  ) {
     for (const componentType of Object.keys(this.ruleNodeTypesModel)) {
       this.ruleNodeTypesModel[componentType].model.nodes.length = 0;
     }
@@ -675,64 +735,46 @@ export class RuleChainPageComponent extends PageComponent
         icon = ruleNodeComponent.configurationDescriptor.nodeDefinition.icon;
       }
       if (ruleNodeComponent.configurationDescriptor.nodeDefinition.iconUrl) {
-        iconUrl = ruleNodeComponent.configurationDescriptor.nodeDefinition.iconUrl;
+        iconUrl =
+          ruleNodeComponent.configurationDescriptor.nodeDefinition.iconUrl;
       }
       const node: FcRuleNodeType = {
-        id: 'node-lib-' + componentType + '-' + model.nodes.length,
+        id: "node-lib-" + componentType + "-" + model.nodes.length,
         component: ruleNodeComponent,
-        name: '',
+        name: "",
         nodeClass: desc.nodeClass,
         icon,
         iconUrl,
         x: 30,
         y: 30 + 70 * model.nodes.length,
-        connectors: []
+        connectors: [],
       };
       if (ruleNodeComponent.configurationDescriptor.nodeDefinition.inEnabled) {
-        node.connectors.push(
-          {
-            type: FlowchartConstants.leftConnectorType,
-            id: (model.nodes.length * 2) + ''
-          }
-        );
+        node.connectors.push({
+          type: FlowchartConstants.leftConnectorType,
+          id: model.nodes.length * 2 + "",
+        });
       }
       if (ruleNodeComponent.configurationDescriptor.nodeDefinition.outEnabled) {
-        node.connectors.push(
-          {
-            type: FlowchartConstants.rightConnectorType,
-            id: (model.nodes.length * 2 + 1) + ''
-          }
-        );
+        node.connectors.push({
+          type: FlowchartConstants.rightConnectorType,
+          id: model.nodes.length * 2 + 1 + "",
+        });
       }
       model.nodes.push(node);
     });
     if (this.expansionPanels) {
-        if(this.editorType === "servicefile"){
-          for (let i = 0; i < serviceruleNodeTypesLibrary.length; i++) {
-            const panel = this.expansionPanels.find((item, index) => {
-              return index === i;
-            });
-            if (panel) {
-              const type = serviceruleNodeTypesLibrary[i];
-              if (!this.ruleNodeTypesModel[type].model.nodes.length) {
-                panel.close();
-              } else {
-                panel.open();
-              }
-            }
-          }
-        } else {
-          for (let i = 0; i < ruleNodeTypesLibrary.length; i++) {
-            const panel = this.expansionPanels.find((item, index) => {
-              return index === i;
-            });
-            if (panel) {
-              const type = ruleNodeTypesLibrary[i];
-              if (!this.ruleNodeTypesModel[type].model.nodes.length) {
-                panel.close();
-              } else {
-                panel.open();
-              }
+      if (this.editorType === "servicefile") {
+        for (let i = 0; i < serviceruleNodeTypesLibrary.length; i++) {
+          const panel = this.expansionPanels.find((item, index) => {
+            return index === i;
+          });
+          if (panel) {
+            const type = serviceruleNodeTypesLibrary[i];
+            if (!this.ruleNodeTypesModel[type].model.nodes.length) {
+              panel.close();
+            } else {
+              panel.open();
             }
           }
         }
@@ -779,33 +821,32 @@ export class RuleChainPageComponent extends PageComponent
     this.inputConnectorId = this.nextConnectorID++;
     if (this.editorType === "servicefile" || this.editorType === "uib") {
     } else {
-        this.ruleChainModel.nodes.push(
+      this.ruleChainModel.nodes.push({
+        id: "rule-chain-node-" + this.nextNodeID++,
+        component: inputNodeComponent,
+        name: "",
+        nodeClass: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).nodeClass,
+        icon: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).icon,
+        readonly: true,
+        x: 50,
+        y: 150,
+        connectors: [
           {
-            id: 'rule-chain-node-' + this.nextNodeID++,
-            component: inputNodeComponent,
-            name: '',
-            nodeClass: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).nodeClass,
-            icon: ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).icon,
-            readonly: true,
-            x: 50,
-            y: 150,
-            connectors: [
-              {
-                type: FlowchartConstants.rightConnectorType,
-                id: this.inputConnectorId + ''
-              },
-            ]
-
-          }
-        );
+            type: FlowchartConstants.rightConnectorType,
+            id: this.inputConnectorId + "",
+          },
+        ],
+      });
     }
     const nodes: FcRuleNode[] = [];
     this.ruleChainMetaData.nodes.forEach((ruleNode) => {
       let component;
-      if(ruleNode.type === 'xiServiceNode'){
+      if (ruleNode.type === "xiServiceNode") {
         component = serviceNodeComponent;
       } else {
-         component = this.ruleChainService.getRuleNodeComponentByClazz(ruleNode.type);
+        component = this.ruleChainService.getRuleNodeComponentByClazz(
+          ruleNode.type
+        );
       }
 
       const descriptor = ruleNodeTypeDescriptors.get(component.type);
@@ -818,7 +859,7 @@ export class RuleChainPageComponent extends PageComponent
         iconUrl = component.configurationDescriptor.nodeDefinition.iconUrl;
       }
       const node: FcRuleNode = {
-        id: 'rule-chain-node-' + this.nextNodeID++,
+        id: "rule-chain-node-" + this.nextNodeID++,
         ruleNodeId: ruleNode.id,
         additionalInfo: ruleNode.additionalInfo,
         configuration: ruleNode.configuration,
@@ -830,23 +871,19 @@ export class RuleChainPageComponent extends PageComponent
         nodeClass: descriptor.nodeClass,
         icon,
         iconUrl,
-        connectors: []
+        connectors: [],
       };
       if (component.configurationDescriptor.nodeDefinition.inEnabled) {
-        node.connectors.push(
-          {
-            type: FlowchartConstants.leftConnectorType,
-            id: (this.nextConnectorID++) + ''
-          }
-        );
+        node.connectors.push({
+          type: FlowchartConstants.leftConnectorType,
+          id: this.nextConnectorID++ + "",
+        });
       }
       if (component.configurationDescriptor.nodeDefinition.outEnabled) {
-        node.connectors.push(
-          {
-            type: FlowchartConstants.rightConnectorType,
-            id: (this.nextConnectorID++) + ''
-          }
-        );
+        node.connectors.push({
+          type: FlowchartConstants.rightConnectorType,
+          id: this.nextConnectorID++ + "",
+        });
       }
       nodes.push(node);
       this.ruleChainModel.nodes.push(node);
@@ -854,40 +891,53 @@ export class RuleChainPageComponent extends PageComponent
     if (this.ruleChainMetaData.firstNodeIndex > -1) {
       const destNode = nodes[this.ruleChainMetaData.firstNodeIndex];
       if (destNode) {
-        const connectors = destNode.connectors.filter(connector => connector.type === FlowchartConstants.leftConnectorType);
+        const connectors = destNode.connectors.filter(
+          (connector) => connector.type === FlowchartConstants.leftConnectorType
+        );
         if (connectors && connectors.length) {
           const edge: FcRuleEdge = {
-            source: this.inputConnectorId + '',
-            destination: connectors[0].id
+            source: this.inputConnectorId + "",
+            destination: connectors[0].id,
           };
           this.ruleChainModel.edges.push(edge);
         }
       }
     }
     if (this.ruleChainMetaData.connections) {
-      const edgeMap: {[edgeKey: string]: FcRuleEdge} = {};
+      const edgeMap: { [edgeKey: string]: FcRuleEdge } = {};
       this.ruleChainMetaData.connections.forEach((connection) => {
         const sourceNode = nodes[connection.fromIndex];
         const destNode = nodes[connection.toIndex];
         if (sourceNode && destNode) {
-          const sourceConnectors = sourceNode.connectors.filter(connector => connector.type === FlowchartConstants.rightConnectorType);
-          const destConnectors = destNode.connectors.filter(connector => connector.type === FlowchartConstants.leftConnectorType);
-          if (sourceConnectors && sourceConnectors.length && destConnectors && destConnectors.length) {
+          const sourceConnectors = sourceNode.connectors.filter(
+            (connector) =>
+              connector.type === FlowchartConstants.rightConnectorType
+          );
+          const destConnectors = destNode.connectors.filter(
+            (connector) =>
+              connector.type === FlowchartConstants.leftConnectorType
+          );
+          if (
+            sourceConnectors &&
+            sourceConnectors.length &&
+            destConnectors &&
+            destConnectors.length
+          ) {
             const sourceId = sourceConnectors[0].id;
             const destId = destConnectors[0].id;
-            const edgeKey = sourceId + '_' + destId;
+            const edgeKey = sourceId + "_" + destId;
             let edge = edgeMap[edgeKey];
             if (!edge) {
               edge = {
                 source: sourceId,
                 destination: destId,
                 label: connection.type,
-                labels: [connection.type]
+                labels: [connection.type],
               };
               edgeMap[edgeKey] = edge;
               this.ruleChainModel.edges.push(edge);
             } else {
-              edge.label += ' / ' + connection.type;
+              edge.label += " / " + connection.type;
               edge.labels.push(connection.type);
             }
           }
@@ -896,59 +946,78 @@ export class RuleChainPageComponent extends PageComponent
     }
     if (this.ruleChainMetaData.ruleChainConnections) {
       const ruleChainsMap = this.ruleChainMetaData.targetRuleChainsMap;
-      const ruleChainNodesMap: {[ruleChainNodeId: string]: FcRuleNode} = {};
-      const ruleChainEdgeMap: {[edgeKey: string]: FcRuleEdge} = {};
-      this.ruleChainMetaData.ruleChainConnections.forEach((ruleChainConnection) => {
-        const ruleChain = ruleChainsMap[ruleChainConnection.targetRuleChainId.id];
-        if (ruleChainConnection.additionalInfo && ruleChainConnection.additionalInfo.ruleChainNodeId) {
-          let ruleChainNode = ruleChainNodesMap[ruleChainConnection.additionalInfo.ruleChainNodeId];
-          if (!ruleChainNode) {
-            ruleChainNode = {
-              id: 'rule-chain-node-' + this.nextNodeID++,
-              name: ruleChain.name ? ruleChain.name : 'Unresolved',
-              targetRuleChainId: ruleChain.name ? ruleChainConnection.targetRuleChainId.id : null,
-              error: ruleChain.name ? undefined : this.translate.instant('rulenode.invalid-target-rulechain'),
-              additionalInfo: ruleChainConnection.additionalInfo,
-              x: Math.round(ruleChainConnection.additionalInfo.layoutX),
-              y: Math.round(ruleChainConnection.additionalInfo.layoutY),
-              component: ruleChainNodeComponent,
-              nodeClass: ruleNodeTypeDescriptors.get(RuleNodeType.RULE_CHAIN).nodeClass,
-              icon: ruleNodeTypeDescriptors.get(RuleNodeType.RULE_CHAIN).icon,
-              connectors: [
-                {
-                  type: FlowchartConstants.leftConnectorType,
-                  id: (this.nextConnectorID++) + ''
+      const ruleChainNodesMap: { [ruleChainNodeId: string]: FcRuleNode } = {};
+      const ruleChainEdgeMap: { [edgeKey: string]: FcRuleEdge } = {};
+      this.ruleChainMetaData.ruleChainConnections.forEach(
+        (ruleChainConnection) => {
+          const ruleChain =
+            ruleChainsMap[ruleChainConnection.targetRuleChainId.id];
+          if (
+            ruleChainConnection.additionalInfo &&
+            ruleChainConnection.additionalInfo.ruleChainNodeId
+          ) {
+            let ruleChainNode =
+              ruleChainNodesMap[
+                ruleChainConnection.additionalInfo.ruleChainNodeId
+              ];
+            if (!ruleChainNode) {
+              ruleChainNode = {
+                id: "rule-chain-node-" + this.nextNodeID++,
+                name: ruleChain.name ? ruleChain.name : "Unresolved",
+                targetRuleChainId: ruleChain.name
+                  ? ruleChainConnection.targetRuleChainId.id
+                  : null,
+                error: ruleChain.name
+                  ? undefined
+                  : this.translate.instant("rulenode.invalid-target-rulechain"),
+                additionalInfo: ruleChainConnection.additionalInfo,
+                x: Math.round(ruleChainConnection.additionalInfo.layoutX),
+                y: Math.round(ruleChainConnection.additionalInfo.layoutY),
+                component: ruleChainNodeComponent,
+                nodeClass: ruleNodeTypeDescriptors.get(RuleNodeType.RULE_CHAIN)
+                  .nodeClass,
+                icon: ruleNodeTypeDescriptors.get(RuleNodeType.RULE_CHAIN).icon,
+                connectors: [
+                  {
+                    type: FlowchartConstants.leftConnectorType,
+                    id: this.nextConnectorID++ + "",
+                  },
+                ],
+              };
+              ruleChainNodesMap[
+                ruleChainConnection.additionalInfo.ruleChainNodeId
+              ] = ruleChainNode;
+              this.ruleChainModel.nodes.push(ruleChainNode);
+            }
+            const sourceNode = nodes[ruleChainConnection.fromIndex];
+            if (sourceNode) {
+              const connectors = sourceNode.connectors.filter(
+                (connector) =>
+                  connector.type === FlowchartConstants.rightConnectorType
+              );
+              if (connectors && connectors.length) {
+                const sourceId = connectors[0].id;
+                const destId = ruleChainNode.connectors[0].id;
+                const edgeKey = sourceId + "_" + destId;
+                let ruleChainEdge = ruleChainEdgeMap[edgeKey];
+                if (!ruleChainEdge) {
+                  ruleChainEdge = {
+                    source: sourceId,
+                    destination: destId,
+                    label: ruleChainConnection.type,
+                    labels: [ruleChainConnection.type],
+                  };
+                  ruleChainEdgeMap[edgeKey] = ruleChainEdge;
+                  this.ruleChainModel.edges.push(ruleChainEdge);
+                } else {
+                  ruleChainEdge.label += " / " + ruleChainConnection.type;
+                  ruleChainEdge.labels.push(ruleChainConnection.type);
                 }
-              ]
-            };
-            ruleChainNodesMap[ruleChainConnection.additionalInfo.ruleChainNodeId] = ruleChainNode;
-            this.ruleChainModel.nodes.push(ruleChainNode);
-          }
-          const sourceNode = nodes[ruleChainConnection.fromIndex];
-          if (sourceNode) {
-            const connectors = sourceNode.connectors.filter(connector => connector.type === FlowchartConstants.rightConnectorType);
-            if (connectors && connectors.length) {
-              const sourceId = connectors[0].id;
-              const destId = ruleChainNode.connectors[0].id;
-              const edgeKey = sourceId + '_' + destId;
-              let ruleChainEdge = ruleChainEdgeMap[edgeKey];
-              if (!ruleChainEdge) {
-                ruleChainEdge = {
-                  source: sourceId,
-                  destination: destId,
-                  label: ruleChainConnection.type,
-                  labels: [ruleChainConnection.type]
-                };
-                ruleChainEdgeMap[edgeKey] = ruleChainEdge;
-                this.ruleChainModel.edges.push(ruleChainEdge);
-              } else {
-                ruleChainEdge.label += ' / ' + ruleChainConnection.type;
-                ruleChainEdge.labels.push(ruleChainConnection.type);
               }
             }
           }
         }
-      });
+      );
     }
     if (this.ruleChainCanvas) {
       this.ruleChainCanvas.adjustCanvasSize(true);
@@ -960,7 +1029,11 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   openRuleChainContextMenu($event: MouseEvent) {
-    if (this.ruleChainCanvas.modelService && !$event.ctrlKey && !$event.metaKey) {
+    if (
+      this.ruleChainCanvas.modelService &&
+      !$event.ctrlKey &&
+      !$event.metaKey
+    ) {
       const x = $event.clientX;
       const y = $event.clientY;
       const item = this.ruleChainCanvas.modelService.getItemInfoAtPoint(x, y);
@@ -969,8 +1042,8 @@ export class RuleChainPageComponent extends PageComponent
         $event.preventDefault();
         $event.stopPropagation();
         this.contextMenuEvent = $event;
-        this.ruleChainMenuPosition.x = x + 'px';
-        this.ruleChainMenuPosition.y = y + 'px';
+        this.ruleChainMenuPosition.x = x + "px";
+        this.ruleChainMenuPosition.y = y + "px";
         this.ruleChainMenuTrigger.menuData = { contextInfo };
         this.ruleChainMenuTrigger.openMenu();
       }
@@ -993,184 +1066,160 @@ export class RuleChainPageComponent extends PageComponent
 
   private prepareRuleChainContextMenu(): RuleChainMenuContextInfo {
     const contextInfo: RuleChainMenuContextInfo = {
-      headerClass: 'virtuan-rulechain-header',
-      icon: 'settings_ethernet',
+      headerClass: "virtuan-rulechain-header",
+      icon: "settings_ethernet",
       title: this.ruleChain.name,
-      subtitle: this.translate.instant('rulechain.rulechain'),
-      menuItems: []
+      subtitle: this.translate.instant("rulechain.rulechain"),
+      menuItems: [],
     };
     if (this.ruleChainCanvas.modelService.nodes.getSelectedNodes().length) {
-      contextInfo.menuItems.push(
-        {
-          action: () => {
-            this.copyRuleNodes();
-          },
-          enabled: true,
-          value: 'rulenode.copy-selected',
-          icon: 'content_copy',
-          shortcut: 'M-C'
-        }
-      );
-    }
-    contextInfo.menuItems.push(
-      {
-        action: ($event) => {
-          this.pasteRuleNodes($event);
+      contextInfo.menuItems.push({
+        action: () => {
+          this.copyRuleNodes();
         },
-        enabled: this.itembuffer.hasRuleNodes(),
-        value: 'action.paste',
-        icon: 'content_paste',
-        shortcut: 'M-V'
-      }
-    );
-    contextInfo.menuItems.push(
-      {
-        divider: true
-      }
-    );
+        enabled: true,
+        value: "rulenode.copy-selected",
+        icon: "content_copy",
+        shortcut: "M-C",
+      });
+    }
+    contextInfo.menuItems.push({
+      action: ($event) => {
+        this.pasteRuleNodes($event);
+      },
+      enabled: this.itembuffer.hasRuleNodes(),
+      value: "action.paste",
+      icon: "content_paste",
+      shortcut: "M-V",
+    });
+    contextInfo.menuItems.push({
+      divider: true,
+    });
     if (this.objectsSelected()) {
-      contextInfo.menuItems.push(
-        {
-          action: () => {
-            this.ruleChainCanvas.modelService.deselectAll();
-          },
-          enabled: true,
-          value: 'rulenode.deselect-all',
-          icon: 'tab_unselected',
-          shortcut: 'Esc'
-        }
-      );
-      contextInfo.menuItems.push(
-        {
-          action: () => {
-            this.ruleChainCanvas.modelService.deleteSelected();
-          },
-          enabled: true,
-          value: 'rulenode.delete-selected',
-          icon: 'clear',
-          shortcut: 'Del'
-        }
-      );
+      contextInfo.menuItems.push({
+        action: () => {
+          this.ruleChainCanvas.modelService.deselectAll();
+        },
+        enabled: true,
+        value: "rulenode.deselect-all",
+        icon: "tab_unselected",
+        shortcut: "Esc",
+      });
+      contextInfo.menuItems.push({
+        action: () => {
+          this.ruleChainCanvas.modelService.deleteSelected();
+        },
+        enabled: true,
+        value: "rulenode.delete-selected",
+        icon: "clear",
+        shortcut: "Del",
+      });
     } else {
-      contextInfo.menuItems.push(
-        {
-          action: () => {
-            this.ruleChainCanvas.modelService.selectAll();
-          },
-          enabled: true,
-          value: 'rulenode.select-all',
-          icon: 'select_all',
-          shortcut: 'M-A'
-        }
-      );
+      contextInfo.menuItems.push({
+        action: () => {
+          this.ruleChainCanvas.modelService.selectAll();
+        },
+        enabled: true,
+        value: "rulenode.select-all",
+        icon: "select_all",
+        shortcut: "M-A",
+      });
     }
-    contextInfo.menuItems.push(
-      {
-        divider: true
-      }
-    );
-    contextInfo.menuItems.push(
-      {
-        action: () => {
-          this.saveRuleChain();
-        },
-        enabled: !(this.isInvalid || (!this.isDirty && !this.isImport)),
-        value: 'action.apply-changes',
-        icon: 'done',
-        shortcut: 'M-S'
-      }
-    );
-    contextInfo.menuItems.push(
-      {
-        action: () => {
-          this.revertRuleChain();
-        },
-        enabled: this.isDirty,
-        value: 'action.decline-changes',
-        icon: 'close',
-        shortcut: 'M-Z'
-      }
-    );
+    contextInfo.menuItems.push({
+      divider: true,
+    });
+    contextInfo.menuItems.push({
+      action: () => {
+        this.saveRuleChain();
+      },
+      enabled: !(this.isInvalid || (!this.isDirty && !this.isImport)),
+      value: "action.apply-changes",
+      icon: "done",
+      shortcut: "M-S",
+    });
+    contextInfo.menuItems.push({
+      action: () => {
+        this.revertRuleChain();
+      },
+      enabled: this.isDirty,
+      value: "action.decline-changes",
+      icon: "close",
+      shortcut: "M-Z",
+    });
     return contextInfo;
   }
 
-  private prepareRuleNodeContextMenu(node: FcRuleNode): RuleChainMenuContextInfo {
+  private prepareRuleNodeContextMenu(
+    node: FcRuleNode
+  ): RuleChainMenuContextInfo {
     const contextInfo: RuleChainMenuContextInfo = {
       headerClass: node.nodeClass,
       icon: node.icon,
       iconUrl: node.iconUrl,
       title: node.name,
       subtitle: node.component.name,
-      menuItems: []
+      menuItems: [],
     };
     if (!node.readonly) {
-      contextInfo.menuItems.push(
-        {
-          action: () => {
-            this.openNodeDetails(node);
-          },
-          enabled: true,
-          value: 'rulenode.details',
-          icon: 'menu'
-        }
-      );
-      contextInfo.menuItems.push(
-        {
-          action: () => {
-            this.copyNode(node);
-          },
-          enabled: true,
-          value: 'action.copy',
-          icon: 'content_copy'
-        }
-      );
-      contextInfo.menuItems.push(
-        {
-          action: () => {
-            this.ruleChainCanvas.modelService.nodes.delete(node);
-          },
-          enabled: true,
-          value: 'action.delete',
-          icon: 'clear',
-          shortcut: 'M-X'
-        }
-      );
+      contextInfo.menuItems.push({
+        action: () => {
+          this.openNodeDetails(node);
+        },
+        enabled: true,
+        value: "rulenode.details",
+        icon: "menu",
+      });
+      contextInfo.menuItems.push({
+        action: () => {
+          this.copyNode(node);
+        },
+        enabled: true,
+        value: "action.copy",
+        icon: "content_copy",
+      });
+      contextInfo.menuItems.push({
+        action: () => {
+          this.ruleChainCanvas.modelService.nodes.delete(node);
+        },
+        enabled: true,
+        value: "action.delete",
+        icon: "clear",
+        shortcut: "M-X",
+      });
     }
     return contextInfo;
   }
 
   private prepareEdgeContextMenu(edge: FcRuleEdge): RuleChainMenuContextInfo {
     const contextInfo: RuleChainMenuContextInfo = {
-      headerClass: 'virtuan-link-header',
-      icon: 'trending_flat',
+      headerClass: "virtuan-link-header",
+      icon: "trending_flat",
       title: edge.label,
-      subtitle: this.translate.instant('rulenode.link'),
-      menuItems: []
+      subtitle: this.translate.instant("rulenode.link"),
+      menuItems: [],
     };
-    const sourceNode: FcRuleNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.source);
+    const sourceNode: FcRuleNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+      edge.source
+    );
     if (sourceNode.component.type !== RuleNodeType.INPUT) {
-      contextInfo.menuItems.push(
-        {
-          action: () => {
-            this.openLinkDetails(edge);
-          },
-          enabled: true,
-          value: 'rulenode.details',
-          icon: 'menu'
-        }
-      );
-    }
-    contextInfo.menuItems.push(
-      {
+      contextInfo.menuItems.push({
         action: () => {
-          this.ruleChainCanvas.modelService.edges.delete(edge);
+          this.openLinkDetails(edge);
         },
         enabled: true,
-        value: 'action.delete',
-        icon: 'clear',
-        shortcut: 'M-X'
-      }
-    );
+        value: "rulenode.details",
+        icon: "menu",
+      });
+    }
+    contextInfo.menuItems.push({
+      action: () => {
+        this.ruleChainCanvas.modelService.edges.delete(edge);
+      },
+      enabled: true,
+      value: "action.delete",
+      icon: "clear",
+      shortcut: "M-X",
+    });
     return contextInfo;
   }
 
@@ -1188,9 +1237,7 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   openNodeDetails(node: FcRuleNode) {
-
-
-    this.branchAvailability = {'branchParams': [], 'branchFound': false};
+    this.branchAvailability = { branchParams: [], branchFound: false };
     this.connectorfields = [];
     this.connectorOperations = [];
     if (node.component.type !== RuleNodeType.INPUT) {
@@ -1200,24 +1247,31 @@ export class RuleChainPageComponent extends PageComponent
       this.editingRuleNodeLink = null;
       this.isEditingRuleNode = true;
       this.editingRuleNodeIndex = this.ruleChainModel.nodes.indexOf(node);
-      this.editingRuleNode = deepClone(node, ['component']);
+      this.editingRuleNode = deepClone(node, ["component"]);
 
-      if (node.component.clazz != 'xiBranchNode' && node.component.clazz != 'xiErrBrNode'){
-          let branchNodeAvailability = this.getConnections(this.editingRuleNodeIndex);
-          this.branchAvailability = branchNodeAvailability;
+      if (
+        node.component.clazz != "xiBranchNode" &&
+        node.component.clazz != "xiErrBrNode"
+      ) {
+        let branchNodeAvailability = this.getConnections(
+          this.editingRuleNodeIndex
+        );
+        this.branchAvailability = branchNodeAvailability;
       }
 
-
-      if(node.component.type === 'CONNECTOR'){
-          let ruleNodeClass = node.component.clazz;
-          this.connectorfields = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).fields;
-      }
-
-      if(node.component.type === 'CONNECTOR'){
+      if (node.component.type === "CONNECTOR") {
         let ruleNodeClass = node.component.clazz;
-        this.connectorOperations = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).operations;
+        this.connectorfields = this.connectorData.find(
+          (x) => x.nodeClazz === ruleNodeClass
+        ).fields;
       }
 
+      if (node.component.type === "CONNECTOR") {
+        let ruleNodeClass = node.component.clazz;
+        this.connectorOperations = this.connectorData.find(
+          (x) => x.nodeClazz === ruleNodeClass
+        ).operations;
+      }
 
       setTimeout(() => {
         this.ruleNodeComponent.ruleNodeFormGroup.markAsPristine();
@@ -1225,84 +1279,112 @@ export class RuleChainPageComponent extends PageComponent
     }
   }
 
-
-  getConnections(editIndex){
-
+  getConnections(editIndex) {
     let allConnections = [];
 
-      const nodes: FcRuleNode[] = [];
-      this.ruleChainModel.nodes.forEach((node) => {
-        if (node.component.type !== RuleNodeType.INPUT && node.component.type !== RuleNodeType.RULE_CHAIN) {
-          nodes.push(node);
+    const nodes: FcRuleNode[] = [];
+    this.ruleChainModel.nodes.forEach((node) => {
+      if (
+        node.component.type !== RuleNodeType.INPUT &&
+        node.component.type !== RuleNodeType.RULE_CHAIN
+      ) {
+        nodes.push(node);
+      }
+    });
+
+    this.ruleChainModel.edges.forEach((edge) => {
+      const sourceNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+        edge.source
+      );
+      const destNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+        edge.destination
+      );
+      if (sourceNode.component.type !== RuleNodeType.INPUT) {
+        const fromIndex = nodes.indexOf(sourceNode);
+        if (destNode.component.type === RuleNodeType.RULE_CHAIN) {
+        } else {
+          const toIndex = nodes.indexOf(destNode);
+          const nodeConnection = {
+            fromIndex,
+            toIndex,
+          } as NodeConnectionInfo;
+          edge.labels.forEach((label) => {
+            const newNodeConnection = deepClone(nodeConnection);
+            newNodeConnection.type = label;
+            allConnections.push(newNodeConnection);
+          });
         }
-      });
-
-
-      this.ruleChainModel.edges.forEach((edge) => {
-        const sourceNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.source);
-        const destNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.destination);
-        if (sourceNode.component.type !== RuleNodeType.INPUT) {
-          const fromIndex = nodes.indexOf(sourceNode);
-          if (destNode.component.type === RuleNodeType.RULE_CHAIN) {
-
-          } else {
-            const toIndex = nodes.indexOf(destNode);
-            const nodeConnection = {
-              fromIndex,
-              toIndex
-            } as NodeConnectionInfo;
-            edge.labels.forEach((label) => {
-              const newNodeConnection = deepClone(nodeConnection);
-              newNodeConnection.type = label;
-              allConnections.push(newNodeConnection);
-            });
-          }
-        }
-      });
-
-      let indexForCheck = editIndex-1;
-      if (this.editorType == 'servicefile') {
-        indexForCheck = editIndex;
       }
+    });
 
-      let branchFoundObj = this.checkForBranchConnection(indexForCheck, allConnections, nodes, [],[], [], [], [], []);
-      let apiFoundObj= this.checkForActivatorConnection(indexForCheck, allConnections, nodes, false, []);
+    let indexForCheck = editIndex - 1;
+    if (this.editorType == "servicefile") {
+      indexForCheck = editIndex;
+    }
 
-      let golbalProperties = this.allGlobalProperties;
+    let branchFoundObj = this.checkForBranchConnection(
+      indexForCheck,
+      allConnections,
+      nodes,
+      [],
+      [],
+      [],
+      [],
+      [],
+      []
+    );
+    let apiFoundObj = this.checkForActivatorConnection(
+      indexForCheck,
+      allConnections,
+      nodes,
+      false,
+      []
+    );
 
-      if (this.allGlobalProperties && this.allGlobalProperties.length > 0){
-        branchFoundObj.properties = branchFoundObj.properties.concat(this.allGlobalProperties);
-      }
+    let golbalProperties = this.allGlobalProperties;
 
-      let allGlobalConstants = this.allGlobalConstants;
-      if (this.allGlobalConstants && this.allGlobalConstants.length > 0){
-        branchFoundObj.constants = branchFoundObj.constants.concat(this.allGlobalConstants);
-      }
+    if (this.allGlobalProperties && this.allGlobalProperties.length > 0) {
+      branchFoundObj.properties = branchFoundObj.properties.concat(
+        this.allGlobalProperties
+      );
+    }
 
-      let allGlobalConnectionProperties = this.allGlobalConnectionProperties;
-      if (this.allGlobalConnectionProperties && this.allGlobalConnectionProperties.length > 0){
-        branchFoundObj.connectionProperties = branchFoundObj.connectionProperties.concat(this.allGlobalConnectionProperties);
-      }
+    let allGlobalConstants = this.allGlobalConstants;
+    if (this.allGlobalConstants && this.allGlobalConstants.length > 0) {
+      branchFoundObj.constants = branchFoundObj.constants.concat(
+        this.allGlobalConstants
+      );
+    }
+
+    let allGlobalConnectionProperties = this.allGlobalConnectionProperties;
+    if (
+      this.allGlobalConnectionProperties &&
+      this.allGlobalConnectionProperties.length > 0
+    ) {
+      branchFoundObj.connectionProperties = branchFoundObj.connectionProperties.concat(
+        this.allGlobalConnectionProperties
+      );
+    }
 
     let valueObjectPropertyArray = [];
 
-    for (let ref of branchFoundObj.referenceProperties){
+    for (let ref of branchFoundObj.referenceProperties) {
       let valueProperty = new ValueProperty();
       valueProperty.name = ref.name;
       valueProperty.type = "REFERENCE";
-      if (ref.propertyDataType == "PRIMITIVE"){
+      if (ref.propertyDataType == "PRIMITIVE") {
         valueProperty.valueType = "primitive";
-      }else {
-        valueProperty.valueType = "object"
+      } else {
+        valueProperty.valueType = "object";
       }
-      valueObjectPropertyArray.push(valueProperty)
+      valueObjectPropertyArray.push(valueProperty);
     }
 
-    for (let prop of branchFoundObj.properties){
+    for (let prop of branchFoundObj.properties) {
       let valueProperty = new ValueProperty();
       valueProperty.name = prop.name;
       valueProperty.type = "PROPERTY";
-      if (prop.propertyDataType == "PRIMITIVE"){
+      if (prop.propertyDataType == "PRIMITIVE") {
         valueProperty.valueType = "primitive";
         /*
         } else if (prop.property.data.Type == "collection"){
@@ -1310,235 +1392,454 @@ export class RuleChainPageComponent extends PageComponent
         } else if (prop.property.data.Type == "list"){
           valueProperty.valueType = "list";
         */
-      }else {
-        valueProperty.valueType = "object"
-      }
-      valueObjectPropertyArray.push(valueProperty)
-    }
-    for (let cons of branchFoundObj.constants){
-      let valueProperty = new ValueProperty();
-      valueProperty.name= cons.constantName;
-      valueProperty.type= "CONSTANT";
-      valueProperty.valueType = "primitive";
-      valueObjectPropertyArray.push(valueProperty)
-    }
-
-
-      if(branchFoundObj.branchFound){
-
-
-        if(nodes[branchFoundObj.branchIndex].configuration.branchParams){
-            for (let param of nodes[branchFoundObj.branchIndex].configuration.branchParams){
-              let valueProperty = new ValueProperty();
-              valueProperty.name = param.name;
-              valueProperty.type= "BRANCH_PARAM";
-              valueProperty.valueType = "primitive";
-              valueObjectPropertyArray.push(valueProperty)
-            }
-            let obj = {'branchParams': nodes[branchFoundObj.branchIndex].configuration.branchParams, 'branchFound': true, 'properties': branchFoundObj.properties, 'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties, 'apiFoundObj': apiFoundObj};
-            return obj;
-        } else {
-            let obj = {'branchParams': [], 'branchFound': true, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants,  'variables': branchFoundObj.variables, 'valueObjectProperties': valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties, 'apiFoundObj': apiFoundObj};
-            return obj;
-        }
-
       } else {
+        valueProperty.valueType = "object";
+      }
+      valueObjectPropertyArray.push(valueProperty);
+    }
+    for (let cons of branchFoundObj.constants) {
+      let valueProperty = new ValueProperty();
+      valueProperty.name = cons.constantName;
+      valueProperty.type = "CONSTANT";
+      valueProperty.valueType = "primitive";
+      valueObjectPropertyArray.push(valueProperty);
+    }
 
-        if (!(this.allRuleInputs === null || this.allRuleInputs === undefined)) {
+    if (branchFoundObj.branchFound) {
+      if (nodes[branchFoundObj.branchIndex].configuration.branchParams) {
+        for (let param of nodes[branchFoundObj.branchIndex].configuration
+          .branchParams) {
+          let valueProperty = new ValueProperty();
+          valueProperty.name = param.name;
+          valueProperty.type = "BRANCH_PARAM";
+          valueProperty.valueType = "primitive";
+          valueObjectPropertyArray.push(valueProperty);
+        }
+        let obj = {
+          branchParams:
+            nodes[branchFoundObj.branchIndex].configuration.branchParams,
+          branchFound: true,
+          properties: branchFoundObj.properties,
+          referenceProperties: branchFoundObj.referenceProperties,
+          constants: branchFoundObj.constants,
+          variables: branchFoundObj.variables,
+          valueObjectProperties: valueObjectPropertyArray,
+          connectionProperties: branchFoundObj.connectionProperties,
+          apiFoundObj: apiFoundObj,
+        };
+        return obj;
+      } else {
+        let obj = {
+          branchParams: [],
+          branchFound: true,
+          properties: branchFoundObj.properties,
+          referenceProperties: branchFoundObj.referenceProperties,
+          constants: branchFoundObj.constants,
+          variables: branchFoundObj.variables,
+          valueObjectProperties: valueObjectPropertyArray,
+          connectionProperties: branchFoundObj.connectionProperties,
+          apiFoundObj: apiFoundObj,
+        };
+        return obj;
+      }
+    } else {
+      if (!(this.allRuleInputs === null || this.allRuleInputs === undefined)) {
+        for (let param of this.allRuleInputs) {
+          let valueProperty = new ValueProperty();
+          valueProperty.name = param.inputName;
+          valueProperty.type = "RULE_INPUT";
+          if (param.inputType === "model" || param.inputType === "dto") {
+            valueProperty.valueType = "object";
+          } else {
+            valueProperty.valueType = "primitive";
+          }
+          valueObjectPropertyArray.push(valueProperty);
+        }
+      }
 
-          for (let param of this.allRuleInputs) {
-            let valueProperty = new ValueProperty();
-            valueProperty.name = param.inputName;
-            valueProperty.type = "RULE_INPUT";
-            if(param.inputType === 'model' || param.inputType === 'dto'){
-                valueProperty.valueType = "object";
-            } else {
-                valueProperty.valueType = "primitive";
-            }
-            valueObjectPropertyArray.push(valueProperty)
+      let obj = {
+        branchParams: [],
+        branchFound: false,
+        properties: branchFoundObj.properties,
+        referenceProperties: branchFoundObj.referenceProperties,
+        constants: branchFoundObj.constants,
+        variables: branchFoundObj.variables,
+        valueObjectProperties: valueObjectPropertyArray,
+        connectionProperties: branchFoundObj.connectionProperties,
+        apiFoundObj: apiFoundObj,
+      };
+      return obj;
+    }
+  }
+
+  checkForBranchConnection(
+    index,
+    allConnections,
+    nodes,
+    nodePropertyArray,
+    nodeReferencePropertyArray,
+    nodeConstantArray,
+    nodeVariableArray,
+    nodeConnectionPropertiesArray,
+    nodeRuleInputs
+  ) {
+    let foundNode = allConnections.find((x) => x.toIndex === index);
+    if (foundNode) {
+      if (
+        foundNode.type.startsWith("BRANCH_") ||
+        foundNode.type.startsWith("ERROR_BRANCH_")
+      ) {
+        let obj = {
+          branchIndex: foundNode.fromIndex,
+          branchFound: true,
+          properties: nodePropertyArray,
+          referenceProperties: nodeReferencePropertyArray,
+          constants: nodeConstantArray,
+          variables: nodeVariableArray,
+          connectionProperties: nodeConnectionPropertiesArray,
+          nodeRuleInputs: nodeRuleInputs,
+        };
+        return obj;
+      } else {
+        if (
+          nodes[foundNode.fromIndex].configuration.nodevariable !== undefined &&
+          nodes[foundNode.fromIndex].configuration.nodevariable !== null
+        ) {
+          if (
+            Object.keys(nodes[foundNode.fromIndex].configuration.nodevariable)
+              .length !== 0
+          ) {
+            nodeVariableArray = nodeVariableArray.push(
+              nodes[foundNode.fromIndex].configuration.nodevariable
+            );
+          }
+        }
+        if (
+          nodes[foundNode.fromIndex].component.clazz === "xiModelPropertyNode"
+        ) {
+          if (
+            nodes[foundNode.fromIndex].configuration.modelproperties !== null &&
+            nodes[foundNode.fromIndex].configuration.modelproperties !==
+              undefined
+          ) {
+            nodePropertyArray = nodePropertyArray.concat(
+              nodes[foundNode.fromIndex].configuration.modelproperties
+            );
+          }
+        } else if (
+          nodes[foundNode.fromIndex].component.clazz === "xiConstantNode"
+        ) {
+          if (nodes[foundNode.fromIndex].configuration.constants) {
+            nodeConstantArray = nodeConstantArray.concat(
+              nodes[foundNode.fromIndex].configuration.constants
+            );
+          }
+        } else if (
+          nodes[foundNode.fromIndex].component.clazz ===
+          "xiReferencePropertyNode"
+        ) {
+          if (
+            nodes[foundNode.fromIndex].configuration.referenceproperties !==
+              null &&
+            nodes[foundNode.fromIndex].configuration.referenceproperties !==
+              undefined
+          ) {
+            nodeReferencePropertyArray = nodeReferencePropertyArray.concat(
+              nodes[foundNode.fromIndex].configuration.referenceproperties
+            );
+          }
+        } else if (nodes[foundNode.fromIndex].component.clazz === "xiCPNode") {
+          if (
+            nodes[foundNode.fromIndex].configuration.connectionProperties !==
+              null &&
+            nodes[foundNode.fromIndex].configuration.connectionProperties !==
+              undefined
+          ) {
+            nodeConnectionPropertiesArray = nodeConnectionPropertiesArray.concat(
+              nodes[foundNode.fromIndex].configuration.connectionProperties
+            );
           }
         }
 
-            let obj = {'branchParams': [], 'branchFound': false, 'properties': branchFoundObj.properties,'referenceProperties': branchFoundObj.referenceProperties, 'constants': branchFoundObj.constants, 'variables': branchFoundObj.variables, 'valueObjectProperties':valueObjectPropertyArray, 'connectionProperties': branchFoundObj.connectionProperties, 'apiFoundObj': apiFoundObj};
-            return obj;
+        let branchCheckVal = this.checkForBranchConnection(
+          foundNode.fromIndex,
+          allConnections,
+          nodes,
+          nodePropertyArray,
+          nodeReferencePropertyArray,
+          nodeConstantArray,
+          nodeVariableArray,
+          nodeConnectionPropertiesArray,
+          nodeRuleInputs
+        );
+        return branchCheckVal;
       }
-
-  }
-
-  checkForBranchConnection( index ,allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray, nodeRuleInputs){
-    let foundNode = allConnections.find(x => x.toIndex === index);
-    if(foundNode){
-        if(foundNode.type.startsWith("BRANCH_") || foundNode.type.startsWith("ERROR_BRANCH_")){
-            let obj = {'branchIndex': foundNode.fromIndex, 'branchFound': true, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray, 'nodeRuleInputs': nodeRuleInputs};
-            return obj;
-        } else {
-            if(nodes[foundNode.fromIndex].configuration.nodevariable !== undefined && nodes[foundNode.fromIndex].configuration.nodevariable !== null){
-              if(Object.keys(nodes[foundNode.fromIndex].configuration.nodevariable).length !== 0){
-                nodeVariableArray = nodeVariableArray.push(nodes[foundNode.fromIndex].configuration.nodevariable);
-              }
-            }
-            if(nodes[foundNode.fromIndex].component.clazz === 'xiModelPropertyNode'){
-                if(nodes[foundNode.fromIndex].configuration.modelproperties !== null && nodes[foundNode.fromIndex].configuration.modelproperties !== undefined ){
-                    nodePropertyArray = nodePropertyArray.concat(nodes[foundNode.fromIndex].configuration.modelproperties);
-                }
-
-            } else if (nodes[foundNode.fromIndex].component.clazz === 'xiConstantNode') {
-                if(nodes[foundNode.fromIndex].configuration.constants){
-                    nodeConstantArray = nodeConstantArray.concat(nodes[foundNode.fromIndex].configuration.constants);
-                }
-            } else if(nodes[foundNode.fromIndex].component.clazz === 'xiReferencePropertyNode'){
-                if(nodes[foundNode.fromIndex].configuration.referenceproperties !== null && nodes[foundNode.fromIndex].configuration.referenceproperties !== undefined ){
-                    nodeReferencePropertyArray = nodeReferencePropertyArray.concat(nodes[foundNode.fromIndex].configuration.referenceproperties);
-                }
-
-            }  else if(nodes[foundNode.fromIndex].component.clazz === 'xiCPNode'){
-                if(nodes[foundNode.fromIndex].configuration.connectionProperties !== null && nodes[foundNode.fromIndex].configuration.connectionProperties !== undefined ){
-                    nodeConnectionPropertiesArray = nodeConnectionPropertiesArray.concat(nodes[foundNode.fromIndex].configuration.connectionProperties);
-                }
-            }
-
-            let branchCheckVal = this.checkForBranchConnection(foundNode.fromIndex, allConnections, nodes, nodePropertyArray, nodeReferencePropertyArray, nodeConstantArray, nodeVariableArray, nodeConnectionPropertiesArray, nodeRuleInputs);
-            return branchCheckVal;
-        }
     } else {
-        let obj = {'branchIndex': 0, 'branchFound': false, 'properties': nodePropertyArray, 'referenceProperties': nodeReferencePropertyArray, 'constants': nodeConstantArray, 'variables': nodeVariableArray, 'connectionProperties': nodeConnectionPropertiesArray, 'nodeRuleInputs': nodeRuleInputs};
-        return obj;
+      let obj = {
+        branchIndex: 0,
+        branchFound: false,
+        properties: nodePropertyArray,
+        referenceProperties: nodeReferencePropertyArray,
+        constants: nodeConstantArray,
+        variables: nodeVariableArray,
+        connectionProperties: nodeConnectionPropertiesArray,
+        nodeRuleInputs: nodeRuleInputs,
+      };
+      return obj;
     }
   }
 
-  checkForActivatorConnection( index ,allConnections, nodes, apiNodeFound, nodeRuleInputs){
-    let foundNode = allConnections.find(x => x.toIndex === index);
-    if(foundNode){
-        if(foundNode.type.startsWith("BRANCH_") || foundNode.type.startsWith("ERROR_BRANCH_")){
-            let obj = {'apiNodeFound': apiNodeFound, 'nodeRuleInputs': nodeRuleInputs};
-            return obj;
-        } else {
-            if(nodes[foundNode.fromIndex].component.clazz === 'xiPostNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGetNode' ||
-                nodes[foundNode.fromIndex].component.clazz === 'xiPutNode' || nodes[foundNode.fromIndex].component.clazz === 'xiDeleteNode' ||
-                nodes[foundNode.fromIndex].component.clazz === 'xiGrpcUnaryNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGrpcServersideStrNode' ||
-                nodes[foundNode.fromIndex].component.clazz === 'xiGrpcClientsideStrNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGrpcBidirectionalStrNode'){
-                apiNodeFound = true;
-                let configuration = nodes[foundNode.fromIndex].configuration;
-                if (nodes[foundNode.fromIndex].component.clazz === 'xiPostNode' || nodes[foundNode.fromIndex].component.clazz === 'xiPutNode' ||
-                    nodes[foundNode.fromIndex].component.clazz === 'xiGrpcUnaryNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGrpcServersideStrNode' ||
-                    nodes[foundNode.fromIndex].component.clazz === 'xiGrpcClientsideStrNode' || nodes[foundNode.fromIndex].component.clazz === 'xiGrpcBidirectionalStrNode'){
-                    let inputname = configuration.selectedAPIInputs.inputName.replace(/\s/g, "");
-                    inputname = inputname.toLowerCase();
-                    inputname = this.titleCaseWord(inputname);
+  checkForActivatorConnection(
+    index,
+    allConnections,
+    nodes,
+    apiNodeFound,
+    nodeRuleInputs
+  ) {
+    let foundNode = allConnections.find((x) => x.toIndex === index);
+    if (foundNode) {
+      if (
+        foundNode.type.startsWith("BRANCH_") ||
+        foundNode.type.startsWith("ERROR_BRANCH_")
+      ) {
+        let obj = {
+          apiNodeFound: apiNodeFound,
+          nodeRuleInputs: nodeRuleInputs,
+        };
+        return obj;
+      } else {
+        if (
+          nodes[foundNode.fromIndex].component.clazz === "xiPostNode" ||
+          nodes[foundNode.fromIndex].component.clazz === "xiGetNode" ||
+          nodes[foundNode.fromIndex].component.clazz === "xiPutNode" ||
+          nodes[foundNode.fromIndex].component.clazz === "xiDeleteNode" ||
+          nodes[foundNode.fromIndex].component.clazz === "xiGrpcUnaryNode" ||
+          nodes[foundNode.fromIndex].component.clazz ===
+            "xiGrpcServersideStrNode" ||
+          nodes[foundNode.fromIndex].component.clazz ===
+            "xiGrpcClientsideStrNode" ||
+          nodes[foundNode.fromIndex].component.clazz ===
+            "xiGrpcBidirectionalStrNode"
+        ) {
+          apiNodeFound = true;
+          let configuration = nodes[foundNode.fromIndex].configuration;
+          if (
+            nodes[foundNode.fromIndex].component.clazz === "xiPostNode" ||
+            nodes[foundNode.fromIndex].component.clazz === "xiPutNode" ||
+            nodes[foundNode.fromIndex].component.clazz === "xiGrpcUnaryNode" ||
+            nodes[foundNode.fromIndex].component.clazz ===
+              "xiGrpcServersideStrNode" ||
+            nodes[foundNode.fromIndex].component.clazz ===
+              "xiGrpcClientsideStrNode" ||
+            nodes[foundNode.fromIndex].component.clazz ===
+              "xiGrpcBidirectionalStrNode"
+          ) {
+            let inputname = configuration.selectedAPIInputs.inputName.replace(
+              /\s/g,
+              ""
+            );
+            inputname = inputname.toLowerCase();
+            inputname = this.titleCaseWord(inputname);
 
-                    let inputTypeLower =configuration.selectedAPIInputs.inputType.toLowerCase();
+            let inputTypeLower = configuration.selectedAPIInputs.inputType.toLowerCase();
 
-                    if (inputTypeLower == "model") {
-                        let ruleInput = { inputName: inputname, inputType: 'model', record: 's'  };
-                        //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                        nodeRuleInputs.push(ruleInput);
-                    } else if (inputTypeLower == "dto") {
-                        let ruleInput = { inputName: inputname, inputType: 'dto', record: 's'  };
-                        //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                        nodeRuleInputs.push(ruleInput);
-                    }
-                }
-                /* else if (configuration.apiStyleType === 'REST' && configuration.apiType === 'FILE_UPLOAD'){
+            if (inputTypeLower == "model") {
+              let ruleInput = {
+                inputName: inputname,
+                inputType: "model",
+                record: "s",
+              };
+              //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+              nodeRuleInputs.push(ruleInput);
+            } else if (inputTypeLower == "dto") {
+              let ruleInput = {
+                inputName: inputname,
+                inputType: "dto",
+                record: "s",
+              };
+              //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+              nodeRuleInputs.push(ruleInput);
+            }
+          }
+          /* else if (configuration.apiStyleType === 'REST' && configuration.apiType === 'FILE_UPLOAD'){
                     let ruleInput = { inputName: 'file', inputType: 'file', record: 's'  };
                     //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
                     nodeRuleInputs.push(ruleInput);
                 } */
 
-                if (configuration.apiParams){
-                    configuration.apiParams.forEach((param) => {
-                        let propertyString = param.inputName.replace(/\s/g, "");
-                        propertyString = propertyString.toLowerCase();
+          if (configuration.apiParams) {
+            configuration.apiParams.forEach((param) => {
+              let propertyString = param.inputName.replace(/\s/g, "");
+              propertyString = propertyString.toLowerCase();
 
-                        if (param.inputType == "TEXT") {
-                            let ruleInput = { inputName: propertyString, inputType: 'string', record: 's'  };
-                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                            nodeRuleInputs.push(ruleInput);
-                        } else if ( param.inputType ==  "NUMBER") {
-                            let ruleInput = { inputName: propertyString, inputType: 'int', record: 's'  };
-                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                            nodeRuleInputs.push(ruleInput);
-                        } else if ( param.inputType ==  "FLOAT") {
-                            let ruleInput = { inputName: propertyString, inputType: 'float64', record: 's'  };
-                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                            nodeRuleInputs.push(ruleInput);
-                        } else if ( param.inputType ==  "TRUE_OR_FALSE") {
-                            let ruleInput = { inputName: propertyString, inputType: 'bool', record: 's'  };
-                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                            nodeRuleInputs.push(ruleInput);
-                        } else if ( param.inputType ==  "FILE") {
-                            let ruleInput = { inputName: propertyString, inputType: 'File', record: 's'  };
-                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                            nodeRuleInputs.push(ruleInput);
-                        } else if ( param.inputType ==  "IMAGE") {
-                            let ruleInput = { inputName: propertyString, inputType: 'Image', record: 's'  };
-                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                            nodeRuleInputs.push(ruleInput);
-                        } else if ( param.inputType ==  "DATE") {
-                            let ruleInput = { inputName: propertyString, inputType: 'time.Time', record: 's'  };
-                            //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                            nodeRuleInputs.push(ruleInput);
-                        }
-                    });
-                }
-              } else if (nodes[foundNode.fromIndex].component.clazz === 'xiGeneralTaskNode' || nodes[foundNode.fromIndex].component.clazz === 'xiMsgSubTaskNode' ||
-                nodes[foundNode.fromIndex].component.clazz === 'xiFileReaderTaskNode' || nodes[foundNode.fromIndex].component.clazz === 'xiServiceCallNode') {
-                apiNodeFound = true;
-                let configuration = nodes[foundNode.fromIndex].configuration;
-                if (nodes[foundNode.fromIndex].component.clazz === 'xiFileReaderTaskNode') {
-                  let inputname = configuration.fileInputModel.inputName.replace(/\s/g, "");
-                  inputname = inputname.toLowerCase();
-                  inputname = this.titleCaseWord(inputname);
-      
-                  let inputTypeLower = configuration.fileInputModel.inputType.toLowerCase();
-      
-                  if (inputTypeLower == "model") {
-                    let ruleInput = { inputName: inputname, inputType: 'model', record: configuration.fileReaderRecordType };
-                    //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                    nodeRuleInputs.push(ruleInput);
-                  } else if (inputTypeLower == "dto") {
-                    let ruleInput = { inputName: inputname, inputType: 'dto', record: configuration.fileReaderRecordType };
-                    //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                    nodeRuleInputs.push(ruleInput);
-                  }
-                } else if (nodes[foundNode.fromIndex].component.clazz === 'xiServiceCallNode') {
-                  let inputname = configuration.returnObj.inputName.replace(/\s/g, "");
-                  inputname = inputname.toLowerCase();
-                  inputname = this.titleCaseWord(inputname);
-      
-                  let inputTypeLower = configuration.returnObj.inputType.toLowerCase();
-      
-                  if (inputTypeLower == "model") {
-                    let ruleInput = { inputName: inputname, inputType: 'model', record: configuration.returnRecordType };
-                    //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                    nodeRuleInputs.push(ruleInput);
-                  } else if (inputTypeLower == "dto") {
-                    let ruleInput = { inputName: inputname, inputType: 'dto', record: configuration.returnRecordType };
-                    //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
-                    nodeRuleInputs.push(ruleInput);
-                  }
-                } else if (nodes[foundNode.fromIndex].component.clazz === 'xiMsgSubTaskNode') {
-                  if(configuration.eventModel){
-                    let inputname = configuration.eventModel.inputName.replace(/\s/g, "");
-                    inputname = inputname.toLowerCase();
-                    let inputTypeLower = configuration.eventModel.inputType.toLowerCase();
-                    if (inputTypeLower == "model") {
-                      let ruleInput = { inputName: inputname, inputType: 'model', record: 's' };
-                      nodeRuleInputs.push(ruleInput);
-                    } else {
-                      let ruleInput = { inputName: inputname, inputType: 'dto', record: 's' };
-                      nodeRuleInputs.push(ruleInput);
-                    }
-                  }
-                }
-    
+              if (param.inputType == "TEXT") {
+                let ruleInput = {
+                  inputName: propertyString,
+                  inputType: "string",
+                  record: "s",
+                };
+                //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                nodeRuleInputs.push(ruleInput);
+              } else if (param.inputType == "NUMBER") {
+                let ruleInput = {
+                  inputName: propertyString,
+                  inputType: "int",
+                  record: "s",
+                };
+                //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                nodeRuleInputs.push(ruleInput);
+              } else if (param.inputType == "FLOAT") {
+                let ruleInput = {
+                  inputName: propertyString,
+                  inputType: "float64",
+                  record: "s",
+                };
+                //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                nodeRuleInputs.push(ruleInput);
+              } else if (param.inputType == "TRUE_OR_FALSE") {
+                let ruleInput = {
+                  inputName: propertyString,
+                  inputType: "bool",
+                  record: "s",
+                };
+                //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                nodeRuleInputs.push(ruleInput);
+              } else if (param.inputType == "FILE") {
+                let ruleInput = {
+                  inputName: propertyString,
+                  inputType: "File",
+                  record: "s",
+                };
+                //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                nodeRuleInputs.push(ruleInput);
+              } else if (param.inputType == "IMAGE") {
+                let ruleInput = {
+                  inputName: propertyString,
+                  inputType: "Image",
+                  record: "s",
+                };
+                //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                nodeRuleInputs.push(ruleInput);
+              } else if (param.inputType == "DATE") {
+                let ruleInput = {
+                  inputName: propertyString,
+                  inputType: "time.Time",
+                  record: "s",
+                };
+                //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+                nodeRuleInputs.push(ruleInput);
+              }
+            });
+          }
+        } else if (
+          nodes[foundNode.fromIndex].component.clazz === "xiGeneralTaskNode" ||
+          nodes[foundNode.fromIndex].component.clazz === "xiMsgSubTaskNode" ||
+          nodes[foundNode.fromIndex].component.clazz ===
+            "xiFileReaderTaskNode" ||
+          nodes[foundNode.fromIndex].component.clazz === "xiServiceCallNode"
+        ) {
+          apiNodeFound = true;
+          let configuration = nodes[foundNode.fromIndex].configuration;
+          if (
+            nodes[foundNode.fromIndex].component.clazz ===
+            "xiFileReaderTaskNode"
+          ) {
+            let inputname = configuration.fileInputModel.inputName.replace(
+              /\s/g,
+              ""
+            );
+            inputname = inputname.toLowerCase();
+            inputname = this.titleCaseWord(inputname);
+
+            let inputTypeLower = configuration.fileInputModel.inputType.toLowerCase();
+
+            if (inputTypeLower == "model") {
+              let ruleInput = {
+                inputName: inputname,
+                inputType: "model",
+                record: configuration.fileReaderRecordType,
+              };
+              //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+              nodeRuleInputs.push(ruleInput);
+            } else if (inputTypeLower == "dto") {
+              let ruleInput = {
+                inputName: inputname,
+                inputType: "dto",
+                record: configuration.fileReaderRecordType,
+              };
+              //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+              nodeRuleInputs.push(ruleInput);
             }
+          } else if (
+            nodes[foundNode.fromIndex].component.clazz === "xiServiceCallNode"
+          ) {
+            let inputname = configuration.returnObj.inputName.replace(
+              /\s/g,
+              ""
+            );
+            inputname = inputname.toLowerCase();
+            inputname = this.titleCaseWord(inputname);
 
-            let apiCheckVal = this.checkForActivatorConnection(foundNode.fromIndex, allConnections, nodes, apiNodeFound, nodeRuleInputs);
-            return apiCheckVal;
+            let inputTypeLower = configuration.returnObj.inputType.toLowerCase();
+
+            if (inputTypeLower == "model") {
+              let ruleInput = {
+                inputName: inputname,
+                inputType: "model",
+                record: configuration.returnRecordType,
+              };
+              //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+              nodeRuleInputs.push(ruleInput);
+            } else if (inputTypeLower == "dto") {
+              let ruleInput = {
+                inputName: inputname,
+                inputType: "dto",
+                record: configuration.returnRecordType,
+              };
+              //nodeRuleInputs = nodeRuleInputs.concat(ruleInput);
+              nodeRuleInputs.push(ruleInput);
+            }
+          } else if (
+            nodes[foundNode.fromIndex].component.clazz === "xiMsgSubTaskNode"
+          ) {
+            if (configuration.eventModel) {
+              let inputname = configuration.eventModel.inputName.replace(
+                /\s/g,
+                ""
+              );
+              inputname = inputname.toLowerCase();
+              let inputTypeLower = configuration.eventModel.inputType.toLowerCase();
+              if (inputTypeLower == "model") {
+                let ruleInput = {
+                  inputName: inputname,
+                  inputType: "model",
+                  record: "s",
+                };
+                nodeRuleInputs.push(ruleInput);
+              } else {
+                let ruleInput = {
+                  inputName: inputname,
+                  inputType: "dto",
+                  record: "s",
+                };
+                nodeRuleInputs.push(ruleInput);
+              }
+            }
+          }
         }
+
+        let apiCheckVal = this.checkForActivatorConnection(
+          foundNode.fromIndex,
+          allConnections,
+          nodes,
+          apiNodeFound,
+          nodeRuleInputs
+        );
+        return apiCheckVal;
+      }
     } else {
-        let obj = {'apiNodeFound': apiNodeFound, 'nodeRuleInputs': nodeRuleInputs};
-        return obj;
+      let obj = { apiNodeFound: apiNodeFound, nodeRuleInputs: nodeRuleInputs };
+      return obj;
     }
   }
 
@@ -1548,14 +1849,20 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   openLinkDetails(edge: FcRuleEdge) {
-    const sourceNode: FcRuleNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.source) as FcRuleNode;
+    const sourceNode: FcRuleNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+      edge.source
+    ) as FcRuleNode;
     if (sourceNode.component.type !== RuleNodeType.INPUT) {
       this.enableHotKeys = false;
       this.updateErrorTooltips(true);
       this.isEditingRuleNode = false;
       this.editingRuleNode = null;
-      this.editingRuleNodeLinkLabels = this.ruleChainService.getRuleNodeSupportedLinks(sourceNode);
-      this.editingRuleNodeAllowCustomLabels = this.ruleChainService.ruleNodeAllowCustomLinks(sourceNode.component);
+      this.editingRuleNodeLinkLabels = this.ruleChainService.getRuleNodeSupportedLinks(
+        sourceNode
+      );
+      this.editingRuleNodeAllowCustomLabels = this.ruleChainService.ruleNodeAllowCustomLinks(
+        sourceNode.component
+      );
       this.isEditingRuleNodeLink = true;
       this.editingRuleNodeLinkIndex = this.ruleChainModel.edges.indexOf(edge);
       this.editingRuleNodeLink = deepClone(edge);
@@ -1574,18 +1881,22 @@ export class RuleChainPageComponent extends PageComponent
     const edges: FcRuleEdge[] = this.ruleChainCanvas.modelService.edges.getSelectedEdges();
     const connections: RuleNodeConnection[] = [];
     edges.forEach((edge) => {
-      const sourceNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.source);
-      const destNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.destination);
+      const sourceNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+        edge.source
+      );
+      const destNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+        edge.destination
+      );
       const isInputSource = sourceNode.component.type === RuleNodeType.INPUT;
       const fromIndex = nodes.indexOf(sourceNode);
       const toIndex = nodes.indexOf(destNode);
-      if ( (isInputSource || fromIndex > -1) && toIndex > -1 ) {
+      if ((isInputSource || fromIndex > -1) && toIndex > -1) {
         const connection: RuleNodeConnection = {
           isInputSource,
           fromIndex,
           toIndex,
           label: edge.label,
-          labels: edge.labels
+          labels: edge.labels,
         };
         connections.push(connection);
       }
@@ -1613,23 +1924,19 @@ export class RuleChainPageComponent extends PageComponent
       this.ruleChainCanvas.modelService.deselectAll();
       const nodes: FcRuleNode[] = [];
       ruleNodes.nodes.forEach((node) => {
-        node.id = 'rule-chain-node-' + this.nextNodeID++;
+        node.id = "rule-chain-node-" + this.nextNodeID++;
         const component = node.component;
         if (component.configurationDescriptor.nodeDefinition.inEnabled) {
-          node.connectors.push(
-            {
-              type: FlowchartConstants.leftConnectorType,
-              id: (this.nextConnectorID++) + ''
-            }
-          );
+          node.connectors.push({
+            type: FlowchartConstants.leftConnectorType,
+            id: this.nextConnectorID++ + "",
+          });
         }
         if (component.configurationDescriptor.nodeDefinition.outEnabled) {
-          node.connectors.push(
-            {
-              type: FlowchartConstants.rightConnectorType,
-              id: (this.nextConnectorID++) + ''
-            }
-          );
+          node.connectors.push({
+            type: FlowchartConstants.rightConnectorType,
+            id: this.nextConnectorID++ + "",
+          });
         }
         nodes.push(node);
         this.ruleChainModel.nodes.push(node);
@@ -1638,24 +1945,30 @@ export class RuleChainPageComponent extends PageComponent
       ruleNodes.connections.forEach((connection) => {
         const sourceNode = nodes[connection.fromIndex];
         const destNode = nodes[connection.toIndex];
-        if ( (connection.isInputSource || sourceNode) &&  destNode ) {
+        if ((connection.isInputSource || sourceNode) && destNode) {
           let source: string;
           let destination: string;
           if (connection.isInputSource) {
-            source = this.inputConnectorId + '';
-            const found = this.ruleChainModel.edges.find(theEdge => theEdge.source === (this.inputConnectorId + ''));
+            source = this.inputConnectorId + "";
+            const found = this.ruleChainModel.edges.find(
+              (theEdge) => theEdge.source === this.inputConnectorId + ""
+            );
             if (found) {
               this.ruleChainCanvas.modelService.edges.delete(found);
             }
           } else {
-            const sourceConnectors = this.ruleChainCanvas.modelService.nodes
-              .getConnectorsByType(sourceNode, FlowchartConstants.rightConnectorType);
+            const sourceConnectors = this.ruleChainCanvas.modelService.nodes.getConnectorsByType(
+              sourceNode,
+              FlowchartConstants.rightConnectorType
+            );
             if (sourceConnectors && sourceConnectors.length) {
               source = sourceConnectors[0].id;
             }
           }
-          const destConnectors = this.ruleChainCanvas.modelService.nodes
-            .getConnectorsByType(destNode, FlowchartConstants.leftConnectorType);
+          const destConnectors = this.ruleChainCanvas.modelService.nodes.getConnectorsByType(
+            destNode,
+            FlowchartConstants.leftConnectorType
+          );
           if (destConnectors && destConnectors.length) {
             destination = destConnectors[0].id;
           }
@@ -1664,7 +1977,7 @@ export class RuleChainPageComponent extends PageComponent
               source,
               destination,
               label: connection.label,
-              labels: connection.labels
+              labels: connection.labels,
             };
             this.ruleChainModel.edges.push(edge);
             this.ruleChainCanvas.modelService.edges.select(edge);
@@ -1697,7 +2010,7 @@ export class RuleChainPageComponent extends PageComponent
   onRevertRuleNodeEdit() {
     this.ruleNodeComponent.ruleNodeFormGroup.markAsPristine();
     const node = this.ruleChainModel.nodes[this.editingRuleNodeIndex];
-    this.editingRuleNode = deepClone(node, ['component']);
+    this.editingRuleNode = deepClone(node, ["component"]);
   }
 
   onRevertRuleNodeLinkEdit() {
@@ -1713,8 +2026,10 @@ export class RuleChainPageComponent extends PageComponent
       if (this.editingRuleNode.error) {
         delete this.editingRuleNode.error;
       }
-      this.ruleChainModel.nodes[this.editingRuleNodeIndex] = this.editingRuleNode;
-      this.editingRuleNode = deepClone(this.editingRuleNode, ['component']);
+      this.ruleChainModel.nodes[
+        this.editingRuleNodeIndex
+      ] = this.editingRuleNode;
+      this.editingRuleNode = deepClone(this.editingRuleNode, ["component"]);
       this.onModelChanged();
       this.updateRuleNodesHighlight();
     }
@@ -1722,32 +2037,46 @@ export class RuleChainPageComponent extends PageComponent
 
   saveRuleNodeLink() {
     this.ruleNodeLinkComponent.ruleNodeLinkFormGroup.markAsPristine();
-    this.ruleChainModel.edges[this.editingRuleNodeLinkIndex] = this.editingRuleNodeLink;
+    this.ruleChainModel.edges[
+      this.editingRuleNodeLinkIndex
+    ] = this.editingRuleNodeLink;
     this.editingRuleNodeLink = deepClone(this.editingRuleNodeLink);
     this.onModelChanged();
   }
 
   typeHeaderMouseEnter(event: MouseEvent, ruleNodeType: RuleNodeType) {
     const type = ruleNodeTypeDescriptors.get(ruleNodeType);
-    this.displayTooltip(event,
+    this.displayTooltip(
+      event,
       '<div class="virtuan-rule-node-tooltip virtuan-lib-tooltip">' +
-      '<div id="virtuan-node-content" layout="column">' +
-      '<div class="virtuan-node-title">' + this.translate.instant(type.name) + '</div>' +
-      '<div class="virtuan-node-details">' + this.translate.instant(type.details) + '</div>' +
-      '</div>' +
-      '</div>'
+        '<div id="virtuan-node-content" layout="column">' +
+        '<div class="virtuan-node-title">' +
+        this.translate.instant(type.name) +
+        "</div>" +
+        '<div class="virtuan-node-details">' +
+        this.translate.instant(type.details) +
+        "</div>" +
+        "</div>" +
+        "</div>"
     );
   }
 
   displayLibNodeDescriptionTooltip(event: MouseEvent, node: FcRuleNodeType) {
-    this.displayTooltip(event,
+    this.displayTooltip(
+      event,
       '<div class="virtuan-rule-node-tooltip virtuan-lib-tooltip">' +
-      '<div id="virtuan-node-content" layout="column">' +
-      '<div class="virtuan-node-title">' + node.component.name + '</div>' +
-      '<div class="virtuan-node-description">' + node.component.configurationDescriptor.nodeDefinition.description + '</div>' +
-      '<div class="virtuan-node-details">' + node.component.configurationDescriptor.nodeDefinition.details + '</div>' +
-      '</div>' +
-      '</div>'
+        '<div id="virtuan-node-content" layout="column">' +
+        '<div class="virtuan-node-title">' +
+        node.component.name +
+        "</div>" +
+        '<div class="virtuan-node-description">' +
+        node.component.configurationDescriptor.nodeDefinition.description +
+        "</div>" +
+        '<div class="virtuan-node-details">' +
+        node.component.configurationDescriptor.nodeDefinition.details +
+        "</div>" +
+        "</div>" +
+        "</div>"
     );
   }
 
@@ -1757,24 +2086,38 @@ export class RuleChainPageComponent extends PageComponent
       let desc: string;
       let details: string;
       if (node.component.type === RuleNodeType.INPUT) {
-        name = this.translate.instant(ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).name);
-        desc = this.translate.instant(ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).details);
+        name = this.translate.instant(
+          ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).name
+        );
+        desc = this.translate.instant(
+          ruleNodeTypeDescriptors.get(RuleNodeType.INPUT).details
+        );
       } else {
         name = node.name;
-        desc = this.translate.instant(ruleNodeTypeDescriptors.get(node.component.type).name) + ' - ' + node.component.name;
+        desc =
+          this.translate.instant(
+            ruleNodeTypeDescriptors.get(node.component.type).name
+          ) +
+          " - " +
+          node.component.name;
         if (node.additionalInfo) {
           details = node.additionalInfo.description;
         }
       }
-      let tooltipContent = '<div class="virtuan-rule-node-tooltip">' +
+      let tooltipContent =
+        '<div class="virtuan-rule-node-tooltip">' +
         '<div id="virtuan-node-content" layout="column">' +
-        '<div class="virtuan-node-title">' + name + '</div>' +
-        '<div class="virtuan-node-description">' + desc + '</div>';
+        '<div class="virtuan-node-title">' +
+        name +
+        "</div>" +
+        '<div class="virtuan-node-description">' +
+        desc +
+        "</div>";
       if (details) {
-        tooltipContent += '<div class="virtuan-node-details">' + details + '</div>';
+        tooltipContent +=
+          '<div class="virtuan-node-details">' + details + "</div>";
       }
-      tooltipContent += '</div>' +
-        '</div>';
+      tooltipContent += "</div>" + "</div>";
       this.displayTooltip(event, tooltipContent);
     }
   }
@@ -1798,7 +2141,9 @@ export class RuleChainPageComponent extends PageComponent
     }
     if (this.ruleNodeSearch) {
       const search = this.ruleNodeSearch.toUpperCase();
-      const res = this.ruleChainModel.nodes.filter(node => node.name.toUpperCase().includes(search));
+      const res = this.ruleChainModel.nodes.filter((node) =>
+        node.name.toUpperCase().includes(search)
+      );
       if (res) {
         for (const ruleNode of res) {
           ruleNode.highlighted = true;
@@ -1811,8 +2156,10 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   objectsSelected(): boolean {
-    return this.ruleChainCanvas.modelService.nodes.getSelectedNodes().length > 0 ||
-      this.ruleChainCanvas.modelService.edges.getSelectedEdges().length > 0;
+    return (
+      this.ruleChainCanvas.modelService.nodes.getSelectedNodes().length > 0 ||
+      this.ruleChainCanvas.modelService.edges.getSelectedEdges().length > 0
+    );
   }
 
   deleteSelected() {
@@ -1821,13 +2168,16 @@ export class RuleChainPageComponent extends PageComponent
 
   isDebugModeEnabled(): boolean {
     const res = this.ruleChainModel.nodes.find((node) => node.debugMode);
-    return typeof res !== 'undefined';
+    return typeof res !== "undefined";
   }
 
   resetDebugModeInAllNodes() {
     let changed = false;
     this.ruleChainModel.nodes.forEach((node) => {
-      if (node.component.type !== RuleNodeType.INPUT && node.component.type !== RuleNodeType.RULE_CHAIN) {
+      if (
+        node.component.type !== RuleNodeType.INPUT &&
+        node.component.type !== RuleNodeType.RULE_CHAIN
+      ) {
         changed = changed || node.debugMode;
         node.debugMode = false;
       }
@@ -1852,7 +2202,9 @@ export class RuleChainPageComponent extends PageComponent
   saveRuleChain() {
     let saveRuleChainObservable: Observable<RuleChain>;
     if (this.isImport) {
-      saveRuleChainObservable = this.ruleChainService.saveRuleChain(this.ruleChain);
+      saveRuleChainObservable = this.ruleChainService.saveRuleChain(
+        this.ruleChain
+      );
     } else {
       saveRuleChainObservable = of(this.ruleChain);
     }
@@ -1867,11 +2219,14 @@ export class RuleChainPageComponent extends PageComponent
         allVariables: this.allVariables,
         nodes: [],
         connections: [],
-        ruleChainConnections: []
+        ruleChainConnections: [],
       };
       const nodes: FcRuleNode[] = [];
       this.ruleChainModel.nodes.forEach((node) => {
-        if (node.component.type !== RuleNodeType.INPUT && node.component.type !== RuleNodeType.RULE_CHAIN) {
+        if (
+          node.component.type !== RuleNodeType.INPUT &&
+          node.component.type !== RuleNodeType.RULE_CHAIN
+        ) {
           const ruleNode: RuleNode = {
             id: node.ruleNodeId,
             type: node.component.clazz,
@@ -1880,7 +2235,7 @@ export class RuleChainPageComponent extends PageComponent
             nodeUUID: node.ruleNodeUUId,
             configuration: node.configuration,
             additionalInfo: node.additionalInfo ? node.additionalInfo : {},
-            debugMode: node.debugMode
+            debugMode: node.debugMode,
           };
           ruleNode.additionalInfo.layoutX = Math.round(node.x);
           ruleNode.additionalInfo.layoutY = Math.round(node.y);
@@ -1888,21 +2243,34 @@ export class RuleChainPageComponent extends PageComponent
           nodes.push(node);
         }
       });
-      const firstNodeEdge = this.ruleChainModel.edges.find((edge) => edge.source === this.inputConnectorId + '');
+      const firstNodeEdge = this.ruleChainModel.edges.find(
+        (edge) => edge.source === this.inputConnectorId + ""
+      );
       if (firstNodeEdge) {
-        const firstNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(firstNodeEdge.destination);
+        const firstNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+          firstNodeEdge.destination
+        );
         ruleChainMetaData.firstNodeIndex = nodes.indexOf(firstNode);
       }
       this.ruleChainModel.edges.forEach((edge) => {
-        const sourceNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.source);
-        const destNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(edge.destination);
+        const sourceNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+          edge.source
+        );
+        const destNode = this.ruleChainCanvas.modelService.nodes.getNodeByConnectorId(
+          edge.destination
+        );
         if (sourceNode.component.type !== RuleNodeType.INPUT) {
           const fromIndex = nodes.indexOf(sourceNode);
           if (destNode.component.type === RuleNodeType.RULE_CHAIN) {
             const ruleChainConnection = {
               fromIndex,
-              targetRuleChainId: {entityType: EntityType.RULE_CHAIN, id: destNode.targetRuleChainId},
-              additionalInfo: destNode.additionalInfo ? destNode.additionalInfo : {}
+              targetRuleChainId: {
+                entityType: EntityType.RULE_CHAIN,
+                id: destNode.targetRuleChainId,
+              },
+              additionalInfo: destNode.additionalInfo
+                ? destNode.additionalInfo
+                : {},
             } as RuleChainConnectionInfo;
             ruleChainConnection.additionalInfo.layoutX = Math.round(destNode.x);
             ruleChainConnection.additionalInfo.layoutY = Math.round(destNode.y);
@@ -1910,13 +2278,15 @@ export class RuleChainPageComponent extends PageComponent
             edge.labels.forEach((label) => {
               const newRuleChainConnection = deepClone(ruleChainConnection);
               newRuleChainConnection.type = label;
-              ruleChainMetaData.ruleChainConnections.push(newRuleChainConnection);
+              ruleChainMetaData.ruleChainConnections.push(
+                newRuleChainConnection
+              );
             });
           } else {
             const toIndex = nodes.indexOf(destNode);
             const nodeConnection = {
               fromIndex,
-              toIndex
+              toIndex,
             } as NodeConnectionInfo;
             edge.labels.forEach((label) => {
               const newNodeConnection = deepClone(nodeConnection);
@@ -1927,52 +2297,54 @@ export class RuleChainPageComponent extends PageComponent
         }
       });
 
-
-
-
-
-      this.ruleChainService.saveAndGetResolvedRuleChainMetadata(ruleChainMetaData, this.username, this.uid).subscribe((savedRuleChainMetaData) => {
-        this.ruleChainMetaData = savedRuleChainMetaData;
-        this.ruleType = this.ruleChainMetaData.ruleType;
-        this.ruleInputs = this.ruleChainMetaData.ruleInputs;
-        this.ruleReturn = this.ruleChainMetaData.ruleReturn;
-        this.name = this.ruleChainMetaData.name;
-        this.dataModels = this.ruleChainMetaData.dataModels;
-        this.inputDataModels = this.ruleChainMetaData.inputDataModels;
-        this.allDomainModelsWithSub = this.ruleChainMetaData.allDomainModelsWithSub;
-        this.allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
-        this.allDomainModels = this.ruleChainMetaData.allDomainModels;
-        this.allRuleInputs = this.ruleChainMetaData.allRuleInputs
-        this.allViewModels = this.ruleChainMetaData.allViewModels;
-        this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
-        this.allPdfs = this.ruleChainMetaData.allPdfs;
-        this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
-        this.allSubRules = this.ruleChainMetaData.allSubRules;
-        this.allApis = this.ruleChainMetaData.allApis;
-        this.allRoots = this.ruleChainMetaData.allRoots;
-        this.allErrorBranches = this.ruleChainMetaData.allErrorBranches;
-        this.allEvents = this.ruleChainMetaData.allEvents;
-        this.queryDb = this.ruleChainMetaData.queryDb;
-        this.commandDb = this.ruleChainMetaData.commandDb;
-        this.apptype = this.ruleChainMetaData.apptype;
-        this.allModelProperties = this.ruleChainMetaData.allModelProperties;
-        this.allGlobalProperties = this.ruleChainMetaData.allGlobalProperties;
-        this.connectorData = this.ruleChainMetaData.connectors;
-        this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
-        this.inputProperties = this.ruleChainMetaData.inputProperties;
-        this.allFields = this.ruleChainMetaData.allFields;
-        this.allConstants = this.ruleChainMetaData.allConstants;
-        this.allVariables = this.ruleChainMetaData.allVariables;
-        this.allSavedObjects = this.ruleChainMetaData.allSavedObjects;
-        this.allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
-        if (this.isImport) {
-          this.isDirtyValue = false;
-          this.isImport = false;
-          this.router.navigateByUrl(`ruleChains/${this.ruleChain.id.id}`);
-        } else {
-          this.createRuleChainModel();
-        }
-      });
+      this.ruleChainService
+        .saveAndGetResolvedRuleChainMetadata(
+          ruleChainMetaData,
+          this.username,
+          this.uid
+        )
+        .subscribe((savedRuleChainMetaData) => {
+          this.ruleChainMetaData = savedRuleChainMetaData;
+          this.ruleType = this.ruleChainMetaData.ruleType;
+          this.ruleInputs = this.ruleChainMetaData.ruleInputs;
+          this.ruleReturn = this.ruleChainMetaData.ruleReturn;
+          this.name = this.ruleChainMetaData.name;
+          this.dataModels = this.ruleChainMetaData.dataModels;
+          this.inputDataModels = this.ruleChainMetaData.inputDataModels;
+          this.allDomainModelsWithSub = this.ruleChainMetaData.allDomainModelsWithSub;
+          this.allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
+          this.allDomainModels = this.ruleChainMetaData.allDomainModels;
+          this.allRuleInputs = this.ruleChainMetaData.allRuleInputs;
+          this.allViewModels = this.ruleChainMetaData.allViewModels;
+          this.allLambdaFunctions = this.ruleChainMetaData.allLambdaFunctions;
+          this.allPdfs = this.ruleChainMetaData.allPdfs;
+          this.allHybridFunctions = this.ruleChainMetaData.allHybridFunctions;
+          this.allSubRules = this.ruleChainMetaData.allSubRules;
+          this.allApis = this.ruleChainMetaData.allApis;
+          this.allRoots = this.ruleChainMetaData.allRoots;
+          this.allErrorBranches = this.ruleChainMetaData.allErrorBranches;
+          this.allEvents = this.ruleChainMetaData.allEvents;
+          this.queryDb = this.ruleChainMetaData.queryDb;
+          this.commandDb = this.ruleChainMetaData.commandDb;
+          this.apptype = this.ruleChainMetaData.apptype;
+          this.allModelProperties = this.ruleChainMetaData.allModelProperties;
+          this.allGlobalProperties = this.ruleChainMetaData.allGlobalProperties;
+          this.connectorData = this.ruleChainMetaData.connectors;
+          this.inputCustomObjects = this.ruleChainMetaData.inputCustomObjects;
+          this.inputProperties = this.ruleChainMetaData.inputProperties;
+          this.allFields = this.ruleChainMetaData.allFields;
+          this.allConstants = this.ruleChainMetaData.allConstants;
+          this.allVariables = this.ruleChainMetaData.allVariables;
+          this.allSavedObjects = this.ruleChainMetaData.allSavedObjects;
+          this.allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
+          if (this.isImport) {
+            this.isDirtyValue = false;
+            this.isImport = false;
+            this.router.navigateByUrl(`ruleChains/${this.ruleChain.id.id}`);
+          } else {
+            this.createRuleChainModel();
+          }
+        });
     });
   }
 
@@ -1981,14 +2353,17 @@ export class RuleChainPageComponent extends PageComponent
   }
 
   addRuleNode(ruleNode: FcRuleNode) {
-
- //   let isNodeEdit: boolean = false;
-    ruleNode.configuration = deepClone(ruleNode.component.configurationDescriptor.nodeDefinition.defaultConfiguration);
+    //   let isNodeEdit: boolean = false;
+    ruleNode.configuration = deepClone(
+      ruleNode.component.configurationDescriptor.nodeDefinition
+        .defaultConfiguration
+    );
     const ruleChainId = this.ruleChain.id ? this.ruleChain.id.id : null;
 
     const dataModels = this.ruleChainMetaData.dataModels;
     const inputDataModels = this.ruleChainMetaData.inputDataModels;
-    const allDomainModelsWithSub = this.ruleChainMetaData.allDomainModelsWithSub;
+    const allDomainModelsWithSub = this.ruleChainMetaData
+      .allDomainModelsWithSub;
     const allViewModelsWithSub = this.ruleChainMetaData.allViewModelsWithSub;
     const allDomainModels = this.ruleChainMetaData.allDomainModels;
     const allRuleInputs = this.ruleChainMetaData.allRuleInputs;
@@ -2010,143 +2385,160 @@ export class RuleChainPageComponent extends PageComponent
     const inputProperties = this.ruleChainMetaData.inputProperties;
     const allFields = this.ruleChainMetaData.allFields;
     const allConstants = this.ruleChainMetaData.allConstants;
-    const allValueObjectProperties = this.ruleChainMetaData.allValueObjectProperties;
+    const allValueObjectProperties = this.ruleChainMetaData
+      .allValueObjectProperties;
     const allVariables = this.ruleChainMetaData.allVariables;
     const allSavedObjects = this.ruleChainMetaData.allSavedObjects;
     const allMicroservices = this.allMicroservices;
 
-    let connectorfields : QuestionBase[]= [];
-    let branchAvailability = {'branchParams': [], 'branchFound': false};
+    let connectorfields: QuestionBase[] = [];
+    let branchAvailability = { branchParams: [], branchFound: false };
 
-    if(ruleNode.component.type === 'CONNECTOR'){
-        let ruleNodeClass = ruleNode.component.clazz;
-        connectorfields = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).operations;
-
-    }
-
-    let connectorOperations : ConOperationBase[]= [];
-    if(ruleNode.component.type === 'CONNECTOR'){
+    if (ruleNode.component.type === "CONNECTOR") {
       let ruleNodeClass = ruleNode.component.clazz;
-      connectorOperations = this.connectorData.find(x => x.nodeClazz === ruleNodeClass).operations;
-
+      connectorfields = this.connectorData.find(
+        (x) => x.nodeClazz === ruleNodeClass
+      ).operations;
     }
 
+    let connectorOperations: ConOperationBase[] = [];
+    if (ruleNode.component.type === "CONNECTOR") {
+      let ruleNodeClass = ruleNode.component.clazz;
+      connectorOperations = this.connectorData.find(
+        (x) => x.nodeClazz === ruleNodeClass
+      ).operations;
+    }
 
     this.enableHotKeys = false;
-    this.dialog.open<AddRuleNodeDialogComponent, AddRuleNodeDialogData,
-      FcRuleNode>(AddRuleNodeDialogComponent, {
-      disableClose: true,
-      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-      data: {
-        ruleNode,
-        ruleChainId,
-        dataModels,
-        inputDataModels,
-        allDomainModelsWithSub,
-        allViewModelsWithSub,
-        inputCustomObjects,
-        inputProperties,
-        allFields,
-        allConstants,
-        allVariables,
-        allSavedObjects,
-        connectorfields,
-        connectorOperations,
-        branchAvailability,
-        allDomainModels,
-        allViewModels,
-        allModelProperties,
-        allRuleInputs,
-        allEvents,
-        allValueObjectProperties,
-        allLambdaFunctions,
-        allPdfs,
-        allHybridFunctions,
-        connectionPropertyTemplates,
-        allSubRules,
-        allApis,
-        allRoots,
-        allErrorBranches,
-        queryDb,
-        commandDb,
-        apptype,
-        allMicroservices
-   //     isNodeEdit
-      }
-    }).afterClosed().subscribe(
-      (addedRuleNode) => {
+    this.dialog
+      .open<AddRuleNodeDialogComponent, AddRuleNodeDialogData, FcRuleNode>(
+        AddRuleNodeDialogComponent,
+        {
+          disableClose: true,
+          panelClass: ["virtuan-dialog", "virtuan-fullscreen-dialog"],
+          data: {
+            ruleNode,
+            ruleChainId,
+            dataModels,
+            inputDataModels,
+            allDomainModelsWithSub,
+            allViewModelsWithSub,
+            inputCustomObjects,
+            inputProperties,
+            allFields,
+            allConstants,
+            allVariables,
+            allSavedObjects,
+            connectorfields,
+            connectorOperations,
+            branchAvailability,
+            allDomainModels,
+            allViewModels,
+            allModelProperties,
+            allRuleInputs,
+            allEvents,
+            allValueObjectProperties,
+            allLambdaFunctions,
+            allPdfs,
+            allHybridFunctions,
+            connectionPropertyTemplates,
+            allSubRules,
+            allApis,
+            allRoots,
+            allErrorBranches,
+            queryDb,
+            commandDb,
+            apptype,
+            allMicroservices,
+            //     isNodeEdit
+          },
+        }
+      )
+      .afterClosed()
+      .subscribe((addedRuleNode) => {
         if (addedRuleNode) {
-          addedRuleNode.id = 'rule-chain-node-' + this.nextNodeID++;
+          addedRuleNode.id = "rule-chain-node-" + this.nextNodeID++;
           addedRuleNode.connectors = [];
-          if (addedRuleNode.component.configurationDescriptor.nodeDefinition.inEnabled) {
-            addedRuleNode.connectors.push(
-              {
-                id: (this.nextConnectorID++) + '',
-                type: FlowchartConstants.leftConnectorType
-              }
-            );
+          if (
+            addedRuleNode.component.configurationDescriptor.nodeDefinition
+              .inEnabled
+          ) {
+            addedRuleNode.connectors.push({
+              id: this.nextConnectorID++ + "",
+              type: FlowchartConstants.leftConnectorType,
+            });
           }
-          if (addedRuleNode.component.configurationDescriptor.nodeDefinition.outEnabled) {
-            addedRuleNode.connectors.push(
-              {
-                id: (this.nextConnectorID++) + '',
-                type: FlowchartConstants.rightConnectorType
-              }
-            );
+          if (
+            addedRuleNode.component.configurationDescriptor.nodeDefinition
+              .outEnabled
+          ) {
+            addedRuleNode.connectors.push({
+              id: this.nextConnectorID++ + "",
+              type: FlowchartConstants.rightConnectorType,
+            });
           }
           this.ruleChainModel.nodes.push(addedRuleNode);
           this.onModelChanged();
           this.updateRuleNodesHighlight();
         }
         this.enableHotKeys = true;
-      }
-    );
+      });
   }
 
-  addRuleNodeLink(link: FcRuleEdge, labels: {[label: string]: LinkLabel}, allowCustomLabels: boolean): Observable<FcRuleEdge> {
-    return this.dialog.open<AddRuleNodeLinkDialogComponent, AddRuleNodeLinkDialogData,
-      FcRuleEdge>(AddRuleNodeLinkDialogComponent, {
-      disableClose: true,
-      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-      data: {
-        link,
-        labels,
-        allowCustomLabels
-      }
-    }).afterClosed();
+  addRuleNodeLink(
+    link: FcRuleEdge,
+    labels: { [label: string]: LinkLabel },
+    allowCustomLabels: boolean
+  ): Observable<FcRuleEdge> {
+    return this.dialog
+      .open<
+        AddRuleNodeLinkDialogComponent,
+        AddRuleNodeLinkDialogData,
+        FcRuleEdge
+      >(AddRuleNodeLinkDialogComponent, {
+        disableClose: true,
+        panelClass: ["virtuan-dialog", "virtuan-fullscreen-dialog"],
+        data: {
+          link,
+          labels,
+          allowCustomLabels,
+        },
+      })
+      .afterClosed();
   }
 
   private updateNodeErrorTooltip(node: FcRuleNode) {
     if (node.error) {
-      const element = $('#' + node.id);
+      const element = $("#" + node.id);
       let tooltip = this.errorTooltips[node.id];
-      if (!tooltip || !element.hasClass('tooltipstered')) {
-        element.tooltipster(
-          {
-            theme: 'tooltipster-shadow',
-            delay: 0,
-            animationDuration: 0,
-            trigger: 'custom',
-            triggerOpen: {
-              click: false,
-              tap: false
-            },
-            triggerClose: {
-              click: false,
-              tap: false,
-              scroll: false
-            },
-            side: 'top',
-            trackOrigin: true
-          }
-        );
-        const content = '<div class="virtuan-rule-node-error-tooltip">' +
+      if (!tooltip || !element.hasClass("tooltipstered")) {
+        element.tooltipster({
+          theme: "tooltipster-shadow",
+          delay: 0,
+          animationDuration: 0,
+          trigger: "custom",
+          triggerOpen: {
+            click: false,
+            tap: false,
+          },
+          triggerClose: {
+            click: false,
+            tap: false,
+            scroll: false,
+          },
+          side: "top",
+          trackOrigin: true,
+        });
+        const content =
+          '<div class="virtuan-rule-node-error-tooltip">' +
           '<div id="tooltip-content" layout="column">' +
-          '<div class="virtuan-node-details">' + node.error + '</div>' +
-          '</div>' +
-          '</div>';
+          '<div class="virtuan-node-details">' +
+          node.error +
+          "</div>" +
+          "</div>" +
+          "</div>";
         const contentElement = $(content);
-        tooltip = element.tooltipster('instance');
+        tooltip = element.tooltipster("instance");
         tooltip.isErrorTooltip = true;
         tooltip.content(contentElement);
         this.errorTooltips[node.id] = tooltip;
@@ -2178,26 +2570,24 @@ export class RuleChainPageComponent extends PageComponent
     this.destroyTooltips();
     this.tooltipTimeout = setTimeout(() => {
       const element = $(event.target);
-      element.tooltipster(
-        {
-          theme: 'tooltipster-shadow',
-          delay: 100,
-          trigger: 'custom',
-          triggerOpen: {
-            click: false,
-            tap: false
-          },
-          triggerClose: {
-            click: true,
-            tap: true,
-            scroll: true
-          },
-          side: 'right',
-          trackOrigin: true
-        }
-      );
+      element.tooltipster({
+        theme: "tooltipster-shadow",
+        delay: 100,
+        trigger: "custom",
+        triggerOpen: {
+          click: false,
+          tap: false,
+        },
+        triggerClose: {
+          click: true,
+          tap: true,
+          scroll: true,
+        },
+        side: "right",
+        trackOrigin: true,
+      });
       const contentElement = $(content);
-      const tooltip = element.tooltipster('instance');
+      const tooltip = element.tooltipster("instance");
       tooltip.content(contentElement);
       tooltip.open();
     }, 500);
@@ -2206,33 +2596,37 @@ export class RuleChainPageComponent extends PageComponent
 
 export interface AddRuleNodeLinkDialogData {
   link: FcRuleEdge;
-  labels: {[label: string]: LinkLabel};
+  labels: { [label: string]: LinkLabel };
   allowCustomLabels: boolean;
 }
 
 @Component({
-  selector: 'virtuan-add-rule-node-link-dialog',
-  templateUrl: './add-rule-node-link-dialog.component.html',
-  providers: [{provide: ErrorStateMatcher, useExisting: AddRuleNodeLinkDialogComponent}],
-  styleUrls: ['./add-rule-node-link-dialog.component.scss']
+  selector: "virtuan-add-rule-node-link-dialog",
+  templateUrl: "./add-rule-node-link-dialog.component.html",
+  providers: [
+    { provide: ErrorStateMatcher, useExisting: AddRuleNodeLinkDialogComponent },
+  ],
+  styleUrls: ["./add-rule-node-link-dialog.component.scss"],
 })
-export class AddRuleNodeLinkDialogComponent extends DialogComponent<AddRuleNodeLinkDialogComponent, FcRuleEdge>
-  implements OnInit, ErrorStateMatcher {
-
+export class AddRuleNodeLinkDialogComponent
+  extends DialogComponent<AddRuleNodeLinkDialogComponent, FcRuleEdge>
+  implements ErrorStateMatcher {
   ruleNodeLinkFormGroup: FormGroup;
 
   link: FcRuleEdge;
-  labels: {[label: string]: LinkLabel};
+  labels: { [label: string]: LinkLabel };
   allowCustomLabels: boolean;
 
   submitted = false;
 
-  constructor(protected store: Store<AppState>,
-              protected router: Router,
-              @Inject(MAT_DIALOG_DATA) public data: AddRuleNodeLinkDialogData,
-              @SkipSelf() private errorStateMatcher: ErrorStateMatcher,
-              public dialogRef: MatDialogRef<AddRuleNodeLinkDialogComponent, FcRuleEdge>,
-              private fb: FormBuilder) {
+  constructor(
+    protected store: Store<AppState>,
+    protected router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: AddRuleNodeLinkDialogData,
+    @SkipSelf() private errorStateMatcher: ErrorStateMatcher,
+    public dialogRef: MatDialogRef<AddRuleNodeLinkDialogComponent, FcRuleEdge>,
+    private fb: FormBuilder
+  ) {
     super(store, router, dialogRef);
 
     this.link = this.data.link;
@@ -2240,16 +2634,18 @@ export class AddRuleNodeLinkDialogComponent extends DialogComponent<AddRuleNodeL
     this.allowCustomLabels = this.data.allowCustomLabels;
 
     this.ruleNodeLinkFormGroup = this.fb.group({
-        link: [deepClone(this.link), [Validators.required]]
-      }
+      link: [deepClone(this.link), [Validators.required]],
+    });
+  }
+
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const originalErrorState = this.errorStateMatcher.isErrorState(
+      control,
+      form
     );
-  }
-
-  ngOnInit(): void {
-  }
-
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const originalErrorState = this.errorStateMatcher.isErrorState(control, form);
     const customErrorState = !!(control && control.invalid && this.submitted);
     return originalErrorState || customErrorState;
   }
@@ -2260,8 +2656,8 @@ export class AddRuleNodeLinkDialogComponent extends DialogComponent<AddRuleNodeL
 
   add(): void {
     this.submitted = true;
-    const link: FcRuleEdge = this.ruleNodeLinkFormGroup.get('link').value;
-    this.link = {...this.link, ...link};
+    const link: FcRuleEdge = this.ruleNodeLinkFormGroup.get("link").value;
+    this.link = { ...this.link, ...link };
     this.dialogRef.close(this.link);
   }
 }
@@ -2288,7 +2684,7 @@ export interface AddRuleNodeDialogData {
   allRuleInputs: any[];
   allEvents: any[];
   allLambdaFunctions: any[];
-  allPdfs:any[];
+  allPdfs: any[];
   allHybridFunctions: any[];
   connectionPropertyTemplates: any[];
   allSubRules: any[];
@@ -2300,19 +2696,22 @@ export interface AddRuleNodeDialogData {
   apptype: string;
   branchAvailability: any;
   allMicroservices: any[];
-//  isNodeEdit: boolean;
+  //  isNodeEdit: boolean;
 }
 
 @Component({
-  selector: 'virtuan-add-rule-node-dialog',
-  templateUrl: './add-rule-node-dialog.component.html',
-  providers: [{provide: ErrorStateMatcher, useExisting: AddRuleNodeDialogComponent}],
-  styleUrls: []
+  selector: "virtuan-add-rule-node-dialog",
+  templateUrl: "./add-rule-node-dialog.component.html",
+  providers: [
+    { provide: ErrorStateMatcher, useExisting: AddRuleNodeDialogComponent },
+  ],
+  styleUrls: [],
 })
-export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialogComponent, FcRuleNode>
-  implements OnInit, ErrorStateMatcher {
-
-  @ViewChild('virtuanRuleNode', {static: true}) ruleNodeDetailsComponent: RuleNodeDetailsComponent;
+export class AddRuleNodeDialogComponent
+  extends DialogComponent<AddRuleNodeDialogComponent, FcRuleNode>
+  implements ErrorStateMatcher {
+  @ViewChild("virtuanRuleNode", { static: true })
+  ruleNodeDetailsComponent: RuleNodeDetailsComponent;
 
   ruleNode: FcRuleNode;
   ruleChainId: string;
@@ -2333,11 +2732,11 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   allDomainModels: any[];
   allViewModels: any[];
   allLambdaFunctions: any[];
-  allPdfs:any[];
+  allPdfs: any[];
   allHybridFunctions: any[];
   connectionPropertyTemplates: any[];
   allSubRules: any[];
-  allApis:any[];
+  allApis: any[];
   allRoots: any[];
   allErrorBranches: any[];
   allModelProperties: any[];
@@ -2347,23 +2746,25 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   commandDb: string;
   apptype: string;
   allMicroservices: any[];
- // isNodeEdit: boolean;
+  // isNodeEdit: boolean;
 
   submitted = false;
 
-  constructor(protected store: Store<AppState>,
-              protected router: Router,
-              @Inject(MAT_DIALOG_DATA) public data: AddRuleNodeDialogData,
-              @SkipSelf() private errorStateMatcher: ErrorStateMatcher,
-              public dialogRef: MatDialogRef<AddRuleNodeDialogComponent, FcRuleNode>) {
+  constructor(
+    protected store: Store<AppState>,
+    protected router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: AddRuleNodeDialogData,
+    @SkipSelf() private errorStateMatcher: ErrorStateMatcher,
+    public dialogRef: MatDialogRef<AddRuleNodeDialogComponent, FcRuleNode>
+  ) {
     super(store, router, dialogRef);
 
     this.ruleNode = this.data.ruleNode;
     this.ruleChainId = this.data.ruleChainId;
     this.dataModels = this.data.dataModels;
     this.inputDataModels = this.data.inputDataModels;
-    this.allDomainModelsWithSub= this.data.allDomainModelsWithSub;
-    this.allViewModelsWithSub= this.data.allViewModelsWithSub;
+    this.allDomainModelsWithSub = this.data.allDomainModelsWithSub;
+    this.allViewModelsWithSub = this.data.allViewModelsWithSub;
     this.inputCustomObjects = this.data.inputCustomObjects;
     this.inputProperties = this.data.inputProperties;
     this.allFields = this.data.allFields;
@@ -2377,14 +2778,14 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.allDomainModels = this.data.allDomainModels;
     this.allViewModels = this.data.allViewModels;
     this.allLambdaFunctions = this.data.allLambdaFunctions;
-    this.allPdfs=this.data.allPdfs;
+    this.allPdfs = this.data.allPdfs;
     this.allHybridFunctions = this.data.allHybridFunctions;
     this.connectionPropertyTemplates = this.data.connectionPropertyTemplates;
     this.allSubRules = this.data.allSubRules;
     this.allApis = this.data.allApis;
     this.allRoots = this.data.allRoots;
     this.allErrorBranches = this.data.allErrorBranches;
-  //  this.isNodeEdit = this.data.isNodeEdit;
+    //  this.isNodeEdit = this.data.isNodeEdit;
     this.allModelProperties = this.data.allModelProperties;
     this.allRuleInputs = this.data.allRuleInputs;
     this.allEvents = this.data.allEvents;
@@ -2392,14 +2793,16 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
     this.commandDb = this.data.commandDb;
     this.apptype = this.data.apptype;
     this.allMicroservices = this.data.allMicroservices;
-
   }
 
-  ngOnInit(): void {
-  }
-
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const originalErrorState = this.errorStateMatcher.isErrorState(control, form);
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const originalErrorState = this.errorStateMatcher.isErrorState(
+      control,
+      form
+    );
     const customErrorState = !!(control && control.invalid && this.submitted);
     return originalErrorState || customErrorState;
   }
@@ -2413,7 +2816,6 @@ export class AddRuleNodeDialogComponent extends DialogComponent<AddRuleNodeDialo
   }
 
   add(): void {
-
     this.submitted = true;
     this.ruleNode.ruleNodeUUId = uuidv4();
     this.dialogRef.close(this.ruleNode);
