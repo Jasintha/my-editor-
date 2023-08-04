@@ -1,0 +1,24 @@
+{
+    "/api": {
+      "target": "https://34.207.210.64/",
+      "secure": false,
+      "logLevel": "info",
+      "changeOrigin": true
+    },
+    "/status": {
+      "target": "https://34.207.210.64/",
+      "secure": false,
+      "logLevel": "info",
+      "changeOrigin": true
+    },
+    "/static/rulenode": {
+      "target": "https://34.207.210.64/",
+      "secure": false,
+      "changeOrigin": true
+    },
+    "/api/ws": {
+      "target": "wss://34.207.210.64/",
+      "ws": true
+    }
+  }
+  
