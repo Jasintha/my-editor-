@@ -1,19 +1,3 @@
-///
-///
-///
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///     http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
-
 import {
   AfterViewInit,
   Component,
@@ -84,6 +68,7 @@ import {
   ruleNodeTypeDescriptors,
   ruleNodeTypesLibrary,
   serviceruleNodeTypesLibrary,
+  uibruleNodeTypesLibrary,
 } from "@shared/models/rule-node.models";
 import {
   QuestionBase,
@@ -499,6 +484,8 @@ export class RuleChainPageComponent extends PageComponent
 
     if (this.editorType === "servicefile") {
       this.ruleNodeTypesLibraryArray = serviceruleNodeTypesLibrary;
+    } else if (this.editorType === "uib") {
+      this.ruleNodeTypesLibraryArray = uibruleNodeTypesLibrary;
     } else {
       this.ruleNodeTypesLibraryArray = ruleNodeTypesLibrary;
     }
@@ -571,6 +558,19 @@ export class RuleChainPageComponent extends PageComponent
 
     if (this.editorType === "servicefile") {
       for (const type of serviceruleNodeTypesLibrary) {
+        const desc = ruleNodeTypeDescriptors.get(type);
+        if (!desc.special) {
+          this.ruleNodeTypesModel[type] = {
+            model: {
+              nodes: [],
+              edges: [],
+            },
+            selectedObjects: [],
+          };
+        }
+      }
+    } else if (this.editorType === "uib") {
+      for (const type of uibruleNodeTypesLibrary) {
         const desc = ruleNodeTypeDescriptors.get(type);
         if (!desc.special) {
           this.ruleNodeTypesModel[type] = {
@@ -778,6 +778,20 @@ export class RuleChainPageComponent extends PageComponent
             }
           }
         }
+      } else if (this.editorType === "uib"){
+        for (let i = 0; i < uibruleNodeTypesLibrary.length; i++) {
+          const panel = this.expansionPanels.find((item, index) => {
+            return index === i;
+          });
+          if (panel) {
+            const type = uibruleNodeTypesLibrary[i];
+            if (!this.ruleNodeTypesModel[type].model.nodes.length) {
+              panel.close();
+            } else {
+              panel.open();
+            }
+          }
+        }
       } else {
         for (let i = 0; i < ruleNodeTypesLibrary.length; i++) {
           const panel = this.expansionPanels.find((item, index) => {
@@ -805,7 +819,7 @@ export class RuleChainPageComponent extends PageComponent
     this.ruleChainModel.edges = [];
 
     this.inputConnectorId = this.nextConnectorID++;
-    if (this.editorType === "servicefile") {
+    if (this.editorType === "servicefile" || this.editorType === "uib") {
     } else {
       this.ruleChainModel.nodes.push({
         id: "rule-chain-node-" + this.nextNodeID++,

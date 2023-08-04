@@ -48,7 +48,6 @@ import * as _moment from "moment";
 import { BuildViewComponent } from "../build-view/build-view.component";
 import { UiHomeComponent } from "../ui-home/ui-home.component";
 import { ServiceHomeComponent } from "../service-home/service-home.component";
-import { DesignViewComponent } from "../design-view/design-view.component";
 import { MicroserviceModelComponent } from "../aggregate/microservice-model.component";
 import { ThemeUpdateComponent } from "../theme/theme-update.component";
 import { FlexGridHandlerComponent } from "../built-in-page/flex-grid-handler.component";
@@ -57,6 +56,7 @@ import { CustomPageViewComponent } from "../built-in-page/custom-page.component"
 import { FilterPageComponent } from "../built-in-page/filter-page.component";
 import { SinglePageViewComponent } from "../built-in-page/single-page.component";
 import { LamdafunctionEditorComponent } from "../create-lamdafunction/function-editor.component";
+import { DesignViewComponent } from "../design-view/design-view.component";
 
 declare const SystemJS;
 
