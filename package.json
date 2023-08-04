@@ -5,6 +5,7 @@
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "ng": "ng",
     "start": "ng serve --port 4200 --host 0.0.0.0",
+    "proxy": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --sourceMap=false --base-href /",
     "build:prod": "ng build --prod --vendor-chunk --base-href /",
     "test": "ng test",
@@ -53,8 +54,8 @@
     "base64-js": "^1.3.1",
     "bootstrap-4-vertical-tabs": "^1.0.7",
     "canvas-gauges": "^2.1.7",
-    "compass-sass-mixins": "^0.12.7",
     "chart.js": "^2.9.3",
+    "compass-sass-mixins": "^0.12.7",
     "core-js": "^3.6.5",
     "date-fns": "^2.12.0",
     "flot": "git://github.com/thingsboard/flot.git#0.9-work",
@@ -110,6 +111,7 @@
     "tslib": "^1.11.1",
     "tv4": "^1.3.0",
     "typeface-roboto": "^0.0.75",
+    "uuid": "^9.0.0",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
