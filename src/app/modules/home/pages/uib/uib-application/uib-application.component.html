@@ -12,25 +12,21 @@
       <h1
         style="font-weight: 300; size: 30px; color: #1a73e8; margin-left: 20px;"
       >
-        Dashboard
+        Application
       </h1>
-        <div style="display: flex; flex-direction: column;">
-          <section class="filter-section">
-            <div style="display: flex;flex-direction: row; justify-content: center; gap: 20%">
-                <div *ngFor="let rule of rules">
-                  <mat-checkbox [(ngModel)]="rule.selected" color="primary"
-                                (ngModelChange)="updateQuery(rule)">
-                    {{rule.name}}
-                  </mat-checkbox>
-                </div>
-            </div> 
-          </section>
-          <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-            <div *ngFor="let chart of chartList">
-              <donut-chart [data]="chart"></donut-chart>
-            </div>
+      <mat-progress-bar
+        mode="indeterminate"
+        *ngIf="isProssesing"
+      ></mat-progress-bar>
+      <div
+        style="display: flex; flex-wrap: wrap; justify-content: space-around; width: 90%;"
+      >
+        <div *ngFor="let tile of tiles">
+          <div (click)="openbox(tile)" style="z-index: 2;">
+            <grid-tile [node]="tile"></grid-tile>
           </div>
         </div>
+      </div>
     </div>
     <ul
       class="nav nav-tabs right-tabs sideways-tabs"

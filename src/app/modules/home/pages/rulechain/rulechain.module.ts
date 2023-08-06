@@ -96,6 +96,12 @@ import {SubMenuModule} from '@home/pages/sub-menu/sub-menu.module';
 import {BuildViewModule} from '@home/pages/build-view/build-view.module';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { DesignViewComponent } from '../design-view/design-view.component';
+import { UibDashboardPageComponent } from '../uib/uib-dashboard/uib-dashboard.component';
+import { UibApplicationPageComponent } from '../uib/uib-application/uib-application.component';
+import { UibRuntimePageComponent } from '../uib/uib-runtime/uib-runtime.component';
+import { ChartComponent } from '../uib/charts/chart.component';
+import { UibServicePageComponent } from '../uib/uib-service/uib-service.component';
+import { GrideTileComponent } from '../uib/grid-tile/grid-tile.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +134,13 @@ import { DesignViewComponent } from '../design-view/design-view.component';
     DesignWarningComponent,
     UiHomeComponent,
     ServiceHomeComponent,
-    DesignViewComponent
+    DesignViewComponent,
+    UibDashboardPageComponent,
+    UibApplicationPageComponent,
+    UibRuntimePageComponent,
+    UibServicePageComponent,
+    GrideTileComponent,
+    ChartComponent
   ],
   providers: [
     {

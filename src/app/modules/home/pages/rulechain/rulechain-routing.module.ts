@@ -57,6 +57,10 @@ import { FilterPageComponent } from "../built-in-page/filter-page.component";
 import { SinglePageViewComponent } from "../built-in-page/single-page.component";
 import { LamdafunctionEditorComponent } from "../create-lamdafunction/function-editor.component";
 import { DesignViewComponent } from "../design-view/design-view.component";
+import { UibDashboardPageComponent } from "../uib/uib-dashboard/uib-dashboard.component";
+import { UibApplicationPageComponent } from "../uib/uib-application/uib-application.component";
+import { UibRuntimePageComponent } from "../uib/uib-runtime/uib-runtime.component";
+import { UibServicePageComponent } from "../uib/uib-service/uib-service.component";
 
 declare const SystemJS;
 
@@ -289,6 +293,44 @@ const routes: Routes = [
     data: {
       auth: [Authority.TENANT_ADMIN],
     },
+  },
+  {
+    path: "dashboard",
+    component: UibDashboardPageComponent,
+    data: {
+      auth: [Authority.TENANT_ADMIN],
+    },
+  },
+  {
+    path: "application",
+    component: UibApplicationPageComponent,
+    data: {
+      auth: [Authority.TENANT_ADMIN],
+    },
+  },
+  {
+    path: "runtime",
+    component: UibRuntimePageComponent,
+    data: {
+      auth: [Authority.TENANT_ADMIN],
+    },
+  },
+  {
+    path: "uib-service",
+    component: UibServicePageComponent,
+    data: {
+      auth: [Authority.TENANT_ADMIN],
+    },
+    children: [
+      {
+        path: "rulechain",
+        component: RuleChainPageComponent,
+        canDeactivate: [ConfirmOnExitGuard],
+        data: {
+          auth: [Authority.TENANT_ADMIN],
+        },
+      },
+    ]
   },
 ];
 

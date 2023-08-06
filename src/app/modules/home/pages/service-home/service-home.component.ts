@@ -243,7 +243,12 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
   selectActiveNode(node) {
     this.activeNode = node;
     this.projectUid = this.activeNode.data.projectuuid;
-    this.viewComponent(node.data);
+    if(node.name.toLowerCase().includes('.uib')){
+      node.data.type = 'UIB'
+      this.viewComponent(node.data);
+  }else{
+      this.viewComponent(node.data);
+  }
   }
 
   refreshTree() {
@@ -351,7 +356,8 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
       item.type === "TASK" ||
       item.type === "MAIN_TASK" ||
       item.type === "SERVICEFILE" ||
-      item.type === "WORKFLOW"
+      item.type === "WORKFLOW"  ||
+      item.type === 'UIB'
     ) {
       this.viewRule(item);
     } else {
@@ -611,6 +617,8 @@ export class ServiceHomeComponent implements OnInit, OnChanges {
     this.ruleprojectUid = item.projectuuid;
     if (item.type === "SERVICEFILE") {
       this.editorType = "servicefile";
+    } else if(item.type === "UIB"){
+      this.editorType = "uib";
     } else if (item.type === "MAIN_TASK") {
       this.editorType = "maintask";
     } else {

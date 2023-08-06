@@ -1,36 +1,7 @@
-<div style="height: 100%;" class="rulechain-page-custom-scroll">
-  <div
-    style="
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      display: flex;
-      flex-direction: row;
-    "
-  >
+<div style="height: 100%;">
+  <div style="width: 100%; height: 100%; background: #ffffff; display: flex;">
     <div style="width: 100%; height: 100%;">
-      <h1
-        style="font-weight: 300; size: 30px; color: #1a73e8; margin-left: 20px;"
-      >
-        Dashboard
-      </h1>
-        <div style="display: flex; flex-direction: column;">
-          <section class="filter-section">
-            <div style="display: flex;flex-direction: row; justify-content: center; gap: 20%">
-                <div *ngFor="let rule of rules">
-                  <mat-checkbox [(ngModel)]="rule.selected" color="primary"
-                                (ngModelChange)="updateQuery(rule)">
-                    {{rule.name}}
-                  </mat-checkbox>
-                </div>
-            </div> 
-          </section>
-          <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-            <div *ngFor="let chart of chartList">
-              <donut-chart [data]="chart"></donut-chart>
-            </div>
-          </div>
-        </div>
+      <router-outlet></router-outlet>
     </div>
     <ul
       class="nav nav-tabs right-tabs sideways-tabs"
