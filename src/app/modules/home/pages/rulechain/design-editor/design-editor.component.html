@@ -51,8 +51,7 @@
                             [ngClass]="{'carousel-next-hide': hideCarouselNext}">
                             <ng-template let-req pTemplate="item">
                                 <div class="wrap mb-0" [ngClass]="{'currentReq': req.uuid === currentReq.uuid }"
-                                    [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 200px;width: 314px;
-}" matTooltip="{{req?.name}}" [matTooltipPosition]="'above'" (click)="clickReq(req)">
+                                    [ngStyle]="{'border-style' : req.uuid === currentReq.uuid ? '' : 'dashed' }" style="height: 200px;width: 314px;" matTooltip="{{req?.name}}" [matTooltipPosition]="'above'" (click)="clickReq(req)">
                                     <div style="display: flex; flex-direction: column; width: 100%;">
                                         <div
                                             style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;">
@@ -702,7 +701,7 @@
         </div>
     </div>
 </div>
-
+<!-- 
 <div style="width: 100%; height: 100%;">
     <virtuan-story-design-page
     *ngIf="viewEditor && ruleChainLoaded && ruleChainMetaDataLoaded && ruleNodeComponentsLoaded && connectionPropertyTemplatesLoaded"
@@ -710,4 +709,4 @@
     [connectionPropertyTemplates]="connectionPropertyTemplates" [username]="username" [uid]="desprojectUid"
     [ruleNodeComponents]="ruleNodeComponents" [serviceUuid]="storyserviceUuid" [projectUid]="desprojectUid"
     [storyuuid]="storyuuid"></virtuan-story-design-page>
-</div>
+</div> -->
