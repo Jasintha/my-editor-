@@ -19,11 +19,11 @@
         *ngIf="isProssesing"
       ></mat-progress-bar>
       <div
-        style="display: flex; flex-wrap: wrap; justify-content: space-around; width: 90%;"
+        style="display: flex; flex-wrap: wrap; justify-content: space-between; width: 90%; margin-left: 65px"
       >
-        <div *ngFor="let tile of tiles">
-          <div (click)="openbox(tile)" style="z-index: 2;">
-            <grid-tile [node]="tile"></grid-tile>
+        <div *ngFor="let app of applications">
+          <div (click)="openbox(app)" style="z-index: 2;">
+            <grid-tile [app]="app"></grid-tile>
           </div>
         </div>
       </div>

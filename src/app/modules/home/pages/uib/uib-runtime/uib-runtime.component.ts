@@ -12,12 +12,7 @@ import { LoginService } from "@app/core/services/login.services";
   })
   export class UibRuntimePageComponent implements OnInit {
 
-    tiles: Tile[] = [
-      {text: 'One', cols: 3, rows: 1, color: 'lightblue'},
-      {text: 'Two', cols: 1, rows: 2, color: 'lightgreen'},
-      {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-      {text: 'Four', cols: 2, rows: 1, color: '#DDBDF1'},
-    ];
+    tiles: Tile[] = [];
     currentTab: string;
     constructor(private router: Router, private loginService: LoginService){}
 

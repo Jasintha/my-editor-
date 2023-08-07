@@ -1,5 +1,5 @@
-import { Component, Input, ViewEncapsulation } from "@angular/core";
-import {Node} from 'src/app/modules/home/pages/uib/uib-application/uib-application.component'
+import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import {Application} from 'src/app/modules/home/pages/uib/uib-application/uib-application.component'
 
 @Component({
     selector: 'grid-tile',
@@ -7,10 +7,18 @@ import {Node} from 'src/app/modules/home/pages/uib/uib-application/uib-applicati
     styleUrls: ['./grid-tile.component.scss'],
     encapsulation: ViewEncapsulation.None
   })
-  export class GrideTileComponent {
-  @Input()node: Node;
+  export class GrideTileComponent implements OnInit {
+  @Input()app: Application;
 
     constructor(){}
+
+    ngOnInit(){
+      console.log(this.app.data)
+    }
+
+    getColor(color){
+      return color;
+    }
 
   }
   

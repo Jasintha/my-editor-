@@ -8,12 +8,24 @@ import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
 } from "@angular/material/tree";
+import { icon } from "leaflet";
 
 export interface Tile {
+  applications: Application []
+}
+
+export interface Application {
+  title: BasicData,
+  labels: BasicData[],
+  hstatus: BasicData,
+  sstatus: BasicData,
+  data: any[]
+}
+
+export interface BasicData {
+  name: string;
   color: string;
-  cols: number;
-  rows: number;
-  text: string;
+  icon: string | undefined;
 }
 
 export interface Node {
@@ -46,7 +58,7 @@ export class UibApplicationPageComponent implements OnInit {
     };
   };
 
-  tiles: Node[] = [];
+  applications: Application[] = [];
 
   treeControl = new FlatTreeControl<any>(
     (node) => node.level,
@@ -76,11 +88,11 @@ export class UibApplicationPageComponent implements OnInit {
     this.loadGridTiles();
   }
 
-  openbox(tile: Node) {
-    if (tile.name.toLowerCase().includes(".uib")) {
-      tile.type = "UIB";
-    }
-    this.triggerService(tile);
+  openbox(tile: Application) {
+    // if (tile.name.toLowerCase().includes(".uib")) {
+    //   tile.type = "UIB";
+    // }
+    // this.triggerService(tile);
   }
 
   triggerService(item) {
@@ -105,16 +117,118 @@ export class UibApplicationPageComponent implements OnInit {
   }
 
   loadGridTiles() {
-    this.projectService.findAllProjectComponents().subscribe((comps) => {
-      this.dataSource.data = comps;
-      const process = this.dataSource.data[0].children.filter(
-        (parent) => parent.type === "PARENT_PROCESS"
-      );
-      for (let node of process[0].children) {
-        this.tiles = [...this.tiles, node];
+    this.applications = [
+      {
+        title: {
+          name: 'test 1',
+          color: 'green',
+          icon: 'share'
+        },
+        labels: [
+          {
+            name: 'test label',
+            color: 'yellow',
+            icon: undefined
+          },
+          {
+            name: 'test label',
+            color: 'blue',
+            icon: undefined
+          }
+        ],
+        hstatus: {
+          name: 'healthy',
+          color: 'green',
+          icon: 'favorite'
+        },
+        sstatus: {
+          name: 'synced',
+          color: 'green',
+          icon: 'sync'
+        },
+        data:{
+          'a': 123,
+          'b': 234,
+          'c': 456
+        }
+      },
+      {
+        title: {
+          name: 'test 2',
+          color: 'green',
+          icon: 'share'
+        },
+        labels: [
+          {
+            name: 'test label',
+            color: 'yellow',
+            icon: undefined
+          },
+          {
+            name: 'test label',
+            color: 'blue',
+            icon, undefined
+          }
+        ],
+        hstatus: {
+          name: 'healthy',
+          color: 'green',
+          icon: 'favorite'
+        },
+        sstatus: {
+          name: 'synced',
+          color: 'green',
+          icon: 'sync'
+        },
+        data: {
+        
+        }
+      },
+      {
+        title: {
+          name: 'test 3',
+          color: 'green',
+          icon: 'share'
+        },
+        labels: [
+          {
+            name: 'test label',
+            color: 'yellow',
+            icon: undefined
+          },
+          {
+            name: 'test label',
+            color: 'blue',
+            icon, undefined
+          }
+        ],
+        hstatus: {
+          name: 'healthy',
+          color: 'green',
+          icon: 'favorite'
+        },
+        sstatus: {
+          name: 'synced',
+          color: 'green',
+          icon: 'sync'
+        },
+        data: {
+          'a': 123,
+          'b': 234,
+          'c': 456
+        }
       }
-      this.isProssesing = false
-    });
+    ] as Application[]
+    // this.projectService.findAllProjectComponents().subscribe((comps) => {
+    //   this.dataSource.data = comps;
+    //   const process = this.dataSource.data[0].children.filter(
+    //     (parent) => parent.type === "PARENT_PROCESS"
+    //   );
+    //   for (let node of process[0].children) {
+    //     this.tiles = [...this.tiles, node];
+    //   }
+    //   this.isProssesing = false
+    // });
   }
 
   changeSplit(val) {

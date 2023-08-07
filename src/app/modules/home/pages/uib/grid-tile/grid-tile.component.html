@@ -1,13 +1,60 @@
-<mat-card class="grid-tile">
-    <mat-card-header class="tile-header">
-      <mat-card-title-group>
-        <mat-card-title style="font-weight: 400; color: white;">{{node.name}}</mat-card-title>
-      </mat-card-title-group>
-    </mat-card-header>
-    <mat-card-content class="tile-body">
-      Project Id: {{node.projectuuid}} <br>
-      Type&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : {{node.type}} <br>
-      Rule Id&nbsp; &nbsp; &nbsp; : {{node.ruleid}} 
-    </mat-card-content>
+<mat-card
+  class="grid-tile"
+  [ngStyle]="{ 'border-left-color': getColor(app.title.color) }"
+>
+  <mat-card-header class="tile-header">
+    <mat-icon>{{ app.title.icon }}</mat-icon>
+    <mat-card-title-group>
+      <mat-card-title style="margin-left: 20px; margin-top: 6px;">{{ app.title.name }}</mat-card-title>
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-content class="tile-body">
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; 
+      flex-direction: row; 
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;">
+        Labels
+        <mat-chip-listbox class="chip-list">
+          <mat-chip class="chip" *ngFor="let label of app.labels" 
+          [ngStyle]="{'background-color': getColor(label.color)}">{{ label.name }}</mat-chip>
+        </mat-chip-listbox>
+      </div>
+      <div style="display: flex; 
+      flex-direction: row; 
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;">
+        Status
+        <div style="display: flex; flex-direction: row; width: 80%; justify-content: space-around;">
+          <div style="display: flex; align-items: center;">
+            <mat-icon style="margin-top: 5px;"
+            [ngStyle]="{'color': getColor(app.hstatus.color)}">
+            {{app.hstatus.icon}}</mat-icon>
+            <span>{{app.hstatus.name}}</span>
+          </div>
+          <div style="display: flex; align-items: center;">
+            <mat-icon style="margin-top: 5px;"
+            [ngStyle]="{'color': getColor(app.sstatus.color)}">
+            {{app.sstatus.icon}}</mat-icon>
+            <span>{{app.sstatus.name}}</span>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; 
+      flex-direction: row; 
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;" *ngFor="let data of app.data | keyvalue" >
+        <span>{{data.key}}</span>
+        <span style="width: 70%;">{{data.value}}</span>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions style="display: flex; flex-direction: row; justify-content: space-around;">
+    <button mat-raised-button style="background-color: rgb(165, 165, 165);"><mat-icon>sync</mat-icon>Sync</button>
+    <button mat-raised-button style="background-color: rgb(165, 165, 165);"><mat-icon>refresh</mat-icon>Refresh</button>
+    <button mat-raised-button style="background-color: rgb(165, 165, 165);"><mat-icon>delete</mat-icon>Delete</button>
+  </mat-card-actions>
 </mat-card>
-  
