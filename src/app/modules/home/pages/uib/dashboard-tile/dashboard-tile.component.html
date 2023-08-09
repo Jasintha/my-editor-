@@ -1,0 +1,16 @@
+<mat-card
+  class="dashboard-tile"
+>
+  <mat-card-header class="dashboard-header">
+      <mat-card-title>{{widget.count}}</mat-card-title>
+      <div [ngStyle]="{'background-color': getColor(widget.icon.bgColor)}"
+       style="width:35px;height:35px;border:1px solid #ffffff; border-top-right-radius: 20px;">
+        <mat-icon style="display: flex; font-size: 25px; margin-top: 5px;
+        margin-left: 3px"
+        [ngStyle]="{'color': getColor(widget.icon.color)}">{{widget.icon.name}}</mat-icon>
+      </div>
+  </mat-card-header>
+  <mat-card-content class="body">
+       <div class="dashboard-body-container">{{widget.title}}</div> 
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,25 @@
+.dashboard-tile{
+    display: flex !important;
+    flex-wrap: wrap;
+    height: 150px;
+    width: 200px;
+    border-radius: 20px !important;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dashboard-header {
+    align-items: center; 
+    padding-bottom: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.dashboard-body-container {
+    display: flex;
+    font-size: large;
+    align-items: center;
+    height: 100%;
+}

@@ -101,7 +101,8 @@ import { UibApplicationPageComponent } from '../uib/uib-application/uib-applicat
 import { UibRuntimePageComponent } from '../uib/uib-runtime/uib-runtime.component';
 import { ChartComponent } from '../uib/charts/chart.component';
 import { UibServicePageComponent } from '../uib/uib-service/uib-service.component';
-import { GrideTileComponent } from '../uib/grid-tile/grid-tile.component';
+import { GridTileComponent } from '../uib/grid-tile/grid-tile.component';
+import { DashboardTileComponent } from '../uib/dashboard-tile/dashboard-tile.component';
 
 @NgModule({
   declarations: [
@@ -139,7 +140,8 @@ import { GrideTileComponent } from '../uib/grid-tile/grid-tile.component';
     UibApplicationPageComponent,
     UibRuntimePageComponent,
     UibServicePageComponent,
-    GrideTileComponent,
+    GridTileComponent,
+    DashboardTileComponent,
     ChartComponent
   ],
   providers: [

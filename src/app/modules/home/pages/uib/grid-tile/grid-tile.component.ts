@@ -7,7 +7,7 @@ import {Application} from 'src/app/modules/home/pages/uib/uib-application/uib-ap
     styleUrls: ['./grid-tile.component.scss'],
     encapsulation: ViewEncapsulation.None
   })
-  export class GrideTileComponent implements OnInit {
+  export class GridTileComponent implements OnInit {
   @Input()app: Application;
 
     constructor(){}
