@@ -21,7 +21,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
           image: virtuan/dev
-          tags: virtuan-studio-editor-dev-$GITHUB_RUN_ID
+          tags: virtuan-studio-editor-uib-$GITHUB_RUN_ID
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
