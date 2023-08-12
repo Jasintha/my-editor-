@@ -235,6 +235,7 @@ export class AddOperationService {
             width: '800px',
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
+                title: 'Create Service File',
                 projectUid: projectUId,
                 createStatus: status,
                 uuid: item.uuid,

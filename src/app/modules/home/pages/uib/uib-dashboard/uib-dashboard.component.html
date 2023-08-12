@@ -135,15 +135,29 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
-              (click)="changeSplit('runtime')"
+              (click)="changeSplit('uib-editor')"
               data-bs-toggle="tab"
               style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'runtime' }"
+              [ngClass]="{ active: currentTab == 'uib-editor' }"
               type="button"
               role="tab"
               aria-selected="false"
             >
-              Runtime
+              Editor
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              (click)="changeSplit('uib-build')"
+              data-bs-toggle="tab"
+              style="height: 2rem !important; margin-top: 24px !important;"
+              [ngClass]="{ active: currentTab == 'uib-build' }"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              Build
             </button>
           </li>
         </div>

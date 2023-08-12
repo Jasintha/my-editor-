@@ -20,7 +20,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
   styleUrls: ['./servicefile.component.scss']
 })
 export class ServicefileComponent implements OnInit {
-
+  title: string
   isSaving: boolean;
   project: IProject;
   editForm: FormGroup;
@@ -50,6 +50,7 @@ export class ServicefileComponent implements OnInit {
   
   getServiceFileData() {
     this.projectUid = this.data.projectUid;
+    this.title = this.data.title
     this.buildServiceFileForm();
     this.isSaving = false;
     if (this.data.createStatus === 'Update') {

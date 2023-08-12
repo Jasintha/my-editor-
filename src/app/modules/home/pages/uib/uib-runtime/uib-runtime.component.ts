@@ -26,12 +26,14 @@ import { LoginService } from "@app/core/services/login.services";
 
     changeSplit(val){
       this.currentTab = val;
-      if(val === 'dashboard') {
-          this.router.navigate([`dashboard`])    
-        } else if (val === 'application') {
-          this.router.navigate([`application`])    
-        } else if (val === 'runtime'){
-          this.router.navigate([`runtime`])    
+      if (val === "dashboard") {
+        this.router.navigate([`dashboard`]);
+      } else if (val === "application") {
+        this.router.navigate([`application`]);
+      } else if (val === "runtime") {
+        this.router.navigate([`runtime`]);
+      } else if (val === "uib-build") {
+          this.router.navigate([`uib-build`]);
         }
   }
 

@@ -339,9 +339,11 @@ export class UibApplicationPageComponent implements OnInit {
       this.router.navigate([`dashboard`]);
     } else if (val === "application") {
       this.router.navigate([`application`]);
-    } else if (val === "runtime") {
-      this.router.navigate([`runtime`]);
-    }
+    } else if (val === "uib-editor") {
+      this.router.navigate([`uib-editor`]);
+    } else if (val === "uib-build") {
+        this.router.navigate([`uib-build`]);
+      }
   }
 
   logout() {

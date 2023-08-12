@@ -27,7 +27,6 @@ import {
 } from "@shared/models/rule-chain.models";
 import { RuleChainService } from "@core/http/rule-chain.service";
 import { RuleChainPageComponent } from "@home/pages/rulechain/rulechain-page.component";
-import { MainRuleChainComponent } from "@home/pages/rulechain/main-rulechain.component";
 import { RuleNodeComponentDescriptor } from "@shared/models/rule-node.models";
 import { ConfirmOnExitGuard } from "@core/guards/confirm-on-exit.guard";
 
@@ -50,17 +49,13 @@ import { UiHomeComponent } from "../ui-home/ui-home.component";
 import { ServiceHomeComponent } from "../service-home/service-home.component";
 import { MicroserviceModelComponent } from "../aggregate/microservice-model.component";
 import { ThemeUpdateComponent } from "../theme/theme-update.component";
-import { FlexGridHandlerComponent } from "../built-in-page/flex-grid-handler.component";
-import { TabPageComponent } from "../built-in-page/tab-page.component";
-import { CustomPageViewComponent } from "../built-in-page/custom-page.component";
-import { FilterPageComponent } from "../built-in-page/filter-page.component";
-import { SinglePageViewComponent } from "../built-in-page/single-page.component";
 import { LamdafunctionEditorComponent } from "../create-lamdafunction/function-editor.component";
 import { DesignViewComponent } from "../design-view/design-view.component";
 import { UibDashboardPageComponent } from "../uib/uib-dashboard/uib-dashboard.component";
 import { UibApplicationPageComponent } from "../uib/uib-application/uib-application.component";
 import { UibRuntimePageComponent } from "../uib/uib-runtime/uib-runtime.component";
-import { UibServicePageComponent } from "../uib/uib-service/uib-service.component";
+import { UibEditorPageComponent } from "../uib/uib-editor/uib-editor.component";
+import { UibBuildPageComponent } from "../uib/ui-build/uib-build.component";
 
 declare const SystemJS;
 
@@ -316,8 +311,15 @@ const routes: Routes = [
     },
   },
   {
-    path: "uib-service",
-    component: UibServicePageComponent,
+    path: "uib-build",
+    component: UibBuildPageComponent,
+    data: {
+      auth: [Authority.TENANT_ADMIN],
+    },
+  },
+  {
+    path: "uib-editor",
+    component: UibEditorPageComponent,
     data: {
       auth: [Authority.TENANT_ADMIN],
     },

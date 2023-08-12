@@ -1,0 +1,372 @@
+<div style="height: 100%;" class="rulechain-page-custom-scroll">
+  <div
+    style="
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: row;
+    "
+  >
+    <div style="width: 100%; height: 100%;">
+      <h1
+        style="font-weight: 300; size: 30px; color: #1a73e8; margin-left: 20px;"
+      >
+        Build
+      </h1>
+      <mat-progress-bar
+      mode="indeterminate"
+      *ngIf="isGenerating"
+    ></mat-progress-bar>
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 90%;
+          background-color: #dae3f0;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 10%;
+            align-items: center;
+            justify-content: flex-start;
+            margin-left: 20px;
+            margin-top: 20px;
+            gap: 10px;
+          "
+        >
+          <form
+            name="editForm"
+            role="form"
+            novalidate
+            [formGroup]="editForm"
+            style="display: flex; width: 38.75%;"
+          >
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-select
+                formControlName="selectedServices"
+                placeholder="Choose"
+                multiple
+              >
+                <mat-option
+                  *ngFor="let service of servicesToGenerate"
+                  [value]="service"
+                  >{{ service.name }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+            <button
+              mat-fab
+              color="accent"
+              (click)="generate()"
+              style="margin-left: 20px; background-color: #2980b9;"
+            >
+              <mat-icon>build</mat-icon>
+            </button>
+            <button
+              mat-fab
+              color="accent"
+              style="margin-left: 20px; background-color: #2980b9;"
+            >
+              <mat-icon>backup</mat-icon>
+            </button>
+          </form>
+        </div>
+        <!-- animated stepper for build -->
+        <ng-container
+          style="margin-top: 15px; height: 10%;"
+          *ngIf="isGenerating"
+        >
+          <div class="build-progress">
+            <div class="build-progress-track"></div>
+            <div
+              style="display: flex; flex-direction: row; width: 100%;"
+              #buildNodes
+            ></div>
+          </div>
+        </ng-container>
+        <div
+          style="
+            margin-top: 30px;
+            margin-left: 20px;
+            display: flex;
+            flex-direction: row;
+            height: 77%;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              width: 30%;
+              height: 100%;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                background: #8080801c;
+                padding: 10px;
+                height: 50px;
+                flex-direction: row;
+                justify-content: space-between;
+                border-top: 1px solid #64666a40;
+                border-bottom: 1px solid #64666a40;
+                align-items: center;
+              "
+            >
+              <span>STEPS</span>
+              <span>DURATION</span>
+            </div>
+            <div style="height: 100%; overflow-y: auto;">
+              <div
+                *ngFor="let item of buildStatusData; let i = index"
+                class="buildStep"
+              >
+                <div
+                  [ngStyle]="{ 'background-color': getStepBackgroundColor(i) }"
+                  style="padding: 5px; border-bottom: 1px solid #64666a40;"
+                  matRipple
+                  (click)="loadTabSpace(i)"
+                >
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      justify-content: space-between;
+                    "
+                  >
+                    <div
+                      style="
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                      "
+                    >
+                      <mat-icon
+                        *ngIf="item.lastbuildstatus === 'DONE'"
+                        style="
+                          color: green;
+                          display: flex;
+                          align-items: center;
+                        "
+                        >check_circle</mat-icon
+                      >
+                      <mat-icon
+                        *ngIf="item.lastbuildstatus === 'DOING'"
+                        style="
+                          color: #d8d83a;
+                          display: flex;
+                          align-items: center;
+                        "
+                        >do_not_disturb_on</mat-icon
+                      >
+                      <mat-icon
+                        *ngIf="item.lastbuildstatus === 'DIDNOT'"
+                        style="color: red; display: flex; align-items: center;"
+                        >cancel</mat-icon
+                      >
+                      <h6>{{ item.servicename }}</h6>
+                    </div>
+                    <h6>{{ item.generatortime }}</h6>
+                  </div>
+                  <div>
+                    <span>{{ item.referenceName }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="isTabVisible"
+            class="rulechain-page-custom-scroll"
+            style="
+              width: 68%;
+              border-top: 1px solid #64666a40;
+              border-left: 1px solid #64666a40;
+              height: 100%;
+            "
+          >
+            <mat-tab-group style="height: 100%;">
+              <mat-tab style="width: 100%;" label="BUILD LOG">
+                <ng-template
+                  matTabContent
+                  style="
+                    background-color: rgba(105, 95, 95, 0.915);
+                    overflow-y: auto;
+                  "
+                >
+                  <div style="margin-left: 25px;">
+                    <h6>Last Build Id: {{ selectedLogData }}</h6>
+                  </div>
+                </ng-template>
+              </mat-tab>
+              <mat-tab style="width: 100%;" label="EXECUTION DETAILS">
+                <ng-template
+                  matTabContent
+                  style="
+                    background-color: rgba(105, 95, 95, 0.915);
+                    overflow-y: auto;
+                  "
+                >
+                  <div style="margin-left: 25px;">
+                    <h6>Execution Status: {{ selectedExecutionData }}</h6>
+                  </div>
+                </ng-template>
+              </mat-tab>
+              <mat-tab style="width: 100%;" label="BUILD ARTIFACTS">
+                <ng-template
+                  matTabContent
+                  style="
+                    background-color: rgba(105, 95, 95, 0.915);
+                    overflow-y: auto;
+                  "
+                >
+                  <div style="margin-left: 25px;">
+                    <h6>Last Build Id: {{ selectedLogData }}</h6>
+                  </div>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul
+      class="nav nav-tabs right-tabs sideways-tabs"
+      role="tablist"
+      style="
+        position: fixed;
+        background-color: lightgrey;
+        margin-top: 0;
+        right: 4.5rem;
+      "
+    >
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          width: 75%;
+          justify-content: space-between;
+        "
+      >
+        <div
+          role="presentation"
+          style="
+            display: flex;
+            width: 50%;
+            height: 7%;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <h1 class="display-4" style="transform: rotate(90deg);">
+            <img
+              src="../assets/images/apps_icon.png"
+              style="width: 38px; transform: rotate(270deg);"
+            />
+          </h1>
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            height: 40%;
+            justify-content: flex-start;
+            align-items: flex-start;
+          "
+        >
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              (click)="changeSplit('dashboard')"
+              data-bs-toggle="tab"
+              style="height: 2rem !important; margin-top: 24px !important;"
+              [ngClass]="{ active: currentTab == 'dashboard' }"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              Dashboard
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              (click)="changeSplit('application')"
+              data-bs-toggle="tab"
+              style="height: 2rem !important; margin-top: 24px !important;"
+              [ngClass]="{ active: currentTab == 'application' }"
+              type="button"
+              role="tab"
+              aria-selected="true"
+            >
+              App
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              (click)="changeSplit('uib-editor')"
+              data-bs-toggle="tab"
+              style="height: 2rem !important; margin-top: 24px !important;"
+              [ngClass]="{ active: currentTab == 'uib-editor' }"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              Editor
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              (click)="changeSplit('uib-build')"
+              data-bs-toggle="tab"
+              style="height: 2rem !important; margin-top: 24px !important;"
+              [ngClass]="{ active: currentTab == 'uib-build' }"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              Build
+            </button>
+          </li>
+        </div>
+        <span
+          class="logout"
+          style="
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            align-items: center;
+          "
+        >
+          <button
+            mat-mini-fab
+            matTooltip="Logout"
+            [matMenuTriggerFor]="menu"
+            style="width: 34px; height: 34px; margin-left: -2px;"
+            color="primary"
+          >
+            <mat-icon>perm_identity</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>power_settings_new</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </span>
+      </div>
+    </ul>
+  </div>
+</div>

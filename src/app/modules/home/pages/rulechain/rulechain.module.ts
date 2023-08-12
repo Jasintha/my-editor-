@@ -100,9 +100,13 @@ import { UibDashboardPageComponent } from '../uib/uib-dashboard/uib-dashboard.co
 import { UibApplicationPageComponent } from '../uib/uib-application/uib-application.component';
 import { UibRuntimePageComponent } from '../uib/uib-runtime/uib-runtime.component';
 import { ChartComponent } from '../uib/charts/chart.component';
-import { UibServicePageComponent } from '../uib/uib-service/uib-service.component';
+import { UibEditorPageComponent } from '../uib/uib-editor/uib-editor.component';
 import { GridTileComponent } from '../uib/grid-tile/grid-tile.component';
 import { DashboardTileComponent } from '../uib/dashboard-tile/dashboard-tile.component';
+import { UibBuildPageComponent } from '../uib/ui-build/uib-build.component';
+import { FilterPipe } from '../uib/dynamic-search/pips/filter.pipe';
+import { HighlightDirective } from '../uib/dynamic-search/directives/highlighter.directive';
+import { DynamicSearchComponent } from '../uib/dynamic-search/dynamic-search.component';
 
 @NgModule({
   declarations: [
@@ -139,10 +143,14 @@ import { DashboardTileComponent } from '../uib/dashboard-tile/dashboard-tile.com
     UibDashboardPageComponent,
     UibApplicationPageComponent,
     UibRuntimePageComponent,
-    UibServicePageComponent,
+    UibEditorPageComponent,
     GridTileComponent,
     DashboardTileComponent,
-    ChartComponent
+    ChartComponent,
+    UibBuildPageComponent,
+    DynamicSearchComponent,
+    HighlightDirective,
+    FilterPipe
   ],
   providers: [
     {
