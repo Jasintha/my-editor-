@@ -319,6 +319,210 @@ export class UibApplicationPageComponent implements OnInit {
           'b': 234,
           'c': 456
         }
+      },
+      {
+        title: {
+          name: 'test 6',
+          color: 'green',
+          icon: 'share'
+        },
+        labels: [
+          {
+            name: 'test label',
+            color: 'yellow',
+            icon: undefined
+          },
+          {
+            name: 'test label',
+            color: 'blue',
+            icon, undefined
+          }
+        ],
+        hstatus: {
+          name: 'healthy',
+          color: 'green',
+          icon: 'favorite'
+        },
+        sstatus: {
+          name: 'synced',
+          color: 'green',
+          icon: 'sync'
+        },
+        data: {
+          'a': 123,
+          'b': 234,
+          'c': 456
+        }
+      },
+      {
+        title: {
+          name: 'test 6',
+          color: 'green',
+          icon: 'share'
+        },
+        labels: [
+          {
+            name: 'test label',
+            color: 'yellow',
+            icon: undefined
+          },
+          {
+            name: 'test label',
+            color: 'blue',
+            icon, undefined
+          }
+        ],
+        hstatus: {
+          name: 'healthy',
+          color: 'green',
+          icon: 'favorite'
+        },
+        sstatus: {
+          name: 'synced',
+          color: 'green',
+          icon: 'sync'
+        },
+        data: {
+          'a': 123,
+          'b': 234,
+          'c': 456
+        }
+      },
+      {
+        title: {
+          name: 'test 6',
+          color: 'green',
+          icon: 'share'
+        },
+        labels: [
+          {
+            name: 'test label',
+            color: 'yellow',
+            icon: undefined
+          },
+          {
+            name: 'test label',
+            color: 'blue',
+            icon, undefined
+          }
+        ],
+        hstatus: {
+          name: 'healthy',
+          color: 'green',
+          icon: 'favorite'
+        },
+        sstatus: {
+          name: 'synced',
+          color: 'green',
+          icon: 'sync'
+        },
+        data: {
+          'a': 123,
+          'b': 234,
+          'c': 456
+        }
+      },
+      {
+        title: {
+          name: 'test 6',
+          color: 'green',
+          icon: 'share'
+        },
+        labels: [
+          {
+            name: 'test label',
+            color: 'yellow',
+            icon: undefined
+          },
+          {
+            name: 'test label',
+            color: 'blue',
+            icon, undefined
+          }
+        ],
+        hstatus: {
+          name: 'healthy',
+          color: 'green',
+          icon: 'favorite'
+        },
+        sstatus: {
+          name: 'synced',
+          color: 'green',
+          icon: 'sync'
+        },
+        data: {
+          'a': 123,
+          'b': 234,
+          'c': 456
+        }
+      },
+      {
+        title: {
+          name: 'test 6',
+          color: 'green',
+          icon: 'share'
+        },
+        labels: [
+          {
+            name: 'test label',
+            color: 'yellow',
+            icon: undefined
+          },
+          {
+            name: 'test label',
+            color: 'blue',
+            icon, undefined
+          }
+        ],
+        hstatus: {
+          name: 'healthy',
+          color: 'green',
+          icon: 'favorite'
+        },
+        sstatus: {
+          name: 'synced',
+          color: 'green',
+          icon: 'sync'
+        },
+        data: {
+          'a': 123,
+          'b': 234,
+          'c': 456
+        }
+      },
+      {
+        title: {
+          name: 'test 6',
+          color: 'green',
+          icon: 'share'
+        },
+        labels: [
+          {
+            name: 'test label',
+            color: 'yellow',
+            icon: undefined
+          },
+          {
+            name: 'test label',
+            color: 'blue',
+            icon, undefined
+          }
+        ],
+        hstatus: {
+          name: 'healthy',
+          color: 'green',
+          icon: 'favorite'
+        },
+        sstatus: {
+          name: 'synced',
+          color: 'green',
+          icon: 'sync'
+        },
+        data: {
+          'a': 123,
+          'b': 234,
+          'c': 456
+        }
       }
     ] as Application[]
     // this.projectService.findAllProjectComponents().subscribe((comps) => {

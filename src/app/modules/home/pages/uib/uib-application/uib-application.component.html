@@ -10,10 +10,34 @@
   >
     <div style="width: 100%; height: 100%;">
       <h1
-        style="font-weight: 300; size: 30px; color: #1a73e8; margin-left: 20px;"
+        style="font-weight: 300; color: #1a73e8; margin-left: 20px;"
       >
         Application
       </h1>
+      <div
+        style="
+         display: flex;
+    margin-left: 20px;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+        "
+      >
+        <button
+          mat-raised-button
+          style="
+            width: 200px;
+            height: 40px;
+            margin-right: 20px;
+            background: #1a73e8;
+            color: #f8f5f0;
+          "
+        >
+          <mat-icon>refresh</mat-icon>
+          <spa>Refresh Apps</spa>
+        </button>
+        <dynamic-search style="width: 300px;"></dynamic-search>
+      </div>
       <mat-progress-bar
         mode="indeterminate"
         *ngIf="isProssesing"
@@ -21,44 +45,52 @@
       <div
         style="
           display: flex;
+          height: 83%;
           flex-direction: column;
-          height: 100%;
           background-color: #dae3f0;
         "
       >
-        <div
-          style="
-            display: flex;
-            margin-right: 10%;
-            flex-direction: row;
-            justify-content: flex-end;
-            align-items: center;
-            margin-top: 2px;
-          "
-        >
-          <button
-            mat-raised-button
+        <div>
+          <div style="color: #17aee0;
+          margin-left: 8px;
+          width: 97%;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+      ">
+            <div style="display: flex; flex-direction: row;">
+              <span style="color: gray;">Previous</span>
+              <span style="margin-left: 10px;"> 1 </span>
+              <span style="margin-left: 10px;color: gray;">Next</span>
+            </div>
+            <div>
+              Items per page: 10
+            </div>
+          </div>
+          <div
             style="
-              width: 25px;
-              height: 30px;
-              margin-right: 20px;
-              background: blue;
-              color: #f8f5f0;
+              margin-left: 24px;
+              width: 95%;
+              height: 20px;
+              background-color: #1a73e8;
+              border: 2px solid;
+              border-color: white;
+              border-radius: 5px;
             "
-          >
-            <mat-icon>refresh</mat-icon>
-          </button>
-          <dynamic-search style="width: 300px;"></dynamic-search>
+          ></div>
         </div>
         <div
           style="
             display: flex;
             flex-wrap: wrap;
             justify-content: flex-start;
-            width: 100%;
+            width: 97%;
             margin-left: 8px;
             margin-top: 20px;
-            gap: 40px;
+            overflow-y: scroll;
+            gap: 30px;
           "
         >
           <div *ngFor="let app of applications">
