@@ -85,7 +85,8 @@
                             <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="selectActiveNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }" style="cursor: pointer">
                                 <mat-icon class="mat-icon-rtl-mirror" color="primary" [ngStyle]="{'color': getColor(node)}"
                                 style="margin-left: 28px" [ngClass]="{ 'background-highlight': activeNode === node }">
-                                {{(node.data.icon == '' || node.data.icon == undefined) ? node.data.isParent ? 'folder' : 'description' : node.data.icon}}
+                                {{(node.data.icon == '' || node.data.icon == undefined)
+                                 ? node.data.isParent ? 'folder' : 'description' : node.data.icon}}
                             </mat-icon>
     
                                 <div style="margin-left: 3px" [ngStyle]="{'color': getColor(node), 'font-size': getFontSize(node), 'font-family': getFontFamily(node)}">

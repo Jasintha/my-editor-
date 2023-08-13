@@ -1,0 +1,79 @@
+<form
+  style="
+    font-size: 18px;
+    margin-top: 15%;
+    border-radius: 10px;
+    width: 40%;
+    padding: 10px;
+    background-color: #fff9f9;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+  "
+  [formGroup]="projectForm"
+>
+  <h3 style="display: flex; justify-content: center;">Create new project</h3>
+  <div style="display: flex; flex-direction: column; flex-wrap: wrap; gap: 20px;">
+    <mat-form-field>
+      <mat-label>Name your roject</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="Example Project"
+        formControlName="projectName"
+      />
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Add a description</mat-label>
+      <mat-hint
+      >Helpful for items or differentiating between projects with similar
+      names</mat-hint
+    >
+      <input
+        matInput
+        type="text"
+        placeholder="Enter description"
+        formControlName="description"
+      />
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Tell us what it's for</mat-label>
+      <mat-hint>This will help us to provide a more relevant experience</mat-hint>
+      <mat-select formControlName="purpose" required>
+        <mat-option *ngFor="let purpose of purposes" [value]="purpose">
+          {{ purpose }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+  </div>
+ 
+  <div
+    style="
+      display: flex;
+      flex-direction: column;
+      margin-top: 50px;
+      gap: 20px;
+      justify-content: space-between;
+    "
+  >
+    <button
+      mat-raised-button
+      color="primary"
+      style="font-size: 18px;"
+      (click)="onSubmit()"
+      [disabled]="!projectForm.valid"
+    >
+      Create Project
+    </button>
+    <button
+      mat-raised-button
+      style="font-size: 18px; background-color: lightgrey;"
+      (click)="updateProfile()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

@@ -107,6 +107,7 @@ import { UibBuildPageComponent } from '../uib/ui-build/uib-build.component';
 import { FilterPipe } from '../uib/dynamic-search/pips/filter.pipe';
 import { HighlightDirective } from '../uib/dynamic-search/directives/highlighter.directive';
 import { DynamicSearchComponent } from '../uib/dynamic-search/dynamic-search.component';
+import { CreateProjectComponent } from '../uib/create-project/create-project.component';
 
 @NgModule({
   declarations: [
@@ -149,6 +150,7 @@ import { DynamicSearchComponent } from '../uib/dynamic-search/dynamic-search.com
     ChartComponent,
     UibBuildPageComponent,
     DynamicSearchComponent,
+    CreateProjectComponent,
     HighlightDirective,
     FilterPipe
   ],

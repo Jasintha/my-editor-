@@ -13,35 +13,60 @@
         style="font-weight: 300; size: 30px; color: #1a73e8; margin-left: 20px;"
       >
         Application
-        <dynamic-search></dynamic-search>
       </h1>
       <mat-progress-bar
         mode="indeterminate"
         *ngIf="isProssesing"
       ></mat-progress-bar>
       <div
-      style="
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        background-color: #dae3f0;
-      "
-    >
-      <div
-        style="display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        width: 100%;
-        margin-left: 8px;
-        margin-top: 20px;
-        gap: 40px;"
+        style="
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          background-color: #dae3f0;
+        "
       >
-        <div *ngFor="let app of applications">
-          <div (click)="openbox(app)" style="z-index: 2;">
-            <grid-tile [app]="app"></grid-tile>
+        <div
+          style="
+            display: flex;
+            margin-right: 10%;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 2px;
+          "
+        >
+          <button
+            mat-raised-button
+            style="
+              width: 25px;
+              height: 30px;
+              margin-right: 20px;
+              background: blue;
+              color: #f8f5f0;
+            "
+          >
+            <mat-icon>refresh</mat-icon>
+          </button>
+          <dynamic-search style="width: 300px;"></dynamic-search>
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            width: 100%;
+            margin-left: 8px;
+            margin-top: 20px;
+            gap: 40px;
+          "
+        >
+          <div *ngFor="let app of applications">
+            <div (click)="openbox(app)" style="z-index: 2;">
+              <grid-tile [app]="app"></grid-tile>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
     <ul

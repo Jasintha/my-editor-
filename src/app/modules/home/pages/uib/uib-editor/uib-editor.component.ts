@@ -29,6 +29,7 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
         level: level,
       };
     };
+    isCreatingProject = true;
     
     treeControl = new FlatTreeControl<any>(
       (node) => node.level,
@@ -108,6 +109,7 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
   }
 
   selectActiveNode(node) {
+    this.isCreatingProject = false 
     this.activeNode = node;
     this.projectUid = this.activeNode.data.projectuuid;
     this.viewRule(node)
