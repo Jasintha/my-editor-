@@ -49,7 +49,8 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
     projectUid: string;
     ruleprojectUid: string;
     editorType: string;
-    userName: string
+    userName: string;
+    currentTab: string;
     eventSubscriber: Subscription;
     eventSubscriberUi: Subscription;
     
@@ -60,11 +61,13 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
        private dialog: MatDialog
        ){}
     ngOnInit(): void {
+      this.currentTab = "uib-editor"
       this.loadTreeData();
       this.registerChangeEditorTree()
     }
 
     changeSplit(val){
+      this.currentTab = "uib-editor"
       if (val === "dashboard") {
         this.router.navigate([`dashboard`]);
       } else if (val === "application") {

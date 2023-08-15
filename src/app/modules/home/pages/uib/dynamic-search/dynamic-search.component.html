@@ -1,11 +1,12 @@
 <form class="example-form">
   <mat-form-field class="example-full-width">
     <input type="text"
-           placeholder="Search by text"
+           placeholder="Search applications..."
            matInput
            [formControl]="myControl"
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
+      <i class="fa fa-search"></i>
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
         {{option}}
       </mat-option>

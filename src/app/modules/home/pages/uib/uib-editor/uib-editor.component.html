@@ -1,24 +1,29 @@
 <div style="height: 100%;">
   <div style="width: 100%; height: 100%; background: #ffffff; display: flex;">
     <as-split direction="horizontal">
-      <as-split-area [size]="80">
+      <as-split-area [size]="85">
         <div style="width: 100%; height: 100%;">
-          <create-uib-project style="display: flex;
-          height: 100%;
-          width: 100%;
-          background-color: #dae3f0;
-          align-items: center;
-          flex-direction: column;" *ngIf="isCreatingProject"></create-uib-project>
+          <create-uib-project
+            style="
+              display: flex;
+              height: 100%;
+              width: 100%;
+              background-color: #dae3f0;
+              align-items: center;
+              flex-direction: column;
+            "
+            *ngIf="isCreatingProject"
+          ></create-uib-project>
           <router-outlet></router-outlet>
         </div>
       </as-split-area>
-      <as-split-area [size]="20">
+      <as-split-area [size]="15">
         <ul
           class="nav nav-tabs right-tabs sideways-tabs"
           role="tablist"
           style="
             position: fixed;
-            background-color: lightgrey;
+            background-color: #30303d;
             margin-top: 0;
             right: 4.5rem;
           "
@@ -64,8 +69,17 @@
                   class="nav-link"
                   (click)="changeSplit('dashboard')"
                   data-bs-toggle="tab"
-                  style="height: 2rem !important; margin-top: 24px !important;"
-                  [ngClass]="{ active: currentTab == 'dashboard' }"
+                  style="
+                    height: 2rem !important;
+                    margin-top: 24px !important;
+                    color: #abb2b9;
+                    background-color: #30303d !important;
+                    text-transform: capitalize !important;
+                  "
+                  [ngClass]="{
+                    active: currentTab == 'dashboard',
+                    active_color: currentTab == 'dashboard'
+                  }"
                   type="button"
                   role="tab"
                   aria-selected="false"
@@ -78,13 +92,22 @@
                   class="nav-link"
                   (click)="changeSplit('application')"
                   data-bs-toggle="tab"
-                  style="height: 2rem !important; margin-top: 24px !important;"
-                [ngClass]="{ active: currentTab == 'application' }"
+                  style="
+                    height: 2rem !important;
+                    margin-top: 24px !important;
+                    color: #abb2b9;
+                    background-color: #30303d !important;
+                    text-transform: capitalize !important;
+                  "
+                  [ngClass]="{
+                    active: currentTab == 'application',
+                    active_color: currentTab == 'application'
+                  }"
                   type="button"
                   role="tab"
                   aria-selected="true"
                 >
-                  App
+                  Apps
                 </button>
               </li>
               <li class="nav-item" role="presentation">
@@ -92,8 +115,17 @@
                   class="nav-link"
                   (click)="changeSplit('uib-editor')"
                   data-bs-toggle="tab"
-                  style="height: 2rem !important; margin-top: 24px !important;"
-                  [ngClass]="{ active: currentTab == 'uib-editor' }"
+                  style="
+                    height: 2rem !important;
+                    margin-top: 24px !important;
+                    color: #abb2b9;
+                    background-color: #30303d !important;
+                    text-transform: capitalize !important;
+                  "
+                  [ngClass]="{
+                    active: currentTab == 'uib-editor',
+                    active_color: currentTab == 'uib-editor'
+                  }"
                   type="button"
                   role="tab"
                   aria-selected="false"
@@ -106,8 +138,17 @@
                   class="nav-link"
                   (click)="changeSplit('uib-build')"
                   data-bs-toggle="tab"
-                  style="height: 2rem !important; margin-top: 24px !important;"
-                  [ngClass]="{ active: currentTab == 'uib-build' }"
+                  style="
+                    height: 2rem !important;
+                    margin-top: 24px !important;
+                    color: #abb2b9;
+                    background-color: #30303d !important;
+                    text-transform: capitalize !important;
+                  "
+                  [ngClass]="{
+                    active: currentTab == 'uib-build',
+                    active_color: currentTab == 'uib-build'
+                  }"
                   type="button"
                   role="tab"
                   aria-selected="false"
@@ -158,7 +199,7 @@
                 style="margin-top: 25px;"
               >
                 <mat-tree-node
-                  *matTreeNodeDef="let node;"
+                  *matTreeNodeDef="let node"
                   matTreeNodePadding
                   [ngClass]="{ 'background-highlight': activeNode === node }"
                   style="cursor: pointer;"
@@ -173,9 +214,11 @@
                       class="mat-icon-rtl-mirror"
                     >
                       {{
-                        node.data.isParent ? treeControl.isExpanded(node)
-                          ? "expand_more"
-                          : "chevron_right" : ''
+                        node.data.isParent
+                          ? treeControl.isExpanded(node)
+                            ? "expand_more"
+                            : "chevron_right"
+                          : ""
                       }}
                     </mat-icon>
                     <mat-icon
@@ -183,9 +226,15 @@
                       class="mat-icon-rtl-mirror"
                       color="primary"
                     >
-                    {{(node.data.icon == '' || node.data.icon == undefined)
-                     ? node.data.isParent ? (treeControl.isExpanded(node)) ? "folder_open" : "folder" 
-                    : 'description' : node.data.icon}}
+                      {{
+                        node.data.icon == "" || node.data.icon == undefined
+                          ? node.data.isParent
+                            ? treeControl.isExpanded(node)
+                              ? "folder_open"
+                              : "folder"
+                            : "description"
+                          : node.data.icon
+                      }}
                     </mat-icon>
                   </button>
                   <div
@@ -204,8 +253,7 @@
                     mat-icon-button
                     title="add model"
                     class="top-node"
-                    *ngIf="
-                      node.data.isParent"
+                    *ngIf="node.data.isParent"
                     (click)="add(node.data)"
                     [ngClass]="{ 'background-highlight': activeNode === node }"
                   >

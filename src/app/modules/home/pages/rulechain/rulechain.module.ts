@@ -104,8 +104,6 @@ import { UibEditorPageComponent } from '../uib/uib-editor/uib-editor.component';
 import { GridTileComponent } from '../uib/grid-tile/grid-tile.component';
 import { DashboardTileComponent } from '../uib/dashboard-tile/dashboard-tile.component';
 import { UibBuildPageComponent } from '../uib/ui-build/uib-build.component';
-import { FilterPipe } from '../uib/dynamic-search/pips/filter.pipe';
-import { HighlightDirective } from '../uib/dynamic-search/directives/highlighter.directive';
 import { DynamicSearchComponent } from '../uib/dynamic-search/dynamic-search.component';
 import { CreateProjectComponent } from '../uib/create-project/create-project.component';
 
@@ -151,8 +149,6 @@ import { CreateProjectComponent } from '../uib/create-project/create-project.com
     UibBuildPageComponent,
     DynamicSearchComponent,
     CreateProjectComponent,
-    HighlightDirective,
-    FilterPipe
   ],
   providers: [
     {

@@ -12,16 +12,40 @@
     "
   >
     <div style="width: 100%; height: 100%;">
-      <h1
-        style="font-weight: 300; size: 30px; color: #1a73e8; margin-left: 20px;"
+      <div
+        style="
+          height: 100px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        "
       >
-        Dashboard
-      </h1>
+        <span
+          style="
+            font-family: Heebo, sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            font-style: normal;
+            color: #363c4a;
+            padding-top: 14px;
+            margin-left: 20px;
+            padding-bottom: 10px;
+          "
+          >Dashboard</span
+        >
+        <div
+          style="
+            height: 50px;
+            border: solid white;
+            border-top-color: #abb2b933;
+          "
+        ></div>
+      </div>
       <div
         style="
           display: flex;
           flex-direction: column;
-          height: 100%;
+          height: calc(100% - 100px);
           background-color: #dae3f0;
         "
       >
@@ -63,7 +87,7 @@
       role="tablist"
       style="
         position: fixed;
-        background-color: lightgrey;
+        background-color: #30303d;
         margin-top: 0;
         right: 4.5rem;
       "
@@ -109,8 +133,17 @@
               class="nav-link"
               (click)="changeSplit('dashboard')"
               data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'dashboard' }"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'dashboard',
+                active_color: currentTab == 'dashboard'
+              }"
               type="button"
               role="tab"
               aria-selected="false"
@@ -123,13 +156,22 @@
               class="nav-link"
               (click)="changeSplit('application')"
               data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'application' }"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'application',
+                active_color: currentTab == 'application'
+              }"
               type="button"
               role="tab"
               aria-selected="true"
             >
-              App
+              Apps
             </button>
           </li>
           <li class="nav-item" role="presentation">
@@ -137,8 +179,17 @@
               class="nav-link"
               (click)="changeSplit('uib-editor')"
               data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'uib-editor' }"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'uib-editor',
+                active_color: currentTab == 'uib-editor'
+              }"
               type="button"
               role="tab"
               aria-selected="false"
@@ -151,8 +202,17 @@
               class="nav-link"
               (click)="changeSplit('uib-build')"
               data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'uib-build' }"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'uib-build',
+                active_color: currentTab == 'uib-build'
+              }"
               type="button"
               role="tab"
               aria-selected="false"

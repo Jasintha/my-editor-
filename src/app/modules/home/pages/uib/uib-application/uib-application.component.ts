@@ -9,6 +9,7 @@ import {
   MatTreeFlattener,
 } from "@angular/material/tree";
 import { icon } from "leaflet";
+import { UIBService } from "@app/core/projectservices/uib.service";
 
 export interface Tile {
   applications: Application []
@@ -79,7 +80,8 @@ export class UibApplicationPageComponent implements OnInit {
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private uibService: UIBService
   ) {}
 
   ngOnInit(): void {
@@ -117,424 +119,417 @@ export class UibApplicationPageComponent implements OnInit {
   }
 
   loadGridTiles() {
-    this.applications = [
-      {
-        title: {
-          name: 'test 1',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon: undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data:{
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      },
-      {
-        title: {
-          name: 'test 2',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
+    // this.applications = [
+    //   {
+    //     title: {
+    //       name: 'test 1',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon: undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data:{
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 2',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
         
-        }
-      },
-      {
-        title: {
-          name: 'test 3',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      },
-      {
-        title: {
-          name: 'test 4',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      },
-      {
-        title: {
-          name: 'test 5',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      },
-      {
-        title: {
-          name: 'test 6',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      },
-      {
-        title: {
-          name: 'test 6',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      },
-      {
-        title: {
-          name: 'test 6',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      },
-      {
-        title: {
-          name: 'test 6',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      },
-      {
-        title: {
-          name: 'test 6',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      },
-      {
-        title: {
-          name: 'test 6',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      },
-      {
-        title: {
-          name: 'test 6',
-          color: 'green',
-          icon: 'share'
-        },
-        labels: [
-          {
-            name: 'test label',
-            color: 'yellow',
-            icon: undefined
-          },
-          {
-            name: 'test label',
-            color: 'blue',
-            icon, undefined
-          }
-        ],
-        hstatus: {
-          name: 'healthy',
-          color: 'green',
-          icon: 'favorite'
-        },
-        sstatus: {
-          name: 'synced',
-          color: 'green',
-          icon: 'sync'
-        },
-        data: {
-          'a': 123,
-          'b': 234,
-          'c': 456
-        }
-      }
-    ] as Application[]
-    // this.projectService.findAllProjectComponents().subscribe((comps) => {
-    //   this.dataSource.data = comps;
-    //   const process = this.dataSource.data[0].children.filter(
-    //     (parent) => parent.type === "PARENT_PROCESS"
-    //   );
-    //   for (let node of process[0].children) {
-    //     this.tiles = [...this.tiles, node];
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 3',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 4',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 5',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 6',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 6',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 6',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 6',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 6',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 6',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
+    //   },
+    //   {
+    //     title: {
+    //       name: 'test 6',
+    //       color: 'green',
+    //       icon: 'share'
+    //     },
+    //     labels: [
+    //       {
+    //         name: 'test label',
+    //         color: 'yellow',
+    //         icon: undefined
+    //       },
+    //       {
+    //         name: 'test label',
+    //         color: 'blue',
+    //         icon, undefined
+    //       }
+    //     ],
+    //     hstatus: {
+    //       name: 'healthy',
+    //       color: 'green',
+    //       icon: 'favorite'
+    //     },
+    //     sstatus: {
+    //       name: 'synced',
+    //       color: 'green',
+    //       icon: 'sync'
+    //     },
+    //     data: {
+    //       'a': 123,
+    //       'b': 234,
+    //       'c': 456
+    //     }
     //   }
-    //   this.isProssesing = false
-    // });
+    // ] as Application[]
+    this.uibService.queryApps().subscribe((value)=> {
+      this.applications = value as unknown as Application[]
+    })
   }
 
   changeSplit(val) {

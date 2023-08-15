@@ -9,94 +9,186 @@
     "
   >
     <div style="width: 100%; height: 100%;">
-      <h1
-        style="font-weight: 300; color: #1a73e8; margin-left: 20px;"
-      >
-        Application
-      </h1>
       <div
         style="
-         display: flex;
-    margin-left: 20px;
-    flex-direction: row;
-    align-items: flex-start;
-    width: 100%;
+          height: 100px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
         "
       >
-        <button
-          mat-raised-button
+        <span
           style="
-            width: 200px;
-            height: 40px;
-            margin-right: 20px;
-            background: #1a73e8;
-            color: #f8f5f0;
+            font-family: Heebo, sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            font-style: normal;
+            color: #363c4a;
+            padding-top: 14px;
+            margin-left: 20px;
+            padding-bottom: 10px;
+          "
+          >Applications</span
+        >
+        <div
+          style="
+            height: 50px;
+            border: solid white;
+            border-top-color: #abb2b933;
           "
         >
-          <mat-icon>refresh</mat-icon>
-          <spa>Refresh Apps</spa>
-        </button>
-        <dynamic-search style="width: 300px;"></dynamic-search>
+          <div
+            style="
+              display: flex;
+              margin-left: 20px;
+              flex-direction: row;
+              align-items: center;
+    gap: 20px;
+    width: 100%;
+    justify-content: flex-start;
+            "
+          >
+            <button
+              mat-raised-button
+              style="
+                cursor: pointer;
+                font-size: 13px;
+                font-weight: 500;
+                text-align: center;
+                border-radius: 24px;
+                background-color: #6d7f8b;
+                color: #f8fbfb;
+                margin-bottom: 10px;
+              "
+            >
+              <mat-icon>refresh</mat-icon>
+              <spa>Refresh Apps</spa>
+            </button>
+            <dynamic-search style="width: 300px;"></dynamic-search>
+          </div>
+        </div>
       </div>
       <mat-progress-bar
         mode="indeterminate"
         *ngIf="isProssesing"
       ></mat-progress-bar>
-      <div
-        style="
-          display: flex;
-          height: 83%;
-          flex-direction: column;
-          background-color: #dae3f0;
-        "
-      >
-        <div>
-          <div style="color: #17aee0;
-          margin-left: 8px;
-          width: 97%;
-          margin-top: 10px;
-          margin-bottom: 10px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-      ">
-            <div style="display: flex; flex-direction: row;">
-              <span style="color: gray;">Previous</span>
-              <span style="margin-left: 10px;"> 1 </span>
-              <span style="margin-left: 10px;color: gray;">Next</span>
-            </div>
-            <div>
-              Items per page: 10
-            </div>
-          </div>
-          <div
-            style="
-              margin-left: 24px;
-              width: 95%;
-              height: 20px;
-              background-color: #1a73e8;
-              border: 2px solid;
-              border-color: white;
-              border-radius: 5px;
-            "
-          ></div>
-        </div>
+      <div style="background-color: #dae3f0; height: calc(100% - 100px);">
         <div
           style="
             display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
+            height: 100%;
             width: 97%;
-            margin-left: 8px;
-            margin-top: 20px;
             overflow-y: scroll;
-            gap: 30px;
+            flex-direction: column;
+            background-color: #dae3f0;
           "
         >
-          <div *ngFor="let app of applications">
-            <div (click)="openbox(app)" style="z-index: 2;">
-              <grid-tile [app]="app"></grid-tile>
+          <div>
+            <div
+              style="
+                color: #17aee0;
+                margin-left: 8px;
+                width: 97%;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  font-family: Heebo, sans-serif;
+                  font-weight: normal;
+                  font-size: 16px;
+                  font-style: normal;
+                "
+              >
+                <span style="color: gray;">Previous</span>
+                <span style="margin-left: 10px; color: #00a2b3;"> 1 </span>
+                <span style="margin-left: 10px; color: gray;">Next</span>
+              </div>
+              <div
+                class="font-family: Heebo,sans-serif; font-weight: normal; font-size: 16px; font-style: normal; color: #00a2b3;"
+              >
+                Items per page: 10
+              </div>
             </div>
+            <div
+              style="
+                margin-left: 24px;
+                width: 95%;
+                height: 20px;
+                background-color: rgb(24, 190, 148);
+                border: 2px solid;
+                border-color: white;
+                border-radius: 10px;
+              "
+            ></div>
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: flex-start;
+              margin-left: 8px;
+              margin-top: 20px;
+              gap: 30px;
+            "
+          >
+            <div *ngFor="let app of applications">
+              <div (click)="openbox(app)" style="z-index: 2;">
+                <grid-tile [app]="app"></grid-tile>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              style="
+                color: #17aee0;
+                margin-left: 8px;
+                width: 97%;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  font-family: Heebo, sans-serif;
+                  font-weight: normal;
+                  font-size: 16px;
+                  font-style: normal;
+                "
+              >
+                <span style="color: gray;">Previous</span>
+                <span style="margin-left: 10px; color: #00a2b3;"> 1 </span>
+                <span style="margin-left: 10px; color: gray;">Next</span>
+              </div>
+              <div
+                class="font-family: Heebo,sans-serif; font-weight: normal; font-size: 16px; font-style: normal; color: #00a2b3;"
+              >
+                Items per page: 10
+              </div>
+            </div>
+            <div
+              style="
+                margin-left: 24px;
+                width: 95%;
+                height: 20px;
+                background-color: rgb(24, 190, 148);
+                border: 2px solid;
+                border-color: white;
+                border-radius: 10px;
+                margin-bottom: 20px;
+              "
+            ></div>
           </div>
         </div>
       </div>
@@ -106,7 +198,7 @@
       role="tablist"
       style="
         position: fixed;
-        background-color: lightgrey;
+        background-color: #30303d;
         margin-top: 0;
         right: 4.5rem;
       "
@@ -152,8 +244,17 @@
               class="nav-link"
               (click)="changeSplit('dashboard')"
               data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'dashboard' }"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'dashboard',
+                active_color: currentTab == 'dashboard'
+              }"
               type="button"
               role="tab"
               aria-selected="false"
@@ -166,13 +267,22 @@
               class="nav-link"
               (click)="changeSplit('application')"
               data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'application' }"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'application',
+                active_color: currentTab == 'application'
+              }"
               type="button"
               role="tab"
               aria-selected="true"
             >
-              App
+              Apps
             </button>
           </li>
           <li class="nav-item" role="presentation">
@@ -180,8 +290,17 @@
               class="nav-link"
               (click)="changeSplit('uib-editor')"
               data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'uib-editor' }"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'uib-editor',
+                active_color: currentTab == 'uib-editor'
+              }"
               type="button"
               role="tab"
               aria-selected="false"
@@ -194,8 +313,17 @@
               class="nav-link"
               (click)="changeSplit('uib-build')"
               data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'uib-build' }"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'uib-build',
+                active_color: currentTab == 'uib-build'
+              }"
               type="button"
               role="tab"
               aria-selected="false"

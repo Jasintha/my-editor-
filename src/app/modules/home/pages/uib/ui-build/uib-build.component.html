@@ -9,11 +9,24 @@
     "
   >
     <div style="width: 100%; height: 100%;">
-      <h1
-        style="font-weight: 300; size: 30px; color: #1a73e8; margin-left: 20px;"
-      >
-        Build
-      </h1>
+      <div style="height: 100px; display: flex; flex-direction: column; justify-content: space-between;
+      ">
+        <span
+          style="
+            font-family: Heebo, sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            font-style: normal;
+            color: #363c4a;
+            padding-top: 14px;
+    margin-left: 20px;
+    padding-bottom: 10px;
+          "
+          >Build</span
+        >
+        <div style="height: 50px; border: solid white; border-top-color: #abb2b933;">
+        </div>
+      </div>
       <mat-progress-bar
       mode="indeterminate"
       *ngIf="isGenerating"
@@ -238,135 +251,171 @@
       </div>
     </div>
     <ul
-      class="nav nav-tabs right-tabs sideways-tabs"
-      role="tablist"
+    class="nav nav-tabs right-tabs sideways-tabs"
+    role="tablist"
+    style="
+      position: fixed;
+      background-color: #30303d;
+      margin-top: 0;
+      right: 4.5rem;
+    "
+  >
+    <div
       style="
-        position: fixed;
-        background-color: lightgrey;
-        margin-top: 0;
-        right: 4.5rem;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 75%;
+        justify-content: space-between;
       "
     >
+      <div
+        role="presentation"
+        style="
+          display: flex;
+          width: 50%;
+          height: 7%;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <h1 class="display-4" style="transform: rotate(90deg);">
+          <img
+            src="../assets/images/apps_icon.png"
+            style="width: 38px; transform: rotate(270deg);"
+          />
+        </h1>
+      </div>
       <div
         style="
           display: flex;
           flex-direction: column;
-          height: 100%;
-          width: 75%;
-          justify-content: space-between;
+          width: 50%;
+          height: 40%;
+          justify-content: flex-start;
+          align-items: flex-start;
         "
       >
-        <div
-          role="presentation"
-          style="
-            display: flex;
-            width: 50%;
-            height: 7%;
-            justify-content: center;
-            align-items: center;
-          "
-        >
-          <h1 class="display-4" style="transform: rotate(90deg);">
-            <img
-              src="../assets/images/apps_icon.png"
-              style="width: 38px; transform: rotate(270deg);"
-            />
-          </h1>
-        </div>
-        <div
-          style="
-            display: flex;
-            flex-direction: column;
-            width: 50%;
-            height: 40%;
-            justify-content: flex-start;
-            align-items: flex-start;
-          "
-        >
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              (click)="changeSplit('dashboard')"
-              data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'dashboard' }"
-              type="button"
-              role="tab"
-              aria-selected="false"
-            >
-              Dashboard
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              (click)="changeSplit('application')"
-              data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'application' }"
-              type="button"
-              role="tab"
-              aria-selected="true"
-            >
-              App
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              (click)="changeSplit('uib-editor')"
-              data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'uib-editor' }"
-              type="button"
-              role="tab"
-              aria-selected="false"
-            >
-              Editor
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              (click)="changeSplit('uib-build')"
-              data-bs-toggle="tab"
-              style="height: 2rem !important; margin-top: 24px !important;"
-              [ngClass]="{ active: currentTab == 'uib-build' }"
-              type="button"
-              role="tab"
-              aria-selected="false"
-            >
-              Build
-            </button>
-          </li>
-        </div>
-        <span
-          class="logout"
-          style="
-            width: 50%;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-            align-items: center;
-          "
-        >
+        <li class="nav-item" role="presentation">
           <button
-            mat-mini-fab
-            matTooltip="Logout"
-            [matMenuTriggerFor]="menu"
-            style="width: 34px; height: 34px; margin-left: -2px;"
-            color="primary"
+            class="nav-link"
+            (click)="changeSplit('dashboard')"
+            data-bs-toggle="tab"
+            style="
+              height: 2rem !important;
+              margin-top: 24px !important;
+              color: #abb2b9;
+              background-color: #30303d !important;
+              text-transform: capitalize !important;
+            "
+            [ngClass]="{
+              active: currentTab == 'dashboard',
+              active_color: currentTab == 'dashboard'
+            }"
+            type="button"
+            role="tab"
+            aria-selected="false"
           >
-            <mat-icon>perm_identity</mat-icon>
+            Dashboard
           </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="logout()">
-              <mat-icon>power_settings_new</mat-icon>
-              <span>Logout</span>
-            </button>
-          </mat-menu>
-        </span>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            (click)="changeSplit('application')"
+            data-bs-toggle="tab"
+            style="
+              height: 2rem !important;
+              margin-top: 24px !important;
+              color: #abb2b9;
+              background-color: #30303d !important;
+              text-transform: capitalize !important;
+            "
+            [ngClass]="{
+              active: currentTab == 'application',
+              active_color: currentTab == 'application'
+            }"
+            type="button"
+            role="tab"
+            aria-selected="true"
+          >
+            Apps
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            (click)="changeSplit('uib-editor')"
+            data-bs-toggle="tab"
+            style="
+              height: 2rem !important;
+              margin-top: 24px !important;
+              color: #abb2b9;
+              background-color: #30303d !important;
+              text-transform: capitalize !important;
+            "
+            [ngClass]="{
+              active: currentTab == 'uib-editor',
+              active_color: currentTab == 'uib-editor'
+            }"
+            type="button"
+            role="tab"
+            aria-selected="false"
+          >
+            Editor
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            (click)="changeSplit('uib-build')"
+            data-bs-toggle="tab"
+            style="
+              height: 2rem !important;
+              margin-top: 24px !important;
+              color: #abb2b9;
+              background-color: #30303d !important;
+              text-transform: capitalize !important;
+            "
+            [ngClass]="{
+              active: currentTab == 'uib-build',
+              active_color: currentTab == 'uib-build'
+            }"
+            type="button"
+            role="tab"
+            aria-selected="false"
+          >
+            Build
+          </button>
+        </li>
       </div>
-    </ul>
+      <span
+        class="logout"
+        style="
+          width: 50%;
+          display: flex;
+          justify-content: center;
+          margin-bottom: 10px;
+          align-items: center;
+        "
+      >
+        <button
+          mat-mini-fab
+          matTooltip="Logout"
+          [matMenuTriggerFor]="menu"
+          style="width: 34px; height: 34px; margin-left: -2px;"
+          color="primary"
+        >
+          <mat-icon>perm_identity</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>power_settings_new</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </span>
+    </div>
+  </ul>
   </div>
 </div>
