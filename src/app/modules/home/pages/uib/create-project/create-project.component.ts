@@ -1,5 +1,8 @@
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { RequirementService } from "@app/core/projectservices/requirement.service";
+import { UIBService } from "@app/core/projectservices/uib.service";
+import { da } from "date-fns/locale";
 
 
 @Component({
@@ -10,9 +13,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
     ],
     encapsulation: ViewEncapsulation.None,
   })
-export class CreateProjectComponent {
+export class CreateProjectComponent implements OnInit{
     purposes = [
-        't1', 't2'
+        'Integration'
     ]
 
     projectForm = this.fb.group({
@@ -21,7 +24,14 @@ export class CreateProjectComponent {
         purpose: [null, Validators.required],
     })
 
-    constructor(private fb: FormBuilder){}
+    projectUuid: string
+
+    constructor(private fb: FormBuilder, private uibService: UIBService, private requirementService: RequirementService){}
+  ngOnInit(): void {
+    this.requirementService.findAllDesignTreeData().subscribe((data)=>{
+      this.projectUuid = data.body[0].projectuuid
+    })
+  }
 
         
   updateProfile() {
@@ -33,6 +43,23 @@ export class CreateProjectComponent {
   }
 
   onSubmit() {
-    console.warn(this.projectForm.value);
+    const newProject = {
+    requirements: [
+        {
+            requirementUUID: "r0001",
+            description: "<p>ZxXX</p>"
+        }
+    ],
+    name: this.projectForm.get(['projectName']).value, 
+    projectUuid: this.projectUuid,
+    epicCreateType: "new",
+    description: this.projectForm.get(['description']).value,
+    status: "NEW",
+    epicuuid: "",
+    referenceName: this.projectForm.get(['projectName']).value, 
+    }
+    this.uibService.createUIBProject(newProject, this.projectUuid).subscribe((value)=> {
+      console.log(value)
+    })
   }
 }

@@ -8,7 +8,7 @@
               display: flex;
               height: 100%;
               width: 100%;
-              background-color: #dae3f0;
+              background-color: #dee6eb;
               align-items: center;
               flex-direction: column;
             "
@@ -49,8 +49,8 @@
             >
               <h1 class="display-4" style="transform: rotate(90deg);">
                 <img
-                  src="../assets/images/apps_icon.png"
-                  style="width: 38px; transform: rotate(270deg);"
+                src="../assets/images/apps_icon.png"
+                style="width: 38px; transform: rotate(270deg);"
                 />
               </h1>
             </div>
@@ -253,7 +253,7 @@
                     mat-icon-button
                     title="add model"
                     class="top-node"
-                    *ngIf="node.data.isParent"
+                    *ngIf="node.data.isParent && node.data.type != 'PARENT_MAIN_TASK' && node.data.type != 'PARENT_SERVICE' " 
                     (click)="add(node.data)"
                     [ngClass]="{ 'background-highlight': activeNode === node }"
                   >

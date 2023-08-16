@@ -14,6 +14,7 @@ export class UIBService {
   public applicationUrl =  '/api/editor/uib/application';
   public uibProjectsUrl = '/api/editor/projects/uib/components'
   public uibServiceUrl = '/api/editor/uib/servicefiles'
+  public uibCreateProjectUrl = '/api/editor/epics/req/'
 
   constructor(protected http: HttpClient) {}
 
@@ -33,7 +34,7 @@ export class UIBService {
     return this.http.get<any[]>(`${this.applicationUrl}`, defaultHttpOptions());
   }
 
-  createUIBProject(serviceFile: any, uuid: string): Observable<EntityResponseType> {
-    return this.http.post<any>(`${this.uibServiceUrl}/${uuid}`, serviceFile, { observe: 'response' });
+  createUIBProject(newProj, uuid: string): Observable<EntityResponseType> {
+    return this.http.post<any>(`${this.uibCreateProjectUrl}/${uuid}`, newProj,  { observe: 'response' });
   }
 }

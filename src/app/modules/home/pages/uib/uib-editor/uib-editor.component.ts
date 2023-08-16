@@ -58,7 +58,7 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
        private loginService: LoginService,
        private projectService: ProjectService,
        private eventManager: EventManagerService,
-       private dialog: MatDialog
+       private addOperationService: AddOperationService
        ){}
     ngOnInit(): void {
       this.currentTab = "uib-editor"
@@ -96,31 +96,50 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
   }
 
   add(node) {
-    const dialogRef = this.dialog.open(ServicefileComponent, {
-      width: '800px',
-      panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
-      data: {
-          title: 'Create UIB Project',
-          projectUid: node.projectUId,
-          createStatus: 'Create',
-          uuid: node.uuid,
-      }
-  });
-  dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-  });
+    this.addOperationService.createPopups(node, node.projectuuid, "Create");
   }
 
   selectActiveNode(node) {
     this.isCreatingProject = false 
     this.activeNode = node;
     this.projectUid = this.activeNode.data.projectuuid;
-    this.viewRule(node)
+
+    if (node.type === "MODEL") {
+      this.router.navigate(["service/model"], {
+        queryParams: { projectUid: node.projectuuid, modelUid: node.uuid },
+      });
+    } else if (node.type === "LAMBDA") {
+      this.router.navigate(["service/lambda"], {
+        queryParams: {
+          projectUid: node.projectuuid,
+          lamdafunctionUuid: node.uuid,
+        },
+      });
+    } else if (
+      node.type === "API" ||
+      node.type === "COMMAND" ||
+      node.type === "QUERY" ||
+      node.type === "TASK" ||
+      node.type === "MAIN_TASK" ||
+      node.type === "SERVICEFILE" ||
+      node.type === "WORKFLOW"  ||
+      node.type === 'UIB'
+    ) {
+      this.viewRule(node);
+    }
   }
 
   viewRule(item) {
     this.ruleprojectUid = item.projectuuid;
-    this.editorType = "UIB";
+    if (item.type === "SERVICEFILE") {
+      this.editorType = "servicefile";
+    } else if(item.type === "UIB"){
+      this.editorType = "uib";
+    } else if (item.type === "MAIN_TASK") {
+      this.editorType = "maintask";
+    } else {
+      this.editorType = "default";
+    }
     this.userName = item.username;
     this.router.navigate(["uib-editor/rulechain"], {
       queryParams: {
