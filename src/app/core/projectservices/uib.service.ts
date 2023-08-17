@@ -12,9 +12,10 @@ type EntityArrayResponseType = HttpResponse<any[]>;
 export class UIBService {
   public dashboardUrl =  '/api/editor/uib/dashboard';
   public applicationUrl =  '/api/editor/uib/application';
-  public uibProjectsUrl = '/api/editor/projects/uib/components'
-  public uibServiceUrl = '/api/editor/uib/servicefiles'
-  public uibCreateProjectUrl = '/api/editor/epics/req/'
+  public uibProjectsUrl = '/api/editor/projects/uib/components';
+  public uibServiceUrl = '/api/editor/uib/servicefiles';
+  public uibCreateProjectUrl = '/api/editor/epics/req/';
+  public uibCreateFlowUrl = '/api/editor/proj/subrules/';
 
   constructor(protected http: HttpClient) {}
 
@@ -36,5 +37,13 @@ export class UIBService {
 
   createUIBProject(newProj, uuid: string): Observable<EntityResponseType> {
     return this.http.post<any>(`${this.uibCreateProjectUrl}/${uuid}`, newProj,  { observe: 'response' });
+  }
+
+  createUIBFlowProject(newFlow, uuid: string): Observable<EntityResponseType> {
+    return this.http.post<any>(`${this.uibCreateFlowUrl}/${uuid}`, newFlow,  { observe: 'response' });
+  }
+
+  updateUIBFlowProject(newFlow, uuid: string): Observable<EntityResponseType> {
+    return this.http.put<any>(`${this.uibCreateFlowUrl}/${uuid}`, newFlow, { observe: 'response' });
   }
 }

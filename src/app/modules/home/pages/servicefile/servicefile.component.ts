@@ -13,6 +13,7 @@ import {AppEvent} from '@shared/events/app.event.class';
 import {EventTypes} from '@shared/events/event.queue';
 import {IApi} from '@shared/models/model/microservice-api.model';
 import {NgxSpinnerService} from 'ngx-spinner';
+import { UIBService } from '@app/core/projectservices/uib.service';
 
 @Component({
   selector: 'virtuan-servicefile',
@@ -41,6 +42,7 @@ export class ServicefileComponent implements OnInit {
       public dialogRef: MatDialogRef<ServicefileComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
       private spinnerService: NgxSpinnerService,
+      private uibService: UIBService
   ) { }
 
   ngOnInit(): void {
@@ -88,9 +90,11 @@ export class ServicefileComponent implements OnInit {
     const serviceFile = this.createFromForm();
     if (serviceFile.uuid) {
       serviceFile.status = this.currentFile.status;
-      this.subscribeToSaveResponse(this.serviceFileService.update(serviceFile, this.projectUid));
+      // this.subscribeToSaveResponse(this.serviceFileService.update(serviceFile, this.projectUid));
+      this.subscribeToSaveResponse(this.uibService.createUIBFlowProject(serviceFile, this.projectUid))
     } else {
-      this.subscribeToSaveResponse(this.serviceFileService.create(serviceFile, this.projectUid));
+     // this.subscribeToSaveResponse(this.serviceFileService.create(serviceFile, this.projectUid));
+     this.subscribeToSaveResponse(this.uibService.createUIBFlowProject(serviceFile, this.projectUid))
     }
   }
 
@@ -99,6 +103,14 @@ export class ServicefileComponent implements OnInit {
       uuid: this.editForm.get(['id']).value,
       name: this.editForm.get(['name']).value,
       projectUuid: this.projectUid,
+      params: [],
+      returnRecordType: 's',
+      returnObj: {
+        id: '',
+        paramType: "RETURN",
+        inputType: "TEXT",
+        inputName: "_s"
+      }
     };
   }
 

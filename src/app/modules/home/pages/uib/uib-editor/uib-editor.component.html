@@ -259,6 +259,13 @@
                   >
                     <mat-icon>add</mat-icon>
                   </button>
+                  <button *ngIf="!node.data.isParent" (click)="$event.stopPropagation()"
+                                        [matMenuTriggerData]="{ item: node.data }"
+                                        [matMenuTriggerFor]="actionsMenu"
+                                        mat-icon-button
+                                        type="button">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
                 </mat-tree-node>
               </mat-tree>
             </div>
@@ -267,4 +274,22 @@
       </as-split-area>
     </as-split>
   </div>
+
+  <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+    <ng-template let-item="item" matMenuContent>
+        <button *ngIf="item.type === 'MODEL'" (click)="exportAggregateFile(item)" mat-menu-item>
+            <span>Export</span>
+        </button>
+        <button *ngIf="item.type !== 'HYBRID' && item.type !== 'EVENT'" (click)="view(item)" mat-menu-item>
+            <span>View</span>
+        </button>
+        <button *ngIf="item.type !== 'MAIN_TASK' && item.type !== 'UI_PAGE' && item.type !== 'PARENT_UI_SUB_MENU'"
+            (click)="edit(item)" mat-menu-item>
+            <span>Edit</span>
+        </button>
+        <button *ngIf="item.type !== 'MAIN_TASK'" (click)="delete(item)" mat-menu-item>
+            <span>Delete</span>
+        </button>
+    </ng-template>
+</mat-menu>
 </div>

@@ -8,8 +8,8 @@ import { AddOperationService } from "@app/core/projectservices/add-operations.se
 import { EventTypes } from "@app/shared/events/event.queue";
 import { Subscription } from "rxjs";
 import { EventManagerService } from "@app/shared/events/event.type";
-import { MatDialog } from "@angular/material/dialog";
-import { ServicefileComponent } from "../../servicefile/servicefile.component";
+import { AggregateService } from "@app/core/projectservices/microservice-aggregate.service";
+import { DeleteOperationService } from "@app/core/projectservices/delete-operations.service";
   
   @Component({
     selector: "uib-editor-page",
@@ -58,7 +58,9 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
        private loginService: LoginService,
        private projectService: ProjectService,
        private eventManager: EventManagerService,
-       private addOperationService: AddOperationService
+       private addOperationService: AddOperationService,
+       private aggregateService: AggregateService,
+       private deleteOperationService: DeleteOperationService
        ){}
     ngOnInit(): void {
       this.currentTab = "uib-editor"
@@ -96,16 +98,16 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
   }
 
   add(node) {
-    if(node.type !== 'MODEL' && node.type !== 'LAMBDA'){
+    if(node.type !== 'PARENT_MODEL' && node.type !== 'PARENT_LAMBDA'){
       node.type = 'UIB';
     }
     this.addOperationService.createPopups(node, node.projectuuid, "Create");
   }
 
-  selectActiveNode(node) {
+  selectActiveNode(selectedNode) {
+    const node = selectedNode.data
     this.isCreatingProject = false 
-    this.activeNode = node;
-    this.projectUid = this.activeNode.data.projectuuid;
+    this.projectUid = node.projectuuid;
 
     if (node.type === "MODEL") {
       this.router.navigate(["service/model"], {
@@ -118,31 +120,14 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
           lamdafunctionUuid: node.uuid,
         },
       });
-    } else if (
-      node.type === "API" ||
-      node.type === "COMMAND" ||
-      node.type === "QUERY" ||
-      node.type === "TASK" ||
-      node.type === "MAIN_TASK" ||
-      node.type === "SERVICEFILE" ||
-      node.type === "WORKFLOW"  ||
-      node.type === 'UIB'
-    ) {
+    } else {
       this.viewRule(node);
     }
   }
 
   viewRule(item) {
     this.ruleprojectUid = item.projectuuid;
-    if (item.type === "SERVICEFILE") {
-      this.editorType = "servicefile";
-    } else if(item.type === "UIB"){
-      this.editorType = "uib";
-    } else if (item.type === "MAIN_TASK") {
-      this.editorType = "maintask";
-    } else {
-      this.editorType = "default";
-    }
+    this.editorType = "uib";
     this.userName = item.username;
     this.router.navigate(["uib-editor/rulechain"], {
       queryParams: {
@@ -152,6 +137,67 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
         editorType: this.editorType,
       },
     });
+  }
+
+  exportAggregateFile(selectedNode) {
+    const node = selectedNode
+    this.aggregateService
+      .getModelDownloader(node.uuid, node.projectuuid)
+      .subscribe((data) => this.downloadFile(data)),
+      (_error) => this.onError("Error got while exporting"),
+      () => {
+        console.log("OK");
+      };
+  }
+
+  downloadFile(data: any) {
+    const blob = new Blob([data.body], { type: "application/json" });
+    const url = window.URL.createObjectURL(blob);
+    let filename = this.getFileNameFromHttpResponse(data);
+    var anchor = document.createElement("a");
+    anchor.download = filename;
+    anchor.href = url;
+    anchor.click();
+  }
+
+  protected onError(_errorMessage: string) {}
+
+  getFileNameFromHttpResponse(data) {
+    var contentDispositionHeader = data.headers.get("content-disposition");
+    var result = contentDispositionHeader.split(";")[1].trim().split("=")[1];
+    return result.replace(/"/g, "");
+  }
+
+  view(node){
+    this.isCreatingProject = false 
+    this.projectUid = node.projectuuid;
+
+    if (node.type === "MODEL") {
+      this.router.navigate(["service/model"], {
+        queryParams: { projectUid: node.projectuuid, modelUid: node.uuid },
+      });
+    } else if (node.type === "LAMBDA") {
+      this.router.navigate(["service/lambda"], {
+        queryParams: {
+          projectUid: node.projectuuid,
+          lamdafunctionUuid: node.uuid,
+        },
+      });
+    } else {
+      this.viewRule(node);
+    }
+  }
+
+  edit(item) {
+    const node = item
+    this.projectUid = node.projectuuid;
+    this.addOperationService.editPopups(node, this.projectUid, "Update");
+  }
+
+  delete(item) {
+    const node = item
+    this.projectUid = node.projectuuid;
+    this.deleteOperationService.delete(node, this.projectUid);
   }
 
   getColor(node){

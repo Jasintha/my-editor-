@@ -1,0 +1,13 @@
+::ng-deep .redNoMatch
+{
+  color:white;
+  font-size: 30px;
+  width: auto;
+  background: #302120 !important;
+}
+
+::ng-deep .greenNoMatch
+{
+  color:white;
+  background: #1ab94f !important;
+}
