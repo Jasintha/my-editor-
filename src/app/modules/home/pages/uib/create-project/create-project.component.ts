@@ -8,9 +8,6 @@ import {
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { RequirementService } from "@app/core/projectservices/requirement.service";
 import { UIBService } from "@app/core/projectservices/uib.service";
-import { da } from "date-fns/locale";
-import { SnackBarComponent } from "../snackbar/snackbar.component";
-import { computeMsgId } from "@angular/compiler";
 
 @Component({
   selector: "create-uib-project",

@@ -96,6 +96,9 @@ import { ServicefileComponent } from "../../servicefile/servicefile.component";
   }
 
   add(node) {
+    if(node.type !== 'MODEL' && node.type !== 'LAMBDA'){
+      node.editorType = 'UIB';
+    }
     this.addOperationService.createPopups(node, node.projectuuid, "Create");
   }
 

@@ -51,6 +51,8 @@ export class AddOperationService {
             this.createNavigation(node ,projectUid , status);
         } else if (node.type === 'PARENT_SERVICEFILE'){
             this.createServiceFile(node ,projectUid , status);
+        } else if (node.type === 'UIB'){
+            this.createServiceFile(node ,projectUid , status);
         }
     }
 
@@ -235,7 +237,7 @@ export class AddOperationService {
             width: '800px',
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
-                title: 'Create Service File',
+                title: item.type === 'UIB'? 'Create New File' : 'Create Service File',
                 projectUid: projectUId,
                 createStatus: status,
                 uuid: item.uuid,
