@@ -77,6 +77,8 @@ export class AddOperationService {
             this.createMainMenu(item,projectUid , status);
         } else if (item.type === 'UI_SUB_MENU'){
             this.addASubMenu(item,projectUid , status);
+        } else if (item.type === 'UIB'){
+            this.createServiceFile(item ,projectUid , status);
         }
     }
 
@@ -237,7 +239,7 @@ export class AddOperationService {
             width: '800px',
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
-                title: item.type === 'UIB'? 'Create New File' : 'Create Service File',
+                title: item.type === 'UIB'? `${status} New File` : `${status} Service File`,
                 projectUid: projectUId,
                 createStatus: status,
                 uuid: item.uuid,

@@ -191,6 +191,9 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
   edit(item) {
     const node = item
     this.projectUid = node.projectuuid;
+    if(node.type !== 'LAMBDA' && node.type !== 'MODEL'){
+      node.type = 'UIB'
+    }
     this.addOperationService.editPopups(node, this.projectUid, "Update");
   }
 
