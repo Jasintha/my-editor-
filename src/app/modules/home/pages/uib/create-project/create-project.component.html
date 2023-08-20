@@ -76,7 +76,7 @@
         color="primary"
         style="font-size: 18px;"
         (click)="onSubmit()"
-        [disabled]="!projectForm.valid"
+        [disabled]="projectForm.invalid || isClear"
       >
         Create Project
       </button>
@@ -91,7 +91,7 @@
       margin-top: 20px;
       background-color: white;
     "
-    (click)="updateProfile()"
+    (click)="clear()"
   >
     Cancel
   </button>

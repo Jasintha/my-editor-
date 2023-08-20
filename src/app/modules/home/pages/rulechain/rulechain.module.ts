@@ -106,6 +106,7 @@ import { DashboardTileComponent } from '../uib/dashboard-tile/dashboard-tile.com
 import { UibBuildPageComponent } from '../uib/ui-build/uib-build.component';
 import { DynamicSearchComponent } from '../uib/dynamic-search/dynamic-search.component';
 import { CreateProjectComponent } from '../uib/create-project/create-project.component';
+import { UIBViewSourceComponent } from '../uib/uib-view-source/uib-view-source.component';
 
 @NgModule({
   declarations: [
@@ -149,6 +150,7 @@ import { CreateProjectComponent } from '../uib/create-project/create-project.com
     UibBuildPageComponent,
     DynamicSearchComponent,
     CreateProjectComponent,
+    UIBViewSourceComponent
   ],
   providers: [
     {

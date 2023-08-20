@@ -86,8 +86,13 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
   }
 
   loadTreeData() {
-    this.projectService.findAllProjectComponents().subscribe((comps) => {
+    this.projectService.findAllProjectComponents().subscribe({
+      next: (comps) => {
       this.dataSource.data = comps;
+      },
+      error: (error)=> {
+        console.error(error)
+      }
     });
   }
 
@@ -186,6 +191,22 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
     } else {
       this.viewRule(node);
     }
+  }
+
+  viewSourceCode(node){
+    this.isCreatingProject = false 
+    this.projectUid = node.projectuuid;
+    console.log(node)
+
+      this.router.navigate(["uib-editor/source"], {
+        queryParams: {
+          projectUid: node.projectuuid,
+          ruleId: node.ruleid,
+          userName: node.username,
+          sourceId: node.uibid
+        },
+      });
+   
   }
 
   edit(item) {

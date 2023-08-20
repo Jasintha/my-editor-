@@ -1,12 +1,14 @@
 <form class="example-form">
   <mat-form-field class="example-full-width">
-    <input type="text"
+    <div style="display: flex; flex-direction: row;"> 
+      <input type="text"
            placeholder="Search applications..."
            matInput
            [formControl]="myControl"
            [matAutocomplete]="auto">
+    <i class="fa fa-search"></i>
+    </div>
     <mat-autocomplete #auto="matAutocomplete">
-      <i class="fa fa-search"></i>
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
         {{option}}
       </mat-option>

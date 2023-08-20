@@ -56,6 +56,7 @@ import { UibApplicationPageComponent } from "../uib/uib-application/uib-applicat
 import { UibRuntimePageComponent } from "../uib/uib-runtime/uib-runtime.component";
 import { UibEditorPageComponent } from "../uib/uib-editor/uib-editor.component";
 import { UibBuildPageComponent } from "../uib/ui-build/uib-build.component";
+import { UIBViewSourceComponent } from "../uib/uib-view-source/uib-view-source.component";
 
 declare const SystemJS;
 
@@ -327,6 +328,14 @@ const routes: Routes = [
       {
         path: "rulechain",
         component: RuleChainPageComponent,
+        canDeactivate: [ConfirmOnExitGuard],
+        data: {
+          auth: [Authority.TENANT_ADMIN],
+        },
+      },
+      {
+        path: "source",
+        component: UIBViewSourceComponent,
         canDeactivate: [ConfirmOnExitGuard],
         data: {
           auth: [Authority.TENANT_ADMIN],

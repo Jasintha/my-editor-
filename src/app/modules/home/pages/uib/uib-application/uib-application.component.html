@@ -49,6 +49,7 @@
             "
           >
             <button
+              (click)="loadGridTiles()"
               mat-raised-button
               style="
                 cursor: pointer;
@@ -107,7 +108,7 @@
                 "
               >
                 <span style="color: gray;">Previous</span>
-                <span style="margin-left: 10px; color: #00a2b3;"> 1 </span>
+                <span style="margin-left: 10px; color: #00a2b3;"> {{this.appCount}} </span>
                 <span style="margin-left: 10px; color: gray;">Next</span>
               </div>
               <div
@@ -168,7 +169,7 @@
                 "
               >
                 <span style="color: gray;">Previous</span>
-                <span style="margin-left: 10px; color: #00a2b3;"> 1 </span>
+                <span style="margin-left: 10px; color: #00a2b3;"> {{this.appCount}} </span>
                 <span style="margin-left: 10px; color: gray;">Next</span>
               </div>
               <div

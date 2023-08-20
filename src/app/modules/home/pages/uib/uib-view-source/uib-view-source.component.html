@@ -1,0 +1,22 @@
+<div class="card-body" style="height: 100%; width: 100%; overflow: hidden;">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Source Code</h2>
+        </div>
+        <div class="col-sm-6">
+            <div style="text-align: right; align-items: end">
+
+                <!-- <button mat-fab color="accent" class="virtuan-btn-footer"
+                        (click)="save()"
+                        matTooltip="{{ 'action.apply-changes' | translate }}"
+                        matTooltipPosition="above">
+                    <mat-icon>done</mat-icon>
+                </button> -->
+            </div>
+        </div>
+
+    </div>
+
+    <ngx-monaco-editor style=" height: 100%; width: 100%;border: 1px solid #eee;" [options]="editorOptions" [(ngModel)]="code" ngDefaultControl></ngx-monaco-editor>
+
+</div>

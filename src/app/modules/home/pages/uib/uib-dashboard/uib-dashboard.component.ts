@@ -32,114 +32,6 @@ export interface Icon {
 })
 export class UibDashboardPageComponent implements OnInit {
   currentTab: string;
-  // chartList = [
-  //   {
-  //     name: "Sample 1",
-  //     data: [50, 50],
-  //     labels: ["A", "B"],
-  //   },
-  //   {
-  //     name: "Sample 2",
-  //     data: [25, 25, 50],
-  //     labels: ["A", "B", "C"],
-  //   },
-  //   {
-  //     name: "Sample 3",
-  //     data: [10, 20, 20, 50],
-  //     labels: ["A", "B", "C", "D"],
-  //   },
-  //   {
-  //     name: "Sample 4",
-  //     data: [25, 25, 50],
-  //     labels: ["A", "B", "C"],
-  //   },
-  //   {
-  //     name: "Sample 5",
-  //     data: [10, 15, 20, 50, 5],
-  //     labels: ["A", "B", "C", "D", "E"],
-  //   },
-  // ];
-  // rules = [
-  //   { id: 1, name: "Rule1", selected: true },
-  //   { id: 2, name: "Rule2", selected: true },
-  //   { id: 3, name: "Rule3", selected: true },
-  // ];
-
-  // widgets = [
-  //   {
-  //     title: 'Synced',
-	// 		count: '21',
-	// 		icon: {
-	// 			name: 'sync',
-	// 			color: 'green',
-	// 			bgColor: 'lightgreen'
-	// 		}
-  //   },
-  //   {
-  //     title: 'Healthy',
-	// 		count: '21',
-	// 		icon: {
-	// 			name: 'favorite',
-	// 			color: 'green',
-	// 			bgColor: 'lightgreen'
-	// 		}
-  //   },
-  //   {
-  //     title: 'Suspended',
-	// 		count: '0',
-	// 		icon: {
-	// 			name: 'pause_circle',
-	// 			color: 'plum',
-	// 			bgColor: '#dae3f0'
-	// 		}
-  //   },
-  //   {
-  //     title: 'Processing',
-	// 		count: '0',
-	// 		icon: {
-	// 			name: 'donut_large',
-	// 			color: 'blue',
-	// 			bgColor: 'lightblue'
-	// 		}
-  //   },
-  //   {
-  //     title: 'Unknown',
-	// 		count: '0',
-	// 		icon: {
-	// 			name: 'help',
-	// 			color: 'gray',
-	// 			bgColor: '#dae3f0'
-	// 		}
-  //   },
-  //   {
-  //     title: 'Missing',
-	// 		count: '0',
-	// 		icon: {
-	// 			name: 'domino_mask',
-  //       color: 'yellow',
-	// 			bgColor: '#F6CE79'
-	// 		}
-  //   },
-  //   {
-  //     title: 'Degraded',
-	// 		count: '0',
-	// 		icon: {
-	// 			name: 'heart_broken',
-	// 			color: 'red',
-	// 			bgColor: '#F69479'
-	// 		}
-  //   },
-  //   {
-  //     title: 'OutofSync',
-	// 		count: '0',
-	// 		icon: {
-	// 			name: 'straight',
-	// 			color: 'yellow',
-	// 			bgColor: '#F6CE79'
-	// 		}
-  //   },
-  // ];
-
   widgets = []
   constructor(private router: Router, private loginService: LoginService,
     private uibService: UIBService) {}
@@ -150,8 +42,13 @@ export class UibDashboardPageComponent implements OnInit {
   }
 
   queryWidgets(){
-    this.uibService.queryDashboard().subscribe((value)=> {
-      this.widgets = value as any
+    this.uibService.queryDashboard().subscribe({
+      next: (value)=> {
+        this.widgets = value as any
+      },
+      error: (error) => {
+        console.error(error)
+      }
     })
   }
 

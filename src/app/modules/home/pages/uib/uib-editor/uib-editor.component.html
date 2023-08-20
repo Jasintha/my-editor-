@@ -13,7 +13,7 @@
               flex-direction: column;
             "
             *ngIf="isCreatingProject"
-          ></create-uib-project>
+         (triggerSaveButton)="refreshTree()" ></create-uib-project>
           <router-outlet></router-outlet>
         </div>
       </as-split-area>
@@ -280,13 +280,16 @@
         <button *ngIf="item.type === 'MODEL'" (click)="exportAggregateFile(item)" mat-menu-item>
             <span>Export</span>
         </button>
-        <button *ngIf="item.type !== 'HYBRID' && item.type !== 'EVENT'" (click)="view(item)" mat-menu-item>
+        <!-- <button *ngIf="item.type !== 'HYBRID' && item.type !== 'EVENT'" (click)="view(item)" mat-menu-item>
             <span>View</span>
-        </button>
-        <button *ngIf="item.type !== 'MAIN_TASK' && item.type !== 'UI_PAGE' && item.type !== 'PARENT_UI_SUB_MENU'"
+        </button> -->
+        <button *ngIf="item.type !== 'HYBRID' && item.type !== 'EVENT'" (click)="viewSourceCode(item)" mat-menu-item>
+          <span>View Source</span>
+      </button>
+        <!-- <button *ngIf="item.type !== 'MAIN_TASK' && item.type !== 'UI_PAGE' && item.type !== 'PARENT_UI_SUB_MENU'"
             (click)="edit(item)" mat-menu-item>
             <span>Edit</span>
-        </button>
+        </button> -->
         <button *ngIf="item.type !== 'MAIN_TASK'" (click)="delete(item)" mat-menu-item>
             <span>Delete</span>
         </button>

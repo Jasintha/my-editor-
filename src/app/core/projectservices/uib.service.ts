@@ -10,12 +10,11 @@ type EntityArrayResponseType = HttpResponse<any[]>;
 
 @Injectable({ providedIn: 'root' })
 export class UIBService {
-  public dashboardUrl =  '/api/editor/uib/dashboard';
-  public applicationUrl =  '/api/editor/uib/application';
-  public uibProjectsUrl = '/api/editor/projects/uib/components';
-  public uibServiceUrl = '/api/editor/uib/servicefiles';
+  public dashboardUrl =  '/api/uib/dashboard';
+  public applicationUrl =  '/api/uib/apps';
   public uibCreateProjectUrl = '/api/editor/epics/req/';
   public uibCreateFlowUrl = '/api/editor/proj/subrules/';
+  public uibViewSourceUrl = '/api/uib/';
 
   constructor(protected http: HttpClient) {}
 
@@ -27,12 +26,8 @@ export class UIBService {
     return this.http.get<any[]>(`${this.applicationUrl}`, defaultHttpOptions());
   }
 
-  queryAllUIComponents(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.uibProjectsUrl}`, defaultHttpOptions());
-  }
-
-  queryProjectPurposes(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.applicationUrl}`, defaultHttpOptions());
+  queryViewSource( ruleId: string, configId: string, user: string, uuid: string):  Observable<any[]> {
+    return this.http.get<any[]>(`${this.uibViewSourceUrl}/${ruleId}/${configId}/${user}/${uuid}`, defaultHttpOptions());
   }
 
   createUIBProject(newProj, uuid: string): Observable<EntityResponseType> {
@@ -41,9 +36,5 @@ export class UIBService {
 
   createUIBFlowProject(newFlow, uuid: string): Observable<EntityResponseType> {
     return this.http.post<any>(`${this.uibCreateFlowUrl}/${uuid}`, newFlow,  { observe: 'response' });
-  }
-
-  updateUIBFlowProject(newFlow, uuid: string): Observable<EntityResponseType> {
-    return this.http.put<any>(`${this.uibCreateFlowUrl}/${uuid}`, newFlow, { observe: 'response' });
   }
 }

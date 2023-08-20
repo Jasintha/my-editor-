@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -25,6 +31,9 @@ export class CreateProjectComponent implements OnInit {
   });
 
   projectUuid: string;
+  isClear = false;
+
+  @Output() triggerSaveButton = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
@@ -38,11 +47,11 @@ export class CreateProjectComponent implements OnInit {
     });
   }
 
-  updateProfile() {
-    this.projectForm.patchValue({
-      projectName: "",
-      description: "",
-      purpose: this.purposes[0],
+  clear() {
+    this.isClear = true;
+    this.projectForm.reset();
+    Object.keys(this.projectForm.controls).forEach((key) => {
+      this.projectForm.get(key).setErrors(null);
     });
   }
 
@@ -62,18 +71,24 @@ export class CreateProjectComponent implements OnInit {
       epicuuid: "",
       referenceName: this.projectForm.get(["projectName"]).value,
     };
-    this.uibService
-      .createUIBProject(newProject, this.projectUuid)
-      .subscribe((value) => {
-        let msg = ''
+    this.uibService.createUIBProject(newProject, this.projectUuid).subscribe({
+      next: (value) => {
+        this.clear();
+        this.triggerSaveButton.emit();
+        let msg = "";
         if (value.status == 200) {
-           msg = 'Created Successfully!'
+          msg = "Created Successfully!";
         } else {
-          msg = 'Creation Failed!'
+          msg = "Creation Failed!";
         }
-        this.snackBar.open(msg,'',{
-          duration: 2000
+        this.snackBar.open(msg, "", {
+          duration: 2000,
         });
-      });
+      },
+
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 }
