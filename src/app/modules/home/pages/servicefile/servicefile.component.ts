@@ -27,6 +27,7 @@ export class ServicefileComponent implements OnInit {
   editForm: FormGroup;
   projectUid: string;
   currentFile: any;
+  projectType: string;
 
   buildServiceFileForm() {
     this.editForm = this.fb.group({
@@ -52,6 +53,7 @@ export class ServicefileComponent implements OnInit {
   
   getServiceFileData() {
     this.projectUid = this.data.projectUid;
+    this.projectType = this.data.type;
     this.title = this.data.title
     this.buildServiceFileForm();
     this.isSaving = false;
@@ -94,11 +96,18 @@ export class ServicefileComponent implements OnInit {
       this.subscribeToSaveResponse(this.uibService.createUIBFlowProject(serviceFile, this.projectUid))
     } else {
      // this.subscribeToSaveResponse(this.serviceFileService.create(serviceFile, this.projectUid));
-     this.subscribeToSaveResponse(this.uibService.createUIBFlowProject(serviceFile, this.projectUid))
+     if(this.projectType === 'PARENT_PROCESS'){
+      this.subscribeToSaveResponse(this.uibService.createUIBFlowProject(serviceFile, this.projectUid))
+     } else if(this.projectType === 'PARENT_LAMBDA'){
+      this.subscribeToSaveResponse(this.uibService.createUIBLambdaProject(serviceFile, this.projectUid))
+     } else if(this.projectType === 'PARENT_MODEL'){
+      this.subscribeToSaveResponse(this.uibService.createUIBModelProject(serviceFile, this.projectUid))
+     }
     }
   }
 
   private createFromForm(): any {
+    if(this.projectType === 'PARENT_PROCESS'){
     return {
       uuid: this.editForm.get(['id']).value,
       name: this.editForm.get(['name']).value,
@@ -112,6 +121,32 @@ export class ServicefileComponent implements OnInit {
         inputName: "_s"
       }
     };
+  } else if(this.projectType === 'PARENT_LAMBDA'){
+    return {
+      uuid: this.editForm.get(['id']).value,
+      name: this.editForm.get(['name']).value,
+      projectUuid: this.projectUid,
+      language: "javascript",
+      params: [],
+      returnRecordType: 's',
+      returnObj: {
+        id: '',
+        paramType: "RETURN",
+        inputType: "TEXT",
+        inputName: "_s"
+      }
+    };
+  }  else if(this.projectType === 'PARENT_MODEL'){
+    return {
+      uuid: this.editForm.get(['id']).value,
+      name: this.editForm.get(['name']).value,
+      projectUuid: this.projectUid,
+      description: null,
+      template: null,
+      type: 'DTO',
+      isComplexObj: false
+    };
+  }
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<any>>) {

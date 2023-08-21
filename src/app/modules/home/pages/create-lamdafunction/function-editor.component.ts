@@ -16,6 +16,7 @@ export class LamdafunctionEditorComponent implements OnInit, OnChanges, OnDestro
   projectUid: string;
 
   lamdafunction: ILamdafunction;
+  projectType: string
   //projectId: number;
   theme: string = 'vs';
   editorOptions: any;
@@ -59,6 +60,7 @@ export class LamdafunctionEditorComponent implements OnInit, OnChanges, OnDestro
     this.activatedRoute.queryParams.subscribe((params)=> {
       this.projectUid = params.projectUid;
       this.lamdafunctionUuid = params.lamdafunctionUuid;
+      this.projectType = params.type;
       this.loadCode();
     })
   }

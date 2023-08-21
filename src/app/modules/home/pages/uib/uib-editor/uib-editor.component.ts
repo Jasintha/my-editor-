@@ -103,9 +103,6 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
   }
 
   add(node) {
-    if(node.type !== 'PARENT_MODEL' && node.type !== 'PARENT_LAMBDA'){
-      node.type = 'UIB';
-    }
     this.addOperationService.createPopups(node, node.projectuuid, "Create");
   }
 
@@ -114,15 +111,12 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
     this.isCreatingProject = false 
     this.projectUid = node.projectuuid;
 
-    if (node.type === "MODEL") {
-      this.router.navigate(["service/model"], {
-        queryParams: { projectUid: node.projectuuid, modelUid: node.uuid },
-      });
-    } else if (node.type === "LAMBDA") {
-      this.router.navigate(["service/lambda"], {
+   if (node.type === "Scripts" || node.type === "MODEL") {
+      this.router.navigate(["uib-editor/lambda"], {
         queryParams: {
           projectUid: node.projectuuid,
           lamdafunctionUuid: node.uuid,
+          type: node.type
         },
       });
     } else {
@@ -173,26 +167,6 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
     return result.replace(/"/g, "");
   }
 
-  view(node){
-    this.isCreatingProject = false 
-    this.projectUid = node.projectuuid;
-
-    if (node.type === "MODEL") {
-      this.router.navigate(["service/model"], {
-        queryParams: { projectUid: node.projectuuid, modelUid: node.uuid },
-      });
-    } else if (node.type === "LAMBDA") {
-      this.router.navigate(["service/lambda"], {
-        queryParams: {
-          projectUid: node.projectuuid,
-          lamdafunctionUuid: node.uuid,
-        },
-      });
-    } else {
-      this.viewRule(node);
-    }
-  }
-
   viewSourceCode(node){
     this.isCreatingProject = false 
     this.projectUid = node.projectuuid;
@@ -212,9 +186,6 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
   edit(item) {
     const node = item
     this.projectUid = node.projectuuid;
-    if(node.type !== 'LAMBDA' && node.type !== 'MODEL'){
-      node.type = 'UIB'
-    }
     this.addOperationService.editPopups(node, this.projectUid, "Update");
   }
 

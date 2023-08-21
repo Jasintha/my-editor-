@@ -40,12 +40,12 @@ export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
         this.uibService.queryViewSource(this.ruleUid, this.sourceId, this.userName, this.projectUid)
       .subscribe({
         next: (res) => {
-          console.log(res)
-          this.editorOptions = { theme: this.theme, language: 'go' };
-          this.code = this.sourceCode;
+          this.editorOptions = { theme: this.theme, language: 'xml' };
+          this.code = res;
         },
         error: (error) => {
-          console.error(error)
+          this.editorOptions = { theme: this.theme, language: 'xml' };
+          this.code = error.text;
         }
       }
       )

@@ -24,15 +24,15 @@ export class AddOperationService {
         if (node.type === 'PARENT_API') {
             this.createApi(node ,projectUid , status);
         } else if (node.type === 'PARENT_PROCESS') {
-            this.createSubrule(node ,projectUid , status);
+            this.createServiceFile(node ,projectUid , status);
         } else if (node.type === 'PARENT_MODEL'){
-            this.createModel(node ,projectUid , status, 'microservice');
+            this.createServiceFile(node ,projectUid , status);
         } else if (node.type === 'PARENT_EVENT'){
             this.createEvent(node ,projectUid , status);
         } else if (node.type === 'PARENT_HYBRID'){
             this.createHybridFunction(node ,projectUid , status);
         } else if (node.type === 'PARENT_LAMBDA'){
-            this.createLambdaFunction(node ,projectUid , status);
+            this.createServiceFile(node ,projectUid , status);
         } else if (node.type === 'PARENT_TASK'){
             this.createTask(node ,projectUid , status);
         } else if (node === 'PARENT_SERVICE'){
@@ -239,7 +239,8 @@ export class AddOperationService {
             width: '800px',
             panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
             data: {
-                title: item.type === 'UIB'? `${status} New File` : `${status} Service File`,
+                title: `${status} New File`,
+                type: item.type,
                 projectUid: projectUId,
                 createStatus: status,
                 uuid: item.uuid,

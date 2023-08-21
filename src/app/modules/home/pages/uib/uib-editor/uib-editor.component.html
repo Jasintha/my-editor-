@@ -277,13 +277,13 @@
 
   <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
     <ng-template let-item="item" matMenuContent>
-        <button *ngIf="item.type === 'MODEL'" (click)="exportAggregateFile(item)" mat-menu-item>
+        <!-- <button *ngIf="item.type === 'MODEL'" (click)="exportAggregateFile(item)" mat-menu-item>
             <span>Export</span>
-        </button>
+        </button> -->
         <!-- <button *ngIf="item.type !== 'HYBRID' && item.type !== 'EVENT'" (click)="view(item)" mat-menu-item>
             <span>View</span>
         </button> -->
-        <button *ngIf="item.type !== 'HYBRID' && item.type !== 'EVENT'" (click)="viewSourceCode(item)" mat-menu-item>
+        <button *ngIf="item.type === 'WORKFLOW'" (click)="viewSourceCode(item)" mat-menu-item>
           <span>View Source</span>
       </button>
         <!-- <button *ngIf="item.type !== 'MAIN_TASK' && item.type !== 'UI_PAGE' && item.type !== 'PARENT_UI_SUB_MENU'"

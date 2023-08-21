@@ -334,6 +334,14 @@ const routes: Routes = [
         },
       },
       {
+        path: "lambda",
+        component: LamdafunctionEditorComponent,
+        canDeactivate: [ConfirmOnExitGuard],
+        data: {
+          auth: [Authority.TENANT_ADMIN],
+        },
+      },
+      {
         path: "source",
         component: UIBViewSourceComponent,
         canDeactivate: [ConfirmOnExitGuard],
