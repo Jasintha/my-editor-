@@ -15,6 +15,9 @@ export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
   ruleUid: string;
   userName: string;
   sourceId: string;
+  editable: string;
+  language: string;
+  title: string;
 
   theme: string = 'vs';
   editorOptions: any;
@@ -40,11 +43,11 @@ export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
         this.uibService.queryViewSource(this.ruleUid, this.sourceId, this.userName, this.projectUid)
       .subscribe({
         next: (res) => {
-          this.editorOptions = { theme: this.theme, language: 'xml' };
+          this.editorOptions = { theme: this.theme, language: this.language };
           this.code = res;
         },
         error: (error) => {
-          this.editorOptions = { theme: this.theme, language: 'xml' };
+          this.editorOptions = { theme: this.theme, language: this.language };
           this.code = error.text;
         }
       }
@@ -57,9 +60,23 @@ export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
       this.projectUid = params.projectUid;
       this.ruleUid = params.ruleId,
       this.userName = params.userName,
-      this.sourceId = params.sourceId
+      this.sourceId = params.sourceId,
+      this.editable = params.editable,
+      this.language = params.language,
+      this.theme = params.theme,
+      this.title = params.title
       this.loadCode();
     })
+  }
+
+  save() {
+    this.uibService
+      .updateViewSource(this.code,this.ruleUid, this.sourceId, this.userName, this.projectUid)
+      .subscribe(
+        (res) => {
+          console.log(res)
+         },
+      );
   }
 
   ngOnDestroy() {

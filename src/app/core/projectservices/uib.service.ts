@@ -47,4 +47,8 @@ export class UIBService {
   createUIBModelProject(newFlow, uuid: string): Observable<EntityResponseType> {
     return this.http.post<any>(`${this.uibCreateModelUrl}/${uuid}`, newFlow,  { observe: 'response' });
   }
+
+  updateViewSource(newFlow, ruleId: string, configId: string, user: string, uuid: string):  Observable<string> {
+    return this.http.post(`${this.uibViewSourceUrl}/${ruleId}/${configId}/${user}/${uuid}`,newFlow, {responseType: 'text'});
+  }
 }

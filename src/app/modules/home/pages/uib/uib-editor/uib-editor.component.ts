@@ -107,18 +107,26 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
   }
 
   selectActiveNode(selectedNode) {
+    if(selectedNode.data.isParent){
+      return
+    }
     const node = selectedNode.data
     this.isCreatingProject = false 
     this.projectUid = node.projectuuid;
 
    if (node.type === "Scripts" || node.type === "MODEL") {
-      this.router.navigate(["uib-editor/lambda"], {
-        queryParams: {
-          projectUid: node.projectuuid,
-          lamdafunctionUuid: node.uuid,
-          type: node.type
-        },
-      });
+    this.router.navigate(["uib-editor/source"], {
+      queryParams: {
+        projectUid: node.projectuuid,
+        ruleId: node.uuid,
+        userName: node.username,
+        sourceId: node.uibid,
+        editable: node.is_editable,
+        languge: node.editor_lan ?? 'text',
+        title: node.editor_title ?? '',
+        theme: node.editor_theme ?? 'vs'
+      },
+    });
     } else {
       this.viewRule(node);
     }
