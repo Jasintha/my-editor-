@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { MatGridListModule } from "@angular/material/grid-list/grid-list-module";
 import { Router } from "@angular/router";
 import { LoginService } from "@app/core/services/login.services";
@@ -10,6 +10,7 @@ import {
 } from "@angular/material/tree";
 import { icon } from "leaflet";
 import { UIBService } from "@app/core/projectservices/uib.service";
+import { MatSidenav } from "@angular/material/sidenav";
 
 export interface Tile {
   applications: Application []
@@ -53,6 +54,7 @@ export interface Node {
   encapsulation: ViewEncapsulation.None,
 })
 export class UibApplicationPageComponent implements OnInit {
+  @ViewChild('drawer') drawer: MatSidenav;
   private _transformer = (node: any, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -80,6 +82,7 @@ export class UibApplicationPageComponent implements OnInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   currentTab: string;
   isProssesing = false;
+  showFiller = false;
 
   constructor(
     private router: Router,
@@ -146,6 +149,10 @@ export class UibApplicationPageComponent implements OnInit {
     } else if (val === "uib-build") {
         this.router.navigate([`uib-build`]);
       }
+  }
+
+  toggleOverlay(){
+    this.drawer.toggle();
   }
 
   logout() {

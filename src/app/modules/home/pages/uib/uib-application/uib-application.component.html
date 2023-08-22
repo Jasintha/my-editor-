@@ -48,6 +48,23 @@
     justify-content: flex-start;
             "
           >
+          <button
+          (click)="toggleOverlay()"
+          mat-raised-button
+          style="
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            border-radius: 24px;
+            background-color: #6d7f8b;
+            color: #f8fbfb;
+            margin-bottom: 10px;
+          "
+        >
+          <mat-icon>plus</mat-icon>
+          <spa>New Project</spa>
+        </button>
             <button
               (click)="loadGridTiles()"
               mat-raised-button
@@ -78,119 +95,137 @@
           style="
             display: flex;
             height: 100%;
-            width: 97%;
+            width: 98%;
             overflow-y: scroll;
             flex-direction: column;
             background-color: #dee6eb;
           "
         >
-          <div>
-            <div
-              style="
-                color: #17aee0;
-                margin-left: 8px;
-                width: 97%;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-              "
-            >
-              <div
-                style="
-                  display: flex;
-                  flex-direction: row;
-                  font-family: Heebo, sans-serif;
-                  font-weight: normal;
-                  font-size: 16px;
-                  font-style: normal;
-                "
-              >
-                <span style="color: gray;">Previous</span>
-                <span style="margin-left: 10px; color: #00a2b3;"> {{this.appCount}} </span>
-                <span style="margin-left: 10px; color: gray;">Next</span>
-              </div>
-              <div
-                class="font-family: Heebo,sans-serif; font-weight: normal; font-size: 16px; font-style: normal; color: #00a2b3;"
-              >
-                Items per page: 10
-              </div>
-            </div>
-            <div
-              style="
-                margin-left: 24px;
-                width: 95%;
-                height: 20px;
-                background-color: rgb(24, 190, 148);
-                border: 2px solid;
-                border-color: white;
-                border-radius: 10px;
-              "
-            ></div>
-          </div>
-          <div
+        <mat-drawer-container style="height: 100%; width: 100%;" autosize>
+          <mat-drawer #drawer mode="side" position="end">
+            <create-uib-project
             style="
               display: flex;
-              flex-wrap: wrap;
-              justify-content: flex-start;
-              margin-left: 8px;
-              margin-top: 20px;
-              gap: 30px;
+              height: 100%;
+              width: 100%;
+              background-color: #dee6eb;
+              align-items: center;
+              flex-direction: column;
             "
-          >
-            <div *ngFor="let app of applications">
-              <div (click)="openbox(app)" style="z-index: 2; cursor: pointer;">
-                <grid-tile [app]="app"></grid-tile>
-              </div>
-            </div>
-          </div>
+         (triggerSaveButton)="toggleOverlay()" ></create-uib-project>
+          </mat-drawer>
+        
           <div>
-            <div
-              style="
-                color: #17aee0;
-                margin-left: 8px;
-                width: 97%;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-              "
-            >
+            <div>
               <div
                 style="
+                  color: #17aee0;
+                  margin-left: 8px;
+                  width: 97%;
+                  margin-top: 10px;
+                  margin-bottom: 10px;
                   display: flex;
                   flex-direction: row;
-                  font-family: Heebo, sans-serif;
-                  font-weight: normal;
-                  font-size: 16px;
-                  font-style: normal;
+                  justify-content: space-between;
                 "
               >
-                <span style="color: gray;">Previous</span>
-                <span style="margin-left: 10px; color: #00a2b3;"> {{this.appCount}} </span>
-                <span style="margin-left: 10px; color: gray;">Next</span>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    font-family: Heebo, sans-serif;
+                    font-weight: normal;
+                    font-size: 16px;
+                    font-style: normal;
+                  "
+                >
+                  <span style="color: gray;">Previous</span>
+                  <span style="margin-left: 10px; color: #00a2b3;"> {{this.appCount}} </span>
+                  <span style="margin-left: 10px; color: gray;">Next</span>
+                </div>
+                <div
+                  class="font-family: Heebo,sans-serif; font-weight: normal; font-size: 16px; font-style: normal; color: #00a2b3;"
+                >
+                  Items per page: 10
+                </div>
               </div>
               <div
-                class="font-family: Heebo,sans-serif; font-weight: normal; font-size: 16px; font-style: normal; color: #00a2b3;"
-              >
-                Items per page: 10
-              </div>
+                style="
+                  margin-left: 24px;
+                  width: 95%;
+                  height: 20px;
+                  background-color: rgb(24, 190, 148);
+                  border: 2px solid;
+                  border-color: white;
+                  border-radius: 10px;
+                "
+              ></div>
             </div>
             <div
               style="
-                margin-left: 24px;
-                width: 95%;
-                height: 20px;
-                background-color: rgb(24, 190, 148);
-                border: 2px solid;
-                border-color: white;
-                border-radius: 10px;
-                margin-bottom: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                margin-left: 8px;
+                margin-top: 20px;
+                gap: 30px;
               "
-            ></div>
+            >
+              <div *ngFor="let app of applications">
+                <div (click)="openbox(app)" style="z-index: 2; cursor: pointer;">
+                  <grid-tile [app]="app"></grid-tile>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                style="
+                  color: #17aee0;
+                  margin-left: 8px;
+                  width: 97%;
+                  margin-top: 10px;
+                  margin-bottom: 10px;
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    font-family: Heebo, sans-serif;
+                    font-weight: normal;
+                    font-size: 16px;
+                    font-style: normal;
+                  "
+                >
+                  <span style="color: gray;">Previous</span>
+                  <span style="margin-left: 10px; color: #00a2b3;"> {{this.appCount}} </span>
+                  <span style="margin-left: 10px; color: gray;">Next</span>
+                </div>
+                <div
+                  class="font-family: Heebo,sans-serif; font-weight: normal; font-size: 16px; font-style: normal; color: #00a2b3;"
+                >
+                  Items per page: 10
+                </div>
+              </div>
+              <div
+                style="
+                  margin-left: 24px;
+                  width: 95%;
+                  height: 20px;
+                  background-color: rgb(24, 190, 148);
+                  border: 2px solid;
+                  border-color: white;
+                  border-radius: 10px;
+                  margin-bottom: 20px;
+                "
+              ></div>
+            </div>
           </div>
+        
+        </mat-drawer-container>
         </div>
       </div>
     </div>

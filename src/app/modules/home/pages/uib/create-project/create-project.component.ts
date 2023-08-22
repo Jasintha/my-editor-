@@ -53,6 +53,7 @@ export class CreateProjectComponent implements OnInit {
     Object.keys(this.projectForm.controls).forEach((key) => {
       this.projectForm.get(key).setErrors(null);
     });
+    this.triggerSaveButton.emit();
   }
 
   onSubmit() {
