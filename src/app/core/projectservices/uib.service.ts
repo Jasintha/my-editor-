@@ -32,6 +32,10 @@ export class UIBService {
     return this.http.get(`${this.uibViewSourceUrl}/${ruleId}/${configId}/${user}/${uuid}`,{responseType: 'text'});
   }
 
+  findProjectComponents(projId: string): Observable<any[]> {
+    return this.http.get<any[]>(`/api/editor/projects/components/${projId}`, defaultHttpOptions());
+  }
+
   createUIBProject(newProj, uuid: string): Observable<EntityResponseType> {
     return this.http.post<any>(`${this.uibCreateProjectUrl}/${uuid}`, newProj,  { observe: 'response' });
   }

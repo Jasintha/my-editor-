@@ -21,6 +21,9 @@ export interface Application {
   hstatus: BasicData,
   sstatus: BasicData,
   data: any[]
+  meta: {
+    projectuuid: string
+  }
 }
 
 export interface BasicData {
@@ -91,11 +94,12 @@ export class UibApplicationPageComponent implements OnInit {
     this.loadGridTiles();
   }
 
-  openbox(tile: Application) {
-    // if (tile.name.toLowerCase().includes(".uib")) {
-    //   tile.type = "UIB";
-    // }
-    // this.triggerService(tile);
+  openbox(app: Application) {
+    this.router.navigate(["uib-editor"], {
+      queryParams: {
+        projectUid: app.meta?.projectuuid
+      }
+    })
   }
 
   triggerService(item) {
@@ -137,8 +141,8 @@ export class UibApplicationPageComponent implements OnInit {
       this.router.navigate([`dashboard`]);
     } else if (val === "application") {
       this.router.navigate([`application`]);
-    } else if (val === "uib-editor") {
-      this.router.navigate([`uib-editor`]);
+    } else if (val === "uib-runtime") {
+      this.router.navigate([`application`]);
     } else if (val === "uib-build") {
         this.router.navigate([`uib-build`]);
       }

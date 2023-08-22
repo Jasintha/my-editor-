@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { LoginService } from "@app/core/services/login.services";
 import { ProjectService } from "../../projects";
 import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
@@ -10,6 +10,7 @@ import { Subscription } from "rxjs";
 import { EventManagerService } from "@app/shared/events/event.type";
 import { AggregateService } from "@app/core/projectservices/microservice-aggregate.service";
 import { DeleteOperationService } from "@app/core/projectservices/delete-operations.service";
+import { UIBService } from "@app/core/projectservices/uib.service";
   
   @Component({
     selector: "uib-editor-page",
@@ -45,6 +46,7 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
   
     dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
+    mainUUID: string;
     activeNode: any;
     projectUid: string;
     ruleprojectUid: string;
@@ -60,9 +62,14 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
        private eventManager: EventManagerService,
        private addOperationService: AddOperationService,
        private aggregateService: AggregateService,
-       private deleteOperationService: DeleteOperationService
+       private deleteOperationService: DeleteOperationService,
+       private uibService: UIBService,
+       private activatedRoute: ActivatedRoute
        ){}
     ngOnInit(): void {
+      this.activatedRoute.queryParams.subscribe((params)=> {
+        this.mainUUID = params.projectUid;
+      });
       this.currentTab = "uib-editor"
       this.loadTreeData();
       this.registerChangeEditorTree()
@@ -86,7 +93,7 @@ import { DeleteOperationService } from "@app/core/projectservices/delete-operati
   }
 
   loadTreeData() {
-    this.projectService.findAllProjectComponents().subscribe({
+    this.uibService.findProjectComponents(this.mainUUID).subscribe({
       next: (comps) => {
       this.dataSource.data = comps;
       },

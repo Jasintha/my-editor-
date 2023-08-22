@@ -345,7 +345,7 @@
         <li class="nav-item" role="presentation">
           <button
             class="nav-link"
-            (click)="changeSplit('uib-editor')"
+            (click)="changeSplit('uib-runtime')"
             data-bs-toggle="tab"
             style="
               height: 2rem !important;
@@ -355,14 +355,14 @@
               text-transform: capitalize !important;
             "
             [ngClass]="{
-              active: currentTab == 'uib-editor',
-              active_color: currentTab == 'uib-editor'
+              active: currentTab == 'uib-runtime',
+              active_color: currentTab == 'uib-runtime'
             }"
             type="button"
             role="tab"
             aria-selected="false"
           >
-            Editor
+            Runtimes
           </button>
         </li>
         <li class="nav-item" role="presentation">

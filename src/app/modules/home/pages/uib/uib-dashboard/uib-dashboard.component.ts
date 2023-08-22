@@ -57,8 +57,8 @@ export class UibDashboardPageComponent implements OnInit {
       this.router.navigate([`dashboard`]);
     } else if (val === "application") {
       this.router.navigate([`application`]);
-    } else if (val === "uib-editor") {
-      this.router.navigate([`uib-editor`]);
+    }  else if (val === "uib-runtime") {
+      this.router.navigate([`application`]);
     } else if (val === "uib-build") {
         this.router.navigate([`uib-build`]);
       }
