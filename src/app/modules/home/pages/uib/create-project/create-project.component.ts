@@ -1,3 +1,4 @@
+import { I } from "@angular/cdk/keycodes";
 import {
   Component,
   EventEmitter,
@@ -5,15 +6,11 @@ import {
   Output,
   ViewEncapsulation,
 } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { RequirementService } from "@app/core/projectservices/requirement.service";
 import { UIBService } from "@app/core/projectservices/uib.service";
+import { Input } from "@material-ui/core";
 
 @Component({
   selector: "create-uib-project",
@@ -32,8 +29,10 @@ export class CreateProjectComponent implements OnInit {
 
   projectUuid: string;
   isClear = false;
+  isEdit = false;
+  projState = 'Create'
 
-  @Output() triggerSaveButton = new EventEmitter();
+  @Output() dismiss = new EventEmitter<any>();
 
   constructor(
     private fb: FormBuilder,
@@ -42,9 +41,17 @@ export class CreateProjectComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
   ngOnInit(): void {
-    this.requirementService.findAllDesignTreeData().subscribe((data) => {
-      this.projectUuid = data.body[0].projectuuid;
-    });
+    if (this.projectUuid) {
+      this.isEdit = true;
+      this.projState = 'Edit'
+      this.projectForm.patchValue({
+        purpose: this.purposes[0]
+      })
+    } else {
+      this.requirementService.findAllDesignTreeData().subscribe((data) => {
+        this.projectUuid = data.body[0].projectuuid;
+      });
+    }
   }
 
   clear() {
@@ -53,7 +60,7 @@ export class CreateProjectComponent implements OnInit {
     Object.keys(this.projectForm.controls).forEach((key) => {
       this.projectForm.get(key).setErrors(null);
     });
-    this.triggerSaveButton.emit();
+    this.dismiss.emit();
   }
 
   onSubmit() {
@@ -72,24 +79,46 @@ export class CreateProjectComponent implements OnInit {
       epicuuid: "",
       referenceName: this.projectForm.get(["projectName"]).value,
     };
-    this.uibService.createUIBProject(newProject, this.projectUuid).subscribe({
-      next: (value) => {
-        this.clear();
-        this.triggerSaveButton.emit();
-        let msg = "";
-        if (value.status == 200) {
-          msg = "Created Successfully!";
-        } else {
-          msg = "Creation Failed!";
-        }
-        this.snackBar.open(msg, "", {
-          duration: 2000,
-        });
-      },
+    if (this.isEdit) {
+      this.uibService.updateUIBProject(newProject, this.projectUuid).subscribe({
+        next: (value) => {
+          this.clear();
+          this.dismiss.emit();
+          let msg = "";
+          if (value.status == 200) {
+            msg = "Updated Successfully!";
+          } else {
+            msg = "Updation Failed!";
+          }
+          this.snackBar.open(msg, "", {
+            duration: 2000,
+          });
+        },
 
-      error: (error) => {
-        console.log(error);
-      },
-    });
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    } else {
+      this.uibService.createUIBProject(newProject, this.projectUuid).subscribe({
+        next: (value) => {
+          this.clear();
+          this.dismiss.emit();
+          let msg = "";
+          if (value.status == 200) {
+            msg = "Created Successfully!";
+          } else {
+            msg = "Creation Failed!";
+          }
+          this.snackBar.open(msg, "", {
+            duration: 2000,
+          });
+        },
+
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    }
   }
 }

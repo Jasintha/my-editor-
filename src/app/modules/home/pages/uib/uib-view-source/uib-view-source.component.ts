@@ -15,7 +15,7 @@ export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
   ruleUid: string;
   userName: string;
   sourceId: string;
-  editable: string;
+  editable: boolean = false;
   language: string;
   title: string;
 

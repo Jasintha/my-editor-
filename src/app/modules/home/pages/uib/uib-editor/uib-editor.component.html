@@ -3,7 +3,7 @@
     <as-split direction="horizontal">
       <as-split-area [size]="85">
         <div style="width: 100%; height: 100%;">
-          <create-uib-project
+          <!-- <create-uib-project
             style="
               display: flex;
               height: 100%;
@@ -13,7 +13,7 @@
               flex-direction: column;
             "
             *ngIf="isCreatingProject"
-         (triggerSaveButton)="refreshTree()" ></create-uib-project>
+         (triggerSaveButton)="refreshTree()" ></create-uib-project> -->
           <router-outlet></router-outlet>
         </div>
       </as-split-area>
@@ -202,7 +202,7 @@
                   *matTreeNodeDef="let node"
                   matTreeNodePadding
                   [ngClass]="{ 'background-highlight': activeNode === node }"
-                  style="cursor: pointer;"
+                  style="cursor: pointer !important;"
                 >
                   <button
                     mat-icon-button

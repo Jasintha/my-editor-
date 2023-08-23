@@ -11,6 +11,9 @@ import {
 import { icon } from "leaflet";
 import { UIBService } from "@app/core/projectservices/uib.service";
 import { MatSidenav } from "@angular/material/sidenav";
+import { GlobalPositionStrategy, Overlay, PositionStrategy } from "@angular/cdk/overlay";
+import { ComponentPortal } from "@angular/cdk/portal";
+import { CreateProjectComponent } from "../create-project/create-project.component";
 
 export interface Tile {
   applications: Application []
@@ -54,7 +57,6 @@ export interface Node {
   encapsulation: ViewEncapsulation.None,
 })
 export class UibApplicationPageComponent implements OnInit {
-  @ViewChild('drawer') drawer: MatSidenav;
   private _transformer = (node: any, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -66,6 +68,7 @@ export class UibApplicationPageComponent implements OnInit {
 
   appCount = 0
   applications: Application[] = [];
+  isOverlayOpen: boolean = false;
 
   treeControl = new FlatTreeControl<any>(
     (node) => node.level,
@@ -88,21 +91,14 @@ export class UibApplicationPageComponent implements OnInit {
     private router: Router,
     private loginService: LoginService,
     private projectService: ProjectService,
-    private uibService: UIBService
+    private uibService: UIBService,
+    private overlay: Overlay
   ) {}
 
   ngOnInit(): void {
     this.isProssesing = false
     this.currentTab = "application";
     this.loadGridTiles();
-  }
-
-  openbox(app: Application) {
-    this.router.navigate(["uib-editor"], {
-      queryParams: {
-        projectUid: app.meta?.projectuuid
-      }
-    })
   }
 
   triggerService(item) {
@@ -130,7 +126,7 @@ export class UibApplicationPageComponent implements OnInit {
     this.uibService.queryApps().subscribe({
       next: (value)=> {
         this.appCount = value.length
-        this.applications = value as unknown as Application[]
+        this.applications = value
       },
       error: (error)=> {
         console.error(error)
@@ -152,7 +148,20 @@ export class UibApplicationPageComponent implements OnInit {
   }
 
   toggleOverlay(){
-    this.drawer.toggle();
+    const overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      backdropClass: 'cdk-overlay-transparent-backdrop',
+      panelClass: 'mat-elevation-z8',
+      positionStrategy: this.overlay
+        .position()
+        .global()
+        .right('0')
+        .width('900px'),
+    });
+    const component = new ComponentPortal(CreateProjectComponent);
+    const componentRef = overlayRef.attach(component);
+    componentRef.instance.dismiss.subscribe(()=> overlayRef.detach())
+    overlayRef.backdropClick().subscribe(() => overlayRef.detach());
   }
 
   logout() {

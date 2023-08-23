@@ -40,6 +40,14 @@ export class UIBService {
     return this.http.post<any>(`${this.uibCreateProjectUrl}/${uuid}`, newProj,  { observe: 'response' });
   }
 
+  updateUIBProject(newProj, uuid: string): Observable<EntityResponseType> {
+    return this.http.put<any>(`${this.uibCreateProjectUrl}/${uuid}`, newProj,  { observe: 'response' });
+  }
+  
+  deleteUIBProject(uuid: string): Observable<EntityResponseType> {
+    return this.http.delete<any>(`${this.uibCreateProjectUrl}/${uuid}`,  { observe: 'response' });
+  }
+
   createUIBFlowProject(newFlow, uuid: string): Observable<EntityResponseType> {
     return this.http.post<any>(`${this.uibCreateFlowUrl}/${uuid}`, newFlow,  { observe: 'response' });
   }

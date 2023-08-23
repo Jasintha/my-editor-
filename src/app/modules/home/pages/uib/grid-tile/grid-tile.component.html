@@ -11,7 +11,7 @@
     </mat-card-title-group>
   </mat-card-header>
   <mat-card-content class="tile-body">
-    <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="display: flex; flex-direction: column; gap: 10px; cursor: pointer !important;" (click)="openbox(app)">
       <div
         style="
           display: flex;
@@ -105,7 +105,7 @@
       <spa>Sync</spa>
     </button>
     <button
-      (click)="loadGridTiles()"
+      (click)="editGridTiles(app)"
       mat-raised-button
       style="
         cursor: pointer;
@@ -118,10 +118,11 @@
         margin-bottom: 10px;
       "
     >
-      <mat-icon>refresh</mat-icon>
-      <spa>Refresh</spa>
+      <mat-icon>edit</mat-icon>
+      <spa>Edit</spa>
     </button>
     <button
+    (click)="deleteGridTiles(app)"
       mat-raised-button
       style="
         cursor: pointer;
@@ -137,9 +138,5 @@
       <mat-icon>delete</mat-icon>
       <spa>Delete</spa>
     </button>
-    <!-- <button mat-raised-button style="background-color: rgb(165, 165, 165);"><mat-icon>sync</mat-icon>Sync</button>
-    <button mat-raised-button style="background-color: rgb(165, 165, 165);"><mat-icon>refresh</mat-icon>Refresh</button>
-    <button mat-raised-button style="background-color: rgb(165, 165, 165);"><mat-icon>delete</mat-icon>Delete</button>
-  -->
   </mat-card-actions>
 </mat-card>

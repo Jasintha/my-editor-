@@ -1,10 +1,17 @@
-<form [formGroup]="projectForm">
+<form [formGroup]="projectForm" style="
+display: flex;
+height: 100%;
+width: 100%;
+background-color: #dee6eb;
+align-items: center;
+flex-direction: column;
+">
   <div
     style="
       font-size: 18px;
       border-radius: 10px;
       width: 800px;
-      margin: 50px 30px 30px 30px;
+      margin: 100px 30px 30px 30px;
       padding: 25px;
       background-color: #f8f8f8;
       flex-wrap: wrap;
@@ -12,7 +19,7 @@
       flex-direction: column;
     "
   >
-    <h2 style="display: flex; justify-content: center;">Create new artefact</h2>
+    <h2 style="display: flex; justify-content: center;">{{projState}} new artefact</h2>
     <img
     src="../assets/images/uib_logo.png"
     style="width: 60px; margin-left: 350px; transform: rotate(270deg);"
@@ -54,7 +61,7 @@
         <mat-hint
           >This will help us to provide a more relevant experience</mat-hint
         >
-        <mat-select formControlName="purpose" required>
+        <mat-select formControlName="purpose" required [disabled]="isEdit">
           <mat-option *ngFor="let purpose of purposes" [value]="purpose">
             {{ purpose }}
           </mat-option>
@@ -78,7 +85,7 @@
         (click)="onSubmit()"
         [disabled]="projectForm.invalid || isClear"
       >
-        Create Project
+        {{projState}} Project
       </button>
     </div>
   </div>
@@ -87,7 +94,6 @@
     mat-raised-button
     style="
       font-size: 14px;
-      margin-left: 400px;
       margin-top: 20px;
       background-color: white;
     "

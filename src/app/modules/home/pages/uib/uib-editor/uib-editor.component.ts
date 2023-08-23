@@ -128,7 +128,7 @@ import { UIBService } from "@app/core/projectservices/uib.service";
         ruleId: node.uuid,
         userName: node.username,
         sourceId: node.uibid,
-        editable: node.is_editable,
+        editable: node.is_editable ?? false,
         languge: node.editor_lan ?? 'text',
         title: node.editor_title ?? '',
         theme: node.editor_theme ?? 'vs'
@@ -192,7 +192,11 @@ import { UIBService } from "@app/core/projectservices/uib.service";
           projectUid: node.projectuuid,
           ruleId: node.ruleid,
           userName: node.username,
-          sourceId: node.uibid
+          sourceId: node.uibid,
+          editable: node.is_editable ?? false,
+          languge: node.editor_lan ?? 'text',
+          title: node.editor_title ?? 'Source Code',
+          theme: node.editor_theme ?? 'vs'
         },
       });
    

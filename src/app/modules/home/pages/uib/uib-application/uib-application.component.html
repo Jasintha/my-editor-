@@ -117,21 +117,6 @@
             background-color: #dee6eb;
           "
         >
-          <mat-drawer-container style="height: 100%; width: 100%; background-color: #dee6eb;" autosize>
-            <mat-drawer #drawer mode="side" position="end">
-              <create-uib-project
-                style="
-                  display: flex;
-                  height: 100%;
-                  width: 100%;
-                  background-color: #dee6eb;
-                  align-items: center;
-                  flex-direction: column;
-                "
-                (triggerSaveButton)="toggleOverlay()"
-              ></create-uib-project>
-            </mat-drawer>
-
             <div>
               <div>
                 <div
@@ -172,7 +157,7 @@
                   style="
                     margin-left: 24px;
                     width: 95%;
-                    height: 20px;
+                    height: 12px;
                     background-color: rgb(24, 190, 148);
                     border: 2px solid;
                     border-color: white;
@@ -192,8 +177,7 @@
               >
                 <div *ngFor="let app of applications">
                   <div
-                    (click)="openbox(app)"
-                    style="z-index: 2; cursor: pointer;"
+                    style="z-index: 2;"
                   >
                     <grid-tile [app]="app"></grid-tile>
                   </div>
@@ -238,7 +222,7 @@
                   style="
                     margin-left: 24px;
                     width: 95%;
-                    height: 20px;
+                    height: 12px;
                     background-color: rgb(24, 190, 148);
                     border: 2px solid;
                     border-color: white;
@@ -248,7 +232,6 @@
                 ></div>
               </div>
             </div>
-          </mat-drawer-container>
         </div>
       </div>
     </div>
