@@ -17,7 +17,9 @@ import { DeleteProjectComponent } from "../delete-project/delete-project.compone
   export class GridTileComponent implements OnInit {
   @Input()app: Application;
 
-    constructor(private dialog: MatDialog, private overlay: Overlay, private router: Router){}
+    constructor(private dialog: MatDialog,
+        private uibService: UIBService,
+       private overlay: Overlay, private router: Router){}
 
     ngOnInit(){
       console.log(this.app.data)
@@ -61,6 +63,18 @@ import { DeleteProjectComponent } from "../delete-project/delete-project.compone
     ).subscribe(result => {
         console.log(`Dialog result: ${result}`);
     });
+    }
+
+    syncGridTile(app){
+      this.uibService.syncUIBProject(app.projectUuid).subscribe(
+      {
+        next: (res) => {
+          console.log(res)
+        },
+        error: (error) => {
+          console.log(error)
+        }
+      })
     }
 
     openbox(app) {

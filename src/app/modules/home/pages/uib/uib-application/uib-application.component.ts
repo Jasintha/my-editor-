@@ -14,6 +14,7 @@ import { MatSidenav } from "@angular/material/sidenav";
 import { GlobalPositionStrategy, Overlay, PositionStrategy } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
 import { CreateProjectComponent } from "../create-project/create-project.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export interface Tile {
   applications: Application []
@@ -90,7 +91,8 @@ export class UibApplicationPageComponent implements OnInit {
     private loginService: LoginService,
     private projectService: ProjectService,
     private uibService: UIBService,
-    private overlay: Overlay
+    private overlay: Overlay,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {

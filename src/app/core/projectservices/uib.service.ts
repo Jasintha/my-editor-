@@ -18,6 +18,7 @@ export class UIBService {
   public uibCreateModelUrl = '/api/editor/proj/aggregates';
   public uibViewSourceUrl = '/api/uib';
   public singleProUrl = 'api/editor/projects'
+  public singleProSyncUrl = 'api/editor/projects'
 
   constructor(protected http: HttpClient) {}
 
@@ -39,6 +40,10 @@ export class UIBService {
 
   createUIBProject(newProj, uuid: string): Observable<EntityResponseType> {
     return this.http.post<any>(`${this.uibCreateProjectUrl}/${uuid}`, newProj,  { observe: 'response' });
+  }
+
+  syncUIBProject(uuid: string): Observable<EntityResponseType> {
+    return this.http.post<any>(`${this.singleProSyncUrl}/${uuid}`,  { observe: 'response' });
   }
 
   updateUIBProject(newProj): Observable<EntityResponseType> {

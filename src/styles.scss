@@ -775,32 +775,32 @@ mat-label {
     }
   }
 
-  .mat-snack-bar-container {
-    position: absolute;
-    background: none;
-    box-shadow: none;
-    margin: 0;
-    padding: 0;
-    border: none;
-    border-radius: inherit;
-    max-width: inherit;
-    min-width: inherit;
-    pointer-events: none;
-    display: flex;
-  }
+  // .mat-snack-bar-container {
+  //   position: absolute;
+  //   background: none;
+  //   box-shadow: none;
+  //   margin: 0;
+  //   padding: 0;
+  //   border: none;
+  //   border-radius: inherit;
+  //   max-width: inherit;
+  //   min-width: inherit;
+  //   pointer-events: none;
+  //   display: flex;
+  // }
 
-  .mat-snack-bar-handset {
-    .mat-snack-bar-container {
-      position: relative !important;
-      width: 100% !important;
-      top: 0 !important;
-      left: 0 !important;
-      height: inherit !important;
-      virtuan-snack-bar-component {
-        width: 100%;
-      }
-    }
-  }
+  // .mat-snack-bar-handset {
+  //   .mat-snack-bar-container {
+  //     position: relative !important;
+  //     width: 100% !important;
+  //     top: 0 !important;
+  //     left: 0 !important;
+  //     height: inherit !important;
+  //     virtuan-snack-bar-component {
+  //       width: 100%;
+  //     }
+  //   }
+  // }
 
   .mat-drawer-side {
     border: none;

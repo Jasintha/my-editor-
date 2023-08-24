@@ -40,6 +40,8 @@ export class DeleteOperationService {
             this.deleteSubMenu(item, projectUid);
         } else if (item.type === 'UI_NAVIGATION'){
             this.deletePageNavigation(item, projectUid);
+        } else if (item.type === 'Scripts'){
+            this.deleteLambdaFunction(item, projectUid);
         }
     }
 

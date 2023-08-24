@@ -93,9 +93,12 @@ export class CreateProjectComponent implements OnInit {
           } else {
             msg = "Updation Failed!";
           }
-          this.snackBar.open(msg, "", {
-            duration: 2000,
-          });
+          this.snackBar.open(msg, '', {
+            duration: 500,
+            panelClass: 'snackbar-success',
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          })
         },
 
         error: (error) => {
@@ -130,9 +133,12 @@ export class CreateProjectComponent implements OnInit {
           } else {
             msg = "Creation Failed!";
           }
-          this.snackBar.open(msg, "", {
-            duration: 2000,
-          });
+          this.snackBar.open(msg, '', {
+            duration: 500,
+            panelClass: 'snackbar-success',
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          })
         },
         error: (error) => {
           this.enableProgress = false
