@@ -1,0 +1,27 @@
+
+<form (ngSubmit)="confirmDelete(uuid)" >
+    <mat-toolbar color="warn">
+        <h2>Confirm delete project</h2>
+        <span fxFlex></span>
+        <button mat-icon-button
+                (click)="cancel()"
+                type="button">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </mat-toolbar>
+    <div mat-dialog-content>
+        <span>
+            Are you sure you want to delete this project <b style="font-weight: bold">{{name}}?</b></span>
+    </div>
+    <div mat-dialog-actions fxLayoutAlign="end center">
+        <button mat-raised-button color="warn"
+                type="submit">
+            YES
+        </button>
+        <button mat-button color="warn"
+                type="button"
+                (click)="cancel()" cdkFocusInitial>
+            NO
+        </button>
+    </div>
+</form>

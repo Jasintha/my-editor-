@@ -24,10 +24,8 @@ export interface Application {
   labels: BasicData[],
   hstatus: BasicData,
   sstatus: BasicData,
-  data: any[]
-  meta: {
-    projectuuid: string
-  }
+  data: any[],
+  projectuuid: string
 }
 
 export interface BasicData {

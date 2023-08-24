@@ -5,6 +5,8 @@ import { UIBService } from "@app/core/projectservices/uib.service";
 import {Application} from 'src/app/modules/home/pages/uib/uib-application/uib-application.component'
 import { CreateProjectComponent } from "../create-project/create-project.component";
 import { Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { DeleteProjectComponent } from "../delete-project/delete-project.component";
 
 @Component({
     selector: 'grid-tile',
@@ -15,7 +17,7 @@ import { Router } from "@angular/router";
   export class GridTileComponent implements OnInit {
   @Input()app: Application;
 
-    constructor(private uibService: UIBService, private overlay: Overlay, private router: Router){}
+    constructor(private dialog: MatDialog, private overlay: Overlay, private router: Router){}
 
     ngOnInit(){
       console.log(this.app.data)
@@ -40,22 +42,25 @@ import { Router } from "@angular/router";
       const componentRef = overlayRef.attach(component);
       componentRef.instance.projectUuid = app.projectUuid
       componentRef.instance.projectForm.patchValue({
-        projectName: app.displayName,
-        description: app.displayName,
+        projectName: app.title.name,
+        description: app.description,
       })
       componentRef.instance.dismiss.subscribe(()=> overlayRef.detach())
       overlayRef.backdropClick().subscribe(() => overlayRef.detach());
     }
 
     deleteGridTiles(app){
-      this.uibService.deleteUIBProject(app.projectUuid).subscribe({
-        next: (value) => {
-          console.log(value)
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
+      const dialogRef = this.dialog.open(DeleteProjectComponent, {
+        panelClass: ['virtuan-dialog', 'virtuan-fullscreen-dialog'],
+        data: {
+            projectUid: app.projectUuid,
+            name: app.title.name
+        }
+    });
+    dialogRef.afterClosed(
+    ).subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+    });
     }
 
     openbox(app) {

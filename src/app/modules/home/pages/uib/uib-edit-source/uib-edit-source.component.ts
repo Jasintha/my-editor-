@@ -5,10 +5,10 @@ import { UIBService } from '@app/core/projectservices/uib.service';
 import { filter, map } from 'rxjs/operators';
 
 @Component({
-  selector: 'uib-view-source',
-  templateUrl: './uib-view-source.component.html'
+  selector: 'uib-edit-source',
+  templateUrl: './uib-edit-source.component.html'
 })
-export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
+export class UIBEditSourceComponent implements OnInit, OnChanges, OnDestroy {
 
   sourceCode: string;
   projectUid: string;

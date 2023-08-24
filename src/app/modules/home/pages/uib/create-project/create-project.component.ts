@@ -31,9 +31,10 @@ export class CreateProjectComponent implements OnInit {
   isClear = false;
   isEdit = false;
   projState = 'Create'
+  enableProgress = false
 
   @Output() dismiss = new EventEmitter<any>();
-
+  
   constructor(
     private fb: FormBuilder,
     private uibService: UIBService,
@@ -64,24 +65,26 @@ export class CreateProjectComponent implements OnInit {
   }
 
   onSubmit() {
-    const newProject = {
-      requirements: [
-        {
-          requirementUUID: "r0001",
-          description: "<p>ZxXX</p>",
-        },
-      ],
-      name: this.projectForm.get(["projectName"]).value,
-      projectUuid: this.projectUuid,
-      epicCreateType: "new",
-      description: this.projectForm.get(["description"]).value,
-      status: "NEW",
-      epicuuid: "",
-      referenceName: this.projectForm.get(["projectName"]).value,
-    };
+    this.enableProgress = true;
     if (this.isEdit) {
-      this.uibService.updateUIBProject(newProject, this.projectUuid).subscribe({
+      const newProject = {
+        requirements: [
+          {
+            requirementUUID: "r0001",
+            description: "<p>ZxXX</p>",
+          },
+        ],
+        name: this.projectForm.get(["projectName"]).value,
+        projectUuid: this.projectUuid,
+        epicCreateType: "new",
+        description: this.projectForm.get(["description"]).value,
+        status: "NEW",
+        epicuuid: "",
+        referenceName: this.projectForm.get(["projectName"]).value,
+      };
+      this.uibService.updateUIBProject(newProject).subscribe({
         next: (value) => {
+          this.enableProgress = false
           this.clear();
           this.dismiss.emit();
           let msg = "";
@@ -96,12 +99,29 @@ export class CreateProjectComponent implements OnInit {
         },
 
         error: (error) => {
+          this.enableProgress = false
           console.log(error);
         },
       });
     } else {
+      const newProject = {
+        requirements: [
+          {
+            requirementUUID: "r0001",
+            description: "<p>ZxXX</p>",
+          },
+        ],
+        name: this.projectForm.get(["projectName"]).value,
+        projectUuid: this.projectUuid,
+        epicCreateType: "new",
+        description: this.projectForm.get(["description"]).value,
+        status: "NEW",
+        epicuuid: "",
+        referenceName: this.projectForm.get(["projectName"]).value,
+      };
       this.uibService.createUIBProject(newProject, this.projectUuid).subscribe({
         next: (value) => {
+          this.enableProgress = false
           this.clear();
           this.dismiss.emit();
           let msg = "";
@@ -114,8 +134,8 @@ export class CreateProjectComponent implements OnInit {
             duration: 2000,
           });
         },
-
         error: (error) => {
+          this.enableProgress = false
           console.log(error);
         },
       });

@@ -19,7 +19,7 @@ flex-direction: column;
       flex-direction: column;
     "
   >
-    <h2 style="display: flex; justify-content: center;">{{projState}} new artefact</h2>
+    <h2 style="display: flex; justify-content: center;">{{projState}} artefact</h2>
     <img
     src="../assets/images/uib_logo.png"
     style="width: 60px; margin-left: 350px; transform: rotate(270deg);"
@@ -78,6 +78,8 @@ flex-direction: column;
         justify-content: space-between;
       "
     >
+    <mat-progress-bar mode="indeterminate" *ngIf="enableProgress"></mat-progress-bar>
+
       <button
         mat-raised-button
         color="primary"

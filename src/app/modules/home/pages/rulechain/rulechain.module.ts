@@ -107,6 +107,8 @@ import { UibBuildPageComponent } from '../uib/ui-build/uib-build.component';
 import { DynamicSearchComponent } from '../uib/dynamic-search/dynamic-search.component';
 import { CreateProjectComponent } from '../uib/create-project/create-project.component';
 import { UIBViewSourceComponent } from '../uib/uib-view-source/uib-view-source.component';
+import { UIBEditSourceComponent } from '../uib/uib-edit-source/uib-edit-source.component';
+import { DeleteProjectComponent } from '../uib/delete-project/delete-project.component';
 
 @NgModule({
   declarations: [
@@ -150,7 +152,9 @@ import { UIBViewSourceComponent } from '../uib/uib-view-source/uib-view-source.c
     UibBuildPageComponent,
     DynamicSearchComponent,
     CreateProjectComponent,
-    UIBViewSourceComponent
+    UIBViewSourceComponent,
+    UIBEditSourceComponent,
+    DeleteProjectComponent
   ],
   providers: [
     {

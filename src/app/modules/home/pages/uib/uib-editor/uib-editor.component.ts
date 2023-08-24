@@ -122,18 +122,32 @@ import { UIBService } from "@app/core/projectservices/uib.service";
     this.projectUid = node.projectuuid;
 
    if (node.type === "Scripts" || node.type === "MODEL") {
-    this.router.navigate(["uib-editor/source"], {
-      queryParams: {
-        projectUid: node.projectuuid,
-        ruleId: node.uuid,
-        userName: node.username,
-        sourceId: node.uibid,
-        editable: node.is_editable ?? false,
-        languge: node.editor_lan ?? 'text',
-        title: node.editor_title ?? '',
-        theme: node.editor_theme ?? 'vs'
-      },
-    });
+    if(node.is_editable){
+      this.router.navigate(["uib-editor/edit-source"], {
+        queryParams: {
+          projectUid: node.projectuuid,
+          ruleId: node.uuid,
+          userName: node.username,
+          sourceId: node.uibid,
+          languge: node.editor_lan ?? 'text',
+          title: node.editor_title ?? '',
+          theme: node.editor_theme ?? 'vs'
+        },
+      });
+    } else {
+      this.router.navigate(["uib-editor/view-source"], {
+        queryParams: {
+          projectUid: node.projectuuid,
+          ruleId: node.uuid,
+          userName: node.username,
+          sourceId: node.uibid,
+          languge: node.editor_lan ?? 'text',
+          title: node.editor_title ?? '',
+          theme: node.editor_theme ?? 'vs'
+        },
+      });
+    }
+   
     } else {
       this.viewRule(node);
     }
@@ -187,19 +201,36 @@ import { UIBService } from "@app/core/projectservices/uib.service";
     this.projectUid = node.projectuuid;
     console.log(node)
 
-      this.router.navigate(["uib-editor/source"], {
+    if(node.is_editable){
+      this.router.navigate(["uib-editor/edit-source"], {
         queryParams: {
           projectUid: node.projectuuid,
           ruleId: node.ruleid,
           userName: node.username,
           sourceId: node.uibid,
-          editable: node.is_editable ?? false,
           languge: node.editor_lan ?? 'text',
           title: node.editor_title ?? 'Source Code',
           theme: node.editor_theme ?? 'vs'
         },
       });
-   
+    } else {
+      this.router.navigate(["uib-editor/view-source"], {
+        queryParams: {
+          projectUid: node.projectuuid,
+          ruleId: node.ruleid,
+          userName: node.username,
+          sourceId: node.uibid,
+          languge: node.editor_lan ?? 'text',
+          title: node.editor_title ?? 'Source Code',
+          theme: node.editor_theme ?? 'vs'
+        },
+      });
+    }
+
+  }
+
+  backToApp(){
+    this.router.navigate([`application`]);
   }
 
   edit(item) {
