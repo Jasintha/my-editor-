@@ -32,7 +32,7 @@ flex-direction: column;
         gap: 20px;
       "
     >
-      <mat-form-field>
+      <mat-form-field [disabled]="isEdit">
         <mat-label>Name your roject</mat-label>
         <input
           matInput
