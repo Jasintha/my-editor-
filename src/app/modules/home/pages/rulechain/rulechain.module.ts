@@ -109,6 +109,7 @@ import { CreateProjectComponent } from '../uib/create-project/create-project.com
 import { UIBViewSourceComponent } from '../uib/uib-view-source/uib-view-source.component';
 import { UIBEditSourceComponent } from '../uib/uib-edit-source/uib-edit-source.component';
 import { DeleteProjectComponent } from '../uib/delete-project/delete-project.component';
+import { UibInternalService } from '../uib/uib-internal-service';
 
 @NgModule({
   declarations: [
@@ -162,7 +163,8 @@ import { DeleteProjectComponent } from '../uib/delete-project/delete-project.com
       useValue: {
         nodeComponentType: RuleNodeComponent
       }
-    }
+    },
+    UibInternalService
   ],
   imports: [
     CommonModule,

@@ -11,6 +11,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { RequirementService } from "@app/core/projectservices/requirement.service";
 import { UIBService } from "@app/core/projectservices/uib.service";
 import { Input } from "@material-ui/core";
+import { UibInternalService } from "../uib-internal-service";
 
 @Component({
   selector: "create-uib-project",
@@ -39,7 +40,8 @@ export class CreateProjectComponent implements OnInit {
     private fb: FormBuilder,
     private uibService: UIBService,
     private requirementService: RequirementService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private uibInternalService: UibInternalService
   ) {}
   ngOnInit(): void {
     if (this.projectUuid) {
@@ -106,6 +108,7 @@ export class CreateProjectComponent implements OnInit {
           console.log(error);
         },
       });
+      this.uibInternalService.setAction('update')
     } else {
       const newProject = {
         requirements: [
@@ -145,6 +148,7 @@ export class CreateProjectComponent implements OnInit {
           console.log(error);
         },
       });
+      this.uibInternalService.setAction('create')
     }
   }
 }

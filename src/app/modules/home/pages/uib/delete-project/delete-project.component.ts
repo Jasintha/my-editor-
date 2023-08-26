@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UIBService } from '@app/core/projectservices/uib.service';
+import { UibInternalService } from '../uib-internal-service';
 
 @Component({
   selector: 'virtuan-project-delete-dialog',
@@ -13,6 +14,7 @@ export class DeleteProjectComponent {
   projectUid: string;
 
   constructor(
+            private uibInternalService: UibInternalService,
             private uibService: UIBService,
             public snackbar: MatSnackBar,
               public dialogRef: MatDialogRef<DeleteProjectComponent>,
@@ -39,6 +41,8 @@ export class DeleteProjectComponent {
           console.log(error);
         },
       });
+    this.uibInternalService.setAction('delete')
+    this.dialogRef.close(null);
   }
 }
 

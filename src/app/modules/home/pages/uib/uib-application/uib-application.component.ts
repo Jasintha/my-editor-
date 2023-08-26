@@ -15,6 +15,7 @@ import { GlobalPositionStrategy, Overlay, PositionStrategy } from "@angular/cdk/
 import { ComponentPortal } from "@angular/cdk/portal";
 import { CreateProjectComponent } from "../create-project/create-project.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { UibInternalService } from "../uib-internal-service";
 
 export interface Tile {
   applications: Application []
@@ -88,6 +89,7 @@ export class UibApplicationPageComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private uibInternalService: UibInternalService,
     private loginService: LoginService,
     private projectService: ProjectService,
     private uibService: UIBService,
@@ -99,6 +101,9 @@ export class UibApplicationPageComponent implements OnInit {
     this.isProssesing = false
     this.currentTab = "application";
     this.loadGridTiles();
+    this.uibInternalService.getAction().subscribe((action)=> {
+      this.loadGridTiles()
+    })
   }
 
   triggerService(item) {
