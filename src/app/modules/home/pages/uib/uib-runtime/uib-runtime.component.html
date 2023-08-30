@@ -1,122 +1,358 @@
 <div style="height: 100%;" class="rulechain-page-custom-scroll">
-    <div style="width: 100%; height: 100%; background: #ffffff; display: flex; flex-direction: row;">
-        <div style="width: 100%; height: 100%;">
-            <h1 style="font-weight: 300; size: 30px; color: #1a73e8; margin-left: 20px;">Runtime</h1>
-            <!-- <mat-grid-list cols="4" rowHeight="100px">
-                <mat-grid-tile
-                    *ngFor="let tile of tiles"
-                    [colspan]="tile.cols"
-                    [rowspan]="tile.rows"
-                    [style.background]="tile.color">
-                    <div (click)="openbox(tile);" style="z-index: 2">
-                                       
-                        {{tile.text}}<br>
-                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1027&q=80" height="200px" width="260px">
-                 </div>
-                </mat-grid-tile>
-              </mat-grid-list>           -->
+  <div
+    style="
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: row;
+    "
+  >
+    <div style="width: 100%; height: 100%;">
+      <div
+        style="
+          height: 100px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        "
+      >
+        <span
+          style="
+            font-family: Heebo, sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            font-style: normal;
+            color: #363c4a;
+            padding-top: 14px;
+            margin-left: 20px;
+            padding-bottom: 10px;
+          "
+          >Runtimes</span
+        >
+        <div
+          style="
+            height: 50px;
+            border: solid white;
+            border-top-color: #abb2b933;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              margin-left: 20px;
+              flex-direction: row;
+              align-items: center;
+              gap: 20px;
+              width: 100%;
+              justify-content: flex-start;
+            "
+          >
+            <button
+              (click)="toggleOverlay()"
+              mat-raised-button
+              style="
+                cursor: pointer;
+                font-size: 13px;
+                font-weight: 500;
+                text-align: center;
+                border-radius: 24px;
+                background-color: #6d7f8b;
+                color: #f8fbfb;
+                margin-bottom: 10px;
+              "
+            >
+              <mat-icon>add</mat-icon>
+              <spa>New App</spa>
+            </button>
+            <button
+              (click)="loadGridTiles()"
+              mat-raised-button
+              style="
+                cursor: pointer;
+                font-size: 13px;
+                font-weight: 500;
+                text-align: center;
+                border-radius: 24px;
+                background-color: #6d7f8b;
+                color: #f8fbfb;
+                margin-bottom: 10px;
+              "
+            >
+              <mat-icon>refresh</mat-icon>
+              <spa>Refresh Apps</spa>
+            </button>
+            <dynamic-search style="width: 300px;" [options]="dropDownList"></dynamic-search>
+          </div>
         </div>
-        <ul class="nav nav-tabs right-tabs sideways-tabs" role="tablist"
-            style="position: fixed; background-color: lightgrey; margin-top: 0;right: 4.5rem;">
-            <div style="display:flex; flex-direction: column;height: 100%; width: 75%;
-             justify-content: space-between;">
-
-                <div role="presentation" style="
-                    display: flex;
-                    width: 50%;
-                    height: 7%;
-                    justify-content: center;
-                    align-items: center;">
-                    <h1 class="display-4" style="transform: rotate(90deg);"><img
-                      src="../assets/images/apps_icon.png" style="width: 38px;transform: rotate(270deg);">
-                    </h1>
-                </div>
+      </div>
+      <mat-progress-bar
+        mode="indeterminate"
+        *ngIf="isProssesing"
+      ></mat-progress-bar>
+      <div style="background-color: #dee6eb; height: calc(100% - 100px);">
+        <router-outlet *ngIf="routeEnable"></router-outlet>
+        <div
+          *ngIf="!routeEnable"
+          style="
+            display: flex;
+            height: 100%;
+            width: 97.8%;
+            overflow-y: scroll;
+            flex-direction: column;
+            background-color: #dee6eb;
+          "
+        >
+            <div>
+              <div>
                 <div
+                  style="
+                    margin-left: 24px;
+                    width: 95%;
+                    height: 12px;
+                    background-color: rgb(24, 190, 148);
+                    border: 2px solid;
+                    border-color: white;
+                    border-radius: 10px;
+                  "
+                ></div>
+              </div>
+              <div
                 style="
                   display: flex;
-                  flex-direction: column;
-                  width: 50%;
-                  height: 40%;
+                  flex-wrap: wrap;
                   justify-content: flex-start;
-                  align-items: flex-start;
+                  margin-left: 80px;
+                  margin-top: 20px;
+                  gap: 30px;
                 "
               >
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link"
-                    (click)="changeSplit('dashboard')"
-                    data-bs-toggle="tab"
-                    style="height: 2rem !important; margin-top: 24px !important;"
-                    [ngClass]="{ active: currentTab == 'dashboard' }"
-                    type="button"
-                    role="tab"
-                    aria-selected="false"
+                <div *ngFor="let app of runtimes">
+                  <div
+                    style="z-index: 2;"
                   >
-                    Dashboard
-                  </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link"
-                    (click)="changeSplit('application')"
-                    data-bs-toggle="tab"
-                    style="height: 2rem !important; margin-top: 24px !important;"
-                    [ngClass]="{ active: currentTab == 'application' }"
-                    type="button"
-                    role="tab"
-                    aria-selected="true"
-                  >
-                    App
-                  </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link"
-                    (click)="changeSplit('runtime')"
-                    data-bs-toggle="tab"
-                    style="height: 2rem !important; margin-top: 24px !important;"
-                    [ngClass]="{ active: currentTab == 'runtime' }"
-                    type="button"
-                    role="tab"
-                    aria-selected="false"
-                  >
-                    Runtime
-                  </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link"
-                    (click)="changeSplit('uib-build')"
-                    data-bs-toggle="tab"
-                    style="height: 2rem !important; margin-top: 24px !important;"
-                    [ngClass]="{ active: currentTab == 'uib-build' }"
-                    type="button"
-                    role="tab"
-                    aria-selected="false"
-                  >
-                    Team
-                  </button>
-                </li>
+                    <runtime-card [app]="app" (enableRouterTriggered)="routeHandler(event)"></runtime-card>
+                  </div>
+                </div>
               </div>
-                <span class="logout" style="width: 50%;
-                    display: flex;
-                    justify-content: center;
+              <div>
+                <div
+                  style="
+                    color: #17aee0;
+                    margin-left: 8px;
+                    width: 97%;
+                    margin-top: 10px;
                     margin-bottom: 10px;
-                    align-items: center;">
-                    <button mat-mini-fab matTooltip="Logout" [matMenuTriggerFor]="menu"
-                        style="width: 34px; height: 34px;margin-left: -2px;" color="primary">
-                        <mat-icon>perm_identity</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="logout()">
-                            <mat-icon>power_settings_new</mat-icon>
-                            <span>Logout</span>
-                        </button>
-                    </mat-menu>
-                </span>
-
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      font-family: Heebo, sans-serif;
+                      font-weight: normal;
+                      font-size: 16px;
+                      font-style: normal;
+                    "
+                  >
+                    <span style="color: gray;">Previous</span>
+                    <span style="margin-left: 10px; color: #00a2b3;">
+                      {{ this.appCount }}
+                    </span>
+                    <span style="margin-left: 10px; color: gray;">Next</span>
+                  </div>
+                  <div
+                    class="font-family: Heebo,sans-serif; font-weight: normal; font-size: 16px; font-style: normal; color: #00a2b3;"
+                  >
+                    Items per page: 10
+                  </div>
+                </div>
+                <div
+                  style="
+                    margin-left: 24px;
+                    width: 95%;
+                    height: 12px;
+                    background-color: rgb(24, 190, 148);
+                    border: 2px solid;
+                    border-color: white;
+                    border-radius: 10px;
+                    margin-bottom: 20px;
+                  "
+                ></div>
+              </div>
             </div>
-
-        </ul>
+        </div>
+      </div>
     </div>
+    <ul
+      class="nav nav-tabs right-tabs sideways-tabs"
+      role="tablist"
+      style="
+        position: fixed;
+        background-color: #30303d;
+        margin-top: 0;
+        right: 4.5rem;
+      "
+    >
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          width: 75%;
+          justify-content: space-between;
+        "
+      >
+        <div
+          role="presentation"
+          style="
+            display: flex;
+            width: 50%;
+            height: 7%;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <h1 class="display-4" style="transform: rotate(90deg);">
+            <img
+              src="../assets/images/apps_icon.png"
+              style="width: 38px; transform: rotate(270deg);"
+            />
+          </h1>
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            height: 40%;
+            justify-content: flex-start;
+            align-items: flex-start;
+          "
+        >
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              (click)="changeSplit('dashboard')"
+              data-bs-toggle="tab"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'dashboard',
+                active_color: currentTab == 'dashboard'
+              }"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              Dashboard
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              (click)="changeSplit('application')"
+              data-bs-toggle="tab"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'application',
+                active_color: currentTab == 'application'
+              }"
+              type="button"
+              role="tab"
+              aria-selected="true"
+            >
+              Apps
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              (click)="changeSplit('uib-runtime')"
+              data-bs-toggle="tab"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'uib-runtime',
+                active_color: currentTab == 'uib-runtime'
+              }"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              Runtimes
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              (click)="changeSplit('uib-build')"
+              data-bs-toggle="tab"
+              style="
+                height: 2rem !important;
+                margin-top: 24px !important;
+                color: #abb2b9;
+                background-color: #30303d !important;
+                text-transform: capitalize !important;
+              "
+              [ngClass]="{
+                active: currentTab == 'uib-build',
+                active_color: currentTab == 'uib-build'
+              }"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              Team
+            </button>
+          </li>
+        </div>
+        <span
+          class="logout"
+          style="
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            align-items: center;
+          "
+        >
+          <button
+            mat-mini-fab
+            matTooltip="Logout"
+            [matMenuTriggerFor]="menu"
+            style="width: 34px; height: 34px; margin-left: -2px;"
+            color="primary"
+          >
+            <mat-icon>perm_identity</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>power_settings_new</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </span>
+      </div>
+    </ul>
+  </div>
 </div>

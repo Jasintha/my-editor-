@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   showNavigationArrows = false;
   showNavigationIndicators = false;
   images = [1, 2].map(n => ` ../../content/images/bgimage${n}.jpeg`);
+  imageURL = ''
   responsiveOptions;
   // apptypes: IApptypes[];
   // eventSubscriber: Subscription;
@@ -75,7 +76,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.isLogin = false;
     this.spinnerService.hide();
-
+    this.imageURL = '../../../../../assets/images/logo_primary.png'
     // this.accountService.identity().then((account: Account) => {
     //   this.account = account;
     // });

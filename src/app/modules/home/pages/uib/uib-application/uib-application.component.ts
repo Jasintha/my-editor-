@@ -68,6 +68,7 @@ export class UibApplicationPageComponent implements OnInit {
 
   appCount = 0
   applications: Application[] = [];
+  dropDownList = []
   isOverlayOpen: boolean = false;
 
   treeControl = new FlatTreeControl<any>(
@@ -91,10 +92,8 @@ export class UibApplicationPageComponent implements OnInit {
     private router: Router,
     private uibInternalService: UibInternalService,
     private loginService: LoginService,
-    private projectService: ProjectService,
     private uibService: UIBService,
     private overlay: Overlay,
-    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -132,6 +131,7 @@ export class UibApplicationPageComponent implements OnInit {
       next: (value)=> {
         this.appCount = value.length
         this.applications = value
+        this.dropDownList = this.applications.map((val)=> val.title.name)
       },
       error: (error)=> {
         console.error(error)
@@ -146,7 +146,7 @@ export class UibApplicationPageComponent implements OnInit {
     } else if (val === "application") {
       this.router.navigate([`application`]);
     } else if (val === "uib-runtime") {
-      this.router.navigate([`application`]);
+      this.router.navigate([`runtime`]);
     } else if (val === "uib-build") {
         this.router.navigate([`uib-build`]);
       }

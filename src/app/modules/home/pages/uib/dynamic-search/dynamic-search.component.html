@@ -10,6 +10,7 @@
     </div>
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        <mat-icon>library_books</mat-icon>
         {{option}}
       </mat-option>
     </mat-autocomplete>

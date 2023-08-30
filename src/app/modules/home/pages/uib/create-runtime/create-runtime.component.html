@@ -1,0 +1,138 @@
+<form [formGroup]="runtimeForm" style="
+display: flex;
+height: 100%;
+width: 100%;
+background-color: #dee6eb;
+align-items: center;
+flex-direction: column;
+">
+  <div
+    style="
+      font-size: 18px;
+      border-radius: 10px;
+      width: 800px;
+      margin: 30px 30px 15px 30px;
+      padding: 25px;
+      background-color: #f8f8f8;
+      flex-wrap: wrap;
+      display: flex;
+      flex-direction: column;
+    "
+  >
+    <h2 style="display: flex; justify-content: center;">{{projState}} Runtime</h2>
+    <div>
+        <h5>General</h5>
+        <div
+        style="
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          gap: 20px;
+        "
+      >
+        <mat-form-field [disabled]="isEdit">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="runtimeName"
+          />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="category" required [disabled]="isEdit">
+            <mat-option *ngFor="let purpose of purposes" [value]="purpose">
+              {{ purpose }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div>
+        <h5>Source</h5>
+        <div
+        style="
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          gap: 20px;
+        "
+      >
+        <mat-form-field [disabled]="isEdit">
+          <mat-label>Repository URL</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="repoUrl"
+          />
+        </mat-form-field>
+
+        <div style="display: flex; flex-direction: row;">
+          <mat-form-field [disabled]="isEdit">
+            <mat-label>Revision</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="revision"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Main / Branch</mat-label>
+            <mat-select formControlName="revisionType" required [disabled]="isEdit">
+              <mat-option *ngFor="let type of revisionTypes" [value]="type">
+                {{ type }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      
+
+          <mat-form-field [disabled]="isEdit">
+            <mat-label>Path</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="path"
+            />
+          </mat-form-field>
+  
+      </div>
+    </div>
+
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        margin-top: 50px;
+        gap: 20px;
+        justify-content: space-between;
+      "
+    >
+    <mat-progress-bar mode="indeterminate" *ngIf="enableProgress"></mat-progress-bar>
+
+      <button
+        mat-raised-button
+        color="primary"
+        style="font-size: 18px;"
+        (click)="onSubmit()"
+        [disabled]="runtimeForm.invalid || isClear"
+      >
+        {{projState}} Runtime
+      </button>
+    </div>
+  </div>
+
+  <button
+    mat-raised-button
+    style="
+      font-size: 14px;
+      margin-top: 20px;
+      background-color: white;
+    "
+    (click)="clear()"
+  >
+    Cancel
+  </button>
+</form>

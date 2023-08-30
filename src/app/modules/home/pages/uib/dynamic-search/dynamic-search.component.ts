@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
@@ -12,7 +12,7 @@ import { map, startWith } from "rxjs/operators";
   })
   export class DynamicSearchComponent implements OnInit {
     myControl = new FormControl();
-  options: string[] = ['One', 'Two', 'Three'];
+  @Input() options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]>;
 
   ngOnInit() {
@@ -26,6 +26,6 @@ import { map, startWith } from "rxjs/operators";
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    return this.options?.filter(option => option.toLowerCase().includes(filterValue));
   }
 }

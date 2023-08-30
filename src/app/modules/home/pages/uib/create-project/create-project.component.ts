@@ -12,6 +12,7 @@ import { RequirementService } from "@app/core/projectservices/requirement.servic
 import { UIBService } from "@app/core/projectservices/uib.service";
 import { Input } from "@material-ui/core";
 import { UibInternalService } from "../uib-internal-service";
+import { style } from "@angular/animations";
 
 @Component({
   selector: "create-uib-project",
@@ -96,7 +97,7 @@ export class CreateProjectComponent implements OnInit {
             msg = "Updation Failed!";
           }
           this.snackBar.open(msg, '', {
-            duration: 500,
+            duration: 1000,
             panelClass: 'snackbar-success',
             horizontalPosition: 'right',
             verticalPosition: 'top'
@@ -131,14 +132,17 @@ export class CreateProjectComponent implements OnInit {
           this.clear();
           this.dismiss.emit();
           let msg = "";
+          let style = "";
           if (value.status == 200) {
             msg = "Created Successfully!";
+            style = 'snackbar-success';
           } else {
             msg = "Creation Failed!";
+            style = 'snackbar-failed'
           }
           this.snackBar.open(msg, '', {
-            duration: 500,
-            panelClass: 'snackbar-success',
+            duration: 1000,
+            panelClass: style,
             horizontalPosition: 'right',
             verticalPosition: 'top'
           })
@@ -150,5 +154,6 @@ export class CreateProjectComponent implements OnInit {
       });
       this.uibInternalService.setAction('create')
     }
+    this.dismiss.emit();
   }
 }

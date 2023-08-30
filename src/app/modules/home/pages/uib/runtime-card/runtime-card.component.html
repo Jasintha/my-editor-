@@ -1,0 +1,28 @@
+<mat-card class="grid-tile">
+  <mat-card-header class="tile-header">
+      <mat-card-title>{{
+        app.name
+      }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-actions
+    style="display: flex; flex-direction: row; justify-content: space-around;"
+  >
+    <button
+      (click)="openCard(app)"
+      mat-raised-button
+      style="
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        text-align: center;
+        border-radius: 24px;
+        background-color: #6d7f8b;
+        color: #f8fbfb;
+        margin-bottom: 10px;
+      "
+    >
+      <mat-icon>view_list</mat-icon>
+      <spa>View</spa>
+    </button>
+  </mat-card-actions>
+</mat-card>

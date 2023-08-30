@@ -58,6 +58,7 @@ import { UibEditorPageComponent } from "../uib/uib-editor/uib-editor.component";
 import { UibBuildPageComponent } from "../uib/ui-build/uib-build.component";
 import { UIBViewSourceComponent } from "../uib/uib-view-source/uib-view-source.component";
 import { UIBEditSourceComponent } from "../uib/uib-edit-source/uib-edit-source.component";
+import { RuntimeDetailsComponent } from "../uib/runtime-details/runtime-details.component";
 
 declare const SystemJS;
 
@@ -306,18 +307,28 @@ const routes: Routes = [
     },
   },
   {
-    path: "runtime",
-    component: UibRuntimePageComponent,
-    data: {
-      auth: [Authority.TENANT_ADMIN],
-    },
-  },
-  {
     path: "uib-build",
     component: UibBuildPageComponent,
     data: {
       auth: [Authority.TENANT_ADMIN],
     },
+  },
+  {
+    path: "uib-runtime",
+    component: UibRuntimePageComponent,
+    data: {
+      auth: [Authority.TENANT_ADMIN],
+    },
+    children: [
+      {
+        path: "view",
+        component: UibBuildPageComponent,
+        canDeactivate: [ConfirmOnExitGuard],
+        data: {
+          auth: [Authority.TENANT_ADMIN],
+        },
+      },
+    ]
   },
   {
     path: "uib-editor",
