@@ -16,16 +16,13 @@ import { BehaviorSubject } from "rxjs";
   export class RuntimeCardComponent implements OnInit {
   @Input()app: RunTime ;
 
-  @Output() enableRouterTriggered = new EventEmitter<boolean>()
-
     constructor(private router: Router){}
 
     ngOnInit(){
     }
 
     openCard(app) {
-      this.enableRouterTriggered.emit(true)
-      this.router.navigate(["uib-runtime/view"])
+      this.router.navigate(["runtime-view"])
     }
   }
   

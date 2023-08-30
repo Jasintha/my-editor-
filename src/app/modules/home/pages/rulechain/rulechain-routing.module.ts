@@ -314,21 +314,18 @@ const routes: Routes = [
     },
   },
   {
-    path: "uib-runtime",
+    path: "runtime",
     component: UibRuntimePageComponent,
     data: {
       auth: [Authority.TENANT_ADMIN],
     },
-    children: [
-      {
-        path: "view",
-        component: UibBuildPageComponent,
-        canDeactivate: [ConfirmOnExitGuard],
-        data: {
-          auth: [Authority.TENANT_ADMIN],
-        },
+  },
+  {
+      path: "runtime-view",
+      component: RuntimeDetailsComponent,
+      data: {
+        auth: [Authority.TENANT_ADMIN],
       },
-    ]
   },
   {
     path: "uib-editor",

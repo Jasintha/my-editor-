@@ -83,10 +83,12 @@ export class UibApplicationPageComponent implements OnInit {
     (node) => node.children
   );
 
+  start = 0;
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   currentTab: string;
   isProssesing = false;
   showFiller = false;
+  filteredApplications = []
 
   constructor(
     private router: Router,
@@ -139,6 +141,10 @@ export class UibApplicationPageComponent implements OnInit {
     })
   }
 
+  getFilteredApps(){
+    this.filteredApplications = this.applications.slice(this.start, this.start + 10)
+  }
+
   changeSplit(val) {
     this.currentTab = val;
     if (val === "dashboard") {
@@ -167,6 +173,26 @@ export class UibApplicationPageComponent implements OnInit {
     const componentRef = overlayRef.attach(component);
     componentRef.instance.dismiss.subscribe(()=> overlayRef.detach())
     overlayRef.backdropClick().subscribe(() => overlayRef.detach());
+  }
+
+  setStart(){
+    const length = this.start + 10
+    if(length >= this.applications.length){
+      return 
+    } else {
+      this.start = length
+    }
+    this.getFilteredApps()
+  }
+
+  resetStart(){
+    const length = this.start - 10
+    if(length <= 0 ){
+      return 
+    } else {
+      this.start = length
+    }
+    this.getFilteredApps()
   }
 
   logout() {

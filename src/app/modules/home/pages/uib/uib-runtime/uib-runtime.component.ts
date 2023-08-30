@@ -20,7 +20,6 @@ export type RunTime = {
   export class UibRuntimePageComponent implements OnInit {
 
     currentTab: string;
-    routeEnable = false;
     runtimes = [];
 
     constructor(private router: Router,
@@ -69,10 +68,6 @@ export type RunTime = {
     const componentRef = overlayRef.attach(component);
     componentRef.instance.dismiss.subscribe(()=> overlayRef.detach())
     overlayRef.backdropClick().subscribe(() => overlayRef.detach());
-  }
-
-  routeHandler(val: boolean){
-    this.routeEnable = !this.routeEnable
   }
 
   logout(){

@@ -125,11 +125,11 @@
                       font-style: normal;
                     "
                   >
-                    <span style="color: gray;">Previous</span>
+                    <span (click)="resetStart()" style="color: #00a2b3; cursor: pointer !important;">Previous</span>
                     <span style="margin-left: 10px; color: #00a2b3;">
                       {{ this.appCount }}
                     </span>
-                    <span style="margin-left: 10px; color: gray;">Next</span>
+                    <span (click)="setStart()" style="margin-left: 10px; color: #00a2b3; cursor: pointer !important;">Next</span>
                   </div>
                   <div
                     class="font-family: Heebo,sans-serif; font-weight: normal; font-size: 16px; font-style: normal; color: #00a2b3;"
@@ -159,7 +159,7 @@
                   gap: 30px;
                 "
               >
-                <div *ngFor="let app of applications">
+                <div *ngFor="let app of filteredApplications">
                   <div
                     style="z-index: 2;"
                   >
@@ -190,11 +190,11 @@
                       font-style: normal;
                     "
                   >
-                    <span style="color: gray;">Previous</span>
-                    <span style="margin-left: 10px; color: #00a2b3;">
-                      {{ this.appCount }}
-                    </span>
-                    <span style="margin-left: 10px; color: gray;">Next</span>
+                  <span (click)="resetStart()" style="color: #00a2b3; cursor: pointer !important;">Previous</span>
+                  <span style="margin-left: 10px; color: #00a2b3;">
+                    {{ this.appCount }}
+                  </span>
+                  <span (click)="setStart()" style="margin-left: 10px; color: #00a2b3; cursor: pointer !important;">Next</span>
                   </div>
                   <div
                     class="font-family: Heebo,sans-serif; font-weight: normal; font-size: 16px; font-style: normal; color: #00a2b3;"

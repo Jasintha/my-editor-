@@ -96,7 +96,7 @@ import { UIBService } from "@app/core/projectservices/uib.service";
     this.uibService.findProjectComponents(this.mainUUID).subscribe({
       next: (comps) => {
       this.dataSource.data = comps;
-      this.selectActiveNode(this.dataSource.data[0]?.children[0])
+      this.openFirst(this.dataSource.data[0]?.children[0])
       },
       error: (error)=> {
         console.error(error)
@@ -112,6 +112,14 @@ import { UIBService } from "@app/core/projectservices/uib.service";
 
   add(node) {
     this.addOperationService.createPopups(node, node.projectuuid, "Create");
+  }
+
+  openFirst(node){
+    if(node?.isParent){
+      return
+    } else {
+      this.viewRule(node);
+    }
   }
 
   selectActiveNode(selectedNode) {
