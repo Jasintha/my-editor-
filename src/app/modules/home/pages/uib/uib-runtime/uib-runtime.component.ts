@@ -5,6 +5,7 @@ import { LoginService } from "@app/core/services/login.services";
 import { Overlay } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
 import { CreateRuntimeComponent } from "../create-runtime/create-runtime.component";
+import { UibInternalService } from "../uib-internal-service";
 
 export type RunTime = {
   runtimeUuid: string;
@@ -32,7 +33,8 @@ export class UibRuntimePageComponent implements OnInit {
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private overlay: Overlay
+    private overlay: Overlay,
+    private uibInternalService: UibInternalService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +68,9 @@ export class UibRuntimePageComponent implements OnInit {
         path: "main",
       },
     ];
+    this.uibInternalService.getAction().subscribe((action)=> {
+      // this.loadGridTiles()
+    })
   }
 
   changeSplit(val) {

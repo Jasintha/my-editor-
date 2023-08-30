@@ -72,88 +72,38 @@ export class CreateRuntimeComponent implements OnInit {
 
   onSubmit() {
     console.log(this.runtimeForm.controls)
-    // this.enableProgress = true;
-    // if (this.isEdit) {
-    //   const newProject = {
-    //     requirements: [
-    //       {
-    //         requirementUUID: "r0001",
-    //         description: "<p>ZxXX</p>",
-    //       },
-    //     ],
-    //     name: this.runtimeForm.get(["projectName"]).value,
-    //     projectUuid: this.projectUuid,
-    //     epicCreateType: "new",
-    //     description: this.projectForm.get(["description"]).value,
-    //     status: "NEW",
-    //     epicuuid: "",
-    //     referenceName: this.projectForm.get(["projectName"]).value,
-    //   };
-    //   this.uibService.updateUIBProject(newProject).subscribe({
-    //     next: (value) => {
-    //       this.enableProgress = false
-    //       this.clear();
-    //       this.dismiss.emit();
-    //       let msg = "";
-    //       if (value.status == 200) {
-    //         msg = "Updated Successfully!";
-    //       } else {
-    //         msg = "Updation Failed!";
-    //       }
-    //       this.snackBar.open(msg, '', {
-    //         duration: 500,
-    //         panelClass: 'snackbar-success',
-    //         horizontalPosition: 'right',
-    //         verticalPosition: 'top'
-    //       })
-    //     },
-
-    //     error: (error) => {
-    //       this.enableProgress = false
-    //       console.log(error);
-    //     },
-    //   });
-    //   this.uibInternalService.setAction('update')
-    // } else {
-    //   const newProject = {
-    //     requirements: [
-    //       {
-    //         requirementUUID: "r0001",
-    //         description: "<p>ZxXX</p>",
-    //       },
-    //     ],
-    //     name: this.projectForm.get(["projectName"]).value,
-    //     projectUuid: this.projectUuid,
-    //     epicCreateType: "new",
-    //     description: this.projectForm.get(["description"]).value,
-    //     status: "NEW",
-    //     epicuuid: "",
-    //     referenceName: this.projectForm.get(["projectName"]).value,
-    //   };
-    //   this.uibService.createUIBProject(newProject, this.projectUuid).subscribe({
-    //     next: (value) => {
-    //       this.enableProgress = false
-    //       this.clear();
-    //       this.dismiss.emit();
-    //       let msg = "";
-    //       if (value.status == 200) {
-    //         msg = "Created Successfully!";
-    //       } else {
-    //         msg = "Creation Failed!";
-    //       }
-    //       this.snackBar.open(msg, '', {
-    //         duration: 500,
-    //         panelClass: 'snackbar-success',
-    //         horizontalPosition: 'right',
-    //         verticalPosition: 'top'
-    //       })
-    //     },
-    //     error: (error) => {
-    //       this.enableProgress = false
-    //       console.log(error);
-    //     },
-    //   });
-    //   this.uibInternalService.setAction('create')
-    // }
+    this.enableProgress = true;
+    const newRuntime = {
+      runtimeName: this.runtimeForm.get(["runtimeName"]).value,
+      category: this.runtimeForm.get(["category"]).value,
+      repoUrl: this.runtimeForm.get(["repoUrl"]).value,
+      revision: this.runtimeForm.get(["revision"]).value,
+      revisionType: this.runtimeForm.get(["revisionType"]).value,
+      path: this.runtimeForm.get(["path"]).value,
+    };
+      this.uibService.createUIBRuntime(newRuntime).subscribe({
+        next: (value) => {
+          this.enableProgress = false
+          this.clear();
+          this.dismiss.emit();
+          let msg = "";
+          if (value.status == 200) {
+            msg = "Runtime Created Successfully!";
+          } else {
+            msg = "Creation Failed!";
+          }
+          this.snackBar.open(msg, '', {
+            duration: 500,
+            panelClass: 'snackbar-success',
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          })
+        },
+        error: (error) => {
+          this.enableProgress = false
+          console.log(error);
+        },
+      });
+      this.uibInternalService.setAction('create')
   }
 }

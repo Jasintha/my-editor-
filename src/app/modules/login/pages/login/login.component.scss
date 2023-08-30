@@ -11,6 +11,7 @@ Main page styles
   display: flex;
   //background-color: rebeccapurple;
 }
+
 //customized
 .twillo-card {
   min-height: 82vh !important;
@@ -20,16 +21,34 @@ Main page styles
   border: none;
 }
 
+.snackbar-success {
+  background-color: rgb(12, 132, 12) !important;
+}
+
+.snackbar-failed{
+  background-color:rgb(241, 49, 10) !important;
+}
+
+.snackbar-info{
+  background-color:rgb(104, 70, 237) !important;
+}
+
+.snackbar-warning{
+  background-color:rgb(225, 221, 24) !important;
+}
+
 .divider:after,
 .divider:before {
-  content: '';
+  content: "";
   flex: 1;
   height: 1px;
   background: #eee;
 }
+
 .h-custom {
   height: calc(100% - 73px);
 }
+
 @media (max-width: 450px) {
   .h-custom {
     height: 100%;
@@ -97,6 +116,7 @@ Main page styles
   background-color: #9b223f;
   background-image: linear-gradient(to right, #9c2f41, #f7ad00);
 }
+
 *:focus {
   outline: 0;
 }
@@ -120,6 +140,7 @@ Main page styles
 .box-text-doc {
   height: 10px;
 }
+
 .doc {
   color: #082c4b;
 }
@@ -161,6 +182,7 @@ Main page styles
   color: #3a86ff;
   font-size: 20px;
 }
+
 .loginbuttoncss:hover {
   background-color: #cccccc;
   color: #3a86ff;
@@ -177,7 +199,7 @@ Main page styles
   padding: 0 32px;
   box-shadow: 0 -2px 16px rgba(47, 54, 64, 0.39);
   font-size: 20px;
-  font-family: 'Noto Sans', sans-serif, FontAwesome, PrimeIcons;
+  font-family: "Noto Sans", sans-serif, FontAwesome, PrimeIcons;
   opacity: 0.8;
   transition: 400ms;
 }
@@ -206,10 +228,12 @@ Main page styles
   transition: all 0.01s ease-in;
   -webkit-transition: all 0.01s ease-in;
   -moz-transition: all 0.01s ease-in;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 
   border-top: 10px solid #193052;
 }
+
 .box-card:hover {
   background: lightgray;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
@@ -221,9 +245,11 @@ h5 {
   font-size: 30px;
   color: #082c4b;
 }
+
 p {
   color: #082c4b;
 }
+
 .borderDesignproject {
   border-top: 10px solid #ffbe0b;
 }
@@ -258,6 +284,7 @@ p {
 .sub-btn {
   margin: 40px 70px 20px 70px;
 }
+
 .form-check {
   margin-top: 10px;
 }
@@ -273,20 +300,23 @@ p {
   background: none;
   border-radius: 0;
   -webkit-appearance: none;
+
   &:focus,
   &:valid {
-    & ~ label {
+    &~label {
       color: #3e8acc;
       font-size: 0.825em;
       cursor: default;
     }
   }
+
   &:focus {
-    & ~ .underline {
+    &~.underline {
       width: 100%;
     }
   }
 }
+
 .form-control:focus,
 input:focus {
   outline: none;
@@ -320,18 +350,19 @@ input:focus {
 }
 
 .card-log {
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
-
-
 
 h1 {
   letter-spacing: -1px;
 }
+
 a {
   color: #5469d4;
   text-decoration: unset;
 }
+
 .login-root {
   background: #fff;
   display: flex;
@@ -339,6 +370,7 @@ a {
   min-height: 100vh;
   overflow: hidden;
 }
+
 .loginbackground {
   min-height: 692px;
   position: fixed;
@@ -349,71 +381,88 @@ a {
   z-index: 0;
   overflow: hidden;
 }
+
 .flex-flex {
   display: flex;
 }
+
 .align-center {
   align-items: center;
 }
+
 .center-center {
   align-items: center;
   justify-content: center;
 }
+
 .box-root {
   box-sizing: border-box;
 }
+
 .flex-direction--column {
   -ms-flex-direction: column;
   flex-direction: column;
 }
+
 .loginbackground-gridContainer {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: [start] 1fr [left-gutter] (86.6px)[16] [left-gutter] 1fr [end];
-  grid-template-columns: [start] 1fr [left-gutter] repeat(16,86.6px) [left-gutter] 1fr [end];
-  -ms-grid-rows: [top] 1fr [top-gutter] (64px)[8] [bottom-gutter] 1fr [bottom];
-  grid-template-rows: [top] 1fr [top-gutter] repeat(8,64px) [bottom-gutter] 1fr [bottom];
+  -ms-grid-columns: [start] 1fr [left-gutter] (86.6px) [16] [left-gutter] 1fr [end];
+  grid-template-columns: [start] 1fr [left-gutter] repeat(16, 86.6px) [left-gutter] 1fr [end];
+  -ms-grid-rows: [top] 1fr [top-gutter] (64px) [8] [bottom-gutter] 1fr [bottom];
+  grid-template-rows: [top] 1fr [top-gutter] repeat(8, 64px) [bottom-gutter] 1fr [bottom];
   justify-content: center;
   margin: 0 -2%;
   transform: rotate(-12deg) skew(-12deg);
 }
+
 .box-divider--light-all-2 {
   box-shadow: inset 0 0 0 2px #e3e8ee;
 }
+
 .box-background--blue {
   background-color: #5469d4;
 }
+
 .box-background--white {
   background-color: #ffffff;
 }
+
 .box-background--blue800 {
   background-color: #212d63;
 }
+
 .box-background--gray100 {
   background-color: #e3e8ee;
 }
+
 .box-background--cyan200 {
   background-color: #7fd3ed;
 }
+
 .padding-top--64 {
   padding-top: 64px;
 }
+
 .padding-top--24 {
   padding-top: 24px;
 }
+
 .padding-top--48 {
   padding-top: 48px;
 }
+
 .padding-bottom--24 {
   padding-bottom: 24px;
 }
+
 .padding-horizontal--48 {
   padding: 48px;
 }
+
 .padding-bottom--15 {
   padding-bottom: 15px;
 }
-
 
 .flex-justifyContent--center {
   -ms-flex-pack: center;
@@ -426,26 +475,33 @@ a {
   max-width: 448px;
   background: white;
   border-radius: 4px;
-  box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+  box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px,
+    rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
 }
+
 span {
   display: block;
   font-size: 20px;
   line-height: 28px;
   color: #1a1f36;
 }
+
 label {
   margin-bottom: 10px;
 }
-.reset-pass a,label {
+
+.reset-pass a,
+label {
   font-size: 14px;
   font-weight: 600;
   display: block;
 }
-.reset-pass > a {
+
+.reset-pass>a {
   text-align: right;
   margin-bottom: 10px;
 }
+
 .grid--50-50 {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -462,28 +518,23 @@ label {
   border-radius: 4px;
   outline-color: rgb(84 105 212 / 0.5);
   background-color: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-  rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-  rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-  rgba(60, 66, 87, 0.16) 0px 0px 0px 1px,
-  rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-  rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-  rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px;
 }
 
 input[type="submit"] {
   background-color: rgb(84, 105, 212);
-  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-  rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-  rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
-  rgb(84, 105, 212) 0px 0px 0px 1px,
-  rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-  rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-  rgba(60, 66, 87, 0.08) 0px 2px 5px 0px;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgb(84, 105, 212) 0px 0px 0px 1px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(60, 66, 87, 0.08) 0px 2px 5px 0px;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
 }
+
 .field-checkbox input {
   width: 20px;
   height: 15px;
@@ -491,20 +542,24 @@ input[type="submit"] {
   box-shadow: unset;
   min-height: unset;
 }
+
 .field-checkbox label {
   display: flex;
   align-items: center;
   margin: 0;
 }
+
 a.ssolink {
   display: block;
   text-align: center;
   font-weight: 600;
 }
+
 .footer-link span {
   font-size: 14px;
   text-align: center;
 }
+
 .listing a {
   color: #697386;
   font-weight: 600;
@@ -514,12 +569,15 @@ a.ssolink {
 .animationRightLeft {
   //animation: animationRightLeft 2s ease-in-out infinite;
 }
+
 .animationLeftRight {
   //animation: animationLeftRight 2s ease-in-out infinite;
 }
+
 .tans3s {
   //animation: animationLeftRight 3s ease-in-out infinite;
 }
+
 .tans4s {
   //animation: animationLeftRight 4s ease-in-out infinite;
 }
@@ -528,9 +586,11 @@ a.ssolink {
   0% {
     transform: translateX(0px);
   }
+
   50% {
     transform: translateX(1000px);
   }
+
   100% {
     transform: translateX(0px);
   }
@@ -540,9 +600,11 @@ a.ssolink {
   0% {
     transform: translateX(0px);
   }
+
   50% {
     transform: translateX(-1000px);
   }
+
   100% {
     transform: translateX(0px);
   }

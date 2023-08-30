@@ -19,6 +19,7 @@ export class UIBService {
   public uibViewSourceUrl = '/api/uib';
   public singleProUrl = 'api/editor/projects'
   public singleProSyncUrl = 'api/editor/projects/sync'
+  public uibCreateRuntimeUrl = 'api/uib/runtime'
 
   constructor(protected http: HttpClient) {}
 
@@ -68,5 +69,9 @@ export class UIBService {
 
   updateViewSource(newFlow, ruleId: string, configId: string, user: string, uuid: string):  Observable<string> {
     return this.http.post(`${this.uibViewSourceUrl}/${ruleId}/${configId}/${user}/${uuid}`,newFlow, {responseType: 'text'});
+  }
+
+  createUIBRuntime(newRuntime): Observable<EntityResponseType> {
+    return this.http.post<any>(`${this.uibCreateProjectUrl}/`, newRuntime,  { observe: 'response' });
   }
 }

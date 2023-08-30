@@ -10,6 +10,7 @@ import {AccountService} from '@core/auth/account.service';
 import {Subscription} from 'rxjs';
 import { Account } from '@shared/models/user/account.model';
 import {NgxSpinnerService} from 'ngx-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'virtuan-login',
   templateUrl: './login.component.html',
@@ -56,7 +57,9 @@ export class LoginComponent implements OnInit {
 
        private loginService: LoginService,
        private stateStorageService: StateStorageService,
-       private spinnerService: NgxSpinnerService
+       private spinnerService: NgxSpinnerService,
+       private snackBar: MatSnackBar,
+
      //  private messageService: MessageService,
       // private apptypesService: ApptypesService,
       // private cookieService: CookieService,
@@ -76,11 +79,28 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.isLogin = false;
     this.spinnerService.hide();
-    this.imageURL = '../../../../../assets/images/logo_primary.png'
+    this.imageURL = 'src/assets/images/logo_primary.png' //'../../../../../assets/images/logo_primary.png'
     // this.accountService.identity().then((account: Account) => {
     //   this.account = account;
     // });
+  //   setInterval(() => {
+  //     let value = {
+  //       notificationMsg: 'Test 1',
+  //       duration: 5000,
+  //       notificationType: 'info'
+  //     }
+  //     this.snackBar.open(value.notificationMsg, '', {
+  //       duration: value.duration,
+  //       panelClass: `snackbar-${value.notificationType}`,
+  //       horizontalPosition: 'right',
+  //       verticalPosition: 'top'
+  //     })
+  // }, 25000);
     this.registerAuthenticationSuccess();
+  }
+
+  getUrl(){
+    return this.imageURL
   }
 
   registerAuthenticationSuccess() {
