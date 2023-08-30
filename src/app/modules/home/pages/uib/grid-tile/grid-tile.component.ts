@@ -17,6 +17,7 @@ import { DeleteProjectComponent } from "../delete-project/delete-project.compone
   export class GridTileComponent implements OnInit {
   @Input()app: Application;
 
+  isSynced = false;
     constructor(private dialog: MatDialog,
         private uibService: UIBService,
        private overlay: Overlay, private router: Router){}
@@ -66,12 +67,15 @@ import { DeleteProjectComponent } from "../delete-project/delete-project.compone
     }
 
     syncGridTile(app){
+      this.isSynced = true;
       this.uibService.syncUIBProject(app.projectUuid).subscribe(
       {
         next: (res) => {
+          this.isSynced = false
           console.log(res)
         },
         error: (error) => {
+          this.isSynced = false
           console.log(error)
         }
       })

@@ -18,7 +18,7 @@ export class UIBService {
   public uibCreateModelUrl = '/api/editor/proj/aggregates';
   public uibViewSourceUrl = '/api/uib';
   public singleProUrl = 'api/editor/projects'
-  public singleProSyncUrl = 'api/editor/projects'
+  public singleProSyncUrl = 'api/editor/projects/sync'
 
   constructor(protected http: HttpClient) {}
 

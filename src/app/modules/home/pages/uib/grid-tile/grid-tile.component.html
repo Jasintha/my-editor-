@@ -82,6 +82,7 @@
         <span>{{ data.key }}</span>
         <span style="width: 70%;">{{ data.value }}</span>
       </div>
+      <mat-progress-bar mode="indeterminate" *ngIf="isSynced"></mat-progress-bar>
     </div>
   </mat-card-content>
   <mat-card-actions
