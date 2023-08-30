@@ -6,12 +6,12 @@ const COLUMNS_SCHEMA = [
   {
       key: "label",
       type: "text",
-      label: "Label"
+      label: ""
   },
   {
       key: "value",
       type: "text",
-      label: "Value"
+      label: ""
   },
   {
     key: "isEdit",
@@ -29,11 +29,21 @@ const COLUMNS_SCHEMA = [
   export class RuntimeDetailsComponent implements OnInit {
     currentTab: string;
 
-    displayedColumns: string[] = [ 'label', 'value'];
+    displayedColumns: string[] = [ 'label', 'value', 'isEdit'];
   dataSource = [
     {
       label: 'test1',
-      value: 'ttt'
+      value: 'ttt',
+      isEdit: false
+    },
+    {
+      label: 'test2',
+      value: 'ttt',
+      isEdit: true
+    },
+    {
+      label: 'test3',
+      value: 'ttt',
     }
   ];
 
