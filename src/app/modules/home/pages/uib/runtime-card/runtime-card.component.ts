@@ -22,7 +22,11 @@ import { BehaviorSubject } from "rxjs";
     }
 
     openCard(app) {
-      this.router.navigate(["runtime-view"])
+      this.router.navigate(["runtime-view"], {
+        queryParams: {
+          runtimeId: app.id
+        }
+      })
     }
   }
   

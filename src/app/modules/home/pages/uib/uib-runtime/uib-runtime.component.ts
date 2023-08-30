@@ -7,73 +7,99 @@ import { ComponentPortal } from "@angular/cdk/portal";
 import { CreateRuntimeComponent } from "../create-runtime/create-runtime.component";
 
 export type RunTime = {
-  name: string
-}
+  runtimeUuid: string;
+  runtimeName: string;
+  category: string;
+  repoUrl: string;
+  revision: string;
+  revisionType: string;
+  path: string;
+};
 
 @Component({
-    selector: 'uib-runtime-page',
-    templateUrl: './uib-runtime.component.html',
-    styleUrls: ['./uib-runtime.component.scss',   
-      "../../rulechain/rulechain-page.component.scss"  ],
-    encapsulation: ViewEncapsulation.None
-  })
-  export class UibRuntimePageComponent implements OnInit {
+  selector: "uib-runtime-page",
+  templateUrl: "./uib-runtime.component.html",
+  styleUrls: [
+    "./uib-runtime.component.scss",
+    "../../rulechain/rulechain-page.component.scss",
+  ],
+  encapsulation: ViewEncapsulation.None,
+})
+export class UibRuntimePageComponent implements OnInit {
+  currentTab: string;
+  runtimes = [];
 
-    currentTab: string;
-    runtimes = [];
-
-    constructor(private router: Router,
-       private loginService: LoginService,
-       private overlay: Overlay,
-       ){}
+  constructor(
+    private router: Router,
+    private loginService: LoginService,
+    private overlay: Overlay
+  ) {}
 
   ngOnInit(): void {
-    this.currentTab = 'runtime'
+    this.currentTab = "runtime";
     this.runtimes = [
       {
-        name: 'test 1'
+        runtimeUuid: '1',
+        runtimeName: "Test 1",
+        category: "Default",
+        repoUrl: "test/test",
+        revision: "HEAD",
+        revisionType: "Main",
+        path: "main",
       },
       {
-        name: 'test 2'
-      }
-    ]
+        runtimeUuid: '2',
+        runtimeName: "Test 2",
+        category: "Default",
+        repoUrl: "test/test",
+        revision: "HEAD",
+        revisionType: "Main",
+        path: "main",
+      },
+      {
+        runtimeUuid: '3',
+        runtimeName: "Test 3",
+        category: "Default",
+        repoUrl: "test/test",
+        revision: "HEAD",
+        revisionType: "Main",
+        path: "main",
+      },
+    ];
   }
 
-
-    changeSplit(val){
-      this.currentTab = val;
-      if (val === "dashboard") {
-        this.router.navigate([`dashboard`]);
-      } else if (val === "application") {
-        this.router.navigate([`application`]);
-      } else if (val === "runtime") {
-        this.router.navigate([`runtime`]);
-      } else if (val === "uib-build") {
-          this.router.navigate([`uib-build`]);
-        }
+  changeSplit(val) {
+    this.currentTab = val;
+    if (val === "dashboard") {
+      this.router.navigate([`dashboard`]);
+    } else if (val === "application") {
+      this.router.navigate([`application`]);
+    } else if (val === "runtime") {
+      this.router.navigate([`runtime`]);
+    } else if (val === "uib-build") {
+      this.router.navigate([`uib-build`]);
+    }
   }
 
-  toggleOverlay(){
+  toggleOverlay() {
     const overlayRef = this.overlay.create({
       hasBackdrop: true,
-      backdropClass: 'cdk-overlay-transparent-backdrop',
-      panelClass: 'mat-elevation-z8',
+      backdropClass: "cdk-overlay-transparent-backdrop",
+      panelClass: "mat-elevation-z8",
       positionStrategy: this.overlay
         .position()
         .global()
-        .right('0')
-        .width('900px'),
+        .right("0")
+        .width("900px"),
     });
     const component = new ComponentPortal(CreateRuntimeComponent);
     const componentRef = overlayRef.attach(component);
-    componentRef.instance.dismiss.subscribe(()=> overlayRef.detach())
+    componentRef.instance.dismiss.subscribe(() => overlayRef.detach());
     overlayRef.backdropClick().subscribe(() => overlayRef.detach());
   }
 
-  logout(){
+  logout() {
     this.loginService.logout();
-    this.router.navigate(['']);
-}
-
+    this.router.navigate([""]);
   }
-  
+}

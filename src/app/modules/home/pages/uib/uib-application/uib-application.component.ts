@@ -133,6 +133,7 @@ export class UibApplicationPageComponent implements OnInit {
       next: (value)=> {
         this.appCount = value.length
         this.applications = value
+        this.getFilteredApps()
         this.dropDownList = this.applications.map((val)=> val.title.name)
       },
       error: (error)=> {
