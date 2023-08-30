@@ -55,6 +55,7 @@ import { UIBService } from "@app/core/projectservices/uib.service";
     currentTab: string;
     eventSubscriber: Subscription;
     eventSubscriberUi: Subscription;
+    showBackdrop = true
     
     constructor(private router: Router,
        private loginService: LoginService,
@@ -118,6 +119,7 @@ import { UIBService } from "@app/core/projectservices/uib.service";
     if(node?.isParent){
       return
     } else {
+      this.showBackdrop = false;
       this.viewRule(node);
     }
   }
@@ -129,7 +131,7 @@ import { UIBService } from "@app/core/projectservices/uib.service";
     const node = selectedNode.data
     this.isCreatingProject = false 
     this.projectUid = node.projectuuid;
-
+    this.showBackdrop = false;
    if (node.type === "Scripts" || node.type === "MODEL") {
     if(node.is_editable){
       this.router.navigate(["uib-editor/edit-source"], {
