@@ -47,6 +47,8 @@ import { UIBService } from "@app/core/projectservices/uib.service";
     dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     mainUUID: string;
+    healthStatusIcon: string;
+    healthStatusColor: string;
     activeNode: any;
     projectUid: string;
     ruleprojectUid: string;
@@ -70,6 +72,8 @@ import { UIBService } from "@app/core/projectservices/uib.service";
     ngOnInit(): void {
       this.activatedRoute.queryParams.subscribe((params)=> {
         this.mainUUID = params.projectUid;
+        this.healthStatusIcon = params.healthStatusIcon;
+        this.healthStatusColor = params.healthStatusColor;
       });
       this.currentTab = "uib-editor"
       this.loadTreeData();
@@ -170,10 +174,13 @@ import { UIBService } from "@app/core/projectservices/uib.service";
     this.userName = item.username;
     this.router.navigate(["uib-editor/rulechain"], {
       queryParams: {
+        mainId: this.mainUUID,
         ruleId: item.ruleid,
         username: this.userName,
         ruleprojectUid: this.ruleprojectUid,
         editorType: this.editorType,
+        hstatusIcon: this.healthStatusIcon,
+        hstatusColor: this.healthStatusColor,
       },
     });
   }

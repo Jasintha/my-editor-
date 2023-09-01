@@ -112,6 +112,7 @@ import { ConOperationBase } from "@shared/models/ConnectorOperation.models";
 import { EventService } from "@core/projectservices/microservice-event.service";
 import { ruleNodeConfigResourcesModulesMap } from "../service-home/service-home.component";
 import {v4 as uuidv4} from 'uuid';
+import { UIBService } from "@app/core/projectservices/uib.service";
 
 @Component({
   selector: "virtuan-rulechain-page",
@@ -229,6 +230,9 @@ export class RuleChainPageComponent extends PageComponent
 
   username: string;
   uid: string;
+  mainid: string;
+  healthStatusIcon: string;
+  healthStatusColor: string;
 
   serviceUuid: string;
   ruleId: string;
@@ -393,13 +397,14 @@ export class RuleChainPageComponent extends PageComponent
   private tooltipTimeout: Timeout;
 
   routerType: string;
+  title: string;
 
   constructor(
     protected store: Store<AppState>,
     protected activatedRoute: ActivatedRoute,
     private router: Router,
     private ruleChainService: RuleChainService,
-    // private authService: AuthService,
+    private uibService: UIBService,
     private translate: TranslateService,
     private itembuffer: ItemBufferService,
     public dialog: MatDialog,
@@ -412,8 +417,11 @@ export class RuleChainPageComponent extends PageComponent
       this.isSpinnerEnable = true;
       this.username = params.username;
       this.uid = params.ruleprojectUid;
+      this.mainid = params.mainId;
       this.editorType = params.editorType;
       this.ruleId = params.ruleId;
+      this.healthStatusIcon = params.hstatusIcon;
+      this.healthStatusColor = params.hstatusColor;
       this.loadInitialData();
     });
   }
@@ -449,9 +457,14 @@ export class RuleChainPageComponent extends PageComponent
         this.ruleChain = ruleChain;
         this.ruleChainMetaData = ruleChainMetaData;
         this.connectionPropertyTemplates = connectionPropertyTemplates;
+        this.title = this.ruleChainMetaData.name.split('ARF_')[1]
         this.init();
       }
     );
+  }
+
+  getIconColor(color){
+    return color ?? '#003a79'
   }
 
   ngAfterViewInit() {
@@ -475,6 +488,19 @@ export class RuleChainPageComponent extends PageComponent
   onSearchTextUpdated(searchText: string) {
     this.ruleNodeSearch = searchText;
     this.updateRuleNodesHighlight();
+  }
+
+  syncFlow(){
+    this.uibService.syncFlow(this.mainid, this.ruleId, this.uid).subscribe(
+    {
+      next: (res)=> {
+        console.log(res)
+      },
+      error: (error)=> {
+        console.log(error)
+      }
+    }
+    )
   }
 
   private init() {
@@ -1052,6 +1078,10 @@ export class RuleChainPageComponent extends PageComponent
 
   onRuleChainContextMenuMouseLeave() {
     this.ruleChainMenuTrigger.closeMenu();
+  }
+
+  backToUIBApps(){
+    this.router.navigate([`application`]);
   }
 
   private prepareContextMenu(item: FcItemInfo): RuleChainMenuContextInfo {

@@ -107,27 +107,6 @@ export class UibApplicationPageComponent implements OnInit {
     })
   }
 
-  triggerService(item) {
-    let editorType = "";
-    if (item.type === "SERVICEFILE") {
-      editorType = "servicefile";
-    } else if (item.type === "UIB") {
-      editorType = "uib";
-    } else if (item.type === "MAIN_TASK") {
-      editorType = "maintask";
-    } else {
-      editorType = "default";
-    }
-    this.router.navigate(["uib-service/rulechain"], {
-      queryParams: {
-        ruleId: item.ruleid,
-        username: item.username,
-        ruleprojectUid: item.projectuuid,
-        editorType: editorType,
-      },
-    });
-  }
-
   loadGridTiles() {
     this.uibService.queryApps().subscribe({
       next: (value)=> {

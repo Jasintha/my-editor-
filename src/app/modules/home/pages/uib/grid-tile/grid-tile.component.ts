@@ -84,7 +84,9 @@ import { DeleteProjectComponent } from "../delete-project/delete-project.compone
     openbox(app) {
       this.router.navigate(["uib-editor"], {
         queryParams: {
-          projectUid: app.projectUuid
+          projectUid: app.projectUuid,
+          healthStatusIcon: app.hstatus.icon,
+          healthStatusColor: app.hstatus.color
         }
       })
     }
