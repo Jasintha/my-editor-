@@ -10,7 +10,6 @@ import { filter, map } from 'rxjs/operators';
 })
 export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
 
-  sourceCode: string;
   projectUid: string;
   ruleUid: string;
   userName: string;
@@ -41,8 +40,9 @@ export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
         this.uibService.queryViewSource(this.ruleUid, this.sourceId, this.userName, this.projectUid)
       .subscribe({
         next: (res) => {
-          this.code = res;
+          console.log(res)
           this.editorOptions = { theme: this.theme, language: this.language };
+          this.code = res;
         },
         error: (error) => {
           this.editorOptions = { theme: this.theme, language: this.language };

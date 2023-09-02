@@ -82,11 +82,13 @@ import { DeleteProjectComponent } from "../delete-project/delete-project.compone
     }
 
     openbox(app) {
+      localStorage.setItem("mainProjectId", app.projectUuid);
+      localStorage.setItem("healthStatusIcon", app.hstatus.icon);
+
       this.router.navigate(["uib-editor"], {
         queryParams: {
           projectUid: app.projectUuid,
           healthStatusIcon: app.hstatus.icon,
-          healthStatusColor: app.hstatus.color
         }
       })
     }

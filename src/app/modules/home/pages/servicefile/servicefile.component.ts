@@ -14,6 +14,7 @@ import {EventTypes} from '@shared/events/event.queue';
 import {IApi} from '@shared/models/model/microservice-api.model';
 import {NgxSpinnerService} from 'ngx-spinner';
 import { UIBService } from '@app/core/projectservices/uib.service';
+import { UibInternalService } from '../uib/uib-internal-service';
 
 @Component({
   selector: 'virtuan-servicefile',
@@ -43,7 +44,8 @@ export class ServicefileComponent implements OnInit {
       public dialogRef: MatDialogRef<ServicefileComponent>,
       @Inject(MAT_DIALOG_DATA)  public data: any,
       private spinnerService: NgxSpinnerService,
-      private uibService: UIBService
+      private uibService: UIBService,
+      private uibInternalService: UibInternalService
   ) { }
 
   ngOnInit(): void {
@@ -157,6 +159,7 @@ export class ServicefileComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
+    this.uibInternalService.setAction('update')
     this.spinnerService.hide();
     this.isSaving = false;
     this.eventManager.dispatch(

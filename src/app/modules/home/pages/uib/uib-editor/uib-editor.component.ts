@@ -11,13 +11,14 @@ import { EventManagerService } from "@app/shared/events/event.type";
 import { AggregateService } from "@app/core/projectservices/microservice-aggregate.service";
 import { DeleteOperationService } from "@app/core/projectservices/delete-operations.service";
 import { UIBService } from "@app/core/projectservices/uib.service";
+import { UibInternalService } from "../uib-internal-service";
   
   @Component({
     selector: "uib-editor-page",
     templateUrl: "./uib-editor.component.html",
     styleUrls: [
       "./uib-editor.component.scss",
-       "../../rulechain/rulechain-page.component.scss",
+      "../../rulechain/rulechain-page.component.scss",
     ],
     encapsulation: ViewEncapsulation.None
   })
@@ -48,7 +49,6 @@ import { UIBService } from "@app/core/projectservices/uib.service";
 
     mainUUID: string;
     healthStatusIcon: string;
-    healthStatusColor: string;
     activeNode: any;
     projectUid: string;
     ruleprojectUid: string;
@@ -67,27 +67,30 @@ import { UIBService } from "@app/core/projectservices/uib.service";
        private aggregateService: AggregateService,
        private deleteOperationService: DeleteOperationService,
        private uibService: UIBService,
-       private activatedRoute: ActivatedRoute
+       private activatedRoute: ActivatedRoute,
+       private uibInternalService: UibInternalService
        ){}
     ngOnInit(): void {
       this.activatedRoute.queryParams.subscribe((params)=> {
         this.mainUUID = params.projectUid;
         this.healthStatusIcon = params.healthStatusIcon;
-        this.healthStatusColor = params.healthStatusColor;
       });
-      this.currentTab = "uib-editor"
+      this.currentTab = "application"
+      this.uibInternalService.getAction().subscribe((action)=> {
+        this.refreshTree()
+      })
       this.loadTreeData();
       this.registerChangeEditorTree()
     }
 
     changeSplit(val){
-      this.currentTab = "uib-editor"
+      this.currentTab = "application"
       if (val === "dashboard") {
         this.router.navigate([`dashboard`]);
       } else if (val === "application") {
         this.router.navigate([`application`]);
-      } else if (val === "uib-editor") {
-        this.router.navigate([`uib-editor`]);
+      } else if (val === "uib-runtime") {
+        this.router.navigate([`uib-runtime`]);
       } else if (val === "uib-build") {
           this.router.navigate([`uib-build`]);
         }
@@ -95,9 +98,14 @@ import { UIBService } from "@app/core/projectservices/uib.service";
 
   refreshTree() {
     this.loadTreeData();
+    this.registerChangeEditorTree()
   }
 
   loadTreeData() {
+    if(this.mainUUID == undefined){
+      this.mainUUID = localStorage.getItem("mainProjectId");
+      this.healthStatusIcon = localStorage.getItem("healthStatusIcon")
+    }
     this.uibService.findProjectComponents(this.mainUUID).subscribe({
       next: (comps) => {
       this.dataSource.data = comps;
@@ -120,7 +128,7 @@ import { UIBService } from "@app/core/projectservices/uib.service";
   }
 
   openFirst(node){
-    if(node?.isParent){
+    if(node?.isParent || this.mainUUID == undefined){
       return
     } else {
       this.showBackdrop = false;
@@ -180,7 +188,6 @@ import { UIBService } from "@app/core/projectservices/uib.service";
         ruleprojectUid: this.ruleprojectUid,
         editorType: this.editorType,
         hstatusIcon: this.healthStatusIcon,
-        hstatusColor: this.healthStatusColor,
       },
     });
   }

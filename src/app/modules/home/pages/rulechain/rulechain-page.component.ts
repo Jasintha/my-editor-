@@ -232,7 +232,6 @@ export class RuleChainPageComponent extends PageComponent
   uid: string;
   mainid: string;
   healthStatusIcon: string;
-  healthStatusColor: string;
 
   serviceUuid: string;
   ruleId: string;
@@ -421,7 +420,6 @@ export class RuleChainPageComponent extends PageComponent
       this.editorType = params.editorType;
       this.ruleId = params.ruleId;
       this.healthStatusIcon = params.hstatusIcon;
-      this.healthStatusColor = params.hstatusColor;
       this.loadInitialData();
     });
   }
