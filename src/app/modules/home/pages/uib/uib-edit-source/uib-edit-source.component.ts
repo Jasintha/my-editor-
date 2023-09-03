@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UIBService } from '@app/core/projectservices/uib.service';
 import { filter, map } from 'rxjs/operators';
@@ -27,7 +27,8 @@ export class UIBEditSourceComponent implements OnInit, OnChanges, OnDestroy {
   ];
   constructor(
     protected activatedRoute: ActivatedRoute,
-    protected uibService: UIBService
+    protected uibService: UIBService,
+    private el: ElementRef,
   ) {
   }
 
@@ -36,16 +37,17 @@ export class UIBEditSourceComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   loadCode(){
-    this.editorOptions = { theme: this.theme };
+    this.editorOptions = {...this.editorOptions, theme: this.theme, language: this.language, automaticLayout: true};
     if (this.projectUid) {
         this.uibService.queryViewSource(this.ruleUid, this.sourceId, this.userName, this.projectUid)
       .subscribe({
         next: (res) => {
           this.code = res;
-          this.editorOptions = { theme: this.theme, language: this.language };
+          if(!this.el.nativeElement.innerHTML.includes('monaco-scrollable-element')){
+            window.location.reload()
+          }
         },
         error: (error) => {
-          this.editorOptions = { theme: this.theme, language: this.language };
           this.code = error.text;
         }
       }

@@ -1,24 +1,12 @@
 import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChild, ElementRef, Renderer2, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UIBService } from '@app/core/projectservices/uib.service';
-import { NGX_MONACO_EDITOR_CONFIG, NgxMonacoEditorConfig } from 'ngx-monaco-editor';
-
-const monacoConfig: NgxMonacoEditorConfig = {
-  defaultOptions: { scrollBeyondLastLine: false },
-  baseUrl: './assets',
-  onMonacoLoad: () => {
-    const monaco = (window as any).monaco;
-    console.log(monaco);
-}
-};
 
 @Component({
   selector: 'uib-view-source',
   templateUrl: './uib-view-source.component.html',
+  styleUrls: ['./uib-view-source.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    { provide: NGX_MONACO_EDITOR_CONFIG, useValue: monacoConfig },
-  ]
 })
 export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
   projectUid: string;
@@ -53,7 +41,6 @@ export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
         this.uibService.queryViewSource(this.ruleUid, this.sourceId, this.userName, this.projectUid)
       .subscribe({
         next: (res) => {
-          console.log(res)
           this.code = res;
           this.changeDetectorRef.markForCheck()
           if(!this.el.nativeElement.innerHTML.includes('monaco-scrollable-element')){
