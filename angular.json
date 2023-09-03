@@ -25,11 +25,36 @@
             "assets": [
               "src/virtuan.ico",
               "src/assets",
-              { "glob": "**/*", "input": "node_modules/ngx-monaco-editor/assets/monaco", "output": "./assets/monaco/" },
-              { "glob": "worker-html.js", "input": "./node_modules/ace-builds/src-min/", "output": "/" },
-              { "glob": "worker-css.js", "input": "./node_modules/ace-builds/src-min/", "output": "/" },
-              { "glob": "worker-json.js", "input": "./node_modules/ace-builds/src-min/", "output": "/" },
-              { "glob": "worker-javascript.js", "input": "./node_modules/ace-builds/src-min/", "output": "/" }
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-monaco-editor/assets/monaco",
+                "output": "./assets/monaco/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/min-maps",
+                "output": "./assets/min-maps/"
+              },
+              {
+                "glob": "worker-html.js",
+                "input": "./node_modules/ace-builds/src-min/",
+                "output": "/"
+              },
+              {
+                "glob": "worker-css.js",
+                "input": "./node_modules/ace-builds/src-min/",
+                "output": "/"
+              },
+              {
+                "glob": "worker-json.js",
+                "input": "./node_modules/ace-builds/src-min/",
+                "output": "/"
+              },
+              {
+                "glob": "worker-javascript.js",
+                "input": "./node_modules/ace-builds/src-min/",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/styles.scss",
@@ -48,9 +73,7 @@
               "node_modules/font-awesome/css/font-awesome.min.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                  "src/scss"
-              ]
+              "includePaths": ["src/scss"]
             },
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -148,26 +171,16 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
+            "assets": ["src/favicon.ico", "src/assets"]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -193,9 +206,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
