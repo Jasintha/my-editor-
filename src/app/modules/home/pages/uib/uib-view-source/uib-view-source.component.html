@@ -1,5 +1,5 @@
 <div class="card-body" style="height: 100%; width: 100%; overflow: hidden;">
-    <div class="row">
+    <div class="row" *ngIf="isDisplayTitle">
         <div class="col-sm-6">
             <h2>{{this.title}}</h2>
         </div>

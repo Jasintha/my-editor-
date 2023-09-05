@@ -5,7 +5,6 @@ import { UIBService } from '@app/core/projectservices/uib.service';
 @Component({
   selector: 'uib-view-source',
   templateUrl: './uib-view-source.component.html',
-  styleUrls: ['./uib-view-source.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
@@ -17,6 +16,7 @@ export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
   title: string;
 
   theme: string = 'vs';
+  isDisplayTitle = false
   editorOptions: any;
   code: string = '';
   themeItems: any[] = [
@@ -45,6 +45,8 @@ export class UIBViewSourceComponent implements OnInit, OnChanges, OnDestroy {
           this.changeDetectorRef.markForCheck()
           if(!this.el.nativeElement.innerHTML.includes('monaco-scrollable-element')){
             window.location.reload()
+          }else{
+            this.isDisplayTitle = true
           }
         },
         error: (error) => {
