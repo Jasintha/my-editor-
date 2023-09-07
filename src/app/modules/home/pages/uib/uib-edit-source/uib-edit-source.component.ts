@@ -17,7 +17,6 @@ export class UIBEditSourceComponent implements OnInit, OnChanges, OnDestroy {
   sourceId: string;
   language: string;
   title: string;
-  isDisplayTitle = false;
   theme: string = 'vs';
   editorOptions: any;
   code: string = '';
@@ -37,17 +36,12 @@ export class UIBEditSourceComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   loadCode(){
-    this.editorOptions = {...this.editorOptions, theme: this.theme, language: this.language, automaticLayout: true};
+    this.editorOptions = {theme: this.theme, language: this.language};
     if (this.projectUid) {
         this.uibService.queryViewSource(this.ruleUid, this.sourceId, this.userName, this.projectUid)
       .subscribe({
         next: (res) => {
           this.code = res;
-          if(!this.el.nativeElement.innerHTML.includes('monaco-scrollable-element')){
-            window.location.reload()
-          } else{
-            this.isDisplayTitle = true
-          }
         },
         error: (error) => {
           this.code = error.text;

@@ -76,22 +76,6 @@ export class UibEditorPageComponent implements OnInit {
     private uibInternalService: UibInternalService
   ) {}
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((params) => {
-      const path = window.location.pathname;
-      if (path.includes("source")) {
-        this.showBackdrop = false;
-        return;
-      } else if(path.includes("rulechain")) {
-        this.showBackdrop = false;
-        return;
-      } else {
-        this.mainUUID = params.projectUid;
-        this.healthStatusIcon = params.healthStatusIcon;
-        params.healthStatusIcon
-          ? (this.fromApplication = true)
-          : (this.fromApplication = false);
-      }
-    });
     this.currentTab = "application";
     this.uibInternalService.getAction().subscribe((action) => {
       this.refreshTree();
@@ -120,11 +104,16 @@ export class UibEditorPageComponent implements OnInit {
 
   loadTreeData() {
     if (this.mainUUID == undefined || this.healthStatusIcon == undefined) {
+      this.fromApplication = true
       this.mainUUID = localStorage.getItem("mainProjectId");
       this.healthStatusIcon = localStorage.getItem("healthStatusIcon");
       this.uibService.findProjectComponents(this.mainUUID).subscribe({
         next: (comps) => {
           this.dataSource.data = comps;
+          this.viewSourceCode(this.dataSource.data[0]?.children[0])
+          setTimeout(()=>{
+            this.openFirst(this.dataSource.data[0]?.children[0]);
+          }, 500)
         },
         error: (error) => {
           console.error(error);
@@ -134,7 +123,6 @@ export class UibEditorPageComponent implements OnInit {
       this.uibService.findProjectComponents(this.mainUUID).subscribe({
         next: (comps) => {
           this.dataSource.data = comps;
-          this.openFirst(this.dataSource.data[0]?.children[0]);
         },
         error: (error) => {
           console.error(error);
@@ -157,6 +145,7 @@ export class UibEditorPageComponent implements OnInit {
     if (node?.isParent || this.fromApplication == false) {
       return;
     } else {
+      this.fromApplication = false;
       this.showBackdrop = false;
       this.viewRule(node);
     }
@@ -252,7 +241,7 @@ export class UibEditorPageComponent implements OnInit {
   }
 
   viewSourceCode(node) {
-    this.showBackdrop = false;
+    this.showBackdrop = this.fromApplication ? true : false;
     this.isCreatingProject = false;
     this.projectUid = node.projectuuid;
     if (node.is_editable) {

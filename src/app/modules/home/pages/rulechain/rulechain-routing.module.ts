@@ -335,25 +335,8 @@ const routes: Routes = [
     },
     children: [
       {
-        path: "rulechain",
-        component: RuleChainPageComponent,
-        canDeactivate: [ConfirmOnExitGuard],
-        data: {
-          auth: [Authority.TENANT_ADMIN],
-        },
-      },
-      {
-        path: "lambda",
-        component: LamdafunctionEditorComponent,
-        canDeactivate: [ConfirmOnExitGuard],
-        data: {
-          auth: [Authority.TENANT_ADMIN],
-        },
-      },
-      {
         path: "view-source",
         component: UIBViewSourceComponent,
-        canDeactivate: [ConfirmOnExitGuard],
         data: {
           auth: [Authority.TENANT_ADMIN],
         },
@@ -361,11 +344,18 @@ const routes: Routes = [
       {
         path: "edit-source",
         component: UIBEditSourceComponent,
-        canDeactivate: [ConfirmOnExitGuard],
         data: {
           auth: [Authority.TENANT_ADMIN],
         },
       },
+      {
+        path: "rulechain",
+        component: RuleChainPageComponent,
+        canDeactivate: [ConfirmOnExitGuard],
+        data: {
+          auth: [Authority.TENANT_ADMIN],
+        },
+      }
     ]
   },
 ];
