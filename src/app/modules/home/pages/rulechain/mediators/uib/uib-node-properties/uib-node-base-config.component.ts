@@ -283,8 +283,12 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
        this.uibNodeBaseConfigFormGroup?.patchValue(this.configuration.callProperties);
 
         this.uibNodeBaseConfigFormGroup?.valueChanges.subscribe((val)=> {
-          this.configuration.callProperties = val
-          this.updateModel(this.configuration)
+          if(!Object.is(this.configuration.callProperties,val)){
+            this.configuration.callProperties = val;
+            setTimeout(() => {
+            this.updateModel(val)
+            },0)
+          }
         })
 
     }
