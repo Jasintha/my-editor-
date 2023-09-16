@@ -156,6 +156,7 @@ import { UIBDropDownComponent } from './uib/uib-node-properties/dropdown/uib-dro
 import { UIBTableComponent } from './uib/uib-node-properties/table/uib-table.component';
 import { UIBFormTableComponent } from './uib/uib-node-properties/form-table/uib-form-table.component';
 import { UIBTreeViewInputComponent } from './uib/uib-node-properties/tree-view/uib-tree-view.component';
+import { UIBDropDownWithChildrenComponent } from './uib/uib-node-properties/dropdown-with-children/dropdown-with-children.component';
 
 @NgModule({
   declarations: [
@@ -168,6 +169,7 @@ import { UIBTreeViewInputComponent } from './uib/uib-node-properties/tree-view/u
     UIBTableComponent,
     UIBFormTableComponent,
     UIBTreeViewInputComponent,
+    UIBDropDownWithChildrenComponent,
     RootNodeConfigComponent,
     ErrorBranchNodeConfigComponent,
     PayloadNodeConfigComponent,
@@ -294,6 +296,7 @@ import { UIBTreeViewInputComponent } from './uib/uib-node-properties/tree-view/u
     UIBTableComponent,
     UIBFormTableComponent,
     UIBTreeViewInputComponent,
+    UIBDropDownWithChildrenComponent,
     RootNodeConfigComponent,
     ErrorBranchNodeConfigComponent,
     PayloadNodeConfigComponent,

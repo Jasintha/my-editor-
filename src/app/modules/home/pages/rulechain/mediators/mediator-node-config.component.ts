@@ -224,7 +224,7 @@ export class MediatorNodeConfigComponent implements OnInit, OnDestroy, AfterView
   ngOnInit(): void {
     //TODO: Enable json for new node
     if(this.nodeClazz == 'xiUibHTTPInput'){
-      this.nodeClazz = 'xiDynamic'
+       this.nodeClazz = 'xiDynamic'
      // this.nodeGuide = JSON.stringify(PropertyNode)
     }
   }

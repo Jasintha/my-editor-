@@ -32,6 +32,7 @@ import { UIBTextInputComponent } from './text-input/uib-text-input.component';
 import { UIBDropDownComponent } from './dropdown/uib-dropdown-input.component';
 import { UIBFormTableComponent } from './form-table/uib-form-table.component';
 import { UIBTreeViewInputComponent } from './tree-view/uib-tree-view.component';
+import { UIBDropDownWithChildrenComponent } from './dropdown-with-children/dropdown-with-children.component';
 
 @Component({
   selector: 'virtuan-uib-base-node-config',
@@ -94,75 +95,7 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
 
   datasource: MatTableDataSource<uibField>;
 
-  fields = [
-          {
-            type: "text",
-            name: "firstName",
-            label: "First Name",
-            value: "",
-            required: true,
-            options: []
-          },
-          {
-            type: "text",
-            name: "lastName",
-            label: "Last Name",
-            value: "",
-            required: true,
-            options: []
-          },
-          {
-            type: "text",
-            name: "email",
-            label: "Email",
-            value: "",
-            required: true,
-            options: []
-          },
-          {
-            type: 'dropdown',
-            name: 'country',
-            label: 'Country',
-            value: 'in',
-            required: true,
-            options: [
-              { key: 'in', label: 'India' },
-              { key: 'us', label: 'USA' }
-            ]
-          },
-          {
-            type: 'form-table',
-            name: 'skills',
-            label: 'Skills',
-            value: [{
-              'qty': '100'
-            }, {'qty': '200'}],
-            required: true,
-            options: [],
-            columns: [{
-              label: 'Quantity',
-              key: 'qty',
-              type: 'text'
-            },
-          {
-            label: 'Qualtiy',
-            key: 'quality',
-            type: 'dropdown',
-            options: [
-              { key: 'good', label: 'Good' },
-              { key: 'bad', label: 'Bad' },
-            ]
-           },
-          ]
-          },
-          {
-            type: "tree-view",
-            name: "x",
-            label: "Test",
-            value: "",
-            options: []
-          },
-        ];
+  @Input() fields: any;
 
   @Input()
   set nodeDefinition(nodeDefinition: RuleNodeDefinition) {
@@ -199,6 +132,108 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   ngOnInit(): void {
+    if(this.fields == null){
+      this.fields = [
+        {
+          type: "text",
+          name: "firstName",
+          label: "First Name",
+          value: "",
+          required: true,
+          options: []
+        },
+        {
+          type: "text",
+          name: "lastName",
+          label: "Last Name",
+          value: "",
+          required: true,
+          options: []
+        },
+        {
+          type: "text",
+          name: "email",
+          label: "Email",
+          value: "",
+          required: true,
+          options: []
+        },
+        {
+          type: 'dropdown',
+          name: 'country',
+          label: 'Country',
+          value: 'in',
+          required: true,
+          options: [
+            { key: 'in', label: 'India' },
+            { key: 'us', label: 'USA' }
+          ]
+        },
+        {
+          type: 'form-table',
+          name: 'skills',
+          label: 'Skills',
+          value: [{
+            'qty': '100'
+          }, {'qty': '200'}],
+          required: true,
+          options: [],
+          columns: [{
+            label: 'Quantity',
+            key: 'qty',
+            type: 'text'
+          },
+        {
+          label: 'Qualtiy',
+          key: 'quality',
+          type: 'dropdown',
+          options: [
+            { key: 'good', label: 'Good' },
+            { key: 'bad', label: 'Bad' },
+          ]
+         },
+        ]
+        },
+        {
+          type: "tree-view",
+          name: "testTree",
+          label: "Test",
+          value: "",
+          options: [
+          {
+                    name: 'AAA',
+                    enable: true,
+                    children: [
+                        {
+                            name: 'BBB',
+                            enable: true
+                        },
+                        {
+                            name: 'CCC',
+                            enable: false
+                        }
+                    ]
+                }
+        ],
+        },
+        {
+          type: 'dropdown-children',
+          name: 'happy',
+          label: 'Happy',
+          value: 'no',
+          options: [
+            { key: 'yes', label: 'Yes', children:[{
+              type: "textarea",
+              name: "templateName",
+              label: "TemplateName",
+              value: "",
+              hide: false
+            }] },
+            { key: 'no', label: 'No' }
+          ],
+        },
+      ];
+    }
     this.createDynamicForm();
     this.createDynamicComponents();
   }
@@ -212,7 +247,7 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
   ngAfterViewInit(): void {
     setTimeout(() => {
       if(this.components.length > 0){
-        this.loadComponent()
+       this.loadComponent()
       }
     }, 0);
   }
@@ -244,12 +279,15 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
         this.updateModel(configuration);
       });
     } else {
-      this.uibNodeBaseConfigFormGroup?.patchValue({});
+
+       this.uibNodeBaseConfigFormGroup?.patchValue(this.configuration.callProperties);
+
+        this.uibNodeBaseConfigFormGroup?.valueChanges.subscribe((val)=> {
+          this.configuration.callProperties = val
+          this.updateModel(this.configuration)
+        })
+
     }
-    
-    this.uibNodeBaseConfigFormGroup.get(this.fields[4].name).valueChanges.subscribe((val)=> {
-      console.log(val)
-    })
   }
 
   private updateModel(configuration: RuleNodeConfiguration) {
@@ -265,14 +303,29 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
   createDynamicForm() {
     let fieldsCtrls = {};
     for (let f of this.fields) {
-      if (f.type != "checkbox" && f.type != "form-table") {
+      if (f.type != "checkbox" && f.type != "form-table" && f.type != "dropdown-children") {
         fieldsCtrls[f.name] = new FormControl(
           f.value || "",
           Validators.required
         );
       } else if(f.type == "form-table"){
         fieldsCtrls[f.name] = new FormArray([])
-      } else {
+      } else if(f.type == "dropdown-children") {
+          for (let opt of f.options) {
+            if(opt.children){
+              for (let ch of opt.children) {
+                fieldsCtrls[ch.name] = new FormControl(
+                  ch.value || "",
+                  Validators.required
+                );
+              }
+            }
+          }
+          fieldsCtrls[f.name] = new FormControl(
+            f.value || "",
+            Validators.required
+          );
+     } else {
         let opts = {};
         for (let opt of f.options) {
           opts[opt.key] = new FormControl(opt.label);
@@ -284,78 +337,91 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   createDynamicComponents() {
-    this.components = [
-      {
-        type: "text",
+    this.components = []
+    for(var i of this.fields){
+      this.components.push({
+        type: i.type,
         info: {
-          formControlName: this.fields[0].name,
-          label: "Name",
-          value: ''
+          formControlName: i.name,
+          label: i.label,
+          value: i.value,
+          options: i.options,
+          columns: i.columns,
         },
-      },
-      {
-        type: "text",
-        info: {
-          formControlName: this.fields[1].name,
-          label: "Surname",
-          value: ''
-        },
-      },
-      {
-        type: "text",
-        info: {
-          formControlName: this.fields[2].name,
-          label: "Email",
-          value: ''
-        },
-      },
-      {
-        type: "dropdown",
-        info: {
-          formControlName: this.fields[3].name,
-          label: "Country",
-          value: 'in',
-          options: [
-            { key: 'in', label: 'India' },
-            { key: 'us', label: 'USA' }
-          ]
-        },
-      },
-      {
-        type: "form-table",
-        info: {
-          formControlName: this.fields[4].name,
-          label: "Skills",
-          value: this.fields[4].value,
-          options: [],
-          columns: this.fields[4].columns,
-        },
-      },
-      {
-        type: "tree-view",
-        info: {
-          formControlName: 'x',
-          label: "foods",
-          value: '',
-          options: [
-            {
-                      name: 'AAA',
-                      enable: true,
-                      children: [
-                          {
-                              name: 'BBB',
-                              enable: true
-                          },
-                          {
-                              name: 'CCC',
-                              enable: false
-                          }
-                      ]
-                  }
-          ],
-        },
-      }
-    ];
+      })
+    }
+    // this.components = [
+    //   {
+    //     type: "text",
+    //     info: {
+    //       formControlName: this.fields[0].name,
+    //       label: "Name",
+    //       value: ''
+    //     },
+    //   },
+    //   {
+    //     type: "text",
+    //     info: {
+    //       formControlName: this.fields[1].name,
+    //       label: "Surname",
+    //       value: ''
+    //     },
+    //   },
+    //   {
+    //     type: "text",
+    //     info: {
+    //       formControlName: this.fields[2].name,
+    //       label: "Email",
+    //       value: ''
+    //     },
+    //   },
+    //   {
+    //     type: "dropdown",
+    //     info: {
+    //       formControlName: this.fields[3].name,
+    //       label: "Country",
+    //       value: 'in',
+    //       options: [
+    //         { key: 'in', label: 'India' },
+    //         { key: 'us', label: 'USA' }
+    //       ]
+    //     },
+    //   },
+    //   {
+    //     type: "form-table",
+    //     info: {
+    //       formControlName: this.fields[4].name,
+    //       label: "Skills",
+    //       value: this.fields[4].value,
+    //       options: [],
+    //       columns: this.fields[4].columns,
+    //     },
+    //   },
+    //   {
+    //     type: "tree-view",
+    //     info: {
+    //       formControlName: 'x',
+    //       label: "foods",
+    //       value: '',
+    //       options: [
+    //         {
+    //                   name: 'AAA',
+    //                   enable: true,
+    //                   children: [
+    //                       {
+    //                           name: 'BBB',
+    //                           enable: true
+    //                       },
+    //                       {
+    //                           name: 'CCC',
+    //                           enable: false
+    //                       }
+    //                   ]
+    //               }
+    //       ],
+    //     },
+    //   }
+    // ];
   }
 
   private loadComponent(): void {
@@ -377,6 +443,9 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
           break;
         case 'tree-view':
           factory = this.resolver.resolveComponentFactory(UIBTreeViewInputComponent)
+          break;
+        case 'dropdown-children':
+          factory = this.resolver.resolveComponentFactory(UIBDropDownWithChildrenComponent)
           break;
       }
       this.componentRef = vcr.createComponent(factory)
