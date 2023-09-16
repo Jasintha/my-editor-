@@ -149,11 +149,25 @@ import { CommonNodeConfigComponent } from './core/common-node-config.component';
 import { UibHttpReplyNodeConfigComponent } from './uib/uibHttpReply-node-config.component';
 import { UibHttpInputNodeConfigComponent } from './uib/uibHttpInput-node-config.component';
 import { UibTraceNodeConfigComponent } from './uib/uibTrace-node-config.component';
+import { UIBTextAreaInputComponent } from './uib/uib-node-properties/text-area-input/uib-text-area-input.component';
+import { UIBTextInputComponent } from './uib/uib-node-properties/text-input/uib-text-input.component';
+import { UibNodeBaseConfigComponent } from './uib/uib-node-properties/uib-node-base-config.component';
+import { UIBDropDownComponent } from './uib/uib-node-properties/dropdown/uib-dropdown-input.component';
+import { UIBTableComponent } from './uib/uib-node-properties/table/uib-table.component';
+import { UIBFormTableComponent } from './uib/uib-node-properties/form-table/uib-form-table.component';
+import { UIBTreeViewInputComponent } from './uib/uib-node-properties/tree-view/uib-tree-view.component';
 
 @NgModule({
   declarations: [
     MediatorNodeConfigComponent,
     CommonNodeConfigComponent,
+    UibNodeBaseConfigComponent,
+    UIBTextAreaInputComponent,
+    UIBTextInputComponent,
+    UIBDropDownComponent,
+    UIBTableComponent,
+    UIBFormTableComponent,
+    UIBTreeViewInputComponent,
     RootNodeConfigComponent,
     ErrorBranchNodeConfigComponent,
     PayloadNodeConfigComponent,
@@ -273,6 +287,13 @@ import { UibTraceNodeConfigComponent } from './uib/uibTrace-node-config.componen
   exports: [
     MediatorNodeConfigComponent,
     CommonNodeConfigComponent,
+    UibNodeBaseConfigComponent,
+    UIBTextAreaInputComponent,
+    UIBTextInputComponent,
+    UIBDropDownComponent,
+    UIBTableComponent,
+    UIBFormTableComponent,
+    UIBTreeViewInputComponent,
     RootNodeConfigComponent,
     ErrorBranchNodeConfigComponent,
     PayloadNodeConfigComponent,

@@ -1,0 +1,25 @@
+<form [formGroup]="formGroup">
+  
+    <table [formArrayName]="data?.formControlName">
+      <tr>
+        <th width="150px"><button type="button" (click)="add()" class="btn btn-primary">Add</button></th>
+      </tr>
+      <tr>
+        <td *ngFor="let header of data?.columns">{{header.label}}</td>
+      </tr>
+      <tr *ngFor="let control of handler().controls; let i=index" [formGroupName]="i"> 
+        <td *ngFor="let header of data?.columns">
+          <div [ngSwitch]="header.type">
+            <input *ngSwitchCase="'text'" type="text" [formControlName]="header.key" class="form-control">
+            <select *ngSwitchCase="'dropdown'" [formControlName]="header.key" class="form-control">
+              <option *ngFor="let opt of header?.options" [value]="opt.key">{{opt.label}}</option>
+            </select>
+          </div>
+        </td>
+        <td>
+            <button (click)="remove(i)" class="btn btn-danger">Remove</button>
+        </td>
+      </tr>
+    </table>
+    
+  </form>

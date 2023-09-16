@@ -1,0 +1,9 @@
+<form [formGroup]="formGroup">
+<mat-form-field class="example-full-width">
+    <mat-label>{{data?.label}}</mat-label>
+    <mat-select [formControlName]="data?.formControlName">
+      <mat-option *ngFor="let opt of data?.options" [value]="opt.key">{{opt.label}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+  

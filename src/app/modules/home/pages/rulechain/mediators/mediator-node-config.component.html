@@ -1366,7 +1366,7 @@
                                         [nodeDefinition]="nodeDefinitionValue">
         </virtuan-email-node-config>
     </ng-container>
-    <ng-container *ngIf="nodeClazz === 'xiDynamic'">
+    <ng-container *ngIf="nodeClazz === 'xiOther'">
         <virtuan-common-node-config
         formControlName="configuration"
         [nodeGuide]="nodeGuide"
@@ -1384,5 +1384,22 @@
         [branchAvailability]="branchAvailability"
         [nodeDefinition]="nodeDefinitionValue">
         </virtuan-common-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiDynamic'">
+        <virtuan-uib-base-node-config
+        formControlName="configuration"
+        [fields]="fields"
+        [ruleNodeId]="ruleNodeId"
+        [allConstants]=" allConstants"
+        [allRuleInputs]="allRuleInputs"
+        [inputEntities]=" inputEntities"
+        [inputCustomobjects]="inputCustomobjects"
+        [allVariables]="allVariables"
+        [inputProperties]="inputProperties"
+        [apptype]="apptype"
+        [branchAvailability]="branchAvailability"
+        [allModelProperties]="allModelProperties"
+        [nodeDefinition]="nodeDefinitionValue">
+</virtuan-uib-base-node-config>
     </ng-container>
 </div>

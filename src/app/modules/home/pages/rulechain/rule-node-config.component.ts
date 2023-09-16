@@ -184,6 +184,9 @@ export class RuleNodeConfigComponent implements  OnInit, OnDestroy, AfterViewIni
   @Input()
   serviceUuid: string;
 
+  @Input()
+  fields: any[]
+
   nodeDefinitionValue: RuleNodeDefinition;
 
   @Input()
