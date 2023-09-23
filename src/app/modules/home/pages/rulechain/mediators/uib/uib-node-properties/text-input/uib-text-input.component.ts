@@ -16,8 +16,6 @@ export class UIBTextInputComponent implements OnInit{
 
   @Input() formGroup:FormGroup
 
-  ngOnInit(): void {
-    this.formGroup.controls[this.data.formControlName].patchValue(this.data.value)
- }
+  ngOnInit(): void {}
 
 }

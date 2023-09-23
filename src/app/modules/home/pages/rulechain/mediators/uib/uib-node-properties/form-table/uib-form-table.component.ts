@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { distinctUntilChanged } from "rxjs/operators";
 
 @Component({
   selector: "uib-form-table",
@@ -24,7 +25,7 @@ export class UIBFormTableComponent implements OnInit {
   newRow(): FormGroup {
     let opts = {};
     for (let opt of this.data.columns) {
-      opts[opt.key] = new FormControl("");
+      opts[opt.key] = new FormControl(null);
     }
 
     return new FormGroup(opts);

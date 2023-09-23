@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -94,6 +95,7 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
   nodeDefinitionValue: RuleNodeDefinition;
 
   datasource: MatTableDataSource<uibField>;
+  dynamicBuildCompleted = false;
 
   @Input() fields: any;
 
@@ -279,19 +281,51 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
         this.updateModel(configuration);
       });
     } else {
+      if(this.uibNodeBaseConfigFormGroup.touched === false && this.configuration.callProperties.length > 0){
 
-       this.uibNodeBaseConfigFormGroup?.patchValue(this.configuration.callProperties);
+        this.uibNodeBaseConfigFormGroup.patchValue(this.configuration.callProperties[0])
 
-        this.uibNodeBaseConfigFormGroup?.valueChanges.subscribe((val)=> {
-          if(!Object.is(this.configuration.callProperties,val)){
-            this.configuration.callProperties = val;
-            setTimeout(() => {
-            this.updateModel(val)
-            },0)
+        for(var i of this.fields){
+         if(i.type === 'form-table'){
+          if (this.configuration.callProperties[0][i.name].length > 0) {
+            const array = this.uibNodeBaseConfigFormGroup.get(i.name) as FormArray;
+            array.clear();
+      
+            this.configuration.callProperties[0][i.name].forEach(item => {
+              const group = this.getCustomFormForup(i.columns)
+              Object.keys(group.controls).forEach(key => {
+                group.patchValue({
+                  [key]: item[key]
+                });
+              });
+              array.controls.push(group);
+            });
           }
-        })
+         }
+
+         else if(i.type === 'tree-view'){
+          
+         }
+        }
+      }
+
+      this.uibNodeBaseConfigFormGroup?.valueChanges.subscribe((val)=> {
+          this.configuration.callProperties = [...[], val]
+            setTimeout(() => {
+            this.updateModel(this.configuration)
+            },0)
+      })
 
     }
+  }
+
+  getCustomFormForup(cols){
+    let opts = {};
+    for (let opt of cols) {
+      opts[opt.key] = new FormControl(null);
+    }
+
+    return new FormGroup(opts);
   }
 
   private updateModel(configuration: RuleNodeConfiguration) {
@@ -309,7 +343,7 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
     for (let f of this.fields) {
       if (f.type != "checkbox" && f.type != "form-table" && f.type != "dropdown-children") {
         fieldsCtrls[f.name] = new FormControl(
-          f.value || "",
+         null,
           Validators.required
         );
       } else if(f.type == "form-table"){
@@ -319,14 +353,14 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
             if(opt.children){
               for (let ch of opt.children) {
                 fieldsCtrls[ch.name] = new FormControl(
-                  ch.value || "",
+                  null,
                   Validators.required
                 );
               }
             }
           }
           fieldsCtrls[f.name] = new FormControl(
-            f.value || "",
+            null,
             Validators.required
           );
      } else {
@@ -354,78 +388,6 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
         },
       })
     }
-    // this.components = [
-    //   {
-    //     type: "text",
-    //     info: {
-    //       formControlName: this.fields[0].name,
-    //       label: "Name",
-    //       value: ''
-    //     },
-    //   },
-    //   {
-    //     type: "text",
-    //     info: {
-    //       formControlName: this.fields[1].name,
-    //       label: "Surname",
-    //       value: ''
-    //     },
-    //   },
-    //   {
-    //     type: "text",
-    //     info: {
-    //       formControlName: this.fields[2].name,
-    //       label: "Email",
-    //       value: ''
-    //     },
-    //   },
-    //   {
-    //     type: "dropdown",
-    //     info: {
-    //       formControlName: this.fields[3].name,
-    //       label: "Country",
-    //       value: 'in',
-    //       options: [
-    //         { key: 'in', label: 'India' },
-    //         { key: 'us', label: 'USA' }
-    //       ]
-    //     },
-    //   },
-    //   {
-    //     type: "form-table",
-    //     info: {
-    //       formControlName: this.fields[4].name,
-    //       label: "Skills",
-    //       value: this.fields[4].value,
-    //       options: [],
-    //       columns: this.fields[4].columns,
-    //     },
-    //   },
-    //   {
-    //     type: "tree-view",
-    //     info: {
-    //       formControlName: 'x',
-    //       label: "foods",
-    //       value: '',
-    //       options: [
-    //         {
-    //                   name: 'AAA',
-    //                   enable: true,
-    //                   children: [
-    //                       {
-    //                           name: 'BBB',
-    //                           enable: true
-    //                       },
-    //                       {
-    //                           name: 'CCC',
-    //                           enable: false
-    //                       }
-    //                   ]
-    //               }
-    //       ],
-    //     },
-    //   }
-    // ];
   }
 
   private loadComponent(): void {
@@ -464,83 +426,3 @@ export interface uibField {
   name: string;
   value: string;
 }
-
-
-//   ngOnInit(): void {
-//     this.fields = [
-//       {
-//         type: "text",
-//         name: "firstName",
-//         label: "First Name",
-//         value: "",
-//         required: true,
-//       },
-//       {
-//         type: "text",
-//         name: "lastName",
-//         label: "Last Name",
-//         value: "",
-//         required: true,
-//       },
-//       {
-//         type: "text",
-//         name: "email",
-//         label: "Email",
-//         value: "",
-//         required: true,
-//       },
-//     ];
-//     this.createDynamicForm();
-//     this.createDynamicComponents();
-//   }
-
-//   createDynamicForm() {
-//     let fieldsCtrls = {};
-//     for (let f of this.fields) {
-//       if (f.type != "checkbox") {
-//         fieldsCtrls[f.name] = new FormControl(
-//           f.value || "",
-//           Validators.required
-//         );
-//       } else {
-//         let opts = {};
-//         for (let opt of f.options) {
-//           opts[opt.key] = new FormControl(opt.value);
-//         }
-//         fieldsCtrls[f.name] = new FormGroup(opts);
-//       }
-//     }
-//     this.form = new FormGroup(fieldsCtrls);
-//   }
-
-//   createDynamicComponents() {
-//     this.components = [
-//       {
-//         type: "text",
-//         info: {
-//           formControllerName: this.fields[0],
-//           label: "Name",
-//         },
-//       },
-//       {
-//         type: "text",
-//         info: {
-//           formControllerName: this.fields[1],
-//           label: "Surname",
-//         },
-//       },
-//       {
-//         type: "text",
-//         info: {
-//           formControllerName: this.fields[2],
-//           label: "Email",
-//         },
-//       },
-//     ];
-//   }
-
-//   writeValue(value: RuleNodeConfiguration): void {
-//     this.configuration = deepClone(value);
-//     console.log(this.configuration)
-//   }
-// }

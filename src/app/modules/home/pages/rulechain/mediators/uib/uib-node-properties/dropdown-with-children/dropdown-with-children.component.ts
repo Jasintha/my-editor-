@@ -30,7 +30,7 @@ export class UIBDropDownWithChildrenComponent implements OnInit{
   constructor(private resolver: ComponentFactoryResolver){}
 
   ngOnInit(): void {
-    this.formGroup.controls[this.data.formControlName].setValue(this.data.value)
+   // this.formGroup.controls[this.data.formControlName].setValue(this.data.value)
 
     this.formGroup.controls[this.data.formControlName].valueChanges.subscribe((val)=> {
       this.data.options.filter((type)=> {
