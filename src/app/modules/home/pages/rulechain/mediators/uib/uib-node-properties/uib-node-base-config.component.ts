@@ -287,7 +287,7 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
 
         for(var i of this.fields){
          if(i.type === 'form-table'){
-          if (this.configuration.callProperties[0][i.name].length > 0) {
+          if (this.configuration.callProperties[0][i.name]?.length > 0) {
             const array = this.uibNodeBaseConfigFormGroup.get(i.name) as FormArray;
             array.clear();
       
@@ -385,6 +385,7 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
           value: i.value,
           options: i.options,
           columns: i.columns,
+          hide: i.hide
         },
       })
     }

@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup">
- <mat-form-field class="example-full-width">
+ <mat-form-field class="example-full-width" [hidden]="data?.hide">
       <mat-label>{{data?.label}}</mat-label>
       <input matInput [formControlName]="data?.formControlName">
     </mat-form-field>

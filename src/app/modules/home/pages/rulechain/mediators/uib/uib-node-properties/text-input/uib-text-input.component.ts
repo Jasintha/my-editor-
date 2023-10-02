@@ -11,7 +11,8 @@ export class UIBTextInputComponent implements OnInit{
   @Input() data = {
     label: '',
     value: '',
-    formControlName: ''
+    formControlName: '',
+    hide: false
   };
 
   @Input() formGroup:FormGroup
