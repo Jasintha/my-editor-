@@ -193,7 +193,7 @@ export class RuleChainService {
   }
 
   public getRuleNodeComponentByClazz(clazz: string): RuleNodeComponentDescriptor {
-    const found = this.ruleNodeComponents.filter((component) => component.clazz === clazz);
+    const found = this.ruleNodeComponents.filter((component) => component.name === clazz);
     if (found && found.length) {
       return found[0];
     } else {

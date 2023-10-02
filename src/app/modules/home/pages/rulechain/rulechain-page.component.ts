@@ -2257,7 +2257,7 @@ export class RuleChainPageComponent extends PageComponent
         ) {
           const ruleNode: RuleNode = {
             id: node.ruleNodeId,
-            type: node.component.clazz,
+            type: node.component.name,
             name: node.name,
             status: node.status,
             nodeUUID: node.ruleNodeUUId,
