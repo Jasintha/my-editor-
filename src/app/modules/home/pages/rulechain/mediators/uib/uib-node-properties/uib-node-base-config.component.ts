@@ -135,7 +135,7 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   ngOnInit(): void {
-    if(this.fields !== null){
+    if(this.fields == null){
       this.fields = [
         {
           type: "section",
