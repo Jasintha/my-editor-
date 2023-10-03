@@ -1,13 +1,20 @@
-<form [formGroup]="formGroup">
+<form [formGroup]="formGroup" class="example-full-width">
   
-    <table [formArrayName]="data?.formControlName">
-      <tr>
-        <th width="150px"><button type="button" (click)="add()" class="btn btn-primary">Add</button></th>
+    <table [formArrayName]="data?.formControlName" class="example-full-width" style="display: flex; flex-direction: column;">
+      <tr style="display: flex; justify-content: flex-end;">
+        <th width="55px"><button type="button" (click)="add()" class="btn btn-primary"
+           style="background-color: darkgray; border-color: darkgray;">Add</button></th>
       </tr>
-      <tr>
+      <tr style="display: flex;
+      flex-direction: row;
+      justify-content: space-between;">
         <td *ngFor="let header of data?.columns">{{header.label}}</td>
+        <td></td>
       </tr>
-      <tr *ngFor="let control of handler().controls; let i=index" [formGroupName]="i"> 
+      <tr style="display: flex;
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;" *ngFor="let control of handler().controls; let i=index" [formGroupName]="i"> 
         <td *ngFor="let header of data?.columns">
           <div [ngSwitch]="header.type">
             <input *ngSwitchCase="'text'" type="text" [formControlName]="header.key" class="form-control">
@@ -17,7 +24,7 @@
           </div>
         </td>
         <td>
-            <button (click)="remove(i)" class="btn btn-danger">Remove</button>
+            <button (click)="remove(i)" class="btn btn-danger">X</button>
         </td>
       </tr>
     </table>

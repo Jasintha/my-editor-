@@ -34,6 +34,7 @@ import { UIBDropDownComponent } from './dropdown/uib-dropdown-input.component';
 import { UIBFormTableComponent } from './form-table/uib-form-table.component';
 import { UIBTreeViewInputComponent } from './tree-view/uib-tree-view.component';
 import { UIBDropDownWithChildrenComponent } from './dropdown-with-children/dropdown-with-children.component';
+import { UIBSectionComponent } from './section/uib-section.component';
 
 @Component({
   selector: 'virtuan-uib-base-node-config',
@@ -134,8 +135,16 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   ngOnInit(): void {
-    if(this.fields == null){
+    if(this.fields !== null){
       this.fields = [
+        {
+          type: "section",
+          name: "",
+          label: "Sample Section",
+          value: "",
+          required: true,
+          options: []
+        },
         {
           type: "text",
           name: "firstName",
@@ -413,6 +422,9 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
           break;
         case 'dropdown-children':
           factory = this.resolver.resolveComponentFactory(UIBDropDownWithChildrenComponent)
+          break;
+        case 'section':
+          factory = this.resolver.resolveComponentFactory(UIBSectionComponent)
           break;
       }
       this.componentRef = vcr.createComponent(factory)

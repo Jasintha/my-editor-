@@ -2,11 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'uib-text-input',
-  styleUrls: ['./uib-text-input.component.scss'],
-  templateUrl: './uib-text-input.component.html',
+  selector: 'uib-section',
+  templateUrl: './uib-section.component.html',
 })
-export class UIBTextInputComponent implements OnInit{
+export class UIBSectionComponent implements OnInit{
   @Input() data = {
     label: '',
     value: '',
@@ -15,8 +14,6 @@ export class UIBTextInputComponent implements OnInit{
 
   @Input() formGroup:FormGroup
 
-  ngOnInit(): void {
-    //this.formGroup.controls[this.data.formControlName].patchValue(this.data.value)
- }
+  ngOnInit(): void { }
 
 }

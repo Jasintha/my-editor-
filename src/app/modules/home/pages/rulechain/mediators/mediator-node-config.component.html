@@ -1402,4 +1402,38 @@
         [nodeDefinition]="nodeDefinitionValue">
 </virtuan-uib-base-node-config>
     </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiDynamicIn'">
+        <virtuan-uib-base-node-config
+        formControlName="configuration"
+        [fields]="fields"
+        [ruleNodeId]="ruleNodeId"
+        [allConstants]=" allConstants"
+        [allRuleInputs]="allRuleInputs"
+        [inputEntities]=" inputEntities"
+        [inputCustomobjects]="inputCustomobjects"
+        [allVariables]="allVariables"
+        [inputProperties]="inputProperties"
+        [apptype]="apptype"
+        [branchAvailability]="branchAvailability"
+        [allModelProperties]="allModelProperties"
+        [nodeDefinition]="nodeDefinitionValue">
+</virtuan-uib-base-node-config>
+    </ng-container>
+    <ng-container *ngIf="nodeClazz === 'xiDynamicOut'">
+        <virtuan-uib-base-node-config
+        formControlName="configuration"
+        [fields]="fields"
+        [ruleNodeId]="ruleNodeId"
+        [allConstants]=" allConstants"
+        [allRuleInputs]="allRuleInputs"
+        [inputEntities]=" inputEntities"
+        [inputCustomobjects]="inputCustomobjects"
+        [allVariables]="allVariables"
+        [inputProperties]="inputProperties"
+        [apptype]="apptype"
+        [branchAvailability]="branchAvailability"
+        [allModelProperties]="allModelProperties"
+        [nodeDefinition]="nodeDefinitionValue">
+</virtuan-uib-base-node-config>
+    </ng-container>
 </div>

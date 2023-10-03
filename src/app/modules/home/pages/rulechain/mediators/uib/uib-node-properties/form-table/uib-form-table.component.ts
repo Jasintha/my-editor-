@@ -4,6 +4,7 @@ import { distinctUntilChanged } from "rxjs/operators";
 
 @Component({
   selector: "uib-form-table",
+  styleUrls: ['./uib-form-table.component.scss'],
   templateUrl: "./uib-form-table.component.html",
 })
 export class UIBFormTableComponent implements OnInit {
