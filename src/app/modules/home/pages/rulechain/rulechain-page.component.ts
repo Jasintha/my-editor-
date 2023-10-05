@@ -885,6 +885,7 @@ export class RuleChainPageComponent extends PageComponent
       const node: FcRuleNode = {
         id: "rule-chain-node-" + this.nextNodeID++,
         ruleNodeId: ruleNode.id,
+        ruleNodeUUId: ruleNode.nodeUUID,
         additionalInfo: ruleNode.additionalInfo,
         configuration: ruleNode.configuration,
         debugMode: ruleNode.debugMode,
