@@ -60,9 +60,9 @@ export class UibEditorPageComponent implements OnInit {
   currentTab: string;
   eventSubscriber: Subscription;
   eventSubscriberUi: Subscription;
-  showBackdrop = true;
   fromApplication = false;
-
+  editorOptions = {theme: 'vs', language: 'xml'};
+  code = ''
   constructor(
     private router: Router,
     private loginService: LoginService,
@@ -110,7 +110,6 @@ export class UibEditorPageComponent implements OnInit {
       this.uibService.findProjectComponents(this.mainUUID).subscribe({
         next: (comps) => {
           this.dataSource.data = comps;
-          this.viewSourceCode(this.dataSource.data[0]?.children[0])
           setTimeout(()=>{
             this.openFirst(this.dataSource.data[0]?.children[0]);
           }, 500)
@@ -146,7 +145,6 @@ export class UibEditorPageComponent implements OnInit {
       return;
     } else {
       this.fromApplication = false;
-      this.showBackdrop = false;
       this.viewRule(node);
     }
   }
@@ -158,7 +156,6 @@ export class UibEditorPageComponent implements OnInit {
     const node = selectedNode.data;
     this.isCreatingProject = false;
     this.projectUid = node.projectuuid;
-    this.showBackdrop = false;
     if (node.type === "Scripts" || node.type === "MODEL") {
       if (node.is_editable) {
         this.router.navigate(["uib-editor/edit-source"], {
@@ -191,7 +188,6 @@ export class UibEditorPageComponent implements OnInit {
   }
 
   viewRule(item) {
-    this.showBackdrop = false;
     if (this.mainUUID == undefined || this.healthStatusIcon == undefined) {
       this.mainUUID = localStorage.getItem("mainProjectId");
       this.healthStatusIcon = localStorage.getItem("healthStatusIcon");
@@ -241,7 +237,6 @@ export class UibEditorPageComponent implements OnInit {
   }
 
   viewSourceCode(node) {
-    this.showBackdrop = this.fromApplication ? true : false;
     this.isCreatingProject = false;
     this.projectUid = node.projectuuid;
     if (node.is_editable) {

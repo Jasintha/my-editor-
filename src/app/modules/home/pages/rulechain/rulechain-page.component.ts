@@ -843,7 +843,7 @@ export class RuleChainPageComponent extends PageComponent
     this.ruleChainModel.edges = [];
 
     this.inputConnectorId = this.nextConnectorID++;
-    if (this.editorType === "servicefile" || this.editorType === "uib") {
+    if (this.editorType === "servicefile") {
     } else {
       this.ruleChainModel.nodes.push({
         id: "rule-chain-node-" + this.nextNodeID++,
