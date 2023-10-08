@@ -1,0 +1,19 @@
+<div style="display: flex; flex-direction: column; width: 100%">
+    <div style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;" >
+        <uib-dropdown-input *ngIf="dropDowns[0].label !== ''" [data]="dropDowns[0]" [formGroup]="childFormGroup"></uib-dropdown-input>
+        <uib-dropdown-input *ngIf="dropDowns[2].label !== ''" [data]="dropDowns[2]" [formGroup]="childFormGroup"></uib-dropdown-input>
+    </div>
+    <div style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;" >
+        <uib-dropdown-input *ngIf="dropDowns[1].label !== ''" [data]="dropDowns[1]" [formGroup]="childFormGroup"></uib-dropdown-input>
+        <uib-dropdown-input  *ngIf="dropDowns[3].label !== ''" [data]="dropDowns[3]" [formGroup]="childFormGroup"></uib-dropdown-input>
+    </div>
+    <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+        <button mat-icon-button class="virtuan-fullscreen-button-style"
+                (click)="addAssignment()"
+                matTooltip="Add Assignment"
+                matTooltipPosition="above">
+            <mat-icon color="primary">add</mat-icon>
+        </button>
+    </div>
+    <uib-table [data]="tableData" [formGroup]="childFormGroup"></uib-table>
+</div>

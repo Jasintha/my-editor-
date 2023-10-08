@@ -26,6 +26,7 @@ import { QuestionBase } from '@shared/models/question-base.models';
 import { RuleChainService } from '@core/http/rule-chain.service';
 import { RuleNodeConfigComponent } from './rule-node-config.component';
 import {ConOperationBase} from "@shared/models/ConnectorOperation.models";
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'virtuan-rule-node',
@@ -199,7 +200,9 @@ export class RuleNodeDetailsComponent extends PageComponent implements OnInit, O
           )
         });
       }
-      this.ruleNodeFormSubscription = this.ruleNodeFormGroup.valueChanges.subscribe(() => {
+      this.ruleNodeFormSubscription = this.ruleNodeFormGroup.valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe((value) => {
         this.updateRuleNode();
       });
     } else {

@@ -35,6 +35,7 @@ import { UIBFormTableComponent } from './form-table/uib-form-table.component';
 import { UIBTreeViewInputComponent } from './tree-view/uib-tree-view.component';
 import { UIBDropDownWithChildrenComponent } from './dropdown-with-children/dropdown-with-children.component';
 import { UIBSectionComponent } from './section/uib-section.component';
+import { UIBMappingComponent } from './mapping-with-table/mapping-with-table.component';
 
 @Component({
   selector: 'virtuan-uib-base-node-config',
@@ -135,114 +136,137 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   ngOnInit(): void {
-    if(this.fields == null){
+    if(this.fields != null){
       this.fields = [
         {
-          type: "section",
-          name: "",
+          type: "mapping",
+          name: "mappingData",
           label: "Sample Section",
           value: "",
           required: true,
-          options: []
-        },
-        {
-          type: "text",
-          name: "firstName",
-          label: "First Name",
-          value: "",
-          required: true,
-          options: []
-        },
-        {
-          type: "text",
-          name: "lastName",
-          label: "Last Name",
-          value: "",
-          required: true,
-          options: []
-        },
-        {
-          type: "text",
-          name: "email",
-          label: "Email",
-          value: "",
-          required: true,
-          options: []
-        },
-        {
-          type: 'dropdown',
-          name: 'country',
-          label: 'Country',
-          value: 'in',
-          required: true,
-          options: [
-            { key: 'in', label: 'India' },
-            { key: 'us', label: 'USA' }
+          dataSource: [],
+          displayedColumns: ['Sample 1', 'Sample 2', 'Sample 3', 'Sample 4'],
+          mappingSource: [
+            {
+              label: 'Sample 1',
+              formControlName: 'dropdown1',
+              path: 'http://universities.hipolabs.com/search?name=middle',
+            },
+            {
+              label: 'Sample 2',
+              formControlName: 'dropdown2',
+              path: 'http://universities.hipolabs.com/search?name=middle',
+            },
+            {
+              label: 'Sample 3',
+              formControlName: 'dropdown3',
+              path: 'http://universities.hipolabs.com/search?name=middle',
+            },
+            {
+              label: 'Sample 4',
+              formControlName: 'dropdown4',
+              path: 'http://universities.hipolabs.com/search?name=middle',
+            }
           ]
         },
-        {
-          type: 'form-table',
-          name: 'skills',
-          label: 'Skills',
-          value: [{
-            'qty': '100'
-          }, {'qty': '200'}],
-          required: true,
-          options: [],
-          columns: [{
-            label: 'Quantity',
-            key: 'qty',
-            type: 'text'
-          },
-        {
-          label: 'Qualtiy',
-          key: 'quality',
-          type: 'dropdown',
-          options: [
-            { key: 'good', label: 'Good' },
-            { key: 'bad', label: 'Bad' },
-          ]
-         },
-        ]
-        },
-        {
-          type: "tree-view",
-          name: "testTree",
-          label: "Test",
-          value: "",
-          options: [
-          {
-                    name: 'AAA',
-                    enable: true,
-                    children: [
-                        {
-                            name: 'BBB',
-                            enable: true
-                        },
-                        {
-                            name: 'CCC',
-                            enable: false
-                        }
-                    ]
-                }
-        ],
-        },
-        {
-          type: 'dropdown-children',
-          name: 'happy',
-          label: 'Happy',
-          value: 'no',
-          options: [
-            { key: 'yes', label: 'Yes', children:[{
-              type: "textarea",
-              name: "templateName",
-              label: "TemplateName",
-              value: "",
-              hide: false
-            }] },
-            { key: 'no', label: 'No' }
-          ],
-        },
+        //  {
+        //   type: "text",
+        //   name: "firstName",
+        //   label: "First Name",
+        //   value: "",
+        //   required: true,
+        //   options: []
+        //  }
+        // {
+        //   type: "text",
+        //   name: "lastName",
+        //   label: "Last Name",
+        //   value: "",
+        //   required: true,
+        //   options: []
+        // },
+        // {
+        //   type: "text",
+        //   name: "email",
+        //   label: "Email",
+        //   value: "",
+        //   required: true,
+        //   options: []
+        // },
+        // {
+        //   type: 'dropdown',
+        //   name: 'country',
+        //   label: 'Country',
+        //   value: 'in',
+        //   required: true,
+        //   options: [
+        //     { key: 'in', label: 'India' },
+        //     { key: 'us', label: 'USA' }
+        //   ]
+        // },
+        // {
+        //   type: 'form-table',
+        //   name: 'skills',
+        //   label: 'Skills',
+        //   value: [{
+        //     'qty': '100'
+        //   }, {'qty': '200'}],
+        //   required: true,
+        //   options: [],
+        //   columns: [{
+        //     label: 'Quantity',
+        //     key: 'qty',
+        //     type: 'text'
+        //   },
+        // {
+        //   label: 'Qualtiy',
+        //   key: 'quality',
+        //   type: 'dropdown',
+        //   options: [
+        //     { key: 'good', label: 'Good' },
+        //     { key: 'bad', label: 'Bad' },
+        //   ]
+        //  },
+        // ]
+        // },
+        // {
+        //   type: "tree-view",
+        //   name: "testTree",
+        //   label: "Test",
+        //   value: "",
+        //   options: [
+        //   {
+        //             name: 'AAA',
+        //             enable: true,
+        //             children: [
+        //                 {
+        //                     name: 'BBB',
+        //                     enable: true
+        //                 },
+        //                 {
+        //                     name: 'CCC',
+        //                     enable: false
+        //                 }
+        //             ]
+        //         }
+        // ],
+        // },
+        // {
+        //   type: 'dropdown-children',
+        //   name: 'happy',
+        //   label: 'Happy',
+        //   value: 'no',
+        //   options: [
+        //     { key: 'yes', label: 'Yes', children:[{
+        //       type: "textarea",
+        //       name: "templateName",
+        //       label: "TemplateName",
+        //       value: "",
+        //       hide: false
+        //     }] },
+        //     { key: 'no', label: 'No' }
+        //   ],
+        // },
       ];
     }
     this.createDynamicForm();
@@ -312,8 +336,8 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
           }
          }
 
-         else if(i.type === 'tree-view'){
-          
+         else if(i.type === 'mapping'){
+          i.dataSource = this.configuration.callProperties[0][i.name]
          }
         }
       }
@@ -394,7 +418,10 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
           value: i.value,
           options: i.options,
           columns: i.columns,
-          hide: i.hide
+          displayedColumns: i.displayedColumns,
+          dataSource: i.dataSource,
+          hide: i.hide,
+          mappingSource: i.mappingSource
         },
       })
     }
@@ -425,6 +452,9 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
           break;
         case 'section':
           factory = this.resolver.resolveComponentFactory(UIBSectionComponent)
+          break;
+        case 'mapping':
+          factory = this.resolver.resolveComponentFactory(UIBMappingComponent)
           break;
       }
       this.componentRef = vcr.createComponent(factory)

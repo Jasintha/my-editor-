@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { any, string } from 'prop-types';
 
 @Component({
   selector: 'uib-table',
@@ -13,8 +12,7 @@ export class UIBTableComponent  implements OnInit{
     value: '',
     formControlName: '',
     displayedColumns: [],
-    dataSource: any,
-    hide: false
+    dataSource: []
   };
 
   @Input() formGroup:FormGroup

@@ -17,8 +17,6 @@ export class UIBDropDownComponent implements OnInit{
 
   @Input() formGroup: FormGroup
 
-  ngOnInit(): void {
-    //this.formGroup.controls[this.data.formControlName].setValue(this.data.value)
- }
+  ngOnInit(): void {}
 
 }
