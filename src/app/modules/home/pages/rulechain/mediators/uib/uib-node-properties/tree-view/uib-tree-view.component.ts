@@ -1,4 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
+import { I } from '@angular/cdk/keycodes';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import {Component, Input, OnInit} from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -54,14 +55,19 @@ export class UIBTreeViewInputComponent implements OnInit{
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   checklistSelection = new SelectionModel<TodoItemFlatNode>(true);
-
+  formList = []
   ngOnInit(): void {
     this.loadTreeData()
+    this.checklistSelection.changed.subscribe((v)=> {
+      const added = v.added.map((i)=> {
+        return i.name
+      })
+      this.formGroup.controls[this.data.formControlName].setValue(added)
+    })
  }
 
  loadTreeData() {
   this.dataSource.data = this.data.options
-    // this.dataSource.data = [
     //     {
     //         name: 'AAA',
     //         enable: true,
@@ -77,10 +83,6 @@ export class UIBTreeViewInputComponent implements OnInit{
     //         ]
     //     }
     // ];       
-  }
-
-  updateData(){
-
   }
   
   descendantsAllSelected(node: TodoItemFlatNode): boolean {

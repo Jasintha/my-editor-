@@ -1,11 +1,21 @@
 <div style="display: flex; flex-direction: column; width: 100%">
     <div style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;" >
         <uib-dropdown-input *ngIf="dropDowns[0].label !== ''" [data]="dropDowns[0]" [formGroup]="childFormGroup"></uib-dropdown-input>
-        <uib-dropdown-input *ngIf="dropDowns[2].label !== ''" [data]="dropDowns[2]" [formGroup]="childFormGroup"></uib-dropdown-input>
+        <uib-dropdown-input *ngIf="dropDowns[1].label !== ''" [data]="dropDowns[1]" [formGroup]="childFormGroup"></uib-dropdown-input>
     </div>
     <div style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;" >
-        <uib-dropdown-input *ngIf="dropDowns[1].label !== ''" [data]="dropDowns[1]" [formGroup]="childFormGroup"></uib-dropdown-input>
-        <uib-dropdown-input  *ngIf="dropDowns[3].label !== ''" [data]="dropDowns[3]" [formGroup]="childFormGroup"></uib-dropdown-input>
+        <div *ngIf="this.enableFirstTree">
+            <uib-tree-view-input [data]="dropDowns[2]" [formGroup]="childFormGroup"></uib-tree-view-input>
+        </div>
+        <div *ngIf="this.enableSecondTree">
+            <uib-tree-view-input [data]="dropDowns[3]" [formGroup]="childFormGroup"></uib-tree-view-input>   
+        </div>
+       <div *ngIf="this.enableFirstDropDown">
+            <uib-dropdown-input [data]="dropDowns[2]" [formGroup]="childFormGroup"></uib-dropdown-input>
+       </div>
+       <div *ngIf="this.enableSecondDropDown">
+            <uib-dropdown-input [data]="dropDowns[3]" [formGroup]="childFormGroup"></uib-dropdown-input>
+        </div>
     </div>
     <div fxFlex fxLayout="row" fxLayoutAlign="end center">
         <button mat-icon-button class="virtuan-fullscreen-button-style"

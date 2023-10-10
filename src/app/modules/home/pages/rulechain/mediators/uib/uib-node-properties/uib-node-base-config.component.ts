@@ -136,7 +136,7 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   ngOnInit(): void {
-    if(this.fields != null){
+    if(this.fields == null){
       this.fields = [
         {
           type: "mapping",
@@ -145,29 +145,49 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
           value: "",
           required: true,
           dataSource: [],
-          displayedColumns: ['Sample 1', 'Sample 2', 'Sample 3', 'Sample 4'],
-          mappingSource: [
+          displayedColumns: ['From', 'To'],
+          mappingSource: {
+          data:[
             {
-              label: 'Sample 1',
+              label: 'From',
               formControlName: 'dropdown1',
               path: 'http://universities.hipolabs.com/search?name=middle',
+              child: {
+                  label: 'From_Data',
+                  formControlName: 'dropdown3',
+                  info: [
+                    {
+                      type: 'tree',
+                      path: 'XX'
+                    },
+                    {
+                      type: 'dropdown',
+                      path: 'http://universities.hipolabs.com/search?name=middle',
+                    }
+                  ]
+              }
             },
             {
-              label: 'Sample 2',
+              label: 'To',
               formControlName: 'dropdown2',
               path: 'http://universities.hipolabs.com/search?name=middle',
+              child:  {
+                label: 'To_Data',
+                formControlName: 'dropdown4',
+                info: [
+                  {
+                    type: 'dropdown',
+                    path: 'http://universities.hipolabs.com/search?name=middle',
+                  },
+                  {
+                    type: 'tree',
+                    path: 'XX'
+                  },
+                ]
+              },
             },
-            {
-              label: 'Sample 3',
-              formControlName: 'dropdown3',
-              path: 'http://universities.hipolabs.com/search?name=middle',
-            },
-            {
-              label: 'Sample 4',
-              formControlName: 'dropdown4',
-              path: 'http://universities.hipolabs.com/search?name=middle',
-            }
           ]
+        }
         },
         //  {
         //   type: "text",
