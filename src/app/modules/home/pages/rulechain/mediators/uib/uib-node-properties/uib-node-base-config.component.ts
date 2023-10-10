@@ -136,158 +136,139 @@ export class UibNodeBaseConfigComponent implements ControlValueAccessor, OnInit,
   }
 
   ngOnInit(): void {
-    if(this.fields == null){
-      this.fields = [
-        {
-          type: "mapping",
-          name: "mappingData",
-          label: "Sample Section",
-          value: "",
-          required: true,
-          dataSource: [],
-          displayedColumns: ['From', 'To'],
-          mappingSource: {
-          data:[
-            {
-              label: 'From',
-              formControlName: 'dropdown1',
-              path: 'http://universities.hipolabs.com/search?name=middle',
-              child: {
-                  label: 'From_Data',
-                  formControlName: 'dropdown3',
-                  info: [
-                    {
-                      type: 'tree',
-                      path: 'XX'
-                    },
-                    {
-                      type: 'dropdown',
-                      path: 'http://universities.hipolabs.com/search?name=middle',
-                    }
-                  ]
-              }
-            },
-            {
-              label: 'To',
-              formControlName: 'dropdown2',
-              path: 'http://universities.hipolabs.com/search?name=middle',
-              child:  {
-                label: 'To_Data',
-                formControlName: 'dropdown4',
-                info: [
-                  {
-                    type: 'dropdown',
-                    path: 'http://universities.hipolabs.com/search?name=middle',
-                  },
-                  {
-                    type: 'tree',
-                    path: 'XX'
-                  },
-                ]
-              },
-            },
-          ]
-        }
-        },
-        //  {
-        //   type: "text",
-        //   name: "firstName",
-        //   label: "First Name",
-        //   value: "",
-        //   required: true,
-        //   options: []
-        //  }
-        // {
-        //   type: "text",
-        //   name: "lastName",
-        //   label: "Last Name",
-        //   value: "",
-        //   required: true,
-        //   options: []
-        // },
-        // {
-        //   type: "text",
-        //   name: "email",
-        //   label: "Email",
-        //   value: "",
-        //   required: true,
-        //   options: []
-        // },
-        // {
-        //   type: 'dropdown',
-        //   name: 'country',
-        //   label: 'Country',
-        //   value: 'in',
-        //   required: true,
-        //   options: [
-        //     { key: 'in', label: 'India' },
-        //     { key: 'us', label: 'USA' }
-        //   ]
-        // },
-        // {
-        //   type: 'form-table',
-        //   name: 'skills',
-        //   label: 'Skills',
-        //   value: [{
-        //     'qty': '100'
-        //   }, {'qty': '200'}],
-        //   required: true,
-        //   options: [],
-        //   columns: [{
-        //     label: 'Quantity',
-        //     key: 'qty',
-        //     type: 'text'
-        //   },
-        // {
-        //   label: 'Qualtiy',
-        //   key: 'quality',
-        //   type: 'dropdown',
-        //   options: [
-        //     { key: 'good', label: 'Good' },
-        //     { key: 'bad', label: 'Bad' },
-        //   ]
-        //  },
-        // ]
-        // },
-        // {
-        //   type: "tree-view",
-        //   name: "testTree",
-        //   label: "Test",
-        //   value: "",
-        //   options: [
-        //   {
-        //             name: 'AAA',
-        //             enable: true,
-        //             children: [
-        //                 {
-        //                     name: 'BBB',
-        //                     enable: true
-        //                 },
-        //                 {
-        //                     name: 'CCC',
-        //                     enable: false
-        //                 }
-        //             ]
-        //         }
-        // ],
-        // },
-        // {
-        //   type: 'dropdown-children',
-        //   name: 'happy',
-        //   label: 'Happy',
-        //   value: 'no',
-        //   options: [
-        //     { key: 'yes', label: 'Yes', children:[{
-        //       type: "textarea",
-        //       name: "templateName",
-        //       label: "TemplateName",
-        //       value: "",
-        //       hide: false
-        //     }] },
-        //     { key: 'no', label: 'No' }
-        //   ],
-        // },
-      ];
+    if(this.fields === null){
+      // this.fields = [
+      //   {
+      //     type: "mapping",
+      //     name: "mappingData",
+      //     label: "Sample Section",
+      //     value: "",
+      //     required: true,
+      //     dataSource: [],
+      //     displayedColumns: ['From', 'From_Data', 'To', 'To_Data'],
+      //     mappingSource: {
+      //     data:[
+      //       {
+      //         label: 'From',
+      //         formControlName: 'dropdown1',
+      //         path: 'http://universities.hipolabs.com/search?name=middle',
+      //         child: {
+      //             label: 'From_Data',
+      //             formControlName: 'dropdown3',
+      //         }
+      //       },
+      //       {
+      //         label: 'To',
+      //         formControlName: 'dropdown2',
+      //         path: 'http://universities.hipolabs.com/search?name=middle',
+      //         child:  {
+      //           label: 'To_Data',
+      //           formControlName: 'dropdown4',
+      //         },
+      //       },
+      //     ]
+      //   }
+      //   },
+      // ]
+      //   //  {
+      //   //   type: "text",
+      //   //   name: "firstName",
+      //   //   label: "First Name",
+      //   //   value: "",
+      //   //   required: true,
+      //   //   options: []
+      //   //  }
+      //   // {
+      //   //   type: "text",
+      //   //   name: "lastName",
+      //   //   label: "Last Name",
+      //   //   value: "",
+      //   //   required: true,
+      //   //   options: []
+      //   // },
+      //   // {
+      //   //   type: "text",
+      //   //   name: "email",
+      //   //   label: "Email",
+      //   //   value: "",
+      //   //   required: true,
+      //   //   options: []
+      //   // },
+      //   // {
+      //   //   type: 'dropdown',
+      //   //   name: 'country',
+      //   //   label: 'Country',
+      //   //   value: 'in',
+      //   //   required: true,
+      //   //   options: [
+      //   //     { key: 'in', label: 'India' },
+      //   //     { key: 'us', label: 'USA' }
+      //   //   ]
+      //   // },
+      //   // {
+      //   //   type: 'form-table',
+      //   //   name: 'skills',
+      //   //   label: 'Skills',
+      //   //   value: [{
+      //   //     'qty': '100'
+      //   //   }, {'qty': '200'}],
+      //   //   required: true,
+      //   //   options: [],
+      //   //   columns: [{
+      //   //     label: 'Quantity',
+      //   //     key: 'qty',
+      //   //     type: 'text'
+      //   //   },
+      //   // {
+      //   //   label: 'Qualtiy',
+      //   //   key: 'quality',
+      //   //   type: 'dropdown',
+      //   //   options: [
+      //   //     { key: 'good', label: 'Good' },
+      //   //     { key: 'bad', label: 'Bad' },
+      //   //   ]
+      //   //  },
+      //   // ]
+      //   // },
+      //   // {
+      //   //   type: "tree-view",
+      //   //   name: "testTree",
+      //   //   label: "Test",
+      //   //   value: "",
+      //   //   options: [
+      //   //   {
+      //   //             name: 'AAA',
+      //   //             enable: true,
+      //   //             children: [
+      //   //                 {
+      //   //                     name: 'BBB',
+      //   //                     enable: true
+      //   //                 },
+      //   //                 {
+      //   //                     name: 'CCC',
+      //   //                     enable: false
+      //   //                 }
+      //   //             ]
+      //   //         }
+      //   // ],
+      //   // },
+      //   // {
+      //   //   type: 'dropdown-children',
+      //   //   name: 'happy',
+      //   //   label: 'Happy',
+      //   //   value: 'no',
+      //   //   options: [
+      //   //     { key: 'yes', label: 'Yes', children:[{
+      //   //       type: "textarea",
+      //   //       name: "templateName",
+      //   //       label: "TemplateName",
+      //   //       value: "",
+      //   //       hide: false
+      //   //     }] },
+      //   //     { key: 'no', label: 'No' }
+      //   //   ],
+      //   // },
+      // ];
     }
     this.createDynamicForm();
     this.createDynamicComponents();

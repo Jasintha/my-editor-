@@ -2,6 +2,8 @@ import { V } from "@angular/cdk/keycodes";
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
+import { defaultHttpOptions } from "@app/core/http/public-api";
+import { UIBService } from "@app/core/projectservices/uib.service";
 import { createRequestOption } from "@app/shared/util/request-util";
 import { BehaviorSubject, Observable, of } from "rxjs";
 
@@ -29,7 +31,9 @@ export class UIBMappingComponent implements OnInit {
   enableSecondTree = false;
   enableSecondDropDown = false;
 
-  constructor(protected http: HttpClient, private ref: ChangeDetectorRef) {}
+  constructor(protected http: HttpClient, private ref: ChangeDetectorRef,     
+    private uibService: UIBService,
+    ) {}
 
   dropDowns = [
     {
@@ -82,10 +86,12 @@ export class UIBMappingComponent implements OnInit {
     this.data.mappingSource.data.forEach((value, index) => {
       this.query(value.path).subscribe((options) => {
         let optionsArray = [];
-        options.body.forEach((item) => {
+        options.forEach((item) => {
           optionsArray.push({
             key: item.key,
             label: item.value,
+            type: item.type,
+            path: item.path
           });
         });
         this.dropDowns[index] = {
@@ -99,31 +105,27 @@ export class UIBMappingComponent implements OnInit {
 
     this.childFormGroup.controls["dropdown1"].valueChanges.subscribe(
       (first) => {
-        const index = this.dropDowns[0].options.findIndex(first);
-        if (this.data.mappingSource.data[0].child.info[index].type === "tree") {
-          this.query(
-            this.data.mappingSource.data[0].child.info[index].path
-          ).subscribe((options) => {
-            let optionsArray = [];
-            options.body.forEach((item) => {
-              optionsArray.push(item);
-            });
-            this.dropDowns[2] = {
-              label: this.data.mappingSource.data[0].child.label,
-              formControlName: this.data.mappingSource.data[0].child
-                .formControlName,
-              options: optionsArray,
-            };
-            this.enableFirstTree = true;
-            this.enableFirstDropDown = false;
-            this.ref.detectChanges();
+        const index = this.dropDowns[0].options.filter((item)=> item.key === first)[0]
+        if (index.type === "tree") {
+          this.query(index.path).subscribe({
+            next: (comps) => {
+              this.dropDowns[2] = {
+                label: this.data.mappingSource.data[0].child.label,
+                formControlName: this.data.mappingSource.data[0].child
+                  .formControlName,
+                options: comps
+              };
+              this.enableFirstTree = true;
+              this.enableFirstDropDown = false;
+              this.ref.detectChanges();
+            },
           });
         } else {
           this.query(
-            this.data.mappingSource.data[0].child.info[index].path
+            index.path
           ).subscribe((options) => {
             let optionsArray = [];
-            options.body.forEach((item) => {
+            options.forEach((item) => {
               optionsArray.push({
                 key: item.key,
                 label: item.value,
@@ -145,46 +147,41 @@ export class UIBMappingComponent implements OnInit {
 
     this.childFormGroup.controls["dropdown2"].valueChanges.subscribe(
       (first) => {
-        const index = this.dropDowns[1].options.findIndex(first);
-
-        if (this.data.mappingSource.data[1].child.info[index].type === "tree") {
-          this.query(
-            this.data.mappingSource.data[1].child.info[index].path
-          ).subscribe((options) => {
-            let optionsArray = [];
-            options.body.forEach((item) => {
-              optionsArray.push(item);
-            });
-            this.dropDowns[3] = {
-              label: this.data.mappingSource.data[1].child.label,
-              formControlName: this.data.mappingSource.data[1].child
-                .formControlName,
-              options: optionsArray,
-            };
-            this.enableSecondTree = true;
-            this.enableSecondDropDown = false;
-            this.ref.detectChanges();
+        const index = this.dropDowns[1].options.filter((item)=> item.key === first)[0]
+        if (index.type === "tree") {
+          this.query(index.path).subscribe({
+            next: (comps) => {
+              this.dropDowns[3] = {
+                label: this.data.mappingSource.data[1].child.label,
+                formControlName: this.data.mappingSource.data[1].child
+                  .formControlName,
+                options: comps
+              };
+              this.enableFirstTree = true;
+              this.enableFirstDropDown = false;
+              this.ref.detectChanges();
+            },
           });
         } else {
-          this.query(
-            this.data.mappingSource.data[1].child.info[index].path
-          ).subscribe((options) => {
-            let optionsArray = [];
-            options.body.forEach((item) => {
-              optionsArray.push({
-                key: item.key,
-                label: item.value,
+          this.query(index.path).subscribe({
+            next: (comps) => {
+              let optionsArray = [];
+              comps.forEach((item) => {
+                optionsArray.push({
+                  key: item.key,
+                  label: item.value,
+                });
               });
-            });
-            this.dropDowns[3] = {
-              label: this.data.mappingSource.data[1].child.label,
-              formControlName: this.data.mappingSource.data[1].child
-                .formControlName,
-              options: optionsArray,
-            };
-            this.enableSecondTree = false;
-            this.enableSecondDropDown = true;
-            this.ref.detectChanges();
+              this.dropDowns[3] = {
+                label: this.data.mappingSource.data[1].child.label,
+                formControlName: this.data.mappingSource.data[1].child
+                  .formControlName,
+                options: optionsArray
+              };
+              this.enableSecondTree = false;
+              this.enableSecondDropDown = true;
+              this.ref.detectChanges();
+            },
           });
         }
       }
@@ -193,25 +190,21 @@ export class UIBMappingComponent implements OnInit {
 
   addAssignment() {
     const newValue = {
-      [this.data.mappingSource[0].label]: this.childFormGroup.controls[
+      [this.data.mappingSource.data[0].label]: this.childFormGroup.controls[
         "dropdown1"
       ].value,
-      [this.data.mappingSource[1].label]: this.childFormGroup.controls[
+      [this.data.mappingSource.data[1].label]: this.childFormGroup.controls[
         "dropdown2"
       ].value,
-      [this.data.mappingSource[0].child.label]: this.childFormGroup.controls[
+      [this.data.mappingSource.data[0].child.label]: this.childFormGroup.controls[
         "dropdown3"
       ].value,
-      [this.data.mappingSource[1].child.label]: this.childFormGroup.controls[
+      [this.data.mappingSource.data[1].child.label]: this.childFormGroup.controls[
         "dropdown4"
       ].value,
     };
 
     this.tableData.dataSource = [...this.tableData.dataSource, newValue];
-    this.childFormGroup.controls["dropdown1"].setValue(null);
-    this.childFormGroup.controls["dropdown2"].setValue(null);
-    this.childFormGroup.controls["dropdown3"].setValue(null);
-    this.childFormGroup.controls["dropdown4"].setValue(null);
     this.enableFirstTree = false;
     this.enableFirstDropDown = false;
     this.enableSecondTree = false;
@@ -221,7 +214,7 @@ export class UIBMappingComponent implements OnInit {
     );
   }
 
-  query(path): Observable<HttpResponse<any[]>> {
-    return this.http.get<any[]>(`${path}`, { observe: "response" });
+  query(path): Observable<any[]> {
+    return this.http.get<any[]>(`${path}`, defaultHttpOptions());
   }
 }

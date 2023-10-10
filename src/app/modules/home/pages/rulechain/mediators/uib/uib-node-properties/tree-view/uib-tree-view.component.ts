@@ -56,33 +56,19 @@ export class UIBTreeViewInputComponent implements OnInit{
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   checklistSelection = new SelectionModel<TodoItemFlatNode>(true);
   formList = []
+  addedList = []
   ngOnInit(): void {
     this.loadTreeData()
     this.checklistSelection.changed.subscribe((v)=> {
-      const added = v.added.map((i)=> {
-        return i.name
-      })
-      this.formGroup.controls[this.data.formControlName].setValue(added)
+      if(v.added){
+        this.addedList.push(v.added[0].name)
+      }
+      this.formGroup.controls[this.data.formControlName].setValue(String(this.addedList.reverse()))
     })
  }
 
  loadTreeData() {
   this.dataSource.data = this.data.options
-    //     {
-    //         name: 'AAA',
-    //         enable: true,
-    //         children: [
-    //             {
-    //                 name: 'BBB',
-    //                 enable: true
-    //             },
-    //             {
-    //                 name: 'CCC',
-    //                 enable: false
-    //             }
-    //         ]
-    //     }
-    // ];       
   }
   
   descendantsAllSelected(node: TodoItemFlatNode): boolean {
